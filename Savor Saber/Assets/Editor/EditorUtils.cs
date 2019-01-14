@@ -13,4 +13,12 @@ public static class EditorUtils
     {
         EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
     }
+    /// <summary>Easy shortcut to the bold label text style</summary>
+    public static GUIStyle Bold
+    {
+        get
+        {
+            return new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold };
+        }
+    }
 }

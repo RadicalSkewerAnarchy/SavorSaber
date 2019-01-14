@@ -17,5 +17,7 @@ public class IngredientEditor : Editor
         // Gameplay data
         ingredient.types = (Ingredient.Types)EditorGUILayout.EnumFlagsField(new GUIContent("Food Groups", "TODO: tooltip"), ingredient.types);
         ingredient.healValue = EditorGUILayout.IntField(new GUIContent("Heal Value", "TODO: tooltip"), ingredient.healValue);
+        if (GUI.changed)
+            EditorUtility.SetDirty(ingredient);
     }
 }
