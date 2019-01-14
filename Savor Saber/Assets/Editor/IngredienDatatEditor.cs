@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(IngredientData))]
-public class IngredientEditor : Editor
+public class IngredientDataEditor : Editor
 {
     private const string displayNameTooltip = "The name of the ingredient in game";
     public override void OnInspectorGUI()
