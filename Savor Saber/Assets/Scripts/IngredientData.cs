@@ -5,8 +5,8 @@ using UnityEngine;
 /// <summary>
 /// A scriptable object class designed to hold the data for an ingredient
 /// </summary>
-[CreateAssetMenu(fileName = "newIngredient", menuName = "Ingredient")]
-public class Ingredient : ScriptableObject
+[CreateAssetMenu(fileName = "newIngredient", menuName = "IngredientData")]
+public class IngredientData : ScriptableObject
 {
     [System.Flags]
     public enum Types
