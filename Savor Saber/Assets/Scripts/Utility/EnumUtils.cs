@@ -11,11 +11,13 @@ public static class EnumUtils
     {
         return (T[])Enum.GetValues(typeof(T));
     }
+
     /// <summary> Quickly returns the number of items defined in this enum </summary>
     public static int Count<T>() where T : Enum
     {
         return Enum.GetNames(typeof(T)).Length;
     }
+
     /// <summary> Extension method to all enums to get the next value
     /// Wraps around to the beginning if this is the last element </summary>
     public static T Next<T>(this T e) where T : Enum
@@ -24,6 +26,7 @@ public static class EnumUtils
         int i = Array.IndexOf(Arr, e) + 1;
         return (Arr.Length == i) ? Arr[0] : Arr[i];
     }
+
     /// <summary> Extension method to all enums to get the previous value 
     /// Wraps around to the end if this is the first element </summary>
     public static T Previous<T>(this T e) where T : Enum
