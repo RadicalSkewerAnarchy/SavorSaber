@@ -21,7 +21,7 @@ public class IngredientData : ScriptableObject
     }
     /// <summary>The name of the ingredient in game</summary>
     public string displayName;
-    /// <summary>The image of the ingredient in world and in the inventory</summary>
+    /// <summary>The image of the ingredient in the inventory</summary>
     public Texture2D image;
     /// <summary>The categories of ingredient this ingredient fits into (flags)</summary>
     public Types types;

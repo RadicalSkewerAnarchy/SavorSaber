@@ -13,6 +13,10 @@ public class DropOnDeath : MonoBehaviour
     public void Drop()
     {
         foreach (var obj in drops)
-            GameObject.Instantiate(obj);
+        {
+            var d = GameObject.Instantiate(obj);
+            d.transform.position = transform.position;
+        }
+
     }
 }
