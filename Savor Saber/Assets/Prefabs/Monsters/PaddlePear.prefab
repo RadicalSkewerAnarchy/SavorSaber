@@ -10,11 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6411723353759096192}
   - component: {fileID: 6411723353759096199}
-  - component: {fileID: 6411723353759096198}
   - component: {fileID: 6411723353759096197}
-  - component: {fileID: 6411723353759096196}
-  - component: {fileID: 6411723353759096251}
   - component: {fileID: 6411723353759096193}
+  - component: {fileID: 850435740}
+  - component: {fileID: 6411723353759096196}
+  - component: {fileID: 6411723353759096198}
+  - component: {fileID: 6411723353759096251}
   m_Layer: 0
   m_Name: PaddlePear
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6411723353759096250}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.93397045, y: -0.48544988, z: -0.5861019}
+  m_LocalPosition: {x: 0.93397045, y: -0.48544988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,21 +58,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6411723353759096198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411723353759096250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  drops:
-  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
-  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
 --- !u!212 &6411723353759096197
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -120,32 +106,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6411723353759096196
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411723353759096250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a7bd314cc041be4885f0f0ea183dbfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHp: 3
---- !u!114 &6411723353759096251
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411723353759096250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayName: PaddlePear
 --- !u!95 &6411723353759096193
 Animator:
   serializedVersion: 3
@@ -165,3 +125,143 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &850435740
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 0.3
+  MinDistance: 1
+  MaxDistance: 30
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.3346489
+      value: 1
+      inSlope: -1.0940729
+      outSlope: -1.0940729
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.21192792
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.05676457
+      outSlope: -0.05676457
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.29271257
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &6411723353759096196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a7bd314cc041be4885f0f0ea183dbfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 3
+--- !u!114 &6411723353759096198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drops:
+  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
+  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
+--- !u!114 &6411723353759096251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: PaddlePear
+  deathSfx: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
+  deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
