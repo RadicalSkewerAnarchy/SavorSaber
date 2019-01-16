@@ -20,7 +20,7 @@ public class RecipeDatabase : MonoBehaviour
     /// recipe book. If it finds a match, it returns that RecipeData.
     /// 
     /// </summary>
-    public RecipeData CompareToBasicRecipes( /* Stack<IngredientData> currentSkewer */)
+    public RecipeData CompareToRecipes( /* Stack<IngredientData> currentSkewer */)
     {
         //for each element of recipes array
             // for each flavor in that recipe
