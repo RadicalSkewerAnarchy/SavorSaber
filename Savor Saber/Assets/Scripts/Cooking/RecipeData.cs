@@ -108,6 +108,9 @@ public class RecipeData : ScriptableObject
     /// </summary>
     public void ApplyEffectToTarget()
     {
-
+        // take in the target that was hit as an argument
+        // if an effect's value is >0, call that monster's corresponding function
+        // which can be nothing (e.g., trying to burn a monster that's immune to
+        // fire would do nothing.
     }
 }
