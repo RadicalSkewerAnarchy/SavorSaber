@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SerializableCollections;
 using UnityEngine;
 
 public class UtilityCurves : MonoBehaviour
 {
 
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
+    public AIStates aiStates = new AIStates();
+    public AIMoods aiMoods = new AIMoods();
 
     // Use this for initialization
     void Start()
     {
-
+        aiMoods.Add("Hostility", 0.5f);
+        aiMoods.Add("Fear", 0.5f);
+        aiMoods.Add("Hunger", 0.5f);
     }
 
     // Update is called once per frame
@@ -58,5 +63,17 @@ public class UtilityCurves : MonoBehaviour
 
         // return the average
         return (sum / len);
+    }
+
+    [System.Serializable]
+    public class AIStates : SDictionary<string, int>
+    {
+        
+    }
+
+    [System.Serializable]
+    public class AIMoods : SDictionary<string, float>
+    {
+        
     }
 }
