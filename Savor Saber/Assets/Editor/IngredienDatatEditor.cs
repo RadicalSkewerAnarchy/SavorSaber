@@ -15,8 +15,7 @@ public class IngredientDataEditor : Editor
         ingredient.image = EditorGUILayout.ObjectField(new GUIContent("Image", "TODO: tooltip"), ingredient.image, typeof(Texture2D), false) as Texture2D;
         EditorUtils.Separator();
         // Gameplay data
-        ingredient.types = (IngredientData.Types)EditorGUILayout.EnumFlagsField(new GUIContent("Food Groups", "TODO: tooltip"), ingredient.types);
-        ingredient.healValue = EditorGUILayout.IntField(new GUIContent("Heal Value", "TODO: tooltip"), ingredient.healValue);
+        ingredient.flavors = (RecipeData.Flavors)EditorGUILayout.EnumFlagsField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors);
         if (GUI.changed)
             EditorUtility.SetDirty(ingredient);
     }

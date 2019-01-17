@@ -57,6 +57,7 @@ public class RecipeData : ScriptableObject
     /// <summary>
     /// Radius of circle in which to apply effects
     /// </summary>
+    [Range(0f, 20f)]
     public float areaOfEffectRadius = 0f;
 
     /// <summary>
