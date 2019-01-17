@@ -8,7 +8,9 @@ public class UtilityCurves : MonoBehaviour
 
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
     public AIStates aiStates = new AIStates();
+    //Replace with stats
     public AIValues aiMoods = new AIValues();
+    public AIValues aiStats = new AIValues();
 
     // Use this for initialization
     void Start()
@@ -66,11 +68,9 @@ public class UtilityCurves : MonoBehaviour
     }
 
     [System.Serializable]
-    public class AIStates : SDictionary<string, AIValues>
-    {
-        
-    }
-
+    public class AIStates : SDictionary<string, CurveDict> { }
+    [System.Serializable]
+    public class CurveDict : SDictionary<string, AnimationCurve> { }
     [System.Serializable]
     public class AIValues : SDictionary<string, float>
     {
