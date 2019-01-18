@@ -4,53 +4,20 @@ using UnityEngine;
 
 [RequireComponent(typeof(UpdatedController))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MeleeAttack : MonoBehaviour
+public class KnifeAttack : MeleeAttack
 {
-    /// <summary>
-    /// Reference to the movement controller that will tell us what directional
-    /// state we're in. This should be a component of the same GameObject.
-    /// </summary>
-    private UpdatedController controller;
-
-    /// <summary>
-    /// How much damage the attack does. Currently a float in case we want.
-    /// finer damage values?
-    /// </summary>
-    public float meleeDamage = 1f;
-
-    /// <summary>
-    /// Number of units in front of the character this attack can reach.
-    /// </summary>
-    public float meleeRange = 1f;
-
-    /// <summary>
-    /// How many units wide this attack is.
-    /// </summary>
-    public float meleeWidth = 1f;
-
-    /// <summary>
-    /// How many seconds the collider will remain active.
-    /// </summary>
-    public float attackDuration = 0.5f;
-
-    /// <summary>
-    /// The collider for the melee attack.
-    /// </summary>
-    private CapsuleCollider2D meleeCollider;
-
-    /// <summary>
-    /// To prevent attack action while still attacking.
-    /// </summary>
-    private bool endSignalSent = false;
-    private bool slashing = false;
-
-
 
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<UpdatedController>();
         meleeCollider = GetComponent<CapsuleCollider2D>();
+
+        //Set attack data values
+        meleeDamage = 1f;
+        meleeRange = 2f;
+        meleeWidth = 1f;
+        attackDuration = 0.5f;
     }
 
     // Update is called once per frame
@@ -93,9 +60,9 @@ public class MeleeAttack : MonoBehaviour
     }
 
     /// <summary>
-    /// Performs the melee attack action
+    /// Performs the melee attack action.
     /// </summary>
-    public void Attack()
+    public override void Attack()
     {
         slashing = true;
         meleeCollider.enabled = true;
