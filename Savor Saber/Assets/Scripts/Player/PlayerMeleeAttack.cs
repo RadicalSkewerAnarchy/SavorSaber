@@ -17,6 +17,12 @@ public class PlayerMeleeAttack : MeleeAttack
     public GameObject skewer;
 
     /// <summary>
+    /// Reference to the movement controller that will tell us what directional
+    /// state we're in. This should be a component of the same GameObject.
+    /// </summary>
+    protected UpdatedController controller;
+
+    /// <summary>
     /// Array of layers that the weapons should not collide with.
     /// Weapon layer is 10. Terrain is 9, for example.
     /// </summary>

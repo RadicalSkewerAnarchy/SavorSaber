@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UpdatedController))]
+
+/// <summary>
+/// Base class for melee attacks.
+/// </summary>
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class MeleeAttack : MonoBehaviour
+public abstract class MeleeAttack : MonoBehaviour
 {
-    /// <summary>
-    /// Reference to the movement controller that will tell us what directional
-    /// state we're in. This should be a component of the same GameObject.
-    /// </summary>
-    protected UpdatedController controller;
 
     /// <summary>
     /// The collider for the melee attack.
@@ -44,20 +42,5 @@ public class MeleeAttack : MonoBehaviour
     protected bool endSignalSent = false;
     protected bool attacking = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public virtual void Attack()
-    {
-        //Intentionally empty, overwritten by derived classes
-    }
+    public abstract void Attack();
 }
