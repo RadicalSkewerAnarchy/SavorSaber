@@ -42,7 +42,7 @@ public class MeleeAttack : MonoBehaviour
     /// To prevent attack action while still attacking.
     /// </summary>
     protected bool endSignalSent = false;
-    protected bool slashing = false;
+    protected bool attacking = false;
 
     // Start is called before the first frame update
     void Start()
