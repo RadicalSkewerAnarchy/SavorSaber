@@ -38,6 +38,12 @@ public class MeleeAttack : MonoBehaviour
     /// </summary>
     private CapsuleCollider2D meleeCollider;
 
+    /// <summary>
+    /// To prevent attack action while still attacking.
+    /// </summary>
+    private bool endSignalSent = false;
+    private bool slashing = false;
+
 
 
     // Start is called before the first frame update
@@ -79,15 +85,36 @@ public class MeleeAttack : MonoBehaviour
             meleeCollider.offset = new Vector2(0, meleeRange / -2);
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        // Attack if player hits button and not already attacking
+        if (Input.GetButtonDown("Fire1")  && !slashing)
         {
-            AttackMelee();
+            Attack();
         }
     }
 
-    public void AttackMelee()
+    /// <summary>
+    /// Performs the melee attack action
+    /// </summary>
+    public void Attack()
     {
+        slashing = true;
+        meleeCollider.enabled = true;
+        StartCoroutine(EndAttackAfterSeconds(attackDuration));
 
+    }
 
+    /// <summary>
+    /// Disables the attacking state after the attack duration has elapsed.
+    /// </summary>
+    IEnumerator EndAttackAfterSeconds(float time)
+    {
+        endSignalSent = true;
+
+        yield return new WaitForSeconds(time);
+
+        slashing = false;
+        meleeCollider.enabled = false;
+
+        yield return null;
     }
 }
