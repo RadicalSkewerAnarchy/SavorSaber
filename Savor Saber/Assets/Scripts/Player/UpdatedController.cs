@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class UpdatedController : MonoBehaviour
-{   
+{
+    [System.NonSerialized]
+    public string directionState;
+    //////
     [SerializeField]
     bool DebugBool = false;
     //////
@@ -98,10 +103,12 @@ public class UpdatedController : MonoBehaviour
             if (movementAngle > 315 || movementAngle < 45)
             {
                 animatorBody.SetFloat("LastMoveX", 1f);
+                directionState = "East";
             }
             else if (movementAngle > 135 && movementAngle < 225)
             {
                 animatorBody.SetFloat("LastMoveX", -1F);
+                directionState = "West";
             }
             else
             {
@@ -109,11 +116,13 @@ public class UpdatedController : MonoBehaviour
             }
             if(movementAngle > 45 && movementAngle < 135)
             {
-                animatorBody.SetFloat("LastMoveY", 1f);               
+                animatorBody.SetFloat("LastMoveY", 1f);
+                directionState = "North";
             }
             else if (movementAngle > 225 && movementAngle < 315)
             {
-                animatorBody.SetFloat("LastMoveY", -1f);                
+                animatorBody.SetFloat("LastMoveY", -1f);
+                directionState = "South";
             }
             else
             {
