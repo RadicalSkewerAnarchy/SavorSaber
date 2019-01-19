@@ -10,6 +10,7 @@ public class UtilityCurves : MonoBehaviour
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
     public AIStates aiStates = new AIStates();
     public AIStates macroValues = new AIStates();
+    private Dictionary<string, float> macroCache = new Dictionary<string, float>();
     public AIData data;
 
     // Use this for initialization
@@ -23,11 +24,12 @@ public class UtilityCurves : MonoBehaviour
     {
         //Testing code Move later
         if(Input.GetKeyDown(KeyCode.U))
-            Debug.Log("Picked state: " + decideState());
+            Debug.Log("Picked state: " + DecideState());
     }
 
-    public string decideState()
+    public string DecideState()
     {
+        macroCache.Clear();
         //Dictionary<string, float> utilityValues = new Dictionary<string, float>();
         string maxState = "";
         float max = 0;
@@ -56,6 +58,16 @@ public class UtilityCurves : MonoBehaviour
         return eva;
     }
 
+    /// <summary> Returns the macro's value from the cache if it has been calculated this frame.
+    /// Else, calculates the macro's value and caches it</summary>
+    private float GetMacroValue(string macroName)
+    {
+        Debug.Log("Calculating Macro value: " + macroName);
+        if (!macroCache.ContainsKey(macroName))
+            macroCache.Add(macroName, SumCurves(macroValues[macroName]));
+        return macroCache[macroName];
+    }
+
     private float SumCurves(CurveDict curves)
     {
         // attributes is TWICE as long as curves
@@ -77,7 +89,7 @@ public class UtilityCurves : MonoBehaviour
             c = curvePair.Value;
             key = curvePair.Key;
             // Use the Macro value if one exists, else get the value from the AI data
-            a = macroValues.ContainsKey(key) ? SumCurves(macroValues[key]) : data.getNormalizedValue(key);
+            a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
             float val = EvaluateAttribute(c, a);
             Debug.Log(curvePair.Key + " value: " + a + " weight: " + val);
             // If the value is less than 0, do not factor it in to the utility
