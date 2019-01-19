@@ -9,6 +9,7 @@ public class UtilityCurves : MonoBehaviour
 {
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
     public AIStates aiStates = new AIStates();
+    public AIStates macroValues = new AIStates();
     public AIData data;
 
     // Use this for initialization
@@ -20,7 +21,7 @@ public class UtilityCurves : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Move later
+        //Testing code Move later
         if(Input.GetKeyDown(KeyCode.U))
             Debug.Log("Picked state: " + decideState());
     }
@@ -67,18 +68,22 @@ public class UtilityCurves : MonoBehaviour
 
         // loop variables
         AnimationCurve c;
+        string key;
         float a;
 
         // extrapolate, iterate, sum
         foreach(var curvePair in curves)
         {
             c = curvePair.Value;
-            a = data.getNormalizedValue(curvePair.Key.ToLower());
+            key = curvePair.Key;
+            // Use the Macro value if one exists, else get the value from the AI data
+            a = macroValues.ContainsKey(key) ? SumCurves(macroValues[key]) : data.getNormalizedValue(key);
             float val = EvaluateAttribute(c, a);
             Debug.Log(curvePair.Key + " value: " + a + " weight: " + val);
-            if(val >= 0)
+            // If the value is less than 0, do not factor it in to the utility
+            if (val >= 0)
             {
-                sum += val;//EvaluateAttribute(c, a);
+                sum += val;
                 ++count;
             }            
         }

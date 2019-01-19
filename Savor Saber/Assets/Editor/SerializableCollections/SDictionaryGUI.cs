@@ -45,12 +45,14 @@ namespace SerializableCollections
             public static void DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, AddGUI addGUI, string title, bool oneLine = false)
             {
                 GUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField(title + ": " + dict.Count, EditorUtils.Bold, GUILayout.MaxWidth(60));
-                GUILayout.FlexibleSpace();
+                EditorGUILayout.LabelField(title + ": " + dict.Count, EditorUtils.Bold, GUILayout.MaxWidth(120));
+                GUILayout.Space(-20);
+                //GUILayout.FlexibleSpace();
                 addGUI();
                 GUILayout.EndHorizontal();
                 EditorUtils.Separator();
-                DoGUILayout(dict, valueGUI, oneLine);
+                if(dict.Count > 0)
+                    DoGUILayout(dict, valueGUI, oneLine);
 
             }
 
