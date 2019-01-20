@@ -12,7 +12,7 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Fields related to inventory visual representation
     /// </summary>
-    public Canvas canvas = null;
+    //public Canvas canvas = null;
     public int maxItemsPerSkewer = 3;
     public Image[] skewerSprites = new Image[3];
     public Sprite emptySprite;

@@ -50,7 +50,7 @@ public class PlayerMeleeAttack : MeleeAttack
 
         //Set attack data values
         meleeDamage = 1f;
-        meleeRange = 2f;
+        meleeRange = 3f;
         meleeWidth = 1f;
         attackDuration = 0.5f;
     }
@@ -182,6 +182,41 @@ public class PlayerMeleeAttack : MeleeAttack
     /// <summary>
     /// Determines which type of attack hit and apply the right effect.
     /// </summary>
+    /// 
+    #region Trigger version
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (attackType == "Knife")
+            ApplyKnifeEffect(collision);
+        else if (attackType == "Skewer")
+            ApplySkewerEffect(collision);
+    }
+
+    public void ApplyKnifeEffect(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "KnifableObject")
+        {
+            Health targetHealth = collision.gameObject.GetComponent<Health>();
+            targetHealth.Hp -= (int)meleeDamage;
+        }
+    }
+
+    public void ApplySkewerEffect(Collider2D collision)
+    {
+        Debug.Log("Applying Skewer Effect");
+        if (collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull())
+        {
+            Debug.Log("Hit skewerable object");
+            SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
+
+            inventory.AddToSkewer(targetObject.data);
+            Destroy(collision.gameObject);
+        }
+    }
+    #endregion
+
+
+    #region Collision2D version
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (attackType == "Knife")
@@ -192,16 +227,24 @@ public class PlayerMeleeAttack : MeleeAttack
 
     public void ApplyKnifeEffect(Collision2D collision)
     {
-
+        if (collision.gameObject.tag == "KnifableObject")
+        {
+            Health targetHealth = collision.gameObject.GetComponent<Health>();
+            targetHealth.Hp -= (int)meleeDamage;
+        }
     }
 
     public void ApplySkewerEffect(Collision2D collision)
     {
+        Debug.Log("Applying Skewer Effect");
         if(collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull())
         {
+            Debug.Log("Hit skewerable object");
             SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
 
             inventory.AddToSkewer(targetObject.data);
+            Destroy(collision.gameObject);
         }
     }
+    #endregion
 }
