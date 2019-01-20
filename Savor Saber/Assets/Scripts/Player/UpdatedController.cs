@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction
+public enum Direction : int
 {
     North,
     NorthEast,
@@ -27,7 +27,7 @@ public class UpdatedController : MonoBehaviour
     //////
     [SerializeField]
     [Range(100f,500f)]
-    float speed;
+    float speed = 100f;
     //////
     /*[SerializeField]
     [Range(5f, 1000f)]
@@ -101,8 +101,8 @@ public class UpdatedController : MonoBehaviour
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
 
-        animatorBody.SetFloat("SpeedX", moveHorizontal);
-        animatorBody.SetFloat("SpeedY", moveVertical);
+        //animatorBody.SetFloat("SpeedX", moveHorizontal);
+        //animatorBody.SetFloat("SpeedY", moveVertical);
         
         //calculates angle agent is moving based on right vector(1,0) and agent movementVector
         
@@ -112,41 +112,28 @@ public class UpdatedController : MonoBehaviour
         }
         if(movementVector != Vector2.zero)
         {
-            animatorBody.SetBool("Walking", true);
+            animatorBody.SetBool("Moving", true);
             if (movementAngle > 315 || movementAngle < 45)
             {
-                animatorBody.SetFloat("LastMoveX", 1f);
                 direction = Direction.East;
             }
             else if (movementAngle > 135 && movementAngle < 225)
             {
-                animatorBody.SetFloat("LastMoveX", -1F);
                 direction = Direction.West;
             }
-            else
+            else if(movementAngle > 45 && movementAngle < 135)
             {
-                animatorBody.SetFloat("LastMoveX", 0f);
-            }
-            if(movementAngle > 45 && movementAngle < 135)
-            {
-                animatorBody.SetFloat("LastMoveY", 1f);
                 direction = Direction.North;
             }
-            else if (movementAngle > 225 && movementAngle < 315)
+            else //(movementAngle > 225 && movementAngle < 315)
             {
-                animatorBody.SetFloat("LastMoveY", -1f);
                 direction = Direction.South;
             }
-            else
-            {
-                animatorBody.SetFloat("LastMoveY", 0f);
-            }
-            
-            
+            animatorBody.SetFloat("Direction", (float)direction);
         }
         else
         {
-            animatorBody.SetBool("Walking", false);
+            animatorBody.SetBool("Moving", false);
         }
         //////
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }

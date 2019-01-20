@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(UpdatedController))]
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerMeleeAttack : MeleeAttack
 {
@@ -21,6 +22,7 @@ public class PlayerMeleeAttack : MeleeAttack
     /// state we're in. This should be a component of the same GameObject.
     /// </summary>
     protected UpdatedController controller;
+    private Animator animator;
 
     /// <summary>
     /// Array of layers that the weapons should not collide with.
@@ -31,7 +33,7 @@ public class PlayerMeleeAttack : MeleeAttack
     // Start is called before the first frame update
     void Start()
     {
-
+        animator = GetComponent<Animator>();
         controller = GetComponent<UpdatedController>();
         meleeCollider = GetComponent<CapsuleCollider2D>();
 
@@ -125,10 +127,12 @@ public class PlayerMeleeAttack : MeleeAttack
     /// </summary>
     public override void Attack()
     {
+        animator.SetTrigger("Attack");
+        animator.SetTrigger(attackType);
         if (attackType == "Knife")
             AttackWithKnife();
         else if (attackType == "Skewer")
-            AttackWithSkewer();
+            AttackWithSkewer();    
     }
 
     private void AttackWithKnife()
