@@ -23,6 +23,9 @@ public class PlayerMeleeAttack : MeleeAttack
     /// </summary>
     protected UpdatedController controller;
 
+    /// <summary>
+    /// Reference to the inventory that collected objects will be added to
+    /// </summary>
     protected Inventory inventory;
 
     /// <summary>
@@ -215,8 +218,11 @@ public class PlayerMeleeAttack : MeleeAttack
     }
     #endregion
 
-
+    /// <summary>
+    /// Older version that fully collides with target. Results in some knockback, probably not ideal
+    /// </summary>
     #region Collision2D version
+    /*
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (attackType == "Knife")
@@ -246,5 +252,6 @@ public class PlayerMeleeAttack : MeleeAttack
             Destroy(collision.gameObject);
         }
     }
+    */
     #endregion
 }
