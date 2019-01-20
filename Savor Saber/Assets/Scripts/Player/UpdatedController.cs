@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum Direction : int
-{
-    North,
-    NorthEast,
+{   
     East,
-    SouthEast,
-    South,
-    SouthWest,
-    West,
+    NorthEast,
+    North,
     NorthWest,
+    West,
+    SouthWest,
+    South,
+    SouthEast,
 }
 
 
@@ -19,7 +19,7 @@ public enum Direction : int
 [RequireComponent(typeof(Animator))]
 public class UpdatedController : MonoBehaviour
 {
-    [System.NonSerialized]
+    //[System.NonSerialized]
     public Direction direction;
     //////
     [SerializeField]
@@ -28,6 +28,10 @@ public class UpdatedController : MonoBehaviour
     [SerializeField]
     [Range(100f,500f)]
     float speed = 100f;
+    //////
+    [SerializeField]
+    [Range(100f, 500f)]
+    float runSpeed = 100f;
     //////
     /*[SerializeField]
     [Range(5f, 1000f)]
@@ -53,18 +57,20 @@ public class UpdatedController : MonoBehaviour
     }
 
     void MoveAgent()
-    {   
+    {
+        bool running = Input.GetButton("Run");
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-        
+        var modSpeed = running ? runSpeed : speed;
+
         if (movementVector.magnitude > 1)
         {
-            rigidBody.velocity = (movementVector/movementVector.magnitude * speed * Time.deltaTime);
+            rigidBody.velocity = (movementVector/movementVector.magnitude * modSpeed * Time.deltaTime);
         }
         else
         {
-            rigidBody.velocity = (movementVector * speed * Time.deltaTime);
+            rigidBody.velocity = (movementVector * modSpeed * Time.deltaTime);
         }
         //////
         if (DebugBool) { Debug.Log("MoveAgent finished."); }
@@ -75,7 +81,7 @@ public class UpdatedController : MonoBehaviour
     }
 
     void StopAgent()
-    {   
+    {
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
@@ -96,44 +102,25 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
+        bool running = Input.GetButton("Run");
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
-
-        //animatorBody.SetFloat("SpeedX", moveHorizontal);
-        //animatorBody.SetFloat("SpeedY", moveVertical);
-        
-        //calculates angle agent is moving based on right vector(1,0) and agent movementVector
-        
         if (movementAngle < 0)
-        {
-            movementAngle += 360;
-        }
+            movementAngle += 360;    
         if(movementVector != Vector2.zero)
         {
             animatorBody.SetBool("Moving", true);
-            if (movementAngle > 315 || movementAngle < 45)
-            {
-                direction = Direction.East;
-            }
-            else if (movementAngle > 135 && movementAngle < 225)
-            {
-                direction = Direction.West;
-            }
-            else if(movementAngle > 45 && movementAngle < 135)
-            {
-                direction = Direction.North;
-            }
-            else //(movementAngle > 225 && movementAngle < 315)
-            {
-                direction = Direction.South;
-            }
+            animatorBody.SetBool("Running", running);
+            //calculates angle based on standard offset from East (1,0)
+            direction = Direction.East.Offset((int)(movementAngle / 45));
             animatorBody.SetFloat("Direction", (float)direction);
         }
         else
         {
             animatorBody.SetBool("Moving", false);
+            animatorBody.SetBool("Running", false);
         }
         //////
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
