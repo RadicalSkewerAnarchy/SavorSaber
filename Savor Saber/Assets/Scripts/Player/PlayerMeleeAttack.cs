@@ -77,8 +77,8 @@ public class PlayerMeleeAttack : MeleeAttack
         //Debug.Log(controller.directionState);
 
         // move melee collider and sprites into position
-        string directionState = controller.directionState;
-        if (directionState == "East" && !attacking)
+        var direction = controller.direction;
+        if (direction == Direction.East && !attacking)
         {
             meleeCollider.direction = CapsuleDirection2D.Horizontal;
             meleeCollider.size = new Vector2(meleeRange, meleeWidth);
@@ -88,7 +88,7 @@ public class PlayerMeleeAttack : MeleeAttack
             knife.transform.localPosition = new Vector3(0.5f, 0f, 0f);
             skewer.transform.eulerAngles = knife.transform.eulerAngles = new Vector3(0f, 0f, 270f);
         }
-        else if (directionState == "West" && !attacking)
+        else if (direction == Direction.West && !attacking)
         {
             meleeCollider.direction = CapsuleDirection2D.Horizontal;
             meleeCollider.size = new Vector2(meleeRange, meleeWidth);
@@ -98,7 +98,7 @@ public class PlayerMeleeAttack : MeleeAttack
             knife.transform.localPosition = new Vector3(-0.5f, 0f, 0f);
             skewer.transform.eulerAngles = knife.transform.eulerAngles = new Vector3(0f, 0f, 90f);
         }
-        else if (directionState == "North" && !attacking)
+        else if (direction == Direction.North && !attacking)
         {
             meleeCollider.direction = CapsuleDirection2D.Vertical;
             meleeCollider.size = new Vector2(meleeWidth, meleeRange);
@@ -108,7 +108,7 @@ public class PlayerMeleeAttack : MeleeAttack
             knife.transform.localPosition = new Vector3(0f, 0.5f, 0f);
             skewer.transform.eulerAngles = knife.transform.eulerAngles = new Vector3(0f, 0f, 0f);
         }
-        else if (directionState == "South" && !attacking)
+        else if (direction == Direction.South && !attacking)
         {
             meleeCollider.direction = CapsuleDirection2D.Vertical;
             meleeCollider.size = new Vector2(meleeWidth, meleeRange);
