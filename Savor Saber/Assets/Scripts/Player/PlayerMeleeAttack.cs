@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(UpdatedController))]
 [RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Inventory))]
 public class PlayerMeleeAttack : MeleeAttack
 {
 
@@ -22,6 +23,8 @@ public class PlayerMeleeAttack : MeleeAttack
     /// </summary>
     protected UpdatedController controller;
 
+    protected Inventory inventory;
+
     /// <summary>
     /// Array of layers that the weapons should not collide with.
     /// Weapon layer is 10. Terrain is 9, for example.
@@ -34,6 +37,7 @@ public class PlayerMeleeAttack : MeleeAttack
 
         controller = GetComponent<UpdatedController>();
         meleeCollider = GetComponent<CapsuleCollider2D>();
+        inventory = GetComponent<Inventory>();
 
 
         //does not currently work. 
@@ -193,6 +197,11 @@ public class PlayerMeleeAttack : MeleeAttack
 
     public void ApplySkewerEffect(Collision2D collision)
     {
+        if(collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull())
+        {
+            SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
 
+            inventory.AddToSkewer(targetObject.data);
+        }
     }
 }
