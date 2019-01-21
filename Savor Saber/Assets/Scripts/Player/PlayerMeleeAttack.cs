@@ -50,12 +50,6 @@ public class PlayerMeleeAttack : MeleeAttack
             Physics.IgnoreLayerCollision(10, layersToIgnore[i]);
         }
 
-
-        //Set attack data values
-        meleeDamage = 1f;
-        meleeRange = 3f;
-        meleeWidth = 1f;
-        attackDuration = 0.5f;
     }
 
     // Update is called once per frame
