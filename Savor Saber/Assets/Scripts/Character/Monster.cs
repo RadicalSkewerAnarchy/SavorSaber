@@ -6,7 +6,7 @@ using UnityEngine;
 /// Attatch this component to an object to make it a monster
 /// </summary>
 [RequireComponent((typeof(Collider2D)), typeof(Rigidbody2D), typeof(SpriteRenderer))]
-[RequireComponent(typeof(AudioSource), typeof(Health), typeof(DropOnDeath))]
+[RequireComponent(typeof(AudioSource), typeof(AIData), typeof(DropOnDeath))]
 public class Monster : MonoBehaviour
 {
     /// <summary>name of the monster in-game</summary>
@@ -17,9 +17,9 @@ public class Monster : MonoBehaviour
     
     private void Start()
     {
-        var health = GetComponent<Health>();
+        var data = GetComponent<AIData>();
         // Drop items and die if health is 0 or lower        
-        health.AddEvent((hp) => { if (hp <= 0) Kill(); });
+        // data.AddEvent((hp) => { if (hp <= 0) Kill(); });
     }
 
     public void Kill()
