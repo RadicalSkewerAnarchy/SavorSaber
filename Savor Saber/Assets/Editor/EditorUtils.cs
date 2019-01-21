@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using SerializableCollections;
 
 /// <summary>
 /// A static class containingsome editor methods for easy GUI utility

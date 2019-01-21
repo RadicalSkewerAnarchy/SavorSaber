@@ -2,43 +2,73 @@
 using System.Collections.Generic;
 using SerializableCollections;
 using UnityEngine;
+using System.Linq;
 
+[RequireComponent(typeof(AIData))]
 public class UtilityCurves : MonoBehaviour
 {
-
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
     public AIStates aiStates = new AIStates();
-    public AIMoods aiMoods = new AIMoods();
+    public AIStates macroValues = new AIStates();
+    private Dictionary<string, float> macroCache = new Dictionary<string, float>();
+    public AIData data;
 
     // Use this for initialization
     void Start()
     {
-        aiMoods.Add("Hostility", 0.5f);
-        aiMoods.Add("Fear", 0.5f);
-        aiMoods.Add("Hunger", 0.5f);
+        data = GetComponent<AIData>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //Testing code Move later
+        if(Input.GetKeyDown(KeyCode.U))
+            Debug.Log("Picked state: " + DecideState());
     }
 
-    private float EvaluateAttribute(AnimationCurve cur, int now, int max)
+    public string DecideState()
     {
-        // proportion of now to max
-        //      0 <= ret <= 1
-        float ret = (float)now / (float)max;
+        macroCache.Clear();
+        //Dictionary<string, float> utilityValues = new Dictionary<string, float>();
+        string maxState = "";
+        float max = 0;
+        foreach(var kvp in aiStates)
+        {
+            Debug.Log("State: " + kvp.Key);
+            //utilityValues.Add(kvp.Key, SumCurves(kvp.Value));
+            float utility = SumCurves(kvp.Value);
+            Debug.Log(kvp.Key + " utility: " + utility);
+            if (utility > max)
+            {
+                max = utility;
+                maxState = kvp.Key;
+            }          
+        }
+        return maxState;
+    }
 
+    private float EvaluateAttribute(AnimationCurve cur, float value)
+    {
         // evaluate with respect to curve
         //      example: curve = (y = x^2), ret = 0.5, eva = 0.25
-        float eva = cur.Evaluate(ret);
+        float eva = cur.Evaluate(value);
 
         // return
         return eva;
     }
 
-    private float SumCurves(AnimationCurve[] curves, int[] attributes)
+    /// <summary> Returns the macro's value from the cache if it has been calculated this frame.
+    /// Else, calculates the macro's value and caches it</summary>
+    private float GetMacroValue(string macroName)
+    {
+        Debug.Log("Calculating Macro value: " + macroName);
+        if (!macroCache.ContainsKey(macroName))
+            macroCache.Add(macroName, SumCurves(macroValues[macroName]));
+        return macroCache[macroName];
+    }
+
+    private float SumCurves(CurveDict curves)
     {
         // attributes is TWICE as long as curves
         // curves[i] ==> attributes[2i] and attributes[2i+1]
@@ -46,34 +76,36 @@ public class UtilityCurves : MonoBehaviour
 
         // return variables
         float sum = 0;
-        int len = curves.Length;
+        int count = 0;
 
         // loop variables
         AnimationCurve c;
-        int a, b;
+        string key;
+        float a;
 
         // extrapolate, iterate, sum
-        for (int i = 0; i < len; i++)
+        foreach(var curvePair in curves)
         {
-            c = curves[i];
-            a = attributes[2 * i];
-            b = attributes[(2 * i) + 1];
-            sum += EvaluateAttribute(c, a, b);
+            c = curvePair.Value;
+            key = curvePair.Key;
+            // Use the Macro value if one exists, else get the value from the AI data
+            a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
+            float val = EvaluateAttribute(c, a);
+            Debug.Log(curvePair.Key + " value: " + a + " weight: " + val);
+            // If the value is less than 0, do not factor it in to the utility
+            if (val >= 0)
+            {
+                sum += val;
+                ++count;
+            }            
         }
 
         // return the average
-        return (sum / len);
+        return count == 0 ? 0 : (sum / count);
     }
 
     [System.Serializable]
-    public class AIStates : SDictionary<string, int>
-    {
-        
-    }
-
+    public class AIStates : SDictionary<string, CurveDict> { }
     [System.Serializable]
-    public class AIMoods : SDictionary<string, float>
-    {
-        
-    }
+    public class CurveDict : SDictionary<string, AnimationCurve> { }
 }
