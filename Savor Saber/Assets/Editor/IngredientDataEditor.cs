@@ -12,7 +12,7 @@ public class IngredientDataEditor : Editor
         var ingredient = target as IngredientData;
         // Display data
         ingredient.displayName = EditorGUILayout.TextField(new GUIContent("Display Name", displayNameTooltip), ingredient.displayName);
-        ingredient.image = EditorGUILayout.ObjectField(new GUIContent("Image", "TODO: tooltip"), ingredient.image, typeof(Texture2D), false) as Texture2D;
+        ingredient.image = EditorGUILayout.ObjectField(new GUIContent("Image", "TODO: tooltip"), ingredient.image, typeof(Sprite), false) as Sprite;
         EditorUtils.Separator();
         // Gameplay data
         ingredient.flavors = (RecipeData.Flavors)EditorGUILayout.EnumFlagsField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors);

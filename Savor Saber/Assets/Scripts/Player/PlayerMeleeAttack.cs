@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(UpdatedController))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Inventory))]
 public class PlayerMeleeAttack : MeleeAttack
 {
 
@@ -25,6 +26,11 @@ public class PlayerMeleeAttack : MeleeAttack
     private Animator animator;
 
     /// <summary>
+    /// Reference to the inventory that collected objects will be added to
+    /// </summary>
+    protected Inventory inventory;
+
+    /// <summary>
     /// Array of layers that the weapons should not collide with.
     /// Weapon layer is 10. Terrain is 9, for example.
     /// </summary>
@@ -36,6 +42,7 @@ public class PlayerMeleeAttack : MeleeAttack
         animator = GetComponent<Animator>();
         controller = GetComponent<UpdatedController>();
         meleeCollider = GetComponent<CapsuleCollider2D>();
+        inventory = GetComponent<Inventory>();
 
 
         //does not currently work. 
@@ -45,12 +52,6 @@ public class PlayerMeleeAttack : MeleeAttack
             Physics.IgnoreLayerCollision(10, layersToIgnore[i]);
         }
 
-
-        //Set attack data values
-        meleeDamage = 1f;
-        meleeRange = 2f;
-        meleeWidth = 1f;
-        attackDuration = 0.5f;
     }
 
     // Update is called once per frame
@@ -182,6 +183,44 @@ public class PlayerMeleeAttack : MeleeAttack
     /// <summary>
     /// Determines which type of attack hit and apply the right effect.
     /// </summary>
+    /// 
+    #region Trigger version
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (attackType == "Knife")
+            ApplyKnifeEffect(collision);
+        else if (attackType == "Skewer")
+            ApplySkewerEffect(collision);
+    }
+
+    public void ApplyKnifeEffect(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "KnifableObject")
+        {
+            Health targetHealth = collision.gameObject.GetComponent<Health>();
+            targetHealth.Hp -= (int)meleeDamage;
+        }
+    }
+
+    public void ApplySkewerEffect(Collider2D collision)
+    {
+        Debug.Log("Applying Skewer Effect");
+        if (collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull())
+        {
+            Debug.Log("Hit skewerable object");
+            SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
+
+            inventory.AddToSkewer(targetObject.data);
+            Destroy(collision.gameObject);
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// Older version that fully collides with target. Results in some knockback, probably not ideal
+    /// </summary>
+    #region Collision2D version
+    /*
     public void OnCollisionEnter2D(Collision2D collision)
     {
         if (attackType == "Knife")
@@ -192,11 +231,25 @@ public class PlayerMeleeAttack : MeleeAttack
 
     public void ApplyKnifeEffect(Collision2D collision)
     {
-
+        if (collision.gameObject.tag == "KnifableObject")
+        {
+            Health targetHealth = collision.gameObject.GetComponent<Health>();
+            targetHealth.Hp -= (int)meleeDamage;
+        }
     }
 
     public void ApplySkewerEffect(Collision2D collision)
     {
+        Debug.Log("Applying Skewer Effect");
+        if(collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull())
+        {
+            Debug.Log("Hit skewerable object");
+            SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
 
+            inventory.AddToSkewer(targetObject.data);
+            Destroy(collision.gameObject);
+        }
     }
+    */
+    #endregion
 }
