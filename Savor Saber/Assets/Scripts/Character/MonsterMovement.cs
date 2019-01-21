@@ -9,8 +9,8 @@ public class MonsterMovement : MonoBehaviour
 {
     Rigidbody2D RigidBody;
     Animator AnimatorBody;
-    Vector2 TargetPoint = new Vector2(0, 0);
-    GameObject Target;
+    Vector2 TargetPoint;
+    //GameObject Target;
     float Speed = 0;
 
     enum Directions { East, NorthEast, North, NorthWest, West, SouthWest, South, SouthEast }
@@ -33,7 +33,8 @@ public class MonsterMovement : MonoBehaviour
 
     void MoveAgent()
     {
-        transform.position = Vector2.MoveTowards(transform.position, TargetPoint, Speed * Time.deltaTime);
+        if(TargetPoint != null)
+            transform.position = Vector2.MoveTowards(transform.position, TargetPoint, Speed * Time.deltaTime);
     }
 
     void AnimateAgent()
