@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MonsterMovement))]
 public class AIData : CharacterData
 {
     #region Moods
@@ -32,11 +33,19 @@ public class AIData : CharacterData
     #endregion
     public int currentState = (int)_states.idle;
     /// <summary> lists that may be needed for certain target positions or objects </summary>
-    List<GameObject> targets = new List<GameObject>();
+    List<GameObject> targetObjects = new List<GameObject>();
+    Vector2 targetPosition;
+    /// <summary>
+    /// Monster Movement
+    /// </summary>
+    private MonsterMovement moveMe;
     
 
     private void Start()
     {
+        moveMe = GetComponent<MonsterMovement>();
+        moveMe.UpdateSpeed(speed);
+
         _values = new Dictionary<string, GetNormalValue>()
         {
             {"Fear", () => {return fear; } },
@@ -67,6 +76,7 @@ public class AIData : CharacterData
                 // idle
                 case (int)_states.idle:
                     Debug.Log("I am Idle");
+                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
                     break;
                 // chase
                 case (int)_states.chase:
@@ -85,6 +95,15 @@ public class AIData : CharacterData
                     Debug.Log("I am Flee");
                     //  Turn Blue
                     GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
+                    if(targetPosition == null)
+                    {
+                        targetPosition = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    }
+                    else
+                    {
+                        moveMe.UpdateDirection(targetPosition);
+                    }
+                    
                     break;
                 // default
                 default:
