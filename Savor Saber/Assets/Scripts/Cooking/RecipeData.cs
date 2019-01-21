@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// A scriptable object class designed to hold the data for an ingredient
 /// </summary>
-
 [CreateAssetMenu(fileName = "newRecipe", menuName = "RecipeData")]
 public class RecipeData : ScriptableObject
 {

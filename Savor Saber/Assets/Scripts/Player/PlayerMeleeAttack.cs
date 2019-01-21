@@ -199,7 +199,16 @@ public class PlayerMeleeAttack : MeleeAttack
         {
             Health targetHealth = collision.gameObject.GetComponent<Health>();
             targetHealth.Hp -= (int)meleeDamage;
+
+            CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
+            if(characterData != null)
+            {
+                characterData.health -= (int)meleeDamage;
+            }
         }
+
+
+
     }
 
     public void ApplySkewerEffect(Collider2D collision)
