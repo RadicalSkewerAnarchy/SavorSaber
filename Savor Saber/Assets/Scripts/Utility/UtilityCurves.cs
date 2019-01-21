@@ -26,7 +26,7 @@ public class UtilityCurves : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
             string state = DecideState();
-            Debug.Log("=====> Picked state: " + state);
+            Debug.Log("=====>> Picked state: " + state);
             data.currentState = data._translation[state];
         }
 
@@ -43,7 +43,7 @@ public class UtilityCurves : MonoBehaviour
         float max = 0;
         foreach(var kvp in aiStates)
         {
-            Debug.Log(">>> " + kvp.Key);
+            Debug.Log("=== " + kvp.Key);
             float utility = SumCurves(kvp.Value);
             Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
             if (utility > max)

@@ -71,14 +71,20 @@ public class AIData : CharacterData
                 // chase
                 case (int)_states.chase:
                     Debug.Log("I am Chase");
+                    // Turn Green
+                    GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
                     break;
                 // attack
                 case (int)_states.attack:
                     Debug.Log("I am Attack");
+                    // Turn Red
+                    GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
                     break;
                 // flee
                 case (int)_states.flee:
                     Debug.Log("I am Flee");
+                    //  Turn Blue
+                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
                     break;
                 // default
                 default:
