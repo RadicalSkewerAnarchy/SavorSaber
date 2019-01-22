@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour {
     /// Fields related to cooking
     /// </summary>
     public GameObject recipeDatabaseObject;
-    public RecipeDatabase recipeDatabase;
+    private RecipeDatabase recipeDatabase;
 
     #endregion
 
