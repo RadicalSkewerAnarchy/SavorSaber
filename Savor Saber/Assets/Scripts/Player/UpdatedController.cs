@@ -19,8 +19,15 @@ public enum Direction : int
 [RequireComponent(typeof(Animator))]
 public class UpdatedController : MonoBehaviour
 {
-    //[System.NonSerialized]
+    [System.NonSerialized]
     public Direction direction;
+    //////
+    [System.NonSerialized]
+    [Range(0f, 1f)]
+    public float speedMod = 1f;
+    //////
+    [System.NonSerialized]
+    public bool freezeDirection = false;
     //////
     [SerializeField]
     bool DebugBool = false;
@@ -62,7 +69,7 @@ public class UpdatedController : MonoBehaviour
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-        var modSpeed = running ? runSpeed : speed;
+        var modSpeed = (running ? runSpeed : speed) * speedMod;
 
         if (movementVector.magnitude > 1)
         {
@@ -106,16 +113,20 @@ public class UpdatedController : MonoBehaviour
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-        var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
-        if (movementAngle < 0)
-            movementAngle += 360;    
+  
         if(movementVector != Vector2.zero)
         {
             animatorBody.SetBool("Moving", true);
             animatorBody.SetBool("Running", running);
             //calculates angle based on standard offset from East (1,0)
-            direction = Direction.East.Offset((int)(movementAngle / 45));
-            animatorBody.SetFloat("Direction", (float)direction);
+            if (!freezeDirection)
+            {
+                var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
+                if (movementAngle < 0)
+                    movementAngle += 360;
+                direction = Direction.East.Offset((int)(movementAngle / 45));
+                animatorBody.SetFloat("Direction", (float)direction);
+            }
         }
         else
         {
@@ -125,6 +136,11 @@ public class UpdatedController : MonoBehaviour
         //////
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
         //////
+    }
+
+    public void Slow()
+    {
+
     }
 }
 
