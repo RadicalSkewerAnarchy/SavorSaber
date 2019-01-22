@@ -23,22 +23,29 @@ public class UtilityCurves : MonoBehaviour
     void Update()
     {
         //Testing code Move later
-        if(Input.GetKeyDown(KeyCode.U))
-            Debug.Log("Picked state: " + DecideState());
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            string state = DecideState();
+            Debug.Log("=====>> Picked state: " + state);
+            data.currentState = data._translation[state];
+        }
+
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns> a string representing a key to the enum state in AIData </returns>
     public string DecideState()
     {
         macroCache.Clear();
-        //Dictionary<string, float> utilityValues = new Dictionary<string, float>();
         string maxState = "";
         float max = 0;
         foreach(var kvp in aiStates)
         {
-            Debug.Log("State: " + kvp.Key);
-            //utilityValues.Add(kvp.Key, SumCurves(kvp.Value));
+            Debug.Log("=== " + kvp.Key);
             float utility = SumCurves(kvp.Value);
-            Debug.Log(kvp.Key + " utility: " + utility);
+            Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
             if (utility > max)
             {
                 max = utility;
@@ -91,7 +98,7 @@ public class UtilityCurves : MonoBehaviour
             // Use the Macro value if one exists, else get the value from the AI data
             a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
             float val = EvaluateAttribute(c, a);
-            Debug.Log(curvePair.Key + " value: " + a + " weight: " + val);
+            Debug.Log(">>>>>>" + curvePair.Key + " value: " + a + " weight: " + val);
             // If the value is less than 0, do not factor it in to the utility
             if (val >= 0)
             {

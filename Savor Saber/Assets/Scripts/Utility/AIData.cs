@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MonsterMovement))]
 public class AIData : CharacterData
 {
     #region Moods
+    [Range(0f,1f)]
     public float fear;
+    [Range(0f, 1f)]
     public float hunger;
+    [Range(0f, 1f)]
     public float hostility;
+    [Range(0f, 1f)]
     public float friendliness;
     #endregion
     /// <summary> A delegate that returns a float between 0 and 1 </summary>
@@ -15,8 +20,32 @@ public class AIData : CharacterData
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
     private Dictionary<string, GetNormalValue> _values;
 
+    #region States
+    /// <summary> my current state </summary>
+    public enum _states : int
+    {
+        idle = 0,
+        chase = 1,
+        attack = 2,
+        flee = 3
+    }
+    public Dictionary<string, int> _translation;
+    #endregion
+    public int currentState = (int)_states.idle;
+    /// <summary> lists that may be needed for certain target positions or objects </summary>
+    List<GameObject> targetObjects = new List<GameObject>();
+    Vector2 targetPosition;
+    /// <summary>
+    /// Monster Movement
+    /// </summary>
+    private MonsterMovement moveMe;
+    
+
     private void Start()
     {
+        moveMe = GetComponent<MonsterMovement>();
+        moveMe.UpdateSpeed(speed);
+
         _values = new Dictionary<string, GetNormalValue>()
         {
             {"Fear", () => {return fear; } },
@@ -27,6 +56,61 @@ public class AIData : CharacterData
             {"FireDistance", () => {return 1; } }, //DEBUG
             {"Health", () => {return Normal(health, maxHealth); } }
         };
+
+        _translation = new Dictionary<string, int>();
+        _translation.Add("Idle",   (int)_states.idle);
+        _translation.Add("Chase",  (int)_states.chase);
+        _translation.Add("Attack", (int)_states.attack);
+        _translation.Add("Flee",   (int)_states.flee);
+    }
+
+    private void Update()
+    {
+        // check current state
+        // acquire necessary data
+        // act on current state
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            switch (currentState)
+            {
+                // idle
+                case (int)_states.idle:
+                    Debug.Log("I am Idle");
+                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+                    break;
+                // chase
+                case (int)_states.chase:
+                    Debug.Log("I am Chase");
+                    // Turn Green
+                    GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+                    break;
+                // attack
+                case (int)_states.attack:
+                    Debug.Log("I am Attack");
+                    // Turn Red
+                    GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+                    break;
+                // flee
+                case (int)_states.flee:
+                    Debug.Log("I am Flee");
+                    //  Turn Blue
+                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
+                    if(targetPosition == null)
+                    {
+                        targetPosition = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+                    }
+                    else
+                    {
+                        moveMe.UpdateDirection(targetPosition);
+                    }
+                    
+                    break;
+                // default
+                default:
+                    Debug.Log("YOU SHOULD NEVER BE HERE!");
+                    break;
+            }
+        }
     }
 
     public float Normal(int now, int max)
