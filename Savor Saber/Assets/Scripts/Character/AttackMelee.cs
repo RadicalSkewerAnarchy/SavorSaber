@@ -25,6 +25,12 @@ public class AttackMelee : MonoBehaviour
     protected CapsuleDirection2D attackCapsuleDirection;
 
     /// <summary>
+    /// how much to rotate the attack capsule
+    /// Needed for diagonal attack
+    /// </summary>
+    protected float attackCapsuleRotation;
+
+    /// <summary>
     /// where the attack collider will be spawned
     /// </summary>
     protected Vector2 attackSpawnPoint;
@@ -110,27 +116,57 @@ public class AttackMelee : MonoBehaviour
         if (direction == Direction.East && !attacking)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y);
         }
         else if (direction == Direction.West && !attacking)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y);
         }
         else if (direction == Direction.North && !attacking)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y + (meleeRange / 2f));
         }
         else if (direction == Direction.South && !attacking)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y - (meleeRange / 2f));
+        }
+        //intermediate directions
+        else if (direction == Direction.NorthWest && !attacking)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = -45f;
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
+        }
+        else if (direction == Direction.NorthEast && !attacking)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 45f;
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
+        }
+        else if (direction == Direction.SouthWest && !attacking)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 45f;
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y - (meleeRange / 2f));
+        }
+        else if (direction == Direction.SouthEast && !attacking)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = -45f;
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y - (meleeRange / 2f));
         }
     }
 
     public virtual void Attack()
     {
+
 
         //animation stuff
         animator.SetTrigger("Attack");
@@ -140,7 +176,10 @@ public class AttackMelee : MonoBehaviour
         attacking = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+
+        Debug.Log(attackCapsuleRotation);
         newAttackCollider.direction = attackCapsuleDirection;
+        newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
 
         if(newAttackCollider.direction == CapsuleDirection2D.Horizontal)
         {
@@ -164,7 +203,7 @@ public class AttackMelee : MonoBehaviour
         yield return new WaitForSeconds(time);
         attacking = false;
 
-        Destroy(newAttack);
+        //Destroy(newAttack);
 
         yield return null;
     }

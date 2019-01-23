@@ -38,7 +38,10 @@ public class AttackMeleeSkewer : AttackMelee
         attacking = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+
+        Debug.Log(attackCapsuleRotation);
         newAttackCollider.direction = attackCapsuleDirection;
+        newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
 
         //send inventory reference
         PlayerSkewerAttack skewerAttack = newAttack.GetComponent<PlayerSkewerAttack>();
