@@ -203,7 +203,7 @@ public class AttackMelee : MonoBehaviour
         yield return new WaitForSeconds(time);
         attacking = false;
 
-        //Destroy(newAttack);
+        Destroy(newAttack);
 
         yield return null;
     }
