@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MonsterMovement))]
+[RequireComponent(typeof(MonsterBehavior))]
 public class AIData : CharacterData
 {
     #region Moods
@@ -38,15 +38,19 @@ public class AIData : CharacterData
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
     /// <summary>
-    /// Monster Movement
+    /// Monster Behavior
     /// </summary>
-    private MonsterMovement moveMe;
-    
+    private MonsterBehavior Protocol;
+    /// <summary>
+    /// Variables to be used for calling MonsterBehaviors
+    /// </summary>
+    float Speed = 1;
+    Vector2 Target;
 
     private void Start()
     {
-        moveMe = GetComponent<MonsterMovement>();
-        moveMe.UpdateSpeed(speed);
+        Protocol = GetComponent<MonsterBehavior>();
+        //Protocol.UpdateSpeed(speed);
 
         _values = new Dictionary<string, GetNormalValue>()
         {
@@ -71,37 +75,21 @@ public class AIData : CharacterData
             {
                 // idle
                 case State.Idle:
-                    Debug.Log("I am Idle");
-                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+                    Protocol.Idle();
                     break;
                 // chase
                 case State.Chase:
-                    Debug.Log("I am Chase");
-                    // Turn Green
-                    GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+                    Protocol.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
                 // attack
                 case State.Attack:
-                    Debug.Log("I am Attack");
-                    // Turn Red
-                    GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+                    Protocol.Attack(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
                 // flee
                 case State.Flee:
-                    Debug.Log("I am Flee");
-                    //  Turn Blue
-                    GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
-                    if(targetPosition == null)
-                    {
-                        targetPosition = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-                    }
-                    else
-                    {
-                        moveMe.UpdateDirection(targetPosition);
-                    }
-                    
+                    Protocol.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
-                // default
+                    // default
                 default:
                     Debug.Log("YOU SHOULD NEVER BE HERE!");
                     break;
