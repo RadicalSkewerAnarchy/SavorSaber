@@ -9,7 +9,7 @@ public class UtilityCurves : MonoBehaviour
 {
     public AnimationCurve curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
     public AIStates aiStates = new AIStates();
-    public AIStates macroValues = new AIStates();
+    public MacroDict macroValues = new MacroDict();
     private Dictionary<string, float> macroCache = new Dictionary<string, float>();
     public AIData data;
 
@@ -25,9 +25,9 @@ public class UtilityCurves : MonoBehaviour
         //Testing code Move later
         if (Input.GetKeyDown(KeyCode.U))
         {
-            string state = DecideState();
+            AIData.State state = DecideState();
             Debug.Log("=====>> Picked state: " + state);
-            data.currentState = data._translation[state];
+            data.currentState = state;
         }
 
     }
@@ -36,10 +36,10 @@ public class UtilityCurves : MonoBehaviour
     /// 
     /// </summary>
     /// <returns> a string representing a key to the enum state in AIData </returns>
-    public string DecideState()
+    public AIData.State DecideState()
     {
         macroCache.Clear();
-        string maxState = "";
+        AIData.State maxState = AIData.State.Idle;
         float max = 0;
         foreach(var kvp in aiStates)
         {
@@ -112,7 +112,9 @@ public class UtilityCurves : MonoBehaviour
     }
 
     [System.Serializable]
-    public class AIStates : SDictionary<string, CurveDict> { }
+    public class AIStates : SDictionary<AIData.State, CurveDict> { }
+    [System.Serializable]
+    public class MacroDict : SDictionary<string, CurveDict> { }
     [System.Serializable]
     public class CurveDict : SDictionary<string, AnimationCurve> { }
 }

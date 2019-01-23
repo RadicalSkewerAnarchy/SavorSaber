@@ -24,14 +24,16 @@ public class AIData : CharacterData
     /// <summary> my current state </summary>
     public enum State
     {
-        idle,
-        chase,
-        attack,
-        flee
+        Idle,
+        Chase,
+        Attack,
+        Flee,
+        Custom1,
+        Custom2,
     }
     public Dictionary<string, int> _translation;
     #endregion
-    public State currentState = State.idle;
+    public State currentState = State.Idle;
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
@@ -68,24 +70,24 @@ public class AIData : CharacterData
             switch (currentState)
             {
                 // idle
-                case State.idle:
+                case State.Idle:
                     Debug.Log("I am Idle");
                     GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
                     break;
                 // chase
-                case State.chase:
+                case State.Chase:
                     Debug.Log("I am Chase");
                     // Turn Green
                     GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
                     break;
                 // attack
-                case State.attack:
+                case State.Attack:
                     Debug.Log("I am Attack");
                     // Turn Red
                     GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
                     break;
                 // flee
-                case State.flee:
+                case State.Flee:
                     Debug.Log("I am Flee");
                     //  Turn Blue
                     GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
