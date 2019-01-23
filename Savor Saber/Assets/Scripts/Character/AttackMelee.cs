@@ -17,7 +17,17 @@ public class AttackMelee : MonoBehaviour
     protected UpdatedController playerController;
     protected MonsterMovement monsterController;
 
-    private Animator animator;
+    protected Animator animator;
+
+    /// <summary>
+    /// The collider orientation for the melee attack.
+    /// </summary>
+    protected CapsuleDirection2D attackCapsuleDirection;
+
+    /// <summary>
+    /// where the attack collider will be spawned
+    /// </summary>
+    protected Vector2 attackSpawnPoint;
 
     /// <summary>
     /// field for the attack prefab to be spawned when attacking
@@ -25,20 +35,9 @@ public class AttackMelee : MonoBehaviour
     public GameObject attack;
 
     /// <summary>
-    /// The collider orientation for the melee attack.
+    /// The name of the attack, used to determine animation states
     /// </summary>
-    private CapsuleDirection2D capsuleDirection;
-
-    /// <summary>
-    /// where the attack collider will be spawned
-    /// </summary>
-    private Vector2 attackSpawnPoint;
-
-    /// <summary>
-    /// How much damage the attack does. Currently a float in case we want.
-    /// finer damage values?
-    /// </summary>
-    public float meleeDamage = 1f;
+    public string attackName;
 
     /// <summary>
     /// Number of units in front of the character this attack can reach.
@@ -51,9 +50,12 @@ public class AttackMelee : MonoBehaviour
     public float meleeWidth = 1f;
 
     /// <summary>
-    /// How many seconds the collider will remain active.
+    /// How many seconds the attack will remain active.
     /// </summary>
     public float attackDuration = 0.5f;
+
+    //what input axis, if any, should be accepted to trigger this attack
+    public string inputAxis;
 
     /// <summary>
     /// To prevent attack action while still attacking.
@@ -79,6 +81,10 @@ public class AttackMelee : MonoBehaviour
     void Update()
     {
         RecalculatePosition();
+        if (Input.GetButtonDown(inputAxis) && !attacking)
+        {
+            Attack();
+        }
     }
 
     /// <summary>
@@ -86,7 +92,6 @@ public class AttackMelee : MonoBehaviour
     /// </summary>
     private void RecalculatePosition()
     {
-        //Debug.Log(controller.directionState);
         Direction direction;
 
         //get direction from whichever controller component this entity has
@@ -99,45 +104,67 @@ public class AttackMelee : MonoBehaviour
             direction = monsterController.direction;
         }
 
+        //Debug.Log(direction);
+
         // move spawn point into position
         if (direction == Direction.East && !attacking)
         {
-            capsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y);
         }
         else if (direction == Direction.West && !attacking)
         {
-            capsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y);
         }
         else if (direction == Direction.North && !attacking)
         {
-            capsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y + (meleeRange / 2f));
         }
         else if (direction == Direction.South && !attacking)
         {
-            capsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y - (meleeRange / 2f));
         }
     }
 
     public virtual void Attack()
     {
+
+        //animation stuff
+        animator.SetTrigger("Attack");
+        animator.SetTrigger(attackName);
+
+        //spawn the attack at the spawn point and give it its dimensions
         attacking = true;
-        Instantiate(attack, attackSpawnPoint, Quaternion.identity);
-        StartCoroutine(EndAttackAfterSeconds(attackDuration));
+        GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
+        CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+        newAttackCollider.direction = attackCapsuleDirection;
+
+        if(newAttackCollider.direction == CapsuleDirection2D.Horizontal)
+        {
+            newAttackCollider.size = new Vector2(meleeRange, meleeWidth);
+        }
+        else
+        {
+            newAttackCollider.size = new Vector2(meleeWidth, meleeRange);
+        }
+
+        StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack));
     }
 
     /// <summary>
     /// Disables the attacking state after the attack duration has elapsed.
     /// Despawning the attack will be handled by the attack itself
     /// </summary>
-    IEnumerator EndAttackAfterSeconds(float time)
+    protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack)
     {
         endSignalSent = true;
         yield return new WaitForSeconds(time);
         attacking = false;
+
+        Destroy(newAttack);
 
         yield return null;
     }
