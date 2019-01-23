@@ -5,7 +5,7 @@ using UnityEngine;
 /// ONLY REQUIRE FOR DEBUGGING OR HARDCODED ABSTRACT BehaviorS
 /// </summary>
 //[RequireComponent(typeof(MonsterBehavior))]
-[RequireComponent(typeof(MonsterBehaviors))]
+[RequireComponent(typeof(MonsterBehavior))]
 
 public class AIData : CharacterData
 {
