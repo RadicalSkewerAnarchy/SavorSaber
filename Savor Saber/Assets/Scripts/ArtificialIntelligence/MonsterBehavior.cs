@@ -39,7 +39,7 @@ public class MonsterBehavior : MonoBehaviour
         Debug.Log("I am Flee");
         //  Turn Blue
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
-        transform.position = -Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
 
     }
 
