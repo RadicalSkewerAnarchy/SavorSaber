@@ -1,8 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+/// <summary>
+/// ONLY REQUIRE FOR DEBUGGING OR HARDCODED ABSTRACT BehaviorS
+/// </summary>
+//[RequireComponent(typeof(MonsterBehavior))]
+[RequireComponent(typeof(MonsterBehaviors))]
 
-[RequireComponent(typeof(MonsterBehavior))]
 public class AIData : CharacterData
 {
     #region Moods
@@ -38,9 +42,10 @@ public class AIData : CharacterData
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
     /// <summary>
-    /// Monster Behavior
+    /// Monster Behavior, Monster Protocol
     /// </summary>
-    private MonsterBehavior Protocol;
+    private MonsterBehavior Behavior;
+    private MonsterProtocols Protocol;
     /// <summary>
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
@@ -49,8 +54,9 @@ public class AIData : CharacterData
 
     private void Start()
     {
-        Protocol = GetComponent<MonsterBehavior>();
-        //Protocol.UpdateSpeed(speed);
+        Behavior = GetComponent<MonsterBehavior>();
+        Protocol = GetComponent<MonsterProtocols>();
+        //Behavior.UpdateSpeed(speed);
 
         _values = new Dictionary<string, GetNormalValue>()
         {
@@ -69,25 +75,29 @@ public class AIData : CharacterData
         // check current state
         // acquire necessary data
         // act on current state
+        /*** IMPORTANT: Currently states call behaviors directly for ease of debugging and setting them up,
+        *               this should be changed so they only call protocols. EXCEPTION: Hard coded abstract
+        *               protocol
+        ***/
         if (Input.GetKeyDown(KeyCode.U))
         {
             switch (currentState)
             {
                 // idle
                 case State.Idle:
-                    Protocol.Idle();
+                    Behavior.Idle();
                     break;
                 // chase
                 case State.Chase:
-                    Protocol.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                    Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
                 // attack
                 case State.Attack:
-                    Protocol.Attack(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                    Behavior.Attack(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
                 // flee
                 case State.Flee:
-                    Protocol.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                    Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
                     // default
                 default:
