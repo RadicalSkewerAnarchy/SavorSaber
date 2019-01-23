@@ -22,16 +22,16 @@ public class AIData : CharacterData
 
     #region States
     /// <summary> my current state </summary>
-    public enum _states : int
+    public enum State
     {
-        idle = 0,
-        chase = 1,
-        attack = 2,
-        flee = 3
+        idle,
+        chase,
+        attack,
+        flee
     }
     public Dictionary<string, int> _translation;
     #endregion
-    public int currentState = (int)_states.idle;
+    public State currentState = State.idle;
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
@@ -56,12 +56,6 @@ public class AIData : CharacterData
             {"FireDistance", () => {return 1; } }, //DEBUG
             {"Health", () => {return Normal(health, maxHealth); } }
         };
-
-        _translation = new Dictionary<string, int>();
-        _translation.Add("Idle",   (int)_states.idle);
-        _translation.Add("Chase",  (int)_states.chase);
-        _translation.Add("Attack", (int)_states.attack);
-        _translation.Add("Flee",   (int)_states.flee);
     }
 
     private void Update()
@@ -74,24 +68,24 @@ public class AIData : CharacterData
             switch (currentState)
             {
                 // idle
-                case (int)_states.idle:
+                case State.idle:
                     Debug.Log("I am Idle");
                     GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
                     break;
                 // chase
-                case (int)_states.chase:
+                case State.chase:
                     Debug.Log("I am Chase");
                     // Turn Green
                     GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
                     break;
                 // attack
-                case (int)_states.attack:
+                case State.attack:
                     Debug.Log("I am Attack");
                     // Turn Red
                     GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
                     break;
                 // flee
-                case (int)_states.flee:
+                case State.flee:
                     Debug.Log("I am Flee");
                     //  Turn Blue
                     GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
