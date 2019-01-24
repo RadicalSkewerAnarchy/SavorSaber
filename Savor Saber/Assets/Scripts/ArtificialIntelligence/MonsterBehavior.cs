@@ -100,7 +100,7 @@ public class MonsterBehavior : MonoBehaviour
     public bool Socialize(Vector2 target, float speed)
     {
         LoopAnimation("Socialize");
-        return true
+        return true;
     }
 
     public void TriggerAnimation(string name)
