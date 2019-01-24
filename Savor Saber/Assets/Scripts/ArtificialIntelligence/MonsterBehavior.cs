@@ -10,6 +10,13 @@ public class MonsterBehavior : MonoBehaviour
     Rigidbody2D RigidBody;
     Animator AnimatorBody;
     AIData AiData;
+
+    // Some behaviors go for a certain amount of time.
+    // timer is complete when < 0
+    public float ActionTimer;
+    public float ActionTimerReset;
+    public float ActionTimerVariance;
+
     /// <summary>
     /// moved to AIData
     /// </summary>    
@@ -19,6 +26,10 @@ public class MonsterBehavior : MonoBehaviour
     {
         AiData = GetComponent<AIData>();
         RigidBody = GetComponent<Rigidbody2D>();
+
+        ActionTimer = -1f;
+        ActionTimerReset = 5f;
+        ActionTimerVariance = 2f;
     }
 
     /// <summary>
@@ -28,14 +39,24 @@ public class MonsterBehavior : MonoBehaviour
 
     public bool Idle()
     {
-        Debug.Log("I am Idle");
-        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
-        return true;
+        //Debug.Log("I am Idle");
+        Debug.Log(ActionTimer);
+        GetComponent<SpriteRenderer>().color = new Color(255,255,255);
+        // if done being idle, reset and return true
+        if (ActionTimer < 0)
+        {
+            return true;
+        }
+        else
+        {
+            ActionTimer -= Time.deltaTime;
+            return false;
+        }
     }
 
     public bool MoveTo(Vector2 target, float speed)
     {
-        Debug.Log("I am Chase at " + speed + "mph");
+        //Debug.Log("I am Chase at " + speed + "mph");
         // Turn Green
         GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -44,7 +65,7 @@ public class MonsterBehavior : MonoBehaviour
 
     public bool MoveFrom(Vector2 target, float speed)
     {
-        Debug.Log("I am Flee");
+        //Debug.Log("I am Flee");
         //  Turn Blue
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
         transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
@@ -58,7 +79,7 @@ public class MonsterBehavior : MonoBehaviour
 
     public bool Attack(Vector2 target, float speed)
     {
-        Debug.Log("I am Attack");
+        //Debug.Log("I am Attack");
         // Turn Red
         GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
