@@ -23,7 +23,7 @@ public class UtilityCurves : MonoBehaviour
     void Update()
     {
         //Testing code Move later
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             AIData.State state = DecideState();
             Debug.Log("=====>> Picked state: " + state);
