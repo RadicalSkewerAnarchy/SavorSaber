@@ -53,6 +53,7 @@ public class RecipeData : ScriptableObject
     /// </summary>
     public Flavors[] flavors = new Flavors[3];
 
+    #region stats
     /// <summary>
     /// Radius of circle in which to apply effects
     /// </summary>
@@ -94,6 +95,7 @@ public class RecipeData : ScriptableObject
     /// </summary>
     [Range(0f, 10f)]
     public float knockbackForce = 0f;
+    #endregion
 
     /// <summary>
     /// Code for what happens when player eats this cooked recipe

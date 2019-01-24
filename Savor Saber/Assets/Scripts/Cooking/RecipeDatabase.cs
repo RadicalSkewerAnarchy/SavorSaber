@@ -22,13 +22,6 @@ public class RecipeDatabase : MonoBehaviour
     /// </summary>
     public RecipeData CompareToRecipes(Stack<IngredientData> currentSkewer)
     {
-        //for each element of recipes array
-            // for each flavor in that recipe
-                // is that flavor present in currentSkewer? If yes, continue to see if 
-                // it's a full match. If not, check the next recipe
-                // if you get to the end of a recipe with no flavors missing on the skewer,
-                // it's a match, so return this recipe 
-        // else return null
 
         IngredientData[] ingredientArray = currentSkewer.ToArray();
         IngredientData[] ingredientArrayCopy = ingredientArray;
@@ -43,22 +36,30 @@ public class RecipeDatabase : MonoBehaviour
             recipeLookupFailed = false;
             ingredientArray = ingredientArrayCopy;
 
+            Debug.Log("Checking recipe: " + currentRecipe.displayName);
+
             //iterate over each flavor of the current recipe 
-            for(int f = 0; f < currentRecipe.flavors.Length; f++)
+            for(int currentFlavor = 0; currentFlavor < currentRecipe.flavors.Length; currentFlavor++)
             {
+
                 //If we failed to find the last ingredient, abandon this recipe and try the next
                 if (recipeLookupFailed)
                 {
+                    Debug.Log("Ingredient missing, recipe failed. Try next.");
                     break;
                 }
+
+                Debug.Log("Checking for presence of flavor " + currentRecipe.flavors[currentFlavor]);
+
                 //iterate over each ingredient on the active skewer
-                for(int s = 0; s < ingredientArray.Length; s++)
+                for (int currentIngredient = 0; currentIngredient < ingredientArray.Length; currentIngredient++)
                 {
+                    Debug.Log("Scanning ingredient " + currentIngredient + " of active skewer");
                     //if the flavor of the current ingredient matches the recipe flavor currently being tested...
-                    if((ingredientArray[s].flavors & currentRecipe.flavors[f]) > 0)
+                    if((ingredientArray[currentIngredient] == null ? 0 : ingredientArray[currentIngredient].flavors & currentRecipe.flavors[currentFlavor]) > 0)
                     {
                         //this flavor is on the skewer, so continue but remove it from the skewer so it isn't counted twice
-                        ingredientArray[s] = null;
+                        ingredientArray[currentIngredient] = null;
                         numberOfMatches++;
                         recipeLookupFailed = false;
 
@@ -70,10 +71,15 @@ public class RecipeDatabase : MonoBehaviour
                 
             }
             //if you got here without failing, the recipe is a match, so return it
-            if(!recipeLookupFailed) return currentRecipe;
+            if (!recipeLookupFailed)
+            {
+                Debug.Log("found recipe match: " + currentRecipe.displayName);
+                return currentRecipe;
+            }
         }
 
         //if you get through all the recipes without a match, return null
+        Debug.Log("No matches found");
         return null;
     }
 

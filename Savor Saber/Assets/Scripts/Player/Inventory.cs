@@ -90,6 +90,14 @@ public class Inventory : MonoBehaviour {
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            LongCook();
+        }
+    }
+
     /// <summary>
     /// Returns true if the active skewer is full
     /// </summary>
@@ -134,6 +142,7 @@ public class Inventory : MonoBehaviour {
     public void ClearActiveSkewer()
     {
         quiver[activeSkewer].Clear();
+        UpdateSkewerVisual();
     }
 
     /// <summary>
@@ -172,6 +181,7 @@ public class Inventory : MonoBehaviour {
         if(cookedRecipe != null)
         {
             quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            ClearActiveSkewer();
         }
 
     }
