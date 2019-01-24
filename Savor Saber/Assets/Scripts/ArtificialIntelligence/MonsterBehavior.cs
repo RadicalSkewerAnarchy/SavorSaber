@@ -18,46 +18,55 @@ public class MonsterBehavior : MonoBehaviour
     private void Start()
     {
         AiData = GetComponent<AIData>();
+        RigidBody = GetComponent<Rigidbody2D>();
     }
 
-    public void Idle()
+    /// <summary>
+    /// These actions return a Boolean to verify their completion.
+    /// These actions may modify the agents position.
+    /// </summary>
+
+    public bool Idle()
     {
         Debug.Log("I am Idle");
-        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);        
+        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
+        return true;
     }
 
-    public void MoveTo(Vector2 target, float speed)
+    public bool MoveTo(Vector2 target, float speed)
     {
         Debug.Log("I am Chase at " + speed + "mph");
         // Turn Green
         GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        return true;
     }
 
-    public void MoveFrom(Vector2 target, float speed)
+    public bool MoveFrom(Vector2 target, float speed)
     {
         Debug.Log("I am Flee");
         //  Turn Blue
         GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
         transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
-
+        return true;
     }
 
-    public void Feed(Vector2 target, float speed)
+    public bool Feed(Vector2 target, float speed)
     {
-
+        return true;
     }
 
-    public void Attack(Vector2 target, float speed)
+    public bool Attack(Vector2 target, float speed)
     {
         Debug.Log("I am Attack");
         // Turn Red
         GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        return true;
     }
 
-    public void Socialize(Vector2 target, float speed)
+    public bool Socialize(Vector2 target, float speed)
     {
-
+        return true;
     }
 }

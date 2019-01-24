@@ -17,6 +17,23 @@ public class MonsterProtocols : MonoBehaviour
     {
         Behaviour = GetComponent<MonsterBehavior>();
     }
+
+    /// <summary>
+    /// Every Behavior that is part of the protocol
+    /// chain returns a boolean, 
+    /// thus, they may be chained to create an order of operations
+    /// Each protocol is of the format:
+    ///     void X()
+    ///     {
+    ///         if (Behavior){
+    ///             if (Behavior)
+    ///             {
+    ///                 ...
+    ///             }
+    ///         }
+    ///     }
+    /// </summary>
+
     void Melee()
     {
         
