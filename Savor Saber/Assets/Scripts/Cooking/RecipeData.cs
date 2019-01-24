@@ -107,7 +107,7 @@ public class RecipeData : ScriptableObject
     /// <summary>
     /// Code for what happens when this recipe is thrown at a target
     /// </summary>
-    public void ApplyEffectToTarget()
+    public void ApplyEffectToTarget(GameObject target)
     {
         // take in the target that was hit as an argument
         // if an effect's value is >0, call that monster's corresponding function

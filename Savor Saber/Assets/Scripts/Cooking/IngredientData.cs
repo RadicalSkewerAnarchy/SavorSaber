@@ -12,7 +12,7 @@ public class IngredientData : ScriptableObject
     /// <summary>The name of the ingredient in game</summary>
     public string displayName;
     /// <summary>The image of the ingredient in the inventory</summary>
-    public Texture2D image;
+    public Sprite image;
     /// <summary>The categories of ingredient this ingredient fits into (flags)</summary>
     public RecipeData.Flavors flavors;
 }

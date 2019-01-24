@@ -35,4 +35,18 @@ public static class EnumUtils
         int i = Array.IndexOf(Arr, e) - 1;
         return (i == -1) ? Arr[Arr.Length - 1] : Arr[i];
     }
+
+    /// <summary> Extension method to all enums. 
+    /// gets the value ahead/behind of the given value by offset places
+    /// Wraps around to the end if this is the first element </summary>
+    public static T Offset<T>(this T e, int offset) where T : Enum
+    {
+        var Arr = (T[])Enum.GetValues(typeof(T));
+        int i = (Array.IndexOf(Arr, e) + offset);
+        if (i >= Arr.Length)
+            return Arr[i % Arr.Length];
+        if (i < 0)
+            return Arr[Arr.Length + (i % Arr.Length)];
+        return Arr[i];
+    }
 }

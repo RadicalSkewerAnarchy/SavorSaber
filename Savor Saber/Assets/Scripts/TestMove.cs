@@ -5,17 +5,23 @@ using UnityEngine;
 public class TestMove : MonoBehaviour
 {
     public float translateSpeed = 0.25f;
+    public float speed = 4;
+
+    private Vector3 direction;
 
     // Update is called once per frame
     void Update()
     {
+        direction = Vector3.zero;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            transform.Translate(new Vector3(translateSpeed, 0));
+            direction.x = 1;
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            transform.Translate(new Vector3(-translateSpeed, 0));
+            direction.x = -1;
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            transform.Translate(new Vector3(0, translateSpeed));
+            direction.y = 1;
         if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            transform.Translate(new Vector3(0, -translateSpeed));
+            direction.y = -1;
+
+        transform.Translate(direction.normalized * Time.deltaTime * speed);
     }
 }

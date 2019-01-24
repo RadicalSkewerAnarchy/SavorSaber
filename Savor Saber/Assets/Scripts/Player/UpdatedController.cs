@@ -2,14 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UpdatedController : MonoBehaviour
+public enum Direction : int
 {   
+    East,
+    NorthEast,
+    North,
+    NorthWest,
+    West,
+    SouthWest,
+    South,
+    SouthEast,
+}
+
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+public class UpdatedController : MonoBehaviour
+{
+    [System.NonSerialized]
+    public Direction direction;
+    //////
+    [System.NonSerialized]
+    [Range(0f, 1f)]
+    public float speedMod = 1f;
+    //////
+    [System.NonSerialized]
+    public bool freezeDirection = false;
+    //////
     [SerializeField]
     bool DebugBool = false;
     //////
     [SerializeField]
     [Range(100f,500f)]
-    float speed;
+    float speed = 100f;
+    //////
+    [SerializeField]
+    [Range(100f, 500f)]
+    float runSpeed = 100f;
     //////
     /*[SerializeField]
     [Range(5f, 1000f)]
@@ -35,18 +64,20 @@ public class UpdatedController : MonoBehaviour
     }
 
     void MoveAgent()
-    {   
+    {
+        bool running = Input.GetButton("Run");
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-        
+        var modSpeed = (running ? runSpeed : speed) * speedMod;
+
         if (movementVector.magnitude > 1)
         {
-            rigidBody.velocity = (movementVector/movementVector.magnitude * speed * Time.deltaTime);
+            rigidBody.velocity = (movementVector/movementVector.magnitude * modSpeed * Time.deltaTime);
         }
         else
         {
-            rigidBody.velocity = (movementVector * speed * Time.deltaTime);
+            rigidBody.velocity = (movementVector * modSpeed * Time.deltaTime);
         }
         //////
         if (DebugBool) { Debug.Log("MoveAgent finished."); }
@@ -57,7 +88,7 @@ public class UpdatedController : MonoBehaviour
     }
 
     void StopAgent()
-    {   
+    {
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
@@ -78,57 +109,38 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
+        bool running = Input.GetButton("Run");
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-        var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
-
-        animatorBody.SetFloat("SpeedX", moveHorizontal);
-        animatorBody.SetFloat("SpeedY", moveVertical);
-        
-        //calculates angle agent is moving based on right vector(1,0) and agent movementVector
-        
-        if (movementAngle < 0)
-        {
-            movementAngle += 360;
-        }
+  
         if(movementVector != Vector2.zero)
         {
-            animatorBody.SetBool("Walking", true);
-            if (movementAngle > 315 || movementAngle < 45)
+            animatorBody.SetBool("Moving", true);
+            animatorBody.SetBool("Running", running);
+            //calculates angle based on standard offset from East (1,0)
+            if (!freezeDirection)
             {
-                animatorBody.SetFloat("LastMoveX", 1f);
+                var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
+                if (movementAngle < 0)
+                    movementAngle += 360;
+                direction = Direction.East.Offset((int)(movementAngle / 45));
+                animatorBody.SetFloat("Direction", (float)direction);
             }
-            else if (movementAngle > 135 && movementAngle < 225)
-            {
-                animatorBody.SetFloat("LastMoveX", -1F);
-            }
-            else
-            {
-                animatorBody.SetFloat("LastMoveX", 0f);
-            }
-            if(movementAngle > 45 && movementAngle < 135)
-            {
-                animatorBody.SetFloat("LastMoveY", 1f);               
-            }
-            else if (movementAngle > 225 && movementAngle < 315)
-            {
-                animatorBody.SetFloat("LastMoveY", -1f);                
-            }
-            else
-            {
-                animatorBody.SetFloat("LastMoveY", 0f);
-            }
-            
-            
         }
         else
         {
-            animatorBody.SetBool("Walking", false);
+            animatorBody.SetBool("Moving", false);
+            animatorBody.SetBool("Running", false);
         }
         //////
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
         //////
+    }
+
+    public void Slow()
+    {
+
     }
 }
 
