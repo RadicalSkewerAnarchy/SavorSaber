@@ -94,8 +94,17 @@ public class Inventory : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
-            LongCook();
+            if(quiver[activeSkewer].GetCount() > 0)
+            {
+                LongCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+
         }
+
     }
 
     /// <summary>
