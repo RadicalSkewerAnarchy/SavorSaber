@@ -6,6 +6,7 @@ using UnityEngine;
 /// </summary>
 //[RequireComponent(typeof(MonsterBehavior))]
 [RequireComponent(typeof(MonsterBehavior))]
+[RequireComponent(typeof(MonsterProtocols))]
 
 public class AIData : CharacterData
 {
@@ -32,15 +33,37 @@ public class AIData : CharacterData
         Chase,
         Attack,
         Flee,
+        Socialize,
+        Feed,
         Custom1,
         Custom2,
         Custom3,
     }
-
     #endregion
 
     public State currentState = State.Idle;
+    #region Protocols
+    /// <summary> my current state </summary>
+    public enum Protocols
+    {
+        Melee,
+        Ranged,
+        Lazy,
+        Guard,
+        Party,
+        Swarm,
+        Feast,
+        Console
+    }
+    #endregion
+    public Protocols currentProtocol = Protocols.Lazy;
     public CustomProtocol[] customProtocols = new CustomProtocol[3];
+
+    // Decision making
+    float DecisionTimer;
+    float DecisionTimerReset;
+    float DecisionTimerVariance;
+
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
@@ -71,6 +94,11 @@ public class AIData : CharacterData
             {"FireDistance", () => {return 1; } }, //DEBUG
             {"Health", () => {return Normal(health, maxHealth); } }
         };
+
+        // Decision making
+        DecisionTimer = -1f;
+        DecisionTimerReset = 10f;
+        DecisionTimerVariance = 5f;
     }
 
     private void Update()
@@ -82,40 +110,62 @@ public class AIData : CharacterData
         *               this should be changed so they only call protocols. EXCEPTION: Hard coded abstract
         *               protocol
         ***/
-        if (Input.GetKeyDown(KeyCode.U))
+        // UPDATE Decision
+        if (DecisionTimer < 0)
         {
-            switch (currentState)
-            {
-                // idle
-                case State.Idle:
-                    Behavior.Idle();
-                    break;
-                // chase
-                case State.Chase:
-                    Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
-                    break;
-                // attack
-                case State.Attack:
-                    Behavior.Attack(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
-                    break;
-                // flee
-                case State.Flee:
-                    Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
-                    break;
-                case State.Custom1:
-                    customProtocols[0].Invoke();
-                    break;
-                case State.Custom2:
-                    customProtocols[1].Invoke();
-                    break;
-                case State.Custom3:
-                    customProtocols[2].Invoke();
-                    break;
-                // default         
-                default:
-                    Debug.Log("YOU SHOULD NEVER BE HERE!");
-                    break;
-            }
+            ///
+            /// EVALUATE THE CURVES
+            /// MAKE NEW DECISION
+            ///
+            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+        }
+
+        // SWITCH protocol
+        switch (currentProtocol)
+        {
+            // melee
+            case Protocols.Melee:
+                //Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Melee();
+                break;
+            // ranged
+            case Protocols.Ranged:
+                //Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Ranged();
+                break;
+            // lazy
+            case Protocols.Lazy:
+                Protocol.Lazy();
+                break;
+            // guard
+            case Protocols.Guard:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Guard();
+                break;
+            // party
+            case Protocols.Party:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Party();
+                break;
+            // swarm
+            case Protocols.Swarm:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Swarm();
+                break;
+            // feast
+            case Protocols.Feast:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Feast();
+                break;
+            // console
+            case Protocols.Console:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Console();
+                break;
+            // default
+            default:
+                Debug.Log("YOU SHOULD NEVER BE HERE!");
+                break;
         }
     }
 

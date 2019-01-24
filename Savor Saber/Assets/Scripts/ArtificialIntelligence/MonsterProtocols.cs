@@ -12,40 +12,60 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 public class MonsterProtocols : MonoBehaviour
 {
-    MonoBehaviour Behaviour;
+    MonsterBehavior Behaviour;
     private void Start()
     {
         Behaviour = GetComponent<MonsterBehavior>();
     }
-    void Melee()
+
+    /// <summary>
+    /// Every Behavior that is part of the protocol
+    /// chain returns a boolean, 
+    /// thus, they may be chained to create an order of operations
+    /// Each protocol is of the format:
+    ///     void X()
+    ///     {
+    ///         if (Behavior()){
+    ///             if (Behavior())
+    ///             {
+    ///                 ...
+    ///             }
+    ///         }
+    ///     }
+    /// </summary>
+
+    public void Melee()
     {
         
     }
-    void Ranged()
+    public void Ranged()
     {
 
     }
-    void Lazy()
+    public void Lazy()
+    {
+        if (Behaviour.Idle())
+        {
+            Behaviour.ActionTimer = Behaviour.ActionTimerReset;
+        }
+    }
+    public void Guard()
     {
 
     }
-    void Guard()
+    public void Party()
     {
 
     }
-    void Party()
+    public void Swarm()
     {
 
     }
-    void Swarm()
+    public void Feast()
     {
 
     }
-    void Feast()
-    {
-
-    }
-    void Console()
+    public void Console()
     {
 
     }
