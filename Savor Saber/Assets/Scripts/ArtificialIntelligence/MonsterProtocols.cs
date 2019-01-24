@@ -12,9 +12,14 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 public class MonsterProtocols : MonoBehaviour
 {
+    MonoBehaviour Behaviour;
+    private void Start()
+    {
+        Behaviour = GetComponent<MonsterBehavior>();
+    }
     void Melee()
     {
-
+        
     }
     void Ranged()
     {
