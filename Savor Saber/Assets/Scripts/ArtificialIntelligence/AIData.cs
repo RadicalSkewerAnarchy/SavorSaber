@@ -34,10 +34,13 @@ public class AIData : CharacterData
         Flee,
         Custom1,
         Custom2,
+        Custom3,
     }
-    public Dictionary<string, int> _translation;
+
     #endregion
+
     public State currentState = State.Idle;
+    public CustomProtocol[] customProtocols = new CustomProtocol[3];
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> targetObjects = new List<GameObject>();
     Vector2 targetPosition;
@@ -99,7 +102,16 @@ public class AIData : CharacterData
                 case State.Flee:
                     Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                     break;
-                    // default
+                case State.Custom1:
+                    customProtocols[0].Invoke();
+                    break;
+                case State.Custom2:
+                    customProtocols[1].Invoke();
+                    break;
+                case State.Custom3:
+                    customProtocols[2].Invoke();
+                    break;
+                // default         
                 default:
                     Debug.Log("YOU SHOULD NEVER BE HERE!");
                     break;
