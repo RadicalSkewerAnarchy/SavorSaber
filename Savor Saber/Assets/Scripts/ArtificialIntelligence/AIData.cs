@@ -108,7 +108,7 @@ public class AIData : CharacterData
         RangeAttackThreshold = Random.Range(2f, 5f);
 
         // Naming for future creature tracking
-        gameObject.name = gameObject.name + Random.Range(0, 1000000).ToString();
+        gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
     private void Update()
