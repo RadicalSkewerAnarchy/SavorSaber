@@ -24,6 +24,7 @@ public class AIData : CharacterData
     public delegate float GetNormalValue();
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
     private Dictionary<string, GetNormalValue> _values;
+    private Dictionary<string, Vector2> _vectors;
 
     #region States
     /// <summary> my current state </summary>
@@ -70,7 +71,9 @@ public class AIData : CharacterData
     /// <summary>
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
-    float Speed = 1;
+    public float Speed;
+    public float MeleeAttackThreshold;
+    public float RangeAttackThreshold;
     Vector2 Target;
 
     private void Start()
@@ -90,10 +93,22 @@ public class AIData : CharacterData
             {"Health", () => {return Normal(health, maxHealth); } }
         };
 
+        _vectors = new Dictionary<string, Vector2> {
+            {"Player", new Vector2(0f, 0f) } 
+        };
+
         // Decision making
         DecisionTimer = -1f;
         DecisionTimerReset = 10f;
         DecisionTimerVariance = 5f;
+
+        // Variable instantiated variance
+        Speed = Random.Range(1f, 1.5f);
+        MeleeAttackThreshold = Random.Range(.5f, 1.5f);
+        RangeAttackThreshold = Random.Range(2f, 5f);
+
+        // Naming for future creature tracking
+        gameObject.name = gameObject.name + Random.Range(0, 1000000).ToString();
     }
 
     private void Update()

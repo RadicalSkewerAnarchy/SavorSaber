@@ -109,8 +109,9 @@ public class MonsterBehavior : MonoBehaviour
     {
         //Debug.Log("I am Attack");
         // Turn Red
-        GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        //GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+
+        // plugin attack animation and hitboxes here, still need Vector2 target from AIData.cs
         return true;
     }
 
