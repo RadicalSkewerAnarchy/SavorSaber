@@ -58,18 +58,46 @@ public class MonsterBehavior : MonoBehaviour
     {
         //Debug.Log("I am Chase at " + speed + "mph");
         // Turn Green
-        GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        //GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+        var left = false;
+       
+        var current = new Vector2(transform.position.x, transform.position.y);
+        if (Vector2.Distance(current, target) < speed * Time.deltaTime)
+        {
+            return false;
+        }                
+        else
+        {
+            target = (target - current);
+            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            left = (target.x < 0) ? true : false;
+            transform.Translate(target);
+        }
+        
+
         return true;
     }
 
     public bool MoveFrom(Vector2 target, float speed)
     {
-        //Debug.Log("I am Flee");
-        //  Turn Blue
-        GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
-        transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
-        return true;
+
+        var left = false;
+
+        var current = new Vector2(transform.position.x, transform.position.y);
+        if (Vector2.Distance(current, target) < speed * Time.deltaTime)
+        {
+            return false;
+        }
+        else
+        {
+            target = (target - current);
+            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            left = (target.x < 0) ? true : false;
+            transform.Translate(-1*target);
+        }
+
+
+        return true;       
     }
 
     public bool Feed(Vector2 target, float speed)
@@ -90,4 +118,6 @@ public class MonsterBehavior : MonoBehaviour
     {
         return true;
     }
+
+    
 }
