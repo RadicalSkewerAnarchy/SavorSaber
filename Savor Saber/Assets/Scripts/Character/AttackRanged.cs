@@ -22,7 +22,7 @@ public class AttackRanged : MonoBehaviour
     /// <summary>
     /// field for the projectile prefab to be spawned when attacking
     /// </summary>
-    public BaseProjectile projectile;
+    public GameObject projectile;
 
     /// <summary>
     /// The name of the attack, used to determine animation states
@@ -34,7 +34,9 @@ public class AttackRanged : MonoBehaviour
     /// </summary>
     public float attackDuration = 0.5f;
 
-    //what input axis, if any, should be accepted to trigger this attack
+    /// <summary>
+    /// what input axis, if any, should be accepted to trigger this attack
+    /// </summary>
     public string inputAxis;
 
     /// <summary>
@@ -60,7 +62,7 @@ public class AttackRanged : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RecalculatePosition();
+        //RecalculatePosition();
         if (Input.GetButtonDown(inputAxis) && !attacking)
         {
             Attack();
@@ -124,13 +126,26 @@ public class AttackRanged : MonoBehaviour
 
     public virtual void Attack()
     {
+        Direction direction;
 
+        //get direction from whichever controller component this entity has
+        if (playerController != null)
+        {
+            direction = playerController.direction;
+        }
+        else
+        {
+            direction = monsterController.direction;
+        }
 
         //animation stuff
         animator.SetTrigger("Attack");
         animator.SetTrigger(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions
+        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
+        projectileData.direction = direction;
         attacking = true;
  
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
