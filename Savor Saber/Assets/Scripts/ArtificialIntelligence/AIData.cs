@@ -53,7 +53,10 @@ public class AIData : CharacterData
         Party,
         Swarm,
         Feast,
-        Console
+        Console,
+        Custom1,
+        Custom2,
+        Custom3,
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -161,6 +164,15 @@ public class AIData : CharacterData
             case Protocols.Console:
                 //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Console();
+                break;
+            case Protocols.Custom1:
+                customProtocols[0].Invoke();
+                break;
+            case Protocols.Custom2:
+                customProtocols[1].Invoke();
+                break;
+            case Protocols.Custom3:
+                customProtocols[2].Invoke();
                 break;
             // default
             default:

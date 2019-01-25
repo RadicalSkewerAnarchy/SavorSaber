@@ -42,11 +42,8 @@ public class MonsterBehavior : MonoBehaviour
     public bool Idle()
     {
         //Debug.Log("I am Idle");
-        Debug.Log(ActionTimer);
-        GetComponent<SpriteRenderer>().color = new Color(255,255,255);
-        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
-        AnimatorBody.SetTrigger("Reset");
-        AnimatorBody.SetBool("Moving", false);
+        //Debug.Log(ActionTimer);
+        TriggerAnimation("Idle");
         // if done being idle, reset and return true
         if (ActionTimer < 0)
         {
@@ -63,10 +60,9 @@ public class MonsterBehavior : MonoBehaviour
     {
         //Debug.Log("I am Chase at " + speed + "mph");
         // Turn Green
-        GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
         transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        float movementAmount = speed * Time.deltaTime;
-        AnimatorBody.SetBool("Moving", movementAmount != 0);
+        LoopAnimation("Move");
+        CancelTrigger();
         return true;
     }
 
@@ -74,10 +70,10 @@ public class MonsterBehavior : MonoBehaviour
     {
         //Debug.Log("I am Flee");
         //  Turn Blue
-        GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
         transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
         float movementAmount = -speed * Time.deltaTime;
-        AnimatorBody.SetBool("Moving", movementAmount != 0);
+        TriggerAnimation("Move");
+        CancelTrigger();
         return true;
     }
 
@@ -90,10 +86,14 @@ public class MonsterBehavior : MonoBehaviour
     public bool Attack(Vector2 target, float speed)
     {
         //Debug.Log("I am Attack");
-        // Turn Red
-        GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
         TriggerAnimation("Melee");
+        return true;
+    }
+
+    public bool Ranged(Vector2 target, float speed)
+    {
+        //Debug.Log("I am Attack");
+        TriggerAnimation("Ranged");
         return true;
     }
 
@@ -105,13 +105,19 @@ public class MonsterBehavior : MonoBehaviour
 
     public void TriggerAnimation(string name)
     {
-        AnimatorBody.SetTrigger("Trigger");
+        if (AnimatorBody.GetCurrentAnimatorStateInfo(1).IsName(name))
+            return;
+        AnimatorBody.Play(name);
         AnimatorBody.SetTrigger(name);
     }
-
     public void LoopAnimation(string name)
     {
-        AnimatorBody.SetTrigger("Loop");
+        if (AnimatorBody.GetCurrentAnimatorStateInfo(0).IsName(name))
+            return;
         AnimatorBody.SetTrigger(name);
+    }
+    public void CancelTrigger()
+    {
+        AnimatorBody.SetTrigger("Cancel");
     }
 }
