@@ -29,23 +29,11 @@ public class CustomBehavior : CustomProtocol
     }
     public bool InvokeBehavior()
     {
-        if (type == Type.Trigger)
+        var animOverride = animatorBody.runtimeAnimatorController as AnimatorOverrideController;
+        if (animOverride["Custom"] != anim || !(animatorBody.GetCurrentAnimatorStateInfo(0).IsName("Custom")))
         {
-            if(!(animatorBody.GetCurrentAnimatorStateInfo(1).IsName("CustomTrigger")))
-            {
-                var animOverride = animatorBody.runtimeAnimatorController as AnimatorOverrideController;
-                animOverride["CustomTrigger"] = anim;
-                animatorBody.SetTrigger("CustomTrigger");
-            }
-        }
-        else if (type == Type.Loop)
-        {
-            if (!(animatorBody.GetCurrentAnimatorStateInfo(0).IsName("CustomLoop")))
-            {
-                var animOverride = animatorBody.runtimeAnimatorController as AnimatorOverrideController;
-                animOverride["CustomLoop"] = anim;
-                animatorBody.SetTrigger("CustomLoop");
-            }
+            animOverride["Custom"] = anim;
+            animatorBody.Play("Custom");
         }
         return DoBehavior();
     }
