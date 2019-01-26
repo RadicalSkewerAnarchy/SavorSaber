@@ -26,7 +26,7 @@ public class AIData : CharacterData
     private Dictionary<string, GetNormalValue> _values;
     private Dictionary<string, Vector2> _vectors;
 
-    #region States
+    #region Behaviors
     /// <summary> my current state </summary>
     public enum Behave
     {
@@ -61,8 +61,9 @@ public class AIData : CharacterData
     float DecisionTimerVariance;
 
     /// <summary> lists that may be needed for certain target positions or objects </summary>
-    List<GameObject> targetObjects = new List<GameObject>();
-    Vector2 targetPosition;
+    List<GameObject> TargetObjects = new List<GameObject>();
+    GameObject AwarenessObject;
+    Vector2 TargetPosition;
     /// <summary>
     /// Monster Behavior, Monster Protocol
     /// </summary>
@@ -72,6 +73,7 @@ public class AIData : CharacterData
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
     public float Speed;
+    public float Perception;
     public float MeleeAttackThreshold;
     public float RangeAttackThreshold;
     Vector2 Target;
@@ -192,5 +194,15 @@ public class AIData : CharacterData
             return -1f;
         }
         return _values[value]();
+    }
+
+    // awareness and assessment
+
+    public Collider2D[] AwareHowMany()
+    {
+        Collider2D[] seen = new Collider2D[10];
+        Physics2D.OverlapCircleNonAlloc(transform.position, Perception, seen);
+
+        return seen;
     }
 }
