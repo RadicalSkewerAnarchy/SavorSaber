@@ -28,7 +28,7 @@ public class AIData : CharacterData
 
     #region States
     /// <summary> my current state </summary>
-    public enum State
+    public enum Behave
     {
         Idle,
         Chase,
@@ -38,7 +38,7 @@ public class AIData : CharacterData
         Feed
     }
     #endregion
-    public State currentState = State.Idle;
+    public Behave currentBehavior = Behave.Idle;
     #region Protocols
     /// <summary> my current state </summary>
     public enum Protocols

@@ -40,8 +40,9 @@ public class MonsterBehavior : MonoBehaviour
     public bool Idle()
     {
         //Debug.Log("I am Idle");
-        Debug.Log(ActionTimer);
-        GetComponent<SpriteRenderer>().color = new Color(255,255,255);
+        //Debug.Log(ActionTimer);
+        GetComponent<SpriteRenderer>().color = new Color(100,100,100);
+        AiData.currentBehavior = AIData.Behave.Idle;
         // if done being idle, reset and return true
         if (ActionTimer < 0)
         {
@@ -57,51 +58,60 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed)
     {
         //Debug.Log("I am Chase at " + speed + "mph");
-        // Turn Green
-        //GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+        // Turn Greenish
+        GetComponent<SpriteRenderer>().color = new Color(0, 255, 100);
+        AiData.currentBehavior = AIData.Behave.Chase;
+
         var left = false;
        
         var current = new Vector2(transform.position.x, transform.position.y);
+
+        // at target
         if (Vector2.Distance(current, target) < speed * Time.deltaTime)
         {
-            return false;
+            return true;
         }                
         else
         {
+            // move towards target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x < 0) ? true : false;
             transform.Translate(target);
-        }
-        
 
-        return true;
+            return false;
+        }
     }
 
     public bool MoveFrom(Vector2 target, float speed)
     {
+        // Turn Greenish
+        GetComponent<SpriteRenderer>().color = new Color(100, 255, 0);
+        AiData.currentBehavior = AIData.Behave.Flee;
 
         var left = false;
 
         var current = new Vector2(transform.position.x, transform.position.y);
+
+        // at target
         if (Vector2.Distance(current, target) < speed * Time.deltaTime)
         {
-            return false;
+            return true;
         }
         else
         {
+            // move towards target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x < 0) ? true : false;
             transform.Translate(-1*target);
+            return false;
         }
-
-
-        return true;       
     }
 
     public bool Feed(Vector2 target, float speed)
     {
+        AiData.currentBehavior = AIData.Behave.Feed;
         return true;
     }
 
@@ -109,7 +119,8 @@ public class MonsterBehavior : MonoBehaviour
     {
         //Debug.Log("I am Attack");
         // Turn Red
-        //GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        AiData.currentBehavior = AIData.Behave.Attack;
 
         // plugin attack animation and hitboxes here, still need Vector2 target from AIData.cs
         return true;
@@ -117,6 +128,7 @@ public class MonsterBehavior : MonoBehaviour
 
     public bool Socialize(Vector2 target, float speed)
     {
+        AiData.currentBehavior = AIData.Behave.Socialize;
         return true;
     }
 
