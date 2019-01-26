@@ -40,8 +40,8 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     [System.NonSerialized]
     public Direction direction;
-    private Vector2 directionVector;
-    private float projectileRotation;
+    protected Vector2 directionVector;
+    protected float projectileRotation;
 
     protected CapsuleCollider2D projectileCollider;
 

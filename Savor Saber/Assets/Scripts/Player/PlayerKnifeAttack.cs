@@ -19,7 +19,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Applying Knife Effect");
-        if (collision.gameObject.tag == "KnifableObject")
+        if (collision.gameObject.tag == "Monster")
         {
             //just instakill the monster for testing purposes
             Monster targetMonster = collision.gameObject.GetComponent<Monster>();
