@@ -55,6 +55,7 @@ public class Skewer
 /// Controller for functions related to managing and displaying inventory
 /// </summary>
 /// 
+[RequireComponent(typeof(AttackRanged))]
 public class Inventory : MonoBehaviour {
 
     #region fields
@@ -62,7 +63,6 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Fields related to inventory visual representation
     /// </summary>
-    //public Canvas canvas = null;
     public int maxItemsPerSkewer = 3;
     public Image[] skewerSprites = new Image[3];
     public Sprite emptySprite;
@@ -79,6 +79,7 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     public GameObject recipeDatabaseObject;
     private RecipeDatabase recipeDatabase;
+    public AttackRanged rangedAttack;
 
     #endregion
 
@@ -88,10 +89,12 @@ public class Inventory : MonoBehaviour {
         quiver[2] = new Skewer();
 
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
+        rangedAttack = GetComponent<AttackRanged>();
     }
 
     private void Update()
     {
+        //Press C to cook
         if (Input.GetKeyDown(KeyCode.C))
         {
             if(quiver[activeSkewer].GetCount() > 0)
@@ -102,7 +105,19 @@ public class Inventory : MonoBehaviour {
             {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
+        }
 
+        //disable the player's ranged attack if the active skewer is not cooked
+        if (ActiveSkewerCooked())
+            rangedAttack.enabled = true;
+        else
+            rangedAttack.enabled = false;
+
+        //clear the skewer of recipes and ingredients after throwing
+        if (quiver[activeSkewer].finishedRecipe != null && rangedAttack.attacking)
+        {
+            quiver[activeSkewer].finishedRecipe = null;
+            ClearActiveSkewer();
         }
 
     }
@@ -146,12 +161,20 @@ public class Inventory : MonoBehaviour {
     }
 
     /// <summary>
-    /// Clears all ingredients from a skewer
+    /// Clears all ingredients from a skewer but does NOT remove cooked recipes
     /// </summary>
     public void ClearActiveSkewer()
     {
         quiver[activeSkewer].Clear();
         UpdateSkewerVisual();
+    }
+
+    /// <summary>
+    /// Tells the player's ranged attack to use the current skewer's effect, if any
+    /// </summary>
+    private void SetActiveEffect()
+    {
+        rangedAttack.effectRecipeData = quiver[activeSkewer].finishedRecipe;
     }
 
     /// <summary>
@@ -183,6 +206,9 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Execute a long cook, access full database
+    /// </summary>
     private void LongCook()
     {
         RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].GetStack());
@@ -190,6 +216,7 @@ public class Inventory : MonoBehaviour {
         if(cookedRecipe != null)
         {
             quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
             ClearActiveSkewer();
         }
 

@@ -25,6 +25,11 @@ public class AttackRanged : MonoBehaviour
     public GameObject projectile;
 
     /// <summary>
+    /// The data for what effects this attack should have, if any.
+    /// </summary>
+    public RecipeData effectRecipeData = null;
+
+    /// <summary>
     /// The name of the attack, used to determine animation states
     /// </summary>
     public string attackName;
@@ -41,9 +46,12 @@ public class AttackRanged : MonoBehaviour
 
     /// <summary>
     /// To prevent attack action while still attacking.
+    /// Also checked by player inventory - if it used a ranged attack, 
+    /// clear the current skewer.
     /// </summary>
     protected bool endSignalSent = false;
-    protected bool attacking = false;
+    [System.NonSerialized]
+    public bool attacking = false;
 
     #endregion
 
@@ -142,12 +150,18 @@ public class AttackRanged : MonoBehaviour
         animator.SetTrigger("Attack");
         animator.SetTrigger(attackName);
 
-        //spawn the attack at the spawn point and give it its dimensions
+        //spawn the attack at the spawn point and give it its direction
         GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
+
+        //give the spawned projectile its effect data, if applicable
+        if(effectRecipeData != null)
+        {
+            projectileData.effectRecipeData = effectRecipeData;
+        }
+
         attacking = true;
- 
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
     }
 

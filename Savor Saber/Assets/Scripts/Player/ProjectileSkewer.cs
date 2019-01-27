@@ -5,8 +5,6 @@ using UnityEngine;
 public class ProjectileSkewer : BaseProjectile
 {
 
-    public RecipeData cookedRecipeData;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -74,10 +72,16 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Monster")
+
+        if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
         {
-            cookedRecipeData.ApplyEffectToTarget(collision.gameObject);
+            Debug.Log("Thrown skewer hit target with effect " + effectRecipeData.displayName);
+            effectRecipeData.ApplyEffectToTarget(collision.gameObject);
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
         }
+
+
 
     }
 }

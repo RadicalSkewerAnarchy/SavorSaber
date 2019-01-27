@@ -36,6 +36,18 @@ public class BaseProjectile : MonoBehaviour
     public float projectileKnockback;
 
     /// <summary>
+    /// Should this projectile penetrate targets?
+    /// </summary>
+    public bool penetrateTargets = false;
+
+    /// <summary>
+    /// Recipe data for any effects to be applied. Projectile gets this from
+    /// the attack script. 
+    /// </summary>
+    [System.NonSerialized]
+    public RecipeData effectRecipeData = null;
+
+    /// <summary>
     /// Direction and rotation fields
     /// </summary>
     [System.NonSerialized]
@@ -113,5 +125,9 @@ public class BaseProjectile : MonoBehaviour
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Projectile trigger entered");
+
+        if (!penetrateTargets)
+            Destroy(this.gameObject);
+
     }
 }
