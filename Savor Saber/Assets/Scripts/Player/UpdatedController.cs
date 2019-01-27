@@ -37,7 +37,7 @@ public class UpdatedController : MonoBehaviour
     float speed = 100f;
     //////
     [SerializeField]
-    [Range(100f, 500f)]
+    [Range(0f, 500f)]
     float runSpeed = 100f;
     //////
     /*[SerializeField]
@@ -46,6 +46,9 @@ public class UpdatedController : MonoBehaviour
     //////
     Rigidbody2D rigidBody;
     Animator animatorBody;
+    /// <summary> The Squared magnitude of the movement vector from last frame
+    /// Used to determine if soma is slowing down </summary>
+    private float lastSqrMagnitude = 0;
 
     void Start()
     {
@@ -70,7 +73,6 @@ public class UpdatedController : MonoBehaviour
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var modSpeed = (running ? runSpeed : speed) * speedMod;
-
         if (movementVector.magnitude > 1)
         {
             rigidBody.velocity = (movementVector/movementVector.magnitude * modSpeed * Time.deltaTime);
@@ -113,13 +115,13 @@ public class UpdatedController : MonoBehaviour
         var moveHorizontal = Input.GetAxis("Horizontal");
         var moveVertical = Input.GetAxis("Vertical");
         var movementVector = new Vector2(moveHorizontal, moveVertical);
-  
+        float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
         if(movementVector != Vector2.zero)
         {
             animatorBody.SetBool("Moving", true);
             animatorBody.SetBool("Running", running);
             //calculates angle based on standard offset from East (1,0)
-            if (!freezeDirection)
+            if (!freezeDirection && clampedMagnitude >= lastSqrMagnitude)
             {
                 var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
                 if (movementAngle < 0)
@@ -127,12 +129,15 @@ public class UpdatedController : MonoBehaviour
                 direction = Direction.East.Offset((int)(movementAngle / 45));
                 animatorBody.SetFloat("Direction", (float)direction);
             }
+            else
+                Debug.Log("Skip Frame");
         }
         else
         {
             animatorBody.SetBool("Moving", false);
             animatorBody.SetBool("Running", false);
         }
+        lastSqrMagnitude = clampedMagnitude;
         //////
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
         //////
