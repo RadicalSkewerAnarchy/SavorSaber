@@ -52,6 +52,7 @@ public class UpdatedController : MonoBehaviour
 
     void Start()
     {
+        animatorBody.GetCurrentAnimatorStateInfo()
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
     }
