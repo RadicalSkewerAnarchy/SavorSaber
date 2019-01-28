@@ -80,6 +80,8 @@ public class Inventory : MonoBehaviour {
     public GameObject recipeDatabaseObject;
     private RecipeDatabase recipeDatabase;
     public AttackRanged rangedAttack;
+    //[System.NonSerialized]
+    public bool nearCampfire = false;
 
     #endregion
 
@@ -95,11 +97,22 @@ public class Inventory : MonoBehaviour {
     private void Update()
     {
         //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
         {
             if(quiver[activeSkewer].GetCount() > 0)
             {
                 LongCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
+        {
+            if (quiver[activeSkewer].GetCount() > 0)
+            {
+                ShortCook();
             }
             else if (quiver[activeSkewer].GetCount() <= 0)
             {
@@ -211,6 +224,7 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     private void LongCook()
     {
+        Debug.Log("Cooking at campfire...");
         RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].GetStack());
         //if it actually returned a recipe match
         if(cookedRecipe != null)
@@ -221,4 +235,34 @@ public class Inventory : MonoBehaviour {
         }
 
     }
+
+    /// <summary>
+    /// Execute a short cook, only use recipes not tagged complex
+    /// </summary>
+    private void ShortCook()
+    {
+        Debug.Log("Cooking in the field...");
+    }
+
+    /// <summary>
+    /// Triggers to check if the player is near a campfire
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Campfire")
+        {
+            Debug.Log("Player near campfire");
+            nearCampfire = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Campfire")
+        {
+            Debug.Log("Player left campfire");
+            nearCampfire = false;
+        }
+    }
+    
 }
