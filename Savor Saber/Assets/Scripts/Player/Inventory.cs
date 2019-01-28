@@ -242,6 +242,14 @@ public class Inventory : MonoBehaviour {
     private void ShortCook()
     {
         Debug.Log("Cooking in the field...");
+        RecipeData cookedRecipe = recipeDatabase.CompareToSimpleRecipes(quiver[activeSkewer].GetStack());
+        //if it actually returned a recipe match
+        if (cookedRecipe != null)
+        {
+            quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
+            ClearActiveSkewer();
+        }
     }
 
     /// <summary>
