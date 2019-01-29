@@ -65,10 +65,10 @@ public class AttackRanged : AttackBase
         if (Input.GetButtonDown(inputAxis))
         {
             //Get the first attack from dependecies that is attacking, else null
-            AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
+            AttackBase activeAttack = GetActiveAttack();
             if (activeAttack == null)
                 Attack();
-            else if (activeAttack.CanCancel)
+            else if (activeAttack.CanBeCanceled)
             {
                 activeAttack.Cancel();
                 Attack();
@@ -106,7 +106,7 @@ public class AttackRanged : AttackBase
     {
         yield return new WaitForSeconds(time);
         Attacking = false;
-        CanCancel = false;
+        CanBeCanceled = false;
         yield return null;
     }
 }
