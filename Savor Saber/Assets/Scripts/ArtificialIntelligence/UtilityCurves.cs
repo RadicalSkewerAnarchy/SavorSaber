@@ -25,21 +25,20 @@ public class UtilityCurves : MonoBehaviour
         //Testing code Move later
         if (Input.GetKeyDown(KeyCode.R))
         {
-            AIData.State state = DecideState();
+            AIData.Protocols state = DecideState();
             Debug.Log("=====>> Picked state: " + state);
-            data.currentState = state;
+            data.currentProtocol = state;
         }
-
     }
 
     /// <summary>
     /// 
     /// </summary>
     /// <returns> a string representing a key to the enum state in AIData </returns>
-    public AIData.State DecideState()
+    public AIData.Protocols DecideState()
     {
         macroCache.Clear();
-        AIData.State maxState = AIData.State.Idle;
+        AIData.Protocols maxState = AIData.Protocols.Lazy;
         float max = 0;
         foreach(var kvp in aiStates)
         {
@@ -112,7 +111,7 @@ public class UtilityCurves : MonoBehaviour
     }
 
     [System.Serializable]
-    public class AIStates : SDictionary<AIData.State, CurveDict> { }
+    public class AIStates : SDictionary<AIData.Protocols, CurveDict> { }
     [System.Serializable]
     public class MacroDict : SDictionary<string, CurveDict> { }
     [System.Serializable]

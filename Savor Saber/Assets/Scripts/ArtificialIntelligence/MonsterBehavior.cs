@@ -44,6 +44,7 @@ public class MonsterBehavior : MonoBehaviour
         //Debug.Log("I am Idle");
         //Debug.Log(ActionTimer);
         AnimatorBody.Play("Idle");
+        AiData.currentBehavior = AIData.Behave.Idle;
         // if done being idle, reset and return true
         if (ActionTimer < 0)
         {
@@ -59,31 +60,68 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed)
     {
         //Debug.Log("I am Chase at " + speed + "mph");
-        // Turn Green
-        transform.position = Vector2.MoveTowards(transform.position, target, speed * Time.deltaTime);
-        AnimatorBody.Play("Move");
-        return true;
+        // Turn Greenish
+        AiData.currentBehavior = AIData.Behave.Chase;
+
+        var left = false;
+
+        var current = new Vector2(transform.position.x, transform.position.y);
+
+        // at target
+        if (Vector2.Distance(current, target) < speed * Time.deltaTime)
+        {
+            return true;
+        }
+        else
+        {
+            // move towards target
+            AnimatorBody.Play("Move");
+            target = (target - current);
+            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            left = (target.x < 0) ? true : false;
+            transform.Translate(target);
+
+            return false;
+        }
     }
 
     public bool MoveFrom(Vector2 target, float speed)
     {
-        //Debug.Log("I am Flee");
-        //  Turn Blue
-        transform.position = Vector2.MoveTowards(transform.position, target, -1 *speed * Time.deltaTime);
-        float movementAmount = -speed * Time.deltaTime;
-        AnimatorBody.Play("Move");
-        return true;
+        // Turn Greenish
+        AiData.currentBehavior = AIData.Behave.Flee;
+
+        var left = false;
+
+        var current = new Vector2(transform.position.x, transform.position.y);
+
+        // at target
+        if (Vector2.Distance(current, target) < speed * Time.deltaTime)
+        {
+            return true;
+        }
+        else
+        {
+            // move towards target
+            AnimatorBody.Play("Move");
+            target = (target - current);
+            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            left = (target.x < 0) ? true : false;
+            transform.Translate(-1*target);
+            return false;
+        }
     }
 
     public bool Feed(Vector2 target, float speed)
     {
         AnimatorBody.Play("Feed");
+        AiData.currentBehavior = AIData.Behave.Feed;
         return true;
     }
 
     public bool Attack(Vector2 target, float speed)
     {
         //Debug.Log("I am Attack");
+        AiData.currentBehavior = AIData.Behave.Attack;
         AnimatorBody.Play("Melee");
         return true;
     }
@@ -91,6 +129,7 @@ public class MonsterBehavior : MonoBehaviour
     public bool Ranged(Vector2 target, float speed)
     {
         //Debug.Log("I am Attack");
+        AiData.currentBehavior = AIData.Behave.Attack;
         AnimatorBody.Play("Ranged");
         return true;
     }
@@ -98,6 +137,9 @@ public class MonsterBehavior : MonoBehaviour
     public bool Socialize(Vector2 target, float speed)
     {
         AnimatorBody.Play("Socialize");
+        AiData.currentBehavior = AIData.Behave.Socialize;
         return true;
     }
+
+
 }

@@ -24,10 +24,11 @@ public class AIData : CharacterData
     public delegate float GetNormalValue();
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
     private Dictionary<string, GetNormalValue> _values;
+    private Dictionary<string, Vector2> _vectors;
 
-    #region States
+    #region Behaviors
     /// <summary> my current state </summary>
-    public enum State
+    public enum Behave
     {
         Idle,
         Chase,
@@ -40,8 +41,7 @@ public class AIData : CharacterData
         Custom3,
     }
     #endregion
-
-    public State currentState = State.Idle;
+    public Behave currentBehavior = Behave.Idle;
     #region Protocols
     /// <summary> my current state </summary>
     public enum Protocols
@@ -68,8 +68,9 @@ public class AIData : CharacterData
     float DecisionTimerVariance;
 
     /// <summary> lists that may be needed for certain target positions or objects </summary>
-    List<GameObject> targetObjects = new List<GameObject>();
-    Vector2 targetPosition;
+    List<GameObject> TargetObjects = new List<GameObject>();
+    GameObject AwarenessObject;
+    Vector2 TargetPosition;
     /// <summary>
     /// Monster Behavior, Monster Protocol
     /// </summary>
@@ -78,7 +79,10 @@ public class AIData : CharacterData
     /// <summary>
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
-    float Speed = 1;
+    public float Speed;
+    public float Perception;
+    public float MeleeAttackThreshold;
+    public float RangeAttackThreshold;
     Vector2 Target;
 
     private void Start()
@@ -98,10 +102,22 @@ public class AIData : CharacterData
             {"Health", () => {return Normal(health, maxHealth); } }
         };
 
+        _vectors = new Dictionary<string, Vector2> {
+            {"Player", new Vector2(0f, 0f) }
+        };
+
         // Decision making
         DecisionTimer = -1f;
         DecisionTimerReset = 10f;
         DecisionTimerVariance = 5f;
+
+        // Variable instantiated variance
+        Speed = Random.Range(1f, 1.5f);
+        MeleeAttackThreshold = Random.Range(.5f, 1.5f);
+        RangeAttackThreshold = Random.Range(2f, 5f);
+
+        // Naming for future creature tracking
+        gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
     private void Update()
@@ -194,5 +210,15 @@ public class AIData : CharacterData
             return -1f;
         }
         return _values[value]();
+    }
+
+    // awareness and assessment
+
+    public Collider2D[] AwareHowMany()
+    {
+        Collider2D[] seen = new Collider2D[10];
+        Physics2D.OverlapCircleNonAlloc(transform.position, Perception, seen);
+
+        return seen;
     }
 }
