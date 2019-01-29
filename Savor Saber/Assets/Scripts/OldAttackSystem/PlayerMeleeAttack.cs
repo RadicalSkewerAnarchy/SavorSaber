@@ -52,6 +52,8 @@ public class PlayerMeleeAttack : MeleeAttack
             Physics.IgnoreLayerCollision(10, layersToIgnore[i]);
         }
 
+        RecalculatePosition();
+
     }
 
     // Update is called once per frame
@@ -187,6 +189,7 @@ public class PlayerMeleeAttack : MeleeAttack
     #region Trigger version
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Trigger entered");
         if (attackType == "Knife")
             ApplyKnifeEffect(collision);
         else if (attackType == "Skewer")
@@ -195,11 +198,22 @@ public class PlayerMeleeAttack : MeleeAttack
 
     public void ApplyKnifeEffect(Collider2D collision)
     {
+        Debug.Log("Applying Knife Effect");
         if (collision.gameObject.tag == "KnifableObject")
         {
-            Health targetHealth = collision.gameObject.GetComponent<Health>();
-            targetHealth.Hp -= (int)meleeDamage;
+            //just instakill the monster for testing purposes
+            Monster targetMonster = collision.gameObject.GetComponent<Monster>();
+            targetMonster.Kill();
+
+            CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
+            if(characterData != null)
+            {
+                characterData.health -= (int)meleeDamage;
+            }
         }
+
+
+
     }
 
     public void ApplySkewerEffect(Collider2D collision)

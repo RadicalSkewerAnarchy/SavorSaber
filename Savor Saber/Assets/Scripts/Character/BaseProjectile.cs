@@ -2,8 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileSkewer : BaseProjectile
+
+/// <summary>
+/// Use to designate a GameObject as a projectile launched by a RangedAttack script
+/// Should be used as a base class, with derived classes for specific entities' attacks
+/// </summary>
+[RequireComponent(typeof(CapsuleCollider2D))]
+public class BaseProjectile : MonoBehaviour
 {
+    /// <summary>
+    /// How fast the projectile travels
+    /// </summary>
+    public float projectileSpeed;
+
+    /// <summary>
+    /// How long the projectile is
+    /// </summary>
+    public float projectileLength;
+
+    /// <summary>
+    /// How wide the projectile is
+    /// </summary>
+    public float projectileWidth;
+
+    /// <summary>
+    /// How much damage the projectile does, if any
+    /// </summary>
+    public float projectileDamage;
+
+    /// <summary>
+    /// How much the projectile should knock back its target
+    /// </summary>
+    public float projectileKnockback;
+
+    /// <summary>
+    /// Should this projectile penetrate targets?
+    /// </summary>
+    public bool penetrateTargets = false;
+
+    /// <summary>
+    /// Recipe data for any effects to be applied. Projectile gets this from
+    /// the attack script. 
+    /// </summary>
+    [System.NonSerialized]
+    public RecipeData effectRecipeData = null;
+
+    /// <summary>
+    /// Direction and rotation fields
+    /// </summary>
+    [System.NonSerialized]
+    public Direction direction;
+    protected Vector2 directionVector;
+    protected float projectileRotation;
+
+    protected CapsuleCollider2D projectileCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -70,18 +122,12 @@ public class ProjectileSkewer : BaseProjectile
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime);
     }
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Projectile trigger entered");
 
-        if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
-        {
-            Debug.Log("Thrown skewer hit target with effect " + effectRecipeData.displayName);
-            effectRecipeData.ApplyEffectToTarget(collision.gameObject);
-            if (!penetrateTargets)
-                Destroy(this.gameObject);
-        }
-
-
+        if (!penetrateTargets)
+            Destroy(this.gameObject);
 
     }
 }
