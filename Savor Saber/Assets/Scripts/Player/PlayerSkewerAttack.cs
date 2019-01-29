@@ -9,7 +9,6 @@ public class PlayerSkewerAttack : BaseMeleeAttack
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Applying Skewer Effect");
         if (collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull() && !inventory.ActiveSkewerCooked())
         {
             Debug.Log("Hit skewerable object");

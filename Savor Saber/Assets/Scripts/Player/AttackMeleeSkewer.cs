@@ -31,15 +31,14 @@ public class AttackMeleeSkewer : AttackMelee
     public override void Attack()
     {
         //animation stuff
-        animator.SetTrigger("Attack");
-        animator.SetTrigger(attackName);
+        animator.Play(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;
+        CanCancel = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
 
-        Debug.Log(attackCapsuleRotation);
         newAttackCollider.direction = attackCapsuleDirection;
         newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
 
