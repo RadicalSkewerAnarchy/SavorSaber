@@ -127,7 +127,7 @@ public class Inventory : MonoBehaviour {
             rangedAttack.enabled = false;
 
         //clear the skewer of recipes and ingredients after throwing
-        if (quiver[activeSkewer].finishedRecipe != null && rangedAttack.attacking)
+        if (quiver[activeSkewer].finishedRecipe != null && rangedAttack.Attacking)
         {
             quiver[activeSkewer].finishedRecipe = null;
             ClearActiveSkewer();

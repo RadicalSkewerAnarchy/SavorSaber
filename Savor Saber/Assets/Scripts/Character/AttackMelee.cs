@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Use to give an entity a melee attack 
 /// </summary>
 /// [RequireComponent(typeof(Animator))]
-public class AttackMelee : MonoBehaviour
+public class AttackMelee : AttackBase
 {
 
     #region fields
@@ -63,18 +64,12 @@ public class AttackMelee : MonoBehaviour
     //what input axis, if any, should be accepted to trigger this attack
     public string inputAxis;
 
-    /// <summary>
-    /// To prevent attack action while still attacking.
-    /// </summary>
-    protected bool endSignalSent = false;
-    protected bool attacking = false;
-
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-
+        dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
 
         //has to have either a monster controller or player controller
@@ -85,11 +80,22 @@ public class AttackMelee : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        RecalculatePosition();
-        if (Input.GetButtonDown(inputAxis) && !attacking)
+    {     
+        if (Input.GetButtonDown(inputAxis))
         {
-            Attack();
+            //Get the first attack from dependecies that is attacking, else null
+            AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
+            if(activeAttack == null)
+            {
+                RecalculatePosition();
+                Attack();
+            }
+            else if(activeAttack.CanCancel)
+            {
+                activeAttack.Cancel();
+                RecalculatePosition();
+                Attack();
+            }
         }
     }
 
@@ -101,62 +107,53 @@ public class AttackMelee : MonoBehaviour
         Direction direction;
 
         //get direction from whichever controller component this entity has
-        if(playerController != null)
-        {
-            direction = playerController.direction;
-        }
-        else
-        {
-            direction = monsterController.direction;
-        }
-
-        //Debug.Log(direction);
+        direction = playerController?.direction ?? monsterController.direction;
 
         // move spawn point into position
-        if (direction == Direction.East && !attacking)
+        if (direction == Direction.East)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y);
         }
-        else if (direction == Direction.West && !attacking)
+        else if (direction == Direction.West)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y);
         }
-        else if (direction == Direction.North && !attacking)
+        else if (direction == Direction.North)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y + (meleeRange / 2f));
         }
-        else if (direction == Direction.South && !attacking)
+        else if (direction == Direction.South)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackCapsuleRotation = 0;
             attackSpawnPoint = new Vector2(transform.position.x, transform.position.y - (meleeRange / 2f));
         }
         //intermediate directions
-        else if (direction == Direction.NorthWest && !attacking)
+        else if (direction == Direction.NorthWest)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = -45f;
             attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
         }
-        else if (direction == Direction.NorthEast && !attacking)
+        else if (direction == Direction.NorthEast)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 45f;
             attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
         }
-        else if (direction == Direction.SouthWest && !attacking)
+        else if (direction == Direction.SouthWest)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 45f;
             attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y - (meleeRange / 2f));
         }
-        else if (direction == Direction.SouthEast && !attacking)
+        else if (direction == Direction.SouthEast)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = -45f;
@@ -164,16 +161,14 @@ public class AttackMelee : MonoBehaviour
         }
     }
 
-    public virtual void Attack()
+    public override void Attack()
     {
-
-
         //animation stuff
         animator.SetTrigger("Attack");
         animator.SetTrigger(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions
-        attacking = true;
+        Attacking = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
 
@@ -199,9 +194,9 @@ public class AttackMelee : MonoBehaviour
     /// </summary>
     protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack)
     {
-        endSignalSent = true;
         yield return new WaitForSeconds(time);
-        attacking = false;
+        Attacking = false;
+        CanCancel = false;
 
         Destroy(newAttack);
 

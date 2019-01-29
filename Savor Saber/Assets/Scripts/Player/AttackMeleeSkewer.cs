@@ -19,7 +19,7 @@ public class AttackMeleeSkewer : AttackMelee
     void Start()
     {
         inventory = GetComponent<Inventory>();
-
+        dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
 
         //has to have either a monster controller or player controller
@@ -35,7 +35,7 @@ public class AttackMeleeSkewer : AttackMelee
         animator.SetTrigger(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions
-        attacking = true;
+        Attacking = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
 

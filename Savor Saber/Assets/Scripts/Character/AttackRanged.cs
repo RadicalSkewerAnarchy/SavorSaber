@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /// <summary>
 /// Use to give an entity a melee attack 
 /// </summary>
 /// [RequireComponent(typeof(Animator))]
-public class AttackRanged : MonoBehaviour
+public class AttackRanged : AttackBase
 {
 
     #region fields
@@ -44,15 +45,6 @@ public class AttackRanged : MonoBehaviour
     /// </summary>
     public string inputAxis;
 
-    /// <summary>
-    /// To prevent attack action while still attacking.
-    /// Also checked by player inventory - if it used a ranged attack, 
-    /// clear the current skewer.
-    /// </summary>
-    protected bool endSignalSent = false;
-    [System.NonSerialized]
-    public bool attacking = false;
-
     #endregion
 
     // Start is called before the first frame update
@@ -60,7 +52,7 @@ public class AttackRanged : MonoBehaviour
     {
 
         animator = GetComponent<Animator>();
-
+        dependecies = GetComponents<AttackBase>();
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
         if (playerController == null)
@@ -70,81 +62,23 @@ public class AttackRanged : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //RecalculatePosition();
-        if (Input.GetButtonDown(inputAxis) && !attacking)
+        if (Input.GetButtonDown(inputAxis))
         {
-            Attack();
+            //Get the first attack from dependecies that is attacking, else null
+            AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
+            if (activeAttack == null)
+                Attack();
+            else if (activeAttack.CanCancel)
+            {
+                activeAttack.Cancel();
+                Attack();
+            }
         }
     }
 
-    /// <summary>
-    /// Adjusts the position of the attack spawner based on current direction state
-    /// </summary>
-    private void RecalculatePosition()
+    public override void Attack()
     {
-        Direction direction;
-
-        //get direction from whichever controller component this entity has
-        if (playerController != null)
-        {
-            direction = playerController.direction;
-        }
-        else
-        {
-            direction = monsterController.direction;
-        }
-
-        //Debug.Log(direction);
-
-        // move spawn point into position
-        if (direction == Direction.East && !attacking)
-        {
-
-        }
-        else if (direction == Direction.West && !attacking)
-        {
-
-        }
-        else if (direction == Direction.North && !attacking)
-        {
-
-        }
-        else if (direction == Direction.South && !attacking)
-        {
-
-        }
-        //intermediate directions
-        else if (direction == Direction.NorthWest && !attacking)
-        {
-
-        }
-        else if (direction == Direction.NorthEast && !attacking)
-        {
-
-        }
-        else if (direction == Direction.SouthWest && !attacking)
-        {
-
-        }
-        else if (direction == Direction.SouthEast && !attacking)
-        {
-
-        }
-    }
-
-    public virtual void Attack()
-    {
-        Direction direction;
-
-        //get direction from whichever controller component this entity has
-        if (playerController != null)
-        {
-            direction = playerController.direction;
-        }
-        else
-        {
-            direction = monsterController.direction;
-        }
+        Direction direction = playerController?.direction ?? monsterController.direction;
 
         //animation stuff
         animator.SetTrigger("Attack");
@@ -161,7 +95,7 @@ public class AttackRanged : MonoBehaviour
             projectileData.effectRecipeData = effectRecipeData;
         }
 
-        attacking = true;
+        Attacking = true;
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
     }
 
@@ -171,10 +105,9 @@ public class AttackRanged : MonoBehaviour
     /// </summary>
     protected IEnumerator EndAttackAfterSeconds(float time)
     {
-        endSignalSent = true;
         yield return new WaitForSeconds(time);
-        attacking = false;
-
+        Attacking = false;
+        CanCancel = false;
         yield return null;
     }
 }
