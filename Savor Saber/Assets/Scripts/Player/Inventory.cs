@@ -238,7 +238,6 @@ public class Inventory : MonoBehaviour {
 
             Debug.Log("Swapping skewer to " + activeSkewer);
             UpdateSkewerVisual();
-            SetActiveEffect();
         }
         else if (Input.GetButtonDown("SwapRight"))
         {
@@ -248,7 +247,6 @@ public class Inventory : MonoBehaviour {
 
             Debug.Log("Swapping skewer to " + activeSkewer);
             UpdateSkewerVisual();
-            SetActiveEffect();
         }
     }
 
