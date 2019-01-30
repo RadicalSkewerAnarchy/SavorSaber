@@ -58,6 +58,8 @@ public class Inventory : MonoBehaviour {
 
     #region fields
 
+    public bool CanSwap { get; set; }
+
     /// <summary>
     /// Fields related to inventory visual representation
     /// </summary>
@@ -91,54 +93,14 @@ public class Inventory : MonoBehaviour {
         quiver[0] = new Skewer();
         quiver[1] = new Skewer();
         quiver[2] = new Skewer();
-
+        CanSwap = true;
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
     }
 
     private void Update()
     {
-<<<<<<< HEAD
         GetCookingInput();
         GetSkewerSwapInput();
-
-        //disable the player's ranged attack if the active skewer is not cooked
-        if (ActiveSkewerCooked())
-            rangedAttack.enabled = true;
-        else
-            rangedAttack.enabled = false;
-
-        //clear the skewer of recipes and ingredients after throwing
-        if (quiver[activeSkewer].finishedRecipe != null && rangedAttack.Attacking)
-        {
-            quiver[activeSkewer].finishedRecipe = null;
-            ClearActiveSkewer();
-        }
-
-=======
-        //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
-        {
-            if(quiver[activeSkewer].GetCount() > 0)
-            {
-                LongCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                ShortCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
->>>>>>> origin/tinoAttackTweaks
     }
 
     #region utility functions 
@@ -249,6 +211,8 @@ public class Inventory : MonoBehaviour {
 
     private void GetSkewerSwapInput()
     {
+        if (!CanSwap)
+            return;
         if (Input.GetButtonDown("SwapLeft"))
         {
             activeSkewer--;
@@ -257,7 +221,6 @@ public class Inventory : MonoBehaviour {
 
             Debug.Log("Swapping skewer to " + activeSkewer);
             UpdateSkewerVisual();
-            SetActiveEffect();
         }
         else if (Input.GetButtonDown("SwapRight"))
         {
@@ -267,7 +230,6 @@ public class Inventory : MonoBehaviour {
 
             Debug.Log("Swapping skewer to " + activeSkewer);
             UpdateSkewerVisual();
-            SetActiveEffect();
         }
     }
 

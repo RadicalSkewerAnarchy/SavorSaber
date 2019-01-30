@@ -51,12 +51,14 @@ public class AttackRangedThrowSkewer : AttackRanged
             currLevel = 0;
             Attack();
             inv.ClearActiveRecipe();
+            inv.CanSwap = true;
         }
     }
 
     private IEnumerator Charge()
     {
         Attacking = true;
+        inv.CanSwap = false;
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
             Debug.Log("Charge Level Equals: " + currLevel);
