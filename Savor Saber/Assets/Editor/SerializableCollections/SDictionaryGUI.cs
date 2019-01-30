@@ -27,6 +27,31 @@ namespace SerializableCollections
                 }
             }
 
+            public static void EnumAddGUI<TKey, TValue>(this SDictionary<TKey, TValue> dict) where TKey: System.Enum where TValue: new() 
+            {
+                GUILayout.FlexibleSpace();
+                if (EditorGUILayout.DropdownButton(new GUIContent("+"), FocusType.Keyboard, GUILayout.MaxWidth(100)))
+                {
+                    GenericMenu menu = new GenericMenu();
+                    foreach (var t in EnumUtils.GetValues<TKey>())
+                        if (!dict.ContainsKey(t))
+                            menu.AddItem(new GUIContent(t.ToString()), false, (obj) => dict.Add((TKey)obj, new TValue()), t);
+                    menu.ShowAsContext();
+                }
+            }
+
+            public static void EnumAddGUIVal<TKey, TValue>(this SDictionary<TKey, TValue> dict) where TKey : System.Enum where TValue : struct
+            {
+                if (EditorGUILayout.DropdownButton(new GUIContent("+"), FocusType.Keyboard))
+                {
+                    GenericMenu menu = new GenericMenu();
+                    foreach (var t in EnumUtils.GetValues<TKey>())
+                        if (!dict.ContainsKey(t))
+                            menu.AddItem(new GUIContent(t.ToString()), false, (obj) => dict.Add((TKey)obj, default), t);
+                    menu.ShowAsContext();
+                }
+            }
+
             public static bool DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, GenericMenu menu, string title, bool oneLine = false)
             {
                 bool ret = false;

@@ -4,31 +4,135 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
+/// Class for packaging a stack of ingredients and a completed recipe.
+/// </summary>
+public class Skewer
+{
+    //fields
+    private Stack<IngredientData> ingredientStack = new Stack<IngredientData>();
+
+    public RecipeData finishedRecipe = null;
+
+
+    //methods
+    public int GetCount()
+    {
+        return ingredientStack.Count;
+    }
+
+    public Stack<IngredientData> GetStack()
+    {
+        return ingredientStack;
+    }
+
+    public void PushIngredient(IngredientData ingredient)
+    {
+        ingredientStack.Push(ingredient);
+    }
+
+    public IngredientData PopIngredient()
+    {
+        return ingredientStack.Pop();
+    }
+
+    public IngredientData[] ToArray()
+    {
+        return ingredientStack.ToArray();
+    }
+
+    public bool IsCooked()
+    {
+        return finishedRecipe != null;
+    }
+
+    public void Clear()
+    {
+        ingredientStack.Clear();
+    }
+}
+
+/// <summary>
 /// Controller for functions related to managing and displaying inventory
 /// </summary>
+/// 
+[RequireComponent(typeof(AttackRanged))]
 public class Inventory : MonoBehaviour {
 
     #region fields
+
     /// <summary>
     /// Fields related to inventory visual representation
     /// </summary>
-    //public Canvas canvas = null;
     public int maxItemsPerSkewer = 3;
     public Image[] skewerSprites = new Image[3];
     public Sprite emptySprite;
 
 
     /// <summary>
-    /// Fields related to skewer switching
+    /// Fields related to actual inventory tracking
     /// </summary>
     private int activeSkewer = 0;
-    private Stack<IngredientData>[] quiver = new Stack<IngredientData>[3];
+    private Skewer[] quiver = new Skewer[3];
+
+    /// <summary>
+    /// Fields related to cooking
+    /// </summary>
+    public GameObject recipeDatabaseObject;
+    private RecipeDatabase recipeDatabase;
+    public AttackRanged rangedAttack;
+    //[System.NonSerialized]
+    public bool nearCampfire = false;
+
     #endregion
 
     void Start () {
-        quiver[0] = new Stack<IngredientData>();
-        quiver[1] = new Stack<IngredientData>();
-        quiver[2] = new Stack<IngredientData>();
+        quiver[0] = new Skewer();
+        quiver[1] = new Skewer();
+        quiver[2] = new Skewer();
+
+        recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
+        rangedAttack = GetComponent<AttackRanged>();
+    }
+
+    private void Update()
+    {
+        //Press C to cook
+        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
+        {
+            if(quiver[activeSkewer].GetCount() > 0)
+            {
+                LongCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
+        {
+            if (quiver[activeSkewer].GetCount() > 0)
+            {
+                ShortCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+        }
+
+        //disable the player's ranged attack if the active skewer is not cooked
+        if (ActiveSkewerCooked())
+            rangedAttack.enabled = true;
+        else
+            rangedAttack.enabled = false;
+
+        //clear the skewer of recipes and ingredients after throwing
+        if (quiver[activeSkewer].finishedRecipe != null && rangedAttack.Attacking)
+        {
+            quiver[activeSkewer].finishedRecipe = null;
+            ClearActiveSkewer();
+        }
+
     }
 
     /// <summary>
@@ -36,22 +140,54 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     public bool ActiveSkewerFull()
     {
-        return (quiver[activeSkewer].Count == 3);
+        return (quiver[activeSkewer].GetCount() == maxItemsPerSkewer);
     }
 
     /// <summary>
-    /// Add or remove ingredients from active skewer
+    /// Returns true if the active skewer has been cooked
+    /// </summary>
+    public bool ActiveSkewerCooked()
+    {
+        return quiver[activeSkewer].IsCooked();
+    }
+
+    /// <summary>
+    /// Add ingredients to active skewer
     /// </summary>
     public void AddToSkewer(IngredientData ingredient)
     {
-        quiver[activeSkewer].Push(ingredient);
+        //Do not allow adding more ingredients if full or already cooked
+        if (!ActiveSkewerCooked() && !ActiveSkewerFull())
+        {
+            quiver[activeSkewer].PushIngredient(ingredient);
+            UpdateSkewerVisual();
+        }
+    }
+
+    /// <summary>
+    /// Remove an ingredient from the active skewer
+    /// </summary>
+    public IngredientData RemoveFromSkewer()
+    {
+        IngredientData topIngredient = quiver[activeSkewer].PopIngredient();
+        return topIngredient;
+    }
+
+    /// <summary>
+    /// Clears all ingredients from a skewer but does NOT remove cooked recipes
+    /// </summary>
+    public void ClearActiveSkewer()
+    {
+        quiver[activeSkewer].Clear();
         UpdateSkewerVisual();
     }
 
-    public IngredientData RemoveFromSkewer()
+    /// <summary>
+    /// Tells the player's ranged attack to use the current skewer's effect, if any
+    /// </summary>
+    private void SetActiveEffect()
     {
-        IngredientData topIngredient = quiver[activeSkewer].Pop();
-        return topIngredient;
+        rangedAttack.effectRecipeData = quiver[activeSkewer].finishedRecipe;
     }
 
     /// <summary>
@@ -83,4 +219,58 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Execute a long cook, access full database
+    /// </summary>
+    private void LongCook()
+    {
+        Debug.Log("Cooking at campfire...");
+        RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].GetStack());
+        //if it actually returned a recipe match
+        if(cookedRecipe != null)
+        {
+            quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
+            ClearActiveSkewer();
+        }
+
+    }
+
+    /// <summary>
+    /// Execute a short cook, only use recipes not tagged complex
+    /// </summary>
+    private void ShortCook()
+    {
+        Debug.Log("Cooking in the field...");
+        RecipeData cookedRecipe = recipeDatabase.CompareToSimpleRecipes(quiver[activeSkewer].GetStack());
+        //if it actually returned a recipe match
+        if (cookedRecipe != null)
+        {
+            quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
+            ClearActiveSkewer();
+        }
+    }
+
+    /// <summary>
+    /// Triggers to check if the player is near a campfire
+    /// </summary>
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Campfire")
+        {
+            Debug.Log("Player near campfire");
+            nearCampfire = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Campfire")
+        {
+            Debug.Log("Player left campfire");
+            nearCampfire = false;
+        }
+    }
+    
 }

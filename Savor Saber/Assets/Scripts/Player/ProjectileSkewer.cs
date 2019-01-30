@@ -2,37 +2,86 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileSkewer : Projectile
+public class ProjectileSkewer : BaseProjectile
 {
-
-    public RecipeData cookedRecipeData;
 
     // Start is called before the first frame update
     void Start()
     {
-        //set data values
-        projectileDamage = 0;
-        projectileLength = 2;
-        projectileWidth = 1;
-
-        //set the dimensions of the hitbox to match the projectile's width and height
         projectileCollider = GetComponent<CapsuleCollider2D>();
-        projectileCollider.direction = CapsuleDirection2D.Horizontal;
         projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+
+        Debug.Log("Shooting " + direction);
+
+        // set projectile velocity vector
+        if (direction == Direction.East)
+        {
+            directionVector = new Vector2(1, 0);
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+        }
+        else if (direction == Direction.West)
+        {
+            directionVector = new Vector2(-1, 0);
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+        }
+        else if (direction == Direction.North)
+        {
+            directionVector = new Vector2(0, 1);
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = 90;
+        }
+        else if (direction == Direction.South)
+        {
+            directionVector = new Vector2(0, -1);
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = -90;
+        }
+        else if (direction == Direction.NorthWest)
+        {
+            directionVector = new Vector2(-1, 1).normalized;
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = -45;
+        }
+        else if (direction == Direction.NorthEast)
+        {
+            directionVector = new Vector2(1, 1).normalized;
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = 45;
+        }
+        else if (direction == Direction.SouthWest)
+        {
+            directionVector = new Vector2(-1, -1).normalized;
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = 45;
+        }
+        else if (direction == Direction.SouthEast)
+        {
+            directionVector = new Vector2(1, -1).normalized;
+            projectileCollider.size = new Vector2(projectileLength, projectileWidth);
+            //projectileRotation = -45;
+        }
+
+        transform.Rotate(new Vector3(0, 0, projectileRotation));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Translate(directionVector * projectileSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "AffectedBySkewer")
+
+        if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
         {
-            cookedRecipeData.ApplyEffectToTarget(collision.gameObject);
+            Debug.Log("Thrown skewer hit target with effect " + effectRecipeData.displayName);
+            effectRecipeData.ApplyEffectToTarget(collision.gameObject);
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
         }
+
+
 
     }
 }

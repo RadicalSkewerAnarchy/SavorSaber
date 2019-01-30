@@ -8,7 +8,6 @@ using UnityEditor.SceneManagement;
 [CustomEditor(typeof(UtilityCurves))]
 public class UtilityCurvesEditor : Editor
 {
-    string addStr;
     string innerAddStr;
     string macroAddStr;
     string macroInnerAddStr;
@@ -16,7 +15,7 @@ public class UtilityCurvesEditor : Editor
     {
         var data = target as UtilityCurves;
         // AI states dictionary
-        SDictionaryGUI.AddGUI addGUI = () => { data.aiStates.StringAddGUI(ref addStr); };
+        SDictionaryGUI.AddGUI addGUI = () => { data.aiStates.EnumAddGUI(); };
         SDictionaryGUI.ValueGUI<UtilityCurves.CurveDict> valueGUI = (dict) =>
         {
             SDictionaryGUI.AddGUI innerAddGUI = () => { dict.StringAddGUI(ref innerAddStr); };

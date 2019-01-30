@@ -129,8 +129,6 @@ public class UpdatedController : MonoBehaviour
                 direction = Direction.East.Offset((int)(movementAngle / 45));
                 animatorBody.SetFloat("Direction", (float)direction);
             }
-            else
-                Debug.Log("Skip Frame");
         }
         else
         {
@@ -143,10 +141,6 @@ public class UpdatedController : MonoBehaviour
         //////
     }
 
-    public void Slow()
-    {
-
-    }
 }
 
 // used for basic movement implementaion, https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/controlling-player

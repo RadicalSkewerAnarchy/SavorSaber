@@ -14,6 +14,7 @@ public class IngredientDataEditor : Editor
         ingredient.displayName = EditorGUILayout.TextField(new GUIContent("Display Name", displayNameTooltip), ingredient.displayName);
         ingredient.image = EditorGUILayout.ObjectField(new GUIContent("Image", "TODO: tooltip"), ingredient.image, typeof(Sprite), false) as Sprite;
         EditorUtils.Separator();
+        //ingredient.flavors = EditorGUILayout.ObjectField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors, typeof()
         // Gameplay data
         ingredient.flavors = (RecipeData.Flavors)EditorGUILayout.EnumFlagsField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors);
         if (GUI.changed)
