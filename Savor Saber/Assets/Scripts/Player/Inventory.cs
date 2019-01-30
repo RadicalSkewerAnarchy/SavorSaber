@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Skewer
 {
     //fields
-    private Stack<IngredientData> ingredientStack = new Stack<IngredientData>();
+    public Stack<IngredientData> ingredientStack = new Stack<IngredientData>();
 
     public RecipeData finishedRecipe = null;
 
@@ -18,11 +18,6 @@ public class Skewer
     public int GetCount()
     {
         return ingredientStack.Count;
-    }
-
-    public Stack<IngredientData> GetStack()
-    {
-        return ingredientStack;
     }
 
     public void PushIngredient(IngredientData ingredient)
@@ -119,6 +114,16 @@ public class Inventory : MonoBehaviour {
     }
 
     #region utility functions 
+
+
+    /// <summary>
+    /// returns the currently active skewer
+    /// </summary>
+    public Skewer GetActiveSkewer()
+    {
+        return quiver[activeSkewer];
+    }
+
     /// <summary>
     /// Returns true if the active skewer is full
     /// </summary>
@@ -262,7 +267,7 @@ public class Inventory : MonoBehaviour {
     private void LongCook()
     {
         Debug.Log("Cooking at campfire...");
-        RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].GetStack());
+        RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].ingredientStack);
         //if it actually returned a recipe match
         if(cookedRecipe != null)
         {
@@ -279,7 +284,7 @@ public class Inventory : MonoBehaviour {
     private void ShortCook()
     {
         Debug.Log("Cooking in the field...");
-        RecipeData cookedRecipe = recipeDatabase.CompareToSimpleRecipes(quiver[activeSkewer].GetStack());
+        RecipeData cookedRecipe = recipeDatabase.CompareToSimpleRecipes(quiver[activeSkewer].ingredientStack);
         //if it actually returned a recipe match
         if (cookedRecipe != null)
         {
