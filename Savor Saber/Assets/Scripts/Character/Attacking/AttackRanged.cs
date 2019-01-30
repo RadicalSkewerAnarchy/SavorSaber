@@ -79,17 +79,46 @@ public class AttackRanged : AttackBase
     public override void Attack()
     {
         Direction direction = playerController?.direction ?? monsterController.direction;
+        float projectileRotation = GetRotation(direction);
 
         //animation stuff
         animator.Play(attackName);
 
-        //spawn the attack at the spawn point and give it its direction
+        //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
+        newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
         //give the spawned projectile its effect data, if applicable
-        if(effectRecipeData != null)
+        if (effectRecipeData != null)
+        {
+            projectileData.effectRecipeData = effectRecipeData;
+        }
+
+        Attacking = true;
+        StartCoroutine(EndAttackAfterSeconds(attackDuration));
+    }
+
+    /// <summary>
+    /// Overloaded version of Attack() that takes in a target bector and uses that to get its rotation.
+    /// </summary>
+    public void Attack(Vector3 targetVector)
+    {
+        Direction direction = playerController?.direction ?? monsterController.direction;
+        float projectileRotation = GetRotation(direction);
+
+        //animation stuff
+        animator.Play(attackName);
+
+        //spawn the attack at the spawn point and give it its data
+        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
+        projectileData.direction = direction;
+        newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
+
+        //give the spawned projectile its effect data, if applicable
+        if (effectRecipeData != null)
         {
             projectileData.effectRecipeData = effectRecipeData;
         }
@@ -108,5 +137,48 @@ public class AttackRanged : AttackBase
         Attacking = false;
         CanCancel = false;
         yield return null;
+    }
+
+    protected float GetRotation(Direction direction)
+    {
+        float projectileRotation = 0f; 
+
+        // set projectile velocity vector
+        if (direction == Direction.East)
+        {
+            projectileRotation = 0f;
+        }
+        else if (direction == Direction.West)
+        {
+            projectileRotation = 180f;
+        }
+        else if (direction == Direction.North)
+        {
+
+            projectileRotation = 90f;
+        }
+        else if (direction == Direction.South)
+        {
+
+            projectileRotation = -90;
+        }
+        else if (direction == Direction.NorthWest)
+        {
+            projectileRotation = 135;
+        }
+        else if (direction == Direction.NorthEast)
+        {
+            projectileRotation = 45;
+        }
+        else if (direction == Direction.SouthWest)
+        {
+            projectileRotation = 225;
+        }
+        else if (direction == Direction.SouthEast)
+        {
+            projectileRotation = 315;
+        }
+
+        return projectileRotation;
     }
 }

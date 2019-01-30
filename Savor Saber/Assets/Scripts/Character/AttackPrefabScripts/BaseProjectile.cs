@@ -40,6 +40,9 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     public bool penetrateTargets = false;
 
+    [System.NonSerialized]
+    public float projectileRotation;
+
     /// <summary>
     /// Recipe data for any effects to be applied. Projectile gets this from
     /// the attack script. 
@@ -52,10 +55,10 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     [System.NonSerialized]
     public Direction direction;
-    protected Vector2 directionVector;
-    protected float projectileRotation;
-
-    protected CapsuleCollider2D projectileCollider;
+    [System.NonSerialized]
+    public Vector2 directionVector;
+    [System.NonSerialized]
+    public CapsuleCollider2D projectileCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -66,6 +69,18 @@ public class BaseProjectile : MonoBehaviour
         Debug.Log("Shooting " + direction);
 
         // set projectile velocity vector
+        SetGeometry();
+ 
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
+    }
+
+    protected void SetGeometry()
+    {
         if (direction == Direction.East)
         {
             directionVector = new Vector2(1, 0);
@@ -80,46 +95,32 @@ public class BaseProjectile : MonoBehaviour
         {
             directionVector = new Vector2(0, 1);
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = 90;
         }
         else if (direction == Direction.South)
         {
             directionVector = new Vector2(0, -1);
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = -90;
         }
         else if (direction == Direction.NorthWest)
         {
             directionVector = new Vector2(-1, 1).normalized;
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = -45;
         }
         else if (direction == Direction.NorthEast)
         {
             directionVector = new Vector2(1, 1).normalized;
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = 45;
         }
         else if (direction == Direction.SouthWest)
         {
             directionVector = new Vector2(-1, -1).normalized;
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = 45;
         }
         else if (direction == Direction.SouthEast)
         {
             directionVector = new Vector2(1, -1).normalized;
             projectileCollider.size = new Vector2(projectileLength, projectileWidth);
-            projectileRotation = -45;
         }
-
-        transform.Rotate(new Vector3(0, 0, projectileRotation));
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
