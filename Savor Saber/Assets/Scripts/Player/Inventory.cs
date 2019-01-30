@@ -22,7 +22,7 @@ public class Skewer
 
     public void PushIngredient(IngredientData ingredient)
     {
-        ingredientStack.Push(ingredient);
+        ingredientStack.Push(ingredient);   
     }
 
     public IngredientData PopIngredient()
@@ -236,7 +236,7 @@ public class Inventory : MonoBehaviour {
     private void GetCookingInput()
     {
         //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
+        if (Input.GetButtonDown("Cook") && nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {
@@ -247,7 +247,7 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
-        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
+        else if (Input.GetButtonDown("Cook") && !nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {
