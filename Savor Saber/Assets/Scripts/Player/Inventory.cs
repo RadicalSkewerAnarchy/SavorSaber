@@ -72,7 +72,8 @@ public class Inventory : MonoBehaviour {
     /// Fields related to actual inventory tracking
     /// </summary>
     private int activeSkewer = 0;
-    private Skewer[] quiver = new Skewer[3];
+    private int numberOfSkewers = 3;
+    private Skewer[] quiver;
 
     /// <summary>
     /// Fields related to cooking
@@ -85,7 +86,10 @@ public class Inventory : MonoBehaviour {
 
     #endregion
 
-    void Start () {
+    void Start ()
+    {
+
+        quiver = new Skewer[numberOfSkewers];
         quiver[0] = new Skewer();
         quiver[1] = new Skewer();
         quiver[2] = new Skewer();
@@ -96,29 +100,8 @@ public class Inventory : MonoBehaviour {
 
     private void Update()
     {
-        //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
-        {
-            if(quiver[activeSkewer].GetCount() > 0)
-            {
-                LongCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                ShortCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
+        GetCookingInput();
+        GetSkewerSwapInput();
 
         //disable the player's ranged attack if the active skewer is not cooked
         if (ActiveSkewerCooked())
@@ -135,6 +118,7 @@ public class Inventory : MonoBehaviour {
 
     }
 
+    #region utility functions 
     /// <summary>
     /// Returns true if the active skewer is full
     /// </summary>
@@ -219,6 +203,58 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    private void GetSkewerSwapInput()
+    {
+        if(Input.GetButtonDown("SwapLeft"))
+        {
+            activeSkewer--;
+            if (activeSkewer < 0)
+                activeSkewer = numberOfSkewers - 1;
+
+            Debug.Log("Swapping skewer to " + activeSkewer);
+            UpdateSkewerVisual();
+            SetActiveEffect();
+        }
+        else if(Input.GetButtonDown("SwapRight"))
+        {
+            activeSkewer++;
+            if (activeSkewer >= numberOfSkewers)
+                activeSkewer = 0;
+
+            Debug.Log("Swapping skewer to " + activeSkewer);
+            UpdateSkewerVisual();
+            SetActiveEffect();
+        }
+    }
+    #endregion
+
+    #region cooking functions
+    private void GetCookingInput()
+    {
+        //Press C to cook
+        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
+        {
+            if (quiver[activeSkewer].GetCount() > 0)
+            {
+                LongCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
+        {
+            if (quiver[activeSkewer].GetCount() > 0)
+            {
+                ShortCook();
+            }
+            else if (quiver[activeSkewer].GetCount() <= 0)
+            {
+                Debug.Log("Your inventory is empty, cannot cook");
+            }
+        }
+    }
     /// <summary>
     /// Execute a long cook, access full database
     /// </summary>
@@ -272,5 +308,7 @@ public class Inventory : MonoBehaviour {
             nearCampfire = false;
         }
     }
-    
+
+    #endregion
+
 }
