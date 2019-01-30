@@ -181,4 +181,9 @@ public class AttackRanged : AttackBase
 
         return projectileRotation;
     }
+
+    protected Vector2 GetDirectionVector(Vector2 targetVector)
+    {
+        return new Vector2(0, 0);
+    }
 }
