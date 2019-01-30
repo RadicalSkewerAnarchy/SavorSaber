@@ -40,13 +40,9 @@ public class Skewer
         return finishedRecipe != null;
     }
 
-    public void ClearItems()
+    public void Clear()
     {
         ingredientStack.Clear();
-    }
-    public void ClearRecipe()
-    {
-        finishedRecipe = null;
     }
 }
 
@@ -54,6 +50,7 @@ public class Skewer
 /// Controller for functions related to managing and displaying inventory
 /// </summary>
 /// 
+[RequireComponent(typeof(AttackRanged))]
 public class Inventory : MonoBehaviour {
 
     #region fields
@@ -93,11 +90,11 @@ public class Inventory : MonoBehaviour {
         quiver[2] = new Skewer();
 
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
+        rangedAttack = GetComponent<AttackRanged>();
     }
 
     private void Update()
     {
-<<<<<<< HEAD
         GetCookingInput();
         GetSkewerSwapInput();
 
@@ -114,31 +111,6 @@ public class Inventory : MonoBehaviour {
             ClearActiveSkewer();
         }
 
-=======
-        //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
-        {
-            if(quiver[activeSkewer].GetCount() > 0)
-            {
-                LongCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                ShortCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
->>>>>>> origin/tinoAttackTweaks
     }
 
     #region utility functions 
@@ -195,24 +167,16 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     public void ClearActiveSkewer()
     {
-        quiver[activeSkewer].ClearItems();
+        quiver[activeSkewer].Clear();
         UpdateSkewerVisual();
-    }
-
-    /// <summary>
-    /// Clears cooked recipes but does NOT remove ingredients
-    /// </summary>
-    public void ClearActiveRecipe()
-    {
-        quiver[activeSkewer].finishedRecipe = null;
     }
 
     /// <summary>
     /// Tells the player's ranged attack to use the current skewer's effect, if any
     /// </summary>
-    public RecipeData GetActiveEffect()
+    private void SetActiveEffect()
     {
-        return quiver[activeSkewer].finishedRecipe;
+        rangedAttack.effectRecipeData = quiver[activeSkewer].finishedRecipe;
     }
 
     /// <summary>
@@ -308,6 +272,7 @@ public class Inventory : MonoBehaviour {
         if(cookedRecipe != null)
         {
             quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
             ClearActiveSkewer();
         }
 
@@ -324,6 +289,7 @@ public class Inventory : MonoBehaviour {
         if (cookedRecipe != null)
         {
             quiver[activeSkewer].finishedRecipe = cookedRecipe;
+            SetActiveEffect();
             ClearActiveSkewer();
         }
     }

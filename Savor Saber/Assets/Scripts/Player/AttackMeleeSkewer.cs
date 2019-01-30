@@ -35,7 +35,7 @@ public class AttackMeleeSkewer : AttackMelee
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;
-        CanBeCanceled = true;
+        CanCancel = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
 
