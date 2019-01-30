@@ -85,13 +85,13 @@ public class AttackMelee : AttackBase
         if (Input.GetButtonDown(inputAxis))
         {
             //Get the first attack from dependecies that is attacking, else null
-            AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);          
+            AttackBase activeAttack = GetActiveAttack();        
             if(activeAttack == null)
             {
                 RecalculatePosition();
                 Attack();
             }
-            else if(activeAttack.CanCancel && activeAttack.CancelPriority <= CancelPriority)
+            else if(activeAttack.CanBeCanceled && activeAttack.CancelPriority <= CancelPriority)
             {
                 Debug.Log("Cancelling into" + this.ToString());
                 activeAttack.Cancel();
@@ -165,7 +165,7 @@ public class AttackMelee : AttackBase
 
     public override void Attack()
     {
-        CanCancel = true;
+        CanBeCanceled = true;
         //animation stuff
         animator.Play(attackName);
 
@@ -203,7 +203,7 @@ public class AttackMelee : AttackBase
         currAttackObject = newAttack;
         yield return new WaitForSeconds(time);
         Attacking = false;
-        CanCancel = false;
+        CanBeCanceled = false;
         currAttackObject = null;
         Destroy(newAttack);
 
