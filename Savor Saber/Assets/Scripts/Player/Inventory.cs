@@ -202,10 +202,13 @@ public class Inventory : MonoBehaviour {
             }
         }
     }
+    #endregion
+
+    #region cooking functions
 
     private void GetSkewerSwapInput()
     {
-        if(Input.GetButtonDown("SwapLeft"))
+        if (Input.GetButtonDown("SwapLeft"))
         {
             activeSkewer--;
             if (activeSkewer < 0)
@@ -215,7 +218,7 @@ public class Inventory : MonoBehaviour {
             UpdateSkewerVisual();
             SetActiveEffect();
         }
-        else if(Input.GetButtonDown("SwapRight"))
+        else if (Input.GetButtonDown("SwapRight"))
         {
             activeSkewer++;
             if (activeSkewer >= numberOfSkewers)
@@ -226,9 +229,7 @@ public class Inventory : MonoBehaviour {
             SetActiveEffect();
         }
     }
-    #endregion
 
-    #region cooking functions
     private void GetCookingInput()
     {
         //Press C to cook
