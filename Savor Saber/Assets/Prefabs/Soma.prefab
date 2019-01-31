@@ -72,6 +72,8 @@ GameObject:
   - component: {fileID: 5232973463692504911}
   - component: {fileID: 4055231404074165998}
   - component: {fileID: 4824409693512105908}
+  - component: {fileID: 1026942967}
+  - component: {fileID: 1026942968}
   m_Layer: 10
   m_Name: Soma
   m_TagString: Player
@@ -218,6 +220,9 @@ MonoBehaviour:
   recipeDatabaseObject: {fileID: 4055231403101592437}
   rangedAttack: {fileID: 0}
   nearCampfire: 0
+  swapSFX: {fileID: 8300000, guid: 2badcb5dd87bea84f871315b46448bb7, type: 3}
+  cookSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
+  cantCookSFX: {fileID: 8300000, guid: 5db5aba6f15df1a418a777ee4cca8d03, type: 3}
 --- !u!114 &4055231404074165996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +281,10 @@ MonoBehaviour:
   inputAxis: Fire3
   chargeLevels: 3
   chargeTime: 0.75
+  chargeSounds:
+  - {fileID: 8300000, guid: a90d1840322c447459cf39fb1d543c87, type: 3}
+  - {fileID: 8300000, guid: 23ebf5c97ad69194cb145d08c6a219c8, type: 3}
+  - {fileID: 8300000, guid: 8f2fce5e9693e3c48a6ca5be96e4aeb3, type: 3}
   currLevel: 0
 --- !u!61 &4055231404074165998
 BoxCollider2D:
@@ -323,3 +332,33 @@ MonoBehaviour:
   maxHealth: 5
   health: 5
   speed: 5
+--- !u!114 &1026942967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f909b47d8022784885a34d16203219e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
+  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
+--- !u!114 &1026942968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7a62a647a25cd4fa74b3c6717d47ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
+    type: 3}

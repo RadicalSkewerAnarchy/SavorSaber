@@ -24,16 +24,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         //Debug.Log("Applying Knife Effect: " + collision);
         if (collision.gameObject.tag == "Monster")
         {
-<<<<<<< HEAD
-            // get char data to deal damage and kill appropriately
-            //Debug.Log("This is a Monster");
-=======
             sfxPlayer.PlayRandPitch(damageSFX);
-            //just instakill the monster for testing purposes
-            Monster targetMonster = collision.gameObject.GetComponent<Monster>();
-            targetMonster.Kill();
-
->>>>>>> hugheHud
             CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
             if (characterData != null)
             {

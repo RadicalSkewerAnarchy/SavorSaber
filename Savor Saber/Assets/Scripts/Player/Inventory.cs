@@ -108,10 +108,6 @@ public class Inventory : MonoBehaviour {
 
     private void Update()
     {
-<<<<<<< HEAD
-=======
-        //Press C to cook
->>>>>>> hugheHud
         GetCookingInput();
         //Detect swapping input
         GetSkewerSwapInput();
@@ -262,11 +258,6 @@ public class Inventory : MonoBehaviour {
             sfxPlayer.Play(swapSFX);
 
             Debug.Log("Swapping skewer to " + activeSkewer);
-<<<<<<< HEAD
-            UpdateSkewerVisual();
-=======
-            //UpdateSkewerVisual();
->>>>>>> hugheHud
         }
         else if (Input.GetButtonDown("SwapRight"))
         {
@@ -277,11 +268,6 @@ public class Inventory : MonoBehaviour {
             sfxPlayer.Play(swapSFX);
 
             Debug.Log("Swapping skewer to " + activeSkewer);
-<<<<<<< HEAD
-            UpdateSkewerVisual();
-=======
-            //UpdateSkewerVisual();
->>>>>>> hugheHud
         }
     }
 
