@@ -85,6 +85,11 @@ public class AIData : CharacterData
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
         //Behavior.UpdateSpeed(speed);
+        // set mood values into dictionary
+        moods.Add("Fear", fear);
+        moods.Add("Hunger", hunger);
+        moods.Add("Hostility", hostility);
+        moods.Add("Friendliness", friendliness);
 
         _values = new Dictionary<string, GetNormalValue>()
         {
@@ -103,8 +108,8 @@ public class AIData : CharacterData
 
         // Decision making
         DecisionTimer = -1f;
-        DecisionTimerReset = 10f;
-        DecisionTimerVariance = 5f;
+        DecisionTimerReset = 5f;
+        DecisionTimerVariance = 2f;
 
         // Variable instantiated variance
         Speed = Random.Range(1f, 1.5f);

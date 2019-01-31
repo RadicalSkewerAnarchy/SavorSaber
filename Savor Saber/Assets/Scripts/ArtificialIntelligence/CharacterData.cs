@@ -33,7 +33,7 @@ public class CharacterData : MonoBehaviour
 
     //public MeleeAttack attack;
 
-    private void Start()
+    void Start()
     {
         // set mood values into dictionary
         moods.Add("Fear", fear);

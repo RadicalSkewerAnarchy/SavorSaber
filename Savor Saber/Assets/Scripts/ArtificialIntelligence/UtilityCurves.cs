@@ -36,9 +36,9 @@ public class UtilityCurves : MonoBehaviour
         float max = 0;
         foreach(var kvp in aiStates)
         {
-            Debug.Log("=== " + kvp.Key);
+            //Debug.Log("=== " + kvp.Key);
             float utility = SumCurves(kvp.Value);
-            Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
+            //Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
             if (utility > max)
             {
                 max = utility;
@@ -62,7 +62,7 @@ public class UtilityCurves : MonoBehaviour
     /// Else, calculates the macro's value and caches it</summary>
     private float GetMacroValue(string macroName)
     {
-        Debug.Log("Calculating Macro value: " + macroName);
+        //Debug.Log("Calculating Macro value: " + macroName);
         if (!macroCache.ContainsKey(macroName))
             macroCache.Add(macroName, SumCurves(macroValues[macroName]));
         return macroCache[macroName];
@@ -91,7 +91,7 @@ public class UtilityCurves : MonoBehaviour
             // Use the Macro value if one exists, else get the value from the AI data
             a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
             float val = EvaluateAttribute(c, a);
-            Debug.Log(">>>>>>" + curvePair.Key + " value: " + a + " weight: " + val);
+            //Debug.Log(">>>>>>" + curvePair.Key + " value: " + a + " weight: " + val);
             // If the value is less than 0, do not factor it in to the utility
             if (val >= 0)
             {
