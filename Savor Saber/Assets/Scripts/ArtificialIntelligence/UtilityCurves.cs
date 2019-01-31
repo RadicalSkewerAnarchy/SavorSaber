@@ -22,13 +22,7 @@ public class UtilityCurves : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Testing code Move later
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            AIData.Protocols state = DecideState();
-            Debug.Log("=====>> Picked state: " + state);
-            data.currentProtocol = state;
-        }
+        // nothing
     }
 
     /// <summary>

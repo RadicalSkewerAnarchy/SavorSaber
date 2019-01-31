@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(MonsterBehavior))]
 [RequireComponent(typeof(MonsterProtocols))]
 [RequireComponent(typeof(MonsterChecks))]
+[RequireComponent(typeof(UtilityCurves))]
 
 public class AIData : CharacterData
 {
@@ -42,7 +43,8 @@ public class AIData : CharacterData
         Party,
         Swarm,
         Feast,
-        Console
+        Console,
+        Runaway
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -62,6 +64,7 @@ public class AIData : CharacterData
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
+    private UtilityCurves Curves;
     /// <summary>
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
@@ -80,6 +83,7 @@ public class AIData : CharacterData
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
+        Curves = GetComponent<UtilityCurves>();
         //Behavior.UpdateSpeed(speed);
 
         _values = new Dictionary<string, GetNormalValue>()
@@ -116,18 +120,17 @@ public class AIData : CharacterData
         // check current state
         // acquire necessary data
         // act on current state
-        /*** IMPORTANT: Currently states call behaviors directly for ease of debugging and setting them up,
-        *               this should be changed so they only call protocols. EXCEPTION: Hard coded abstract
-        *               protocol
-        ***/
+
         // UPDATE Decision
         if (DecisionTimer < 0)
         {
-            ///
-            /// EVALUATE THE CURVES
-            /// MAKE NEW DECISION
-            ///
+            currentProtocol = Curves.DecideState();
+            Debug.Log("Getting New Protocol: " + currentProtocol);
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+        }
+        else
+        {
+            DecisionTimer -= Time.deltaTime;
         }
 
         // SWITCH protocol
@@ -171,6 +174,11 @@ public class AIData : CharacterData
             case Protocols.Console:
                 //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Console();
+                break;
+            // Runaway
+            case Protocols.Runaway:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Runaway();
                 break;
             // default
             default:

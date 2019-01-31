@@ -98,4 +98,8 @@ public class MonsterProtocols : MonoBehaviour
     {
 
     }
+    public void Runaway()
+    {
+
+    }
 }
