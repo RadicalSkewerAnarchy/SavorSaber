@@ -82,6 +82,14 @@ public class Inventory : MonoBehaviour {
     //[System.NonSerialized]
     public bool nearCampfire = false;
 
+    /// <summary>
+    /// Fields related to audio
+    /// </summary>
+    public AudioClip swapSFX;
+    public AudioClip cookSFX;
+    public AudioClip cantCookSFX;
+    private PlaySFX sfxPlayer;
+
     #endregion
 
     void Start ()
@@ -93,33 +101,13 @@ public class Inventory : MonoBehaviour {
         quiver[2] = new Skewer();
 
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
+        sfxPlayer = GetComponent<PlaySFX>();
     }
 
     private void Update()
     {
         //Press C to cook
-        if (Input.GetKeyDown(KeyCode.C) && nearCampfire)
-        {
-            if(quiver[activeSkewer].GetCount() > 0)
-            {
-                LongCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.C) && !nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                ShortCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
+        GetCookingInput();
         //Detect swapping input
         GetSkewerSwapInput();
     }
@@ -258,6 +246,8 @@ public class Inventory : MonoBehaviour {
             if (activeSkewer < 0)
                 activeSkewer = numberOfSkewers - 1;
 
+            sfxPlayer.Play(swapSFX);
+
             Debug.Log("Swapping skewer to " + activeSkewer);
             //UpdateSkewerVisual();
         }
@@ -266,6 +256,8 @@ public class Inventory : MonoBehaviour {
             activeSkewer++;
             if (activeSkewer >= numberOfSkewers)
                 activeSkewer = 0;
+
+            sfxPlayer.Play(swapSFX);
 
             Debug.Log("Swapping skewer to " + activeSkewer);
             //UpdateSkewerVisual();
@@ -279,10 +271,12 @@ public class Inventory : MonoBehaviour {
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {
+                sfxPlayer.Play(cookSFX);
                 LongCook();
             }
             else if (quiver[activeSkewer].GetCount() <= 0)
             {
+                sfxPlayer.Play(cantCookSFX);
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
@@ -290,10 +284,12 @@ public class Inventory : MonoBehaviour {
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {
+                sfxPlayer.Play(cookSFX);
                 ShortCook();
             }
             else if (quiver[activeSkewer].GetCount() <= 0)
             {
+                sfxPlayer.Play(cantCookSFX);
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }

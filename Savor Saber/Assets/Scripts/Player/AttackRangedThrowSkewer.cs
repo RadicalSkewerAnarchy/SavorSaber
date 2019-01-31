@@ -8,10 +8,12 @@ public class AttackRangedThrowSkewer : AttackRanged
 {
     public int chargeLevels = 3;
     public float chargeTime = 1;
+    public AudioClip[] chargeSounds = new AudioClip[3];
     [HideInInspector]
     public int currLevel = 0;
     private float normalInterval;
     private Inventory inv;
+    private PlaySFX sfxPlayer;
     SpriteRenderer r;
 
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         normalInterval = (1 / (float)chargeLevels) - 0.001f;
         inv = GetComponent<Inventory>();
         r = GetComponent<SpriteRenderer>();
+        sfxPlayer = GetComponent<PlaySFX>();
     }
 
     // Update is called once per frame
@@ -61,6 +64,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         {
             Debug.Log("Charge Level Equals: " + currLevel);
             animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
+            sfxPlayer.Play(chargeSounds[currLevel]);
             float time = 0;
             while (time < chargeTime)
             {
@@ -68,6 +72,7 @@ public class AttackRangedThrowSkewer : AttackRanged
                 time += Time.deltaTime;
             }
         }
+        sfxPlayer.Play(chargeSounds[currLevel]);
         animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
         // PLACEHOLDER EFFECT
         float colorInc = 0.05f;
