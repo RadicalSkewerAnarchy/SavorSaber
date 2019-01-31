@@ -62,12 +62,12 @@ public class PlayerMeleeAttack : MeleeAttack
         RecalculatePosition();
 
         // Knife attack if player hits button1 and not already attacking
-        if (Input.GetButtonDown("Fire1")  && !attacking)
+        if (InputManager.GetButtonDown(Control.Knife)  && !attacking)
         {
             attackType = "Knife";
             Attack();
         }
-        else if(Input.GetButtonDown("Fire2") && !attacking)
+        else if(InputManager.GetButtonDown(Control.Skewer) && !attacking)
         {
             attackType = "Skewer";
             Attack();

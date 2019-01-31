@@ -68,9 +68,9 @@ public class UpdatedController : MonoBehaviour
 
     void MoveAgent()
     {
-        bool running = Input.GetButton("Run");
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
+        bool running = InputManager.GetButton(Control.Dash);
+        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
+        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var modSpeed = (running ? runSpeed : speed) * speedMod;
         if (movementVector.magnitude > 1)
@@ -91,8 +91,8 @@ public class UpdatedController : MonoBehaviour
 
     void StopAgent()
     {
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
+        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
+        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var negativeDirection = -rigidBody.velocity;
  
@@ -111,9 +111,9 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
-        bool running = Input.GetButton("Run");
-        var moveHorizontal = Input.GetAxis("Horizontal");
-        var moveVertical = Input.GetAxis("Vertical");
+        bool running = InputManager.GetButton(Control.Dash);
+        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
+        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
         if(movementVector != Vector2.zero)

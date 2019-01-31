@@ -34,7 +34,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown(inputAxis) && inv.ActiveSkewerCooked())
+        if (InputManager.GetButtonDown(control) && inv.ActiveSkewerCooked())
         {
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
@@ -46,7 +46,7 @@ public class AttackRangedThrowSkewer : AttackRanged
                 StartCoroutine(Charge());
             }
         }
-        if (Input.GetButtonUp(inputAxis) && Attacking)
+        if (InputManager.GetButtonUp(control) && Attacking)
         {
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
@@ -55,12 +55,14 @@ public class AttackRangedThrowSkewer : AttackRanged
             Attack();
             inv.ClearActiveRecipe();
             inv.CanSwap = true;
+            Attacking = false;
         }
     }
 
     private IEnumerator Charge()
     {
         Attacking = true;
+        CanBeCanceled = false;
         inv.CanSwap = false;
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {

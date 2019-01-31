@@ -249,7 +249,7 @@ public class Inventory : MonoBehaviour {
     {
         if (!CanSwap)
             return;
-        if (Input.GetButtonDown("SwapLeft"))
+        if (InputManager.GetButtonDown(Control.SwapSkewerLeft))
         {
             activeSkewer--;
             if (activeSkewer < 0)
@@ -259,7 +259,7 @@ public class Inventory : MonoBehaviour {
 
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
-        else if (Input.GetButtonDown("SwapRight"))
+        else if (InputManager.GetButtonDown(Control.SwapSkewerRight))
         {
             activeSkewer++;
             if (activeSkewer >= numberOfSkewers)
@@ -274,7 +274,7 @@ public class Inventory : MonoBehaviour {
     private void GetCookingInput()
     {
         //Press C to cook
-        if (Input.GetButtonDown("Cook") && nearCampfire)
+        if (InputManager.GetButtonDown(Control.Cook) && nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {
@@ -287,7 +287,7 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
-        else if (Input.GetButtonDown("Cook") && !nearCampfire)
+        else if (InputManager.GetButtonDown(Control.Cook) && !nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
             {

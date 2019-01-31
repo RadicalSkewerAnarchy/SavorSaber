@@ -33,7 +33,7 @@ public enum InputAxis
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager main;
+    private static InputManager main;
     // Start is called before the first frame update
 
     public ControlProfile keyboardControls = null;
@@ -43,30 +43,29 @@ public class InputManager : MonoBehaviour
    
     private void Awake()
     {
-        if (main != null)
+        if (main == null)
         {
-            DontDestroyOnLoad(gameObject);
             main = this;
         }
         else
             Destroy(gameObject);
     }
 
-    public float GetAxis(InputAxis a)
+    public static float GetAxis(InputAxis a)
     {
-        return Input.GetAxis(a.ToString().ToLower());
+        return Input.GetAxis(a.ToString());
     }
-    public bool GetButton(Control c)
+    public static bool GetButton(Control c)
     {
-        return Input.GetKey(keyboardControls[c]) || Input.GetKey(gamepadControls[c]);
+        return Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.gamepadControls[c]);
     }
-    public bool GetButtonDown(Control c)
+    public static bool GetButtonDown(Control c)
     {
-        return Input.GetKeyDown(keyboardControls[c]) || Input.GetKeyDown(gamepadControls[c]);
+        return Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.gamepadControls[c]);
     }
-    public bool GetButtonUp(Control c)
+    public static bool GetButtonUp(Control c)
     {
-        return Input.GetKeyUp(keyboardControls[c]) || Input.GetKeyUp(gamepadControls[c]);
+        return Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.gamepadControls[c]);
     }
 
 
