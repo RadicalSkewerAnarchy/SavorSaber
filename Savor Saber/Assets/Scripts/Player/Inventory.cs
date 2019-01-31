@@ -120,6 +120,8 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
+        //Detect swapping input
+        GetSkewerSwapInput();
     }
 
     #region utility functions
@@ -131,6 +133,26 @@ public class Inventory : MonoBehaviour {
     public Skewer GetActiveSkewer()
     {
         return quiver[activeSkewer];
+    }
+
+    /// <summary>
+    /// returns the left skewer
+    /// </summary>
+    public Skewer GetLeftSkewer()
+    {
+        int leftIndex = activeSkewer - 1;
+        if (leftIndex < 0) leftIndex = quiver.Length-1;
+        return quiver[leftIndex];
+    }
+
+    /// <summary>
+    /// returns the right skewer
+    /// </summary>
+    public Skewer GetRightSkewer()
+    {
+        int rightIndex = activeSkewer + 1;
+        if (rightIndex > quiver.Length - 1) rightIndex = 0;
+        return quiver[rightIndex];
     }
 
     /// <summary>
@@ -158,7 +180,7 @@ public class Inventory : MonoBehaviour {
         if (!ActiveSkewerCooked() && !ActiveSkewerFull())
         {
             quiver[activeSkewer].PushIngredient(ingredient);
-            UpdateSkewerVisual();
+            //UpdateSkewerVisual();
         }
     }
 
@@ -237,7 +259,7 @@ public class Inventory : MonoBehaviour {
                 activeSkewer = numberOfSkewers - 1;
 
             Debug.Log("Swapping skewer to " + activeSkewer);
-            UpdateSkewerVisual();
+            //UpdateSkewerVisual();
         }
         else if (Input.GetButtonDown("SwapRight"))
         {
@@ -246,7 +268,7 @@ public class Inventory : MonoBehaviour {
                 activeSkewer = 0;
 
             Debug.Log("Swapping skewer to " + activeSkewer);
-            UpdateSkewerVisual();
+            //UpdateSkewerVisual();
         }
     }
 
