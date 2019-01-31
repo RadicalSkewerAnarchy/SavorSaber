@@ -100,6 +100,9 @@ public class MonsterProtocols : MonoBehaviour
     }
     public void Runaway()
     {
-
+        // returns a collider
+        // why not just the game object?
+        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().gameObject.transform.position;
+        Behaviour.MoveFrom(nearestEnemy, AiData.Speed);
     }
 }

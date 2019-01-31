@@ -18,6 +18,10 @@ public class MonsterChecks : MonoBehaviour
     public Dictionary<Collider2D, CharacterData> EnemyCreaturesDictionary;
     public Dictionary<Collider2D, CharacterData> CreaturesDictionary;
 
+    // list strategy
+    public List<GameObject> Friendlies;
+    public List<GameObject> Enemies;
+
     /// <summary>
     /// Closest Friend and Closest Enemy for quick access
     /// </summary>
@@ -29,6 +33,8 @@ public class MonsterChecks : MonoBehaviour
     private void Start()
     {
         AiData = GetComponent<AIData>();
+        GameObject soma = GameObject.FindGameObjectWithTag("Player");
+        Enemies.Add(soma);
     }
     /// <summary>
     /// empty array of nearby seen creatures
@@ -69,14 +75,29 @@ public class MonsterChecks : MonoBehaviour
     }
 
 
-
+    /// MODIFIED WITH LISTS INSTEAD
     /// <summary>
     /// Checks closest enemy from enemy/friend dictionary
     /// </summary>
     /// <returns> Collider2D of closest enemy or friend </returns>
-    public Collider2D ClosestEnemyCreature()
+    public GameObject ClosestEnemyCreature()
     {
-        float closest = 10000000;
+        float closest = 10000000f;
+        GameObject ClosestEnemy = null;
+        foreach(GameObject Creature in Enemies)
+        {
+            float dist = Vector2.Distance(transform.position, Creature.transform.position);
+            if(dist < closest)
+            {
+                closest = dist;
+                ClosestEnemy = Creature;
+            }
+        }
+        return ClosestEnemy;
+    }
+    /*public Collider2D ClosestEnemyCreature()
+    {
+        float closest = 10000000f;
         foreach(KeyValuePair<Collider2D, CharacterData> Creature in EnemyCreaturesDictionary)
         {
             if(Creature.Value.distanceFrom < closest)
@@ -86,7 +107,9 @@ public class MonsterChecks : MonoBehaviour
             }
         }
         return ClosestEnemy;
-    }
+    }*/
+
+
     public Collider2D ClosestFriendlyCreature()
     {
         float closest = 10000000;

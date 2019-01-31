@@ -24,7 +24,7 @@ public class SignalApplication : MonoBehaviour
     public float friendMod = 0;
 
     // private variables
-    private bool activate = true;
+    private bool activate = false;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +32,7 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
+        Debug.Log("signal with radius = " + interactRadius);
 
         // modifications?
         moodMod.Add("Fear", fearMod);
@@ -42,6 +43,7 @@ public class SignalApplication : MonoBehaviour
 
     private void Update()
     {
+        activate = (hitList.Count > 0);
         if (activate)
         {
             ApplyToAll();
@@ -55,10 +57,11 @@ public class SignalApplication : MonoBehaviour
         //Debug.Log("Object Found: " + go);
         if (!hitList.Contains(go))
         {
-            //Debug.Log("---Object Not in List");
-            if (go.GetComponent<AIData>() != null)
+            Debug.Log("Found Object Not in List");
+            AIData data = go.GetComponent<AIData>();
+            if (data != null)
             {
-                //Debug.Log("------Object Added");
+                Debug.Log("---NPC Added");
                 hitList.Add(go);
             }
         }
@@ -83,9 +86,14 @@ public class SignalApplication : MonoBehaviour
         {
             // using the keys, change the values
             // of "moods" in data
-            float value = data.moods[key];
-            value = Mathf.Clamp((value + moodMod[key]), 0f, 1f);
-            data.moods[key] = value;
+            float mod = moodMod[key];
+            if (mod > 0)
+            {
+                float value = data.moods[key];
+                value = Mathf.Clamp((value + mod), 0f, 1f);
+                data.moods[key] = value;
+                Debug.Log(g + "'s " + key + " value should be " + value);
+            }
         }
     }
 }
