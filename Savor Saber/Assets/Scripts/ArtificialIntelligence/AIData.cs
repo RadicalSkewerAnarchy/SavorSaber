@@ -213,4 +213,9 @@ public class AIData : CharacterData
         return _values[value]();
     }
 
+    public void ManualDecision()
+    {
+        DecisionTimer = -1f;
+    }
+
 }

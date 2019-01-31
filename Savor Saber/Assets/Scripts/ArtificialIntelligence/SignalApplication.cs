@@ -82,6 +82,7 @@ public class SignalApplication : MonoBehaviour
     private void Apply(GameObject g)
     {
         AIData data = g.GetComponent<AIData>();
+        //modification
         foreach(string key in moodMod.Keys)
         {
             // using the keys, change the values
@@ -95,5 +96,8 @@ public class SignalApplication : MonoBehaviour
                 Debug.Log(g + "'s " + key + " value should be " + value);
             }
         }
+
+        // set decision timer to 0
+        data.ManualDecision();
     }
 }
