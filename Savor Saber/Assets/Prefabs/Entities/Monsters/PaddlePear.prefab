@@ -96,8 +96,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 2078142477
-  m_SortingLayer: 0
+  m_SortingLayerID: -133389985
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 433019f5259a414439c14e7799adb496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -120,7 +120,7 @@ Animator:
   m_GameObject: {fileID: 6411723353759096250}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: bfd0dd2c799c4c74a9d5765fb887d249, type: 2}
+  m_Controller: {fileID: 22100000, guid: 5c74d51eb02693f48846649e57399f46, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -294,11 +294,13 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 00000000
+    _keys: 0200000000000000
     _values:
     - _keys:
       - Health
       - Hostility
+      - Fear
+      - Hunger
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -326,22 +328,166 @@ MonoBehaviour:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0.008333334
-          value: 0.993744
-          inSlope: -1.4999582
-          outSlope: -1.4999582
+          time: 0
+          value: 1
+          inSlope: -1.0070763
+          outSlope: -1.0070763
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: -0.0070762634
+          inSlope: -1.0070763
+          outSlope: -1.0070763
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.9976425
+          outSlope: -0.9976425
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.002357483
+          inSlope: -0.9976425
+          outSlope: -0.9976425
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -1
+          outSlope: -1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Fear
+      - Hostility
+      - Health
+      - Friendliness
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0.0022727498
+          value: 0.99567175
+          inSlope: -0.0883197
+          outSlope: -0.0883197
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.14768086
+          outWeight: 0.26651478
         - serializedVersion: 3
-          time: 0.99938965
-          value: 0.025932312
+          time: 1.00001
+          value: 0.0004467517
+          inSlope: -3.5409586
+          outSlope: -3.5409586
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.043191478
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.9999925
+          inSlope: -0.0627931
+          outSlope: -0.0627931
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.074999996
+        - serializedVersion: 3
+          time: 1
+          value: 0
           inSlope: 0
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.8254844
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: -0.0047187805
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.5070801
+          inSlope: -0.35382932
+          outSlope: -0.35382932
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.9931946
+          value: 0.15565872
+          inSlope: -0.35382932
+          outSlope: -0.35382932
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -373,9 +519,9 @@ MonoBehaviour:
   currentBehavior: 0
   currentProtocol: 2
   Checks: {fileID: 0}
-  Speed: 0
-  Perception: 0
-  MeleeAttackThreshold: 0
+  Speed: 100
+  Perception: 10
+  MeleeAttackThreshold: 5
   RangeAttackThreshold: 0
   NearbyCreatures:
   - {fileID: 0}
