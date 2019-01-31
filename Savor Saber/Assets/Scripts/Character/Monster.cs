@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     {
         var data = GetComponent<AIData>();
         // Drop items and die if health is 0 or lower        
-        // data.AddEvent((hp) => { if (hp <= 0) Kill(); });
+        // data.AddEvent((health) => { if (health <= 0) Kill(); });
     }
 
     public void Kill()

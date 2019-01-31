@@ -126,6 +126,8 @@ public class AIData : CharacterData
         // acquire necessary data
         // act on current state
 
+
+
         // UPDATE Decision
         if (DecisionTimer < 0)
         {

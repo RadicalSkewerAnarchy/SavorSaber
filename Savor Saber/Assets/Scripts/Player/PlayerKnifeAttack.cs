@@ -18,17 +18,23 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Applying Knife Effect");
+        //Debug.Log("Applying Knife Effect: " + collision);
         if (collision.gameObject.tag == "Monster")
         {
-            //just instakill the monster for testing purposes
-            Monster targetMonster = collision.gameObject.GetComponent<Monster>();
-            targetMonster.Kill();
-
+            // get char data to deal damage and kill appropriately
+            //Debug.Log("This is a Monster");
             CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
             if (characterData != null)
             {
                 characterData.health -= (int)meleeDamage;
+                //Debug.Log("This much hp left: " + characterData.health);
+                if (characterData.health <= 0)
+                {
+                    //Debug.Log("Killing Monster");
+                    Monster targetMonster = collision.gameObject.GetComponent<Monster>();
+                    targetMonster.Kill();
+                }
+
             }
         }
     }
