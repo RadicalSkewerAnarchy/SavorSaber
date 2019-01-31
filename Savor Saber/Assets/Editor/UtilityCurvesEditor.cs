@@ -22,8 +22,10 @@ public class UtilityCurvesEditor : Editor
             SDictionaryGUI.ValueGUI <AnimationCurve> innerValueGUI= (curve) =>
             {
                 curve = EditorGUILayout.CurveField(curve);
+                return curve;
             };
             dict.DoGUILayout(innerValueGUI, innerAddGUI, "Values", true);
+            return dict;
         };
         data.aiStates.DoGUILayout(valueGUI, addGUI, "AI States");
         // Macro values dictionary
@@ -34,8 +36,10 @@ public class UtilityCurvesEditor : Editor
             SDictionaryGUI.ValueGUI<AnimationCurve> innerValueGUI = (curve) =>
             {
                 curve = EditorGUILayout.CurveField(curve);
+                return curve;
             };
             dict.DoGUILayout(innerValueGUI, innerAddGUI, "Sub Values", true);
+            return dict;
         };
         data.macroValues.DoGUILayout(macroValueGUI, macroAddGUI, "Macro Values");
         if(GUI.changed)

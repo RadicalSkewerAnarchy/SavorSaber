@@ -9,7 +9,7 @@ namespace SerializableCollections
     {
         public static class SDictionaryGUI
         {
-            public delegate void ValueGUI<T>(T value);
+            public delegate T ValueGUI<T>(T value);
             public delegate void AddGUI();
 
             public static void StringAddGUI<TValue>(this SDictionary<string, TValue> dict, ref string toAdd) where TValue : new()
@@ -95,7 +95,7 @@ namespace SerializableCollections
                     EditorGUILayout.LabelField(key.ToString(), GUILayout.MaxWidth(150));
                     GUILayout.Space(1);
                     if (oneLine)
-                        valueGUI(dict[key]);
+                        dict[key] = valueGUI(dict[key]);
                     GUILayout.FlexibleSpace();
                     if (GUILayout.Button("-", GUILayout.Width(45)))
                     {
@@ -104,7 +104,7 @@ namespace SerializableCollections
                     }
                     GUILayout.EndHorizontal();
                     if (!oneLine)
-                        valueGUI(dict[key]);
+                        dict[key] = valueGUI(dict[key]);
                 }
                 if (delete)
                     dict.Remove(toDelete);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using SerializableCollections;
+using UnityEditor.SceneManagement;
 
 /// <summary>
 /// A static class containingsome editor methods for easy GUI utility
@@ -21,5 +22,10 @@ public static class EditorUtils
         {
             return new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold };
         }
+    }
+    public static void SetSceneDirtyIfGUIChanged()
+    {
+        if (GUI.changed)
+            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 }
