@@ -105,16 +105,19 @@ public class AttackRanged : AttackBase
     /// </summary>
     public void Attack(Vector3 targetVector)
     {
-        Direction direction = playerController?.direction ?? monsterController.direction;
-        float projectileRotation = GetRotation(direction);
 
         //animation stuff
         animator.Play(attackName);
+
+        Direction direction = playerController?.direction ?? monsterController.direction;
+        float projectileRotation = GetRotation(direction);
+        Vector2 directionVector = GetDirectionVector(direction);
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
+        projectileData.directionVector = directionVector;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
         //give the spawned projectile its effect data, if applicable
@@ -139,6 +142,9 @@ public class AttackRanged : AttackBase
         yield return null;
     }
 
+    /// <summary>
+    /// Get the rotation associated with the current facing
+    /// </summary>
     protected float GetRotation(Direction direction)
     {
         float projectileRotation = 0f; 
@@ -182,8 +188,49 @@ public class AttackRanged : AttackBase
         return projectileRotation;
     }
 
-    protected Vector2 GetDirectionVector(Vector2 targetVector)
+    /// <summary>
+    /// Get the vector associated with the current facing
+    /// </summary>
+    protected Vector2 GetDirectionVector(Direction direction)
     {
-        return new Vector2(0, 0);
+        Vector2 directionVector;
+        if (direction == Direction.East)
+        {
+            directionVector = new Vector2(1, 0);       
+        }
+        else if (direction == Direction.West)
+        {
+            directionVector = new Vector2(-1, 0);    
+        }
+        else if (direction == Direction.North)
+        {
+            directionVector = new Vector2(0, 1);
+        }
+        else if (direction == Direction.South)
+        {
+            directionVector = new Vector2(0, -1);
+        }
+        else if (direction == Direction.NorthWest)
+        {
+            directionVector = new Vector2(-1, 1).normalized;
+        }
+        else if (direction == Direction.NorthEast)
+        {
+            directionVector = new Vector2(1, 1).normalized;
+        }
+        else if (direction == Direction.SouthWest)
+        {
+            directionVector = new Vector2(-1, -1).normalized;
+        }
+        else if (direction == Direction.SouthEast)
+        {
+            directionVector = new Vector2(1, -1).normalized;
+        }
+        else
+        {
+            directionVector = new Vector2(0, 0);
+        }
+        Debug.Log("Direction vector: " + directionVector);
+        return directionVector;
     }
 }
