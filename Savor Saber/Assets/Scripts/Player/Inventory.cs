@@ -197,11 +197,17 @@ public class Inventory : MonoBehaviour {
             if(i < dropArray.Length)
             {
                 print("showing " + dropArray[i].flavors + " at index " + i);
-                skewerSprites[i].sprite = dropArray[i].image;
+                if (skewerSprites[i] != null)
+                    skewerSprites[i].sprite = dropArray[i].image;
+                else
+                    Debug.Log("Error: No UI detected for inventory visualization");
             }
             else
             {
-                skewerSprites[i].sprite = emptySprite;
+                if(skewerSprites[i] != null)
+                    skewerSprites[i].sprite = emptySprite;
+                else
+                    Debug.Log("Error: No UI detected for inventory visualization");
             }
         }
     }
