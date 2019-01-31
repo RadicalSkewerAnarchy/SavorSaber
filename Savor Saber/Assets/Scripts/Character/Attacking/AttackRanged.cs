@@ -78,16 +78,19 @@ public class AttackRanged : AttackBase
 
     public override void Attack()
     {
-        Direction direction = playerController?.direction ?? monsterController.direction;
-        float projectileRotation = GetRotation(direction);
-
         //animation stuff
         animator.Play(attackName);
+
+        Direction direction = playerController?.direction ?? monsterController.direction;
+        float projectileRotation = GetRotation(direction);
+        Vector2 directionVector = GetDirectionVector(direction);
+
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
+        projectileData.directionVector = directionVector;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
         //give the spawned projectile its effect data, if applicable
@@ -105,7 +108,6 @@ public class AttackRanged : AttackBase
     /// </summary>
     public void Attack(Vector3 targetVector)
     {
-
         //animation stuff
         animator.Play(attackName);
 
@@ -230,7 +232,12 @@ public class AttackRanged : AttackBase
         {
             directionVector = new Vector2(0, 0);
         }
-        Debug.Log("Direction vector: " + directionVector);
+        //Debug.Log("Direction vector: " + directionVector);
         return directionVector;
+    }
+
+    protected Vector2 GetTargetVector(Vector2 targetVector)
+    {
+        return new Vector2(0, 0);
     }
 }
