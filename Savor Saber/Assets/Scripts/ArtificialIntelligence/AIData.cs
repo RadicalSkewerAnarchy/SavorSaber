@@ -7,19 +7,11 @@ using UnityEngine;
 //[RequireComponent(typeof(MonsterBehavior))]
 [RequireComponent(typeof(MonsterBehavior))]
 [RequireComponent(typeof(MonsterProtocols))]
+[RequireComponent(typeof(MonsterChecks))]
 
 public class AIData : CharacterData
 {
-    #region Moods
-    [Range(0f,1f)]
-    public float fear;
-    [Range(0f, 1f)]
-    public float hunger;
-    [Range(0f, 1f)]
-    public float hostility;
-    [Range(0f, 1f)]
-    public float friendliness;
-    #endregion
+
     /// <summary> A delegate that returns a float between 0 and 1 </summary>
     public delegate float GetNormalValue();
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
@@ -35,10 +27,7 @@ public class AIData : CharacterData
         Attack,
         Flee,
         Socialize,
-        Feed,
-        Custom1,
-        Custom2,
-        Custom3,
+        Feed
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;
@@ -53,14 +42,10 @@ public class AIData : CharacterData
         Party,
         Swarm,
         Feast,
-        Console,
-        Custom1,
-        Custom2,
-        Custom3,
+        Console
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
-    public CustomProtocol[] customProtocols = new CustomProtocol[3];
 
     // Decision making
     float DecisionTimer;
@@ -76,6 +61,7 @@ public class AIData : CharacterData
     /// </summary>
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
+    public MonsterChecks Checks;
     /// <summary>
     /// Variables to be used for calling MonsterBehaviors
     /// </summary>
@@ -83,20 +69,25 @@ public class AIData : CharacterData
     public float Perception;
     public float MeleeAttackThreshold;
     public float RangeAttackThreshold;
+    /// <summary>
+    /// empty array of nearby seen creatures
+    /// </summary>
+    public Collider2D[] NearbyCreatures = new Collider2D[10];
     Vector2 Target;
 
     private void Start()
     {
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
+        Checks = GetComponent<MonsterChecks>();
         //Behavior.UpdateSpeed(speed);
 
         _values = new Dictionary<string, GetNormalValue>()
         {
-            {"Fear", () => {return fear; } },
-            {"Hunger", () => {return hunger; } },
-            {"Hostility", () => {return hostility; } },
-            {"Friendliness", () => {return friendliness; } },
+            {"Fear", () => {return moods["Fear"]; } },
+            {"Hunger", () => {return moods["Hunger"]; } },
+            {"Hostility", () => {return moods["Hostility"]; } },
+            {"Friendliness", () => {return moods["Friendliness"]; } },
             {"PlayerDistance", () => { return 1; } }, // DEBUG
             {"FireDistance", () => {return 1; } }, //DEBUG
             {"Health", () => {return Normal(health, maxHealth); } }
@@ -181,15 +172,6 @@ public class AIData : CharacterData
                 //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Console();
                 break;
-            case Protocols.Custom1:
-                customProtocols[0].Invoke();
-                break;
-            case Protocols.Custom2:
-                customProtocols[1].Invoke();
-                break;
-            case Protocols.Custom3:
-                customProtocols[2].Invoke();
-                break;
             // default
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
@@ -204,7 +186,7 @@ public class AIData : CharacterData
     /// <summary> Get a normalized value from the value dictionary. if the value is not present, returns -1 </summary>
     public float getNormalizedValue(string value)
     {
-        if(!_values.ContainsKey(value))
+        if (!_values.ContainsKey(value))
         {
             Debug.LogError(value + " is not a valid AI value, returning -1");
             return -1f;
@@ -212,13 +194,4 @@ public class AIData : CharacterData
         return _values[value]();
     }
 
-    // awareness and assessment
-
-    public Collider2D[] AwareHowMany()
-    {
-        Collider2D[] seen = new Collider2D[10];
-        Physics2D.OverlapCircleNonAlloc(transform.position, Perception, seen);
-
-        return seen;
-    }
 }

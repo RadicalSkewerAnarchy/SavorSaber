@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5129380485292126785}
   - component: {fileID: 2903048292295415507}
   - component: {fileID: 5158955316715184632}
+  - component: {fileID: 7842350833140496129}
   - component: {fileID: 1707353156324864275}
   m_Layer: 0
   m_Name: PaddlePear
@@ -96,7 +97,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2078142477
-  m_SortingLayer: 5
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 433019f5259a414439c14e7799adb496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -239,6 +240,7 @@ MonoBehaviour:
   drops:
   - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
   - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
+  - {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781, type: 3}
 --- !u!114 &6411723353759096251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,23 +362,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 4
-  health: 1
-  speed: 3
   fear: 1
   hunger: 0.5
   hostility: 0.5
   friendliness: 0.5
+  distanceFrom: 0
+  maxHealth: 4
+  health: 1
+  speed: 3
   currentBehavior: 0
   currentProtocol: 2
-  customProtocols:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Checks: {fileID: 0}
   Speed: 0
   Perception: 0
   MeleeAttackThreshold: 0
   RangeAttackThreshold: 0
+  NearbyCreatures:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &5158955316715184632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,6 +400,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7842350833140496129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855506bed9018d046a30cc6d87bf0b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AiData: {fileID: 0}
 --- !u!114 &1707353156324864275
 MonoBehaviour:
   m_ObjectHideFlags: 0

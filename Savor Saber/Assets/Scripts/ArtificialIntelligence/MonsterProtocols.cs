@@ -33,26 +33,29 @@ public class MonsterProtocols : MonoBehaviour
     ///     }
     /// </summary>
 
+    /// NEEDS A LOT OF POLISH
     public void Melee()
     {
-        var distanceToPlayer = AiData.getNormalizedValue("PlayerDistance");
+        // var distanceToPlayer = AiData.getNormalizedValue("PlayerDistance");
         // float distanceToPlayer = AiData.Aware("PlayerDistance");
+        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().gameObject.transform.position;
         // Aware is a function that uses the Perception of the agent
         //  to get a list of targets
-        
+
         //The way MoveTo is set up is that it assumes you're only calling it when you need to move
         //Both of these behaviors require the player position as a Vector2 stored somewhere in AIData.cs
-        if (distanceToPlayer > AiData.MeleeAttackThreshold)
+        if (Vector2.Distance(nearestEnemy, AiData.gameObject.transform.position) > AiData.MeleeAttackThreshold)
         {
-            //Behaviour.MoveTo();
+            if (Behaviour.MoveTo(nearestEnemy, AiData.Speed))
+            {
+                Behaviour.Attack(nearestEnemy, AiData.Speed);
+
+            }
         }
-        else
-        {
-            //Behaviour.Attack();
-        }
-        
+
         // Need the actual coordinates of Player and findobject() is computationally expensive, need workaround in AiData to have this Vector2           
     }
+
     public void Ranged()
     {
         var distanceToPlayer = AiData.getNormalizedValue("PlayerDistance");
