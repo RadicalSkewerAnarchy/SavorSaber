@@ -339,7 +339,7 @@ public class Inventory : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Campfire")
         {
-            Debug.Log("Player near campfire");
+            //Debug.Log("Player near campfire");
             nearCampfire = true;
         }
     }
@@ -348,7 +348,7 @@ public class Inventory : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Campfire")
         {
-            Debug.Log("Player left campfire");
+            //Debug.Log("Player left campfire");
             nearCampfire = false;
         }
     }

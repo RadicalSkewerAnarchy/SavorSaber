@@ -11,8 +11,6 @@ public class ProjectileSkewer : BaseProjectile
         projectileCollider = GetComponent<CapsuleCollider2D>();
         projectileCollider.size = new Vector2(projectileLength, projectileWidth);
 
-        Debug.Log("Shooting " + direction);
-
         // set projectile velocity vector
         SetGeometry();
     }

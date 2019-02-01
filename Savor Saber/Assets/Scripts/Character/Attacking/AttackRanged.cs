@@ -106,14 +106,14 @@ public class AttackRanged : AttackBase
     /// <summary>
     /// Overloaded version of Attack() that takes in a target bector and uses that to get its rotation.
     /// </summary>
-    public void Attack(Vector3 targetVector)
+    public void Attack(Vector2 targetVector)
     {
         //animation stuff
         animator.Play(attackName);
 
         Direction direction = playerController?.direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
-        Vector2 directionVector = GetDirectionVector(direction);
+        Vector2 directionVector = GetTargetVector(targetVector);
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
@@ -232,12 +232,12 @@ public class AttackRanged : AttackBase
         {
             directionVector = new Vector2(0, 0);
         }
-        //Debug.Log("Direction vector: " + directionVector);
+
         return directionVector;
     }
 
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
-        return new Vector2(0, 0);
+        return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
     }
 }
