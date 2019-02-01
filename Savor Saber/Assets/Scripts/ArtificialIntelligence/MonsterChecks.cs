@@ -129,11 +129,11 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Count of Enemy and Friend Dictionaries </returns>
     public int NumberOfEnemies()
     {
-        return EnemyCreaturesDictionary.Count;
+        return Enemies.Count;
     }
     public int NumberOfFriends()
     {
-        return FriendlyCreaturesDictionary.Count;
+        return Friendlies.Count;
     }
 
 

@@ -94,12 +94,6 @@ public class MonsterBehavior : MonoBehaviour
 
         var current = new Vector2(transform.position.x, transform.position.y);
 
-        // at target
-        if (Vector2.Distance(current, target) < speed * Time.deltaTime)
-        {
-            return true;
-        }
-        else
         {
             // move towards target
             AnimatorBody.Play("Move");

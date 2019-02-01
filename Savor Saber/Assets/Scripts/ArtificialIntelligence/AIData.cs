@@ -65,13 +65,7 @@ public class AIData : CharacterData
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
-    /// <summary>
-    /// Variables to be used for calling MonsterBehaviors
-    /// </summary>
-    public float Speed;
-    public float Perception;
-    public float MeleeAttackThreshold;
-    public float RangeAttackThreshold;
+    
     /// <summary>
     /// empty array of nearby seen creatures
     /// </summary>
@@ -111,10 +105,7 @@ public class AIData : CharacterData
         DecisionTimerReset = 5f;
         DecisionTimerVariance = 2f;
 
-        // Variable instantiated variance
-        Speed = Random.Range(1f, 1.5f);
-        MeleeAttackThreshold = Random.Range(.5f, 1.5f);
-        RangeAttackThreshold = Random.Range(2f, 5f);
+        
 
         // Naming for future creature tracking
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();

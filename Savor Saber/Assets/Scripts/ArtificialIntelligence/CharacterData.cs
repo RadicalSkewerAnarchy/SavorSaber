@@ -19,6 +19,8 @@ public class CharacterData : MonoBehaviour
     #endregion
     public float distanceFrom;
 
+
+
     public Vector2 Position
     {
         get
@@ -27,11 +29,20 @@ public class CharacterData : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Variables to be used for calling MonsterBehaviors
+    /// </summary>
+    public float Speed;
+    public float Perception;
+    public float MeleeAttackThreshold;
+    public float RangeAttackThreshold;
     public int maxHealth;
     public int health;
-    public float speed;
-
-    //public MeleeAttack attack;
+    //used for the number of creatures to initiate a party
+    public int PartySize = 3;
+    float VDown = 9 / 10;
+    float VUp = 11 / 10;
+    
 
     void Start()
     {
@@ -40,5 +51,12 @@ public class CharacterData : MonoBehaviour
         moods.Add("Hunger", hunger);
         moods.Add("Hostility", hostility);
         moods.Add("Friendliness", friendliness);
+        
+        // Variable instantiated variance
+        Speed = Random.Range(Speed*VDown, Speed*VUp);
+        Perception = Random.Range(Perception*VDown, Perception*VUp);
+        MeleeAttackThreshold = Random.Range(MeleeAttackThreshold * VDown, MeleeAttackThreshold*VUp);
+        RangeAttackThreshold = Random.Range(RangeAttackThreshold * VDown, RangeAttackThreshold*VUp);
+        maxHealth = (int)Random.Range(maxHealth * VDown, maxHealth * VUp);
     }
 }
