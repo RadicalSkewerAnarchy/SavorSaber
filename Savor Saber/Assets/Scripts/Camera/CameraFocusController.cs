@@ -16,12 +16,6 @@ public class CameraFocusController : MonoBehaviour
     int RadiusChain;
     //
     
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -32,7 +26,6 @@ public class CameraFocusController : MonoBehaviour
         var upDown = 1;
         var localPosition = transform.position;
       
-
         leftRight = DirectionX();
         upDown = DirectionY();
         xTo = Target.transform.position.x + leftRight * Mathf.Min((RadiusChain), Mathf.Abs(localPosition.x - Camera.main.ScreenToWorldPoint(Input.mousePosition).x));
