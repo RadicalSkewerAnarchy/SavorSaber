@@ -40,6 +40,13 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     public bool penetrateTargets = false;
 
+    /// <summary>
+    /// How far this projectile should travel before self-terminating.
+    /// Range of 0 will fly FOREVER 
+    /// </summary>
+    [Range(0, 50)]
+    public float range;
+
     [System.NonSerialized]
     public float projectileRotation;
 
@@ -60,6 +67,8 @@ public class BaseProjectile : MonoBehaviour
     [System.NonSerialized]
     public CapsuleCollider2D projectileCollider;
 
+    protected Vector2 spawnPosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +77,13 @@ public class BaseProjectile : MonoBehaviour
 
         // set projectile velocity vector
         SetGeometry();
+
+        //as a safety measure, if range is infinite, do NOT allow penetrating targets
+        if (range == 0)
+            penetrateTargets = false;
+
+        spawnPosition = transform.position;
+        Debug.Log("Spawn position: " + spawnPosition);
  
     }
 
@@ -75,6 +91,9 @@ public class BaseProjectile : MonoBehaviour
     void Update()
     {
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
+
+        if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
+            Destroy(this.gameObject);
     }
 
     protected void SetGeometry()

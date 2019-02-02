@@ -226,7 +226,7 @@ public class Inventory : MonoBehaviour {
         {
             if(i < dropArray.Length)
             {
-                print("showing " + dropArray[i].flavors + " at index " + i);
+                //print("showing " + dropArray[i].flavors + " at index " + i);
                 if (skewerSprites[i] != null)
                     skewerSprites[i].sprite = dropArray[i].image;
                 else

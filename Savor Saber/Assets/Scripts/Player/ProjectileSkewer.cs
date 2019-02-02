@@ -13,12 +13,25 @@ public class ProjectileSkewer : BaseProjectile
 
         // set projectile velocity vector
         SetGeometry();
+
+        spawnPosition = transform.position;
+        Debug.Log("Spawn position: " + spawnPosition);
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
+
+        if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
+        {
+            Debug.Log("Exceeded max range, destroying projectile");
+            //Debug.Log("Start position: " + spawnPosition);
+            //Debug.Log("End position: " + transform.position);
+
+            Destroy(this.gameObject);
+
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)

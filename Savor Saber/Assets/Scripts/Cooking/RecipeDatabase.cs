@@ -101,11 +101,11 @@ public class RecipeDatabase : MonoBehaviour
             recipeLookupFailed = false;
             Array.Copy(ingredientArrayCopy, ingredientArray, ingredientArray.Length);
 
-            Debug.Log("Checking recipe: " + currentRecipe.displayName);
+            //Debug.Log("Checking recipe: " + currentRecipe.displayName);
 
             if (currentRecipe.complexRecipe)
             {
-                Debug.Log("Can only check simple recipes on a short cook, skipping...");
+                //Debug.Log("Can only check simple recipes on a short cook, skipping...");
                 continue;
             }
 
@@ -116,16 +116,16 @@ public class RecipeDatabase : MonoBehaviour
                 //If we failed to find the last ingredient, abandon this recipe and try the next
                 if (recipeLookupFailed)
                 {
-                    Debug.Log("Ingredient missing, recipe failed. Try next.");
+                    //Debug.Log("Ingredient missing, recipe failed. Try next.");
                     break;
                 }
 
-                Debug.Log("Checking for presence of flavor " + currentRecipe.flavors[currentFlavor]);
+                //Debug.Log("Checking for presence of flavor " + currentRecipe.flavors[currentFlavor]);
 
                 //iterate over each ingredient on the active skewer
                 for (int currentIngredient = 0; currentIngredient < ingredientArray.Length; currentIngredient++)
                 {
-                    Debug.Log("Scanning ingredient " + currentIngredient + " of active skewer");
+                    //Debug.Log("Scanning ingredient " + currentIngredient + " of active skewer");
                     //if the flavor of the current ingredient matches the recipe flavor currently being tested...
                     if ((ingredientArray[currentIngredient] == null ? 0 : ingredientArray[currentIngredient].flavors & currentRecipe.flavors[currentFlavor]) > 0)
                     {

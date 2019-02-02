@@ -236,6 +236,9 @@ public class AttackRanged : AttackBase
         return directionVector;
     }
 
+    /// <summary>
+    /// Get the vector pointing at a target's position
+    /// </summary>
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
