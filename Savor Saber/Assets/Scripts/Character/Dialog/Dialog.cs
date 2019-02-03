@@ -31,7 +31,7 @@ public class Dialog : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(dialogBox.transform.localPosition);
+
     }
 
     public void Activate()
