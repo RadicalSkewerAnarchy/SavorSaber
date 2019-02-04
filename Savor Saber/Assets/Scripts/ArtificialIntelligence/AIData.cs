@@ -136,7 +136,7 @@ public class AIData : CharacterData
         if (DecisionTimer < 0)
         {
             currentProtocol = Curves.DecideState();
-            Debug.Log("Getting New Protocol: " + currentProtocol);
+            //Debug.Log("Getting New Protocol: " + currentProtocol);
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
         }
         else
