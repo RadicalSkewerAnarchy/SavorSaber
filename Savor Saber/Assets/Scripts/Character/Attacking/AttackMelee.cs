@@ -17,6 +17,7 @@ public class AttackMelee : AttackBase
     /// </summary>
     protected UpdatedController playerController;
     protected MonsterMovement monsterController;
+    protected SpriteRenderer spriteRenderer;
 
     protected Animator animator;
 
@@ -71,6 +72,7 @@ public class AttackMelee : AttackBase
     {
         dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
@@ -105,6 +107,11 @@ public class AttackMelee : AttackBase
     /// </summary>
     private void RecalculatePosition()
     {
+        //get center offset (due to pivot changes) 
+        //float spriteHeight = spriteRenderer.bounds.size.y / 32f; //characters will always be 32ppu
+        //Debug.Log(spriteHeight);
+        Vector2 center = spriteRenderer.bounds.center;
+
         Direction direction;
 
         //get direction from whichever controller component this entity has
@@ -115,50 +122,50 @@ public class AttackMelee : AttackBase
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 0;
-            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y);
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y);
         }
         else if (direction == Direction.West)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 0;
-            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y);
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y);
         }
         else if (direction == Direction.North)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackCapsuleRotation = 0;
-            attackSpawnPoint = new Vector2(transform.position.x, transform.position.y + (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x, center.y + (meleeRange / 2f));
         }
         else if (direction == Direction.South)
         {
             attackCapsuleDirection = CapsuleDirection2D.Vertical;
             attackCapsuleRotation = 0;
-            attackSpawnPoint = new Vector2(transform.position.x, transform.position.y - (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x, center.y - (meleeRange / 2f));
         }
         //intermediate directions
         else if (direction == Direction.NorthWest)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = -45f;
-            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y + (meleeRange / 2f));
         }
         else if (direction == Direction.NorthEast)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 45f;
-            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y + (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y + (meleeRange / 2f));
         }
         else if (direction == Direction.SouthWest)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = 45f;
-            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), transform.position.y - (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y - (meleeRange / 2f));
         }
         else if (direction == Direction.SouthEast)
         {
             attackCapsuleDirection = CapsuleDirection2D.Horizontal;
             attackCapsuleRotation = -45f;
-            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), transform.position.y - (meleeRange / 2f));
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y - (meleeRange / 2f));
         }
     }
 
