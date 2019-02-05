@@ -14,6 +14,7 @@ public class SignalApplication : MonoBehaviour
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
     public Dictionary<string, float> moodMod = new Dictionary<string, float>();
+
     [Range(-1f, 1f)]
     public float fearMod = 0;
     [Range(-1f, 1f)]
@@ -24,7 +25,7 @@ public class SignalApplication : MonoBehaviour
     public float friendMod = 0;
 
     // private variables
-    private bool activate = false;
+    private bool activate = true;
 
     // Start is called before the first frame update
     void Start()
@@ -43,11 +44,21 @@ public class SignalApplication : MonoBehaviour
 
     private void Update()
     {
-        activate = (hitList.Count > 0);
+        // if data is being requested,
+        // then obtain hit list after
+        // instantiation
         if (activate)
         {
+            // ensure proper values
+            moodMod["Fear"] = fearMod;
+            moodMod["Hunger"] = hungerMod;
+            moodMod["Hostility"] = hostileMod;
+            moodMod["Friendliness"] = friendMod;
+            // apply
             ApplyToAll();
+            // destroy
             Destroy(this.gameObject);
+            
         }
     }
 

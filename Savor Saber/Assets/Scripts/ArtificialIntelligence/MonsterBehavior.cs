@@ -132,6 +132,9 @@ public class MonsterBehavior : MonoBehaviour
     {
         AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;
+        // create signal
+        // change signal radius
+        // change signal values (++friendliness)
         return true;
     }
 
