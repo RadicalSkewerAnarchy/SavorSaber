@@ -92,7 +92,7 @@ namespace SerializableCollections
                 foreach (var key in keys)
                 {
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(key.ToString(), GUILayout.MaxWidth(150));
+                    EditorGUILayout.PrefixLabel(key.ToString());
                     GUILayout.Space(1);
                     if (oneLine)
                         dict[key] = valueGUI(dict[key]);

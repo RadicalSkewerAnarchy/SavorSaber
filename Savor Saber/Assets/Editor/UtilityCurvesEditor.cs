@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using SerializableCollections.GUIUtils;
-using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(UtilityCurves))]
 public class UtilityCurvesEditor : Editor
@@ -42,7 +41,6 @@ public class UtilityCurvesEditor : Editor
             return dict;
         };
         data.macroValues.DoGUILayout(macroValueGUI, macroAddGUI, "Macro Values");
-        if(GUI.changed)
-            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        EditorUtils.SetSceneDirtyIfGUIChanged();
     }
 }

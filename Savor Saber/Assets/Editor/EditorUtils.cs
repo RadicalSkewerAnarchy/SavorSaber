@@ -25,7 +25,7 @@ public static class EditorUtils
     }
     public static void SetSceneDirtyIfGUIChanged()
     {
-        if (GUI.changed)
+        if (GUI.changed && !EditorApplication.isPlayingOrWillChangePlaymode)
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
     }
 }
