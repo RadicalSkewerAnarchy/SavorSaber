@@ -14,14 +14,13 @@ public class AttackRangedThrowSkewer : AttackRanged
     private float normalInterval;
     private Inventory inv;
     private PlaySFX sfxPlayer;
-    SpriteRenderer r;
+    //SpriteRenderer r;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
@@ -38,6 +37,9 @@ public class AttackRangedThrowSkewer : AttackRanged
     {
         if (InputManager.GetButtonDown(control) && inv.ActiveSkewerCooked())
         {
+            chargedAttack = true;
+            center = r.bounds.center;
+
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
             if (activeAttack == null)
@@ -58,6 +60,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             inv.ClearActiveRecipe();
             inv.CanSwap = true;
             Attacking = false;
+            chargedAttack = false;
         }
     }
 

@@ -17,7 +17,13 @@ public class AttackRanged : AttackBase
     /// </summary>
     protected UpdatedController playerController;
     protected MonsterMovement monsterController;
-    protected SpriteRenderer spriteRenderer;
+    protected SpriteRenderer r;
+
+    /// <summary>
+    /// fields related to compensating for non-standard pivots
+    /// </summary>
+    protected Vector2 center;
+    protected bool chargedAttack = false;
 
     protected Animator animator;
 
@@ -54,7 +60,7 @@ public class AttackRanged : AttackBase
 
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        r = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
@@ -81,15 +87,22 @@ public class AttackRanged : AttackBase
 
     public override void Attack()
     {
+
+        // if it was a charged attack, centerpoint is found when charge starts, not
+        // when attack is released.
+        if (!chargedAttack)
+        {
+            Debug.Log("Not charged attack");
+            //true center of sprite
+            center = r.bounds.center;
+        }
+
         //animation stuff
         animator.Play(attackName);
 
         Direction direction = playerController?.direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
-
-        //true center of sprite
-        Vector2 center = spriteRenderer.bounds.center;
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
@@ -113,15 +126,18 @@ public class AttackRanged : AttackBase
     /// </summary>
     public void Attack(Vector2 targetVector)
     {
+        if (!chargedAttack)
+        {
+            //true center of sprite
+            center = r.bounds.center;
+        }
+
         //animation stuff
         animator.Play(attackName);
 
         Direction direction = playerController?.direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetTargetVector(targetVector);
-
-        //true center of sprite
-        Vector2 center = spriteRenderer.bounds.center;
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
