@@ -21,6 +21,7 @@ public class AttackMeleeSkewer : AttackMelee
         inventory = GetComponent<Inventory>();
         dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();

@@ -17,6 +17,7 @@ public class AttackRanged : AttackBase
     /// </summary>
     protected UpdatedController playerController;
     protected MonsterMovement monsterController;
+    protected SpriteRenderer spriteRenderer;
 
     protected Animator animator;
 
@@ -53,6 +54,8 @@ public class AttackRanged : AttackBase
 
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
         if (playerController == null)
@@ -85,9 +88,11 @@ public class AttackRanged : AttackBase
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
+        //true center of sprite
+        Vector2 center = spriteRenderer.bounds.center;
 
         //spawn the attack at the spawn point and give it its data
-        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
@@ -115,8 +120,11 @@ public class AttackRanged : AttackBase
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetTargetVector(targetVector);
 
+        //true center of sprite
+        Vector2 center = spriteRenderer.bounds.center;
+
         //spawn the attack at the spawn point and give it its data
-        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;

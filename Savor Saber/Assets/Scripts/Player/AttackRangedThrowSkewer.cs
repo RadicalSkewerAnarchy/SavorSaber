@@ -21,6 +21,8 @@ public class AttackRangedThrowSkewer : AttackRanged
     {
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
         if (playerController == null)
