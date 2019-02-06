@@ -30,10 +30,11 @@ public class MonsterChecks : MonoBehaviour
     private void Start()
     {
         AiData = GetComponent<AIData>();
-        /*GameObject soma = GameObject.FindGameObjectWithTag("Player");
-        Enemies.Add(soma);*/
+        GameObject soma = GameObject.FindGameObjectWithTag("Player");
+        //Enemies.Add(soma);
         Friends = AiData.Friends;
         Enemies = AiData.Enemies;
+        Enemies.Add(soma);
         // clear often
         AllCreatures = new List<GameObject>();
     }
@@ -87,10 +88,11 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Collider2D of closest enemy or friend </returns>
     public GameObject ClosestEnemyCreature()
     {
-        AwareNearby();
+        //AwareNearby();
 
         float closest = closestDistance;
-        GameObject ClosestEnemy = null;
+        GameObject ClosestEnemy = Enemies[0];
+        //GameObject ClosestEnemy = null;
 
         foreach(GameObject Creature in AllCreatures)
         {

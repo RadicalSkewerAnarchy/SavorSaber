@@ -17,12 +17,29 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
+    bool left = false;
+    bool up = false;
 
+    #region
     /// <summary>
-    /// moved to AIData
+    /// where the attack collider will be spawned
     /// </summary>
-    //public Vector2 TargetPoint;
-    //public float Speed = 0;
+    protected Vector2 attackSpawnPoint;
+    /// <summary>
+    /// field for the attack prefab to be spawned when attacking
+    /// </summary>
+    public GameObject attack;
+    /// <summary>
+    /// The collider orientation for the melee attack.
+    /// </summary>
+    protected CapsuleDirection2D attackCapsuleDirection;
+    /// <summary>
+    /// how much to rotate the attack capsule
+    /// Needed for diagonal attack
+    /// </summary>
+    protected float attackCapsuleRotation;
+    #endregion
+
     private void Start()
     {
         AiData = GetComponent<AIData>();
@@ -64,7 +81,7 @@ public class MonsterBehavior : MonoBehaviour
         // Turn Greenish
         AiData.currentBehavior = AIData.Behave.Chase;
 
-        var left = false;
+        //left = false;
 
         var current = new Vector2(transform.position.x, transform.position.y);
 
@@ -80,6 +97,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x < 0) ? true : false;
+            up = (target.y < 0) ? true : false;
             transform.Translate(target);
 
             return false;
@@ -101,6 +119,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x < 0) ? true : false;
+            up = (target.y < 0) ? true : false;
             transform.Translate(-1*target);
             return false;
         }
@@ -118,6 +137,26 @@ public class MonsterBehavior : MonoBehaviour
         //Debug.Log("I am Attack");
         AiData.currentBehavior = AIData.Behave.Attack;
         AnimatorBody.Play("Melee");
+        CalculateDirection();
+
+        GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
+        Debug.Log("Attack instantiated");
+        
+
+        CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+
+        newAttackCollider.direction = attackCapsuleDirection;
+        newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
+
+        if(newAttackCollider.direction == CapsuleDirection2D.Horizontal)
+        {
+            //1f is placeholder for melee attack width
+            newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, 1f);
+        }
+        else
+        {
+            newAttackCollider.size = new Vector2(1f, AiData.MeleeAttackThreshold);
+        }
         return true;
     }
 
@@ -137,6 +176,34 @@ public class MonsterBehavior : MonoBehaviour
         // change signal radius
         // change signal values (++friendliness)
         return true;
+    }
+
+    void CalculateDirection()
+    {
+        if (left)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x + (AiData.MeleeAttackThreshold), transform.position.y);
+        }
+        else if (up)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x, transform.position.y + (AiData.MeleeAttackThreshold));
+        }
+        else if (!left)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x - (AiData.MeleeAttackThreshold), transform.position.y);
+        }
+        else
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x, transform.position.y - (AiData.MeleeAttackThreshold));
+        }
     }
 
 

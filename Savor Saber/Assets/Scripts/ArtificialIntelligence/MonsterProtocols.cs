@@ -38,9 +38,10 @@ public class MonsterProtocols : MonoBehaviour
     /// NEEDS A LOT OF POLISH
     public void Melee()
     {
+        
         // var distanceToPlayer = AiData.getNormalizedValue("PlayerDistance");
         // float distanceToPlayer = AiData.Aware("PlayerDistance");
-        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().gameObject.transform.position;
+        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().transform.position;
         // Aware is a function that uses the Perception of the agent
         //  to get a list of targets
 
@@ -54,7 +55,7 @@ public class MonsterProtocols : MonoBehaviour
 
             }
         }
-
+        Behaviour.Attack(nearestEnemy, AiData.Speed);
         // Need the actual coordinates of Player and findobject() is computationally expensive, need workaround in AiData to have this Vector2           
     }
 
@@ -82,12 +83,14 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Lazy()
     {
+        Melee();
+        /*
         if (Behaviour.Idle())
         {
             // test signals
             Checks.AwareHowMany();
             Behaviour.ActionTimer = Behaviour.ActionTimerReset;
-        }
+        }*/
     }
 
 
@@ -183,9 +186,10 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Runaway()
     {
+        Debug.Log(GetInstanceID() + " IS RUNNING AWAY");
         // returns a collider
         // why not just the game object?
-        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().gameObject.transform.position;
+        var nearestEnemy = AiData.Checks.ClosestEnemyCreature().transform.position;
         Behaviour.MoveFrom(nearestEnemy, AiData.Speed);
         
         // for testing
