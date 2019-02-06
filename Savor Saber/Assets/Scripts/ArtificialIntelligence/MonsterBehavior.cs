@@ -50,6 +50,8 @@ public class MonsterBehavior : MonoBehaviour
         ActionTimer = -1f;
         ActionTimerReset = 5f;
         ActionTimerVariance = 2f;
+
+        
     }
 
     /// <summary>
@@ -139,8 +141,8 @@ public class MonsterBehavior : MonoBehaviour
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
             CalculateDirection();
-            GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity);
-            CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();           
+            GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
+            CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
             newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
             //Debug.Log("ATTACKING");
             //stops attacking for 1 second after attack

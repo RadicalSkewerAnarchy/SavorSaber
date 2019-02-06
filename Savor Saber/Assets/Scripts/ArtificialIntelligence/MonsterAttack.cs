@@ -6,34 +6,39 @@ public class MonsterAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
-    private MonsterChecks monsterChecks;
+    public MonsterChecks monsterChecks;
 
     // Start is called before the first frame update
     void Start()
     {
         sfxPlayer = GetComponent<PlaySFXRandPitch>();
-        monsterChecks = GetComponent<MonsterChecks>();
+        monsterChecks = gameObject.GetComponentInParent<MonsterChecks>();
+        if(monsterChecks == null)
+        {
+            Debug.Log("Retrieved monsterChecks: ");
+        }
+        var circleCollider = GetComponent<CircleCollider2D>();
+        //Physics2D.IgnoreCollision(circleCollider, GetComponent<CapsuleCollider2D>());
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("THERE IS NO CHARACTERCOLLISION");
-        if (collision.gameObject.tag == "Player")
-        {
+        //monsterChecks.Enemies.Clear();
+        if (collision.gameObject.tag == "Player" || monsterChecks.Enemies.Contains(collision.gameObject))
+        {            
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
             Debug.Log("THERE IS CHARACTER COLLISION");
-            if(charData != null)
+            if (charData != null)
             {
                 charData.health -= (int)meleeDamage;
                 Debug.Log("Character health: " + charData.health);
-                if(charData.health <= 0)
+                if (charData.health <= 0)
                 {
-                    //monsterChecks.Enemies.Remove(collision.gameObject);
-                    collision.gameObject.SetActive(false);                  
-                    
+                    collision.gameObject.SetActive(false);
                 }
-            }
+            }                       
         }
     }
 }
