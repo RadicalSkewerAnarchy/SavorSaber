@@ -16,10 +16,10 @@ public class Dialog : MonoBehaviour
     public Sprite[] portraitSprites;
     public string[] currentSpeaker;
     public string[] text;
+    public GameObject[] actors;
 
     public GameObject dialogBoxPrefab;
     public Canvas UICanvas;
-
 
     private GameObject dialogBox;
     private Text dialogText;

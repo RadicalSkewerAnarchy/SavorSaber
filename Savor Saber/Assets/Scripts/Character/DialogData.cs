@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Contains data to be used by conversation dialog boxes
+/// Attach to any entity that should bring up dialog boxes when interacted with
 /// </summary>
 public class DialogData : MonoBehaviour
 {
 
-    public enum Emotions
+    public enum Emotions:int
     {
         Neutral,
         Happy,
@@ -18,7 +18,11 @@ public class DialogData : MonoBehaviour
 
     public string displayName;
 
-    public Sprite portraitSpriteNeutral;
+    public PortraitDictionary portraitDictionary = new PortraitDictionary();
 
+    [System.Serializable]
+    public class PortraitDictionary:SerializableCollections.SDictionary<Emotions, Sprite>
+    {
 
+    }
 }
