@@ -32,6 +32,7 @@ public class AIData : CharacterData
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;
+    public Behave previousBehavior = Behave.Idle;
     #region Protocols
     /// <summary> my current state </summary>
     public enum Protocols
@@ -193,6 +194,7 @@ public class AIData : CharacterData
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
         }
+        
     }
 
     public float Normal(int now, int max)
