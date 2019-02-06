@@ -10,11 +10,13 @@ public class MonsterProtocols : MonoBehaviour
 {
     AIData AiData;
     MonsterBehavior Behaviour;
+    MonsterChecks Checks;
 
     private void Start()
     {
         AiData = GetComponent<AIData>();
         Behaviour = AiData.GetComponent<MonsterBehavior>();
+        Checks = AiData.GetComponent<MonsterChecks>();
     }
 
     /// <summary>
@@ -82,6 +84,8 @@ public class MonsterProtocols : MonoBehaviour
     {
         if (Behaviour.Idle())
         {
+            // test signals
+            Checks.AwareHowMany();
             Behaviour.ActionTimer = Behaviour.ActionTimerReset;
         }
     }

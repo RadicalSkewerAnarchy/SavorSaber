@@ -386,9 +386,16 @@ MonoBehaviour:
   maxHealth: 4
   health: 4
   PartySize: 3
+  whoIAm: {fileID: 6411723353759096250}
   currentBehavior: 0
   currentProtocol: 2
+  DecisionTimer: 0
+  DecisionTimerReset: 10
+  DecisionTimerVariance: 2
   Checks: {fileID: 0}
+  Friends: []
+  Enemies: []
+  FoodPreference: 
   NearbyCreatures:
   - {fileID: 0}
   - {fileID: 0}
@@ -425,8 +432,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AiData: {fileID: 0}
-  Friendlies: []
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
+  Friends: []
   Enemies: []
+  AllCreatures: []
 --- !u!114 &1707353156324864275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,8 +450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionTimer: 0
-  ActionTimerReset: 0
-  ActionTimerVariance: 0
+  ActionTimerReset: 10
+  ActionTimerVariance: 2
 --- !u!58 &3015010221631929720
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -28,9 +28,10 @@ public class SignalApplication : MonoBehaviour
 
 
     // private variables
-    private bool activate = true;
+    public bool activate = true;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
+    bool hitAll = true;
     bool hitEnemies = true;
     bool hitFriends = true;
     // Game object of who made this
@@ -38,11 +39,12 @@ public class SignalApplication : MonoBehaviour
 
     // Constructor
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
-    public SignalApplication(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitself, bool hitenemies, bool hitfriends)
+    public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself, bool hitenemies, bool hitfriends)
     {
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         this.moodMod = moods;
+        this.hitAll = hitall;
         this.hitSelf = hitself;
         this.hitEnemies = hitenemies;
         this.hitFriends = hitfriends;
@@ -55,10 +57,10 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
-        Debug.Log("signal with radius = " + interactRadius);
+        //Debug.Log("signal with radius = " + interactRadius);
     }
 
-    private void Update()
+    public void Update()
     {
         // if data is being requested,
         // then obtain hit list after
@@ -67,42 +69,61 @@ public class SignalApplication : MonoBehaviour
         {
             // apply
             ApplyToAll();
+            // inform signal maker of those here
+            if (signalMaker != null)
+            {
+                signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+            }
+
             // destroy
             Destroy(this.gameObject);
-            
+        }
+        else
+        {
+            activate = true;
         }
     }
 
     // COLLECT THE HIT LIST
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
         // get objects
         GameObject go = collision.gameObject;
-        // if not in list...
-        if (!hitList.Contains(go))
+        AIData maindata = go.GetComponent<AIData>();
+        if (maindata != null)
         {
-            // if someone made the signal...
-            if (signalMaker != null)
+            // if not in list...
+            if (!hitList.Contains(go))
             {
-                // extract signal maker data and lists
-                AIData data = signalMaker.GetComponent<AIData>();// get lists
-                List<GameObject> fr = data.Friends;
-                List<GameObject> en = data.Enemies;
-                // create boolean cases
-                bool hitF = fr.Contains(go) && hitFriends;
-                bool hitE = en.Contains(go) && hitEnemies;
-                bool hitS = hitSelf && go == signalMaker;
-                bool hitA = !hitEnemies && !hitFriends && hitSelf;
-                // if ANY of these...
-                if (hitF || hitE || hitS || hitA)
+                // if someone made the signal...
+                if (signalMaker != null)
                 {
-                    // add to list
-                    hitList.Add(go);
+                    // extract signal maker data and lists
+                    AIData data = signalMaker.GetComponent<AIData>();// get lists
+                    List<GameObject> fr = data.Friends;
+                    List<GameObject> en = data.Enemies;
+                    // create boolean cases
+                    bool hitF = fr.Contains(go) && hitFriends;
+                    //Debug.Log("hit friends?: " + hitF + " who?: " + go.name);
+                    bool hitE = en.Contains(go) && hitEnemies;
+                    //Debug.Log("hit enemies?: " + hitE + " who?: " + go.name);
+                    bool hitS = hitSelf && go.Equals(signalMaker);
+                    //Debug.Log("hit self?: " + hitS + " who?: " + go.name);
+                    bool hitA = hitAll;
+                    //Debug.Log("hit ALL?: " + hitA + " who?: " + go.name);
+                    // if ANY of these...
+                    if (hitA || (hitF || hitE) || hitS)
+                    {
+                        // add to list
+                        Debug.Log(signalMaker.name + "'s HIT LIST ++ : " + go.name);
+                        //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
+                        hitList.Add(go);
+                    }
                 }
-            }
-            else
-            {
-                // do nothing
+                else
+                {
+                    // do nothing
+                }
             }
         }
     }
@@ -139,6 +160,7 @@ public class SignalApplication : MonoBehaviour
             }
         }
         // set decision timer to 0
-        data.ManualDecision();
+        // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
+        // data.ManualDecision();
     }
 }

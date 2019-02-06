@@ -10,10 +10,11 @@ public class MonsterChecks : MonoBehaviour
     /// brings AIData for easy reference;
     /// </summary>
     public AIData AiData;
+    public GameObject signalPrefab;
 
-    private List<GameObject> Friends;
-    private List<GameObject> Enemies;
-    private List<GameObject> AllCreatures;
+    public List<GameObject> Friends;
+    public List<GameObject> Enemies;
+    public List<GameObject> AllCreatures;
 
     private int numEnemiesNear = 0;
     private int numFriendsNear = 0;
@@ -50,18 +51,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public void AwareHowMany()
     {
-        Physics2D.OverlapCircleNonAlloc(transform.position, AiData.Perception, AiData.NearbyCreatures, 11);
-    }
-
-
-
-    /// <summary>
-    /// for every creature in the nearbycreatures list, inserts them into a dictionary with (Collider2D : character data)
-    /// </summary>
-    public void AwareNearby()
-    {
-        // clear all creatues
-        // update all creatues
+        // reset nums
         numEnemiesNear = 0;
         numFriendsNear = 0;
         foreach (GameObject Creature in AllCreatures)
@@ -71,6 +61,22 @@ public class MonsterChecks : MonoBehaviour
             if (Enemies.Contains(Creature)) { numEnemiesNear++; }
             if (Friends.Contains(Creature)) { numFriendsNear++; }
         }
+
+        Debug.Log(this + " is surrounded by " + AllCreatures.Count + " Creature" + (AllCreatures.Count==1?": ":"s: ") +  " Friends = " + numFriendsNear + " Enemies = " + numEnemiesNear);
+    }
+
+    /// <summary>
+    /// for every creature in the nearbycreatures list, inserts them into a dictionary with (Collider2D : character data)
+    /// </summary>
+    public void AwareNearby()
+    {
+        // clear all creatues
+        AllCreatures.Clear();
+        // update all creatures
+        GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform, true) as GameObject;
+        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true, true, true);
+        // the signal will notify the signal creator of this data once it is dead
     }
 
 

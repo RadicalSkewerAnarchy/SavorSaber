@@ -46,6 +46,7 @@ public class MonsterBehavior : MonoBehaviour
         AnimatorBody.Play("Idle");
         AiData.currentBehavior = AIData.Behave.Idle;
         // if done being idle, reset and return true
+        // stay idle or dont if time allows
         if (ActionTimer < 0)
         {
             return true;

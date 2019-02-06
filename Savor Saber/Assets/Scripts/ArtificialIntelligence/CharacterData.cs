@@ -42,7 +42,6 @@ public class CharacterData : MonoBehaviour
     public int PartySize = 3;
     float VDown = 9 / 10;
     float VUp = 11 / 10;
-    
 
     void Start()
     {

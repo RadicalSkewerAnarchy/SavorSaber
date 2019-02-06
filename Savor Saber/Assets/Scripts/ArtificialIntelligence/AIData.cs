@@ -50,9 +50,14 @@ public class AIData : CharacterData
     public Protocols currentProtocol = Protocols.Lazy;
 
     // Decision making
-    float DecisionTimer;
-    float DecisionTimerReset;
-    float DecisionTimerVariance;
+    [SerializeField]
+    public float DecisionTimer;
+    [SerializeField]
+    [Range(5f, 15f)]
+    public float DecisionTimerReset = 10f;
+    [SerializeField]
+    [Range(0f, 4f)]
+    public float DecisionTimerVariance = 2f;
 
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> TargetObjects = new List<GameObject>();
@@ -106,14 +111,9 @@ public class AIData : CharacterData
             {"Player", new Vector2(0f, 0f) }
         };
 
-        // Decision making
-        DecisionTimer = -1f;
-        DecisionTimerReset = 5f;
-        DecisionTimerVariance = 2f;
-
-        
-
         // Naming for future creature tracking
+        //Debug.Log("PaddlePear ==?== " + gameObject);
+        //Friends.Add(GetComponent<GameObject>());
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
@@ -124,10 +124,10 @@ public class AIData : CharacterData
         // act on current state
 
         // silly debug updates
-        fear = moods["Fear"];
-        hunger = moods["Hunger"];
-        hostility = moods["Hostility"];
-        friendliness = moods["Friendliness"];
+        //fear = moods["Fear"];
+        //hunger = moods["Hunger"];
+        //hostility = moods["Hostility"];
+        //friendliness = moods["Friendliness"];
 
         // UPDATE Decision
         if (DecisionTimer < 0)
@@ -135,6 +135,7 @@ public class AIData : CharacterData
             currentProtocol = Curves.DecideState();
             Debug.Log("Getting New Protocol: " + currentProtocol);
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            Checks.AwareNearby();
         }
         else
         {
