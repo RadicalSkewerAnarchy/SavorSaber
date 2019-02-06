@@ -6,11 +6,11 @@ public class DialogManualTrigger : MonoBehaviour
 {
 
     public GameObject dialogTarget;
-    private Dialog dialog;
+    private BaseDialog dialog;
     // Start is called before the first frame update
     void Start()
     {
-        dialog = dialogTarget.GetComponent<Dialog>();
+        dialog = dialogTarget.GetComponent<BaseDialog>();
     }
 
     // Update is called once per frame

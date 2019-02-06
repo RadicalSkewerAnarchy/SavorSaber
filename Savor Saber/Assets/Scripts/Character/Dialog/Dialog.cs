@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// Attach this script to an empty GameObject to create a dialog sequence.
 /// Call Activate() to start it up.
 /// </summary>
-public class Dialog : MonoBehaviour
+public class Dialog : BaseDialog
 {
     #region fields
 
@@ -16,7 +16,7 @@ public class Dialog : MonoBehaviour
     public Sprite[] portraitSprites;
     public string[] currentSpeaker;
     public string[] text;
-    public GameObject[] actors;
+
 
     public GameObject dialogBoxPrefab;
     public Canvas UICanvas;
@@ -56,7 +56,7 @@ public class Dialog : MonoBehaviour
     /// <summary>
     /// Call this function to begin dialog
     /// </summary>
-    public void Activate()
+    public override void Activate()
     {
         stage = 0;
         //set position on of dialog box on screen
@@ -89,7 +89,7 @@ public class Dialog : MonoBehaviour
     /// <summary>
     /// Advance to the next dialog stage
     /// </summary>
-    public void NextDialog()
+    public override void NextDialog()
     {
         dialogText.text = text[stage];
         dialogImage.sprite = portraitSprites[stage];
