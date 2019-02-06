@@ -26,7 +26,6 @@ public class Dialog : BaseDialog
     private Image dialogImage;
     
     private int stage = 0;
-    private bool active = false;
 
     #endregion
 
@@ -41,6 +40,7 @@ public class Dialog : BaseDialog
             {
                 Destroy(dialogBox);
                 active = false;
+                dialogFinished = true;
 
                 if (!repeatable)
                     Destroy(this.gameObject);
@@ -59,6 +59,8 @@ public class Dialog : BaseDialog
     public override void Activate()
     {
         stage = 0;
+        dialogFinished = false;
+
         //set position on of dialog box on screen
         if(dialogBoxPrefab != null)
         {

@@ -26,13 +26,14 @@ public class DialogSpeechBubbles : BaseDialog
     public GameObject dialogBoxPrefab;
     public Canvas UICanvas;
     private GameObject dialogBox;
+    private RectTransform dialogRectTransform;
 
     private Text dialogText;
     private Image dialogImage;
     private DialogData dialogData;
 
     private int stage = 0;
-    private bool active = false;
+
 
     #endregion
 
@@ -47,6 +48,7 @@ public class DialogSpeechBubbles : BaseDialog
             {
                 Destroy(dialogBox);
                 active = false;
+                dialogFinished = true;
 
                 if (!repeatable)
                     Destroy(this.gameObject);
@@ -65,15 +67,17 @@ public class DialogSpeechBubbles : BaseDialog
     public override void Activate()
     {
         stage = 0;
+        dialogFinished = false;
         
         if (dialogBoxPrefab != null)
         {
             //set position on of dialog box on screen
             dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
             dialogBox.transform.SetParent(UICanvas.transform);
-            RectTransform rectTransform = dialogBox.GetComponent<RectTransform>();
+            dialogRectTransform = dialogBox.GetComponent<RectTransform>();
             dialogBox.transform.localScale = new Vector3(1, 1, 1);
-            rectTransform.anchoredPosition = new Vector3(0, 50, 0);
+            //rectTransform.anchoredPosition = new Vector3(0, 50, 0);
+            dialogRectTransform.anchoredPosition = GetActorUISpace(actors[stage]);
 
             //set dialog box text
             Debug.Log("stage: " + stage);
@@ -104,7 +108,7 @@ public class DialogSpeechBubbles : BaseDialog
         dialogText.text = text[stage];
         dialogData = actors[stage].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[emotions[stage]];
-        //dialogImage.sprite = portraitSprites[stage];
+        dialogRectTransform.anchoredPosition = GetActorUISpace(actors[stage]);
     }
 
     /// <summary>
@@ -118,15 +122,12 @@ public class DialogSpeechBubbles : BaseDialog
         yield return null;
     }
 
-    protected Vector3 GetActorUISpace(GameObject actor)
+    protected Vector2 GetActorUISpace(GameObject actor)
     {
-        RectTransform rectTransform = dialogBox.GetComponent<RectTransform>();
+        RectTransform canvasRect = UICanvas.GetComponent<RectTransform>();
+        Vector2 viewportPosition = Camera.main.WorldToViewportPoint(actor.transform.position);
+        Vector3 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y, 0f);
 
-        Vector2 actorPosition = actor.transform.position;
-
-        Vector2 viewportPosition = Camera.main.WorldToViewportPoint(actorPosition);
-        //Vector2 proportionalPosition = new Vector2(viewportPosition.x * Canvas.sizeDelta.x, viewportPosition.y * Canvas.sizeDelta.y);
-
-        return new Vector3(0, 50, 0);
+        return proportionalPosition;
     }
 }

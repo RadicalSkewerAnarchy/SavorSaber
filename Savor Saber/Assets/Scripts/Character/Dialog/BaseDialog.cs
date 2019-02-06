@@ -7,7 +7,15 @@ using UnityEngine;
 /// </summary>
 public class BaseDialog : MonoBehaviour
 {
+    [System.NonSerialized]
+    public bool active = false;
 
+    /// <summary>
+    /// Signals dialog triggers that this dialog has finished, in case something
+    /// needs to happen after it plays.
+    /// </summary>
+    [System.NonSerialized]
+    public bool dialogFinished = false;
 
     public virtual void Activate()
     {
