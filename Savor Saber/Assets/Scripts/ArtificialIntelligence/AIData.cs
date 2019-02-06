@@ -73,6 +73,7 @@ public class AIData : CharacterData
     private UtilityCurves Curves;
 
     /// Friends, Enemies, Food Pref, Stomach
+    public SignalApplication Awareness = null;
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<RecipeData.Flavors> FoodPreference;
@@ -113,8 +114,6 @@ public class AIData : CharacterData
         };
 
         // Naming for future creature tracking
-        //Debug.Log("PaddlePear ==?== " + gameObject);
-        //Friends.Add(GetComponent<GameObject>());
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
@@ -133,9 +132,12 @@ public class AIData : CharacterData
         // UPDATE Decision
         if (DecisionTimer < 0)
         {
+            // update state
             currentProtocol = Curves.DecideState();
             Debug.Log("Getting New Protocol: " + currentProtocol);
+            // reset decision timer
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            // update awareness of creatures
             Checks.AwareNearby();
         }
         else

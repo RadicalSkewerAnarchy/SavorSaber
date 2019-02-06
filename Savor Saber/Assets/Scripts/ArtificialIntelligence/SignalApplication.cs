@@ -80,7 +80,7 @@ public class SignalApplication : MonoBehaviour
         }
         else
         {
-            activate = true;
+            //activate = true;
         }
     }
 
@@ -95,30 +95,28 @@ public class SignalApplication : MonoBehaviour
             // if not in list...
             if (!hitList.Contains(go))
             {
-                // if someone made the signal...
-                if (signalMaker != null)
+                // extract signal maker data and lists
+                AIData data = signalMaker.GetComponent<AIData>();// get lists
+                List<GameObject> fr = data.Friends;
+                List<GameObject> en = data.Enemies;
+
+                // create boolean cases
+                bool hitF = fr.Contains(go) && hitFriends;
+                //Debug.Log("hit friends?: " + hitF + " who?: " + go.name);
+                bool hitE = en.Contains(go) && hitEnemies;
+                //Debug.Log("hit enemies?: " + hitE + " who?: " + go.name);
+                bool hitS = hitSelf && data.Equals(maindata);
+                //Debug.Log("hit self?: " + hitS + " who?: " + go.name);
+                bool hitA = hitAll;
+                //Debug.Log("hit ALL?: " + hitA + " who?: " + go.name);
+
+                // if ANY of these...
+                if (hitA || (hitF || hitE) || hitS)
                 {
-                    // extract signal maker data and lists
-                    AIData data = signalMaker.GetComponent<AIData>();// get lists
-                    List<GameObject> fr = data.Friends;
-                    List<GameObject> en = data.Enemies;
-                    // create boolean cases
-                    bool hitF = fr.Contains(go) && hitFriends;
-                    //Debug.Log("hit friends?: " + hitF + " who?: " + go.name);
-                    bool hitE = en.Contains(go) && hitEnemies;
-                    //Debug.Log("hit enemies?: " + hitE + " who?: " + go.name);
-                    bool hitS = hitSelf && go.Equals(signalMaker);
-                    //Debug.Log("hit self?: " + hitS + " who?: " + go.name);
-                    bool hitA = hitAll;
-                    //Debug.Log("hit ALL?: " + hitA + " who?: " + go.name);
-                    // if ANY of these...
-                    if (hitA || (hitF || hitE) || hitS)
-                    {
-                        // add to list
-                        Debug.Log(signalMaker.name + "'s HIT LIST ++ : " + go.name);
-                        //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
-                        hitList.Add(go);
-                    }
+                    // add to list
+                    //Debug.Log(signalMaker.name + "'s HIT LIST ++ : " + go.name);
+                    //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
+                    hitList.Add(go);
                 }
                 else
                 {
@@ -156,7 +154,7 @@ public class SignalApplication : MonoBehaviour
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
-                Debug.Log(g + "'s " + key + " value should be " + value);
+                //Debug.Log(g + "'s " + key + " value should be " + value);
             }
         }
         // set decision timer to 0

@@ -11,6 +11,7 @@ public class MonsterBehavior : MonoBehaviour
     Rigidbody2D RigidBody;
     Animator AnimatorBody;
     AIData AiData;
+    MonsterChecks Checks;
 
     // Some behaviors go for a certain amount of time.
     // timer is complete when < 0
@@ -44,6 +45,7 @@ public class MonsterBehavior : MonoBehaviour
     private void Start()
     {
         AiData = GetComponent<AIData>();
+        Checks = AiData.GetComponent<MonsterChecks>();
         AnimatorBody = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
 
@@ -87,6 +89,11 @@ public class MonsterBehavior : MonoBehaviour
         //left = false;
 
         var current = new Vector2(transform.position.x, transform.position.y);
+        // make movement more random
+        if (Random.Range(0, 100) > 95)
+        {
+            current = RandomPointAround(current);
+        }
 
         // at target
         if (Vector2.Distance(current, target) < 1)
@@ -164,10 +171,20 @@ public class MonsterBehavior : MonoBehaviour
     {
         AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;
-        // create signal
-        // change signal radius
-        // change signal values (++friendliness)
-        return true;
+        if (Random.Range(0, 100) > 95)
+        {
+            // create signal 
+            // change signal radius
+            // change signal values (++friendliness)
+            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
+            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+            signalModifier.SetSignalParameters(this.gameObject, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false, false, true);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void CalculateDirection()
@@ -184,4 +201,8 @@ public class MonsterBehavior : MonoBehaviour
         yield return null;
     }
 
+    private Vector2 RandomPointAround(Vector2 origin)
+    {
+        return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+    }
 }

@@ -52,6 +52,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public void AwareHowMany()
     {
+        //AiData.Awareness.activate = true;
         // reset nums
         numEnemiesNear = 0;
         numFriendsNear = 0;
@@ -59,6 +60,7 @@ public class MonsterChecks : MonoBehaviour
         {
             // for now nothing
             // heauristic for sorting into new friends and new enemies
+            Debug.Log("Checking if Friend or Enemy...");
             if (Enemies.Contains(Creature)) { numEnemiesNear++; }
             if (Friends.Contains(Creature)) { numFriendsNear++; }
         }
@@ -77,6 +79,7 @@ public class MonsterChecks : MonoBehaviour
         GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform, true) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
         signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true, true, true);
+        AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
     }
 
@@ -88,8 +91,6 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Collider2D of closest enemy or friend </returns>
     public GameObject ClosestEnemyCreature()
     {
-        //AwareNearby();
-
         float closest = closestDistance;
         GameObject ClosestEnemy = Enemies[0];
         //GameObject ClosestEnemy = null;
@@ -112,8 +113,6 @@ public class MonsterChecks : MonoBehaviour
 
     public GameObject ClosestFriendCreature()
     {
-        AwareNearby();
-
         float closest = closestDistance;
         GameObject ClosestFriend = null;
 
@@ -130,6 +129,26 @@ public class MonsterChecks : MonoBehaviour
             }
         }
         return ClosestFriend;
+    }
+
+
+
+    public GameObject ClosestCreature()
+    {
+        float closest = closestDistance;
+        GameObject ClosestCreature = null;
+
+        foreach (GameObject Creature in AllCreatures)
+        {
+            float dist = Vector2.Distance(transform.position, Creature.transform.position);
+            if (dist < closest)
+            {
+                closest = dist;
+                ClosestCreature = Creature;
+            }
+           
+        }
+        return ClosestCreature;
     }
 
 
