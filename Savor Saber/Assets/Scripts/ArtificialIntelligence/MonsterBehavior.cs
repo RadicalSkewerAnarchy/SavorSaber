@@ -203,6 +203,10 @@ public class MonsterBehavior : MonoBehaviour
 
     private Vector2 RandomPointAround(Vector2 origin)
     {
+        //return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+        Vector2 around = new Vector2(transform.position.x, transform.position.y);
+        around = origin - around;
+        Vector2.ClampMagnitude(around, 5f); 
         return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
     }
 }
