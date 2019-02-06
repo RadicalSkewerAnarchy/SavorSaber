@@ -55,7 +55,11 @@ public class MonsterProtocols : MonoBehaviour
 
             }
         }
-        Behaviour.Attack(nearestEnemy, AiData.Speed);
+        else
+        {
+            Behaviour.Attack(nearestEnemy, AiData.Speed);
+        }
+        //Behaviour.Attack(nearestEnemy, AiData.Speed);
         // Need the actual coordinates of Player and findobject() is computationally expensive, need workaround in AiData to have this Vector2           
     }
 
