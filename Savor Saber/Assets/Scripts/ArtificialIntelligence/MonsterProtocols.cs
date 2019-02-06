@@ -87,14 +87,14 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Lazy()
     {
-        Melee();
-        /*
+        //Melee();
+        
         if (Behaviour.Idle())
         {
             // test signals
             Checks.AwareHowMany();
             Behaviour.ActionTimer = Behaviour.ActionTimerReset;
-        }*/
+        }
     }
 
 
