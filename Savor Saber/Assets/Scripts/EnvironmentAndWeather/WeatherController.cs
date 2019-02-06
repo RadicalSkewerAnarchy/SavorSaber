@@ -23,7 +23,7 @@ public class WeatherController : MonoBehaviour
     private void Start()
     {
         windController = GetComponent<WindController>();
-        weatherObj = Instantiate(weatherData[_weather].effectCreator).GetComponent<Weather>();
+        weatherObj = Instantiate(weatherData[_weather].effectCreator, transform).GetComponent<Weather>();
     }
 
     /// <summary> Change the current weather. will allow crossfading in the future </summary>
