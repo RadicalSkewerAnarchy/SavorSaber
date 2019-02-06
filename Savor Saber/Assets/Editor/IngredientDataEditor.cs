@@ -17,6 +17,7 @@ public class IngredientDataEditor : Editor
         //ingredient.flavors = EditorGUILayout.ObjectField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors, typeof()
         // Gameplay data
         ingredient.flavors = (RecipeData.Flavors)EditorGUILayout.EnumFlagsField(new GUIContent("Flavors", "TODO: tooltip"), ingredient.flavors);
+        ingredient.monster = EditorGUILayout.ObjectField(new GUIContent("Monster Spawn"), ingredient.monster, typeof(GameObject), false) as GameObject;
         if (GUI.changed)
             EditorUtility.SetDirty(ingredient);
     }

@@ -65,7 +65,13 @@ public class AIData : CharacterData
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
-    
+
+    /// Friends, Enemies, Food Pref, Stomach
+    public List<GameObject> Friends;
+    public List<GameObject> Enemies;
+    public List<RecipeData.Flavors> FoodPreference;
+    public Queue<GameObject> Stomach;
+
     /// <summary>
     /// empty array of nearby seen creatures
     /// </summary>

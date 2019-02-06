@@ -15,4 +15,6 @@ public class IngredientData : ScriptableObject
     public Sprite image;
     /// <summary>The categories of ingredient this ingredient fits into (flags)</summary>
     public RecipeData.Flavors flavors;
+    /// <summary>The categories of ingredient this ingredient fits into (flags)</summary>
+    public GameObject monster;
 }
