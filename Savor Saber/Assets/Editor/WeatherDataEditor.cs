@@ -15,6 +15,7 @@ public class WeatherDataEditor : Editor
         data.displayName = EditorGUILayout.TextField(new GUIContent("Display Name", displayNameTooltip), data.displayName);
         EditorUtils.Separator();
         data.effectCreator = EditorGUILayout.ObjectField(new GUIContent("Effect Creator"), data.effectCreator, typeof(GameObject),false) as GameObject;
+        data.ambientSound = EditorGUILayout.ObjectField(new GUIContent("Ambient Sound"), data.ambientSound, typeof(AudioClip), false) as AudioClip;
         SDictionaryGUI.ValueGUI<TimeOfDayData> valGUI = (tod) =>
         {
             tod.lightColor = EditorGUILayout.ColorField(tod.lightColor);

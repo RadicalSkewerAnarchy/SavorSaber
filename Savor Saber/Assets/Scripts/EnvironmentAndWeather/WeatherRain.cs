@@ -8,6 +8,8 @@ public class WeatherRain : Weather
     [SerializeField]
     private float _intensity = 0;
     public override float Intensity { get => _intensity; set => SetIntensity(value); }
+    private AudioSource _ambient;
+    public override AudioSource AmbientSound { get => _ambient; }
     public MathUtils.FloatRange emissionMinMax = new MathUtils.FloatRange(10, 20);
     public MathUtils.FloatRange gravityMinMax = new MathUtils.FloatRange(5, 9);
     public float sizeBase = 0.025f;
@@ -24,6 +26,7 @@ public class WeatherRain : Weather
     // Start is called before the first frame update
     void Start()
     {
+        _ambient = GetComponent<AudioSource>();
         var emitterPairs = GetComponentsInChildren<ParticleSystem>();
         emitters = new ParticleSystem[emitterPairs.Length / 2];
         splashers = new ParticleSystem[emitterPairs.Length / 2];
