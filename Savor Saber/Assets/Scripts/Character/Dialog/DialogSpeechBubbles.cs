@@ -75,7 +75,7 @@ public class DialogSpeechBubbles : BaseDialog
             dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
             dialogBox.transform.SetParent(UICanvas.transform);
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
-            dialogBox.transform.localScale = new Vector3(1, 1, 1);
+            dialogBox.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
             //rectTransform.anchoredPosition = new Vector3(0, 50, 0);
             dialogRectTransform.anchoredPosition = GetActorUISpace(actors[stage]);
 
@@ -124,10 +124,15 @@ public class DialogSpeechBubbles : BaseDialog
 
     protected Vector2 GetActorUISpace(GameObject actor)
     {
+        
         RectTransform canvasRect = UICanvas.GetComponent<RectTransform>();
         Vector2 viewportPosition = Camera.main.WorldToViewportPoint(actor.transform.position);
-        Vector3 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y, 0f);
 
-        return proportionalPosition;
+        Vector2 UIOffset = new Vector2((float)canvasRect.sizeDelta.x / 2f, -70f);
+
+
+        Vector2 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
+
+        return proportionalPosition - UIOffset;
     }
 }

@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class DialogManualTrigger : MonoBehaviour
 {
 
     public GameObject dialogTarget;
+    private SpriteRenderer spriteRenderer;
     private BaseDialog dialog;
     private bool playingDialog = false;
+    private Color defaultColor;
 
     // Start is called before the first frame update
     void Start()
     {
         dialog = dialogTarget.GetComponent<BaseDialog>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        defaultColor = spriteRenderer.color;
     }
 
     // Update is called once per frame
@@ -25,9 +30,10 @@ public class DialogManualTrigger : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+
         if(collision.gameObject.tag == "Player" && Input.GetButtonDown("Cook") && !playingDialog)
         {
-            if(dialog != null)
+            if (dialog != null)
             {
                 playingDialog = true;
                 dialog.Activate();
@@ -37,5 +43,23 @@ public class DialogManualTrigger : MonoBehaviour
                 Debug.LogWarning("Warning: No dialog associated with trigger");
             }
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            spriteRenderer.color = defaultColor;
+        }
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Player")
+        {
+            spriteRenderer.color = Color.yellow;
+        }
+        
     }
 }
