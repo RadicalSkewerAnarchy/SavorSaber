@@ -46,6 +46,7 @@ public class UpdatedController : MonoBehaviour
     //////
     Rigidbody2D rigidBody;
     Animator animatorBody;
+    DialogData dialogData;
     /// <summary> The Squared magnitude of the movement vector from last frame
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
@@ -54,16 +55,22 @@ public class UpdatedController : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
+        dialogData = GetComponent<DialogData>();
     }
 
     /*Update is called once per frame*/
     void FixedUpdate()
-    {   
+    {
+        
         /*Two functions are used here in order to allow easy edition of 
         movement and stopping behavior as well as immediate frame by frame updates*/
-        MoveAgent();
-        //StopAgent();
-        AnimateAgent();
+        if (!dialogData.inConversation)
+        {
+            MoveAgent();
+            //StopAgent();
+            AnimateAgent();
+        }
+
     }
 
     void MoveAgent()
@@ -75,6 +82,7 @@ public class UpdatedController : MonoBehaviour
         var modSpeed = (running ? runSpeed : speed) * speedMod;
         if (movementVector.magnitude > 1)
         {
+
             rigidBody.velocity = (movementVector/movementVector.magnitude * modSpeed * Time.deltaTime);
         }
         else

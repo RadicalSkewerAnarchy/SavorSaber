@@ -9,33 +9,7 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogSpeechBubbles : BaseDialog
 {
-    #region fields
 
-    public bool repeatable = false;
-
-    /// <summary>
-    /// Dialog writers set these fields
-    /// </summary>
-    public DialogData.Emotions[] emotions;
-    public string[] text;
-    public GameObject[] actors;
-
-    /// <summary>
-    /// references to objects used for display
-    /// </summary>
-    public GameObject dialogBoxPrefab;
-    public Canvas UICanvas;
-    private GameObject dialogBox;
-    private RectTransform dialogRectTransform;
-
-    private Text dialogText;
-    private Image dialogImage;
-    private DialogData dialogData;
-
-    private int stage = 0;
-
-
-    #endregion
 
     // Update is called once per frame
     void Update()
@@ -49,6 +23,7 @@ public class DialogSpeechBubbles : BaseDialog
                 Destroy(dialogBox);
                 active = false;
                 dialogFinished = true;
+                ReleaseActors();
 
                 if (!repeatable)
                     Destroy(this.gameObject);
@@ -68,6 +43,7 @@ public class DialogSpeechBubbles : BaseDialog
     {
         stage = 0;
         dialogFinished = false;
+        HoldActors();
         
         if (dialogBoxPrefab != null)
         {

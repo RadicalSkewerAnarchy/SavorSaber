@@ -18,6 +18,9 @@ public class DialogData : MonoBehaviour
 
     public string displayName;
 
+    [System.NonSerialized]
+    public bool inConversation = false;
+
     public PortraitDictionary portraitDictionary = new PortraitDictionary();
 
     [System.Serializable]

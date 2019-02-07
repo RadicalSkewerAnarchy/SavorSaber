@@ -9,25 +9,10 @@ using UnityEngine.UI;
 /// </summary>
 public class Dialog : BaseDialog
 {
-    #region fields
-
-    public bool repeatable = false;
 
     public Sprite[] portraitSprites;
     public string[] currentSpeaker;
-    public string[] text;
-
-
-    public GameObject dialogBoxPrefab;
-    public Canvas UICanvas;
-
-    private GameObject dialogBox;
-    private Text dialogText;
-    private Image dialogImage;
-    
-    private int stage = 0;
-
-    #endregion
+  
 
     // Update is called once per frame
     void Update()
