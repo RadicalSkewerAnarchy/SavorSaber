@@ -10,6 +10,7 @@ public class DialogManualTrigger : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private BaseDialog dialog;
     private bool playingDialog = false;
+    private bool playerInRange = false;
     private Color defaultColor;
 
     // Start is called before the first frame update
@@ -26,11 +27,24 @@ public class DialogManualTrigger : MonoBehaviour
         //reset playing state if the dialog has finished.
         if (dialog != null && dialog.dialogFinished)
             playingDialog = false;
-    }
 
+        if (playerInRange && Input.GetButtonDown("Cook") && !playingDialog)
+        {
+            if (dialog != null)
+            {
+                playingDialog = true;
+                dialog.Activate();
+            }
+            else
+            {
+                Debug.LogWarning("Warning: No dialog associated with trigger");
+            }
+        }
+    }
+    /*
     private void OnTriggerStay2D(Collider2D collision)
     {
-
+        //Debug.Log("Player in trigger");
         if(collision.gameObject.tag == "Player" && Input.GetButtonDown("Cook") && !playingDialog)
         {
             if (dialog != null)
@@ -44,12 +58,13 @@ public class DialogManualTrigger : MonoBehaviour
             }
         }
     }
-
+    */
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             spriteRenderer.color = defaultColor;
+            playerInRange = false;
         }
 
     }
@@ -59,6 +74,7 @@ public class DialogManualTrigger : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             spriteRenderer.color = Color.yellow;
+            playerInRange = true;
         }
         
     }

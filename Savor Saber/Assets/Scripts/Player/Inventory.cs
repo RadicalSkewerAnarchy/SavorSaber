@@ -13,8 +13,39 @@ public class Skewer
 
     public RecipeData finishedRecipe = null;
 
+    /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCount = new Dictionary<RecipeData.Flavors, int>();
+
 
     //methods
+
+    public void InitializeDictionary()
+    {
+        flavorCount.Add(RecipeData.Flavors.Sweet, 0);
+        flavorCount.Add(RecipeData.Flavors.Sour, 0);
+        flavorCount.Add(RecipeData.Flavors.Spicy, 0);
+        flavorCount.Add(RecipeData.Flavors.Salty, 0);
+        flavorCount.Add(RecipeData.Flavors.Savory, 0);
+        flavorCount.Add(RecipeData.Flavors.Bitter, 0);
+        flavorCount.Add(RecipeData.Flavors.Acquired, 0);
+    }
+
+    /// <summary>
+    /// Resets the count of each flavor to 0
+    /// </summary>
+    public void ResetDictionary()
+    {
+        flavorCount[RecipeData.Flavors.Sweet] = 0;
+        flavorCount[RecipeData.Flavors.Sour] = 0;
+        flavorCount[RecipeData.Flavors.Spicy] = 0;
+        flavorCount[RecipeData.Flavors.Salty] = 0;
+        flavorCount[RecipeData.Flavors.Savory] = 0;
+        flavorCount[RecipeData.Flavors.Bitter] = 0;
+        flavorCount[RecipeData.Flavors.Acquired] = 0;
+    }
+
     public int GetCount()
     {
         return ingredientStack.Count;
@@ -150,6 +181,14 @@ public class Inventory : MonoBehaviour {
     public bool ActiveSkewerFull()
     {
         return (quiver[activeSkewer].GetCount() == maxItemsPerSkewer);
+    }
+
+    /// <summary>
+    /// Returns true if the active skewer is empty
+    /// </summary>
+    public bool ActiveSkewerEmpty()
+    {
+        return (quiver[activeSkewer].GetCount() == 0);
     }
 
     /// <summary>

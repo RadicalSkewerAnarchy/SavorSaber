@@ -11,6 +11,11 @@ using UnityEngine;
 public class BaseProjectile : MonoBehaviour
 {
     /// <summary>
+    /// A prefab to be instantiated when the projectile is terminated
+    /// </summary>
+    public GameObject dropItem; 
+
+    /// <summary>
     /// How fast the projectile travels
     /// </summary>
     public float projectileSpeed;
@@ -136,8 +141,12 @@ public class BaseProjectile : MonoBehaviour
     {
         Debug.Log("Projectile trigger entered");
 
+        if (dropItem != null)
+            Instantiate(dropItem, transform.position, Quaternion.identity);
+
         if (!penetrateTargets)
             Destroy(this.gameObject);
+
 
     }
 }

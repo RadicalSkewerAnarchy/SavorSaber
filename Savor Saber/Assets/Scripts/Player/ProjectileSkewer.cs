@@ -15,7 +15,6 @@ public class ProjectileSkewer : BaseProjectile
         SetGeometry();
 
         spawnPosition = transform.position;
-        Debug.Log("Spawn position: " + spawnPosition);
     }
 
     // Update is called once per frame
@@ -25,9 +24,8 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
-            Debug.Log("Exceeded max range, destroying projectile");
-            //Debug.Log("Start position: " + spawnPosition);
-            //Debug.Log("End position: " + transform.position);
+            if (dropItem != null)
+                Instantiate(dropItem, transform.position, Quaternion.identity);
 
             Destroy(this.gameObject);
 
@@ -36,16 +34,21 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-
+        Debug.Log("thrown skewer collided with " + collision.name);
         if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
         {
             Debug.Log("Thrown skewer hit target with effect " + effectRecipeData.displayName);
             effectRecipeData.ApplyEffectToTarget(collision.gameObject);
+            
+        }
+        if(collision.gameObject.tag != "Player")
+        {
+            if (dropItem != null)
+                Instantiate(dropItem, transform.position, Quaternion.identity);
+
             if (!penetrateTargets)
                 Destroy(this.gameObject);
         }
-
-
 
     }
 }

@@ -35,7 +35,8 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
-        if (InputManager.GetButtonDown(control) && inv.ActiveSkewerCooked())
+        //conditions to throw: Must either have ingredients OR a cooked recipe
+        if (InputManager.GetButtonDown(control) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
         {
             chargedAttack = true;
             center = r.bounds.center;
@@ -69,6 +70,8 @@ public class AttackRangedThrowSkewer : AttackRanged
         Attacking = true;
         CanBeCanceled = false;
         inv.CanSwap = false;
+        inv.ClearActiveSkewer();
+        inv.ClearActiveRecipe();
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
             Debug.Log("Charge Level Equals: " + currLevel);
