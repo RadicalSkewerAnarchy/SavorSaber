@@ -12,13 +12,14 @@ using UnityEngine;
 
 public class AIData : CharacterData
 {
-
+    #region NormalValues
     /// <summary> A delegate that returns a float between 0 and 1 </summary>
     public delegate float GetNormalValue();
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
     private Dictionary<string, GetNormalValue> _values;
     private Dictionary<string, Vector2> _vectors;
-
+    #endregion
+    #region Behaviors
     #region Behaviors
     /// <summary> my current state </summary>
     public enum Behave
@@ -49,8 +50,9 @@ public class AIData : CharacterData
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
+    #endregion
+    #region Timers
 
-    // Decision making
     [SerializeField]
     public float DecisionTimer;
     [SerializeField]
@@ -59,13 +61,21 @@ public class AIData : CharacterData
     [SerializeField]
     [Range(0f, 4f)]
     public float DecisionTimerVariance = 2f;
-
+    #endregion
+    #region NearbyCreatures and Food
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> TargetObjects = new List<GameObject>();
     GameObject AwarenessObject;
     Vector2 TargetPosition;
     /// <summary>
-    /// Monster Behavior, Monster Protocol
+    /// empty array of nearby seen creatures
+    /// </summary>
+    public Collider2D[] NearbyCreatures = new Collider2D[10];
+    Vector2 Target;
+    #endregion
+    #region MonstersBrain and inventory;
+    /// <summary>
+    /// Monster Behaviors, Monster Protocols, Monster Checks, Utility Curves
     /// </summary>
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
@@ -78,12 +88,8 @@ public class AIData : CharacterData
     public List<GameObject> Enemies;
     public List<RecipeData.Flavors> FoodPreference;
     public Queue<GameObject> Stomach;
-
-    /// <summary>
-    /// empty array of nearby seen creatures
-    /// </summary>
-    public Collider2D[] NearbyCreatures = new Collider2D[10];
-    Vector2 Target;
+    #endregion
+    
 
     private void Start()
     {

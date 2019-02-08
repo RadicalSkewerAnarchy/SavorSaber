@@ -51,9 +51,7 @@ public class MonsterBehavior : MonoBehaviour
 
         ActionTimer = -1f;
         ActionTimerReset = 5f;
-        ActionTimerVariance = 2f;
-
-        
+        ActionTimerVariance = 2f;        
     }
 
     /// <summary>
