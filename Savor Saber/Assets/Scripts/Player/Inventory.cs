@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Class for packaging a stack of ingredients and a completed recipe.
@@ -53,7 +54,24 @@ public class Skewer
 
     public void PushIngredient(IngredientData ingredient)
     {
-        ingredientStack.Push(ingredient);   
+        ingredientStack.Push(ingredient);
+
+        // Sweet = 1, Acquired = 64
+        /*
+        for(RecipeData.Flavors f = RecipeData.Flavors.Sweet; (int)f <= 64; f = f << 1)
+        {
+
+            if (f & ingredient.flavors > 0)
+            {
+
+            }
+            
+        }
+        */
+        if (ingredient.flavors.HasFlag(RecipeData.Flavors.Sweet))
+        {
+
+        }
     }
 
     public IngredientData PopIngredient()
