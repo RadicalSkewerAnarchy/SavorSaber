@@ -91,6 +91,7 @@ public class MonsterChecks : MonoBehaviour
         GameObject ClosestFriend = null;
         GameObject ClosestEnemy = null;
         GameObject ClosestNeutral = null;
+        float dist;
         #endregion
         #region Debug
         if (frenemy != "friend" || frenemy != "enemy" || frenemy != "neutral")
@@ -102,7 +103,7 @@ public class MonsterChecks : MonoBehaviour
         {
             if (Enemies.Contains(Creature))
             {
-                float dist = Vector2.Distance(transform.position, Creature.transform.position);
+                dist = Vector2.Distance(transform.position, Creature.transform.position);
                 if (dist < closestE)
                 {
                     closestE = dist;
@@ -111,7 +112,7 @@ public class MonsterChecks : MonoBehaviour
             }
             if (Friends.Contains(Creature))
             {
-                float dist = Vector2.Distance(transform.position, Creature.transform.position);
+                dist = Vector2.Distance(transform.position, Creature.transform.position);
                 if(dist < closestF)
                 {
                     closestF = dist;
@@ -119,7 +120,7 @@ public class MonsterChecks : MonoBehaviour
                 }
             }
             #region if (NeutralCreature)
-            float dist = Vector2.Distance(transform.position, Creature.transform.position);
+            dist = Vector2.Distance(transform.position, Creature.transform.position);
             if(dist < closestN)
             {
                 closestN = dist;
