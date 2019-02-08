@@ -118,11 +118,13 @@ public class MonsterProtocols : MonoBehaviour
     // socializes
     public void Party()
     {
-        var closest = Checks.ClosestCreature().gameObject.transform.position;
+        
+        var closest = Checks.ClosestCreature().transform.position;
         if (Behaviour.MoveTo(closest, AiData.Speed))
         {
             Behaviour.Socialize(closest, AiData.Speed);
         }
+       
     }
 
 

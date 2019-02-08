@@ -35,6 +35,7 @@ public class MonsterChecks : MonoBehaviour
         Friends = AiData.Friends;
         Enemies = AiData.Enemies;
         Enemies.Add(soma);
+        Friends.Add(soma);
         // clear often
         AllCreatures = new List<GameObject>();
     }

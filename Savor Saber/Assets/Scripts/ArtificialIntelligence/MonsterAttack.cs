@@ -36,7 +36,7 @@ public class MonsterAttack : BaseMeleeAttack
                 Debug.Log("Character health: " + charData.health);
                 if (charData.health <= 0)
                 {
-                    collision.gameObject.SetActive(false);
+                    //collision.gameObject.SetActive(false);
                 }
             }                       
         }

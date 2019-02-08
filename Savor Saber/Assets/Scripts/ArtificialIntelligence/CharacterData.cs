@@ -58,4 +58,21 @@ public class CharacterData : MonoBehaviour
         RangeAttackThreshold = Random.Range(RangeAttackThreshold * VDown, RangeAttackThreshold*VUp);
         maxHealth = (int)Random.Range(maxHealth * VDown, maxHealth * VUp);
     }
+
+    private void Update()
+    {
+        if(health <= 0)
+        {
+            if(this.tag == "Player")
+            {
+                Respawn();
+            }            
+        }
+    }
+
+    private void Respawn()
+    {
+        transform.position = new Vector3(0, 0, .5f);
+        health = maxHealth;
+    }
 }
