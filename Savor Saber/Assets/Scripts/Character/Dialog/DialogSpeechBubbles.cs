@@ -9,22 +9,25 @@ using UnityEngine.UI;
 /// </summary>
 public class DialogSpeechBubbles : BaseDialog
 {
+    private DialogItem item;
 
+    public void Start()
+    {
+        scene = GetComponent<DialogScene>();
+    }
 
     // Update is called once per frame
     void Update()
     {
         if (Input.GetButtonDown("Cook") && active)
         {
-            stage++;
-            Debug.Log("Advancing to dialog stage " + stage);
-            if (stage >= text.Length)
+            item = scene.NextDialog();
+            if (item == null)
             {
                 Destroy(dialogBox);
                 active = false;
                 dialogFinished = true;
                 ReleaseActors();
-
                 if (!repeatable)
                     Destroy(this.gameObject);
             }
@@ -39,12 +42,11 @@ public class DialogSpeechBubbles : BaseDialog
     /// <summary>
     /// Call this function to begin dialog
     /// </summary>
-    public override void Activate()
+    public override void Activate(bool doFirst)
     {
-        stage = 0;
         dialogFinished = false;
         HoldActors();
-        
+        scene.ResetScene();
         if (dialogBoxPrefab != null)
         {
             //set position on of dialog box on screen
@@ -52,28 +54,22 @@ public class DialogSpeechBubbles : BaseDialog
             dialogBox.transform.SetParent(UICanvas.transform);
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
             dialogBox.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            //rectTransform.anchoredPosition = new Vector3(0, 50, 0);
-            dialogRectTransform.anchoredPosition = GetActorUISpace(actors[stage]);
-
-            //set dialog box text
-            Debug.Log("stage: " + stage);
             dialogText = dialogBox.GetComponentInChildren<Text>();
-            dialogText.text = text[stage];
-
             //set dialog box portrait
             Transform portrait = dialogBox.transform.GetChild(1);
             dialogImage = portrait.GetComponent<Image>();
-            dialogData = actors[stage].GetComponent<DialogData>();
-            dialogImage.sprite = dialogData.portraitDictionary[emotions[stage]];
-
-            StartCoroutine(Wait(0.5f));
         }
         else
         {
             Debug.LogWarning("Warning: No dialog box prefab found when trying to activate Dialog");
             Destroy(this.gameObject);
         }
-
+        if (doFirst)
+        {
+            item = scene.NextDialog();
+            NextDialog();
+        }
+        active = true;
     }
 
     /// <summary>
@@ -81,23 +77,11 @@ public class DialogSpeechBubbles : BaseDialog
     /// </summary>
     public override void NextDialog()
     {
-        dialogText.text = text[stage];
-        dialogData = actors[stage].GetComponent<DialogData>();
-        dialogImage.sprite = dialogData.portraitDictionary[emotions[stage]];
-        dialogRectTransform.anchoredPosition = GetActorUISpace(actors[stage]);
+        dialogText.text = item.text;
+        dialogData = actors[item.actor].GetComponent<DialogData>();
+        dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
+        dialogRectTransform.anchoredPosition = GetActorUISpace(actors[item.actor]);
     }
-
-    /// <summary>
-    /// A short delay before considering the dialog "active" or else the stage
-    /// gets advanced by the same key press as activation.
-    /// </summary>
-    protected IEnumerator Wait(float time)
-    {
-        yield return new WaitForSeconds(time);
-        active = true;
-        yield return null;
-    }
-
     protected Vector2 GetActorUISpace(GameObject actor)
     {
         

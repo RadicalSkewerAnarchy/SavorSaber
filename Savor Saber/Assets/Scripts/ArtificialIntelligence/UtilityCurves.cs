@@ -38,7 +38,7 @@ public class UtilityCurves : MonoBehaviour
         {
             //Debug.Log("=== " + kvp.Key);
             float utility = SumCurves(kvp.Value);
-            Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
+            //Debug.Log(">>> " + kvp.Key + " Utility: " + utility);
             if (utility > max)
             {
                 max = utility;
