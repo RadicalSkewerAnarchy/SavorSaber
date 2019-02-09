@@ -57,20 +57,18 @@ public class Skewer
         ingredientStack.Push(ingredient);
 
         // Sweet = 1, Acquired = 64
-        /*
-        for(RecipeData.Flavors f = RecipeData.Flavors.Sweet; (int)f <= 64; f = f << 1)
+        
+        for(int f = 1; f <= 64; f = f << 1)
         {
 
-            if (f & ingredient.flavors > 0)
+            if ((f & (int)ingredient.flavors) > 0)
             {
-
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                flavorCount[foundFlavor] = flavorCount[foundFlavor] + 1;
+                Debug.Log("Amount of flavor " + foundFlavor + ": " + flavorCount[foundFlavor]);
             }
             
-        }
-        */
-        if (ingredient.flavors.HasFlag(RecipeData.Flavors.Sweet))
-        {
-
+            
         }
     }
 
@@ -153,6 +151,12 @@ public class Inventory : MonoBehaviour {
         CanSwap = true;
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
         sfxPlayer = GetComponent<PlaySFX>();
+
+        //initialize dictionaries 
+        for(int i = 0; i < quiver.Length; i++)
+        {
+            quiver[i].InitializeDictionary();
+        }
     }
 
     private void Update()

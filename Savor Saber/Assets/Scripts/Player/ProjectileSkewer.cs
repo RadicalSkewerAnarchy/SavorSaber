@@ -37,9 +37,7 @@ public class ProjectileSkewer : BaseProjectile
         Debug.Log("thrown skewer collided with " + collision.name);
         if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
         {
-            Debug.Log("Thrown skewer hit target with effect " + effectRecipeData.displayName);
-            effectRecipeData.ApplyEffectToTarget(collision.gameObject);
-            
+            effectRecipeData.ApplyEffectToTarget(collision.gameObject);           
         }
         if(collision.gameObject.tag != "Player")
         {
