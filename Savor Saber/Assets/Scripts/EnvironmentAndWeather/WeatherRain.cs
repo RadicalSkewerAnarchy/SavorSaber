@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using MathUtils;
 using UnityEngine;
 
 public class WeatherRain : Weather
@@ -10,8 +11,15 @@ public class WeatherRain : Weather
     public override float Intensity { get => _intensity; set => SetIntensity(value); }
     private AudioSource _ambient;
     public override AudioSource AmbientSound { get => _ambient; }
+    [SerializeField]
+    private FloatRange _windRange = new FloatRange(0, 40);
+    public override FloatRange WindRange { get => _windRange; }
+    public override float DestroyTime => 1;
+
     public MathUtils.FloatRange emissionMinMax = new MathUtils.FloatRange(10, 20);
     public MathUtils.FloatRange gravityMinMax = new MathUtils.FloatRange(5, 9);
+
+    #region Customization fields
     public float sizeBase = 0.025f;
     public float sizeStep = 0.025f;
     public float trailWidthBase = 0.025f;
@@ -22,6 +30,7 @@ public class WeatherRain : Weather
     public float splashSizeStep = 0.025f;
     private ParticleSystem[] emitters;
     private ParticleSystem[] splashers;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
