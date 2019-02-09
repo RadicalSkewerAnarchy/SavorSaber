@@ -38,6 +38,11 @@ public class AttackRanged : AttackBase
     public RecipeData effectRecipeData = null;
 
     /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+
+    /// <summary>
     /// The name of the attack, used to determine animation states
     /// </summary>
     public string attackName;
@@ -115,6 +120,10 @@ public class AttackRanged : AttackBase
         if (effectRecipeData != null)
         {
             projectileData.effectRecipeData = effectRecipeData;
+        }
+        if(flavorCountDictionary != null)
+        {
+            projectileData.flavorCountDictionary = flavorCountDictionary;
         }
 
         Attacking = true;

@@ -35,11 +35,26 @@ public class ProjectileSkewer : BaseProjectile
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("thrown skewer collided with " + collision.name);
+
+        //if it has an effect recipe (i.e. cooked/crafted item)
         if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
         {
             effectRecipeData.ApplyEffectToTarget(collision.gameObject);           
         }
-        if(collision.gameObject.tag != "Player")
+
+        //if it has a flavor dictionary (i.e. uncooked, regular attack)
+        if (collision.gameObject.tag == "Monster" && flavorCountDictionary != null)
+        {
+            //print out what flavors are on the projectile
+            for (int f = 1; f <= 64; f = f << 1)
+            {
+                    RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                    Debug.Log("Amount of flavor " + foundFlavor + " hitting target: " + flavorCountDictionary[foundFlavor]);
+            }
+        }
+
+        //general hitting 
+        if (collision.gameObject.tag != "Player")
         {
             if (dropItem != null)
                 Instantiate(dropItem, transform.position, Quaternion.identity);

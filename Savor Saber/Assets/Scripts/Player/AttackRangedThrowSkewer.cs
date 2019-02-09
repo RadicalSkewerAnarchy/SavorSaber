@@ -55,6 +55,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         {
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
+            flavorCountDictionary = inv.GetActiveFlavorDictionary();
             r.color = Color.white;
             currLevel = 0;
             Attack();
@@ -74,7 +75,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         inv.ClearActiveRecipe();
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
-            Debug.Log("Charge Level Equals: " + currLevel);
+            //Debug.Log("Charge Level Equals: " + currLevel);
             animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
             sfxPlayer.Play(chargeSounds[currLevel]);
             float time = 0;

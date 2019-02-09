@@ -17,20 +17,20 @@ public class Skewer
     /// <summary>
     /// how much of each flavor is present on the skewer
     /// </summary>
-    public Dictionary<RecipeData.Flavors, int> flavorCount = new Dictionary<RecipeData.Flavors, int>();
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
 
 
     //methods
 
     public void InitializeDictionary()
     {
-        flavorCount.Add(RecipeData.Flavors.Sweet, 0);
-        flavorCount.Add(RecipeData.Flavors.Sour, 0);
-        flavorCount.Add(RecipeData.Flavors.Spicy, 0);
-        flavorCount.Add(RecipeData.Flavors.Salty, 0);
-        flavorCount.Add(RecipeData.Flavors.Savory, 0);
-        flavorCount.Add(RecipeData.Flavors.Bitter, 0);
-        flavorCount.Add(RecipeData.Flavors.Acquired, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Sweet, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Sour, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Spicy, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Salty, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Savory, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Bitter, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
     }
 
     /// <summary>
@@ -38,13 +38,13 @@ public class Skewer
     /// </summary>
     public void ResetDictionary()
     {
-        flavorCount[RecipeData.Flavors.Sweet] = 0;
-        flavorCount[RecipeData.Flavors.Sour] = 0;
-        flavorCount[RecipeData.Flavors.Spicy] = 0;
-        flavorCount[RecipeData.Flavors.Salty] = 0;
-        flavorCount[RecipeData.Flavors.Savory] = 0;
-        flavorCount[RecipeData.Flavors.Bitter] = 0;
-        flavorCount[RecipeData.Flavors.Acquired] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Savory] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
     }
 
     public int GetCount()
@@ -64,11 +64,9 @@ public class Skewer
             if ((f & (int)ingredient.flavors) > 0)
             {
                 RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                flavorCount[foundFlavor] = flavorCount[foundFlavor] + 1;
-                Debug.Log("Amount of flavor " + foundFlavor + ": " + flavorCount[foundFlavor]);
-            }
-            
-            
+                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
+                Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
+            }    
         }
     }
 
@@ -267,6 +265,11 @@ public class Inventory : MonoBehaviour {
     public RecipeData GetActiveEffect()
     {
         return quiver[activeSkewer].finishedRecipe;
+    }
+
+    public Dictionary<RecipeData.Flavors, int> GetActiveFlavorDictionary()
+    {
+        return quiver[activeSkewer].flavorCountDictionary;
     }
 
     /// <summary>

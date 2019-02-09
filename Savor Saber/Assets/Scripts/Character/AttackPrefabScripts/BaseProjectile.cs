@@ -63,6 +63,11 @@ public class BaseProjectile : MonoBehaviour
     public RecipeData effectRecipeData = null;
 
     /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+
+    /// <summary>
     /// Direction and rotation fields
     /// </summary>
     [System.NonSerialized]
@@ -88,7 +93,7 @@ public class BaseProjectile : MonoBehaviour
             penetrateTargets = false;
 
         spawnPosition = transform.position;
-        Debug.Log("Spawn position: " + spawnPosition);
+        //Debug.Log("Spawn position: " + spawnPosition);
  
     }
 
@@ -139,7 +144,7 @@ public class BaseProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Projectile trigger entered");
+       // Debug.Log("Projectile trigger entered");
 
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
