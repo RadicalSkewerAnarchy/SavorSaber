@@ -33,7 +33,7 @@ public class DialogManualTrigger : MonoBehaviour
             if (dialog != null)
             {
                 playingDialog = true;
-                dialog.Activate();
+                dialog.Activate(false);
             }
             else
             {

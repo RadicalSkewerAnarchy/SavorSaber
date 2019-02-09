@@ -6,6 +6,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Exists so that dialog triggers can activate different styles of dialog
 /// </summary>
+[RequireComponent(typeof(DialogScene))]
 public class BaseDialog : MonoBehaviour
 {
 
@@ -28,9 +29,7 @@ public class BaseDialog : MonoBehaviour
     /// <summary>
     /// Dialog writers set these fields
     /// </summary>
-    public DialogData.Emotions[] emotions;
-    public string[] text;
-    public GameObject[] actors;
+    public ActorDict actors = new ActorDict();
 
     /// <summary>
     /// references to objects used for display
@@ -43,13 +42,10 @@ public class BaseDialog : MonoBehaviour
     protected Text dialogText;
     protected Image dialogImage;
     protected DialogData dialogData;
-
-    protected int stage = 0;
-
-
+    protected DialogScene scene;
     #endregion
 
-    public virtual void Activate()
+    public virtual void Activate(bool doFirst)
     {
 
     }
@@ -65,9 +61,9 @@ public class BaseDialog : MonoBehaviour
     protected void HoldActors()
     {
         DialogData actorDialogData;
-        for(int i = 0; i < actors.Length; i++)
+        foreach(var key in actors.Keys)
         {
-            actorDialogData = actors[i].GetComponent<DialogData>();
+            actorDialogData = actors[key].GetComponent<DialogData>();
             actorDialogData.inConversation = true;
         }
     }
@@ -75,10 +71,12 @@ public class BaseDialog : MonoBehaviour
     protected void ReleaseActors()
     {
         DialogData actorDialogData;
-        for (int i = 0; i < actors.Length; i++)
+        foreach (var key in actors.Keys)
         {
-            actorDialogData = actors[i].GetComponent<DialogData>();
+            actorDialogData = actors[key].GetComponent<DialogData>();
             actorDialogData.inConversation = false;
         }
     }
+
+    [System.Serializable] public class ActorDict : SerializableCollections.SDictionary<string, GameObject> { };
 }

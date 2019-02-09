@@ -7,15 +7,6 @@ using UnityEngine;
 /// </summary>
 public class DialogData : MonoBehaviour
 {
-
-    public enum Emotions:int
-    {
-        Neutral,
-        Happy,
-        Sad,
-        Angry
-    }
-
     public string displayName;
 
     [System.NonSerialized]
@@ -24,7 +15,7 @@ public class DialogData : MonoBehaviour
     public PortraitDictionary portraitDictionary = new PortraitDictionary();
 
     [System.Serializable]
-    public class PortraitDictionary:SerializableCollections.SDictionary<Emotions, Sprite>
+    public class PortraitDictionary:SerializableCollections.SDictionary<Gameflow.DialogNodeVN.Emotion, Sprite>
     {
 
     }
