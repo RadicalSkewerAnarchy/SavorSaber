@@ -249,6 +249,7 @@ public class Inventory : MonoBehaviour {
     public void ClearActiveSkewer()
     {
         quiver[activeSkewer].ClearItems();
+        quiver[activeSkewer].ResetDictionary();
         UpdateSkewerVisual();
     }
 
