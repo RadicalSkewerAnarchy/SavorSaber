@@ -12,6 +12,7 @@ public class SignalApplication : MonoBehaviour
     // hit and mod list
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
+    public List<GameObject> dropList = new List<GameObject>();
     public Dictionary<string, float> moodMod = new Dictionary<string, float>();
     #region MoodMods
     [Range(-1f, 1f)]
@@ -28,26 +29,26 @@ public class SignalApplication : MonoBehaviour
 
 
     // private variables
-    public bool activate = true;
+    public bool activate = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
     bool hitAll = true;
-    bool hitEnemies = true;
-    bool hitFriends = true;
     // Game object of who made this
     GameObject signalMaker = null;
 
     // Constructor
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
-    public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself, bool hitenemies, bool hitfriends)
+    public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
+        Debug.Log("Signal Created via Constructor");
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
+        // update radius
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        collider.radius = interactRadius;
         this.moodMod = moods;
         this.hitAll = hitall;
         this.hitSelf = hitself;
-        this.hitEnemies = hitenemies;
-        this.hitFriends = hitfriends;
     }
 
 
@@ -73,6 +74,9 @@ public class SignalApplication : MonoBehaviour
             if (signalMaker != null)
             {
                 signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+                Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
+                signalMaker.GetComponent<AIData>().Awareness = null;
             }
 
             // destroy
@@ -80,7 +84,7 @@ public class SignalApplication : MonoBehaviour
         }
         else
         {
-            //activate = true;
+            activate = true;
         }
     }
 
@@ -89,40 +93,31 @@ public class SignalApplication : MonoBehaviour
     {
         // get objects
         GameObject go = collision.gameObject;
+        Debug.Log(signalMaker.name + "has found --> " + go.name);
         AIData maindata = go.GetComponent<AIData>();
-        if (maindata != null)
+        // 11 is monster layer
+        if (go.layer == 11)
         {
-            // if not in list...
-            if (!hitList.Contains(go))
+            // extract signal maker data and lists
+            AIData data = signalMaker.GetComponent<AIData>();// get lists
+
+            // create boolean cases
+            bool hitS = hitSelf && data.Equals(maindata);
+            bool hitA = hitAll;
+
+            // if ANY of these...
+            if (hitA || hitS)
             {
-                // extract signal maker data and lists
-                AIData data = signalMaker.GetComponent<AIData>();// get lists
-                List<GameObject> fr = data.Friends;
-                List<GameObject> en = data.Enemies;
-
-                // create boolean cases
-                bool hitF = fr.Contains(go) && hitFriends;
-                //Debug.Log("hit friends?: " + hitF + " who?: " + go.name);
-                bool hitE = en.Contains(go) && hitEnemies;
-                //Debug.Log("hit enemies?: " + hitE + " who?: " + go.name);
-                bool hitS = hitSelf && data.Equals(maindata);
-                //Debug.Log("hit self?: " + hitS + " who?: " + go.name);
-                bool hitA = hitAll;
-                //Debug.Log("hit ALL?: " + hitA + " who?: " + go.name);
-
-                // if ANY of these...
-                if (hitA || (hitF || hitE) || hitS)
-                {
-                    // add to list
-                    //Debug.Log(signalMaker.name + "'s HIT LIST ++ : " + go.name);
-                    //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
-                    hitList.Add(go);
-                }
-                else
-                {
-                    // do nothing
-                }
+                // add to list
+                Debug.Log(signalMaker.name + "'s HIT LIST ++ --> " + go.name);
+                //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
+                hitList.Add(go);
             }
+        }
+        else if (go.tag == "SkewerableObject")
+        {
+            // keep track of drops
+            dropList.Add(go);
         }
     }
 

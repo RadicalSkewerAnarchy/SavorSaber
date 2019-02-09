@@ -37,22 +37,33 @@ public class MonsterProtocols : MonoBehaviour
 
     /// NEEDS A LOT OF POLISH
     public void Melee()
-    {      
-        var nearestEnemy = AiData.Checks.ClosestCreature("enemy").transform.position;
+    {
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
+        {
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
         // Aware is a function that uses the Perception of the agent
         //to get a list of targets
         //The way MoveTo is set up is that it assumes you're only calling it when you need to move
         //Both of these behaviors require the player position as a Vector2 stored somewhere in AIData.cs
-        if (Vector2.Distance(nearestEnemy, AiData.gameObject.transform.position) > AiData.MeleeAttackThreshold)
+        if (Vector2.Distance(pos, AiData.gameObject.transform.position) > AiData.MeleeAttackThreshold)
         {
-            if (Behaviour.MoveTo(nearestEnemy, AiData.Speed))
+            if (Behaviour.MoveTo(pos, AiData.Speed))
             {
-                Behaviour.Attack(nearestEnemy, AiData.Speed);
+                Behaviour.Attack(pos, AiData.Speed);
             }
         }
         else
         {
-            Behaviour.Attack(nearestEnemy, AiData.Speed);
+            Behaviour.Attack(pos, AiData.Speed);
         }       
     }
 
@@ -60,12 +71,23 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Ranged()
     {
-        var nearestEnemy = AiData.Checks.ClosestCreature("enemy").gameObject.transform.position;
-        if (Vector2.Distance(nearestEnemy, AiData.gameObject.transform.position) > AiData.RangeAttackThreshold)
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
         {
-            if (Behaviour.MoveTo(nearestEnemy, AiData.Speed))
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
+        if (Vector2.Distance(pos, AiData.gameObject.transform.position) > AiData.RangeAttackThreshold)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed))
             {
-                Behaviour.Ranged(nearestEnemy, AiData.Speed);
+                Behaviour.Ranged(pos, AiData.Speed);
             }
         }
     }
@@ -90,7 +112,7 @@ public class MonsterProtocols : MonoBehaviour
     {
         if (AiData.Checks.NumberOfEnemies() > 0)
         {
-            if (!Behaviour.Attack(AiData.Checks.ClosestCreature("enemy").gameObject.transform.position, AiData.Speed))
+            if (!Behaviour.Attack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
             {
                 Lazy();
             }
@@ -102,11 +124,22 @@ public class MonsterProtocols : MonoBehaviour
     // moves if necessary to the nearest friend
     // socializes
     public void Party()
-    {        
-        var closest = Checks.ClosestCreature().transform.position;
-        if (Behaviour.MoveTo(closest, AiData.Speed))
+    {
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
         {
-            Behaviour.Socialize(closest, AiData.Speed);
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed))
+        {
+            Behaviour.Socialize(pos, AiData.Speed);
         }       
     }
 
@@ -122,17 +155,28 @@ public class MonsterProtocols : MonoBehaviour
     {
         var numFriends = AiData.Checks.NumberOfFriends();
         var numEnemies = AiData.Checks.NumberOfEnemies();
-        var closestEnemy = AiData.Checks.ClosestCreature("enemy").gameObject.transform.position;
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
+        {
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
 
 
-        if(numFriends >= AiData.PartySize)
+        if (numFriends >= AiData.PartySize)
         {
             if (numFriends / numEnemies >= 2 * numEnemies )
             {
-                if(Behaviour.MoveTo(closestEnemy, AiData.Speed))
+                if(Behaviour.MoveTo(pos, AiData.Speed))
                 {
                     //behavior.attack should return true if creature dies?
-                    if(Behaviour.Attack(closestEnemy, AiData.Speed))
+                    if(Behaviour.Attack(pos, AiData.Speed))
                     {
                         //need to look at behavior.feed
                         //Behaviour.Feed(closestEnemy, AiData.Speed);
@@ -147,7 +191,24 @@ public class MonsterProtocols : MonoBehaviour
     // plants currently not implemented
     public void Feast()
     {
-
+        GameObject cDrop = Checks.ClosestDrop();
+        // if there are drops
+        if (this.tag == "Prey")
+        {
+            // move to and feed
+            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed))
+            {
+                Behaviour.Feed();
+            }
+     
+        }
+        // else if i am a predator
+        else if (this.tag == "Predator")
+        {
+            // move to 
+            // attack
+            Melee();
+        }
     }
 
 
@@ -167,17 +228,20 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-
-
     public void Runaway()
     {
-        Debug.Log(GetInstanceID() + " IS RUNNING AWAY");
-        // returns a collider
-        // why not just the game object?
-        var nearestEnemy = AiData.Checks.ClosestCreature("enemy").transform.position;
-        Behaviour.MoveFrom(nearestEnemy, AiData.Speed);
-        
-        // for testing
-        //Melee();
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
+        {
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
+        Behaviour.MoveFrom(pos, AiData.Speed);
     }
 }

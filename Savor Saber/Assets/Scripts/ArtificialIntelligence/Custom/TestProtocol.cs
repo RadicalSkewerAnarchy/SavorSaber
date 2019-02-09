@@ -44,7 +44,7 @@ public class TestProtocol : CustomProtocol
                 _behave.MoveFrom(target, speed);
                 break;
             case Behavior.Feed:
-                _behave.Feed(target, speed);
+                _behave.Feed();
                 break;
             case Behavior.Attack:
                 _behave.Attack(target, speed);

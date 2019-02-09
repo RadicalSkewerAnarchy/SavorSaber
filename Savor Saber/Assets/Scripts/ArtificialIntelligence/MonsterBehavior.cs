@@ -20,7 +20,7 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimerVariance;
     bool left = false;
 
-    #region
+    #region Attacking
     /// <summary>
     /// where the attack collider will be spawned
     /// </summary>
@@ -88,10 +88,10 @@ public class MonsterBehavior : MonoBehaviour
 
         var current = new Vector2(transform.position.x, transform.position.y);
         // make movement more random
-        if (Random.Range(0, 100) > 95)
+        /*if (Random.Range(0, 100) > 95)
         {
             current = RandomPointAround(current);
-        }
+        }*/
 
         // at target
         if (Vector2.Distance(current, target) < 1)
@@ -131,13 +131,18 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
-    public bool Feed(Vector2 target, float speed)
+    // FEED
+    public bool Feed()
     {
         AnimatorBody.Play("Feed");
         AiData.currentBehavior = AIData.Behave.Feed;
+        
+        // for all my nearby
+
         return true;
     }
 
+    // ATTACK
     public bool Attack(Vector2 target, float speed)
     {
         if (!isAttacking)
@@ -174,9 +179,9 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
-            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            signalModifier.SetSignalParameters(this.gameObject, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false, false, true);
+            //GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
+            //SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+            //signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
             return true;
         }
         else

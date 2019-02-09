@@ -16,6 +16,7 @@ public class MonsterChecks : MonoBehaviour
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<GameObject> AllCreatures;
+    public List<GameObject> AllDrops;
 
     private int numEnemiesNear = 0;
     private int numFriendsNear = 0;
@@ -39,26 +40,15 @@ public class MonsterChecks : MonoBehaviour
         Friends.Add(soma);
         // clear often
         AllCreatures = new List<GameObject>();
+        AllDrops = new List<GameObject>();
     }
 
     /// <summary>
     /// checks for all creatures, Max of 10 (Change this in AIData in Start() for NearbyCreatures[]
     /// </summary>
-    public void AwareHowMany()
+    public int AwareHowMany()
     {
-        //AiData.Awareness.activate = true;
-        // reset nums
-        numEnemiesNear = 0;
-        numFriendsNear = 0;
-        foreach (GameObject Creature in AllCreatures)
-        {
-            // for now nothing
-            // heauristic for sorting into new friends and new enemies
-            Debug.Log("Checking if Friend or Enemy...");
-            if (Enemies.Contains(Creature)) { numEnemiesNear++; }
-            if (Friends.Contains(Creature)) { numFriendsNear++; }
-        }
-        Debug.Log(this + " is surrounded by " + AllCreatures.Count + " Creature" + (AllCreatures.Count==1?": ":"s: ") +  " Friends = " + numFriendsNear + " Enemies = " + numEnemiesNear);
+        return AllCreatures.Count;
     }
 
     /// <summary>
@@ -71,7 +61,7 @@ public class MonsterChecks : MonoBehaviour
         // update all creatures
         GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform, true) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true, true, true);
+        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true);
         AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
     }
@@ -82,84 +72,45 @@ public class MonsterChecks : MonoBehaviour
     /// Checks closest enemy from enemy/friend dictionary
     /// </summary>
     /// <returns> Collider2D of closest enemy or friend </returns>
-    public GameObject ClosestCreature(string frenemy)
-    {
-        #region Initialize Friend and Enemy
-        float closestF = closestDistance;
-        float closestE = closestDistance;
-        float closestN = closestDistance;
-        GameObject ClosestFriend = null;
-        GameObject ClosestEnemy = null;
-        GameObject ClosestNeutral = null;
-        float dist;
-        #endregion
-        #region Debug
-        if (frenemy != "friend" || frenemy != "enemy" || frenemy != "neutral")
-        {
-            Debug.Log(frenemy + "is not recognized. 'friend', 'enemy', and 'neutral' are recognized inputs");
-        }
-        #endregion
-        foreach (GameObject Creature in AllCreatures)
-        {
-            if (Enemies.Contains(Creature))
-            {
-                dist = Vector2.Distance(transform.position, Creature.transform.position);
-                if (dist < closestE)
-                {
-                    closestE = dist;
-                    ClosestEnemy = Creature;
-                }
-            }
-            if (Friends.Contains(Creature))
-            {
-                dist = Vector2.Distance(transform.position, Creature.transform.position);
-                if(dist < closestF)
-                {
-                    closestF = dist;
-                    ClosestFriend = Creature;
-                }
-            }
-            #region if (NeutralCreature)
-            dist = Vector2.Distance(transform.position, Creature.transform.position);
-            if(dist < closestN)
-            {
-                closestN = dist;
-                ClosestNeutral = Creature;
-            }
-            #endregion
-        }
-        if (frenemy == "friend")
-        {
-            return ClosestFriend;
-        }else if(frenemy == "enemy")
-        {
-            return ClosestEnemy;
-        }else if(frenemy == "neutral")
-        {
-            return ClosestNeutral;
-        }
-        return null;
-        
-    }
     public GameObject ClosestCreature()
     {
-        float closest = closestDistance;
-        GameObject ClosestCreature = null;
-
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestCreature = null;
+        #endregion
         foreach (GameObject Creature in AllCreatures)
         {
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
-            if (dist < closest)
+            if (dist < close)
             {
-                closest = dist;
-                ClosestCreature = Creature;
+                close = dist;
+                closestCreature = Creature;
             }
-           
         }
-        return ClosestCreature;
+
+        return closestCreature;
     }
 
-
+    public GameObject ClosestDrop()
+    {
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestDrop = null;
+        #endregion
+        foreach (GameObject Creature in AllCreatures)
+        {
+            if (Creature.tag == "SkewerableObject")
+            {
+                float dist = Vector2.Distance(transform.position, Creature.transform.position);
+                if (dist < close)
+                {
+                    close = dist;
+                    closestDrop = Creature;
+                }
+            }
+        }
+        return closestDrop;
+    }
 
     /// <returns> Count of Enemy and Friend Dictionaries </returns>
     public int NumberOfEnemies()
@@ -176,11 +127,11 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Vector2 of Closest Enemy or Friend </returns>
     public Vector2 NearestEnemyPosition()
     {
-        return ClosestCreature("enemy").gameObject.transform.position;
+        return ClosestCreature().gameObject.transform.position;
     }
     public Vector2 NearestFriendPosition()
     {
-        return ClosestCreature("friend").gameObject.transform.position;
+        return ClosestCreature().gameObject.transform.position;
     }
 
 
