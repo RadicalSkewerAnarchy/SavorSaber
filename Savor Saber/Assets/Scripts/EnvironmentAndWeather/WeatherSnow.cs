@@ -26,18 +26,14 @@ public class WeatherSnow : Weather
     private ParticleSystem bottomEmitter;
     private ParticleSystem[] sideEmitters = new ParticleSystem[2];
 
-    private void Start()
+    private void Awake()
     {
+        _ambient = GetComponent<AudioSource>();
         var emitters = GetComponentsInChildren<ParticleSystem>();
         mainEmitter = emitters[0];
         bottomEmitter = emitters[1];
         sideEmitters[0] = emitters[2];
         sideEmitters[1] = emitters[3];
-    }
-
-    private void Update()
-    {
-
     }
 
     private void SetIntensity(float intensity)

@@ -54,6 +54,7 @@ public class WeatherController : MonoBehaviour
 
     private IEnumerator crossFadeWeather(Weather curr, Weather next, float time, float goalIntensity)
     {
+        StartCoroutine(CrossFade.CrossFadeAudioSource(curr.AmbientSound, next.AmbientSound, time));
         float diffA = curr.Intensity;
         float diffB = goalIntensity;
         while (next.Intensity < goalIntensity)

@@ -33,7 +33,7 @@ public class WeatherRain : Weather
     #endregion
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _ambient = GetComponent<AudioSource>();
         var emitterPairs = GetComponentsInChildren<ParticleSystem>();
