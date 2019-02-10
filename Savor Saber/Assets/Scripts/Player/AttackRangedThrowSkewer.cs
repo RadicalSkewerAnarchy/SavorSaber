@@ -55,11 +55,20 @@ public class AttackRangedThrowSkewer : AttackRanged
         {
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
-            flavorCountDictionary = inv.GetActiveFlavorDictionary();
+            flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
+
+            //print out what flavors are on the projectile
+            for (int f = 1; f <= 64; f = f << 1)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                Debug.Log("Amount of flavor " + foundFlavor + " in attackRanged: " + flavorCountDictionary[foundFlavor]);
+            }
+
             r.color = Color.white;
             currLevel = 0;
             Attack();
             inv.ClearActiveRecipe();
+            inv.ClearActiveSkewer();
             inv.CanSwap = true;
             Attacking = false;
             chargedAttack = false;
@@ -71,8 +80,8 @@ public class AttackRangedThrowSkewer : AttackRanged
         Attacking = true;
         CanBeCanceled = false;
         inv.CanSwap = false;
-        inv.ClearActiveSkewer();
-        inv.ClearActiveRecipe();
+        //inv.ClearActiveSkewer();
+        //inv.ClearActiveRecipe();
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
             //Debug.Log("Charge Level Equals: " + currLevel);

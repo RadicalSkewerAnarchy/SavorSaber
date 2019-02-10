@@ -352,6 +352,8 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
+
+        /*
         else if (InputManager.GetButtonDown(Control.Cook) && !nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
@@ -365,6 +367,7 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
+        */
     }
     /// <summary>
     /// Execute a long cook, access full database
