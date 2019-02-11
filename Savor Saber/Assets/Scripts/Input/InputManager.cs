@@ -4,10 +4,6 @@ using UnityEngine;
 
 public enum Control
 {
-    //Up,
-    //Down,
-    //Left,
-    //Right,
     Dash,
     Cook,
     Eat,
@@ -21,6 +17,10 @@ public enum Control
     Cancel,
     SwapSkewerLeft,
     SwapSkewerRight,
+    Up,
+    Down,
+    Left,
+    Right,
 }
 
 public enum InputAxis
@@ -57,15 +57,15 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButton(Control c)
     {
-        return Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.gamepadControls[c]);
+        return Input.GetKey(main.keyboardControls[c]) || (main.gamepadControls.keyBinds.ContainsKey(c) && Input.GetKey(main.gamepadControls[c]));
     }
     public static bool GetButtonDown(Control c)
     {
-        return Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.gamepadControls[c]);
+        return Input.GetKeyDown(main.keyboardControls[c]) || (main.gamepadControls.keyBinds.ContainsKey(c) && Input.GetKeyDown(main.gamepadControls[c]));
     }
     public static bool GetButtonUp(Control c)
     {
-        return Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.gamepadControls[c]);
+        return Input.GetKeyUp(main.keyboardControls[c]) || (main.gamepadControls.keyBinds.ContainsKey(c) && Input.GetKeyUp(main.gamepadControls[c]));
     }
 
 

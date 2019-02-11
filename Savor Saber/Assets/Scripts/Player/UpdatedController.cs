@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum Direction : int
@@ -12,6 +13,18 @@ public enum Direction : int
     SouthWest,
     South,
     SouthEast,
+}
+
+static class DirectionMethods
+{
+    public static bool IsCardinal(this Direction d) => (int)d % 2 == 0;
+    public static Direction FromVec2(Vector2 vec)
+    {
+        var movementAngle = Vector2.SignedAngle(Vector2.right, vec);
+        if (movementAngle < 0)
+            movementAngle += 360;
+        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 45));
+    }
 }
 
 
@@ -33,7 +46,7 @@ public class UpdatedController : MonoBehaviour
     bool DebugBool = false;
     //////
     [SerializeField]
-    [Range(100f,500f)]
+    [Range(100f, 500f)]
     float speed = 100f;
     //////
     [SerializeField]
@@ -53,15 +66,77 @@ public class UpdatedController : MonoBehaviour
     public float dashTime;
     public AnimationCurve dashSpeed;
     public float dashScale;
+    public int maxDashes = 3;
+    private int currDashes;
     private bool dashing = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
-
+    public float doubleTapTime;
+    private Dictionary<Control, float> doubleTapTrackers;
+    private Control[] keys;
+    private bool running = false;
+    private Coroutine rechargeDashes;
+    public float dashRechargeTime = 1f;
+    public UnityEngine.UI.Text debugText;
 
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
+        doubleTapTrackers = new Dictionary<Control, float>()
+        {
+            { Control.Up, 0 },
+            { Control.Down, 0 },
+            { Control.Left, 0 },
+            { Control.Right, 0 },
+        };
+        keys = new Control[doubleTapTrackers.Count];
+        doubleTapTrackers.Keys.CopyTo(keys, 0);
+        currDashes = maxDashes;
+    }
+
+    //Detect non-axis every fram so input isn't dropped
+    private void Update()
+    {
+        if (InputManager.GetButtonDown(Control.Dash))
+                StartDash();
+        foreach (var key in keys)
+        {
+            if (InputManager.GetButtonDown(key))
+            {
+                if (doubleTapTrackers[key] > 0)
+                {
+                    doubleTapTrackers[key] = 0;
+                    if(dashing && dashCurrTime <= Time.fixedDeltaTime)
+                    {
+                        var currDashDir = DirectionMethods.FromVec2(dashVector);
+                        Debug.Log("dash Vector: " + dashVector + " angle " + Vector2.SignedAngle(Vector2.right, dashVector));
+                        Debug.Log("curr direction: " + currDashDir);
+                        var moveVec = GetMovementVector();
+                        Debug.Log("move Vector: " + moveVec);
+                        var newDashDir = DirectionMethods.FromVec2(moveVec);
+                        Debug.Log("new direction: " + newDashDir + " angle " + Vector2.SignedAngle(Vector2.right, moveVec));
+                        Debug.Log("curr time: " + dashCurrTime);
+                        if (currDashDir.IsCardinal() && !newDashDir.IsCardinal())
+                            StartDash(false);
+                        else
+                            StartDash();
+                    }
+                    else
+                        StartDash();
+                    break;
+                }
+                else
+                    doubleTapTrackers[key] = doubleTapTime;
+            }
+            else if (doubleTapTrackers[key] > 0)
+                doubleTapTrackers[key] -= Time.deltaTime;
+        }
+        if(running)
+        {
+            if (!keys.Any((key) => InputManager.GetButton(key)))
+                running = false;
+        }
     }
 
     /*Update is called once per frame*/
@@ -74,46 +149,71 @@ public class UpdatedController : MonoBehaviour
         AnimateAgent();
     }
 
+    private void StartDash(bool decrement = true)
+    {
+        if (decrement && currDashes <= 0)
+            return;
+        dashVector = GetMovementVector();
+        if (dashVector.SqrMagnitude() == 0)
+            return;
+        if (decrement)
+            currDashes--;
+        debugText.text = "Dashes: " + currDashes;
+        dashing = true;
+        dashCurrTime = 0;
+        freezeDirection = true;
+        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        animatorBody.SetBool("Dashing", true);
+        if(rechargeDashes != null)
+            StopCoroutine(rechargeDashes);
+    }
+
+    private void Dash()
+    {
+        var dSpeed = dashSpeed.Evaluate(dashCurrTime / dashTime) * dashScale * speedMod;
+        rigidBody.velocity = (dashVector / dashVector.magnitude * dSpeed * Time.fixedDeltaTime);
+        dashCurrTime += Time.fixedDeltaTime;
+        if (dashCurrTime >= dashTime)
+            StopDash();
+    }
+
+    private void StopDash()
+    {
+        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+        freezeDirection = false;
+        dashCurrTime = 0;
+        dashing = false;
+        animatorBody.SetBool("Dashing", false);
+        running = true;
+        rechargeDashes = StartCoroutine(rechargeDashesCR());
+        dashVector = Vector2.zero;
+    }
+
+    private IEnumerator rechargeDashesCR()
+    {
+        while(currDashes < maxDashes)
+        {
+            yield return new WaitForSeconds(dashRechargeTime);
+            currDashes++;
+            debugText.text = "Dashes: " + currDashes;
+        }
+    }
+
+    private Vector2 GetMovementVector()
+    {
+        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
+        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
+        return new Vector2(moveHorizontal, moveVertical);
+    }
+
     void MoveAgent()
     {
-        if(InputManager.GetButtonDown(Control.Cook))
-        {
-            if (!dashing || true)
-            {
-                var h = InputManager.GetAxis(InputAxis.Horizontal);
-                var v = InputManager.GetAxis(InputAxis.Vertical);
-                dashVector = new Vector2(h, v);
-                if (dashVector.SqrMagnitude() == 0)
-                    return;
-                dashing = true;
-                dashCurrTime = 0;
-                freezeDirection = true;
-                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-                animatorBody.SetBool("Dashing", true);
-            }
-        }
-
-        if(dashing)
-        {
-            var dSpeed = dashSpeed.Evaluate(dashCurrTime / dashTime) * dashScale * speedMod;
-            Debug.Log(dSpeed);
-            rigidBody.velocity = (dashVector / dashVector.magnitude * dSpeed * Time.fixedDeltaTime);
-            dashCurrTime += Time.fixedDeltaTime;
-            if (dashCurrTime >= dashTime)
-            {
-                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
-                freezeDirection = false;
-                dashCurrTime = 0;
-                dashing = false;
-                animatorBody.SetBool("Dashing", false);
-            }
-        }
+        if (dashing)
+            Dash();
         else
         {
-            var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
-            var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
-            var movementVector = new Vector2(moveHorizontal, moveVertical);
-            var modSpeed = speed * speedMod;
+            var movementVector = GetMovementVector();
+            var modSpeed = (running ? runSpeed : speed) * speedMod;
             if (movementVector.magnitude > 1)
             {
                 rigidBody.velocity = (movementVector / movementVector.magnitude * modSpeed * Time.fixedDeltaTime);
@@ -153,10 +253,8 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
-        bool running = InputManager.GetButton(Control.Dash);
-        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
-        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
-        var movementVector = new Vector2(moveHorizontal, moveVertical);
+        //bool running = InputManager.GetButton(Control.Dash);
+        var movementVector = GetMovementVector();
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
         if(movementVector != Vector2.zero)
         {
@@ -165,10 +263,7 @@ public class UpdatedController : MonoBehaviour
             //calculates angle based on standard offset from East (1,0)
             if (!freezeDirection && clampedMagnitude >= lastSqrMagnitude)
             {
-                var movementAngle = Vector2.SignedAngle(Vector2.right, movementVector);
-                if (movementAngle < 0)
-                    movementAngle += 360;
-                direction = Direction.East.Offset((int)(movementAngle / 45));
+                direction = DirectionMethods.FromVec2(movementVector);
                 animatorBody.SetFloat("Direction", (float)direction);
             }
         }

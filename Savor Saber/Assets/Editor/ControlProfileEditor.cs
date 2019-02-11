@@ -12,6 +12,8 @@ public class ControlProfileEditor : Editor
         var c = target as ControlProfile;
         c.displayName = EditorGUILayout.TextField(new GUIContent("Display Name"), c.displayName);
         c.inputSource = (ControlProfile.InputSource) EditorGUILayout.EnumPopup(new GUIContent("Input Source"), c.inputSource);
+        SDictionaryGUI.ValueGUI<string> valGUI = (str) => EditorGUILayout.TextField(str);
+        c.keyBinds.DoGUILayout(valGUI, () => c.keyBinds.EnumAddGUI(), "Bindings", true);
         SDictionaryGUI.ValueGUI<KeyCode> valGUI = (key) => (KeyCode)EditorGUILayout.EnumPopup(key);
         c.keyBinds.DoGUILayout(valGUI, () => c.keyBinds.EnumAddGUI(), "Bindings", true);
         if (GUI.changed)

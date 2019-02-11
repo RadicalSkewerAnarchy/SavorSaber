@@ -14,6 +14,13 @@ public class ControlProfile : ScriptableObject
 
     public string displayName;
     public InputSource inputSource;
+    public AxisDict axes = new AxisDict()
+    {
+        {InputAxis.Horizontal, string.Empty},
+        {InputAxis.Vertical, string.Empty},
+        {InputAxis.LeftTrigger, string.Empty},
+        {InputAxis.RightTrigger, string.Empty},
+    };
     public KeyCodeDict keyBinds = new KeyCodeDict()
     {
         {Control.Camp, default},
@@ -27,6 +34,10 @@ public class ControlProfile : ScriptableObject
         {Control.Pause, default},
         {Control.Skewer, default},
         {Control.Throw, default},
+        {Control.Up, KeyCode.W},
+        {Control.Down, KeyCode.S},
+        {Control.Left, KeyCode.A},
+        {Control.Right, KeyCode.D},
     };
     public KeyCode this[Control c]
     {
@@ -36,4 +47,5 @@ public class ControlProfile : ScriptableObject
         }
     }
     [System.Serializable] public class KeyCodeDict : SerializableCollections.SDictionary<Control, KeyCode> { }
+    [System.Serializable] public class AxisDict : SerializableCollections.SDictionary<InputAxis, string> { }
 }
