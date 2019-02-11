@@ -78,6 +78,7 @@ public class MonsterChecks : MonoBehaviour
         float close = closestDistance;
         GameObject closestCreature = null;
         #endregion
+        Debug.Log("Number of nearby Creatures: " + AllCreatures.Count);
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -111,8 +112,10 @@ public class MonsterChecks : MonoBehaviour
                 continue;
             }
             #endregion
+            //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
             if (Creature.tag == "SkewerableObject")
             {
+                Debug.Log(Creature.GetInstanceID() + " is a drop");
                 float dist = Vector2.Distance(transform.position, Creature.transform.position);
                 if (dist < close)
                 {
