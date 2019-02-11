@@ -143,7 +143,7 @@ public class MonsterProtocols : MonoBehaviour
         if (Behaviour.MoveTo(pos, AiData.Speed))
         {
             // socialize
-            if (Behaviour.Socialize(pos, AiData.Speed))
+            if (Behaviour.Socialize())
             {
                 // reset action timer
                 Behaviour.ResetActionTimer();
