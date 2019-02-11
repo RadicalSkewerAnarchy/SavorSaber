@@ -12,14 +12,16 @@ public class ControlProfile : ScriptableObject
         DKBongos,
     }
 
+
+
+
     public string displayName;
     public InputSource inputSource;
     public AxisDict axes = new AxisDict()
     {
-        {InputAxis.Horizontal, string.Empty},
-        {InputAxis.Vertical, string.Empty},
-        {InputAxis.LeftTrigger, string.Empty},
-        {InputAxis.RightTrigger, string.Empty},
+        {InputAxis.Horizontal, default},
+        {InputAxis.Vertical, default},
+        {InputAxis.Dash, default},
     };
     public KeyCodeDict keyBinds = new KeyCodeDict()
     {
@@ -46,6 +48,13 @@ public class ControlProfile : ScriptableObject
             return keyBinds[c];
         }
     }
+    public AxisName this[InputAxis a]
+    {
+        get
+        {
+            return axes[a];
+        }
+    }
     [System.Serializable] public class KeyCodeDict : SerializableCollections.SDictionary<Control, KeyCode> { }
-    [System.Serializable] public class AxisDict : SerializableCollections.SDictionary<InputAxis, string> { }
+    [System.Serializable] public class AxisDict : SerializableCollections.SDictionary<InputAxis, AxisName> { }
 }

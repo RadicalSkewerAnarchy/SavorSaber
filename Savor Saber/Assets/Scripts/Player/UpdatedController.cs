@@ -98,7 +98,7 @@ public class UpdatedController : MonoBehaviour
     //Detect non-axis every fram so input isn't dropped
     private void Update()
     {
-        if (InputManager.GetButtonDown(Control.Dash))
+        if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 StartDash();
         foreach (var key in keys)
         {
