@@ -40,7 +40,7 @@ public class SignalApplication : MonoBehaviour
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
-        Debug.Log("Signal Created via Constructor");
+        //Debug.Log("Signal Created via Constructor");
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         // update radius
@@ -96,8 +96,10 @@ public class SignalApplication : MonoBehaviour
         Debug.Log(signalMaker.name + "has found --> " + go.name);
         AIData maindata = go.GetComponent<AIData>();
         // 11 is monster layer
-        if (go.layer == 11)
+        if (go.tag == "Player" || go.tag == "Prey" || go.tag == "Predator")
         {
+
+            Debug.Log(go.name + "is tagged properly --> " + go.tag);
             // extract signal maker data and lists
             AIData data = signalMaker.GetComponent<AIData>();// get lists
 

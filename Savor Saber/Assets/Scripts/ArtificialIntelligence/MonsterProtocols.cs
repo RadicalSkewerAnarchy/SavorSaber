@@ -96,11 +96,13 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Lazy()
     {             
+        // idle
         if (Behaviour.Idle())
         {
             // test signals
             Checks.AwareHowMany();
-            Behaviour.ActionTimer = Behaviour.ActionTimerReset;
+            // reset action timer
+            Behaviour.ResetActionTimer();
         }
     }
 
@@ -137,9 +139,15 @@ public class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
+        // move to
         if (Behaviour.MoveTo(pos, AiData.Speed))
         {
-            Behaviour.Socialize(pos, AiData.Speed);
+            // socialize
+            if (Behaviour.Socialize(pos, AiData.Speed))
+            {
+                // reset action timer
+                Behaviour.ResetActionTimer();
+            }
         }       
     }
 

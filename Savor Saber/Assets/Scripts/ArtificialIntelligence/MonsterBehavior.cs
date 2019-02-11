@@ -174,18 +174,19 @@ public class MonsterBehavior : MonoBehaviour
     {
         AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;
-        if (Random.Range(0, 100) > 95)
+        if (ActionTimer < 0)
         {
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            //GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
-            //SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            //signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
+            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
+            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+            signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
             return true;
         }
         else
         {
+            ActionTimer -= Time.deltaTime;
             return false;
         }
     }
@@ -211,5 +212,11 @@ public class MonsterBehavior : MonoBehaviour
         around = origin - around;
         Vector2.ClampMagnitude(around, 5f); 
         return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
+    }
+
+    // reset action timer
+    public void ResetActionTimer()
+    {
+        ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
 }
