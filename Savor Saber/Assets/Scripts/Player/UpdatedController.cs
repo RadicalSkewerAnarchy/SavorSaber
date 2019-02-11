@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public enum Direction : int
-{   
+{
     East,
     NorthEast,
     North,
@@ -95,11 +95,28 @@ public class UpdatedController : MonoBehaviour
         currDashes = maxDashes;
     }
 
-    //Detect non-axis every fram so input isn't dropped
+    // Detect non-movement input every fram so input isn't dropped
     private void Update()
     {
         if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
-                StartDash();
+            StartDash();
+        else
+            CheckForDoubleTaps();
+        if (running)
+            running = InputManager.GetAxis(InputAxis.Horizontal) != 0 || InputManager.GetAxis(InputAxis.Vertical) != 0;
+    }
+
+    void FixedUpdate()
+    {
+        /*Two functions are used here in order to allow easy edition of
+        movement and stopping behavior as well as immediate frame by frame updates*/
+        MoveAgent();
+        //StopAgent();
+        AnimateAgent();
+    }
+
+    private void CheckForDoubleTaps()
+    {
         foreach (var key in keys)
         {
             if (InputManager.GetButtonDown(key))
@@ -107,23 +124,18 @@ public class UpdatedController : MonoBehaviour
                 if (doubleTapTrackers[key] > 0)
                 {
                     doubleTapTrackers[key] = 0;
-                    if(dashing && dashCurrTime <= Time.fixedDeltaTime)
+                    if (dashing && dashCurrTime <= Time.fixedDeltaTime)
                     {
                         var currDashDir = DirectionMethods.FromVec2(dashVector);
-                        Debug.Log("dash Vector: " + dashVector + " angle " + Vector2.SignedAngle(Vector2.right, dashVector));
-                        Debug.Log("curr direction: " + currDashDir);
                         var moveVec = GetMovementVector();
-                        Debug.Log("move Vector: " + moveVec);
                         var newDashDir = DirectionMethods.FromVec2(moveVec);
-                        Debug.Log("new direction: " + newDashDir + " angle " + Vector2.SignedAngle(Vector2.right, moveVec));
-                        Debug.Log("curr time: " + dashCurrTime);
                         if (currDashDir.IsCardinal() && !newDashDir.IsCardinal())
+                        {
                             StartDash(false);
-                        else
-                            StartDash();
+                            break;
+                        }
                     }
-                    else
-                        StartDash();
+                    StartDash();
                     break;
                 }
                 else
@@ -132,21 +144,6 @@ public class UpdatedController : MonoBehaviour
             else if (doubleTapTrackers[key] > 0)
                 doubleTapTrackers[key] -= Time.deltaTime;
         }
-        if(running)
-        {
-            if (!keys.Any((key) => InputManager.GetButton(key)))
-                running = false;
-        }
-    }
-
-    /*Update is called once per frame*/
-    void FixedUpdate()
-    {
-        /*Two functions are used here in order to allow easy edition of 
-        movement and stopping behavior as well as immediate frame by frame updates*/
-        MoveAgent();
-        //StopAgent();
-        AnimateAgent();
     }
 
     private void StartDash(bool decrement = true)
@@ -227,7 +224,7 @@ public class UpdatedController : MonoBehaviour
         if (DebugBool) { Debug.Log("MoveAgent finished."); }
         //////
         //https://forum.unity.com/threads/diagonal-movement-speed-to-fast.271703/, comment by cranky. Normalizing
-        //the vector adds a weird feel to the player but dividing by the vector's magnitude if it's greater than 1 
+        //the vector adds a weird feel to the player but dividing by the vector's magnitude if it's greater than 1
         //gives a tight control feel
     }
 
@@ -237,7 +234,7 @@ public class UpdatedController : MonoBehaviour
         var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
         var movementVector = new Vector2(moveHorizontal, moveVertical);
         var negativeDirection = -rigidBody.velocity;
- 
+
         if (movementVector == Vector2.zero && rigidBody.velocity != Vector2.zero)
         {
             rigidBody.velocity = Vector2.zero;
@@ -253,7 +250,6 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
-        //bool running = InputManager.GetButton(Control.Dash);
         var movementVector = GetMovementVector();
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
         if(movementVector != Vector2.zero)
