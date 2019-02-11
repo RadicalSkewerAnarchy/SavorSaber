@@ -50,6 +50,14 @@ public class UpdatedController : MonoBehaviour
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
 
+    public float dashTime;
+    public AnimationCurve dashSpeed;
+    public float dashScale;
+    private bool dashing = false;
+    private float dashCurrTime = 0;
+    private Vector2 dashVector;
+
+
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -58,7 +66,7 @@ public class UpdatedController : MonoBehaviour
 
     /*Update is called once per frame*/
     void FixedUpdate()
-    {   
+    {
         /*Two functions are used here in order to allow easy edition of 
         movement and stopping behavior as well as immediate frame by frame updates*/
         MoveAgent();
@@ -68,18 +76,52 @@ public class UpdatedController : MonoBehaviour
 
     void MoveAgent()
     {
-        bool running = InputManager.GetButton(Control.Dash);
-        var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
-        var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
-        var movementVector = new Vector2(moveHorizontal, moveVertical);
-        var modSpeed = (running ? runSpeed : speed) * speedMod;
-        if (movementVector.magnitude > 1)
+        if(InputManager.GetButtonDown(Control.Cook))
         {
-            rigidBody.velocity = (movementVector/movementVector.magnitude * modSpeed * Time.deltaTime);
+            if (!dashing || true)
+            {
+                var h = InputManager.GetAxis(InputAxis.Horizontal);
+                var v = InputManager.GetAxis(InputAxis.Vertical);
+                dashVector = new Vector2(h, v);
+                if (dashVector.SqrMagnitude() == 0)
+                    return;
+                dashing = true;
+                dashCurrTime = 0;
+                freezeDirection = true;
+                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+                animatorBody.SetBool("Dashing", true);
+            }
+        }
+
+        if(dashing)
+        {
+            var dSpeed = dashSpeed.Evaluate(dashCurrTime / dashTime) * dashScale * speedMod;
+            Debug.Log(dSpeed);
+            rigidBody.velocity = (dashVector / dashVector.magnitude * dSpeed * Time.fixedDeltaTime);
+            dashCurrTime += Time.fixedDeltaTime;
+            if (dashCurrTime >= dashTime)
+            {
+                rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
+                freezeDirection = false;
+                dashCurrTime = 0;
+                dashing = false;
+                animatorBody.SetBool("Dashing", false);
+            }
         }
         else
         {
-            rigidBody.velocity = (movementVector * modSpeed * Time.deltaTime);
+            var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
+            var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
+            var movementVector = new Vector2(moveHorizontal, moveVertical);
+            var modSpeed = speed * speedMod;
+            if (movementVector.magnitude > 1)
+            {
+                rigidBody.velocity = (movementVector / movementVector.magnitude * modSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                rigidBody.velocity = (movementVector * modSpeed * Time.fixedDeltaTime);
+            }
         }
         //////
         if (DebugBool) { Debug.Log("MoveAgent finished."); }
@@ -140,7 +182,5 @@ public class UpdatedController : MonoBehaviour
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
         //////
     }
-
 }
-
 // used for basic movement implementaion, https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/controlling-player
