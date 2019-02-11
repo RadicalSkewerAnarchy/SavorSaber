@@ -20,6 +20,10 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimerVariance;
     bool left = false;
 
+    // biases
+    private float biasAngle = 45f;
+    private float biasMovementAngle;
+
     #region Attacking
     /// <summary>
     /// where the attack collider will be spawned
@@ -51,7 +55,9 @@ public class MonsterBehavior : MonoBehaviour
 
         ActionTimer = -1f;
         ActionTimerReset = 5f;
-        ActionTimerVariance = 2f;        
+        ActionTimerVariance = 2f;
+
+        ResetMovementBias();
     }
 
     /// <summary>
@@ -87,21 +93,21 @@ public class MonsterBehavior : MonoBehaviour
         //left = false;
 
         var current = new Vector2(transform.position.x, transform.position.y);
-        // make movement more random
-        /*if (Random.Range(0, 100) > 95)
-        {
-            current = RandomPointAround(current);
-        }*/
 
         // at target
         if (Vector2.Distance(current, target) < 1)
         {
+            ResetMovementBias();
             return true;
         }
         else
         {
             // move towards target
             AnimatorBody.Play("Move");
+            // random rotation of target around current
+            //     based on bias of movement
+            target = RotatePoint(current, biasMovementAngle, target);
+            // get direction towards new target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x > 0) ? true : false;
@@ -205,18 +211,34 @@ public class MonsterBehavior : MonoBehaviour
         yield return null;
     }
 
-    private Vector2 RandomPointAround(Vector2 origin)
-    {
-        //return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
-        Vector2 around = new Vector2(transform.position.x, transform.position.y);
-        around = origin - around;
-        Vector2.ClampMagnitude(around, 5f); 
-        return origin + new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
-    }
-
     // reset action timer
     public void ResetActionTimer()
     {
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
+    }
+
+    // resest movement bias
+    public void ResetMovementBias()
+    {
+        biasMovementAngle = Random.Range(-biasAngle, biasAngle);
+    }
+
+    public Vector2 RotatePoint(Vector2 pivotPoint, float angle, Vector2 changePoint)
+    {
+        // sin and cos
+        float sin = Mathf.Sin(angle);
+        float cos = Mathf.Cos(angle);
+
+        // translate point back to origin
+        changePoint.x -= pivotPoint.x;
+        changePoint.y -= pivotPoint.y;
+
+        // rotate point
+        float xnew = changePoint.x * cos - changePoint.y * sin;
+        float ynew = changePoint.x * sin + changePoint.y * cos;
+
+        // return new vector
+        // after readjusting from pivot
+        return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
 }

@@ -129,18 +129,12 @@ public class AIData : CharacterData
         // acquire necessary data
         // act on current state
 
-        // silly debug updates
-        //fear = moods["Fear"];
-        //hunger = moods["Hunger"];
-        //hostility = moods["Hostility"];
-        //friendliness = moods["Friendliness"];
-
         // UPDATE Decision
         if (DecisionTimer < 0)
         {
             // update state
             currentProtocol = Curves.DecideState();
-            Debug.Log("Getting New Protocol: " + currentProtocol);
+            //Debug.Log("Getting New Protocol: " + currentProtocol);
             // reset decision timer
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
             // update awareness of creatures

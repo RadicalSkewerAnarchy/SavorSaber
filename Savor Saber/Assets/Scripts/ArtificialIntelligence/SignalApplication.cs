@@ -24,10 +24,7 @@ public class SignalApplication : MonoBehaviour
     [Range(-1f, 1f)]
     public float friendMod = 0;
     #endregion
-
-    // look at aidata
-
-
+    
     // private variables
     public bool activate = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
@@ -40,7 +37,7 @@ public class SignalApplication : MonoBehaviour
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
-        Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y);
+        //Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y);
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         // update radius
@@ -74,7 +71,7 @@ public class SignalApplication : MonoBehaviour
             if (signalMaker != null && !ReferenceEquals(signalMaker, null))
             {
                 signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
-                Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
                 signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
                 signalMaker.GetComponent<AIData>().Awareness = null;
             }
