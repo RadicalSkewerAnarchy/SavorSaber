@@ -20,6 +20,7 @@ public class CharacterData : MonoBehaviour
     public int maxHealth;
     public int health;
     public int PartySize = 3;
+    private Vector2 Spawn;
     #endregion
     #region Variance
     float VDown = 9 / 10;
@@ -48,13 +49,8 @@ public class CharacterData : MonoBehaviour
         moods.Add("Friendliness", friendliness);
         #endregion
         // Variable instantiated variance
-        #region Variance Implementation
-        Speed = Random.Range(Speed*VDown, Speed*VUp);
-        Perception = Random.Range(Perception*VDown, Perception*VUp);
-        MeleeAttackThreshold = Random.Range(MeleeAttackThreshold * VDown, MeleeAttackThreshold*VUp);
-        RangeAttackThreshold = Random.Range(RangeAttackThreshold * VDown, RangeAttackThreshold*VUp);
-        maxHealth = (int)Random.Range(maxHealth * VDown, maxHealth * VUp);
-        #endregion
+
+        Spawn = transform.position;
     }
 
     private void Update()
@@ -68,9 +64,20 @@ public class CharacterData : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Respawn")
+        {
+            var rand = Random.Range(.9f, 1.1f);
+            Spawn.x = collision.gameObject.transform.position.x * rand;
+            rand = Random.Range(.9f, 1.1f);
+            Spawn.y = collision.gameObject.transform.position.y * rand;
+            Debug.Log("Respawn Set");
+        }
+    }
     private void Respawn()
     {
-        transform.position = new Vector3(0, 0, .5f);
+        transform.position = Spawn;
         health = maxHealth;
     }
 }
