@@ -206,7 +206,7 @@ public class MonsterProtocols : MonoBehaviour
             // move to and feed
             if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed))
             {
-                Behaviour.Feed();
+                Behaviour.Feed(cDrop);
             }
      
         }
@@ -226,13 +226,7 @@ public class MonsterProtocols : MonoBehaviour
     {
         if(AiData.Checks.NumberOfFriends() > 0)
         {
-            //need a check for fear signals
-            /*
-            if (NearestFriend.isAfraid() ???)
-            {
-                Behaviour.Socialize(AiData.Checks.ClosestFriendlyCreature().gameObject.transform.position);
-            }*/
-            
+            Behaviour.Socialize();            
         }
     }
 

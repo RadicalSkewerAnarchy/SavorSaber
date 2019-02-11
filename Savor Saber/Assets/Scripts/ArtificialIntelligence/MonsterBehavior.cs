@@ -138,12 +138,12 @@ public class MonsterBehavior : MonoBehaviour
     }
 
     // FEED
-    public bool Feed()
+    public bool Feed(GameObject drop)
     {
         AnimatorBody.Play("Feed");
         AiData.currentBehavior = AIData.Behave.Feed;
-        
-        // for all my nearby
+        AiData.Stomach.Enqueue(Instantiate(drop));
+        Destroy(drop);
 
         return true;
     }
@@ -176,7 +176,7 @@ public class MonsterBehavior : MonoBehaviour
         return true;
     }
 
-    public bool Socialize(Vector2 target, float speed)
+    public bool Socialize()
     {
         AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;

@@ -74,7 +74,7 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Collider2D of closest enemy or friend </returns>
     public GameObject ClosestCreature()
     {
-        #region Initialize Friend and Enemy
+        #region Initialize closest vars
         float close = closestDistance;
         GameObject closestCreature = null;
         #endregion
