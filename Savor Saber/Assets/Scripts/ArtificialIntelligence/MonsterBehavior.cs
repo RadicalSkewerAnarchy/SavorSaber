@@ -223,11 +223,21 @@ public class MonsterBehavior : MonoBehaviour
         biasMovementAngle = Random.Range(-biasAngle, biasAngle);
     }
 
+    #region POINTS AND ANGLES
+    /// <summary>
+    /// Rotate Point: given a pivot and an angle,
+    ///     return the original point having been
+    ///     rotated that many degrees
+    /// </summary>
+    /// <param name="pivotPoint"></param>
+    /// <param name="angle"></param>
+    /// <param name="changePoint"></param>
+    /// <returns></returns>
     public Vector2 RotatePoint(Vector2 pivotPoint, float angle, Vector2 changePoint)
     {
         // sin and cos
-        float sin = Mathf.Sin(angle);
-        float cos = Mathf.Cos(angle);
+        float sin = Mathf.Sin(Mathf.Deg2Rad*angle);
+        float cos = Mathf.Cos(Mathf.Deg2Rad*angle);
 
         // translate point back to origin
         changePoint.x -= pivotPoint.x;
@@ -241,4 +251,5 @@ public class MonsterBehavior : MonoBehaviour
         // after readjusting from pivot
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
+    #endregion
 }
