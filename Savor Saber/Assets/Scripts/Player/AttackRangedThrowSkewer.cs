@@ -61,7 +61,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             for (int f = 1; f <= 64; f = f << 1)
             {
                 RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                Debug.Log("Amount of flavor " + foundFlavor + " in attackRanged: " + flavorCountDictionary[foundFlavor]);
+                //Debug.Log("Amount of flavor " + foundFlavor + " in attackRanged: " + flavorCountDictionary[foundFlavor]);
             }
 
             r.color = Color.white;
