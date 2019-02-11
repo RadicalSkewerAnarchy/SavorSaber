@@ -80,6 +80,12 @@ public class MonsterChecks : MonoBehaviour
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
+            #region Check if Creature Deleted
+            if (Creature == null)
+            {
+                continue;
+            }
+            #endregion
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
             if (dist < close)
             {
@@ -99,6 +105,12 @@ public class MonsterChecks : MonoBehaviour
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
+            #region Check if Creature Deleted
+            if (Creature == null)
+            {
+                continue;
+            }
+            #endregion
             if (Creature.tag == "SkewerableObject")
             {
                 float dist = Vector2.Distance(transform.position, Creature.transform.position);

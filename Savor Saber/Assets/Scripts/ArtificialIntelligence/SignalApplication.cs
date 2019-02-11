@@ -71,14 +71,13 @@ public class SignalApplication : MonoBehaviour
             // apply
             ApplyToAll();
             // inform signal maker of those here
-            if (signalMaker != null)
+            if (signalMaker != null && !ReferenceEquals(signalMaker, null))
             {
                 signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
                 Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
                 signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
                 signalMaker.GetComponent<AIData>().Awareness = null;
             }
-
             // destroy
             Destroy(this.gameObject);
         }
@@ -94,14 +93,13 @@ public class SignalApplication : MonoBehaviour
         // get objects
         GameObject go = collision.gameObject;
 
-        string sm = (signalMaker != null ? signalMaker.name : "null character" );
-        Debug.Log(sm + " has found --> " + go.name);
+        //string sm = (signalMaker != null ? signalMaker.name : "null character" );
+        //Debug.Log(sm + " has found --> " + go.name);
 
-        AIData maindata = go.GetComponent<AIData>();
-        // 11 is monster layer
-        if (go.tag == "Player" || go.tag == "Prey" || go.tag == "Predator")
+        // check tags
+        if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
         {
-            Debug.Log(go.name + "is tagged properly --> " + go.tag);
+            //Debug.Log(go.name + "is tagged properly --> " + go.tag);
 
             // create boolean cases
             bool hitS = hitSelf && this.Equals(go);
@@ -111,7 +109,7 @@ public class SignalApplication : MonoBehaviour
             if (hitA || hitS)
             {
                 // add to list
-                Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
+                //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
                 //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
                 hitList.Add(go);
             }
@@ -128,10 +126,13 @@ public class SignalApplication : MonoBehaviour
     {
         foreach (GameObject g in hitList)
         {
-            // get data
-            AIData data = g.GetComponent<AIData>();
-            // apply
-            Apply(g, data);
+            if (g != null)
+            {
+                // get data
+                AIData data = g.GetComponent<AIData>();
+                // apply
+                Apply(g, data);
+            }
         }
     }
 
