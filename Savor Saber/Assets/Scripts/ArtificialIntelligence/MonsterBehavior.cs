@@ -179,7 +179,7 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, true) as GameObject;
+            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, false) as GameObject;
             SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
             signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
             return true;

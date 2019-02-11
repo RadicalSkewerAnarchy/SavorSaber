@@ -40,7 +40,7 @@ public class SignalApplication : MonoBehaviour
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
-        //Debug.Log("Signal Created via Constructor");
+        Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y);
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         // update radius
@@ -93,25 +93,25 @@ public class SignalApplication : MonoBehaviour
     {
         // get objects
         GameObject go = collision.gameObject;
-        Debug.Log(signalMaker.name + "has found --> " + go.name);
+
+        string sm = (signalMaker != null ? signalMaker.name : "null character" );
+        Debug.Log(sm + " has found --> " + go.name);
+
         AIData maindata = go.GetComponent<AIData>();
         // 11 is monster layer
         if (go.tag == "Player" || go.tag == "Prey" || go.tag == "Predator")
         {
-
             Debug.Log(go.name + "is tagged properly --> " + go.tag);
-            // extract signal maker data and lists
-            AIData data = signalMaker.GetComponent<AIData>();// get lists
 
             // create boolean cases
-            bool hitS = hitSelf && data.Equals(maindata);
-            bool hitA = hitAll;
+            bool hitS = hitSelf && this.Equals(go);
+            bool hitA = hitAll && !hitS;
 
             // if ANY of these...
             if (hitA || hitS)
             {
                 // add to list
-                Debug.Log(signalMaker.name + "'s HIT LIST ++ --> " + go.name);
+                Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
                 //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
                 hitList.Add(go);
             }
