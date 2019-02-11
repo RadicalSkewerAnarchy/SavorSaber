@@ -12,9 +12,6 @@ public class ControlProfile : ScriptableObject
         DKBongos,
     }
 
-
-
-
     public string displayName;
     public InputSource inputSource;
     public AxisDict axes = new AxisDict()

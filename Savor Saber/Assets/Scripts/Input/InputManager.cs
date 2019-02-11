@@ -47,7 +47,6 @@ public enum AxisName
 public class InputManager : MonoBehaviour
 {
     private static InputManager main;
-    // Start is called before the first frame update
 
     public ControlProfile keyboardControls = null;
     public ControlProfile gamepadControls = null;
@@ -67,7 +66,10 @@ public class InputManager : MonoBehaviour
             main = this;
         }
         else
+        {
             Destroy(gameObject);
+            DontDestroyOnLoad(transform);
+        }
     }
 
     public static float GetAxis(InputAxis a)
@@ -81,7 +83,7 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButton(Control c, InputAxis a)
     {
-        return GetButton(c) || main.axisButtons[main.gamepadControls[a]].GetInput();
+        return GetButton(c) || main.axisButtons[main.gamepadControls[a]].GetButton();
     }
     public static bool GetButtonDown(Control c)
     {
@@ -89,7 +91,7 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonDown(Control c, InputAxis a)
     {
-        return main.axisButtons[main.gamepadControls[a]].GetInputDown() || GetButtonDown(c);
+        return main.axisButtons[main.gamepadControls[a]].GetButtonDown() || GetButtonDown(c);
     }
     public static bool GetButtonUp(Control c)
     {
@@ -97,17 +99,13 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonUp(Control c, InputAxis a)
     {
-        return main.axisButtons[main.gamepadControls[a]].GetInputUp() || GetButtonDown(c);
+        return main.axisButtons[main.gamepadControls[a]].GetButtonUp() || GetButtonDown(c);
     }
-
-
 
     [System.Serializable] public class ControlDict : SerializableCollections.SDictionary<string, ControlProfile> { }
     public class AxisButton
     {
         public AxisName axis;
-        public int indexValue;
-
         private string axisName;
         private bool InputDown { get { return Input.GetAxisRaw(axisName) != 0; } }
         private bool lastValue = false;
@@ -118,12 +116,12 @@ public class InputManager : MonoBehaviour
             axisName = axis.ToString();
         }
 
-        public bool GetInput()
+        public bool GetButton()
         {
             return InputDown;
         }
 
-        public bool GetInputDown()
+        public bool GetButtonDown()
         {
             if (InputDown)
             {
@@ -138,7 +136,7 @@ public class InputManager : MonoBehaviour
             return false;
         }
 
-        public bool GetInputUp()
+        public bool GetButtonUp()
         {
             if (!InputDown)
             {
