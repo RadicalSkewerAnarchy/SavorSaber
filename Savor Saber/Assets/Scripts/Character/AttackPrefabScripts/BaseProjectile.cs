@@ -11,6 +11,11 @@ using UnityEngine;
 public class BaseProjectile : MonoBehaviour
 {
     /// <summary>
+    /// A prefab to be instantiated when the projectile is terminated
+    /// </summary>
+    public GameObject dropItem; 
+
+    /// <summary>
     /// How fast the projectile travels
     /// </summary>
     public float projectileSpeed;
@@ -40,6 +45,13 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     public bool penetrateTargets = false;
 
+    /// <summary>
+    /// How far this projectile should travel before self-terminating.
+    /// Range of 0 will fly FOREVER 
+    /// </summary>
+    [Range(0, 50)]
+    public float range;
+
     [System.NonSerialized]
     public float projectileRotation;
 
@@ -51,6 +63,11 @@ public class BaseProjectile : MonoBehaviour
     public RecipeData effectRecipeData = null;
 
     /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+
+    /// <summary>
     /// Direction and rotation fields
     /// </summary>
     [System.NonSerialized]
@@ -60,16 +77,23 @@ public class BaseProjectile : MonoBehaviour
     [System.NonSerialized]
     public CapsuleCollider2D projectileCollider;
 
+    protected Vector2 spawnPosition;
+
     // Start is called before the first frame update
     void Start()
     {
         projectileCollider = GetComponent<CapsuleCollider2D>();
         projectileCollider.size = new Vector2(projectileLength, projectileWidth);
 
-        Debug.Log("Shooting " + direction);
-
         // set projectile velocity vector
         SetGeometry();
+
+        //as a safety measure, if range is infinite, do NOT allow penetrating targets
+        if (range == 0)
+            penetrateTargets = false;
+
+        spawnPosition = transform.position;
+        //Debug.Log("Spawn position: " + spawnPosition);
  
     }
 
@@ -77,6 +101,9 @@ public class BaseProjectile : MonoBehaviour
     void Update()
     {
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
+
+        if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
+            Destroy(this.gameObject);
     }
 
     protected void SetGeometry()
@@ -117,10 +144,14 @@ public class BaseProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Projectile trigger entered");
+       // Debug.Log("Projectile trigger entered");
+
+        if (dropItem != null)
+            Instantiate(dropItem, transform.position, Quaternion.identity);
 
         if (!penetrateTargets)
             Destroy(this.gameObject);
+
 
     }
 }

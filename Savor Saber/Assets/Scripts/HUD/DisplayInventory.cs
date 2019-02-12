@@ -91,7 +91,7 @@ public class DisplayInventory : MonoBehaviour
         {
             if (i < dropActiveArray.Length)
             {
-                print("showing " + dropActiveArray[i].flavors + " at index " + i);
+                //print("showing " + dropActiveArray[i].flavors + " at index " + i);
                 skewerSpritesActive[i].sprite = dropActiveArray[i].image;
             }
             else
@@ -101,7 +101,7 @@ public class DisplayInventory : MonoBehaviour
 
             if (i < dropLeftArray.Length)
             {
-                print("showing " + dropLeftArray[i].flavors + " at index " + i);
+                //print("showing " + dropLeftArray[i].flavors + " at index " + i);
                 skewerSpritesLeft[i].sprite = dropLeftArray[i].image;
             }
             else
@@ -111,7 +111,7 @@ public class DisplayInventory : MonoBehaviour
 
             if (i < dropRightArray.Length)
             {
-                print("showing " + dropRightArray[i].flavors + " at index " + i);
+                //print("showing " + dropRightArray[i].flavors + " at index " + i);
                 skewerSpritesRight[i].sprite = dropRightArray[i].image;
             }
             else

@@ -27,7 +27,7 @@ namespace SerializableCollections
                 }
             }
 
-            public static void EnumAddGUI<TKey, TValue>(this SDictionary<TKey, TValue> dict) where TKey: System.Enum where TValue: new() 
+            public static void EnumAddGUI<TKey, TValue>(this SDictionary<TKey, TValue> dict) where TKey: System.Enum where TValue: new()
             {
                 EnumAddGUI(dict, () => new TValue());
             }
@@ -48,7 +48,6 @@ namespace SerializableCollections
                     menu.ShowAsContext();
                 }
             }
-
 
             public static bool DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, GenericMenu menu, string title, bool oneLine = false)
             {

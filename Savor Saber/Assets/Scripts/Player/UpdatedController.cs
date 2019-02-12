@@ -59,6 +59,7 @@ public class UpdatedController : MonoBehaviour
     //////
     Rigidbody2D rigidBody;
     Animator animatorBody;
+    DialogData dialogData;
     /// <summary> The Squared magnitude of the movement vector from last frame
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
@@ -101,6 +102,7 @@ public class UpdatedController : MonoBehaviour
         doubleTapTrackers.Keys.CopyTo(keys, 0);
         currDashes = maxDashes;
         currRunSpeed = runSpeed;
+        dialogData = GetComponent<DialogData>();
     }
 
     // Detect non-movement input every fram so input isn't dropped
@@ -118,9 +120,13 @@ public class UpdatedController : MonoBehaviour
     {
         /*Two functions are used here in order to allow easy edition of
         movement and stopping behavior as well as immediate frame by frame updates*/
-        MoveAgent();
-        //StopAgent();
-        AnimateAgent();
+        if (!dialogData.inConversation)
+        {
+            MoveAgent();
+            //StopAgent();
+            AnimateAgent();
+        }
+
     }
 
     private void CheckForDoubleTaps()

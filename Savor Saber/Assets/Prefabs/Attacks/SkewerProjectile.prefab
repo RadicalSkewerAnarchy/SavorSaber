@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1280546299}
   - component: {fileID: 1280546298}
   - component: {fileID: 7862083922890303634}
+  - component: {fileID: 3330181527158110430}
   m_Layer: 0
   m_Name: SkewerProjectile
   m_TagString: Untagged
@@ -110,12 +111,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f15d44944ef3068479704b3404a5f2e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropItem: {fileID: 0}
   projectileSpeed: 20
   projectileLength: 1
   projectileWidth: 0.5
   projectileDamage: 0
   projectileKnockback: 0
   penetrateTargets: 0
+  range: 6
 --- !u!114 &7862083922890303634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,3 +134,24 @@ MonoBehaviour:
   sfx: {fileID: 8300000, guid: 0af000ac3dc925c48aac4813611f6384, type: 3}
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
+--- !u!50 &3330181527158110430
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280546296}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4

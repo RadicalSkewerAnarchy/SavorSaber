@@ -17,6 +17,13 @@ public class AttackRanged : AttackBase
     /// </summary>
     protected UpdatedController playerController;
     protected MonsterMovement monsterController;
+    protected SpriteRenderer r;
+
+    /// <summary>
+    /// fields related to compensating for non-standard pivots
+    /// </summary>
+    protected Vector2 center;
+    protected bool chargedAttack = false;
 
     protected Animator animator;
 
@@ -29,6 +36,11 @@ public class AttackRanged : AttackBase
     /// The data for what effects this attack should have, if any.
     /// </summary>
     public RecipeData effectRecipeData = null;
+
+    /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
 
     /// <summary>
     /// The name of the attack, used to determine animation states
@@ -53,6 +65,8 @@ public class AttackRanged : AttackBase
 
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
+        r = GetComponent<SpriteRenderer>();
+
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
         if (playerController == null)
@@ -78,6 +92,16 @@ public class AttackRanged : AttackBase
 
     public override void Attack()
     {
+
+        // if it was a charged attack, centerpoint is found when charge starts, not
+        // when attack is released.
+        if (!chargedAttack)
+        {
+            Debug.Log("Not charged attack");
+            //true center of sprite
+            center = r.bounds.center;
+        }
+
         //animation stuff
         animator.Play(attackName);
 
@@ -85,9 +109,8 @@ public class AttackRanged : AttackBase
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
-
         //spawn the attack at the spawn point and give it its data
-        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
@@ -98,6 +121,10 @@ public class AttackRanged : AttackBase
         {
             projectileData.effectRecipeData = effectRecipeData;
         }
+        if(flavorCountDictionary != null)
+        {
+            projectileData.flavorCountDictionary = flavorCountDictionary;
+        }
 
         Attacking = true;
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
@@ -106,17 +133,23 @@ public class AttackRanged : AttackBase
     /// <summary>
     /// Overloaded version of Attack() that takes in a target bector and uses that to get its rotation.
     /// </summary>
-    public void Attack(Vector3 targetVector)
+    public void Attack(Vector2 targetVector)
     {
+        if (!chargedAttack)
+        {
+            //true center of sprite
+            center = r.bounds.center;
+        }
+
         //animation stuff
         animator.Play(attackName);
 
         Direction direction = playerController?.direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
-        Vector2 directionVector = GetDirectionVector(direction);
+        Vector2 directionVector = GetTargetVector(targetVector);
 
         //spawn the attack at the spawn point and give it its data
-        GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+        GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
@@ -232,12 +265,15 @@ public class AttackRanged : AttackBase
         {
             directionVector = new Vector2(0, 0);
         }
-        //Debug.Log("Direction vector: " + directionVector);
+
         return directionVector;
     }
 
+    /// <summary>
+    /// Get the vector pointing at a target's position
+    /// </summary>
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
-        return new Vector2(0, 0);
+        return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
     }
 }

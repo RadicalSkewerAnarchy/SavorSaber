@@ -14,13 +14,14 @@ public class AttackRangedThrowSkewer : AttackRanged
     private float normalInterval;
     private Inventory inv;
     private PlaySFX sfxPlayer;
-    SpriteRenderer r;
+    //SpriteRenderer r;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
+
         //has to have either a monster controller or player controller
         playerController = GetComponent<UpdatedController>();
         if (playerController == null)
@@ -34,8 +35,12 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
-        if (InputManager.GetButtonDown(control) && inv.ActiveSkewerCooked())
+        //conditions to throw: Must either have ingredients OR a cooked recipe
+        if (InputManager.GetButtonDown(control) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
         {
+            chargedAttack = true;
+            center = r.bounds.center;
+
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
             if (activeAttack == null)
@@ -50,12 +55,23 @@ public class AttackRangedThrowSkewer : AttackRanged
         {
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
+            flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
+
+            //print out what flavors are on the projectile
+            for (int f = 1; f <= 64; f = f << 1)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                //Debug.Log("Amount of flavor " + foundFlavor + " in attackRanged: " + flavorCountDictionary[foundFlavor]);
+            }
+
             r.color = Color.white;
             currLevel = 0;
             Attack();
             inv.ClearActiveRecipe();
+            inv.ClearActiveSkewer();
             inv.CanSwap = true;
             Attacking = false;
+            chargedAttack = false;
         }
     }
 
@@ -64,9 +80,11 @@ public class AttackRangedThrowSkewer : AttackRanged
         Attacking = true;
         CanBeCanceled = false;
         inv.CanSwap = false;
+        //inv.ClearActiveSkewer();
+        //inv.ClearActiveRecipe();
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
-            Debug.Log("Charge Level Equals: " + currLevel);
+            //Debug.Log("Charge Level Equals: " + currLevel);
             animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
             sfxPlayer.Play(chargeSounds[currLevel]);
             float time = 0;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /// <summary>
 /// Class for packaging a stack of ingredients and a completed recipe.
@@ -13,8 +14,39 @@ public class Skewer
 
     public RecipeData finishedRecipe = null;
 
+    /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
+
 
     //methods
+
+    public void InitializeDictionary()
+    {
+        flavorCountDictionary.Add(RecipeData.Flavors.Sweet, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Sour, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Spicy, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Salty, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Savory, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Bitter, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
+    }
+
+    /// <summary>
+    /// Resets the count of each flavor to 0
+    /// </summary>
+    public void ResetDictionary()
+    {
+        flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Savory] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
+    }
+
     public int GetCount()
     {
         return ingredientStack.Count;
@@ -22,7 +54,20 @@ public class Skewer
 
     public void PushIngredient(IngredientData ingredient)
     {
-        ingredientStack.Push(ingredient);   
+        ingredientStack.Push(ingredient);
+
+        // Sweet = 1, Acquired = 64
+        
+        for(int f = 1; f <= 64; f = f << 1)
+        {
+
+            if ((f & (int)ingredient.flavors) > 0)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
+                Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
+            }    
+        }
     }
 
     public IngredientData PopIngredient()
@@ -104,6 +149,12 @@ public class Inventory : MonoBehaviour {
         CanSwap = true;
         recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
         sfxPlayer = GetComponent<PlaySFX>();
+
+        //initialize dictionaries 
+        for(int i = 0; i < quiver.Length; i++)
+        {
+            quiver[i].InitializeDictionary();
+        }
     }
 
     private void Update()
@@ -153,6 +204,14 @@ public class Inventory : MonoBehaviour {
     }
 
     /// <summary>
+    /// Returns true if the active skewer is empty
+    /// </summary>
+    public bool ActiveSkewerEmpty()
+    {
+        return (quiver[activeSkewer].GetCount() == 0);
+    }
+
+    /// <summary>
     /// Returns true if the active skewer has been cooked
     /// </summary>
     public bool ActiveSkewerCooked()
@@ -188,6 +247,7 @@ public class Inventory : MonoBehaviour {
     public void ClearActiveSkewer()
     {
         quiver[activeSkewer].ClearItems();
+        quiver[activeSkewer].ResetDictionary();
         UpdateSkewerVisual();
     }
 
@@ -205,6 +265,11 @@ public class Inventory : MonoBehaviour {
     public RecipeData GetActiveEffect()
     {
         return quiver[activeSkewer].finishedRecipe;
+    }
+
+    public Dictionary<RecipeData.Flavors, int> GetActiveFlavorDictionary()
+    {
+        return quiver[activeSkewer].flavorCountDictionary;
     }
 
     /// <summary>
@@ -226,7 +291,7 @@ public class Inventory : MonoBehaviour {
         {
             if(i < dropArray.Length)
             {
-                print("showing " + dropArray[i].flavors + " at index " + i);
+                //print("showing " + dropArray[i].flavors + " at index " + i);
                 if (skewerSprites[i] != null)
                     skewerSprites[i].sprite = dropArray[i].image;
                 else
@@ -287,6 +352,8 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
+
+        /*
         else if (InputManager.GetButtonDown(Control.Cook) && !nearCampfire)
         {
             if (quiver[activeSkewer].GetCount() > 0)
@@ -300,6 +367,7 @@ public class Inventory : MonoBehaviour {
                 Debug.Log("Your inventory is empty, cannot cook");
             }
         }
+        */
     }
     /// <summary>
     /// Execute a long cook, access full database
@@ -339,7 +407,7 @@ public class Inventory : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Campfire")
         {
-            Debug.Log("Player near campfire");
+            //Debug.Log("Player near campfire");
             nearCampfire = true;
         }
     }
@@ -348,7 +416,7 @@ public class Inventory : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Campfire")
         {
-            Debug.Log("Player left campfire");
+            //Debug.Log("Player left campfire");
             nearCampfire = false;
         }
     }
