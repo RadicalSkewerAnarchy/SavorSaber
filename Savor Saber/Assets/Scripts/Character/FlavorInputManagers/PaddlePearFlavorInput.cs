@@ -13,11 +13,6 @@ public class PaddlePearFlavorInput : FlavorInputManager
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void Feed(RecipeData.Flavors flavor, int magnitude)
     {
@@ -29,6 +24,9 @@ public class PaddlePearFlavorInput : FlavorInputManager
         {
             Debug.Log("Friendliness up!");
             spriteRenderer.color = new Color(1f, 0.2f, 0.8f);
+
+            //when a status effect is applied, reset the dictionary to avoid massive buildup
+            ResetDictionary();
         }
     }
 }
