@@ -142,7 +142,8 @@ public class MonsterBehavior : MonoBehaviour
     {
         AnimatorBody.Play("Feed");
         AiData.currentBehavior = AIData.Behave.Feed;
-        AiData.Stomach.Enqueue(Instantiate(drop));
+        drop.SetActive(false);
+        //AiData.Stomach.Enqueue(Instantiate(drop));
         Destroy(drop);
 
         return true;

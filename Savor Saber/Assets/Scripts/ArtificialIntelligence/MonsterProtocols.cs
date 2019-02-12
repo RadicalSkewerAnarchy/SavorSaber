@@ -199,20 +199,23 @@ public class MonsterProtocols : MonoBehaviour
     // plants currently not implemented
     public void Feast()
     {
-        /*
+        
         Checks.AwareNearby();
 
         GameObject cDrop = Checks.ClosestDrop();
+        //GameObject cBody = Checks.ClosestCreature();
         //Debug.Log("cDrop instanceID: " + cDrop.GetInstanceID());
         // if there are drops
         if (this.tag == "Prey")
         {
             // move to and feed
-            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed))
+            if(cDrop != null)
             {
-                Behaviour.Feed(cDrop);
-            }
-     
+                if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed))
+                {
+                    Behaviour.Feed(cDrop);
+                }
+            }          
         }
         // else if i am a predator
         else if (this.tag == "Predator")
@@ -220,7 +223,7 @@ public class MonsterProtocols : MonoBehaviour
             // move to 
             // attack
             Melee();
-        }*/
+        }
     }
 
 
