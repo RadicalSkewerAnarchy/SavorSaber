@@ -35,13 +35,13 @@ public class ProjectileSkewer : BaseProjectile
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         //if it has an effect recipe (i.e. cooked/crafted item)
-        if (collision.gameObject.tag == "Monster" && effectRecipeData != null)
+        if (IsCollisionMonster(collision) && effectRecipeData != null)
         {
             effectRecipeData.ApplyEffectToTarget(collision.gameObject);           
         }
 
         //if it has a flavor dictionary (i.e. uncooked, regular attack)
-        if (collision.gameObject.tag == "Monster" && flavorCountDictionary != null)
+        if (IsCollisionMonster(collision) && flavorCountDictionary != null)
         {
             //call the target's feeding function
             FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
@@ -67,5 +67,11 @@ public class ProjectileSkewer : BaseProjectile
                 Destroy(this.gameObject);
         }
 
+    }
+
+    //save space in earlier checks
+    private bool IsCollisionMonster(Collider2D collision)
+    {
+        return collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator";
     }
 }
