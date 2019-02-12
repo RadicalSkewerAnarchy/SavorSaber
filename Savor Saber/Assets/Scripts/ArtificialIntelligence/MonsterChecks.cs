@@ -78,7 +78,7 @@ public class MonsterChecks : MonoBehaviour
         float close = closestDistance;
         GameObject closestCreature = null;
         #endregion
-        Debug.Log("Number of nearby Creatures: " + AllCreatures.Count);
+        //Debug.Log("Number of nearby Creatures: " + AllCreatures.Count);
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted

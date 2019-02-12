@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 1026942967}
   - component: {fileID: 1026942968}
   - component: {fileID: 3084804184240454975}
+  - component: {fileID: 527947531}
   m_Layer: 8
   m_Name: Soma
   m_TagString: Player
@@ -176,7 +177,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 0.25
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -367,14 +368,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13daa368f4f2b946b6ea0e6cebc63c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 0
+  Perception: 0
+  MeleeAttackThreshold: 0
+  RangeAttackThreshold: 0
+  maxHealth: 5
+  health: 5
+  PartySize: 3
   fear: 0
   hunger: 0
   hostility: 0
   friendliness: 0
-  distanceFrom: 0
-  maxHealth: 5
-  health: 5
-  speed: 5
 --- !u!114 &1026942967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,3 +424,23 @@ MonoBehaviour:
   returnTime: 0.75
   maxReturnSpeed: 25
   deadzone: {x: 1.5, y: 1.25}
+--- !u!114 &527947531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f0513f71a3cea45b9cd169b968a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: Soma
+  portraitDictionary:
+    _keys: 00000000020000000100000003000000
+    _values:
+    - {fileID: 21300000, guid: d17dd8c6bbe939e43bc7df42e7f1f6af, type: 3}
+    - {fileID: 21300000, guid: d17dd8c6bbe939e43bc7df42e7f1f6af, type: 3}
+    - {fileID: 21300000, guid: d17dd8c6bbe939e43bc7df42e7f1f6af, type: 3}
+    - {fileID: 21300000, guid: d17dd8c6bbe939e43bc7df42e7f1f6af, type: 3}

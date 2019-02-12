@@ -123,7 +123,7 @@ public class SignalApplication : MonoBehaviour
     {
         foreach (GameObject g in hitList)
         {
-            if (g != null)
+            if (g != null && g.tag != "Player")
             {
                 // get data
                 AIData data = g.GetComponent<AIData>();
