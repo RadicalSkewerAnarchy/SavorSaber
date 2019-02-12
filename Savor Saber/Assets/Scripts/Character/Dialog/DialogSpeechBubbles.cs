@@ -19,7 +19,7 @@ public class DialogSpeechBubbles : BaseDialog
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Cook") && active)
+        if (InputManager.GetButtonDown(Control.Interact) && active)
         {
             item = scene.NextDialog();
             if (item == null)

@@ -28,7 +28,7 @@ public class DialogManualTrigger : MonoBehaviour
         if (dialog != null && dialog.dialogFinished)
             playingDialog = false;
 
-        if (playerInRange && Input.GetButtonDown("Cook") && !playingDialog)
+        if (playerInRange && InputManager.GetButtonDown(Control.Interact) && !playingDialog)
         {
             if (dialog != null)
             {

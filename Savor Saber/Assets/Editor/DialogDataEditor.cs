@@ -18,7 +18,7 @@ public class DialogDataEditor : Editor
             return EditorGUILayout.ObjectField(spr, typeof(Sprite), false) as Sprite;
         };
 
-        dialogData.portraitDictionary.DoGUILayout(valGUI, dialogData.portraitDictionary.EnumAddGUIVal2, "Portraits", true);
+        dialogData.portraitDictionary.DoGUILayout(valGUI, dialogData.portraitDictionary.EnumAddGUIVal, "Portraits", true);
 
         EditorUtils.SetSceneDirtyIfGUIChanged();
     }

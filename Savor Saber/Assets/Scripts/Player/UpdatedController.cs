@@ -120,13 +120,9 @@ public class UpdatedController : MonoBehaviour
     {
         /*Two functions are used here in order to allow easy edition of
         movement and stopping behavior as well as immediate frame by frame updates*/
-        if (!dialogData.inConversation)
-        {
-            MoveAgent();
-            //StopAgent();
-            AnimateAgent();
-        }
-
+        MoveAgent();
+        //StopAgent();
+        AnimateAgent();
     }
 
     private void CheckForDoubleTaps()
@@ -169,7 +165,8 @@ public class UpdatedController : MonoBehaviour
             return;
         if (decrement)
             currDashes--;
-        debugText.text = "Dashes: " + currDashes;
+        if(debugText != null)
+            debugText.text = "Dashes: " + currDashes;
         dashing = true;
         dashCurrTime = 0;
         freezeDirection = true;
@@ -206,7 +203,8 @@ public class UpdatedController : MonoBehaviour
         {
             yield return new WaitForSeconds(dashRechargeTime);
             currDashes++;
-            debugText.text = "Dashes: " + currDashes;
+            if(debugText != null)
+                debugText.text = "Dashes: " + currDashes;
         }
     }
 
@@ -238,7 +236,13 @@ public class UpdatedController : MonoBehaviour
 
     void MoveAgent()
     {
-        if (dashing)
+        if(dialogData.inConversation)
+        {
+            StopDash();
+            StopRunning();
+            rigidBody.velocity = Vector2.zero;
+        }
+        else if (dashing)
             Dash();
         else
         {
@@ -286,6 +290,12 @@ public class UpdatedController : MonoBehaviour
 
     void AnimateAgent()
     {
+        if(dialogData.inConversation)
+        {
+            animatorBody.SetBool("Moving", false);
+            animatorBody.SetBool("Running", false);
+            return;
+        }
         var movementVector = GetMovementVector();
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
         if(movementVector != Vector2.zero)
