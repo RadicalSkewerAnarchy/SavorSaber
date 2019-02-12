@@ -97,7 +97,6 @@ public class AttackRanged : AttackBase
         // when attack is released.
         if (!chargedAttack)
         {
-            Debug.Log("Not charged attack");
             //true center of sprite
             center = r.bounds.center;
         }
