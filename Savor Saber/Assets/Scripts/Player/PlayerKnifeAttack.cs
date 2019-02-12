@@ -22,7 +22,8 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log("Applying Knife Effect: " + collision);
-        if (collision.gameObject.tag == "Monster")
+        // layer 11 is Monster layer
+        if (collision.gameObject.layer == 11)
         {
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();

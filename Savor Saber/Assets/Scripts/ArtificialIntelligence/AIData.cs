@@ -12,13 +12,14 @@ using UnityEngine;
 
 public class AIData : CharacterData
 {
-
+    #region NormalValues
     /// <summary> A delegate that returns a float between 0 and 1 </summary>
     public delegate float GetNormalValue();
     /// <summary> A dictionary of normalized AI values to be used by Utility curves</summary>
     private Dictionary<string, GetNormalValue> _values;
     private Dictionary<string, Vector2> _vectors;
-
+    #endregion
+    #region Behaviors
     #region Behaviors
     /// <summary> my current state </summary>
     public enum Behave
@@ -32,6 +33,7 @@ public class AIData : CharacterData
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;
+    public Behave previousBehavior = Behave.Idle;
     #region Protocols
     /// <summary> my current state </summary>
     public enum Protocols
@@ -48,35 +50,46 @@ public class AIData : CharacterData
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
+    #endregion
+    #region Timers
 
-    // Decision making
-    float DecisionTimer;
-    float DecisionTimerReset;
-    float DecisionTimerVariance;
-
+    [SerializeField]
+    public float DecisionTimer;
+    [SerializeField]
+    [Range(5f, 15f)]
+    public float DecisionTimerReset = 10f;
+    [SerializeField]
+    [Range(0f, 4f)]
+    public float DecisionTimerVariance = 2f;
+    #endregion
+    #region NearbyCreatures and Food
     /// <summary> lists that may be needed for certain target positions or objects </summary>
     List<GameObject> TargetObjects = new List<GameObject>();
     GameObject AwarenessObject;
     Vector2 TargetPosition;
     /// <summary>
-    /// Monster Behavior, Monster Protocol
+    /// empty array of nearby seen creatures
+    /// </summary>
+    public Collider2D[] NearbyCreatures = new Collider2D[10];
+    Vector2 Target;
+    #endregion
+    #region MonstersBrain and inventory;
+    /// <summary>
+    /// Monster Behaviors, Monster Protocols, Monster Checks, Utility Curves
     /// </summary>
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
-    /// <summary>
-    /// Variables to be used for calling MonsterBehaviors
-    /// </summary>
-    public float Speed;
-    public float Perception;
-    public float MeleeAttackThreshold;
-    public float RangeAttackThreshold;
-    /// <summary>
-    /// empty array of nearby seen creatures
-    /// </summary>
-    public Collider2D[] NearbyCreatures = new Collider2D[10];
-    Vector2 Target;
+
+    /// Friends, Enemies, Food Pref, Stomach
+    public SignalApplication Awareness = null;
+    public List<GameObject> Friends;
+    public List<GameObject> Enemies;
+    public List<RecipeData.Flavors> FoodPreference;
+    public Queue<GameObject> Stomach;
+    #endregion
+
 
     private void Start()
     {
@@ -106,16 +119,6 @@ public class AIData : CharacterData
             {"Player", new Vector2(0f, 0f) }
         };
 
-        // Decision making
-        DecisionTimer = -1f;
-        DecisionTimerReset = 5f;
-        DecisionTimerVariance = 2f;
-
-        // Variable instantiated variance
-        Speed = Random.Range(1f, 1.5f);
-        MeleeAttackThreshold = Random.Range(.5f, 1.5f);
-        RangeAttackThreshold = Random.Range(2f, 5f);
-
         // Naming for future creature tracking
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
@@ -126,18 +129,16 @@ public class AIData : CharacterData
         // acquire necessary data
         // act on current state
 
-        // silly debug updates
-        fear = moods["Fear"];
-        hunger = moods["Hunger"];
-        hostility = moods["Hostility"];
-        friendliness = moods["Friendliness"];
-
         // UPDATE Decision
         if (DecisionTimer < 0)
         {
+            // update state
             currentProtocol = Curves.DecideState();
             //Debug.Log("Getting New Protocol: " + currentProtocol);
+            // reset decision timer
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            // update awareness of creatures
+            Checks.AwareNearby();
         }
         else
         {
@@ -196,6 +197,7 @@ public class AIData : CharacterData
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
         }
+
     }
 
     public float Normal(int now, int max)

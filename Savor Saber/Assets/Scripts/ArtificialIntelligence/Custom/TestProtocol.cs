@@ -21,7 +21,8 @@ public class TestProtocol : CustomProtocol
     }
 
     public float speed = 0;
-    public Vector2 target = new Vector2( 0, 0 );
+    public GameObject target;
+    public Vector2 targetPos = new Vector2( 0, 0 );
     public Behavior curr;
     public CustomBehavior custom;
     MonsterBehavior _behave;
@@ -38,22 +39,22 @@ public class TestProtocol : CustomProtocol
                 _behave.Idle();
                 break;
             case Behavior.MoveTo:
-                _behave.MoveTo(target, speed);
+                _behave.MoveTo(targetPos, speed);
                 break;
             case Behavior.MoveAwayFrom:
-                _behave.MoveFrom(target, speed);
+                _behave.MoveFrom(targetPos, speed);
                 break;
             case Behavior.Feed:
-                _behave.Feed(target, speed);
+                _behave.Feed(target);
                 break;
             case Behavior.Attack:
-                _behave.Attack(target, speed);
+                _behave.Attack(targetPos, speed);
                 break;
             case Behavior.Ranged:
-                _behave.Ranged(target, speed);
+                _behave.Ranged(targetPos, speed);
                 break;
             case Behavior.Socialize:
-                _behave.Socialize(target, speed);
+                _behave.Socialize();
                 break;
             case Behavior.Custom:
                 custom.InvokeBehavior();

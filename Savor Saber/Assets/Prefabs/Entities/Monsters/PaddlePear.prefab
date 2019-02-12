@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 7842350833140496129}
   - component: {fileID: 1707353156324864275}
   - component: {fileID: 3015010221631929720}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PaddlePear
-  m_TagString: Monster
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -133389985
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 433019f5259a414439c14e7799adb496, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 0200000008000000
+    _keys: 020000000800000004000000
     _values:
     - _keys:
       - Fear
@@ -338,17 +338,43 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.64791524
-          value: 0.44062206
-          inSlope: 1.4993491
-          outSlope: 1.4993491
+          time: 0.6645819
+          value: 0.9422319
+          inSlope: 3.7726512
+          outSlope: 3.7726512
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.09677241
           outWeight: 0.33333334
         - serializedVersion: 3
+          time: 1.0125122
+          value: 1.1937523
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Friendliness
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
           time: 1
-          value: 0.9937515
+          value: 1
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -374,21 +400,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 2
+  Perception: 10
+  MeleeAttackThreshold: 1
+  RangeAttackThreshold: 0
+  maxHealth: 4
+  health: 4
+  PartySize: 3
   fear: 0.5
   hunger: 0.5
   hostility: 0.5
   friendliness: 0.5
-  distanceFrom: 0
-  maxHealth: 4
-  health: 4
-  speed: 6
   currentBehavior: 0
+  previousBehavior: 0
   currentProtocol: 2
-  Checks: {fileID: 0}
-  Speed: 100
-  Perception: 10
-  MeleeAttackThreshold: 5
-  RangeAttackThreshold: 0
+  DecisionTimer: 0
+  DecisionTimerReset: 5
+  DecisionTimerVariance: 2
   NearbyCreatures:
   - {fileID: 0}
   - {fileID: 0}
@@ -400,6 +428,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  Checks: {fileID: 0}
+  Awareness: {fileID: 0}
+  Friends: []
+  Enemies: []
+  FoodPreference: 
 --- !u!114 &5158955316715184632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -425,8 +458,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AiData: {fileID: 0}
-  Friendlies: []
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
+  Friends: []
   Enemies: []
+  AllCreatures: []
+  AllDrops: []
 --- !u!114 &1707353156324864275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,8 +477,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActionTimer: 0
-  ActionTimerReset: 0
-  ActionTimerVariance: 0
+  ActionTimerReset: 10
+  ActionTimerVariance: 2
+  attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
+  attackDuration: 1
+  isAttacking: 0
 --- !u!58 &3015010221631929720
 CircleCollider2D:
   m_ObjectHideFlags: 0

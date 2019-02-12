@@ -7,13 +7,14 @@ public class SignalApplication : MonoBehaviour
 {
     // variables
     [SerializeField]
-    [Range(0f, 10f)]
     public float interactRadius;
 
     // hit and mod list
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
+    public List<GameObject> dropList = new List<GameObject>();
     public Dictionary<string, float> moodMod = new Dictionary<string, float>();
+    #region MoodMods
     [Range(-1f, 1f)]
     public float fearMod = 0;
     [Range(-1f, 1f)]
@@ -22,9 +23,31 @@ public class SignalApplication : MonoBehaviour
     public float hostileMod = 0;
     [Range(-1f, 1f)]
     public float friendMod = 0;
-
+    #endregion
+    
     // private variables
-    private bool activate = false;
+    public bool activate = false;
+    // if both hit enemies and hit friends are false, hit EVERYTHING
+    bool hitSelf = true;
+    bool hitAll = true;
+    // Game object of who made this
+    GameObject signalMaker = null;
+
+    // Constructor
+    // signalmaker, radius, moods, hitself, hitenemies, hitfriends
+    public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
+    {
+        //Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y);
+        this.signalMaker = signalMaker;
+        this.interactRadius = radius;
+        // update radius
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        collider.radius = interactRadius;
+        this.moodMod = moods;
+        this.hitAll = hitall;
+        this.hitSelf = hitself;
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,38 +55,66 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
-        Debug.Log("signal with radius = " + interactRadius);
-
-        // modifications?
-        moodMod.Add("Fear", fearMod);
-        moodMod.Add("Hunger", hungerMod);
-        moodMod.Add("Hostility", hostileMod);
-        moodMod.Add("Friendliness", friendMod);
+        //Debug.Log("signal with radius = " + interactRadius);
     }
 
-    private void Update()
+    public void Update()
     {
-        activate = (hitList.Count > 0);
+        // if data is being requested,
+        // then obtain hit list after
+        // instantiation
         if (activate)
         {
+            // apply
             ApplyToAll();
+            // inform signal maker of those here
+            if (signalMaker != null && !ReferenceEquals(signalMaker, null))
+            {
+                signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+                //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
+                signalMaker.GetComponent<AIData>().Awareness = null;
+            }
+            // destroy
             Destroy(this.gameObject);
+        }
+        else
+        {
+            activate = true;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // COLLECT THE HIT LIST
+    public void OnTriggerEnter2D(Collider2D collision)
     {
+        // get objects
         GameObject go = collision.gameObject;
-        //Debug.Log("Object Found: " + go);
-        if (!hitList.Contains(go))
+
+        //string sm = (signalMaker != null ? signalMaker.name : "null character" );
+        //Debug.Log(sm + " has found --> " + go.name);
+
+        // check tags
+        if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
         {
-            Debug.Log("Found Object Not in List");
-            AIData data = go.GetComponent<AIData>();
-            if (data != null)
+            //Debug.Log(go.name + "is tagged properly --> " + go.tag);
+
+            // create boolean cases
+            bool hitS = hitSelf && this.Equals(go);
+            bool hitA = hitAll && !hitS;
+
+            // if ANY of these...
+            if (hitA || hitS)
             {
-                Debug.Log("---NPC Added");
+                // add to list
+                //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
+                //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
                 hitList.Add(go);
             }
+        }
+        else if (go.tag == "SkewerableObject")
+        {
+            // keep track of drops
+            dropList.Add(go);
         }
     }
 
@@ -72,32 +123,37 @@ public class SignalApplication : MonoBehaviour
     {
         foreach (GameObject g in hitList)
         {
-            Apply(g);
+            if (g != null)
+            {
+                // get data
+                AIData data = g.GetComponent<AIData>();
+                // apply
+                Apply(g, data);
+            }
         }
     }
 
     // Apply
     // Override this given the type of 
     // signal that needs to be applied
-    private void Apply(GameObject g)
+    private void Apply(GameObject g, AIData data)
     {
-        AIData data = g.GetComponent<AIData>();
         //modification
-        foreach(string key in moodMod.Keys)
+        foreach (string key in moodMod.Keys)
         {
             // using the keys, change the values
             // of "moods" in data
             float mod = moodMod[key];
-            if (mod > 0)
+            if (mod != 0)
             {
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
-                Debug.Log(g + "'s " + key + " value should be " + value);
+                //Debug.Log(g + "'s " + key + " value should be " + value);
             }
         }
-
         // set decision timer to 0
-        data.ManualDecision();
+        // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
+        // data.ManualDecision();
     }
 }
