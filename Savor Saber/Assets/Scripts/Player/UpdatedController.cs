@@ -79,6 +79,13 @@ public class UpdatedController : MonoBehaviour
     public float dashRechargeTime = 1f;
     public UnityEngine.UI.Text debugText;
 
+    private Coroutine run;
+    private float currRunSpeed;
+    public float runTimeBuffer;
+    public float accelerationTime;
+    public float maxSpeed;
+    public float accelrationAmount;
+
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -93,6 +100,7 @@ public class UpdatedController : MonoBehaviour
         keys = new Control[doubleTapTrackers.Count];
         doubleTapTrackers.Keys.CopyTo(keys, 0);
         currDashes = maxDashes;
+        currRunSpeed = runSpeed;
     }
 
     // Detect non-movement input every fram so input isn't dropped
@@ -102,8 +110,8 @@ public class UpdatedController : MonoBehaviour
             StartDash();
         else
             CheckForDoubleTaps();
-        if (running)
-            running = InputManager.GetAxis(InputAxis.Horizontal) != 0 || InputManager.GetAxis(InputAxis.Vertical) != 0;
+        if (running && InputManager.GetAxis(InputAxis.Horizontal) == 0 && InputManager.GetAxis(InputAxis.Vertical) == 0)
+            StopRunning();
     }
 
     void FixedUpdate()
@@ -181,7 +189,7 @@ public class UpdatedController : MonoBehaviour
         dashCurrTime = 0;
         dashing = false;
         animatorBody.SetBool("Dashing", false);
-        running = true;
+        run = StartCoroutine(runCR());
         rechargeDashes = StartCoroutine(rechargeDashesCR());
         dashVector = Vector2.zero;
     }
@@ -194,6 +202,25 @@ public class UpdatedController : MonoBehaviour
             currDashes++;
             debugText.text = "Dashes: " + currDashes;
         }
+    }
+
+    private IEnumerator runCR()
+    {
+        running = true;
+        currRunSpeed = runSpeed;
+        yield return new WaitForSeconds(runTimeBuffer);
+        while(currRunSpeed < maxSpeed)
+        {
+            yield return new WaitForFixedUpdate();
+            currRunSpeed += accelrationAmount;
+        }
+    }
+
+    private void StopRunning()
+    {
+        running = false;
+        if(run != null)
+            StopCoroutine(run);
     }
 
     private Vector2 GetMovementVector()
@@ -210,7 +237,7 @@ public class UpdatedController : MonoBehaviour
         else
         {
             var movementVector = GetMovementVector();
-            var modSpeed = (running ? runSpeed : speed) * speedMod;
+            var modSpeed = (running ? currRunSpeed : speed) * speedMod;
             if (movementVector.magnitude > 1)
             {
                 rigidBody.velocity = (movementVector / movementVector.magnitude * modSpeed * Time.fixedDeltaTime);
@@ -218,7 +245,10 @@ public class UpdatedController : MonoBehaviour
             else
             {
                 rigidBody.velocity = (movementVector * modSpeed * Time.fixedDeltaTime);
+                StopRunning();
             }
+            if (running && movementVector.magnitude < 0.25)
+                StopRunning();
         }
         //////
         if (DebugBool) { Debug.Log("MoveAgent finished."); }
