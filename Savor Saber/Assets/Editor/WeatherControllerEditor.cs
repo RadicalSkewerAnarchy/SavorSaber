@@ -7,13 +7,18 @@ using SerializableCollections.GUIUtils;
 [CustomEditor(typeof(WeatherController))]
 public class WeatherControllerEditor : Editor
 {
+    private WeatherType setTo = WeatherType.Sun;
     public override void OnInspectorGUI()
     {
         var w = target as WeatherController;
-        if (EditorApplication.isPlaying)
-            w.Weather = (WeatherType)EditorGUILayout.EnumPopup(new GUIContent("Weather"), w.Weather);
-        else
-            w._weather = (WeatherType)EditorGUILayout.EnumPopup(new GUIContent("Weather"), w.Weather);
+        if(EditorApplication.isPlaying)
+        {
+            EditorGUILayout.LabelField(new GUIContent("Weather: " + w.Weather.ToString()));
+            EditorGUILayout.LabelField(new GUIContent("Buffer: " + w.Buffer.ToString()));
+            setTo = (WeatherType)EditorGUILayout.EnumPopup(new GUIContent("Set to"), setTo);
+            if (GUILayout.Button("Set Weather"))
+                w.Weather = setTo;
+        }
         SDictionaryGUI.ValueGUI<WeatherData> valGUI = (data) =>
         {
             return EditorGUILayout.ObjectField(data, typeof(WeatherData), false) as WeatherData;
