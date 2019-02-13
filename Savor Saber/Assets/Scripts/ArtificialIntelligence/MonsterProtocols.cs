@@ -58,12 +58,18 @@ public class MonsterProtocols : MonoBehaviour
         {
             if (Behaviour.MoveTo(pos, AiData.Speed))
             {
-                Behaviour.Attack(pos, AiData.Speed);
+                if (Behaviour.Attack(pos, AiData.Speed))
+                {
+                    Checks.ResetSpecials();
+                }
             }
         }
         else
         {
-            Behaviour.Attack(pos, AiData.Speed);
+            if (Behaviour.Attack(pos, AiData.Speed))
+            {
+                Checks.ResetSpecials();
+            }
         }       
     }
 
@@ -103,6 +109,7 @@ public class MonsterProtocols : MonoBehaviour
             Checks.AwareHowMany();
             // reset action timer
             Behaviour.ResetActionTimer();
+            Checks.ResetSpecials();
         }
     }
 
@@ -138,6 +145,7 @@ public class MonsterProtocols : MonoBehaviour
             {
                 // reset action timer
                 Behaviour.ResetActionTimer();
+                Checks.ResetSpecials();
             }
         }       
     }
@@ -212,7 +220,10 @@ public class MonsterProtocols : MonoBehaviour
     {
         if(AiData.Checks.NumberOfFriends() > 0)
         {
-            Behaviour.Socialize();            
+            if(Behaviour.Socialize())
+            {
+                Checks.ResetSpecials();
+            }
         }
     }
 
@@ -221,6 +232,25 @@ public class MonsterProtocols : MonoBehaviour
         #region Get Nearest + Null Check
         Vector2 pos = Checks.GetRandomPositionType();
         #endregion
-        Behaviour.MoveFrom(pos, AiData.Speed);
+        if(Behaviour.MoveFrom(pos, AiData.Speed))
+        {
+            Checks.ResetSpecials();
+        }
+    }
+
+    public void Conga()
+    {
+        if(Checks.AmLeader())
+        {
+            Vector2 pos = Checks.ClosestCreature().transform.position;
+            Behaviour.MoveFrom(pos, AiData.Speed);
+        }
+        else
+        {
+            if (Checks.specialLeader==null) { Checks.BecomeLeader(); };
+            GameObject near = Checks.ClosestLeader();
+            Vector2 pos = near.transform.position;
+            Behaviour.MoveTo(pos, AiData.Speed);
+        }
     }
 }

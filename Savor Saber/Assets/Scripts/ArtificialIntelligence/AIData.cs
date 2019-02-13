@@ -46,7 +46,8 @@ public class AIData : CharacterData
         Swarm,
         Feast,
         Console,
-        Runaway
+        Runaway,
+        Conga
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -191,6 +192,11 @@ public class AIData : CharacterData
             case Protocols.Runaway:
                 //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Runaway();
+                break;
+            // Conga
+            case Protocols.Conga:
+                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+                Protocol.Conga();
                 break;
             // default
             default:
