@@ -56,14 +56,14 @@ public class MonsterProtocols : MonoBehaviour
         //Both of these behaviors require the player position as a Vector2 stored somewhere in AIData.cs
         if (Vector2.Distance(pos, AiData.gameObject.transform.position) > AiData.MeleeAttackThreshold)
         {
-            if (Behaviour.MoveTo(pos, AiData.Speed))
+            if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
             {
-                Behaviour.Attack(pos, AiData.Speed);
+                Behaviour.MeleeAttack(pos, AiData.Speed);
             }
         }
         else
         {
-            Behaviour.Attack(pos, AiData.Speed);
+            Behaviour.MeleeAttack(pos, AiData.Speed);
         }       
     }
 
@@ -83,12 +83,11 @@ public class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        if (Vector2.Distance(pos, AiData.gameObject.transform.position) > AiData.RangeAttackThreshold)
+        //Behaviour.RangedAttack(pos, AiData.Speed);
+
+        if (Vector2.Distance(pos, AiData.gameObject.transform.position) >= AiData.RangeAttackThreshold)
         {
-            if (Behaviour.MoveTo(pos, AiData.Speed))
-            {
-                Behaviour.Ranged(pos, AiData.Speed);
-            }
+            Behaviour.RangedAttack(pos, AiData.Speed);
         }
     }
 
@@ -114,7 +113,7 @@ public class MonsterProtocols : MonoBehaviour
     {
         if (AiData.Checks.NumberOfEnemies() > 0)
         {
-            if (!Behaviour.Attack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
+            if (!Behaviour.MeleeAttack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
             {
                 Lazy();
             }
@@ -140,7 +139,7 @@ public class MonsterProtocols : MonoBehaviour
         }
         #endregion
         // move to
-        if (Behaviour.MoveTo(pos, AiData.Speed))
+        if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
             // socialize
             if (Behaviour.Socialize())
@@ -181,10 +180,10 @@ public class MonsterProtocols : MonoBehaviour
         {
             if (numFriends / numEnemies >= 2 * numEnemies )
             {
-                if(Behaviour.MoveTo(pos, AiData.Speed))
+                if(Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
                     //behavior.attack should return true if creature dies?
-                    if(Behaviour.Attack(pos, AiData.Speed))
+                    if(Behaviour.MeleeAttack(pos, AiData.Speed))
                     {
                         //need to look at behavior.feed
                         //Behaviour.Feed(closestEnemy, AiData.Speed);
@@ -211,7 +210,7 @@ public class MonsterProtocols : MonoBehaviour
             // move to and feed
             if(cDrop != null)
             {
-                if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed))
+                if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
                     Behaviour.Feed(cDrop);
                 }

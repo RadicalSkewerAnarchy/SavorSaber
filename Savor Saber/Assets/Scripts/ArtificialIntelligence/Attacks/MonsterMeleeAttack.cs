@@ -15,7 +15,7 @@ public class MonsterAttack : BaseMeleeAttack
         monsterChecks = gameObject.GetComponentInParent<MonsterChecks>();
         if(monsterChecks == null)
         {
-            Debug.Log("Retrieved monsterChecks: ");
+            Debug.Log("MonsterChecks is null");
         }
         var circleCollider = GetComponent<CircleCollider2D>();
         //Physics2D.IgnoreCollision(circleCollider, GetComponent<CapsuleCollider2D>());
@@ -23,13 +23,13 @@ public class MonsterAttack : BaseMeleeAttack
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("THERE IS NO CHARACTERCOLLISION");
+        //Debug.Log("THERE IS NO CHARACTERCOLLISION");
         //monsterChecks.Enemies.Clear();
-        if (collision.gameObject.tag == "Player" || monsterChecks.Enemies.Contains(collision.gameObject))
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "prey" || collision.gameObject.tag == "predator")
         {            
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
-            Debug.Log("THERE IS CHARACTER COLLISION");
+            //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
             {
                 charData.health -= (int)meleeDamage;

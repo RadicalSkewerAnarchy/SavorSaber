@@ -18,13 +18,23 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
-    bool left = false;
 
     // biases
     private float biasAngle = 45f;
     private float biasMovementAngle;
 
     #region Attacking
+    public enum Direction : int
+    {
+        East,
+        NorthEast,
+        North,
+        NorthWest,
+        West,
+        SouthWest,
+        South,
+        SouthEast,
+    }
     /// <summary>
     /// where the attack collider will be spawned
     /// </summary>
@@ -34,6 +44,10 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public GameObject attack;
     /// <summary>
+    /// field for the attack prefab to be spawned when attacking
+    /// </summary>
+    public GameObject projectile;
+    /// <summary>
     /// The collider orientation for the melee attack.
     /// </summary>
     protected CapsuleDirection2D attackCapsuleDirection;
@@ -42,7 +56,7 @@ public class MonsterBehavior : MonoBehaviour
     /// Needed for diagonal attack
     /// </summary>
     protected float attackCapsuleRotation;
-    public float attackDuration = 1f;
+    public float attackDuration = .5f;
     public bool isAttacking = false;
     #endregion
 
@@ -84,7 +98,7 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
-    public bool MoveTo(Vector2 target, float speed)
+    public bool MoveTo(Vector2 target, float speed, float threshold)
     {
         //Debug.Log("I am Chase at " + speed + "mph");
         // Turn Greenish
@@ -95,7 +109,7 @@ public class MonsterBehavior : MonoBehaviour
         var current = new Vector2(transform.position.x, transform.position.y);
 
         // at target
-        if (Vector2.Distance(current, target) < 1)
+        if (Vector2.Distance(current, target) <= threshold)
         {
             ResetMovementBias();
             return true;
@@ -110,7 +124,7 @@ public class MonsterBehavior : MonoBehaviour
             // get direction towards new target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
-            left = (target.x > 0) ? true : false;
+            //left = (target.x > 0) ? true : false;
             transform.Translate(target);
 
             return false;
@@ -120,10 +134,7 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveFrom(Vector2 target, float speed)
     {
         // Turn Greenish
-        AiData.currentBehavior = AIData.Behave.Flee;
-
-        var left = false;
-
+        AiData.currentBehavior = AIData.Behave.Flee;     
         var current = new Vector2(transform.position.x, transform.position.y);
 
         {
@@ -131,7 +142,7 @@ public class MonsterBehavior : MonoBehaviour
             AnimatorBody.Play("Move");
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
-            left = (target.x < 0) ? true : false;
+            //left = (target.x < 0) ? true : false;
             transform.Translate(-1*target);
             return false;
         }
@@ -150,30 +161,43 @@ public class MonsterBehavior : MonoBehaviour
     }
 
     // ATTACK
-    public bool Attack(Vector2 target, float speed)
+    public bool MeleeAttack(Vector2 target, float speed)
     {
         if (!isAttacking)
         {
             isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
-            CalculateDirection();
+            // var dir = CalculateDirection(target);
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
             newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
             //Debug.Log("ATTACKING");
             //stops attacking for 1 second after attack
-            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack));
+            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             return true;
         }
         return false;        
     }
 
-    public bool Ranged(Vector2 target, float speed)
+    public bool RangedAttack(Vector2 target, float speed)
     {
-        //Debug.Log("I am Attack");
-        AiData.currentBehavior = AIData.Behave.Attack;
-        AnimatorBody.Play("Ranged");
+        Debug.Log("I am rangedAttack");
+        if (!isAttacking)
+        {
+            AiData.currentBehavior = AIData.Behave.Attack;
+            // var dir = CalculateDirection(target);
+            // AnimatorBody.Play("Ranged");
+            Vector2 normalizedVec = GetTargetVector(target);
+            GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+            BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
+            projectileData.directionVector = normalizedVec;
+            isAttacking = true;
+            Debug.Log("isAttacking is: " + isAttacking);
+            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
+            
+        }
+
         return true;
     }
 
@@ -198,17 +222,19 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
-    void CalculateDirection()
+    static Direction CalculateDirection(Vector2 target)
     {
-        attackCapsuleDirection = CapsuleDirection2D.Horizontal;
-        attackSpawnPoint = new Vector2(transform.position.x + (AiData.MeleeAttackThreshold), transform.position.y + .5f);
+        var movementAngle = Vector2.SignedAngle(Vector2.right, target);
+        if (movementAngle < 0)
+            movementAngle += 360;
+        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 90));
     }
 
-    protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack)
+    protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack, bool destroy)
     {
         yield return new WaitForSeconds(time);
         isAttacking = false;
-        Destroy(newAttack);
+        if (destroy) Destroy(newAttack);
         yield return null;
     }
 
@@ -223,7 +249,10 @@ public class MonsterBehavior : MonoBehaviour
     {
         biasMovementAngle = Random.Range(-biasAngle, biasAngle);
     }
-
+    protected Vector2 GetTargetVector(Vector2 targetVector)
+    {
+        return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
+    }
     #region POINTS AND ANGLES
     /// <summary>
     /// Rotate Point: given a pivot and an angle,
