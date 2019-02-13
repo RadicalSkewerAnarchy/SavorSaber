@@ -27,16 +27,6 @@ public class PaddlePearFlavorInput : FlavorInputManager
         Debug.Log("Paddlepear ate " + magnitude + " " + flavor);
         flavorCountDictionary[flavor] += magnitude;
 
-        //handle sweet
-        if(flavorCountDictionary[RecipeData.Flavors.Sweet] >= 2)
-        {
-            Debug.Log("Friendliness up!");
-            spriteRenderer.color = new Color(1f, 0.2f, 0.8f);
-
-            //when a status effect is applied, reset the dictionary to avoid massive buildup
-            ResetDictionary();
-        }
-
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
         {
