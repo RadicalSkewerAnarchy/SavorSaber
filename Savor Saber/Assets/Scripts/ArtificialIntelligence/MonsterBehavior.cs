@@ -223,7 +223,7 @@ public class MonsterBehavior : MonoBehaviour
     // resest movement bias
     public void ResetMovementBias()
     {
-        biasMovementAngle = Random.Range(-biasAngle, biasAngle);
+        biasMovementAngle = Random.Range(-biasAngle/2, biasAngle*2);
     }
 
     #region POINTS AND ANGLES

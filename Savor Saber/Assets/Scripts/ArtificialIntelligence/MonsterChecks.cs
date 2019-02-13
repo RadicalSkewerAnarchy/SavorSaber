@@ -146,10 +146,11 @@ public class MonsterChecks : MonoBehaviour
             avgx += Creature.transform.position.x;
             avgy += Creature.transform.position.y;
         }
+
+        if (count == 0) { return transform.position; }
         // average out positions
         avgx /= count;
         avgy /= count;
-
         // send new vector
         return new Vector2(avgx, avgy);
     }
@@ -205,14 +206,41 @@ public class MonsterChecks : MonoBehaviour
         return ClosestCreature().gameObject.transform.position;
     }
 
-
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <returns> CharacterData record of given Creature as recorded by THIS creature </returns>
-    /*public CharacterData AssessCreature(Collider2D Creature)
+    /// <summary>
+    /// Given some distribution, return a vector2 of:
+    ///     the closest creauture
+    ///     the weakest creature
+    ///     the group average
+    /// with null checking
+    /// </summary>
+    /// <returns> CharacterData record of given Creature as recorded by THIS creature </returns>
+    public Vector2 GetRandomPositionType()
     {
-        return CreaturesDictionary[Creature];
-    }*/
+        // position to return
+        Vector2 pos;
+        GameObject cre;
+   
+        // randomly choose
+        float rand = Random.Range(0, 100);
+        // closest
+        if (rand < 30)
+        {
+            cre = ClosestCreature();
+            pos = (cre == null ? transform.position : ClosestCreature().transform.position);
+        }
+        // weakest
+        else if (rand < 60)
+        {
+            cre = WeakestCreature();
+            pos = (cre == null ? transform.position : ClosestCreature().transform.position);
+        }
+        // group
+        {
+            pos = AverageGroupPosition();
+        }
+
+        // return
+        return pos;
+    }
 
 }

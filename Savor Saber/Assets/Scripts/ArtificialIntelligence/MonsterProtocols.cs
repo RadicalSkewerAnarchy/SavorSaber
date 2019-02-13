@@ -39,11 +39,11 @@ public class MonsterProtocols : MonoBehaviour
     public void Melee()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
+        var weakest = Checks.WeakestCreature();
         Vector2 pos;
-        if (nearestEnemy != null)
+        if (weakest != null)
         {
-            pos = nearestEnemy.gameObject.transform.position;
+            pos = weakest.transform.position;
         }
         else
         {
@@ -128,16 +128,7 @@ public class MonsterProtocols : MonoBehaviour
     public void Party()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
-        {
-            pos = nearestEnemy.gameObject.transform.position;
-        }
-        else
-        {
-            pos = transform.position;
-        }
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
         // move to
         if (Behaviour.MoveTo(pos, AiData.Speed))
@@ -164,16 +155,7 @@ public class MonsterProtocols : MonoBehaviour
         var numFriends = AiData.Checks.NumberOfFriends();
         var numEnemies = AiData.Checks.NumberOfEnemies();
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
-        {
-            pos = nearestEnemy.gameObject.transform.position;
-        }
-        else
-        {
-            pos = transform.position;
-        }
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
 
 
@@ -237,16 +219,7 @@ public class MonsterProtocols : MonoBehaviour
     public void Runaway()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
-        {
-            pos = nearestEnemy.gameObject.transform.position;
-        }
-        else
-        {
-            pos = transform.position;
-        }
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
         Behaviour.MoveFrom(pos, AiData.Speed);
     }
