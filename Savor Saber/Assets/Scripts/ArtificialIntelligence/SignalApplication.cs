@@ -55,7 +55,7 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
-        Debug.Log("signal with radius = " + interactRadius);
+        //Debug.Log("signal with radius = " + interactRadius);
     }
 
     public void Update()
@@ -76,7 +76,7 @@ public class SignalApplication : MonoBehaviour
                 signalMaker.GetComponent<AIData>().Awareness = null;
             }
             // destroy
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, Time.fixedDeltaTime);
         }
         else
         {
