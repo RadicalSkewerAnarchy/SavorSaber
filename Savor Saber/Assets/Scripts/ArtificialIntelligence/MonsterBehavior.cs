@@ -129,6 +129,9 @@ public class MonsterBehavior : MonoBehaviour
         {
             // move towards target
             AnimatorBody.Play("Move");
+            // random rotation of target around current
+            //     based on bias of movement
+            target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             left = (target.x < 0) ? true : false;

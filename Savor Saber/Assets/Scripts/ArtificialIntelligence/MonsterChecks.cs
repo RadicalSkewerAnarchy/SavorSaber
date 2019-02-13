@@ -69,7 +69,7 @@ public class MonsterChecks : MonoBehaviour
 
  
     /// <summary>
-    /// Checks closest enemy from enemy/friend dictionary
+    /// Checks creatures and returns closest
     /// </summary>
     /// <returns> Collider2D of closest enemy or friend </returns>
     public GameObject ClosestCreature()
@@ -78,7 +78,6 @@ public class MonsterChecks : MonoBehaviour
         float close = closestDistance;
         GameObject closestCreature = null;
         #endregion
-        //Debug.Log("Number of nearby Creatures: " + AllCreatures.Count);
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -98,11 +97,15 @@ public class MonsterChecks : MonoBehaviour
         return closestCreature;
     }
 
-    public GameObject ClosestDrop()
+    /// <summary>
+    /// Checks creatures and returns weakest
+    /// </summary>
+    /// <returns> Collider2D of closest enemy or friend </returns>
+    public GameObject WeakestCreature()
     {
-        #region Initialize Friend and Enemy
-        float close = closestDistance;
-        GameObject closestDrop = null;
+        #region Initialize closest vars
+        float weak = 10f;
+        GameObject weakest = null;
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
@@ -112,15 +115,68 @@ public class MonsterChecks : MonoBehaviour
                 continue;
             }
             #endregion
-            //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
-            if (Creature.tag == "SkewerableObject")
+            float dist = Creature.GetComponent<CharacterData>().health;
+            if (dist < weak)
             {
-                Debug.Log(Creature.GetInstanceID() + " is a drop");
-                float dist = Vector2.Distance(transform.position, Creature.transform.position);
+                weak = dist;
+                weakest = Creature;
+            }
+        }
+
+        return weakest;
+    }
+    
+    /// <summary>
+    /// Checks creatures and returns weakest
+    /// </summary>
+    /// <returns> Collider2D of closest enemy or friend </returns>
+    public Vector2 AverageGroupPosition()
+    {
+        float avgx=0f, avgy=0f;
+        float count = AllCreatures.Count;
+        foreach (GameObject Creature in AllCreatures)
+        {
+            #region Check if Creature Deleted
+            if (Creature == null)
+            {
+                count--;
+                continue;
+            }
+            #endregion
+            avgx += Creature.transform.position.x;
+            avgy += Creature.transform.position.y;
+        }
+        // average out positions
+        avgx /= count;
+        avgy /= count;
+
+        // send new vector
+        return new Vector2(avgx, avgy);
+    }
+
+    public GameObject ClosestDrop()
+    {
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestDrop = null;
+        #endregion
+        foreach (GameObject Drop in AllCreatures)
+        {
+            #region Check if Creature Deleted
+            if (Drop == null)
+            {
+                continue;
+            }
+            #endregion
+            //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
+            if (Drop.tag == "SkewerableObject")
+            {
+                Debug.Log(Drop.GetInstanceID() + " is a drop");
+                float dist = Vector2.Distance(transform.position, Drop.transform.position);
                 if (dist < close)
                 {
                     close = dist;
-                    closestDrop = Creature;
+                    closestDrop = Drop;
                 }
             }
         }
