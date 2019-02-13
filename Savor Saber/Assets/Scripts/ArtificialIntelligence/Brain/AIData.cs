@@ -123,7 +123,7 @@ public class AIData : CharacterData
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         // check current state
         // acquire necessary data
