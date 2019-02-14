@@ -43,7 +43,7 @@ public class TestProtocol : CustomProtocol
                 _behave.MoveTo(targetPos, speed, threshold);
                 break;
             case Behavior.MoveAwayFrom:
-                _behave.MoveFrom(targetPos, speed);
+                _behave.MoveFrom(targetPos, speed, threshold+1);
                 break;
             case Behavior.Feed:
                 _behave.Feed(target);

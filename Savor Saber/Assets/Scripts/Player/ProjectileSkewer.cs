@@ -28,7 +28,7 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
-            if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
+            if (flavorCountDictionary != null && flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
             {
                 //attack radius is set by the amount of Savory/Umami on the skewer
                 attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
@@ -50,10 +50,17 @@ public class ProjectileSkewer : BaseProjectile
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         //attack radius is set by the amount of Savory/Umami on the skewer
-        attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+        if(flavorCountDictionary != null)
+        {
+            attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+        }
+        else
+        {
+            attackRadius = 2.5f;
+        }
 
         //general hitting 
-        if (collision.gameObject.tag != "Player" && flavorCountDictionary != null)
+        if (flavorCountDictionary != null)
         { 
 
             //call the target's feeding function, if it has one
@@ -79,11 +86,10 @@ public class ProjectileSkewer : BaseProjectile
                         }
                     }
                 }
-            }
-
-            if (!penetrateTargets)
-                Destroy(this.gameObject);
+            }            
         }
+        if (!penetrateTargets)
+            Destroy(this.gameObject);
 
     }
 

@@ -110,6 +110,7 @@ public class AttackRanged : AttackBase
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
+        Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;

@@ -154,6 +154,8 @@ public class BaseProjectile : MonoBehaviour
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
 
+        collision.gameObject.GetComponent<CharacterData>().health -= (int)projectileDamage;
+
         if (!penetrateTargets)
             Destroy(this.gameObject);
 

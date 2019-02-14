@@ -85,9 +85,12 @@ public class MonsterProtocols : MonoBehaviour
         #endregion
         //Behaviour.RangedAttack(pos, AiData.Speed);
 
-        if (Vector2.Distance(pos, AiData.gameObject.transform.position) >= AiData.RangeAttackThreshold)
+        if (Vector2.Distance(pos, AiData.gameObject.transform.position) <= AiData.RangeAttackThreshold)
         {
-            Behaviour.RangedAttack(pos, AiData.Speed);
+            if (Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
         }
     }
 
@@ -250,6 +253,6 @@ public class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        Behaviour.MoveFrom(pos, AiData.Speed);
+        Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold);
     }
 }

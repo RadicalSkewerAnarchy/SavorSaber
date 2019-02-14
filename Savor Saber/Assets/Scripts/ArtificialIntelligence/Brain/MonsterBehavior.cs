@@ -131,12 +131,12 @@ public class MonsterBehavior : MonoBehaviour
         }
     }
 
-    public bool MoveFrom(Vector2 target, float speed)
+    public bool MoveFrom(Vector2 target, float speed, float threshold)
     {
         // Turn Greenish
         AiData.currentBehavior = AIData.Behave.Flee;     
         var current = new Vector2(transform.position.x, transform.position.y);
-
+        if(Vector2.Distance(current, target) <= threshold - 1)
         {
             // move towards target
             AnimatorBody.Play("Move");
@@ -145,6 +145,10 @@ public class MonsterBehavior : MonoBehaviour
             //left = (target.x < 0) ? true : false;
             transform.Translate(-1*target);
             return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
@@ -189,12 +193,13 @@ public class MonsterBehavior : MonoBehaviour
             // var dir = CalculateDirection(target);
             // AnimatorBody.Play("Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
-            GameObject newAttack = Instantiate(projectile, transform.position, Quaternion.identity);
+            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity, transform);
+            Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;
             isAttacking = true;
             Debug.Log("isAttacking is: " + isAttacking);
-            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
+            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             
         }
 
