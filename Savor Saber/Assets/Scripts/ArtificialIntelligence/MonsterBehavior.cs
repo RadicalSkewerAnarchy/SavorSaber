@@ -21,7 +21,8 @@ public class MonsterBehavior : MonoBehaviour
     bool left = false;
 
     // biases
-    private float biasAngle = 45f;
+    private float biasAngle = 30f;
+    private float biasAngleMod;
     private float biasMovementAngle;
 
     #region Attacking
@@ -223,7 +224,10 @@ public class MonsterBehavior : MonoBehaviour
     // resest movement bias
     public void ResetMovementBias()
     {
-        biasMovementAngle = Random.Range(-biasAngle/2, biasAngle*2);
+        biasAngleMod = Random.Range(-2f, 2f);
+        float bR = Mathf.Pow(2f, biasAngleMod);
+        float bL = Mathf.Pow(2f, -biasAngleMod);
+        biasMovementAngle = Random.Range(-biasAngle * bL, biasAngle * bR);
     }
 
     #region POINTS AND ANGLES
