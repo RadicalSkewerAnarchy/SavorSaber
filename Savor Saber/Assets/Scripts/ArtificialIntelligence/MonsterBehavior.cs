@@ -18,6 +18,9 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
+    public float ResetTimer;
+    public float ResetTimerReset;
+    public float ResetTimerVariance;
     bool left = false;
 
     // biases
@@ -57,8 +60,24 @@ public class MonsterBehavior : MonoBehaviour
         ActionTimer = -1f;
         ActionTimerReset = 5f;
         ActionTimerVariance = 2f;
+        ResetTimer = -1f;
+        ResetTimerReset = 6f;
+        ResetTimerVariance = 2f;
 
         ResetMovementBias();
+    }
+
+    private void Update()
+    {
+        if (ResetTimer < 0)
+        {
+            ResetMovementBias();
+            ResetTimer = ResetTimerReset + Random.Range(-ResetTimerVariance, ResetTimerVariance);
+        }
+        else
+        {
+            ResetTimer -= Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -98,7 +117,6 @@ public class MonsterBehavior : MonoBehaviour
         // at target
         if (Vector2.Distance(current, target) < 1)
         {
-            ResetMovementBias();
             return true;
         }
         else
@@ -218,6 +236,7 @@ public class MonsterBehavior : MonoBehaviour
     // reset action timer
     public void ResetActionTimer()
     {
+        ResetMovementBias();
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
 
