@@ -19,4 +19,9 @@ public class SceneChange : MonoBehaviour
     {
         Application.Quit();
     }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 }
