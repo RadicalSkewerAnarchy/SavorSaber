@@ -10,6 +10,16 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CameraController : MonoBehaviour
 {
+    private bool _detatched;
+    public bool Detatched
+    {
+        get => _detatched;
+        set
+        {
+            _detatched = value;
+            returning = true;
+        }
+    }
     public float returnTime = 0.5f;
     public float maxReturnSpeed = 1000f;
     public Vector2 deadzone = new Vector2(1.5f, 1.25f);
@@ -43,10 +53,41 @@ public class CameraController : MonoBehaviour
         target = null;
     }
 
+    public IEnumerator MoveToPointLinearCr(Vector2 point, float speed)
+    {
+        while (Vector2.Distance(camera.position, point) > speed * Time.fixedDeltaTime)
+        {
+            Debug.Log(Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
+            var newPos = Vector2.MoveTowards(camera.position, point, speed * Time.fixedDeltaTime);
+            camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
+        }
+        camera.position = new Vector3(point.x, point.y, camera.position.z);
+    }
+    public void MoveToPointSmooth(Vector2 point, float maxSpeed, float snapTime)
+    {
+        Detatched = true;
+        StartCoroutine(MoveToPointSmoothCr(point, maxSpeed, snapTime));
+    }
+    private IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
+    {
+        Vector2 currVelocity = Vector2.zero;
+        float currTime = 0f;
+        while(currTime <= snapTime)
+        {
+            yield return new WaitForFixedUpdate();
+            currTime += Time.fixedDeltaTime;
+            var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
+            camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
+        }
+        camera.position = new Vector3(point.x, point.y, camera.position.z);
+    }
+
     // FixedUpdate removes jitter to Rigidbody movement
     void FixedUpdate()
     {
-        //No current point of interest
+        if (Detatched)
+            return;
         if (target == null)
         {
             if (returning)
@@ -91,7 +132,12 @@ public class CameraController : MonoBehaviour
         float distance = Vector2.Distance(transform.position, target.position);
         var targetPos = Vector2.Lerp(transform.position, target.position, Mathf.Clamp01(radius / distance));
         //Move towards the target point (with smoothing)
-        var newPos = Vector2.SmoothDamp(camera.position, targetPos, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
+        SmoothStep(targetPos, this.snapTime, this.maxSpeed);
+    }
+
+    private void SmoothStep(Vector2 targetPos, float time, float maxSpeed)
+    {
+        var newPos = Vector2.SmoothDamp(camera.position, targetPos, ref currVelocity, time, maxSpeed, Time.fixedDeltaTime);
         camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
     }
 }
