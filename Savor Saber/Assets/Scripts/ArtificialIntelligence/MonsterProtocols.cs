@@ -11,6 +11,7 @@ public class MonsterProtocols : MonoBehaviour
     AIData AiData;
     MonsterBehavior Behaviour;
     MonsterChecks Checks;
+    bool runningCoRoutine = false;
 
     private void Start()
     {
@@ -240,17 +241,33 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Conga()
     {
-        if(Checks.AmLeader())
+        if (Checks.AmLeader())
         {
-            Vector2 pos = Checks.ClosestCreature().transform.position;
+            GameObject near = Checks.ClosestCreature();
+            Vector2 pos = (near == null ? Checks.AverageGroupPosition() : (Vector2)near.transform.position);
             Behaviour.MoveFrom(pos, AiData.Speed);
+        }
+        else if (Checks.specialLeader == null)
+        {
+            if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
         }
         else
         {
-            if (Checks.specialLeader==null) { Checks.BecomeLeader(); };
             GameObject near = Checks.ClosestLeader();
             Vector2 pos = near.transform.position;
             Behaviour.MoveTo(pos, AiData.Speed);
         }
     }
+
+    protected IEnumerator DecideLeader()
+    {
+        runningCoRoutine = true;
+        //Debug.Log("In coroutine and running...");
+        yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
+        //sDebug.Log("... in coroutine and Done");
+        Checks.BecomeLeader();
+        yield return null;
+        runningCoRoutine = false;
+    }
 }
+

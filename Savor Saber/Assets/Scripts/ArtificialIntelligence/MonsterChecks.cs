@@ -107,35 +107,7 @@ public class MonsterChecks : MonoBehaviour
 
         return closestCreature;
     } 
-    /// <summary>
-    /// Checks creatures and returns closest leader
-    /// </summary>
-    /// <returns> Collider2D of closest enemy or friend </returns>
-    public GameObject ClosestLeader()
-    {
-        #region Initialize closest vars
-        float close = closestDistance;
-        GameObject closestCreature = null;
-        #endregion
-        foreach (GameObject Creature in AllCreatures)
-        {
-            #region Check if Creature Deleted
-            if (Creature == null)
-            {
-                continue;
-            }
-            #endregion
-            if (Creature.GetComponent<MonsterChecks>().AmLeader()) { return Creature; }
-            float dist = Vector2.Distance(transform.position, Creature.transform.position);
-            if (dist < close)
-            {
-                close = dist;
-                closestCreature = Creature;
-            }
-        }
 
-        return closestCreature;
-    }
 
     /// <summary>
     /// Checks creatures and returns weakest
@@ -167,7 +139,7 @@ public class MonsterChecks : MonoBehaviour
     }
     
     /// <summary>
-    /// Checks creatures and returns weakest
+    /// Checks creatures and returns the average group position
     /// </summary>
     /// <returns> Collider2D of closest enemy or friend </returns>
     public Vector2 AverageGroupPosition()
@@ -228,9 +200,12 @@ public class MonsterChecks : MonoBehaviour
         return closestDrop;
     }
 
+    #region CONGA LINE FUNCTIONS
     ///Conga Line Functions
-    public bool BecomeLeader()
+    public void BecomeLeader()
     {
+        bool become = true;
+        amLeader = false;
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -239,16 +214,47 @@ public class MonsterChecks : MonoBehaviour
                 continue;
             }
             #endregion
-            if (Creature.GetComponent<MonsterChecks>().amLeader)
+            if (Creature.GetComponent<MonsterChecks>().AmLeader())
             {
+                Debug.Log(Creature.name + " is the Leader of " + this.name);
                 specialLeader = Creature;
-                return false;
+                become = false;
             }
         }
         // no one is a leader, so be the leader
-        amLeader = true;
-        return true;
+        if (become)
+        {
+            Debug.Log(this.name + " is the Leader now!!!");
+            amLeader = true;
+        }
     }
+    /// <summary>
+    /// Checks creatures and returns closest leader
+    /// </summary>
+    /// <returns> Collider2D of closest enemy or friend </returns>
+    public GameObject ClosestLeader()
+    {
+        #region Initialize closest vars
+        float close = closestDistance;
+        #endregion
+        foreach (GameObject Creature in AllCreatures)
+        {
+            #region Check if Creature Deleted
+            if (Creature == null)
+            {
+                continue;
+            }
+            #endregion
+            if (Creature == specialLeader)
+            {
+                amLeader = false;
+                return specialLeader;
+            }
+        }
+        specialLeader = null;
+        return this.gameObject;
+    }
+    #endregion
 
     /// <returns> Count of Enemy and Friend Dictionaries </returns>
     public int NumberOfEnemies()
@@ -287,7 +293,7 @@ public class MonsterChecks : MonoBehaviour
     public void ResetSpecials()
     {
         this.specialTarget = null;
-        this.specialLeader = null;
+        //this.specialLeader = null;
         this.specialPosition = transform.position;
     }
     public bool AmLeader()
