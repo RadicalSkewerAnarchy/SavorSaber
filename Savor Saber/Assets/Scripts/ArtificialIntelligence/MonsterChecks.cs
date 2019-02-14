@@ -31,9 +31,9 @@ public class MonsterChecks : MonoBehaviour
     /// <summary>
     /// Special Targets and Locations
     /// </summary>
-    GameObject specialTarget = null;
+    public GameObject specialTarget = null;
     public GameObject specialLeader = null;
-    Vector2 specialPosition;
+    public Vector2 specialPosition;
     bool amLeader = false;
     bool positionAcquired = false;
     #endregion
@@ -214,10 +214,29 @@ public class MonsterChecks : MonoBehaviour
                 continue;
             }
             #endregion
-            if (Creature.GetComponent<MonsterChecks>().AmLeader())
+            MonsterChecks creatureCheck = Creature.GetComponent<MonsterChecks>();
+            if (creatureCheck.AmLeader())
             {
                 Debug.Log(Creature.name + " is the Leader of " + this.name);
-                specialLeader = Creature;
+                // set leader
+                specialLeader = creatureCheck.specialLeader;
+                // set MY target to my leader
+                this.SetSpecialTarget(creatureCheck.specialTarget);
+                // set my leader's target to ME
+                creatureCheck.SetSpecialTarget(this.gameObject);
+                become = false;
+            }
+            else if (creatureCheck.specialLeader != null && specialTarget == this.gameObject)
+            {
+                // set leader
+                GameObject lead = creatureCheck.specialLeader;
+                creatureCheck = lead.GetComponent<MonsterChecks>();
+                // set leader
+                specialLeader = creatureCheck.specialLeader;
+                // set MY target to my leader
+                //this.SetSpecialTarget(creatureCheck.specialTarget);
+                // set my leader's target to ME
+                creatureCheck.SetSpecialTarget(this.gameObject);
                 become = false;
             }
         }
@@ -226,17 +245,17 @@ public class MonsterChecks : MonoBehaviour
         {
             Debug.Log(this.name + " is the Leader now!!!");
             amLeader = true;
+            specialTarget = this.gameObject;
+            specialLeader = this.gameObject;
         }
     }
     /// <summary>
     /// Checks creatures and returns closest leader
     /// </summary>
-    /// <returns> Collider2D of closest enemy or friend </returns>
     public GameObject ClosestLeader()
     {
-        #region Initialize closest vars
-        float close = closestDistance;
-        #endregion
+        bool foundLeader = false;
+        bool foundSpecial = false;
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -247,12 +266,16 @@ public class MonsterChecks : MonoBehaviour
             #endregion
             if (Creature == specialLeader)
             {
-                amLeader = false;
-                return specialLeader;
+                foundLeader = true;
+            }
+            if (Creature == specialTarget)
+            {
+                foundSpecial = true;
             }
         }
-        specialLeader = null;
-        return this.gameObject;
+        // only return positions if target OR leader are found
+        if (!foundLeader) { specialLeader = null; }
+        return specialTarget;
     }
     #endregion
 
@@ -292,7 +315,7 @@ public class MonsterChecks : MonoBehaviour
     // reset
     public void ResetSpecials()
     {
-        this.specialTarget = null;
+        //this.specialTarget = null;
         //this.specialLeader = null;
         this.specialPosition = transform.position;
     }

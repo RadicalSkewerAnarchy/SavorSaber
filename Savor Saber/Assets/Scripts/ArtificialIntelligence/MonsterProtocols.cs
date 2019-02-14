@@ -244,10 +244,10 @@ public class MonsterProtocols : MonoBehaviour
         if (Checks.AmLeader())
         {
             GameObject near = Checks.ClosestCreature();
-            Vector2 pos = (near == null ? Checks.AverageGroupPosition() : (Vector2)near.transform.position);
-            Behaviour.MoveFrom(pos, AiData.Speed);
+            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f);
         }
-        else if (Checks.specialLeader == null)
+        else if (Checks.specialTarget == null)
         {
             if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
         }
@@ -263,7 +263,7 @@ public class MonsterProtocols : MonoBehaviour
     {
         runningCoRoutine = true;
         //Debug.Log("In coroutine and running...");
-        yield return new WaitForSeconds(Random.Range(0.1f, 0.5f));
+        yield return new WaitForSeconds(Random.Range(0.01f, 0.05f));
         //sDebug.Log("... in coroutine and Done");
         Checks.BecomeLeader();
         yield return null;
