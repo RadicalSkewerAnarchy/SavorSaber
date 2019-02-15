@@ -30,10 +30,19 @@ static class DirectionMethods
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public class UpdatedController : MonoBehaviour
+public class UpdatedController : EntityController
 {
-    [System.NonSerialized]
-    public Direction direction;
+    private Direction _direction;
+    public override Direction Direction
+    {
+        get => _direction;
+        set
+        {
+            _direction = value;
+            animatorBody.SetFloat("Direction", (float)value);
+        }
+    }
+
     //////
     [System.NonSerialized]
     [Range(0f, 1f)]
@@ -123,6 +132,15 @@ public class UpdatedController : MonoBehaviour
         MoveAgent();
         //StopAgent();
         AnimateAgent();
+    }
+
+    public void Stop()
+    {
+        StopDash();
+        StopRunning();
+        rigidBody.velocity = Vector2.zero;
+        animatorBody.SetBool("Moving", false);
+        animatorBody.SetBool("Running", false);
     }
 
     private void CheckForDoubleTaps()
@@ -316,8 +334,7 @@ public class UpdatedController : MonoBehaviour
             //calculates angle based on standard offset from East (1,0)
             if (!freezeDirection && clampedMagnitude >= lastSqrMagnitude)
             {
-                direction = DirectionMethods.FromVec2(movementVector);
-                animatorBody.SetFloat("Direction", (float)direction);
+                Direction = DirectionMethods.FromVec2(movementVector);
             }
         }
         else

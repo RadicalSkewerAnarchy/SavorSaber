@@ -18,6 +18,6 @@ public class DialogBaseEditor : Editor
         {
             return EditorGUILayout.ObjectField(actor, typeof(GameObject), true) as GameObject;
         };
-        dialog.actors.DoGUILayout(valueGUI, () => { dialog.actors.StringAddGUI(ref addStr); }, "Actors", true);
+        dialog.actors.DoGUILayout(valueGUI, () => { dialog.actors.StringAddGUID(ref addStr); }, "Actors", true);
     }
 }

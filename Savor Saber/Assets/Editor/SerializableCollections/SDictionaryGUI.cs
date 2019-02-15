@@ -11,8 +11,19 @@ namespace SerializableCollections
         {
             public delegate T ValueGUI<T>(T value);
             public delegate void AddGUI();
+            public delegate T GetNew<T>();
 
             public static void StringAddGUI<TValue>(this SDictionary<string, TValue> dict, ref string toAdd) where TValue : new()
+            {
+                StringAddGUI(dict, ref toAdd, () => new TValue());
+            }
+
+            public static void StringAddGUID<TValue>(this SDictionary<string, TValue> dict, ref string toAdd)
+            {
+                StringAddGUI(dict, ref toAdd, () => default);
+            }
+
+            private static void StringAddGUI<TValue>(SDictionary<string, TValue> dict, ref string toAdd, GetNew<TValue> getNew)
             {
                 EditorGUILayout.LabelField("New:", GUILayout.Width(45));
                 toAdd = EditorGUILayout.TextField(toAdd);
@@ -20,7 +31,7 @@ namespace SerializableCollections
                 {
                     if (!string.IsNullOrWhiteSpace(toAdd) && !dict.ContainsKey(toAdd))
                     {
-                        dict.Add(toAdd, new TValue());
+                        dict.Add(toAdd, getNew());
                     }
                     toAdd = string.Empty;
                     GUIUtility.keyboardControl = 0;
@@ -36,7 +47,7 @@ namespace SerializableCollections
             {
                 EnumAddGUI(dict, () => default);
             }
-            public delegate T GetNew<T>();
+           
             private static void EnumAddGUI<TKey, TValue>(this SDictionary<TKey, TValue> dict, GetNew<TValue> getNew) where TKey : System.Enum
             {
                 if (EditorGUILayout.DropdownButton(new GUIContent("+"), FocusType.Keyboard))

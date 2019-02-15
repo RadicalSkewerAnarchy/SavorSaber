@@ -105,7 +105,7 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.direction ?? monsterController.direction;
+        Direction direction = playerController?.Direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
@@ -144,7 +144,7 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.direction ?? monsterController.direction;
+        Direction direction = playerController?.Direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetTargetVector(targetVector);
 

@@ -20,13 +20,18 @@ public class TriggerEvent : MonoBehaviour
     }
     private IEnumerator PlayEvent()
     {
-        player.GetComponent<DialogData>().inConversation = true;
+        if (!repeatable)
+            GetComponent<Collider2D>().enabled = false;
+        var plCon = player.GetComponent<UpdatedController>();
+        plCon.enabled = false;
+        plCon.Stop();      
+        int count = 0;
         foreach (var e in events)
         {
-            Debug.Log("Running: " + e.name);
+            Debug.Log("Running event: " + ++count);
             yield return StartCoroutine(e.PlayEvent(player));
         }
-        player.GetComponent<DialogData>().inConversation = false;
+        plCon.enabled = true;
         if (!repeatable)
             Destroy(this);
     }

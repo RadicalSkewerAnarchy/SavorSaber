@@ -13,25 +13,86 @@ MonoBehaviour:
   m_Name: LastSession
   m_EditorClassIdentifier: 
   editorStates:
-  - {fileID: 114521804171097078}
-  saveName: Assets\ScriptableObjects\DialogScenes\AmritaTut1
-  savePath: Assets\ScriptableObjects\DialogScenes\AmritaTut1.asset
+  - {fileID: 114724453550609548}
+  saveName: Assets\ScriptableObjects\DialogScenes\ManaIntro
+  savePath: Assets\ScriptableObjects\DialogScenes\ManaIntro.asset
   livesInScene: 0
   nodes:
-  - {fileID: 114587525750397220}
-  - {fileID: 114710831494952966}
-  - {fileID: 114444641546187348}
-  - {fileID: 114201169013960612}
-  - {fileID: 114605675259702220}
-  - {fileID: 114913468543933654}
-  - {fileID: 114701224665896240}
-  - {fileID: 114508482577680382}
-  - {fileID: 114265563766773618}
-  - {fileID: 114321840117497952}
-  - {fileID: 114873812827704966}
-  - {fileID: 114893647856704118}
-  groups: []
---- !u!114 &114017514124967488
+  - {fileID: 114023492851667494}
+  - {fileID: 114149345660995002}
+  - {fileID: 114930336231459108}
+  - {fileID: 114805382368691110}
+  - {fileID: 114156807261009268}
+  - {fileID: 114770527084207710}
+  - {fileID: 114223077892429262}
+  - {fileID: 114922078172659974}
+  - {fileID: 114849999640094358}
+  - {fileID: 114514759065178214}
+  - {fileID: 114570113156683766}
+  - {fileID: 114236797364374418}
+  - {fileID: 114061326542686668}
+  - {fileID: 114273256075202878}
+  groups:
+  - rect:
+      serializedVersion: 2
+      x: 80.19997
+      y: -132.6
+      width: 1157
+      height: 232
+    title: After Move 1
+    _color: {r: 0, g: 0, b: 1, a: 1}
+  - rect:
+      serializedVersion: 2
+      x: 81.399956
+      y: -383.4
+      width: 1156.4001
+      height: 214
+    title: Before Move
+    _color: {r: 1, g: 0, b: 0.09860468, a: 1}
+  - rect:
+      serializedVersion: 2
+      x: 84.39993
+      y: 135.00003
+      width: 666.9999
+      height: 214.39996
+    title: After Move 2
+    _color: {r: 0, g: 1, b: 0.17437077, a: 1}
+--- !u!114 &114023492851667494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b47af2bc75234d468d7b8273f8f0d88, type: 3}
+  m_Name: Gameflow Start
+  m_EditorClassIdentifier: 
+  position: {x: -531.69995, y: -76.5}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114657695585234562}
+--- !u!114 &114061326542686668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87126bd1293fbd48b368443268e4997, type: 3}
+  m_Name: Set Flag
+  m_EditorClassIdentifier: 
+  position: {x: 1020, y: -360}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114280763515594794}
+  fromPreviousIN: {fileID: 114267123854033912}
+  flagName: ManaIntroMove
+  value: 1
+--- !u!114 &114088747593640780
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43,16 +104,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114265563766773618}
+  body: {fileID: 114570113156683766}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114562174957680534}
+  - {fileID: 114786658438700666}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114022612426173536
+--- !u!114 &114091623469779862
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,16 +125,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114321840117497952}
+  body: {fileID: 114156807261009268}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114208015700769186}
+  - {fileID: 114438029197738068}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114040423877520312
+--- !u!114 &114123407368606444
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,16 +146,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114587525750397220}
+  body: {fileID: 114922078172659974}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114596456263857114}
+  - {fileID: 114364282417173180}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114093990131868676
+--- !u!114 &114129620414201290
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,16 +167,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114321840117497952}
+  body: {fileID: 114156807261009268}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114937144085986424}
+  - {fileID: 114991912971146958}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114201169013960612
+--- !u!114 &114140978615770132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: OUT
+  m_EditorClassIdentifier: 
+  body: {fileID: 114805382368691110}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114614407100102076}
+  side: 2
+  sidePosition: 98
+  sideOffset: 0
+--- !u!114 &114149345660995002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9846b17575a458d45aec9532bc18d459, type: 3}
+  m_Name: Note Start
+  m_EditorClassIdentifier: 
+  position: {x: -540, y: 110}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  extraSize: {x: 300, y: 100}
+  text: "Mana: ...Quite a beast isn't it?\r\nMana: A long time ago, Devourers would
+    try to eat up all that existed on this land.\r\nMana: But in order to survive,
+    the humans created cooking robots to mediate and feed the Gods in their stead.\r\n[Mana
+    turns to Soma, optional: face sprite appears]\r\nMana: That's our role in Ambrosia
+    Kitchen Brigade, of course.\r\nMana: You must be Soma, right? I'm Mana.\r\nMana:
+    Amrita told me you were a new recruit, so I'll be glad to give help if I can as
+    your senior.\r\n[Mana moves down and to the left slightly to give more space for
+    Soma to aim at the Devourer, then they face to the right at Soma]\r\nMana: Say,
+    would you like to see something interesting?\r\nMana: Try feeding the Devourer
+    here.\r\n"
+--- !u!114 &114156807261009268
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,17 +235,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: -60, y: -200}
+  position: {x: 120, y: -110}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114822534401641880}
-  fromPreviousIN: {fileID: 114351156663383540}
+  toNextOUT: {fileID: 114129620414201290}
+  fromPreviousIN: {fileID: 114091623469779862}
   characterName: Character Name
-  text: "Newer model robot, from the look of things. How\u2019s your memory? Do you
-    remember your name?"
-  actor: Amrita
+  text: "That's our role in Ambrosia Kitchen Brigade, of course.\r"
+  actor: Mana
   emotion: 0
---- !u!114 &114204065172282620
+--- !u!114 &114219660757171674
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,79 +256,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114701224665896240}
+  body: {fileID: 114273256075202878}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114767977632649250}
+  - {fileID: 114786658438700666}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114208015700769186
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 114508482577680382}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114022612426173536}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114212653065490230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 114710831494952966}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114617390355803460}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114217804489965984
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114701224665896240}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114636472229796288}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114265563766773618
+--- !u!114 &114223077892429262
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -233,80 +277,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: 576.4, y: 16.4}
+  position: {x: 730, y: -110}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114017514124967488}
-  fromPreviousIN: {fileID: 114767977632649250}
+  toNextOUT: {fileID: 114917116995706876}
+  fromPreviousIN: {fileID: 114399918790632122}
   characterName: Character Name
-  text: What do you need me to do?
-  actor: Soma
-  emotion: 1
---- !u!114 &114321840117497952
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 1200, y: -200}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114093990131868676}
-  fromPreviousIN: {fileID: 114022612426173536}
-  characterName: Character Name
-  text: Hunt them down with your knife (J) and stick their remains with your skewer
-    (K) to collect them.
-  actor: Amrita
+  text: ' Amrita told me you were a new recruit, so your sempai I''d love to help
+    you out'
+  actor: Mana
   emotion: 0
---- !u!114 &114351156663383540
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114201169013960612}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114618262653480548}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114392431664951140
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114893647856704118}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114581353726364536}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114444641546187348
+--- !u!114 &114236797364374418
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,16 +299,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: -383, y: 18}
+  position: {x: 120, y: 150}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114618262653480548}
-  fromPreviousIN: {fileID: 114617390355803460}
+  toNextOUT: {fileID: 114756251319090764}
+  fromPreviousIN: {fileID: 114614407100102076}
   characterName: Character Name
-  text: '...'
-  actor: Soma
+  text: "Say, would you like to see something interesting?\r"
+  actor: Mana
   emotion: 0
---- !u!114 &114479316512272548
+--- !u!114 &114267123854033912
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114061326542686668}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114411681000331636}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114273256075202878
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d87126bd1293fbd48b368443268e4997, type: 3}
+  m_Name: Set Flag
+  m_EditorClassIdentifier: 
+  position: {x: 1030, y: -110}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114219660757171674}
+  fromPreviousIN: {fileID: 114666794894220002}
+  flagName: ManaIntroMove
+  value: 2
+--- !u!114 &114280763515594794
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,16 +360,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114605675259702220}
+  body: {fileID: 114061326542686668}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114888526684611318}
+  - {fileID: 114786658438700666}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114508482577680382
+--- !u!114 &114287832944590360
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,20 +378,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
   m_EditorClassIdentifier: 
-  position: {x: 892, y: -201}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114208015700769186}
-  fromPreviousIN: {fileID: 114562174957680534}
-  characterName: Character Name
-  text: "Let\u2019s start with your main tools. Around here, you\u2019ll see herds
-    of paddlepears, those little green critters."
-  actor: Amrita
-  emotion: 0
---- !u!114 &114519769304712436
+  body: {fileID: 114849999640094358}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114764391544876208}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114334360045994466
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114770527084207710}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114399918790632122}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114364282417173180
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,16 +423,248 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114605675259702220}
+  body: {fileID: 114514759065178214}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114822534401641880}
+  - {fileID: 114123407368606444}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114521804171097078
+--- !u!114 &114399918790632122
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114223077892429262}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114334360045994466}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114411681000331636
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114514759065178214}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114267123854033912}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114438029197738068
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: OUT
+  m_EditorClassIdentifier: 
+  body: {fileID: 114805382368691110}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114091623469779862}
+  side: 2
+  sidePosition: 113.8
+  sideOffset: 0
+--- !u!114 &114514759065178214
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 710, y: -360}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114411681000331636}
+  fromPreviousIN: {fileID: 114364282417173180}
+  characterName: Character Name
+  text: "But in order to survive, the humans created cooking robots to mediate and
+    feed the Gods in their stead.\r"
+  actor: Mana
+  emotion: 0
+--- !u!114 &114570113156683766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 440, y: 150}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114088747593640780}
+  fromPreviousIN: {fileID: 114873237142957808}
+  characterName: Character Name
+  text: "Try feeding the Devourer here.\r"
+  actor: Mana
+  emotion: 0
+--- !u!114 &114588235224017854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Default Branch
+  m_EditorClassIdentifier: 
+  body: {fileID: 114805382368691110}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114630017765291944}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114614407100102076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114236797364374418}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114140978615770132}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114630017765291944
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114849999640094358}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114588235224017854}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114657695585234562
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114023492851667494}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114717784133857804}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114666794894220002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114273256075202878}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114917116995706876}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114717784133857804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114805382368691110}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114657695585234562}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114724453550609548
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -405,31 +678,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   parentEditor: {fileID: 0}
-  selectedNode: {fileID: 114893647856704118}
-  panOffset: {x: -1137.2001, y: 68.600006}
-  zoom: 1.2
---- !u!114 &114562174957680534
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114508482577680382}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114017514124967488}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114581353726364536
+  selectedNode: {fileID: 114273256075202878}
+  panOffset: {x: -560.19995, y: -132}
+  zoom: 1.6
+--- !u!114 &114756251319090764
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -441,32 +693,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114873812827704966}
+  body: {fileID: 114236797364374418}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114392431664951140}
+  - {fileID: 114873237142957808}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114587525750397220
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b47af2bc75234d468d7b8273f8f0d88, type: 3}
-  m_Name: Gameflow Start
-  m_EditorClassIdentifier: 
-  position: {x: -597.5, y: -202.5}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114040423877520312}
---- !u!114 &114596456263857114
+--- !u!114 &114764391544876208
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,16 +714,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114710831494952966}
+  body: {fileID: 114922078172659974}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114040423877520312}
+  - {fileID: 114287832944590360}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114605675259702220
+--- !u!114 &114770527084207710
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -499,16 +735,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: -61, y: 18}
+  position: {x: 420, y: -110}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114479316512272548}
-  fromPreviousIN: {fileID: 114519769304712436}
+  toNextOUT: {fileID: 114334360045994466}
+  fromPreviousIN: {fileID: 114991912971146958}
   characterName: Character Name
-  text: Soma.
-  actor: Soma
+  text: You must be Soma, right? I'm Mana.
+  actor: Mana
   emotion: 0
---- !u!114 &114617390355803460
+--- !u!114 &114786658438700666
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -520,16 +756,88 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114444641546187348}
+  body: {fileID: 114930336231459108}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114212653065490230}
+  - {fileID: 114280763515594794}
+  - {fileID: 114219660757171674}
+  - {fileID: 114088747593640780}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114618262653480548
+--- !u!114 &114805382368691110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d272a38b9015334288766e9538f3b4d, type: 3}
+  m_Name: Gameflow Branch
+  m_EditorClassIdentifier: 
+  position: {x: -320, y: -140}
+  dynamicConnectionPorts:
+  - {fileID: 114140978615770132}
+  - {fileID: 114438029197738068}
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  fromPreviousIN: {fileID: 114717784133857804}
+  toDefaultBranch: {fileID: 114588235224017854}
+  cases:
+  - connection: {fileID: 114140978615770132}
+    pattern: 1
+    type: 0
+  - connection: {fileID: 114438029197738068}
+    pattern: 2
+    type: 0
+  exprType: 0
+  variableName: ManaIntroMove
+--- !u!114 &114849999640094358
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 110, y: -360}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114287832944590360}
+  fromPreviousIN: {fileID: 114630017765291944}
+  characterName: Character Name
+  text: "...Quite a beast isn't it?\r"
+  actor: Mana
+  emotion: 0
+--- !u!114 &114873237142957808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114570113156683766}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114756251319090764}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114917116995706876
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -541,37 +849,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114444641546187348}
+  body: {fileID: 114223077892429262}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114351156663383540}
+  - {fileID: 114666794894220002}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114636472229796288
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 114913468543933654}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114217804489965984}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114701224665896240
+--- !u!114 &114922078172659974
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -583,123 +870,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: 570, y: -200}
+  position: {x: 410, y: -360}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114204065172282620}
-  fromPreviousIN: {fileID: 114217804489965984}
+  toNextOUT: {fileID: 114123407368606444}
+  fromPreviousIN: {fileID: 114764391544876208}
   characterName: Character Name
-  text: "I\u2019m sorry to throw you into action so quickly. These days, we can\u2019t
-    afford to wait."
-  actor: Amrita
+  text: "A long time ago, Devourers would try to eat up all that existed on this land.\r"
+  actor: Mana
   emotion: 0
---- !u!114 &114710831494952966
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -380, y: -200}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114212653065490230}
-  fromPreviousIN: {fileID: 114596456263857114}
-  characterName: Character Name
-  text: Wow, Mana actually pulled it off. I thought you were beyond repair.
-  actor: Amrita
-  emotion: 0
---- !u!114 &114767977632649250
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114265563766773618}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114204065172282620}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114822534401641880
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 114201169013960612}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114519769304712436}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114873812827704966
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 1494.4, y: -202.4}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114581353726364536}
-  fromPreviousIN: {fileID: 114937144085986424}
-  characterName: Character Name
-  text: Bring me three paddlepear slices, and once we know you can still hunt, we
-    can move on to the next test.
-  actor: Amrita
-  emotion: 0
---- !u!114 &114888526684611318
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 114913468543933654}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 114479316512272548}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &114893647856704118
+--- !u!114 &114930336231459108
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -711,33 +891,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05d26699c2c95e43a8c82b5f9c2f141, type: 3}
   m_Name: Gameflow End
   m_EditorClassIdentifier: 
-  position: {x: 1800, y: -200}
+  position: {x: 1341.6001, y: 241.2}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  fromPreviousIN: {fileID: 114392431664951140}
---- !u!114 &114913468543933654
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 262, y: -198}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114636472229796288}
-  fromPreviousIN: {fileID: 114888526684611318}
-  characterName: Character Name
-  text: "Didn\u2019t even hesitate. Good. Seems like your memory and speech protocols
-    are in working order, so what do you say we test your primary functions?"
-  actor: Amrita
-  emotion: 1
---- !u!114 &114937144085986424
+  fromPreviousIN: {fileID: 114786658438700666}
+--- !u!114 &114991912971146958
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -749,12 +907,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114873812827704966}
+  body: {fileID: 114770527084207710}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114093990131868676}
+  - {fileID: 114129620414201290}
   side: 4
   sidePosition: 30
   sideOffset: 0
