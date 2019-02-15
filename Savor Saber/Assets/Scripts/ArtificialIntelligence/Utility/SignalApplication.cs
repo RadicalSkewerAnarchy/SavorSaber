@@ -33,6 +33,8 @@ public class SignalApplication : MonoBehaviour
     // Game object of who made this
     GameObject signalMaker = null;
 
+    Animator AnimationBody;
+
     // Constructor
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
@@ -55,6 +57,7 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
+        AnimationBody = GetComponent<Animator>();
         //Debug.Log("signal with radius = " + interactRadius);
     }
 
