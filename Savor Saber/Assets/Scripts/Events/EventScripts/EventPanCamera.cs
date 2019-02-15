@@ -23,8 +23,7 @@ public class EventPanCamera : EventScript
         switch (movementType)
         {
             case MoveType.Smoothed:
-                cam.MoveToPointSmooth(target.transform.position, maxPullSpeed, snapTime);
-                yield return new WaitForSeconds(snapTime + Time.fixedDeltaTime);
+                yield return StartCoroutine(cam.MoveToPointSmoothCr(target.transform.position, maxPullSpeed, snapTime));
                 break;
             case MoveType.Linear:
                 yield return StartCoroutine(cam.MoveToPointLinearCr(target.transform.position, maxPullSpeed/100));

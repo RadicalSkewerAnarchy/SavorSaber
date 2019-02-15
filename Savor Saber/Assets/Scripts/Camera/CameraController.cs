@@ -57,26 +57,18 @@ public class CameraController : MonoBehaviour
     {
         while (Vector2.Distance(camera.position, point) > speed * Time.fixedDeltaTime)
         {
-            Debug.Log(Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
             var newPos = Vector2.MoveTowards(camera.position, point, speed * Time.fixedDeltaTime);
             camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
         }
         camera.position = new Vector3(point.x, point.y, camera.position.z);
     }
-    public void MoveToPointSmooth(Vector2 point, float maxSpeed, float snapTime)
-    {
-        Detatched = true;
-        StartCoroutine(MoveToPointSmoothCr(point, maxSpeed, snapTime));
-    }
-    private IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
+    public IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
     {
         Vector2 currVelocity = Vector2.zero;
-        float currTime = 0f;
-        while(currTime <= snapTime)
+        while (Vector2.Distance(camera.position, point) > 0.01f)
         {
             yield return new WaitForFixedUpdate();
-            currTime += Time.fixedDeltaTime;
             var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
             camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
         }

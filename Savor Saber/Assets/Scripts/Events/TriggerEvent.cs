@@ -27,5 +27,7 @@ public class TriggerEvent : MonoBehaviour
             yield return StartCoroutine(e.PlayEvent(player));
         }
         player.GetComponent<DialogData>().inConversation = false;
+        if (!repeatable)
+            Destroy(this);
     }
 }

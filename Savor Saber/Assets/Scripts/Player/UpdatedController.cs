@@ -192,8 +192,10 @@ public class UpdatedController : MonoBehaviour
         dashCurrTime = 0;
         dashing = false;
         animatorBody.SetBool("Dashing", false);
-        run = StartCoroutine(runCR());
-        rechargeDashes = StartCoroutine(rechargeDashesCR());
+        if(run == null)
+            run = StartCoroutine(runCR());
+        if(rechargeDashes == null)
+            rechargeDashes = StartCoroutine(rechargeDashesCR());
         dashVector = Vector2.zero;
     }
 
