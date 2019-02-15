@@ -173,7 +173,11 @@ public class UpdatedController : MonoBehaviour
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         animatorBody.SetBool("Dashing", true);
         if(rechargeDashes != null)
+        {
             StopCoroutine(rechargeDashes);
+            rechargeDashes = null;
+        }
+            
     }
 
     private void Dash()
@@ -208,6 +212,7 @@ public class UpdatedController : MonoBehaviour
             if(debugText != null)
                 debugText.text = "Dashes: " + currDashes;
         }
+        rechargeDashes = null;
     }
 
     private IEnumerator runCR()
@@ -220,13 +225,17 @@ public class UpdatedController : MonoBehaviour
             yield return new WaitForFixedUpdate();
             currRunSpeed += accelrationAmount;
         }
+        run = null;
     }
 
     private void StopRunning()
     {
         running = false;
         if(run != null)
+        {
             StopCoroutine(run);
+            run = null;           
+        }          
     }
 
     private Vector2 GetMovementVector()
