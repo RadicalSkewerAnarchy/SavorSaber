@@ -186,7 +186,7 @@ public class MonsterBehavior : MonoBehaviour
 
     public bool RangedAttack(Vector2 target, float speed)
     {
-        Debug.Log("I am rangedAttack");
+        //Debug.Log("I am rangedAttack");
         if (!isAttacking)
         {
             AiData.currentBehavior = AIData.Behave.Attack;
@@ -198,7 +198,7 @@ public class MonsterBehavior : MonoBehaviour
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;
             isAttacking = true;
-            Debug.Log("isAttacking is: " + isAttacking);
+            //Debug.Log("isAttacking is: " + isAttacking);
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             
         }

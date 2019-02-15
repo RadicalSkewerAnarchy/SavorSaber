@@ -138,7 +138,7 @@ public class SignalApplication : MonoBehaviour
     // signal that needs to be applied
     private void Apply(GameObject g, AIData data)
     {
-        Debug.Log("Applying signal to " + g);
+        //Debug.Log("Applying signal to " + g);
         //modification
         foreach (string key in moodMod.Keys)
         {
