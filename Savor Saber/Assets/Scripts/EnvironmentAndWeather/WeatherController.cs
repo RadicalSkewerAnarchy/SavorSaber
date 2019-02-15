@@ -51,6 +51,8 @@ public class WeatherController : MonoBehaviour
         _weather = w;
         StartCoroutine(crossFadeWeather(weatherObj, next, fadeTime, intensity));       
     }
+    /// <summary> ONLY FOR HACKY EVENTS> DO NOT CALL. </summary>
+    public void SetWeather(int type) => SetWeather((WeatherType)type, 0.5f);
 
     private IEnumerator crossFadeWeather(Weather curr, Weather next, float time, float goalIntensity)
     {
