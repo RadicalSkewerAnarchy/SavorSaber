@@ -115,7 +115,7 @@ public class DialogSpeechBubbles : BaseDialog
         while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
         {
             dialogText.text += lineOfText[letter];
-            Debug.Log(lineOfText[letter]);
+            //Debug.Log(lineOfText[letter]);
             letter++;
             yield return new WaitForSeconds(typeSpeed);
         }

@@ -20,6 +20,6 @@ public class DialogDataEditor : Editor
 
         dialogData.portraitDictionary.DoGUILayout(valGUI, dialogData.portraitDictionary.EnumAddGUIVal, "Portraits", true);
 
-        EditorUtils.SetSceneDirtyIfGUIChanged();
+        EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }
 }

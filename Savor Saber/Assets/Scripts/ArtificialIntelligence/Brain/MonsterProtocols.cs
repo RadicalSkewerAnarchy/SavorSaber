@@ -68,8 +68,6 @@ public class MonsterProtocols : MonoBehaviour
         }       
     }
 
-
-
     public void Ranged()
     {
         #region Get Nearest + Null Check
@@ -95,8 +93,6 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-
-
     public void Lazy()
     {             
         // idle
@@ -109,8 +105,6 @@ public class MonsterProtocols : MonoBehaviour
             Checks.ResetSpecials();
         }
     }
-
-
 
     // checks if their are enemies, then attempts to attack
     // if attack cannot happen, becomes lazy
@@ -181,8 +175,6 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-
-
     // plants currently not implemented
     public void Feast()
     {
@@ -213,8 +205,6 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-
-
     // fear signal check needed
     public void Console()
     {
@@ -229,10 +219,11 @@ public class MonsterProtocols : MonoBehaviour
 
     public void Runaway()
     {
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.GetRandomPositionType();
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        Vector2 pos = GetComponent<AIData>().Enemies[0].transform.position;//Checks.GetRandomPositionType();
         #endregion
-        if(Behaviour.MoveFrom(pos, AiData.Speed, 1f))
+        if(Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
             Checks.ResetSpecials();
         }
@@ -257,6 +248,11 @@ public class MonsterProtocols : MonoBehaviour
             Vector2 pos = near.transform.position;
             Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
+    }
+
+    public void Wander()
+    {
+
     }
 
     protected IEnumerator DecideLeader()

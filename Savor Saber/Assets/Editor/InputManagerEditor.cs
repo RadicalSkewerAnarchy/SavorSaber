@@ -18,6 +18,6 @@ public class InputManagerEditor : Editor
             return EditorGUILayout.ObjectField(c, typeof(ControlProfile), false) as ControlProfile;
         };
         i.controlProfiles.DoGUILayout(valGUI, () => i.controlProfiles.StringAddGUI(ref addStr), "Profiles", true);
-        EditorUtils.SetSceneDirtyIfGUIChanged();
+        EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }
 }

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using SerializableCollections;
 using UnityEditor.SceneManagement;
+using UnityEditor.Experimental.SceneManagement;
 
 /// <summary>
 /// A static class containingsome editor methods for easy GUI utility
@@ -23,9 +24,18 @@ public static class EditorUtils
             return new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold };
         }
     }
-    public static void SetSceneDirtyIfGUIChanged()
+    public static void SetSceneDirtyIfGUIChanged(Object target)
     {
-        if (GUI.changed && !EditorApplication.isPlayingOrWillChangePlaymode)
-            EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+        if (GUI.changed)
+        {
+            if(!EditorApplication.isPlayingOrWillChangePlaymode)
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            var prefabStage = PrefabStageUtility.GetCurrentPrefabStage();
+            if (prefabStage != null)
+            {
+                EditorSceneManager.MarkSceneDirty(prefabStage.scene);
+            }
+        }
+            
     }
 }

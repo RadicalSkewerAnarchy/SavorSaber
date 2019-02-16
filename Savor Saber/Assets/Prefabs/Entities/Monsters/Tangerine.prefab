@@ -56,7 +56,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -481,10 +481,10 @@ MonoBehaviour:
   maxHealth: 6
   health: 6
   PartySize: 2
-  fear: 0.63
-  hunger: 0.5
-  hostility: 0.21
-  friendliness: 0.63
+  initialFear: 0
+  initialHunger: 0
+  initialHostility: 0
+  initialFriendliness: 0
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -538,6 +538,9 @@ MonoBehaviour:
   Enemies: []
   AllCreatures: []
   AllDrops: []
+  specialTarget: {fileID: 0}
+  specialLeader: {fileID: 0}
+  specialPosition: {x: 0, y: 0}
 --- !u!114 &5790457105946965403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -553,6 +556,9 @@ MonoBehaviour:
   ActionTimer: 0
   ActionTimerReset: 10
   ActionTimerVariance: 2
+  ResetTimer: 0
+  ResetTimerReset: 0
+  ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
   projectile: {fileID: 0}
   attackDuration: 1

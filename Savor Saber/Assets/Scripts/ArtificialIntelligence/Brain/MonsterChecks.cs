@@ -218,7 +218,7 @@ public class MonsterChecks : MonoBehaviour
             MonsterChecks creatureCheck = Creature.GetComponent<MonsterChecks>();
             if (creatureCheck.AmLeader())
             {
-                Debug.Log(Creature.name + " is the Leader of " + this.name);
+                //Debug.Log(Creature.name + " is the Leader of " + this.name);
                 // set leader
                 specialLeader = creatureCheck.specialLeader;
                 // set MY target to my leader
@@ -244,7 +244,7 @@ public class MonsterChecks : MonoBehaviour
         // no one is a leader, so be the leader
         if (become)
         {
-            Debug.Log(this.name + " is the Leader now!!!");
+            //Debug.Log(this.name + " is the Leader now!!!");
             amLeader = true;
             specialTarget = this.gameObject;
             specialLeader = this.gameObject;

@@ -24,6 +24,6 @@ public class WeatherControllerEditor : Editor
             return EditorGUILayout.ObjectField(data, typeof(WeatherData), false) as WeatherData;
         };
         w.weatherData.DoGUILayout(valGUI, w.weatherData.EnumAddGUI, "Weather Data", true);
-        EditorUtils.SetSceneDirtyIfGUIChanged();
+        EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }
 }

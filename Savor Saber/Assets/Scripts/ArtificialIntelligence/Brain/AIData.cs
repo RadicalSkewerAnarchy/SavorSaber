@@ -57,7 +57,7 @@ public class AIData : CharacterData
     [SerializeField]
     public float DecisionTimer;
     [SerializeField]
-    [Range(5f, 15f)]
+    [Range(0.25f, 15f)]
     public float DecisionTimerReset = 10f;
     [SerializeField]
     [Range(0f, 4f)]
@@ -94,38 +94,39 @@ public class AIData : CharacterData
 
     private void Start()
     {
+        //Init moods and other CharacterData stuff
+        InitializeCharacterData();        
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
+        //Initalize the values availible to Utility curves
+        InitializeNormalValues();
         //Behavior.UpdateSpeed(speed);
-        // set mood values into dictionary
-        moods.Add("Fear", fear);
-        moods.Add("Hunger", hunger);
-        moods.Add("Hostility", hostility);
-        moods.Add("Friendliness", friendliness);
-
-        _values = new Dictionary<string, GetNormalValue>()
-        {
-            {"Fear", () => {return moods["Fear"]; } },
-            {"Hunger", () => {return moods["Hunger"]; } },
-            {"Hostility", () => {return moods["Hostility"]; } },
-            {"Friendliness", () => {return moods["Friendliness"]; } },
-            {"PlayerDistance", () => { return 1; } }, // DEBUG
-            {"FireDistance", () => {return 1; } }, //DEBUG
-            {"Health", () => {return Normal(health, maxHealth); } }
-        };
 
         _vectors = new Dictionary<string, Vector2> {
             {"Player", new Vector2(0f, 0f) }
         };
-
         // Naming for future creature tracking
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
 
+    protected void InitializeNormalValues()
+    {
+        _values = new Dictionary<string, GetNormalValue>()
+        {
+            {"Fear", () => moods["Fear"] },
+            {"Hunger", () => moods["Hunger"] },
+            {"Hostility", () => moods["Hostility"] },
+            {"Friendliness", () => moods["Friendliness"] },
+            {"EnemyDistance", () => Normalize(Vector2.Distance(transform.position, Enemies[0].transform.position), Perception) },
+            {"Health", () => NormalizeInt(health, maxHealth) }
+        };
+    }
+
     private void LateUpdate()
     {
+        Debug.Log(moods["Friendliness"]);
         // check current state
         // acquire necessary data
         // act on current state
@@ -206,7 +207,11 @@ public class AIData : CharacterData
 
     }
 
-    public float Normal(int now, int max)
+    public float Normalize(float now, float max)
+    {
+        return now / max;
+    }
+    public float NormalizeInt(int now, int max)
     {
         return now / (float)max;
     }

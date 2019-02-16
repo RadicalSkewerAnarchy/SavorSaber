@@ -19,12 +19,6 @@ public class UtilityCurves : MonoBehaviour
         data = GetComponent<AIData>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        // nothing
-    }
-
     /// <summary>
     /// 
     /// </summary>

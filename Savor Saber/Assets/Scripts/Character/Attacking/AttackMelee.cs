@@ -94,7 +94,7 @@ public class AttackMelee : AttackBase
             }
             else if(activeAttack.CanBeCanceled && activeAttack.CancelPriority <= CancelPriority)
             {
-                Debug.Log("Cancelling into" + this.ToString());
+                //Debug.Log("Cancelling into" + this.ToString());
                 activeAttack.Cancel();
                 RecalculatePosition();
                 Attack();

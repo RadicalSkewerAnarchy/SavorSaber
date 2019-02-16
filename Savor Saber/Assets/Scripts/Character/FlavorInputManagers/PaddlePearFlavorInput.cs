@@ -32,8 +32,12 @@ public class PaddlePearFlavorInput : FlavorInputManager
         {
             spriteRenderer.color = Color.red;
             DamageOverTime(2 * flavorCountDictionary[RecipeData.Flavors.Spicy], dotTicLength);
-            //when a status effect is applied, reset the dictionary to avoid massive buildup
-            ResetDictionary();
+            //Only reset the spicy stat or else no other stats will work
+            flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
+        }
+        if(flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
+        {
+            characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
         }
 
 

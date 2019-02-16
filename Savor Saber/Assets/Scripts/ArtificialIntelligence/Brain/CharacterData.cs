@@ -28,31 +28,34 @@ public class CharacterData : MonoBehaviour
     #endregion
     #region Moods
     [Range(0f, 1f)]
-    public float fear;
+    [SerializeField] protected float initialFear;
     [Range(0f, 1f)]
-    public float hunger;
+    [SerializeField] protected float initialHunger;
     [Range(0f, 1f)]
-    public float hostility;
+    [SerializeField] protected float initialHostility;
     [Range(0f, 1f)]
-    public float friendliness;
-
+    [SerializeField] protected float initialFriendliness;
     public Dictionary<string, float> moods = new Dictionary<string, float>();
     #endregion
 
     void Start()
     {
+        InitializeCharacterData();
+    }
+
+    protected void InitializeCharacterData()
+    {
         // set mood values into dictionary
         #region Mood Value Setup
-        moods.Add("Fear", fear);
-        moods.Add("Hunger", hunger);
-        moods.Add("Hostility", hostility);
-        moods.Add("Friendliness", friendliness);
+        moods.Add("Fear", initialFear);
+        moods.Add("Hunger", initialHunger);
+        moods.Add("Hostility", initialHostility);
+        moods.Add("Friendliness", initialFriendliness);
         #endregion
-        // Variable instantiated variance
-
         Spawn = transform.position;
     }
 
+    #region Respawning (Move to player-specific child class)
     private void Update()
     {
         if(health <= 0)
@@ -63,7 +66,6 @@ public class CharacterData : MonoBehaviour
             }            
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Respawn")
@@ -80,4 +82,5 @@ public class CharacterData : MonoBehaviour
         transform.position = Spawn;
         health = maxHealth;
     }
+    #endregion
 }

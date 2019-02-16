@@ -41,6 +41,6 @@ public class UtilityCurvesEditor : Editor
             return dict;
         };
         data.macroValues.DoGUILayout(macroValueGUI, macroAddGUI, "Macro Values");
-        EditorUtils.SetSceneDirtyIfGUIChanged();
+        EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }
 }
