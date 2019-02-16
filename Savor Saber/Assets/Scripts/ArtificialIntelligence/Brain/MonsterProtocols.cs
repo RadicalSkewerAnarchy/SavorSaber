@@ -11,6 +11,7 @@ public class MonsterProtocols : MonoBehaviour
     AIData AiData;
     MonsterBehavior Behaviour;
     MonsterChecks Checks;
+    bool runningCoRoutine = false;
 
     private void Start()
     {
@@ -39,11 +40,11 @@ public class MonsterProtocols : MonoBehaviour
     public void Melee()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
+        var weakest = Checks.WeakestCreature();
         Vector2 pos;
-        if (nearestEnemy != null)
+        if (weakest != null)
         {
-            pos = nearestEnemy.gameObject.transform.position;
+            pos = weakest.transform.position;
         }
         else
         {
@@ -105,6 +106,7 @@ public class MonsterProtocols : MonoBehaviour
             Checks.AwareHowMany();
             // reset action timer
             Behaviour.ResetActionTimer();
+            Checks.ResetSpecials();
         }
     }
 
@@ -130,16 +132,7 @@ public class MonsterProtocols : MonoBehaviour
     public void Party()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
-        {
-            pos = nearestEnemy.gameObject.transform.position;
-        }
-        else
-        {
-            pos = transform.position;
-        }
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
         // move to
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
@@ -149,6 +142,7 @@ public class MonsterProtocols : MonoBehaviour
             {
                 // reset action timer
                 Behaviour.ResetActionTimer();
+                Checks.ResetSpecials();
             }
         }       
     }
@@ -166,16 +160,7 @@ public class MonsterProtocols : MonoBehaviour
         var numFriends = AiData.Checks.NumberOfFriends();
         var numEnemies = AiData.Checks.NumberOfEnemies();
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
-        {
-            pos = nearestEnemy.gameObject.transform.position;
-        }
-        else
-        {
-            pos = transform.position;
-        }
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
 
 
@@ -235,24 +220,54 @@ public class MonsterProtocols : MonoBehaviour
     {
         if(AiData.Checks.NumberOfFriends() > 0)
         {
-            Behaviour.Socialize();            
+            if(Behaviour.Socialize())
+            {
+                Checks.ResetSpecials();
+            }
         }
     }
 
     public void Runaway()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
+        Vector2 pos = Checks.GetRandomPositionType();
+        #endregion
+        if(Behaviour.MoveFrom(pos, AiData.Speed, 1f))
         {
-            pos = nearestEnemy.gameObject.transform.position;
+            Checks.ResetSpecials();
+        }
+    }
+
+    public void Conga()
+    {
+        if (Checks.AmLeader())
+        {
+            GameObject near = Checks.ClosestCreature();
+            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            //Vector2 pos = Checks.AverageGroupPosition();
+            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f, 1f);
+        }
+        else if (Checks.specialTarget == null)
+        {
+            if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
         }
         else
         {
-            pos = transform.position;
+            GameObject near = Checks.ClosestLeader();
+            Vector2 pos = near.transform.position;
+            Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
-        #endregion
-        Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold);
+    }
+
+    protected IEnumerator DecideLeader()
+    {
+        runningCoRoutine = true;
+        //Debug.Log("In coroutine and running...");
+        yield return new WaitForSeconds(Random.Range(0.01f, 0.05f));
+        //sDebug.Log("... in coroutine and Done");
+        Checks.BecomeLeader();
+        yield return null;
+        runningCoRoutine = false;
     }
 }
+

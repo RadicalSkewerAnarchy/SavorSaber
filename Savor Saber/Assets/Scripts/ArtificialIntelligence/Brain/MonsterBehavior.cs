@@ -18,9 +18,14 @@ public class MonsterBehavior : MonoBehaviour
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
+    public float ResetTimer;
+    public float ResetTimerReset;
+    public float ResetTimerVariance;
+    bool left = false;
 
     // biases
-    private float biasAngle = 45f;
+    private float biasAngle = 15f;
+    private float biasAngleMod;
     private float biasMovementAngle;
 
     #region Attacking
@@ -70,8 +75,24 @@ public class MonsterBehavior : MonoBehaviour
         ActionTimer = -1f;
         ActionTimerReset = 5f;
         ActionTimerVariance = 2f;
+        ResetTimer = -1f;
+        ResetTimerReset = 6f;
+        ResetTimerVariance = 2f;
 
         ResetMovementBias();
+    }
+
+    private void Update()
+    {
+        if (ResetTimer < 0)
+        {
+            ResetMovementBias();
+            ResetTimer = ResetTimerReset + Random.Range(-ResetTimerVariance, ResetTimerVariance);
+        }
+        else
+        {
+            ResetTimer -= Time.deltaTime;
+        }
     }
 
     /// <summary>
@@ -111,7 +132,6 @@ public class MonsterBehavior : MonoBehaviour
         // at target
         if (Vector2.Distance(current, target) <= threshold)
         {
-            ResetMovementBias();
             return true;
         }
         else
@@ -140,6 +160,9 @@ public class MonsterBehavior : MonoBehaviour
         {
             // move towards target
             AnimatorBody.Play("Move");
+            // random rotation of target around current
+            //     based on bias of movement
+            //target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             //left = (target.x < 0) ? true : false;
@@ -246,13 +269,17 @@ public class MonsterBehavior : MonoBehaviour
     // reset action timer
     public void ResetActionTimer()
     {
+        ResetMovementBias();
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
 
     // resest movement bias
     public void ResetMovementBias()
     {
-        biasMovementAngle = Random.Range(-biasAngle, biasAngle);
+        biasAngleMod = Random.Range(-2f, 2f);
+        float bR = Mathf.Pow(2f, biasAngleMod);
+        float bL = Mathf.Pow(2f, -biasAngleMod);
+        biasMovementAngle = Random.Range(-biasAngle * bL, biasAngle * bR);
     }
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
