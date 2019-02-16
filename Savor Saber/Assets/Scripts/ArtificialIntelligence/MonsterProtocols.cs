@@ -245,6 +245,7 @@ public class MonsterProtocols : MonoBehaviour
         {
             GameObject near = Checks.ClosestCreature();
             Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            //Vector2 pos = Checks.AverageGroupPosition();
             Behaviour.MoveFrom(pos, AiData.Speed / 1.5f);
         }
         else if (Checks.specialTarget == null)

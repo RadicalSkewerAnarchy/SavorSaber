@@ -209,7 +209,7 @@ public class MonsterChecks : MonoBehaviour
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
-            if (Creature == null)
+            if (Creature == null || Creature.tag == "Player")
             {
                 continue;
             }
