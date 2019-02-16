@@ -91,7 +91,8 @@ public class SignalApplication : MonoBehaviour
         GameObject go = collision.gameObject;
 
         string sm = (signalMaker != null ? signalMaker.name : "null character" );
-        //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
+        if(interactRadius < 5)
+            Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
         // check tags
         if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
@@ -138,7 +139,7 @@ public class SignalApplication : MonoBehaviour
     // signal that needs to be applied
     private void Apply(GameObject g, AIData data)
     {
-        Debug.Log("Applying signal to " + g);
+        //Debug.Log("Applying signal to " + g);
         //modification
         foreach (string key in moodMod.Keys)
         {

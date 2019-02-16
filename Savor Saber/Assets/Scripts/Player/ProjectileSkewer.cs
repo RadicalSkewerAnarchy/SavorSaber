@@ -49,17 +49,12 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-<<<<<<< HEAD
-        //if it has a flavor dictionary (i.e. uncooked, regular attack)
-        if (flavorCountDictionary != null)
-=======
         //attack radius is set by the amount of Savory/Umami on the skewer
         if(flavorCountDictionary != null)
         {
             attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
         }
         else
->>>>>>> jonahVerticalSlicePrep
         {
             attackRadius = 2.5f;
         }
