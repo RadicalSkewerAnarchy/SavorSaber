@@ -61,7 +61,7 @@ public class DialogSpeechBubbles : BaseDialog
             dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
             dialogBox.transform.SetParent(UICanvas.transform);
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
-            dialogBox.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             dialogText = dialogBox.GetComponentInChildren<Text>();
             //set dialog box portrait
             Transform portrait = dialogBox.transform.GetChild(1);
