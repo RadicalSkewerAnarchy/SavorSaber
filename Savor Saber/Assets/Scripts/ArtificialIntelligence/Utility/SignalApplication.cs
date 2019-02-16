@@ -146,7 +146,12 @@ public class SignalApplication : MonoBehaviour
     private void Apply(GameObject g, AIData data)
     {
         //Debug.Log("Applying signal to " + g);
-        //modification
+        //modification  
+        #region SignalAnimations
+        string mood = null;
+        float mostInfluential = 0;
+        int sign = 0;
+        #endregion
         foreach (string key in moodMod.Keys)
         {
             // using the keys, change the values
@@ -154,6 +159,7 @@ public class SignalApplication : MonoBehaviour
             float mod = moodMod[key];
             if (mod != 0)
             {
+                if(Mathf.Abs(mod) > Mathf.Abs(mostInfluential)) { mostInfluential = mod; mood = key; sign = (int)(mod / Mathf.Abs(mod)); }
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
@@ -161,14 +167,58 @@ public class SignalApplication : MonoBehaviour
             }
         }
         //change middle argument based on creatures offset
-        // var child = Instantiate(ChildAnimationAgent, g.transform.position + new Vector3(0f, 1.2f, 0f), Quaternion.identity);
-        //child.GetComponent<SignalAnimationChild>().EndAnimationAfterEnd();
-        // StartCoroutine(EndAnimationAfterEnd(child));
+        GameObject child = null;
+        SignalAnimator(mostInfluential, mood, sign, child, g);
         // child.GetComponent<Animator>().Play("FearUpAnimation");
-        // StartCoroutine()
+
         // set decision timer to 0
         // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
         // data.ManualDecision();
     }
-    
+    private void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent)
+    {
+        emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0f, 1.2f, 0f), Quaternion.identity, parent.transform);
+        //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
+        if(sign > 0)
+        {
+            if (mood == "Friendliness")
+            {
+                Debug.Log("Setting animation to friendly");
+                emoter.GetComponent<Animator>().Play("FriendUpAnimation");
+            }
+            else if (mood == "Hostility")
+            {
+                emoter.GetComponent<Animator>().Play("HostilityUpAnimation");
+            }
+            else if (mood == "Fear")
+            {
+                emoter.GetComponent<Animator>().Play("FearUpAnimation");
+            }
+            else if (mood == "Hunger")
+            {
+                emoter.GetComponent<Animator>().Play("HungerUpAnimation");
+            }
+        }
+        else if(sign < 0)
+        {
+            if (mood == "Friendliness")
+            {
+                emoter.GetComponent<Animator>().Play("FriendDownAnimation");
+            }
+            else if (mood == "Hostility")
+            {
+                emoter.GetComponent<Animator>().Play("HostilityDownAnimation");
+            }
+            else if (mood == "Fear")
+            {
+                emoter.GetComponent<Animator>().Play("FearDownAnimation");
+            }
+            else if (mood == "Hunger")
+            {
+                emoter.GetComponent<Animator>().Play("HungerDownAnimation");
+            }
+        }else{
+            Destroy(emoter);
+        }        
+    }    
 }
