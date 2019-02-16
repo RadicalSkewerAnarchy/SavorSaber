@@ -31,7 +31,7 @@ public class DisplayInventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateSkewerPrompt();
+        //UpdateSkewerPrompt();
         UpdateSkewerVisual();
     }
 

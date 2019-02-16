@@ -14,6 +14,7 @@ namespace Gameflow
             Happy,
             Angry,
             Sad,
+            NoSprite,
         }
 
         #region Editor

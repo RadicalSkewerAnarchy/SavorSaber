@@ -97,7 +97,6 @@ public class AttackRanged : AttackBase
         // when attack is released.
         if (!chargedAttack)
         {
-            Debug.Log("Not charged attack");
             //true center of sprite
             center = r.bounds.center;
         }
@@ -105,12 +104,13 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.direction ?? monsterController.direction;
+        Direction direction = playerController?.Direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
+        Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
@@ -144,7 +144,7 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.direction ?? monsterController.direction;
+        Direction direction = playerController?.Direction ?? monsterController.direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetTargetVector(targetVector);
 

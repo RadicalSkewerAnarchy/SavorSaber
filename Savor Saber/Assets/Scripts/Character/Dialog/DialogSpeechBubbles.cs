@@ -21,23 +21,31 @@ public class DialogSpeechBubbles : BaseDialog
     {
         if (InputManager.GetButtonDown(Control.Interact) && active)
         {
-            item = scene.NextDialog();
-            if (item == null)
+            if (!isTyping)
             {
-                Destroy(dialogBox);
-                active = false;
-                dialogFinished = true;
-                ReleaseActors();
-                if (!repeatable)
-                    Destroy(this.gameObject);
-            }
-            else
-            {
-                NextDialog();
-            }
+                item = scene.NextDialog();
+                if (item == null)
+                {
+                    Destroy(dialogBox);
+                    active = false;
+                    dialogFinished = true;
+                    ReleaseActors();
 
+                    if (!repeatable)
+                        Destroy(this.gameObject);
+                }
+                else
+                {
+                    NextDialog();
+                }
+            }
+            else if (isTyping && !cancelTyping)
+            {
+                cancelTyping = true;
+            }
         }
     }
+
 
     /// <summary>
     /// Call this function to begin dialog
@@ -53,7 +61,7 @@ public class DialogSpeechBubbles : BaseDialog
             dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
             dialogBox.transform.SetParent(UICanvas.transform);
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
-            dialogBox.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             dialogText = dialogBox.GetComponentInChildren<Text>();
             //set dialog box portrait
             Transform portrait = dialogBox.transform.GetChild(1);
@@ -77,7 +85,8 @@ public class DialogSpeechBubbles : BaseDialog
     /// </summary>
     public override void NextDialog()
     {
-        dialogText.text = item.text;
+        //dialogText.text = item.text;
+        StartCoroutine(Scroll(item.text));
         dialogData = actors[item.actor].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
         dialogRectTransform.anchoredPosition = GetActorUISpace(actors[item.actor]);
@@ -94,5 +103,26 @@ public class DialogSpeechBubbles : BaseDialog
         Vector2 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
 
         return proportionalPosition - UIOffset;
+    }
+
+    public IEnumerator Scroll(string lineOfText)
+    {
+        int letter = 0;
+        dialogText.text = "";
+        isTyping = true;
+        cancelTyping = false;
+        Debug.Log("Text: " + lineOfText);
+        while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
+        {
+            dialogText.text += lineOfText[letter];
+            Debug.Log(lineOfText[letter]);
+            letter++;
+            yield return new WaitForSeconds(typeSpeed);
+        }
+        dialogText.text = lineOfText;
+        isTyping = false;
+        cancelTyping = false;
+
+        yield return null;
     }
 }

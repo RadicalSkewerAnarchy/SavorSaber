@@ -27,7 +27,31 @@ public class DialogScene : MonoBehaviour
     }
     private BaseNode Branch(GameflowBranchNode b)
     {
-        return b.toDefaultBranch.connections[0].body as BaseNode;
+        string value = string.Empty;
+        if (b.exprType == GameflowBranchNode.controlExpressionType.Last_Input)
+            return b.toDefaultBranch.connection(0).body as BaseNode;
+        else
+            value = FlagManager.GetFlag(b.variableName);
+        foreach (var brCase in b.cases)
+        {
+            if (brCase.type == GameflowBranchNode.BranchCase.CaseType.Regex)
+            {
+                if (CheckRegexCase(brCase.pattern, value))
+                    return brCase.connection.connections[0].body as BaseNode;
+            }
+            else if (CheckTextCase(brCase.pattern, value))//brCase.type == BranchCaseData.CaseType.Text
+                return brCase.connection.connections[0].body as BaseNode;
+        }
+        return b.toDefaultBranch.connection(0).body as BaseNode;
+    }
+    private bool CheckTextCase(string pattern, string value)
+    {
+        //Probably should compress this to regex
+        return value.Trim().ToLower() == pattern.Trim().ToLower().Replace(".", string.Empty).Replace("?", string.Empty).Replace("!", string.Empty);
+    }
+    private bool CheckRegexCase(string pattern, string value)
+    {
+        throw new System.NotImplementedException();
     }
     /// <summary> Go through the graph, porcessing nodes until a dialog node is reached
     /// When reached, translate into a dialog item and return </summary>
@@ -43,6 +67,11 @@ public class DialogScene : MonoBehaviour
                 var dNode = currNode as DialogNodeVN;
                 return new DialogItem(dNode.text, dNode.actor, dNode.emotion);
             }
+        }
+        else if(currNode is SetFlagNode)
+        {
+            var node = currNode as SetFlagNode;
+            FlagManager.SetFlag(node.flagName, node.value);
         }
         //Process other node types
         //Recursively move to next

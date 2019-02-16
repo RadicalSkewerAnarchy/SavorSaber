@@ -46,6 +46,11 @@ public class BaseProjectile : MonoBehaviour
     public bool penetrateTargets = false;
 
     /// <summary>
+    /// what is the AOE of this projectile on impact?
+    /// </summary>
+    public float attackRadius = 0.5f;
+
+    /// <summary>
     /// How far this projectile should travel before self-terminating.
     /// Range of 0 will fly FOREVER 
     /// </summary>
@@ -148,6 +153,8 @@ public class BaseProjectile : MonoBehaviour
 
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
+
+        collision.gameObject.GetComponent<CharacterData>().health -= (int)projectileDamage;
 
         if (!penetrateTargets)
             Destroy(this.gameObject);

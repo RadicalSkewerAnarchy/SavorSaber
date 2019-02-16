@@ -115,7 +115,7 @@ public class AttackMelee : AttackBase
         Direction direction;
 
         //get direction from whichever controller component this entity has
-        direction = playerController?.direction ?? monsterController.direction;
+        direction = playerController?.Direction ?? monsterController.direction;
 
         // move spawn point into position
         if (direction == Direction.East)
