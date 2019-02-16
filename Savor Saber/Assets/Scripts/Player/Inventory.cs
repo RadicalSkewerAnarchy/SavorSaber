@@ -65,7 +65,7 @@ public class Skewer
             {
                 RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
                 flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
+                //Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
             }    
         }
     }
@@ -294,15 +294,15 @@ public class Inventory : MonoBehaviour {
                 //print("showing " + dropArray[i].flavors + " at index " + i);
                 if (skewerSprites[i] != null)
                     skewerSprites[i].sprite = dropArray[i].image;
-                else
-                    Debug.Log("Error: No UI detected for inventory visualization");
+                //else
+                    //Debug.Log("Error: No UI detected for inventory visualization");
             }
             else
             {
                 if(skewerSprites[i] != null)
                     skewerSprites[i].sprite = emptySprite;
-                else
-                    Debug.Log("Error: No UI detected for inventory visualization");
+                //else
+                    //Debug.Log("Error: No UI detected for inventory visualization");
             }
         }
     }

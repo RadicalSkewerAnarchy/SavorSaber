@@ -22,6 +22,7 @@ public class TestProtocol : CustomProtocol
 
     public float speed = 0;
     public GameObject target;
+    public float threshold = .5f;
     public Vector2 targetPos = new Vector2( 0, 0 );
     public Behavior curr;
     public CustomBehavior custom;
@@ -39,19 +40,19 @@ public class TestProtocol : CustomProtocol
                 _behave.Idle();
                 break;
             case Behavior.MoveTo:
-                _behave.MoveTo(targetPos, speed);
+                _behave.MoveTo(targetPos, speed, threshold);
                 break;
             case Behavior.MoveAwayFrom:
-                _behave.MoveFrom(targetPos, speed);
+                _behave.MoveFrom(targetPos, speed, threshold+1);
                 break;
             case Behavior.Feed:
                 _behave.Feed(target);
                 break;
             case Behavior.Attack:
-                _behave.Attack(targetPos, speed);
+                _behave.MeleeAttack(targetPos, speed);
                 break;
             case Behavior.Ranged:
-                _behave.Ranged(targetPos, speed);
+                _behave.RangedAttack(targetPos, speed);
                 break;
             case Behavior.Socialize:
                 _behave.Socialize();
