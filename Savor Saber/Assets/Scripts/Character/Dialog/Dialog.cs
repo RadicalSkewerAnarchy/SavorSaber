@@ -10,6 +10,9 @@ using UnityEngine.UI;
 public class Dialog : BaseDialog
 {
     private DialogItem item;
+
+
+
     private void Start()
     {
         scene = GetComponent<DialogScene>();
@@ -20,21 +23,27 @@ public class Dialog : BaseDialog
     {
         if (InputManager.GetButtonDown(Control.Interact) && active)
         {
-            item = scene.NextDialog();
-            if (item == null)
+            if (!isTyping)
             {
-                Destroy(dialogBox);
-                active = false;
-                dialogFinished = true;
+                item = scene.NextDialog();
+                if (item == null)
+                {
+                    Destroy(dialogBox);
+                    active = false;
+                    dialogFinished = true;
 
-                if (!repeatable)
-                    Destroy(this.gameObject);
+                    if (!repeatable)
+                        Destroy(this.gameObject);
+                }
+                else
+                {
+                    NextDialog();
+                }
             }
-            else
+            else if(isTyping && !cancelTyping)
             {
-                NextDialog();
+                cancelTyping = true;
             }
-
         }
     }
 
@@ -75,8 +84,30 @@ public class Dialog : BaseDialog
     /// </summary>
     public override void NextDialog()
     {
-        dialogText.text = item.text;
+        //dialogText.text = item.text;
+        StartCoroutine(Scroll(item.text));
         dialogData = actors[item.actor].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
+    }
+
+    public IEnumerator Scroll(string lineOfText)
+    {
+        int letter = 0;
+        dialogText.text = "";
+        isTyping = true;
+        cancelTyping = false;
+        Debug.Log("Text: " + lineOfText);
+        while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
+        {
+            dialogText.text += lineOfText[letter];
+            Debug.Log(lineOfText[letter]);
+            letter++;
+            yield return new WaitForSeconds(typeSpeed);
+        }
+        dialogText.text = lineOfText;
+        isTyping = false;
+        cancelTyping = false;
+
+        yield return null;
     }
 }

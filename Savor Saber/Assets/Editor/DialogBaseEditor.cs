@@ -12,6 +12,7 @@ public class DialogBaseEditor : Editor
     {
         var dialog = target as BaseDialog;
         dialog.repeatable = EditorGUILayout.Toggle(new GUIContent("Repeatable"), dialog.repeatable);
+        dialog.typeSpeed = EditorGUILayout.FloatField(new GUIContent("Text type speed"), dialog.typeSpeed);
         dialog.dialogBoxPrefab = EditorGUILayout.ObjectField(new GUIContent("Dialog Box Prefab"), dialog.dialogBoxPrefab, typeof(GameObject), false) as GameObject;
         dialog.UICanvas = EditorGUILayout.ObjectField(new GUIContent("UI Canvas"), dialog.UICanvas, typeof(Canvas), true) as Canvas;
         SDictionaryGUI.ValueGUI<GameObject> valueGUI = (actor) =>

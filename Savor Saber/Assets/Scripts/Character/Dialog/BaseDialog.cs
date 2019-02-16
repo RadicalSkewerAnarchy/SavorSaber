@@ -27,6 +27,13 @@ public class BaseDialog : MonoBehaviour
     public bool repeatable = false;
 
     /// <summary>
+    /// Fields for text scrolling
+    /// </summary>
+    protected bool isTyping = false;
+    protected bool cancelTyping = false;
+    public float typeSpeed = 0.03f;
+
+    /// <summary>
     /// Dialog writers set these fields
     /// </summary>
     public ActorDict actors = new ActorDict();
