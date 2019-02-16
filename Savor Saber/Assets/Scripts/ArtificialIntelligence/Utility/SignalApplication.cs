@@ -31,7 +31,11 @@ public class SignalApplication : MonoBehaviour
     bool hitSelf = true;
     bool hitAll = true;
     // Game object of who made this
-    GameObject signalMaker = null;
+    public GameObject signalMaker = null;
+
+    //Animator AnimationBody;
+
+    public GameObject ChildAnimationAgent;
 
     // Constructor
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
@@ -55,6 +59,8 @@ public class SignalApplication : MonoBehaviour
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
         collider.radius = interactRadius;
+        //AnimationBody = GetComponent<Animator>();
+        //ChildAnimationAgent.AddComponent<Animator>();
         //Debug.Log("signal with radius = " + interactRadius);
     }
 
@@ -153,8 +159,15 @@ public class SignalApplication : MonoBehaviour
                 //Debug.Log(g + "'s " + key + " value should be " + value);
             }
         }
+        //change middle argument based on creatures offset
+        // var child = Instantiate(ChildAnimationAgent, g.transform.position + new Vector3(0f, 1.2f, 0f), Quaternion.identity);
+        //child.GetComponent<SignalAnimationChild>().EndAnimationAfterEnd();
+        // StartCoroutine(EndAnimationAfterEnd(child));
+        // child.GetComponent<Animator>().Play("FearUpAnimation");
+        // StartCoroutine()
         // set decision timer to 0
         // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
         // data.ManualDecision();
     }
+    
 }
