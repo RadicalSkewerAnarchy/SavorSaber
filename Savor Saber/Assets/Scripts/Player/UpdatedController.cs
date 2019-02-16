@@ -32,6 +32,7 @@ static class DirectionMethods
 [RequireComponent(typeof(Animator))]
 public class UpdatedController : EntityController
 {
+    [SerializeField]
     private Direction _direction;
     public override Direction Direction
     {
@@ -97,9 +98,10 @@ public class UpdatedController : EntityController
     public float accelrationAmount;
 
     void Start()
-    {
+    {      
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
+        Direction = _direction;
         doubleTapTrackers = new Dictionary<Control, float>()
         {
             { Control.Up, 0 },
