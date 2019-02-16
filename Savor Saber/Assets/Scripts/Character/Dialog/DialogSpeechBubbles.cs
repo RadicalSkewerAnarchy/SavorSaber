@@ -86,6 +86,7 @@ public class DialogSpeechBubbles : BaseDialog
     public override void NextDialog()
     {
         //dialogText.text = item.text;
+        StopCoroutine(Scroll(item.text));
         StartCoroutine(Scroll(item.text));
         dialogData = actors[item.actor].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
