@@ -232,7 +232,7 @@ public class MonsterProtocols : MonoBehaviour
         #region Get Nearest + Null Check
         Vector2 pos = Checks.GetRandomPositionType();
         #endregion
-        if(Behaviour.MoveFrom(pos, AiData.Speed))
+        if(Behaviour.MoveFrom(pos, AiData.Speed, 1f))
         {
             Checks.ResetSpecials();
         }
@@ -245,7 +245,7 @@ public class MonsterProtocols : MonoBehaviour
             GameObject near = Checks.ClosestCreature();
             Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
-            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f);
+            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f, 1f);
         }
         else if (Checks.specialTarget == null)
         {
@@ -255,7 +255,7 @@ public class MonsterProtocols : MonoBehaviour
         {
             GameObject near = Checks.ClosestLeader();
             Vector2 pos = near.transform.position;
-            Behaviour.MoveTo(pos, AiData.Speed);
+            Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
 
