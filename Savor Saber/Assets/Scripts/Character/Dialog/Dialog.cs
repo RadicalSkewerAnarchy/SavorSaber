@@ -33,7 +33,7 @@ public class Dialog : BaseDialog
                     dialogFinished = true;
 
                     if (!repeatable)
-                        Destroy(this.gameObject);
+                        Destroy(gameObject);
                 }
                 else
                 {

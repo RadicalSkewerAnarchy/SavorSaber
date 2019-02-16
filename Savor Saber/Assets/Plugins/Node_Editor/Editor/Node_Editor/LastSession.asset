@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: LastSession
   m_EditorClassIdentifier: 
   editorStates:
-  - {fileID: 114879423818328230}
+  - {fileID: 114139005447859668}
   saveName: Assets\ScriptableObjects\DialogScenes\Raindeer
   savePath: Assets\ScriptableObjects\DialogScenes\Raindeer.asset
   livesInScene: 0
   nodes:
-  - {fileID: 114541375069543364}
-  - {fileID: 114296398596365698}
-  - {fileID: 114153585024878896}
+  - {fileID: 114247337305031540}
+  - {fileID: 114012446939767714}
+  - {fileID: 114365288849102686}
+  - {fileID: 114020396001805014}
+  - {fileID: 114737203147590568}
   groups: []
---- !u!114 &114153585024878896
+--- !u!114 &114012446939767714
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34,11 +36,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a05d26699c2c95e43a8c82b5f9c2f141, type: 3}
   m_Name: Gameflow End
   m_EditorClassIdentifier: 
-  position: {x: 50, y: -180}
+  position: {x: 395, y: -180}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  fromPreviousIN: {fileID: 114492568516948090}
---- !u!114 &114296398596365698
+  fromPreviousIN: {fileID: 114866696716155790}
+--- !u!114 &114020396001805014
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -244.5, y: 37.5}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114346675884495686}
+  fromPreviousIN: {fileID: 114713704414518742}
+  characterName: Character Name
+  text: '.....'
+  actor: Raindeer
+  emotion: 0
+--- !u!114 &114139005447859668
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
+  m_Name: MainEditorState
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  parentEditor: {fileID: 0}
+  selectedNode: {fileID: 114737203147590568}
+  panOffset: {x: 0, y: 0}
+  zoom: 1
+--- !u!114 &114247337305031540
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,8 +93,8 @@ MonoBehaviour:
   position: {x: -450, y: -180}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114627870876977770}
---- !u!114 &114444781479856310
+  toNextOUT: {fileID: 114312852547973522}
+--- !u!114 &114312852547973522
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -66,16 +106,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114541375069543364}
+  body: {fileID: 114247337305031540}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114492568516948090}
+  - {fileID: 114967072569509174}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114492568516948090
+--- !u!114 &114346675884495686
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,18 +125,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
+  m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114153585024878896}
-  direction: 1
-  maxConnectionCount: 1
+  body: {fileID: 114020396001805014}
+  direction: 2
+  maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114444781479856310}
-  side: 4
+  - {fileID: 114772619661796922}
+  side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114541375069543364
+--- !u!114 &114365288849102686
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,13 +151,13 @@ MonoBehaviour:
   position: {x: -250, y: -180}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 114444781479856310}
-  fromPreviousIN: {fileID: 114928452044020014}
+  toNextOUT: {fileID: 114930712657399576}
+  fromPreviousIN: {fileID: 114967072569509174}
   characterName: Character Name
-  text: '.......'
+  text: '...'
   actor: Raindeer
   emotion: 0
---- !u!114 &114627870876977770
+--- !u!114 &114518363035969718
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -129,33 +169,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 114296398596365698}
+  body: {fileID: 114737203147590568}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 114928452044020014}
+  - {fileID: 114866696716155790}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114879423818328230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
-  m_Name: MainEditorState
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  parentEditor: {fileID: 0}
-  selectedNode: {fileID: 114153585024878896}
-  panOffset: {x: 0, y: 0}
-  zoom: 1
---- !u!114 &114928452044020014
+--- !u!114 &114713704414518742
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -167,12 +190,117 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114541375069543364}
+  body: {fileID: 114020396001805014}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 114627870876977770}
+  - {fileID: 114930712657399576}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114737203147590568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 80, y: 40}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114518363035969718}
+  fromPreviousIN: {fileID: 114772619661796922}
+  characterName: Character Name
+  text: '.......'
+  actor: Raindeer
+  emotion: 0
+--- !u!114 &114772619661796922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114737203147590568}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114346675884495686}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114866696716155790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114012446939767714}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114518363035969718}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114930712657399576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114365288849102686}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114713704414518742}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114967072569509174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114365288849102686}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114312852547973522}
   side: 4
   sidePosition: 30
   sideOffset: 0

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cutscene : MonoBehaviour
 {
+    public bool IsActive { get; protected set; }
     protected GameObject player;
     public bool repeatable = false;
     protected EventScript[] events;
@@ -15,6 +16,7 @@ public class Cutscene : MonoBehaviour
     public void Activate()
     {
         Debug.Log("Activating Cutscene: " + name);
+        IsActive = true;
         StartCoroutine(PlayEvent());
     }
     protected virtual IEnumerator PlayEvent()
@@ -31,6 +33,7 @@ public class Cutscene : MonoBehaviour
             yield return StartCoroutine(e.PlayEvent(player));
         }
         plCon.enabled = true;
+        IsActive = false;
         if (!repeatable)
         {
             Destroy(gameObject);

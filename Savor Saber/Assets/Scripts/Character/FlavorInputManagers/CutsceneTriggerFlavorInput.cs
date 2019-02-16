@@ -11,7 +11,9 @@ public class CutsceneTriggerFlavorInput : FlavorInputManager
     public override void Feed(RecipeData.Flavors flavor, int magnitude)
     {
         //flavorCountDictionary[flavor] += magnitude;
-        if (magnitude > 0)
+        if (magnitude > 0 && !scene.IsActive)
+        {
             scene.Activate();
+        }        
     }
 }
