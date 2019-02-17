@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class SignalAnimationChild : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(EndAnimationAfterEnd());
     }
     public IEnumerator EndAnimationAfterEnd()
     {
-        Debug.Log("Coroutine for ending animation REACHED");
+        //Debug.Log("Coroutine for ending animation REACHED");
         yield return new WaitForSeconds(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length);
-        Debug.Log("Coroutine is done waiting.");
+        //Debug.Log("Coroutine is done waiting.");
         Destroy(gameObject);
         yield return null;
     }
