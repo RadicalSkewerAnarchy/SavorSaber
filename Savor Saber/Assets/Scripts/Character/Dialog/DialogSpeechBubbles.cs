@@ -52,32 +52,36 @@ public class DialogSpeechBubbles : BaseDialog
     /// </summary>
     public override void Activate(bool doFirst)
     {
-        dialogFinished = false;
-        HoldActors();
-        scene.ResetScene();
-        if (dialogBoxPrefab != null)
+        if (!active)
         {
-            //set position on of dialog box on screen
-            dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
-            dialogBox.transform.SetParent(UICanvas.transform);
-            dialogRectTransform = dialogBox.GetComponent<RectTransform>();
-            dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            dialogText = dialogBox.GetComponentInChildren<Text>();
-            //set dialog box portrait
-            Transform portrait = dialogBox.transform.GetChild(1);
-            dialogImage = portrait.GetComponent<Image>();
+            dialogFinished = false;
+            HoldActors();
+            scene.ResetScene();
+            if (dialogBoxPrefab != null)
+            {
+                //set position on of dialog box on screen
+                dialogBox = Instantiate(dialogBoxPrefab, Vector3.zero, Quaternion.identity);
+                dialogBox.transform.SetParent(UICanvas.transform);
+                dialogRectTransform = dialogBox.GetComponent<RectTransform>();
+                dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                dialogText = dialogBox.GetComponentInChildren<Text>();
+                //set dialog box portrait
+                Transform portrait = dialogBox.transform.GetChild(1);
+                dialogImage = portrait.GetComponent<Image>();
+            }
+            else
+            {
+                Debug.LogWarning("Warning: No dialog box prefab found when trying to activate Dialog");
+                Destroy(this.gameObject);
+            }
+            if (doFirst)
+            {
+                item = scene.NextDialog();
+                NextDialog();
+            }
+            active = true;
         }
-        else
-        {
-            Debug.LogWarning("Warning: No dialog box prefab found when trying to activate Dialog");
-            Destroy(this.gameObject);
-        }
-        if (doFirst)
-        {
-            item = scene.NextDialog();
-            NextDialog();
-        }
-        active = true;
+
     }
 
     /// <summary>
@@ -86,6 +90,7 @@ public class DialogSpeechBubbles : BaseDialog
     public override void NextDialog()
     {
         //dialogText.text = item.text;
+        StopCoroutine(Scroll(item.text));
         StartCoroutine(Scroll(item.text));
         dialogData = actors[item.actor].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
