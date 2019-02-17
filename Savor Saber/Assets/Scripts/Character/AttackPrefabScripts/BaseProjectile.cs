@@ -149,13 +149,23 @@ public class BaseProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-       // Debug.Log("Projectile trigger entered");
+        GameObject go = collision.gameObject;
+        // Debug.Log("Projectile trigger entered");
+        if (go.tag == "SkewerableObject")
+            return;
+
 
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
 
-        collision.gameObject.GetComponent<CharacterData>().health -= (int)projectileDamage;
-
+        CharacterData characterData = go.GetComponent<CharacterData>();
+        characterData.health -= (int)projectileDamage;
+        if (characterData.health <= 0 && go.tag != "Player")
+        {
+            //Debug.Log("Killing Monster");
+            Monster targetMonster = collision.gameObject.GetComponent<Monster>();
+            targetMonster.Kill();
+        }
         if (!penetrateTargets)
             Destroy(this.gameObject);
 

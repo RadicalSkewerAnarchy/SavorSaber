@@ -126,7 +126,7 @@ public class AIData : CharacterData
 
     private void LateUpdate()
     {
-        Debug.Log(moods["Friendliness"]);
+        //Debug.Log(moods["Friendliness"]);
         // check current state
         // acquire necessary data
         // act on current state
