@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAttack : BaseMeleeAttack
+public class MonsterMeleeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
