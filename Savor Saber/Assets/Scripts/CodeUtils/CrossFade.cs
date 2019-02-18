@@ -18,4 +18,28 @@ public static class CrossFade
         fadeIn.volume = goal;
         fadeOut.volume = 0;
     }
+    public static IEnumerator FadeAudioSourceOut(AudioSource fade, float time)
+    {
+        float diff = fade.volume;
+        while (fade.volume > 0)
+        {
+            yield return new WaitForEndOfFrame();
+            float percent = (Time.deltaTime / time);
+            fade.volume -= percent * diff;
+        }
+        fade.volume = 0;
+    }
+
+    public static IEnumerator FadeAudioSourceIn(AudioSource fade, float time, float goal = 1)
+    {
+        fade.Play();
+        float diff = goal - fade.volume;
+        while (fade.volume < goal)
+        {
+            yield return new WaitForEndOfFrame();
+            float percent = (Time.deltaTime / time);
+            fade.volume += percent * diff;
+        }
+        fade.volume = goal;
+    }
 }

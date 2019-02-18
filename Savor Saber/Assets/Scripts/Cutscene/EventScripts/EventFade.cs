@@ -7,7 +7,6 @@ public class EventFade : EventScript
 {
     public Image fade;
     public Color color;
-    public float time;
     public bool fadeOut = true;
     public float speed = 0.1f;
     public override IEnumerator PlayEvent(GameObject player)
@@ -17,7 +16,7 @@ public class EventFade : EventScript
         float end = fadeOut ? 1 : 0;
         float sign = fadeOut ? 1 : -1;
         fade.color = new Color(color.r, color.g, color.b, start);
-        while(fade.color.a != end)
+        while (fade.color.a != end)
         {
             yield return new WaitForFixedUpdate();
             fade.color = new Color(fade.color.r, fade.color.g, fade.color.b, Mathf.Clamp01(fade.color.a + Time.fixedDeltaTime * speed * sign));
