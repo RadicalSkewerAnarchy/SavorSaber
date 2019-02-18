@@ -7,25 +7,22 @@ public class CutsceneAwake : Cutscene
     public bool onStart = false;
     private void Start()
     {
-        if(onStart)
-        {
-            events = GetComponents<EventScript>();
-            player = GameObject.FindGameObjectWithTag("Player");
-            Activate();
-        }
+        if (onStart)
+            Play();
     }
     private void Awake()
     {
         if (!onStart)
-        {
-            events = GetComponents<EventScript>();
-            player = GameObject.FindGameObjectWithTag("Player");
-            Activate();
-        }
+            Play();
+    }
+    private void Play()
+    {
+        InitializeBase();
+        Activate();
     }
     protected override IEnumerator PlayEvent()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(Time.fixedDeltaTime);
         yield return base.PlayEvent();
     }
 }

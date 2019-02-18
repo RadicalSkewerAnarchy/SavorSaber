@@ -7,17 +7,16 @@ using System.Linq;
 public class CutsceneTriggerAmrita : Cutscene
 {
     public string ingredientName;
+    public int number = 2;
     private void Start()
     {
-        events = GetComponents<EventScript>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        InitializeBase();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var inv = player.GetComponent<Inventory>();
-        if ((inv.GetActiveSkewer().ingredientStack.Count >= 1 && inv.GetActiveSkewer().ingredientStack.All((ing) => ing.displayName == ingredientName)) ||
-            (inv.GetLeftSkewer().ingredientStack.Count >= 1 && inv.GetLeftSkewer().ingredientStack.All((ing) => ing.displayName == ingredientName))   ||
-            (inv.GetRightSkewer().ingredientStack.Count >= 1 && inv.GetRightSkewer().ingredientStack.All((ing) => ing.displayName == ingredientName)))
+        var ingredientStacks = new Stack<IngredientData>[3] { inv.GetActiveSkewer().ingredientStack, inv.GetLeftSkewer().ingredientStack, inv.GetRightSkewer().ingredientStack };
+        if (ingredientStacks.Any((skewer) => skewer.Count((obj) => obj.displayName == ingredientName) >= number))
         {
             Debug.Log("Triggering Event: " + name);
             Activate();

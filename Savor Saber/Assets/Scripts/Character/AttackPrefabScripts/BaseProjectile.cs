@@ -153,12 +153,11 @@ public class BaseProjectile : MonoBehaviour
         // Debug.Log("Projectile trigger entered");
         if (go.tag == "SkewerableObject")
             return;
-
-
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
-
         CharacterData characterData = go.GetComponent<CharacterData>();
+        if (characterData == null)
+            return;
         characterData.health -= (int)projectileDamage;
         if (characterData.health <= 0 && go.tag != "Player")
         {

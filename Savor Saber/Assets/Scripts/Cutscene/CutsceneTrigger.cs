@@ -7,8 +7,7 @@ public class CutsceneTrigger : Cutscene
 {
     private void Start()
     {
-        events = GetComponents<EventScript>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        InitializeBase();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
