@@ -96,6 +96,8 @@ public class UpdatedController : EntityController
     public float accelerationTime;
     public float maxSpeed;
     public float accelrationAmount;
+    public AudioClip dashSFX;
+    private PlaySFX sfxPlayer;
 
     void Start()
     {      
@@ -114,6 +116,7 @@ public class UpdatedController : EntityController
         currDashes = maxDashes;
         currRunSpeed = runSpeed;
         dialogData = GetComponent<DialogData>();
+        sfxPlayer = GetComponent<PlaySFX>();
     }
 
     // Detect non-movement input every fram so input isn't dropped
@@ -192,7 +195,8 @@ public class UpdatedController : EntityController
         freezeDirection = true;
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         animatorBody.SetBool("Dashing", true);
-        if(rechargeDashes != null)
+        sfxPlayer.Play(dashSFX);
+        if (rechargeDashes != null)
         {
             StopCoroutine(rechargeDashes);
             rechargeDashes = null;
