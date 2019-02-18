@@ -9,6 +9,8 @@ public class DialogData : MonoBehaviour
 {
     public string displayName;
 
+    public AudioClip textBlipSound;
+
     [System.NonSerialized]
     public bool inConversation = false;
 

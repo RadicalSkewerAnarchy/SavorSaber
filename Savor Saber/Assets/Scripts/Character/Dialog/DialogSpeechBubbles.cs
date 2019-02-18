@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class DialogSpeechBubbles : BaseDialog
 {
     private DialogItem item;
+    private AudioSource audioPlayer;
+    private int dialogIterator = 0;
 
     public void Start()
     {
@@ -64,7 +66,8 @@ public class DialogSpeechBubbles : BaseDialog
                 dialogBox.transform.SetParent(UICanvas.transform);
                 dialogRectTransform = dialogBox.GetComponent<RectTransform>();
                 dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                dialogText = dialogBox.GetComponentInChildren<Text>();
+                dialogText = dialogBox.transform.GetChild(2).GetComponent<Text>();
+                audioPlayer = dialogBox.GetComponent<AudioSource>();
                 //set dialog box portrait
                 Transform portrait = dialogBox.transform.GetChild(1);
                 dialogImage = portrait.GetComponent<Image>();
@@ -95,6 +98,8 @@ public class DialogSpeechBubbles : BaseDialog
         dialogData = actors[item.actor].GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
         dialogRectTransform.anchoredPosition = GetActorUISpace(actors[item.actor]);
+        if(dialogData.textBlipSound != null)
+            audioPlayer.clip = dialogData.textBlipSound;
     }
     protected Vector2 GetActorUISpace(GameObject actor)
     {
@@ -113,14 +118,17 @@ public class DialogSpeechBubbles : BaseDialog
     public IEnumerator Scroll(string lineOfText)
     {
         int letter = 0;
+        dialogIterator = 0;
         dialogText.text = "";
         isTyping = true;
         cancelTyping = false;
         Debug.Log("Text: " + lineOfText);
         while (isTyping && !cancelTyping && (letter < lineOfText.Length - 1))
         {
+            dialogIterator++;
+            if ((dialogIterator + 1) % 3 == 0)
+                audioPlayer.Play();
             dialogText.text += lineOfText[letter];
-            //Debug.Log(lineOfText[letter]);
             letter++;
             yield return new WaitForSeconds(typeSpeed);
         }
