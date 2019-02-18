@@ -10,10 +10,13 @@ namespace Gameflow
     {
         public enum Emotion
         {
-            Neuteral,
+            Neutral,
             Happy,
+            Glad,
             Angry,
             Sad,
+            Surprised,
+            Special,
             NoSprite,
         }
 
