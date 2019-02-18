@@ -12,6 +12,7 @@ public class DialogDataEditor : Editor
     {
         DialogData dialogData = target as DialogData;
         dialogData.displayName = EditorGUILayout.TextField(new GUIContent("Display name"), dialogData.displayName);
+        dialogData.textBlipSound = EditorGUILayout.ObjectField(new GUIContent("Text scroll sound"), dialogData.textBlipSound, typeof(AudioClip), false) as AudioClip;
 
         SDictionaryGUI.ValueGUI<Sprite> valGUI = (spr) =>
         {
