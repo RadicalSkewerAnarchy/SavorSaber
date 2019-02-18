@@ -99,7 +99,7 @@ public class UpdatedController : EntityController
     public AudioClip dashSFX;
     private PlaySFX sfxPlayer;
 
-    void Start()
+    void Awake()
     {      
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
