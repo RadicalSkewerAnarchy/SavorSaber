@@ -13,7 +13,7 @@ public class SignalApplication : MonoBehaviour
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
     public List<GameObject> dropList = new List<GameObject>();
-    public Dictionary<string, float> moodMod = new Dictionary<string, float>();
+    public Dictionary<string, float> moodMod;
     #region MoodMods
     [Range(-1f, 1f)]
     public float fearMod = 0;
@@ -41,7 +41,7 @@ public class SignalApplication : MonoBehaviour
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
-        //Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y);
+        //Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y + "(" + moods["Friendliness"] + ")");
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         // update radius
@@ -130,6 +130,7 @@ public class SignalApplication : MonoBehaviour
     {
         foreach (GameObject g in hitList)
         {
+            //Debug.Log("APPLY TO HIT: " + g.name);
             if (g != null && g.tag != "Player")
             {
                 // get data
@@ -157,9 +158,11 @@ public class SignalApplication : MonoBehaviour
             // using the keys, change the values
             // of "moods" in data
             float mod = moodMod[key];
+            Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
             if (mod != 0)
             {
-                if(Mathf.Abs(mod) > Mathf.Abs(mostInfluential)) { mostInfluential = mod; mood = key; sign = (int)(mod / Mathf.Abs(mod)); }
+                if(Mathf.Abs(mod) >= Mathf.Abs(mostInfluential)) { mostInfluential = mod; mood = key; sign = (int)(mod / Mathf.Abs(mod)); }
+                Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
@@ -168,7 +171,8 @@ public class SignalApplication : MonoBehaviour
         }
         //change middle argument based on creatures offset
         GameObject child = null;
-        SignalAnimator(mostInfluential, mood, sign, child, g);
+        if (signalMaker == null)
+            SignalAnimator(mostInfluential, mood, sign, child, g);
         // child.GetComponent<Animator>().Play("FearUpAnimation");
 
         // set decision timer to 0
@@ -218,6 +222,7 @@ public class SignalApplication : MonoBehaviour
                 emoter.GetComponent<Animator>().Play("HungerDownAnimation");
             }
         }else{
+            Debug.Log("Destroying emoter");
             Destroy(emoter);
         }        
     }    

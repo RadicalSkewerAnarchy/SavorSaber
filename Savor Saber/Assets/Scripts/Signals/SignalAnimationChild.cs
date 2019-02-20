@@ -6,6 +6,7 @@ public class SignalAnimationChild : MonoBehaviour
 {
     private void Awake()
     {
+        GetComponent<SpriteRenderer>().sortingLayerName = "Objects";
         StartCoroutine(EndAnimationAfterEnd());
     }
     public IEnumerator EndAnimationAfterEnd()
