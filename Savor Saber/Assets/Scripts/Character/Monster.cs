@@ -21,7 +21,6 @@ public class Monster : MonoBehaviour
         // Drop items and die if health is 0 or lower        
         // data.AddEvent((health) => { if (health <= 0) Kill(); });
     }
-
     public void Kill()
     {
         var deathSoundObj = Instantiate(deathSfxPlayer, transform.position, transform.rotation);

@@ -15,8 +15,7 @@ public class AttackRanged : AttackBase
     /// <summary>
     /// Controllers to get direction state from
     /// </summary>
-    protected UpdatedController playerController;
-    protected MonsterMovement monsterController;
+    protected EntityController controller;
     protected SpriteRenderer r;
 
     /// <summary>
@@ -68,9 +67,7 @@ public class AttackRanged : AttackBase
         r = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
-        playerController = GetComponent<UpdatedController>();
-        if (playerController == null)
-            monsterController = GetComponent<MonsterMovement>();
+        controller = GetComponent<EntityController>();
     }
 
     // Update is called once per frame
@@ -104,7 +101,7 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.Direction ?? monsterController.direction;
+        Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
@@ -144,7 +141,7 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
-        Direction direction = playerController?.Direction ?? monsterController.direction;
+        Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetTargetVector(targetVector);
 

@@ -24,9 +24,7 @@ public class AttackMeleeSkewer : AttackMelee
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
-        playerController = GetComponent<UpdatedController>();
-        if (playerController == null)
-            monsterController = GetComponent<MonsterMovement>();
+        controller = GetComponent<EntityController>();
     }
 
     public override void Attack()

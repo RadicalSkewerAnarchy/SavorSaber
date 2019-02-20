@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AIData))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(MonsterController))]
 
 public class MonsterBehavior : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MonsterBehavior : MonoBehaviour
     Animator AnimatorBody;
     AIData AiData;
     MonsterChecks Checks;
+    MonsterController controller;
 
     // Some behaviors go for a certain amount of time.
     // timer is complete when < 0
@@ -71,6 +73,7 @@ public class MonsterBehavior : MonoBehaviour
         Checks = AiData.GetComponent<MonsterChecks>();
         AnimatorBody = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
+        controller = GetComponent<MonsterController>();
 
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -136,6 +139,7 @@ public class MonsterBehavior : MonoBehaviour
         }
         else
         {
+
             // move towards target
             AnimatorBody.Play("Move");
             // random rotation of target around current
@@ -144,7 +148,8 @@ public class MonsterBehavior : MonoBehaviour
             // get direction towards new target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
-            //left = (target.x > 0) ? true : false;
+            controller.Direction = DirectionMethods.FromVec2(target);
+            //left = () ? true : false;
             transform.Translate(target);
 
             return false;
@@ -165,6 +170,7 @@ public class MonsterBehavior : MonoBehaviour
             //target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            controller.Direction = DirectionMethods.FromVec2(-1 * target);
             //left = (target.x < 0) ? true : false;
             transform.Translate(-1*target);
             return false;

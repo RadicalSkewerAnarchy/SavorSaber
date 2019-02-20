@@ -15,8 +15,7 @@ public class AttackMelee : AttackBase
     /// <summary>
     /// Controllers to get direction state from
     /// </summary>
-    protected UpdatedController playerController;
-    protected MonsterMovement monsterController;
+    protected EntityController controller;
     protected SpriteRenderer spriteRenderer;
 
     protected Animator animator;
@@ -75,9 +74,7 @@ public class AttackMelee : AttackBase
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         //has to have either a monster controller or player controller
-        playerController = GetComponent<UpdatedController>();
-        if (playerController == null)
-            monsterController = GetComponent<MonsterMovement>();
+        controller = GetComponent<EntityController>();
     }
 
     // Update is called once per frame
@@ -115,7 +112,7 @@ public class AttackMelee : AttackBase
         Direction direction;
 
         //get direction from whichever controller component this entity has
-        direction = playerController?.Direction ?? monsterController.direction;
+        direction = controller.Direction;
 
         // move spawn point into position
         if (direction == Direction.East)
