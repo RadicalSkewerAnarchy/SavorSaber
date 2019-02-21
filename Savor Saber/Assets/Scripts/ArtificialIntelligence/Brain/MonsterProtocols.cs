@@ -56,7 +56,7 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        if (CheckThreshold(pos, AiData.MeleeAttackThreshold))
+        if (!CheckThreshold(pos, AiData.MeleeAttackThreshold))
         {
             if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
             {
@@ -144,7 +144,6 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Feast()
     {
         #region Surroundings        
-        Checks.AwareNearby();
         GameObject cDrop = Checks.ClosestDrop();
         #endregion
         if (this.tag == "Prey")
@@ -155,10 +154,15 @@ public partial class MonsterProtocols : MonoBehaviour
                 {
                     Behaviour.Feed(cDrop);
                 }
+            }
+            else
+            {
+                Debug.Log("No nearby food");
             }          
         }
         else if (this.tag == "Predator")
         {
+            Debug.Log("I AM A HUNGRE PADDLE PREDATOR");
             Melee();
         }
     }

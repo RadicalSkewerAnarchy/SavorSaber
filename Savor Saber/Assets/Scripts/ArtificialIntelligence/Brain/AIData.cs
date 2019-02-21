@@ -148,7 +148,7 @@ public class AIData : CharacterData
             currentProtocol = Curves.DecideState();            
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
             Checks.AwareNearby();
-            //Debug.Log("Getting New Protocol: " + currentProtocol);
+            Debug.Log("Getting New Protocol: " + currentProtocol);
         }else{
             DecisionTimer -= Time.deltaTime;
         }

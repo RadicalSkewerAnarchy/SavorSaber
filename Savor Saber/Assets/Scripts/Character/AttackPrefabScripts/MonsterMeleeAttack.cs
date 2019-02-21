@@ -25,7 +25,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
     {
         //Debug.Log("THERE IS NO CHARACTERCOLLISION");
         //monsterChecks.Enemies.Clear();
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "prey" || collision.gameObject.tag == "predator")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator")
         {            
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();

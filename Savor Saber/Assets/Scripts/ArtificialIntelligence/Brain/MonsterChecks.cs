@@ -72,7 +72,7 @@ public class MonsterChecks : MonoBehaviour
         // update all creatures
         GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform, false) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true);
+        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, false);
         AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
     }
