@@ -198,6 +198,7 @@ public class MonsterChecks : MonoBehaviour
             }
             
         }
+        Debug.Log("Closest drop is reached");
         return closestDrop;
     }
 

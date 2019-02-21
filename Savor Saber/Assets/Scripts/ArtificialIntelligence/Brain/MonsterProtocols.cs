@@ -146,7 +146,7 @@ public partial class MonsterProtocols : MonoBehaviour
         #region Surroundings        
         GameObject cDrop = Checks.ClosestDrop();
         #endregion
-        if (this.tag == "Prey")
+        if (cDrop != null)
         {
             if(cDrop != null)
             {
@@ -154,10 +154,6 @@ public partial class MonsterProtocols : MonoBehaviour
                 {
                     Behaviour.Feed(cDrop);
                 }
-            }
-            else
-            {
-                Debug.Log("No nearby food");
             }          
         }
         else if (this.tag == "Predator")

@@ -171,13 +171,26 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>  
     public bool Feed(GameObject drop)
     {
-        #region Eat
-        AnimatorBody.Play("Feed");
-        AiData.currentBehavior = AIData.Behave.Feed;
-        drop.SetActive(false);
-        Destroy(drop);
-        #endregion
-        return true;
+        if(drop != null)
+        {
+            #region Eat
+            AnimatorBody.Play("Feed");
+            AiData.currentBehavior = AIData.Behave.Feed;
+            AiData.Stomach.Enqueue(drop.GetComponent<SkewerableObject>().data);
+            drop.SetActive(false);
+            Destroy(drop);
+
+            #endregion
+            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, false) as GameObject;
+            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+            signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Hunger", -0.25f } }, false, true);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
     /// <summary>
     /// If you're not attacking, make attack collider and attack

@@ -74,7 +74,7 @@ public class AIData : CharacterData
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<RecipeData.Flavors> FoodPreference;
-    public Queue<GameObject> Stomach;
+    public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
     #endregion
     private void Start()
