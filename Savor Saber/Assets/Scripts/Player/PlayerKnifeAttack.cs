@@ -25,19 +25,12 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         // layer 11 is Monster layer
         if (collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator")
         {
-            Debug.Log("Applying Knife Effect: " + collision);
+            //Debug.Log("Applying Knife Effect: " + collision);
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
             if (characterData != null)
             {
-                characterData.health -= (int)meleeDamage;
-                //Debug.Log("This much hp left: " + characterData.health);
-                if (characterData.health <= 0)
-                {
-                    //Debug.Log("Killing Monster");
-                    Monster targetMonster = collision.gameObject.GetComponent<Monster>();
-                    targetMonster.Kill();
-                }
+                characterData.DoDamage((int)meleeDamage);
 
             }
         }

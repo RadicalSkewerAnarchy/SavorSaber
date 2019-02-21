@@ -158,13 +158,7 @@ public class BaseProjectile : MonoBehaviour
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData == null)
             return;
-        characterData.health -= (int)projectileDamage;
-        if (characterData.health <= 0 && go.tag != "Player")
-        {
-            //Debug.Log("Killing Monster");
-            Monster targetMonster = collision.gameObject.GetComponent<Monster>();
-            targetMonster.Kill();
-        }
+        characterData.DoDamage((int)projectileDamage);
         if (!penetrateTargets)
             Destroy(this.gameObject);
 
