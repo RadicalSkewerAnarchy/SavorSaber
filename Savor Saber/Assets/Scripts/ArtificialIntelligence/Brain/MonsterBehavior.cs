@@ -183,7 +183,7 @@ public class MonsterBehavior : MonoBehaviour
             #endregion
             GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, false) as GameObject;
             SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Hunger", -0.25f } }, false, true);
+            signalModifier.SetSignalParameters(this.gameObject, .1f, new Dictionary<string, float>() { { "Hunger", 0.25f } }, false, true);
             return true;
         }
         else
