@@ -30,14 +30,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
             if (characterData != null)
             {
-                characterData.health -= (int)meleeDamage;
-                //Debug.Log("This much hp left: " + characterData.health);
-                if (characterData.health <= 0)
-                {
-                    //Debug.Log("Killing Monster");
-                    Monster targetMonster = collision.gameObject.GetComponent<Monster>();
-                    targetMonster.Kill();
-                }
+                characterData.DoDamage((int)meleeDamage);
 
             }
         }

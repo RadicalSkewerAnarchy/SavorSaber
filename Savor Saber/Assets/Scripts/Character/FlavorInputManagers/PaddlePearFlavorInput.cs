@@ -45,21 +45,18 @@ public class PaddlePearFlavorInput : FlavorInputManager
 
     public void DamageOverTime(int numTics, float ticLength)
     {
+        bool killingBlow = false;
         if(numTics > 0)
         {
-            characterData.health -= 1;
+            //test to see if this tic will inflict a killing blow
+            if (characterData.health - 1 <= 0)
+                killingBlow = true;
+           
+            characterData.DoDamage(1);
             Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
-            if (characterData.health <= 0)
-            {
-                //Debug.Log("Killing Monster");
-                Monster targetMonster = GetComponent<Monster>();
-                targetMonster.Kill();
+            if (killingBlow)
                 return;
-            }
-
-            var deathSoundObj = Instantiate(deathSfxPlayer, transform.position, transform.rotation);
-            deathSoundObj.GetComponent<PlayAndDestroy>().Play(hurtSfx);
 
             StartCoroutine(ExecuteAfterSeconds(ticLength, numTics));
         }

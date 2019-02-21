@@ -32,12 +32,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
             //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
             {
-                charData.health -= (int)meleeDamage;
-                Debug.Log("Character health: " + charData.health);
-                if (charData.health <= 0)
-                {
-                    //collision.gameObject.SetActive(false);
-                }
+                charData.DoDamage((int)meleeDamage);
             }                       
         }
     }

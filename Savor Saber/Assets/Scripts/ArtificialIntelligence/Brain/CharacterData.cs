@@ -20,6 +20,9 @@ public class CharacterData : MonoBehaviour
     public int maxHealth;
     public int health;
     public int PartySize = 3;
+    public AudioClip damageSFX;
+    public AudioClip deathSFX;
+    public GameObject sfxPlayer;
     private Vector2 Spawn;
     #endregion
     #region Variance
@@ -54,10 +57,45 @@ public class CharacterData : MonoBehaviour
         #endregion
         Spawn = transform.position;
     }
+    public void DoDamage(int damage)
+    {
+        health -= damage;
+
+        //only play damage SFX if it was not a killing blow so sounds don't overlap
+        if (damageSFX != null && health > 0)
+        {
+            var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+            deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+        }
+        else if(damageSFX == null && health > 0)
+        {
+            //play generic sound from asset bundle
+        }
+        else if (health <= 0)
+        {
+            if (this.tag == "Prey" || this.tag == "Predator")
+            {
+                Kill();
+            }
+            else if (this.tag == "Player")
+            {
+                Respawn();
+            }
+        }
+    }
+
+    public void Kill()
+    {
+        var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+        deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
+        GetComponent<DropOnDeath>().Drop();
+        Destroy(gameObject);
+    }
 
     #region Respawning (Move to player-specific child class)
     private void Update()
     {
+        /*
         if(health <= 0)
         {
             if(this.tag == "Player")
@@ -65,6 +103,7 @@ public class CharacterData : MonoBehaviour
                 Respawn();
             }            
         }
+        */
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
