@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// not sure if this should be a hard requirement or not but I'll leave it here for now
-/// </summary>
 [RequireComponent(typeof(AIData))]
 public class MonsterProtocols : MonoBehaviour
 {
+    #region Initialize
     AIData AiData;
     MonsterBehavior Behaviour;
     MonsterChecks Checks;
     bool runningCoRoutine = false;
+    #endregion
 
     private void Start()
     {
@@ -36,7 +35,11 @@ public class MonsterProtocols : MonoBehaviour
     ///     }
     /// </summary>
 
+    #region Aggro Protocols
     /// NEEDS A LOT OF POLISH
+    // Melee()
+    // move to and make a melee attack on
+    // some creature or enemy or bush
     public void Melee()
     {
         #region Get Nearest + Null Check
@@ -68,6 +71,8 @@ public class MonsterProtocols : MonoBehaviour
         }       
     }
 
+    // Ranged()
+    // move from a target and launch a projectile
     public void Ranged()
     {
         #region Get Nearest + Null Check
@@ -93,19 +98,6 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-    public void Lazy()
-    {             
-        // idle
-        if (Behaviour.Idle())
-        {
-            // test signals
-            Checks.AwareHowMany();
-            // reset action timer
-            Behaviour.ResetActionTimer();
-            Checks.ResetSpecials();
-        }
-    }
-
     // checks if their are enemies, then attempts to attack
     // if attack cannot happen, becomes lazy
     public void Guard()
@@ -119,7 +111,84 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
+    // Swarm()
+    // given enough friends
+    // and few enemies
+    // swarm a target and kill them
+    // eat their remains and feast
+    public void Swarm()
+    {
+        var numFriends = AiData.Checks.NumberOfFriends();
+        var numEnemies = AiData.Checks.NumberOfEnemies();
+        #region Get Nearest + Null Check
+        Vector2 pos = Checks.GetRandomPositionType();
+        #endregion
 
+
+        if (numFriends >= AiData.PartySize)
+        {
+            if (numFriends / numEnemies >= 2 * numEnemies)
+            {
+                if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
+                {
+                    //behavior.attack should return true if creature dies?
+                    if (Behaviour.MeleeAttack(pos, AiData.Speed))
+                    {
+                        //need to look at behavior.feed
+                        //Behaviour.Feed(closestEnemy, AiData.Speed);
+                    }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Neutral Protocols
+    // Lazy()
+    // just chill
+    public void Lazy()
+    {             
+        // idle
+        if (Behaviour.Idle())
+        {
+            // test signals
+            Checks.AwareHowMany();
+            // reset action timer
+            Behaviour.ResetActionTimer();
+            Checks.ResetSpecials();
+        }
+    }
+
+    // Runaway()
+    // move away from the nearest anything
+    public void Runaway()
+    {
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
+        #endregion
+        if (Behaviour.MoveFrom(pos, AiData.Speed, 10f))
+        {
+            Checks.ResetSpecials();
+        }
+    }
+
+    // Chase()
+    // move away from the nearest anything
+    public void Chase()
+    {
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        {
+            Checks.ResetSpecials();
+        }
+    }
+    #endregion
+
+    #region Pacifist Protocols
     // checks if there are enough friends to party
     // moves if necessary to the nearest friend
     // socializes
@@ -141,41 +210,9 @@ public class MonsterProtocols : MonoBehaviour
         }       
     }
 
-
-    // calculates numFriends/numEnemies once for efficiency
-    //
-    // if there are a party of friends{
-    //      if the ratio of friends to enemies is >= twice the number of enemies{
-    //          if the agent is at closest enemy{
-    //              if the creature is dead{
-    //                  feed()
-    public void Swarm()
-    {
-        var numFriends = AiData.Checks.NumberOfFriends();
-        var numEnemies = AiData.Checks.NumberOfEnemies();
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.GetRandomPositionType();
-        #endregion
-
-
-        if (numFriends >= AiData.PartySize)
-        {
-            if (numFriends / numEnemies >= 2 * numEnemies )
-            {
-                if(Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
-                {
-                    //behavior.attack should return true if creature dies?
-                    if(Behaviour.MeleeAttack(pos, AiData.Speed))
-                    {
-                        //need to look at behavior.feed
-                        //Behaviour.Feed(closestEnemy, AiData.Speed);
-                    }
-                }
-            }
-        }
-    }
-
     // plants currently not implemented
+    // Feast()
+    // find plants, hit plants, eat plant drops
     public void Feast()
     {
         
@@ -205,7 +242,10 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-    // fear signal check needed
+    // Console()
+    // go to a friend in need
+    // increase their friendliness and
+    // decrease their fear and hostility
     public void Console()
     {
         if(AiData.Checks.NumberOfFriends() > 0)
@@ -217,18 +257,9 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-    public void Runaway()
-    {
-        #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
-        Vector2 pos = GetComponent<AIData>().Enemies[0].transform.position;//Checks.GetRandomPositionType();
-        #endregion
-        if(Behaviour.MoveFrom(pos, AiData.Speed, 10f))
-        {
-            Checks.ResetSpecials();
-        }
-    }
-
+    // Conga()
+    // become the leader if no leader
+    // otherwise, follow the last person in line
     public void Conga()
     {
         if (Checks.AmLeader())
@@ -250,11 +281,19 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
+    // Wander()
+    // go in random directions
     public void Wander()
     {
 
     }
+    #endregion
 
+    #region Helper Functions
+    // DecideLeader()
+    // used to randomly start and end
+    // the decision making process for who
+    // is 1st leader
     protected IEnumerator DecideLeader()
     {
         runningCoRoutine = true;
@@ -265,5 +304,6 @@ public class MonsterProtocols : MonoBehaviour
         yield return null;
         runningCoRoutine = false;
     }
+    #endregion
 }
 

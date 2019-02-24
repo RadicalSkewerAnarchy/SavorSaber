@@ -18,9 +18,6 @@ public class MonsterChecks : MonoBehaviour
     public List<GameObject> AllCreatures;
     public List<GameObject> AllDrops;
 
-    private int numEnemiesNear = 0;
-    private int numFriendsNear = 0;
-
     /// <summary>
     /// Closest Friend and Closest Enemy for quick access
     /// </summary>
@@ -42,18 +39,22 @@ public class MonsterChecks : MonoBehaviour
     {
         AiData = GetComponent<AIData>();
         GameObject soma = GameObject.FindGameObjectWithTag("Player");
-        //Enemies.Add(soma);
+
+        // Know who is friend and foe
         Friends = AiData.Friends;
         Enemies = AiData.Enemies;
         Enemies.Add(soma);
         Friends.Add(soma);
+
         // clear often
         AllCreatures = new List<GameObject>();
         AllDrops = new List<GameObject>();
+
         // specials
         specialPosition = transform.position;
     }
 
+    #region AWARENESS
     /// <summary>
     /// checks for all creatures, Max of 10 (Change this in AIData in Start() for NearbyCreatures[]
     /// </summary>
@@ -76,9 +77,9 @@ public class MonsterChecks : MonoBehaviour
         AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
     }
+    #endregion
 
-
- 
+    #region LOCATIONAL CHECKS
     /// <summary>
     /// Checks creatures and returns closest
     /// </summary>
@@ -201,7 +202,19 @@ public class MonsterChecks : MonoBehaviour
         return closestDrop;
     }
 
-    #region CONGA LINE FUNCTIONS
+    /// <returns> Vector2 of Closest Enemy or Friend </returns>
+    public Vector2 NearestEnemyPosition()
+    {
+        return ClosestCreature().gameObject.transform.position;
+    }
+    public Vector2 NearestFriendPosition()
+    {
+        return ClosestCreature().gameObject.transform.position;
+    }
+
+    #endregion
+
+    #region CONGA LINE CHECKS
     ///Conga Line Functions
     public void BecomeLeader()
     {
@@ -280,27 +293,18 @@ public class MonsterChecks : MonoBehaviour
     }
     #endregion
 
-    /// <returns> Count of Enemy and Friend Dictionaries </returns>
+    #region COUNT CHECKS
+    /// COUNT FUNCTIONS
+    /// <returns> Count of Enemy and Friend Lists </returns>
     public int NumberOfEnemies()
     {
-        return numEnemiesNear;
+        return Enemies.Count;
     }
     public int NumberOfFriends()
     {
-        return numFriendsNear;
+        return Friends.Count;
     }
-
-
-
-    /// <returns> Vector2 of Closest Enemy or Friend </returns>
-    public Vector2 NearestEnemyPosition()
-    {
-        return ClosestCreature().gameObject.transform.position;
-    }
-    public Vector2 NearestFriendPosition()
-    {
-        return ClosestCreature().gameObject.transform.position;
-    }
+    #endregion
 
     #region (Re)Set Specials
     // set specials
@@ -326,6 +330,7 @@ public class MonsterChecks : MonoBehaviour
     }
     #endregion
 
+    #region POSITION RANDOMIZATION
     /// <summary>
     /// Given some distribution, return a vector2 of:
     ///     the closest creauture
@@ -376,5 +381,5 @@ public class MonsterChecks : MonoBehaviour
         // return
         return pos;
     }
-
+    #endregion
 }
