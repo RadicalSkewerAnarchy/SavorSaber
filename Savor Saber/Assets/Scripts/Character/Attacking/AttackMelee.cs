@@ -170,6 +170,11 @@ public class AttackMelee : AttackBase
     {
         CanBeCanceled = true;
         //animation stuff
+        if(attackSound != null && attackSoundPlayer != null)
+        {
+            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
+            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+        }
         animator.Play(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions

@@ -158,11 +158,11 @@ public class SignalApplication : MonoBehaviour
             // using the keys, change the values
             // of "moods" in data
             float mod = moodMod[key];
-            Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
+            //Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
             if (mod != 0)
             {
                 if(Mathf.Abs(mod) >= Mathf.Abs(mostInfluential)) { mostInfluential = mod; mood = key; sign = (int)(mod / Mathf.Abs(mod)); }
-                Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
+                //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
@@ -187,7 +187,7 @@ public class SignalApplication : MonoBehaviour
         {
             if (mood == "Friendliness")
             {
-                Debug.Log("Setting animation to friendly");
+                //Debug.Log("Setting animation to friendly");
                 emoter.GetComponent<Animator>().Play("FriendUpAnimation");
             }
             else if (mood == "Hostility")

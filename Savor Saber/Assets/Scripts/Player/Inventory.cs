@@ -5,97 +5,6 @@ using UnityEngine.UI;
 using System;
 
 /// <summary>
-/// Class for packaging a stack of ingredients and a completed recipe.
-/// </summary>
-public class Skewer
-{
-    //fields
-    public Stack<IngredientData> ingredientStack = new Stack<IngredientData>();
-
-    public RecipeData finishedRecipe = null;
-
-    /// <summary>
-    /// how much of each flavor is present on the skewer
-    /// </summary>
-    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
-
-
-    //methods
-
-    public void InitializeDictionary()
-    {
-        flavorCountDictionary.Add(RecipeData.Flavors.Sweet, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Sour, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Spicy, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Salty, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Savory, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Bitter, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
-    }
-
-    /// <summary>
-    /// Resets the count of each flavor to 0
-    /// </summary>
-    public void ResetDictionary()
-    {
-        flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Savory] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
-    }
-
-    public int GetCount()
-    {
-        return ingredientStack.Count;
-    }
-
-    public void PushIngredient(IngredientData ingredient)
-    {
-        ingredientStack.Push(ingredient);
-
-        // Sweet = 1, Acquired = 64
-        
-        for(int f = 1; f <= 64; f = f << 1)
-        {
-
-            if ((f & (int)ingredient.flavors) > 0)
-            {
-                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                //Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
-            }    
-        }
-    }
-
-    public IngredientData PopIngredient()
-    {
-        return ingredientStack.Pop();
-    }
-
-    public IngredientData[] ToArray()
-    {
-        return ingredientStack.ToArray();
-    }
-
-    public bool IsCooked()
-    {
-        return finishedRecipe != null;
-    }
-
-    public void ClearItems()
-    {
-        ingredientStack.Clear();
-    }
-    public void ClearRecipe()
-    {
-        finishedRecipe = null;
-    }
-}
-
-/// <summary>
 /// Controller for functions related to managing and displaying inventory
 /// </summary>
 ///
@@ -111,7 +20,6 @@ public class Inventory : MonoBehaviour {
     public int maxItemsPerSkewer = 3;
     public Image[] skewerSprites = new Image[3];
     public Sprite emptySprite;
-
 
     /// <summary>
     /// Fields related to actual inventory tracking
@@ -159,13 +67,14 @@ public class Inventory : MonoBehaviour {
 
     private void Update()
     {
-        GetCookingInput();
         //Detect swapping input
         GetSkewerSwapInput();
+
+        //Debug.Log("Majority flavor on active skewer: " + GetMajorityFlavor(false, true));
+        //Debug.Log("Majority flavor on all skewers: " + GetMajorityFlavor(true, true));
     }
 
     #region utility functions
-
 
     /// <summary>
     /// returns the currently active skewer
@@ -196,6 +105,14 @@ public class Inventory : MonoBehaviour {
     }
 
     /// <summary>
+    /// returns an array of all skewers
+    /// </summary>
+    public Skewer[] GetAllskewers()
+    {
+        return quiver;
+    }
+
+    /// <summary>
     /// Returns true if the active skewer is full
     /// </summary>
     public bool ActiveSkewerFull()
@@ -204,11 +121,31 @@ public class Inventory : MonoBehaviour {
     }
 
     /// <summary>
+    /// returns true if all skewers are full
+    /// </summary>
+    public bool AllSkewersFull()
+    {
+        return GetRightSkewer().GetCount() == maxItemsPerSkewer &&
+               GetLeftSkewer().GetCount() == maxItemsPerSkewer &&
+               GetActiveSkewer().GetCount() == maxItemsPerSkewer;
+    }
+
+    /// <summary>
     /// Returns true if the active skewer is empty
     /// </summary>
     public bool ActiveSkewerEmpty()
     {
         return (quiver[activeSkewer].GetCount() == 0);
+    }
+
+    /// <summary>
+    /// returns true if all skewers are empty
+    /// </summary>
+    public bool AllSkewersEmpty()
+    {
+        return GetRightSkewer().GetCount() == 0 &&
+               GetLeftSkewer().GetCount() == 0 &&
+               GetActiveSkewer().GetCount() == 0;
     }
 
     /// <summary>
@@ -267,9 +204,89 @@ public class Inventory : MonoBehaviour {
         return quiver[activeSkewer].finishedRecipe;
     }
 
+    /// <summary>
+    /// Returns the flavor count dictionary of the active skewer
+    /// </summary>
     public Dictionary<RecipeData.Flavors, int> GetActiveFlavorDictionary()
     {
         return quiver[activeSkewer].flavorCountDictionary;
+    }
+
+    /// <summary>
+    /// Returns the majority flavor on either the active skewer or all skewers. 
+    /// Can return either Acquired or None if there is a tie
+    /// </summary>
+    public RecipeData.Flavors GetMajorityFlavor(bool checkAllSkewers, bool acquiredTies)
+    {
+
+        RecipeData.Flavors majorityFlavor = RecipeData.Flavors.None;
+        bool tie = true;
+
+        if (!checkAllSkewers)
+        {
+            if (ActiveSkewerEmpty())
+            {
+                //Debug.Log("Warning: Cannot find majority flavor on empty skewer");
+                return RecipeData.Flavors.None;
+             }
+
+            int highestNumber = 0;
+            int lastNumber = 0;
+            //iterate over all possible flavors
+            for (int f = 1; f <= 64; f = f << 1)
+            {
+                if(quiver[activeSkewer].flavorCountDictionary[(RecipeData.Flavors)f] >= highestNumber)
+                {
+                    highestNumber = quiver[activeSkewer].flavorCountDictionary[(RecipeData.Flavors)f];
+
+                    if (lastNumber == highestNumber)
+                        tie = true;
+                    else
+                        tie = false;
+
+                    lastNumber = highestNumber;
+                    majorityFlavor = (RecipeData.Flavors)f;
+                }
+            }
+            if (!tie)
+                return majorityFlavor;
+            else
+                return acquiredTies ? RecipeData.Flavors.Acquired : RecipeData.Flavors.None;
+        }
+        else
+        {
+            if (AllSkewersEmpty())
+            {
+                //Debug.Log("Warning: Cannot find majority flavor on empty skewers");
+                return RecipeData.Flavors.None;
+            }
+
+            int highestNumber = 0;
+            int lastNumber = 0;
+            //iterate over all possible flavors
+            for (int s = 0; s < numberOfSkewers; s++)
+            {
+                for (int f = 1; f <= 64; f = f << 1)
+                {
+                    if (quiver[s].flavorCountDictionary[(RecipeData.Flavors)f] > highestNumber)
+                    {
+                        highestNumber = quiver[s].flavorCountDictionary[(RecipeData.Flavors)f];
+
+                        if (lastNumber == highestNumber)
+                            tie = true;
+                        else
+                            tie = false;
+
+                        lastNumber = highestNumber;
+                        majorityFlavor = (RecipeData.Flavors)f;
+                    }
+                }
+            }
+            if (!tie)
+                return majorityFlavor;
+            else
+                return acquiredTies ? RecipeData.Flavors.Acquired : RecipeData.Flavors.None;
+        }
     }
 
     /// <summary>
@@ -291,25 +308,20 @@ public class Inventory : MonoBehaviour {
         {
             if(i < dropArray.Length)
             {
-                //print("showing " + dropArray[i].flavors + " at index " + i);
                 if (skewerSprites[i] != null)
                     skewerSprites[i].sprite = dropArray[i].image;
-                //else
-                    //Debug.Log("Error: No UI detected for inventory visualization");
             }
             else
             {
                 if(skewerSprites[i] != null)
                     skewerSprites[i].sprite = emptySprite;
-                //else
-                    //Debug.Log("Error: No UI detected for inventory visualization");
             }
         }
     }
-    #endregion
 
-    #region cooking functions
-
+    /// <summary>
+    /// Handle input for buttons to swap skewers
+    /// </summary>
     private void GetSkewerSwapInput()
     {
         if (!CanSwap)
@@ -336,70 +348,6 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    private void GetCookingInput()
-    {
-        //Press C to cook
-        if (InputManager.GetButtonDown(Control.Cook) && nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                sfxPlayer.Play(cookSFX);
-                LongCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                sfxPlayer.Play(cantCookSFX);
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-
-        /*
-        else if (InputManager.GetButtonDown(Control.Cook) && !nearCampfire)
-        {
-            if (quiver[activeSkewer].GetCount() > 0)
-            {
-                sfxPlayer.Play(cookSFX);
-                ShortCook();
-            }
-            else if (quiver[activeSkewer].GetCount() <= 0)
-            {
-                sfxPlayer.Play(cantCookSFX);
-                Debug.Log("Your inventory is empty, cannot cook");
-            }
-        }
-        */
-    }
-    /// <summary>
-    /// Execute a long cook, access full database
-    /// </summary>
-    private void LongCook()
-    {
-        Debug.Log("Cooking at campfire...");
-        RecipeData cookedRecipe = recipeDatabase.CompareToRecipes(quiver[activeSkewer].ingredientStack);
-        //if it actually returned a recipe match
-        if(cookedRecipe != null)
-        {
-            quiver[activeSkewer].finishedRecipe = cookedRecipe;
-            ClearActiveSkewer();
-        }
-
-    }
-
-    /// <summary>
-    /// Execute a short cook, only use recipes not tagged complex
-    /// </summary>
-    private void ShortCook()
-    {
-        Debug.Log("Cooking in the field...");
-        RecipeData cookedRecipe = recipeDatabase.CompareToSimpleRecipes(quiver[activeSkewer].ingredientStack);
-        //if it actually returned a recipe match
-        if (cookedRecipe != null)
-        {
-            quiver[activeSkewer].finishedRecipe = cookedRecipe;
-            ClearActiveSkewer();
-        }
-    }
-
     /// <summary>
     /// Triggers to check if the player is near a campfire
     /// </summary>
@@ -411,7 +359,6 @@ public class Inventory : MonoBehaviour {
             nearCampfire = true;
         }
     }
-
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Campfire")

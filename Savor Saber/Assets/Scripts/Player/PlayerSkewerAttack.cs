@@ -15,7 +15,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
         sfxPlayer = GetComponent<PlaySFX>();
         if (collision.gameObject.tag == "SkewerableObject" && !inventory.ActiveSkewerFull() && !inventory.ActiveSkewerCooked())
         {
-            Debug.Log("Hit skewerable object");
+            //Debug.Log("Hit skewerable object");
             SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
 
             sfxPlayer.Play(pickUpSFX);
