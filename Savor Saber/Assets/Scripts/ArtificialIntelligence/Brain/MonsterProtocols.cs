@@ -165,7 +165,7 @@ public class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
+        Vector2 pos = Checks.GetRandomPositionType();
         #endregion
         if (Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
@@ -195,7 +195,7 @@ public class MonsterProtocols : MonoBehaviour
     public void Party()
     {
         #region Get Nearest + Null Check
-        Vector2 pos = Checks.GetRandomPositionType();
+        Vector2 pos = Checks.AverageGroupPosition();
         #endregion
         // move to
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))

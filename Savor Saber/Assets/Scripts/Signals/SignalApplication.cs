@@ -26,7 +26,8 @@ public class SignalApplication : MonoBehaviour
     #endregion
     
     // private variables
-    public bool activate = false;
+    public bool activate = true;
+    public bool isForAwareness = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
     bool hitAll = true;
@@ -41,7 +42,6 @@ public class SignalApplication : MonoBehaviour
     // signalmaker, radius, moods, hitself, hitenemies, hitfriends
     public void SetSignalParameters(GameObject signalMaker, float radius, Dictionary<string, float> moods, bool hitall, bool hitself)
     {
-        //Debug.Log("Signal Created: rad = " + radius + ", x = " + transform.position.x + ", y = " + transform.position.y + "(" + moods["Friendliness"] + ")");
         this.signalMaker = signalMaker;
         this.interactRadius = radius;
         // update radius
@@ -50,6 +50,14 @@ public class SignalApplication : MonoBehaviour
         this.moodMod = moods;
         this.hitAll = hitall;
         this.hitSelf = hitself;
+
+        // set whether or not this is for awareness:
+        //      if the dictionary is empty, 
+        //      it is for awareness
+        isForAwareness = (this.moodMod.Count == 0);
+
+
+        //Debug.Log("Signal Created: is " + (isForAwareness?"":"NOT ") + "for awareness, x = " + transform.position.x + ", y = " + transform.position.y);
     }
 
 
@@ -66,27 +74,32 @@ public class SignalApplication : MonoBehaviour
 
     public void Update()
     {
-        // if data is being requested,
-        // then obtain hit list after
-        // instantiation
         if (activate)
         {
-            // apply
-            ApplyToAll();
-            // inform signal maker of those here
-            if (signalMaker != null && !ReferenceEquals(signalMaker, null))
+            // if data is being requested,
+            // then obtain hit list after
+            // instantiation
+            // apply only if it's NOT for awareness
+            if (!isForAwareness)
             {
-                signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
-                //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
-                signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
-                signalMaker.GetComponent<AIData>().Awareness = null;
+                ApplyToAll();
             }
+            // inform signal maker of those here
+            else if (signalMaker != null)
+            {
+                {
+                    signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+                    //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                    signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
+                    signalMaker.GetComponent<AIData>().Awareness = null;
+                }
+            }
+
             // destroy
-            Destroy(this.gameObject, Time.fixedDeltaTime);
-        }
-        else
-        {
-            activate = true;
+            Debug.Log("this signal should destroy istelf");
+            Destroy(this.gameObject);
+
+            activate = false;
         }
     }
 
@@ -97,7 +110,7 @@ public class SignalApplication : MonoBehaviour
         GameObject go = collision.gameObject;
 
         string sm = (signalMaker != null ? signalMaker.name : "null character" );
-        if(interactRadius < 5)
+        //if(interactRadius < 5)
             Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
         // check tags
@@ -106,11 +119,10 @@ public class SignalApplication : MonoBehaviour
             //Debug.Log(go.name + "is tagged properly --> " + go.tag);
 
             // create boolean cases
-            bool hitS = hitSelf && this.Equals(go);
-            bool hitA = hitAll && !hitS;
+            bool isMe = (signalMaker != null ? this.signalMaker.name.Equals(go.name) : false );
 
             // if ANY of these...
-            if (hitA || hitS)
+            if ((isMe && hitSelf) || (hitAll && !isMe))
             {
                 // add to list
                 //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
@@ -130,13 +142,16 @@ public class SignalApplication : MonoBehaviour
     {
         foreach (GameObject g in hitList)
         {
-            //Debug.Log("APPLY TO HIT: " + g.name);
-            if (g != null && g.tag != "Player")
+            if (g != null)
             {
-                // get data
-                AIData data = g.GetComponent<AIData>();
-                // apply
-                Apply(g, data);
+                if (g.tag != "Player")
+                {
+                    //Debug.Log("APPLY TO HIT: " + g.name);
+                    // get data
+                    AIData data = g.GetComponent<AIData>();
+                    // apply
+                    Apply(g, data);
+                }
             }
         }
     }
@@ -146,33 +161,46 @@ public class SignalApplication : MonoBehaviour
     // signal that needs to be applied
     private void Apply(GameObject g, AIData data)
     {
-        //Debug.Log("Applying signal to " + g);
+        if (ReferenceEquals(g, null))
+            return;
+        Debug.Log("Applying signal to " + g);
+
         //modification  
         #region SignalAnimations
         string mood = null;
         float mostInfluential = 0;
         int sign = 0;
         #endregion
+
+        // iterate thru all the keys
         foreach (string key in moodMod.Keys)
         {
-            // using the keys, change the values
-            // of "moods" in data
+            // extract modifier
             float mod = moodMod[key];
-            Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
+            //Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
+
+            // as long is it's non zero....
             if (mod != 0)
             {
-                if(Mathf.Abs(mod) >= Mathf.Abs(mostInfluential)) { mostInfluential = mod; mood = key; sign = (int)(mod / Mathf.Abs(mod)); }
+                // update signal animation
+                if(Mathf.Abs(mod) >= Mathf.Abs(mostInfluential))
+                {
+                    mostInfluential = mod;
+                    mood = key;
+                    sign = (int)Mathf.Sign(mod);
+                }
                 Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
+
                 float value = data.moods[key];
                 value = Mathf.Clamp((value + mod), 0f, 1f);
                 data.moods[key] = value;
-                //Debug.Log(g + "'s " + key + " value should be " + value);
+                Debug.Log(g + "'s " + key + " value should be " + value);
             }
         }
         //change middle argument based on creatures offset
         GameObject child = null;
-        if (signalMaker == null)
-            SignalAnimator(mostInfluential, mood, sign, child, g);
+        SignalAnimator(mostInfluential, mood, sign, child, g);
+        
         // child.GetComponent<Animator>().Play("FearUpAnimation");
 
         // set decision timer to 0
@@ -200,6 +228,8 @@ public class SignalApplication : MonoBehaviour
             }
             else if (mood == "Hunger")
             {
+
+                //Debug.Log("Setting animation to FAMINE");
                 emoter.GetComponent<Animator>().Play("HungerUpAnimation");
             }
         }
@@ -221,7 +251,9 @@ public class SignalApplication : MonoBehaviour
             {
                 emoter.GetComponent<Animator>().Play("HungerDownAnimation");
             }
-        }else{
+        }
+        else
+        {
             Debug.Log("Destroying emoter");
             Destroy(emoter);
         }        

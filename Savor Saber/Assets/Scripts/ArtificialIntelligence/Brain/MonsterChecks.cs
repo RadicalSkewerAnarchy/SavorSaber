@@ -71,9 +71,9 @@ public class MonsterChecks : MonoBehaviour
         // clear all creatues
         AllCreatures.Clear();
         // update all creatures
-        GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform, false) as GameObject;
+        GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform.position, Quaternion.identity) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, true);
+        signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, false);
         AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
     }
@@ -269,7 +269,7 @@ public class MonsterChecks : MonoBehaviour
     public GameObject ClosestLeader()
     {
         bool foundLeader = false;
-        bool foundSpecial = false;
+        //bool foundSpecial = false;
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -284,7 +284,7 @@ public class MonsterChecks : MonoBehaviour
             }
             if (Creature == specialTarget)
             {
-                foundSpecial = true;
+                //foundSpecial = true;
             }
         }
         // only return positions if target OR leader are found

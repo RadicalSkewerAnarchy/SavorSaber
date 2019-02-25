@@ -9,6 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(MonsterProtocols))]
 [RequireComponent(typeof(MonsterChecks))]
 [RequireComponent(typeof(UtilityCurves))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class AIData : CharacterData
 {
@@ -134,13 +135,19 @@ public class AIData : CharacterData
         // UPDATE Decision
         if (DecisionTimer < 0)
         {
-            // update state
+            // CALCULATE AND ACQUIRE NEW STATE:
             currentProtocol = Curves.DecideState();
-            //Debug.Log("Getting New Protocol: " + currentProtocol);
-            // reset decision timer
+
+            //Debug.Log(this.gameObject.name + " is getting a New Protocol: " + currentProtocol);
+
+            // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
-            // update awareness of creatures
+
+            // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
+
+            // UPDATE HUNGER??
+            UpdateHunger();
         }
         else
         {
@@ -231,4 +238,38 @@ public class AIData : CharacterData
         DecisionTimer = -1f;
     }
 
+    // UpdateHunger()
+    // damage me if im hungry
+    private void UpdateHunger()
+    {
+        // have random chance to be hungry
+        float rand = Random.Range(0f, 100f);
+        if (rand < 100)
+        {
+            // create a signal that subtracts from my hunger
+            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity) as GameObject;
+            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+            signalModifier.SetSignalParameters(this.gameObject, 0.1f, new Dictionary<string, float>() { { "Hunger", 0.1f } }, false, true);
+
+            // die or
+            // change sprite color
+            float hunger = moods["Hunger"];
+            Debug.Log("Im getting hungrier: " + this.gameObject.name + "'s hunger = " + hunger);
+            if (hunger >= 1f)
+            {
+                // hurt me
+                health -= 1;
+                if (health <= 0)
+                {
+                    // ded
+                    Monster me = this.gameObject.GetComponent<Monster>();
+                    me.Kill();
+                }
+            }
+            else if (hunger >= 0.75f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(116f, 116f, 0f);
+            }
+        }
+    }
 }
