@@ -9,14 +9,18 @@ using UnityEngine;
 
 public class MonsterBehavior : MonoBehaviour
 {
+    #region GlobalVariables
+    #region Components
     Rigidbody2D RigidBody;
     Animator AnimatorBody;
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
-
-    // Some behaviors go for a certain amount of time.
-    // timer is complete when < 0
+    #endregion
+    #region ActionTimer
+    /// <summary>
+    /// behavior timers
+    /// </summary>
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
@@ -24,24 +28,16 @@ public class MonsterBehavior : MonoBehaviour
     public float ResetTimerReset;
     public float ResetTimerVariance;
     bool left = false;
-
-    // biases
+    #endregion
+    #region Bias
+    /// <summary>
+    /// biase
+    /// </summary>
     private float biasAngle = 15f;
     private float biasAngleMod;
     private float biasMovementAngle;
-
+    #endregion
     #region Attacking
-    public enum Direction : int
-    {
-        East,
-        NorthEast,
-        North,
-        NorthWest,
-        West,
-        SouthWest,
-        South,
-        SouthEast,
-    }
     /// <summary>
     /// where the attack collider will be spawned
     /// </summary>
@@ -66,25 +62,29 @@ public class MonsterBehavior : MonoBehaviour
     public float attackDuration = .5f;
     public bool isAttacking = false;
     #endregion
-
+    #endregion
     private void Start()
     {
+        #region Initialize
+        #region GetComponents
         AiData = GetComponent<AIData>();
         Checks = AiData.GetComponent<MonsterChecks>();
         AnimatorBody = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         controller = GetComponent<MonsterController>();
-
+        #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
         ActionTimerVariance = 2f;
         ResetTimer = -1f;
         ResetTimerReset = 6f;
         ResetTimerVariance = 2f;
-
         ResetMovementBias();
+        #endregion
     }
-
+    /// <summary>
+    /// Resets timer if it reaches 0, decrements if it's above 0
+    /// </summary>
     private void Update()
     {
         if (ResetTimer < 0)
@@ -97,20 +97,18 @@ public class MonsterBehavior : MonoBehaviour
             ResetTimer -= Time.deltaTime;
         }
     }
-
     /// <summary>
     /// These actions return a Boolean to verify their completion.
     /// These actions may modify the agents position.
     /// </summary>
-
+    
+    /// <summary>
+    /// Idle does nothing until next decision is made
+    /// </summary>
     public bool Idle()
     {
-        //Debug.Log("I am Idle");
-        //Debug.Log(ActionTimer);
         AnimatorBody.Play("Idle");
         AiData.currentBehavior = AIData.Behave.Idle;
-        // if done being idle, reset and return true
-        // stay idle or dont if time allows
         if (ActionTimer < 0)
         {
             return true;
@@ -121,58 +119,46 @@ public class MonsterBehavior : MonoBehaviour
             return false;
         }
     }
-
+    /// <summary>
+    /// Moves the agent to threshhold distance from target at speed
+    /// </summary>
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
-        //Debug.Log("I am Chase at " + speed + "mph");
-        // Turn Greenish
         AiData.currentBehavior = AIData.Behave.Chase;
-
-        //left = false;
-
         var current = new Vector2(transform.position.x, transform.position.y);
-
-        // at target
         if (Vector2.Distance(current, target) <= threshold)
         {
             return true;
         }
         else
         {
-
-            // move towards target
+            #region Move
             AnimatorBody.Play("Move");
-            // random rotation of target around current
-            //     based on bias of movement
             target = RotatePoint(current, biasMovementAngle, target);
-            // get direction towards new target
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
-            //left = () ? true : false;
             transform.Translate(target);
-
+            #endregion
             return false;
         }
     }
-
+    /// <summary>
+    /// Moves the agent away from threshold distance - 1 from target at speed
+    /// </summary>
     public bool MoveFrom(Vector2 target, float speed, float threshold)
     {
-        // Turn Greenish
         AiData.currentBehavior = AIData.Behave.Flee;     
         var current = new Vector2(transform.position.x, transform.position.y);
         if(Vector2.Distance(current, target) <= threshold - 1)
         {
-            // move towards target
+            #region Move
             AnimatorBody.Play("Move");
-            // random rotation of target around current
-            //     based on bias of movement
-            //target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(-1 * target);
-            //left = (target.x < 0) ? true : false;
             transform.Translate(-1*target);
+            #endregion
             return false;
         }
         else
@@ -180,70 +166,69 @@ public class MonsterBehavior : MonoBehaviour
             return true;
         }
     }
-
-    // FEED
+    /// <summary>
+    /// Deactivates detected drop and destroys it
+    /// </summary>  
     public bool Feed(GameObject drop)
     {
+        #region Eat
         AnimatorBody.Play("Feed");
         AiData.currentBehavior = AIData.Behave.Feed;
         drop.SetActive(false);
-        //AiData.Stomach.Enqueue(Instantiate(drop));
         Destroy(drop);
-
+        #endregion
         return true;
     }
-
-    // ATTACK
+    /// <summary>
+    /// If you're not attacking, make attack collider and attack
+    /// </summary>
     public bool MeleeAttack(Vector2 target, float speed)
     {
         if (!isAttacking)
         {
+            #region Attack
             isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
-            // var dir = CalculateDirection(target);
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
             newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
-            //Debug.Log("ATTACKING");
-            //stops attacking for 1 second after attack
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
+            #endregion
             return true;
         }
         return false;        
     }
-
+    /// <summary>
+    /// If you're not attacking, same boolean as MeleeAttack();
+    /// </summary>
     public bool RangedAttack(Vector2 target, float speed)
     {
-        //Debug.Log("I am rangedAttack");
         if (!isAttacking)
         {
+            #region Attack
+            isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
-            // var dir = CalculateDirection(target);
-            // AnimatorBody.Play("Ranged");
+            AnimatorBody.Play("Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
             GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity, transform);
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
-            projectileData.directionVector = normalizedVec;
-            isAttacking = true;
-            //Debug.Log("isAttacking is: " + isAttacking);
+            projectileData.directionVector = normalizedVec;            
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
-            
+            #endregion
         }
-
         return true;
     }
-
+    /// <summary>
+    /// Spawns one friend signal per action
+    /// </summary>
     public bool Socialize()
     {
         AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;
         if (ActionTimer < 0)
         {
-            // create signal 
-            // change signal radius
-            // change signal values (++friendliness)
             GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, false) as GameObject;
             SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
             signalModifier.SetSignalParameters(null, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
@@ -255,7 +240,9 @@ public class MonsterBehavior : MonoBehaviour
             return false;
         }
     }
-
+    /// <summary>
+    /// Returns a normalized direction
+    /// </summary>
     static Direction CalculateDirection(Vector2 target)
     {
         var movementAngle = Vector2.SignedAngle(Vector2.right, target);
@@ -263,7 +250,9 @@ public class MonsterBehavior : MonoBehaviour
             movementAngle += 360;
         return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 90));
     }
-
+    /// <summary>
+    /// Ends attack after time passes and destroys
+    /// </summary>
     protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack, bool destroy)
     {
         yield return new WaitForSeconds(time);
@@ -271,15 +260,17 @@ public class MonsterBehavior : MonoBehaviour
         if (destroy) Destroy(newAttack);
         yield return null;
     }
-
-    // reset action timer
+    /// <summary>
+    /// Reset action timer
+    /// </summary>
     public void ResetActionTimer()
     {
         ResetMovementBias();
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
-
-    // resest movement bias
+    /// <summary>
+    /// Resets movement bias
+    /// </summary>
     public void ResetMovementBias()
     {
         biasAngleMod = Random.Range(-2f, 2f);
