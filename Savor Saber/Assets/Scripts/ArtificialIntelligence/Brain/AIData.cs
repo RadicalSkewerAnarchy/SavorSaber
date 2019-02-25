@@ -244,7 +244,7 @@ public class AIData : CharacterData
     {
         // have random chance to be hungry
         float rand = Random.Range(0f, 100f);
-        if (rand < 100)
+        if (rand < 20)
         {
             // create a signal that subtracts from my hunger
             GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity) as GameObject;
@@ -254,7 +254,7 @@ public class AIData : CharacterData
             // die or
             // change sprite color
             float hunger = moods["Hunger"];
-            Debug.Log("Im getting hungrier: " + this.gameObject.name + "'s hunger = " + hunger);
+            //Debug.Log("Im getting hungrier: " + this.gameObject.name + "'s hunger = " + hunger);
             if (hunger >= 1f)
             {
                 // hurt me

@@ -13,7 +13,7 @@ public class SignalApplication : MonoBehaviour
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
     public List<GameObject> dropList = new List<GameObject>();
-    public Dictionary<string, float> moodMod;
+    public Dictionary<string, float> moodMod = new Dictionary<string, float>();
     #region MoodMods
     [Range(-1f, 1f)]
     public float fearMod = 0;
@@ -56,7 +56,6 @@ public class SignalApplication : MonoBehaviour
         //      it is for awareness
         isForAwareness = (this.moodMod.Count == 0);
 
-
         //Debug.Log("Signal Created: is " + (isForAwareness?"":"NOT ") + "for awareness, x = " + transform.position.x + ", y = " + transform.position.y);
     }
 
@@ -70,6 +69,17 @@ public class SignalApplication : MonoBehaviour
         //AnimationBody = GetComponent<Animator>();
         //ChildAnimationAgent.AddComponent<Animator>();
         //Debug.Log("signal with radius = " + interactRadius);
+        gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
+
+        // set any default dictionary values
+        if (fearMod != 0)
+            moodMod.Add("Fear", fearMod);
+        if (hungerMod != 0)
+            moodMod.Add("Hunger", hungerMod);
+        if (hostileMod != 0)
+            moodMod.Add("Hostility", hostileMod);
+        if (friendMod != 0)
+            moodMod.Add("Friendliness", friendMod);
     }
 
     public void Update()
@@ -95,11 +105,11 @@ public class SignalApplication : MonoBehaviour
                 }
             }
 
-            // destroy
-            Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject);
-
             activate = false;
+
+            // destroy
+            //Debug.Log("this signal should destroy istelf");
+            Destroy(this.gameObject);
         }
     }
 
@@ -111,7 +121,7 @@ public class SignalApplication : MonoBehaviour
 
         string sm = (signalMaker != null ? signalMaker.name : "null character" );
         //if(interactRadius < 5)
-            Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
+        //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
         // check tags
         if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
@@ -130,7 +140,7 @@ public class SignalApplication : MonoBehaviour
                 hitList.Add(go);
             }
         }
-        else if (go.tag == "SkewerableObject")
+        else if (go.tag == "SkewerableObject" && !isForAwareness)
         {
             // keep track of drops
             dropList.Add(go);
@@ -163,7 +173,7 @@ public class SignalApplication : MonoBehaviour
     {
         if (ReferenceEquals(g, null))
             return;
-        Debug.Log("Applying signal to " + g);
+        Debug.Log(this.gameObject.name + " is Applying signal to " + g + "===>");
 
         //modification  
         #region SignalAnimations
@@ -171,31 +181,37 @@ public class SignalApplication : MonoBehaviour
         float mostInfluential = 0;
         int sign = 0;
         #endregion
-
-        // iterate thru all the keys
-        foreach (string key in moodMod.Keys)
+        if (moodMod != null)
         {
-            // extract modifier
-            float mod = moodMod[key];
-            //Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
-
-            // as long is it's non zero....
-            if (mod != 0)
+            // iterate thru all the keys
+            foreach (string key in moodMod.Keys)
             {
-                // update signal animation
-                if(Mathf.Abs(mod) >= Mathf.Abs(mostInfluential))
-                {
-                    mostInfluential = mod;
-                    mood = key;
-                    sign = (int)Mathf.Sign(mod);
-                }
-                Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
+                // extract modifier
+                float mod = moodMod[key];
+                //Debug.Log("Mod of signal is: key, mod" + key + ", " + mod);
 
-                float value = data.moods[key];
-                value = Mathf.Clamp((value + mod), 0f, 1f);
-                data.moods[key] = value;
-                Debug.Log(g + "'s " + key + " value should be " + value);
+                // as long is it's non zero....
+                if (mod != 0)
+                {
+                    // update signal animation
+                    if (Mathf.Abs(mod) >= Mathf.Abs(mostInfluential))
+                    {
+                        mostInfluential = mod;
+                        mood = key;
+                        sign = (int)Mathf.Sign(mod);
+                    }
+                    //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
+
+                    float value = data.moods[key];
+                    value = Mathf.Clamp((value + mod), 0f, 1f);
+                    data.moods[key] = value;
+                    Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
+                }
             }
+        }
+        else
+        {
+            Debug.Log("****************Mood mod of this signal is null: " + this.gameObject.name);
         }
         //change middle argument based on creatures offset
         GameObject child = null;

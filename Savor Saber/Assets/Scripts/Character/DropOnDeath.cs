@@ -17,6 +17,7 @@ public class DropOnDeath : MonoBehaviour
             var d = GameObject.Instantiate(obj);
             d.transform.position = transform.position;
         }
+        Debug.Log(this.gameObject.name + " has ****DIED****");
 
     }
 }
