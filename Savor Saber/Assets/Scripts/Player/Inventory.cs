@@ -72,6 +72,8 @@ public class Inventory : MonoBehaviour {
 
         //Debug.Log("Majority flavor on active skewer: " + GetMajorityFlavor(false, true));
         //Debug.Log("Majority flavor on all skewers: " + GetMajorityFlavor(true, true));
+        //Debug.Log("Has exactly 2 pears on active skewer: " + HasIngredients("Pear", 2, false, true));
+        //Debug.Log("Has 4 pears on all skewers: " + HasIngredients("Pear", 4, true, false));
     }
 
     #region utility functions
@@ -286,6 +288,54 @@ public class Inventory : MonoBehaviour {
                 return majorityFlavor;
             else
                 return acquiredTies ? RecipeData.Flavors.Acquired : RecipeData.Flavors.None;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the inventory has the target number of a certain ingredient. 
+    /// Bool parameters set whether to check all skewers and whether to require the exact number.
+    /// </summary>
+    public bool HasIngredients(string displayName, int target, bool checkAllSkewers = false, bool requireExact = false)
+    {
+        if (!checkAllSkewers)
+        {
+            int numIngredient = 0;
+            IngredientData[] skewerArray = quiver[activeSkewer].ToArray();
+            foreach(IngredientData ingredient in skewerArray)
+            {
+                if(ingredient.displayName == displayName)
+                {
+                    numIngredient++;
+                }
+            }
+            if (!requireExact && numIngredient >= target)
+                return true;
+            else if (requireExact && numIngredient == target)
+                return true;
+            else
+                return false;
+        }
+        else
+        {
+            int numIngredient = 0;
+            IngredientData[] skewerArray;
+            for (int s = 0; s < numberOfSkewers; s++)
+            {
+                skewerArray = quiver[s].ToArray();
+                foreach (IngredientData ingredient in skewerArray)
+                {
+                    if (ingredient.displayName == displayName)
+                    {
+                        numIngredient++;
+                    }
+                }
+            }
+            if (!requireExact && numIngredient >= target)
+                return true;
+            else if (requireExact && numIngredient == target)
+                return true;
+            else
+                return false;
         }
     }
 
