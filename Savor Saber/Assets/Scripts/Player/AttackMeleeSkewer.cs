@@ -22,14 +22,29 @@ public class AttackMeleeSkewer : AttackMelee
         dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        //has to have either a monster controller or player controller
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
+    }
+    
+    private void Awake()
+    {
+        LoadAssetBundles();
+        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
     }
 
     public override void Attack()
     {
         //animation stuff
+        if (attackSound != null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
+        }
+        else if (attackSound == null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
+        }
         animator.Play(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions

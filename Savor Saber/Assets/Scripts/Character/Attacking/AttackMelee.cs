@@ -17,7 +17,6 @@ public class AttackMelee : AttackBase
     /// </summary>
     protected EntityController controller;
     protected SpriteRenderer spriteRenderer;
-
     protected Animator animator;
 
     /// <summary>
@@ -72,9 +71,15 @@ public class AttackMelee : AttackBase
         dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        //has to have either a monster controller or player controller
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
+    }
+
+
+    private void Awake()
+    {
+        LoadAssetBundles();
+        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
     }
 
     // Update is called once per frame
@@ -170,10 +175,15 @@ public class AttackMelee : AttackBase
     {
         CanBeCanceled = true;
         //animation stuff
-        if(attackSound != null && attackSoundPlayer != null)
+        if(attackSound != null && audioSource != null)
         {
-            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
-            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+            audioSource.clip = attackSound;
+            audioSource.Play();
+        }
+        else if(attackSound == null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
         }
         animator.Play(attackName);
 

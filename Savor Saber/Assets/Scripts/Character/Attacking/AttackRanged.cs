@@ -61,13 +61,18 @@ public class AttackRanged : AttackBase
     // Start is called before the first frame update
     void Start()
     {
-
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
         r = GetComponent<SpriteRenderer>();
-
-        //has to have either a monster controller or player controller
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
+
+    }
+
+    private void Awake()
+    {
+        LoadAssetBundles();
+        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
     }
 
     // Update is called once per frame
@@ -99,13 +104,18 @@ public class AttackRanged : AttackBase
         }
 
         //animation stuff
-        animator.Play(attackName);
-
-        if (attackSound != null && attackSoundPlayer != null)
+        if (attackSound != null && audioSource != null)
         {
-            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
-            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+            audioSource.clip = attackSound;
+            audioSource.Play();
+
         }
+        else if (attackSound == null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
+        }
+        animator.Play(attackName);
 
         Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);
@@ -145,13 +155,18 @@ public class AttackRanged : AttackBase
         }
 
         //animation stuff
-        animator.Play(attackName);
-
-        if (attackSound != null && attackSoundPlayer != null)
+        if (attackSound != null && audioSource != null)
         {
-            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
-            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+            audioSource.clip = attackSound;
+            audioSource.Play();
+
         }
+        else if (attackSound == null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
+        }
+        animator.Play(attackName);
 
         Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);

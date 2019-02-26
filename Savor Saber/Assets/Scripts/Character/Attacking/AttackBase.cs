@@ -6,10 +6,10 @@ using System.Linq;
 public abstract class AttackBase : MonoBehaviour
 {
     public AudioClip attackSound;
-    /// <summary>
-    /// should be a PlayAndDestroy variant
-    /// </summary>
-    public GameObject attackSoundPlayer;
+    protected AudioClip defaultAttackSound;
+    protected AssetBundle sfx_bundle;
+    protected AudioSource audioSource;
+
     /// <summary> To prevent attack action while still attacking (unless CanBeCancelled)
     /// Also checked by player inventory - if it used a ranged attack, 
     /// clear the current skewer. </summary>
@@ -22,6 +22,7 @@ public abstract class AttackBase : MonoBehaviour
     /// Set in the start of any derived class using GetComponents<AttackBase>() </summary>
     protected AttackBase[] dependecies;
 
+
     protected AttackBase GetActiveAttack()
     {
         return dependecies.FirstOrDefault((at) => at.Attacking);
@@ -32,5 +33,22 @@ public abstract class AttackBase : MonoBehaviour
         StopAllCoroutines();
         Attacking = false;
         CanBeCanceled = false;
+    }
+
+    protected void LoadAssetBundles()
+    {
+        sfx_bundle = AssetBundleManager.getAssetBundle("sfx");
+        Debug.Log(sfx_bundle);
+        if (sfx_bundle == null)
+            StartCoroutine(LoadAB("sfx"));
+    }
+
+    protected IEnumerator LoadAB(string url)
+    {
+        AssetBundleManager.LoadAssetBundle(url);
+        sfx_bundle = AssetBundleManager.getAssetBundle(url);
+        Debug.Log("In LoadAB, sfx_bundle = " + sfx_bundle);
+        defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
+        yield return null;
     }
 }
