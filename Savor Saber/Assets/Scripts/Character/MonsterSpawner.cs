@@ -46,6 +46,7 @@ public class MonsterSpawner : MonoBehaviour
         {
             if (trackedObjects.Count >= maxSpawnedEntites)
                 return;
+
             for (int i = 0; i < maxTries; ++i)
             {
                 var bounds = collider.bounds;
@@ -57,8 +58,22 @@ public class MonsterSpawner : MonoBehaviour
                     spawned = true;
                     trackedObjects.Add(newObj);
                     group?.AddMember(newObj);
+
+                    // if it's a skewerable object,
+                    // set momentum to 0
+                    if (newObj.tag == "SkewerableObject")
+                    {
+                        Debug.Log("skewerable object drift speed being set to 0");
+                        newObj.GetComponent<SkewerableObject>().attached = true;
+                    }
+
                     break;
                 }
+            }
+
+            if (!loop)
+            {
+                Destroy(this);
             }
         }
         if(spawned)

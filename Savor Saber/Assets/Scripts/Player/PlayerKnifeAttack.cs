@@ -21,7 +21,6 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-
         // layer 11 is Monster layer
         if (collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator")
         {
@@ -40,6 +39,10 @@ public class PlayerKnifeAttack : BaseMeleeAttack
                 }
 
             }
+        }
+        else if (collision.gameObject.tag == "SkewerableObject")
+        {
+            collision.gameObject.GetComponent<SkewerableObject>().attached = false;
         }
     }
 }

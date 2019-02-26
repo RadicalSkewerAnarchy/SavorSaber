@@ -17,12 +17,17 @@ public class SkewerableObject : MonoBehaviour
     //movement values
     public float maxDrift = 4;
     public float driftSpeed = 1;
+    public bool attached = false;
 
     private Vector3 target;
+    private Vector3 origin;
+    private Vector3 halfScale = new Vector3(0.5f, 0.5f, 1f);
 
     // Use this for initialization
     void Start()
     {
+        origin = transform.position;
+
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         float x = transform.position.x + Random.Range(-maxDrift, maxDrift);
@@ -35,6 +40,15 @@ public class SkewerableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+        if (!attached)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+            transform.localScale = halfScale * 2;
+        }
+        else
+        {
+            transform.position = origin;
+            transform.localScale = halfScale;
+        }
     }
 }
