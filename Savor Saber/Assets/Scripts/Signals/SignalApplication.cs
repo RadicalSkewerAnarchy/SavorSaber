@@ -140,7 +140,7 @@ public class SignalApplication : MonoBehaviour
                 hitList.Add(go);
             }
         }
-        else if (go.tag == "SkewerableObject" && !isForAwareness)
+        else if (go.tag == "SkewerableObject" && isForAwareness)
         {
             // keep track of drops
             dropList.Add(go);
@@ -265,6 +265,8 @@ public class SignalApplication : MonoBehaviour
             }
             else if (mood == "Hunger")
             {
+
+                Debug.Log("YUMMY");
                 emoter.GetComponent<Animator>().Play("HungerDownAnimation");
             }
         }

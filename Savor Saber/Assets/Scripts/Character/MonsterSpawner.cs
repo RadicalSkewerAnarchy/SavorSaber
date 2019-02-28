@@ -63,7 +63,7 @@ public class MonsterSpawner : MonoBehaviour
                     // set momentum to 0
                     if (newObj.tag == "SkewerableObject")
                     {
-                        Debug.Log("skewerable object drift speed being set to 0");
+                        //Debug.Log("skewerable object drift speed being set to 0");
                         newObj.GetComponent<SkewerableObject>().attached = true;
                     }
 

@@ -162,10 +162,7 @@ public class AIData : CharacterData
         }
         else
         {
-            currentProtocol = Curves.DecideState();            
-            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
-            Checks.AwareNearby();
-            Debug.Log("Getting New Protocol: " + currentProtocol);
+            DecisionTimer -= Time.deltaTime;
         }
 
         ProtocolSwitch();
@@ -231,12 +228,10 @@ public class AIData : CharacterData
     {
         // have random chance to be hungry
         float rand = Random.Range(0f, 100f);
-        if (rand < 20)
+        if (rand < 50)
         {
             // create a signal that subtracts from my hunger
-            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity) as GameObject;
-            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            signalModifier.SetSignalParameters(this.gameObject, 0.1f, new Dictionary<string, float>() { { "Hunger", 0.1f } }, false, true);
+            InstantiateSignal(0.1f, "Hunger", 0.1f, false, true);
 
             // die or
             // change sprite color
@@ -258,5 +253,16 @@ public class AIData : CharacterData
                 this.gameObject.GetComponent<SpriteRenderer>().color = new Color(116f, 116f, 0f);
             }
         }
+    }
+
+    // InstantiateSignal()
+    // create a signal that subtracts
+    public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
+    {
+        GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity) as GameObject;
+        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+        signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
+
+        return obtainSurroundings;
     }
 }

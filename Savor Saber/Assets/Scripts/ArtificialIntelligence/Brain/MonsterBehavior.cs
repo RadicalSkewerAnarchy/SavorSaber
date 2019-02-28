@@ -171,6 +171,7 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>  
     public bool Feed(GameObject drop)
     {
+        Debug.Log("Feed Reached");
         if(drop != null)
         {
             #region Eat
@@ -181,9 +182,7 @@ public class MonsterBehavior : MonoBehaviour
             Destroy(drop);
 
             #endregion
-            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform, false) as GameObject;
-            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            signalModifier.SetSignalParameters(this.gameObject, .1f, new Dictionary<string, float>() { { "Hunger", -0.25f } }, false, true);
+            AiData.InstantiateSignal(0.1f, "Hunger", -0.25f, false, true);
             return true;
         }
         else
@@ -245,9 +244,7 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, this.transform.position, Quaternion.identity) as GameObject;
-            SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-            signalModifier.SetSignalParameters(this.gameObject, (AiData.Perception / 2), new Dictionary<string, float>() { { "Friendliness", 0.25f } }, true, false);
+            AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
             return true;
         }
         else

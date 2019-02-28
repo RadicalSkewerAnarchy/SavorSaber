@@ -189,7 +189,7 @@ public class MonsterChecks : MonoBehaviour
             //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
             if (Drop.tag == "SkewerableObject")
             {
-                Debug.Log(Drop.GetInstanceID() + " is a drop");
+                //Debug.Log(Drop.GetInstanceID() + " is a drop");
                 float dist = Vector2.Distance(transform.position, Drop.transform.position);
                 if (dist < close)
                 {
@@ -199,7 +199,7 @@ public class MonsterChecks : MonoBehaviour
             }
             
         }
-        Debug.Log("Closest drop is reached");
+        //Debug.Log("Closest drop is reached = " + (closestDrop == null ? "and it is null" : closestDrop.name + closestDrop.GetInstanceID()));
         return closestDrop;
     }
 

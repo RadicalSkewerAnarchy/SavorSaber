@@ -62,6 +62,7 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
+
         if (!CheckThreshold(pos, AiData.MeleeAttackThreshold))
         {
             if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
@@ -93,6 +94,7 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
+
         if (CheckThreshold(pos, AiData.RangeAttackThreshold))
         {
             if (Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold))
@@ -114,7 +116,7 @@ public partial class MonsterProtocols : MonoBehaviour
             }
         }
     }
-
+    //end of aggro region
     #endregion
 
     #region Neutral Protocols
@@ -141,6 +143,7 @@ public partial class MonsterProtocols : MonoBehaviour
         // For now, fun away from your first enemy (SOMA most likely)
         Vector2 pos = Checks.GetRandomPositionType();
         #endregion
+
         if (Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
             Checks.ResetSpecials();
@@ -155,11 +158,14 @@ public partial class MonsterProtocols : MonoBehaviour
         // For now, fun away from your first enemy (SOMA most likely)
         Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
         #endregion
+
         if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
         {
             Checks.ResetSpecials();
         }
     }
+
+    // end of neutral region
     #endregion
 
     #region Pacifist Protocols
@@ -174,6 +180,7 @@ public partial class MonsterProtocols : MonoBehaviour
         #region Get Nearest + Null Check
         Vector2 pos = Checks.AverageGroupPosition();
         #endregion
+
         // move to
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
@@ -197,17 +204,18 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Surroundings        
         GameObject cDrop = Checks.ClosestDrop();
+
         #endregion
-        if (cDrop != null)
+       
+        if(cDrop != null)
         {
-            if(cDrop != null)
+            //Debug.Log("drop is not null");
+            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
             {
-                if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
-                {
-                    Behaviour.Feed(cDrop);
-                }
-            }          
-        }
+                Behaviour.Feed(cDrop);
+            }
+        }          
+      
         else if (this.tag == "Predator")
         {
             Debug.Log("I AM A HUNGRE PADDLE PREDATOR");
@@ -256,6 +264,8 @@ public partial class MonsterProtocols : MonoBehaviour
             Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
+    // end of pacifict region
+    #endregion
 
 
     #region Unimplemented Protocols    
@@ -295,4 +305,3 @@ public partial class MonsterProtocols : MonoBehaviour
     }
     #endregion
 }
-
