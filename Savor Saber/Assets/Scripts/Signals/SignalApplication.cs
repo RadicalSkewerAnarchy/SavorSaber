@@ -231,7 +231,7 @@ public class SignalApplication : MonoBehaviour
         {
             if (mood == "Friendliness")
             {
-                Debug.Log("Setting animation to friendly");
+                //Debug.Log("Setting animation to friendly");
                 emoter.GetComponent<Animator>().Play("FriendUpAnimation");
             }
             else if (mood == "Hostility")

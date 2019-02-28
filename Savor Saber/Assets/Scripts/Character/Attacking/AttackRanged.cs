@@ -101,6 +101,12 @@ public class AttackRanged : AttackBase
         //animation stuff
         animator.Play(attackName);
 
+        if (attackSound != null && attackSoundPlayer != null)
+        {
+            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
+            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+        }
+
         Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
@@ -140,6 +146,12 @@ public class AttackRanged : AttackBase
 
         //animation stuff
         animator.Play(attackName);
+
+        if (attackSound != null && attackSoundPlayer != null)
+        {
+            GameObject attackSoundObject = Instantiate(attackSoundPlayer, transform.position, Quaternion.identity);
+            attackSoundObject.GetComponent<PlayAndDestroy>().Play(attackSound);
+        }
 
         Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);

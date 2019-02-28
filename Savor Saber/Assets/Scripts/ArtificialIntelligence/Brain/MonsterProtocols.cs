@@ -3,26 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AIData))]
-public class MonsterProtocols : MonoBehaviour
+public partial class MonsterProtocols : MonoBehaviour
 {
     #region Initialize
-    AIData AiData;
-    MonsterBehavior Behaviour;
-    MonsterChecks Checks;
-    bool runningCoRoutine = false;
-    #endregion
+	    #region Global Variables
+		    #region Components
+		    AIData AiData;
+		    MonsterBehavior Behaviour;
+		    MonsterChecks Checks;
+		    #endregion
+
+		    #region Booleans
+		    bool runningCoRoutine = false;
+		    #endregion
+	    #endregion
+	#endregion
 
     private void Start()
     {
+        #region Component Initialization
         AiData = GetComponent<AIData>();
         Behaviour = AiData.GetComponent<MonsterBehavior>();
         Checks = AiData.GetComponent<MonsterChecks>();
+        #endregion
     }
 
     /// <summary>
-    /// Every Behavior that is part of the protocol
-    /// chain returns a boolean, 
-    /// thus, they may be chained to create an order of operations
     /// Each protocol is of the format:
     ///     void X()
     ///     {
@@ -34,12 +40,14 @@ public class MonsterProtocols : MonoBehaviour
     ///         }
     ///     }
     /// </summary>
-
     #region Aggro Protocols
     /// NEEDS A LOT OF POLISH
     // Melee()
     // move to and make a melee attack on
     // some creature or enemy or bush
+    /// <summary>
+    /// If the target is outside of our range, move to it and attack. Else, attack.
+    /// </summary>
     public void Melee()
     {
         #region Get Nearest + Null Check
@@ -54,11 +62,7 @@ public class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        // Aware is a function that uses the Perception of the agent
-        //to get a list of targets
-        //The way MoveTo is set up is that it assumes you're only calling it when you need to move
-        //Both of these behaviors require the player position as a Vector2 stored somewhere in AIData.cs
-        if (Vector2.Distance(pos, AiData.gameObject.transform.position) > AiData.MeleeAttackThreshold)
+        if (!CheckThreshold(pos, AiData.MeleeAttackThreshold))
         {
             if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
             {
@@ -70,9 +74,11 @@ public class MonsterProtocols : MonoBehaviour
             Behaviour.MeleeAttack(pos, AiData.Speed);
         }       
     }
-
     // Ranged()
     // move from a target and launch a projectile
+    /// <summary>
+    /// If the target is outside of our range, move to it and attack. Else, attack.
+    /// </summary>
     public void Ranged()
     {
         #region Get Nearest + Null Check
@@ -87,9 +93,7 @@ public class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        //Behaviour.RangedAttack(pos, AiData.Speed);
-
-        if (Vector2.Distance(pos, AiData.gameObject.transform.position) <= AiData.RangeAttackThreshold)
+        if (CheckThreshold(pos, AiData.RangeAttackThreshold))
         {
             if (Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold))
             {
@@ -111,49 +115,19 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
-    // Swarm()
-    // given enough friends
-    // and few enemies
-    // swarm a target and kill them
-    // eat their remains and feast
-    public void Swarm()
-    {
-        var numFriends = AiData.Checks.NumberOfFriends();
-        var numEnemies = AiData.Checks.NumberOfEnemies();
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.GetRandomPositionType();
-        #endregion
-
-
-        if (numFriends >= AiData.PartySize)
-        {
-            if (numFriends / numEnemies >= 2 * numEnemies)
-            {
-                if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
-                {
-                    //behavior.attack should return true if creature dies?
-                    if (Behaviour.MeleeAttack(pos, AiData.Speed))
-                    {
-                        //need to look at behavior.feed
-                        //Behaviour.Feed(closestEnemy, AiData.Speed);
-                    }
-                }
-            }
-        }
-    }
     #endregion
 
     #region Neutral Protocols
     // Lazy()
     // just chill
+    /// <summary>
+    /// If idle, update awareness and reset timers
+    /// </summary>
     public void Lazy()
     {             
-        // idle
         if (Behaviour.Idle())
         {
-            // test signals
             Checks.AwareHowMany();
-            // reset action timer
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
         }
@@ -192,6 +166,9 @@ public class MonsterProtocols : MonoBehaviour
     // checks if there are enough friends to party
     // moves if necessary to the nearest friend
     // socializes
+    /// <summary>
+    /// Checks if there are enough friends to party then socializes
+    /// </summary>
     public void Party()
     {
         #region Get Nearest + Null Check
@@ -213,18 +190,16 @@ public class MonsterProtocols : MonoBehaviour
     // plants currently not implemented
     // Feast()
     // find plants, hit plants, eat plant drops
+    /// <summary>
+    /// Checks surroundings, if there is a drop move to it and eat it, if there aren't any drops attack nearest prey
+    /// </summary>
     public void Feast()
     {
-        
-        Checks.AwareNearby();
-
+        #region Surroundings        
         GameObject cDrop = Checks.ClosestDrop();
-        //GameObject cBody = Checks.ClosestCreature();
-        //Debug.Log("cDrop instanceID: " + cDrop.GetInstanceID());
-        // if there are drops
-        if (this.tag == "Prey")
+        #endregion
+        if (cDrop != null)
         {
-            // move to and feed
             if(cDrop != null)
             {
                 if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
@@ -233,11 +208,9 @@ public class MonsterProtocols : MonoBehaviour
                 }
             }          
         }
-        // else if i am a predator
         else if (this.tag == "Predator")
         {
-            // move to 
-            // attack
+            Debug.Log("I AM A HUNGRE PADDLE PREDATOR");
             Melee();
         }
     }
@@ -246,6 +219,9 @@ public class MonsterProtocols : MonoBehaviour
     // go to a friend in need
     // increase their friendliness and
     // decrease their fear and hostility
+    /// <summary>
+    /// If there are friends, socialize and update special position
+    /// </summary>
     public void Console()
     {
         if(AiData.Checks.NumberOfFriends() > 0)
@@ -281,28 +257,41 @@ public class MonsterProtocols : MonoBehaviour
         }
     }
 
+
+    #region Unimplemented Protocols    
+    // Swarm()
+    // given enough friends
+    // and few enemies
+    // swarm a target and kill them
+    // eat their remains and feast
+    public void Swarm()
+    {
+        var numFriends = AiData.Checks.NumberOfFriends();
+        var numEnemies = AiData.Checks.NumberOfEnemies();
+        #region Get Nearest + Null Check
+        Vector2 pos = Checks.GetRandomPositionType();
+        #endregion
+        if (numFriends >= AiData.PartySize)
+        {
+            if (numFriends / numEnemies >= 2 * numEnemies)
+            {
+                if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
+                {
+                    //behavior.attack should return true if creature dies?
+                    if (Behaviour.MeleeAttack(pos, AiData.Speed))
+                    {
+                        //need to look at behavior.feed
+                        //Behaviour.Feed(closestEnemy, AiData.Speed);
+                    }
+                }
+            }
+        }
+    }
     // Wander()
     // go in random directions
     public void Wander()
     {
-
-    }
-    #endregion
-
-    #region Helper Functions
-    // DecideLeader()
-    // used to randomly start and end
-    // the decision making process for who
-    // is 1st leader
-    protected IEnumerator DecideLeader()
-    {
-        runningCoRoutine = true;
-        //Debug.Log("In coroutine and running...");
-        yield return new WaitForSeconds(Random.Range(0.01f, 0.05f));
-        //sDebug.Log("... in coroutine and Done");
-        Checks.BecomeLeader();
-        yield return null;
-        runningCoRoutine = false;
+    	
     }
     #endregion
 }

@@ -13,6 +13,7 @@ using UnityEngine;
 
 public class AIData : CharacterData
 {
+    #region Global Variables
     #region NormalValues
     /// <summary> A delegate that returns a float between 0 and 1 </summary>
     public delegate float GetNormalValue();
@@ -20,7 +21,7 @@ public class AIData : CharacterData
     private Dictionary<string, GetNormalValue> _values;
     private Dictionary<string, Vector2> _vectors;
     #endregion
-    #region Behaviors
+    #region Behavior/Protocol
     #region Behaviors
     /// <summary> my current state </summary>
     public enum Behave
@@ -54,7 +55,6 @@ public class AIData : CharacterData
     public Protocols currentProtocol = Protocols.Lazy;
     #endregion
     #region Timers
-
     [SerializeField]
     public float DecisionTimer;
     [SerializeField]
@@ -62,56 +62,39 @@ public class AIData : CharacterData
     public float DecisionTimerReset = 10f;
     [SerializeField]
     [Range(0f, 4f)]
-    public float DecisionTimerVariance = 2f;
+    public float DecisionTimerVariance = 2f;    
     #endregion
-    #region NearbyCreatures and Food
-    /// <summary> lists that may be needed for certain target positions or objects </summary>
-    List<GameObject> TargetObjects = new List<GameObject>();
-    GameObject AwarenessObject;
-    Vector2 TargetPosition;
-    /// <summary>
-    /// empty array of nearby seen creatures
-    /// </summary>
-    public Collider2D[] NearbyCreatures = new Collider2D[10];
-    Vector2 Target;
-    #endregion
-    #region MonstersBrain and inventory;
-    /// <summary>
-    /// Monster Behaviors, Monster Protocols, Monster Checks, Utility Curves
-    /// </summary>
+    #region Components
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
-
-    /// Friends, Enemies, Food Pref, Stomach
+    #endregion
+    #region Unfinished
     public SignalApplication Awareness = null;
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<RecipeData.Flavors> FoodPreference;
-    public Queue<GameObject> Stomach;
+    public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
-
-
+    #endregion
     private void Start()
-    {
-        //Init moods and other CharacterData stuff
-        InitializeCharacterData();        
+    {        
+        #region Initialize Components
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
-        //Initalize the values availible to Utility curves
+        #endregion
+        #region Initialize Data
+        InitializeCharacterData();
         InitializeNormalValues();
-        //Behavior.UpdateSpeed(speed);
+        #endregion
 
         _vectors = new Dictionary<string, Vector2> {
             {"Player", new Vector2(0f, 0f) }
         };
-        // Naming for future creature tracking
-        gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
     }
-
     protected void InitializeNormalValues()
     {
         _values = new Dictionary<string, GetNormalValue>()
@@ -124,15 +107,43 @@ public class AIData : CharacterData
             {"Health", () => NormalizeInt(health, maxHealth) }
         };
     }
-
+    /// <summary>
+    /// Updates protocol
+    /// </summary>
     private void LateUpdate()
     {
-        //Debug.Log(moods["Friendliness"]);
-        // check current state
-        // acquire necessary data
-        // act on current state
+        UpdateProtocol();
+    }
+    public float Normalize(float now, float max)
+    {
+        return now / max;
+    }
+    public float NormalizeInt(int now, int max)
+    {
+        return now / (float)max;
+    }
+    /// <summary> 
+    ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
+    /// </summary>
+    public float getNormalizedValue(string value)
+    {
+        if (!_values.ContainsKey(value))
+        {
+            Debug.LogError(value + " is not a valid AI value, returning -1");
+            return -1f;
+        }
+        return _values[value]();
+    }
+    public void ManualDecision()
+    {
+        DecisionTimer = -1f;
+    }
 
-        // UPDATE Decision
+    /// <summary>
+    /// If its time to make a new decision, choose protocol based on curves and call switch statement
+    /// </summary>
+    private void UpdateProtocol()
+    {
         if (DecisionTimer < 0)
         {
             // CALCULATE AND ACQUIRE NEW STATE:
@@ -151,20 +162,28 @@ public class AIData : CharacterData
         }
         else
         {
-            DecisionTimer -= Time.deltaTime;
+            currentProtocol = Curves.DecideState();            
+            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            Checks.AwareNearby();
+            Debug.Log("Getting New Protocol: " + currentProtocol);
         }
 
-        // SWITCH protocol
+        ProtocolSwitch();
+    }
+    /// <summary>
+    /// Case switch based on current protocol
+    /// </summary>
+    private void ProtocolSwitch()
+    {
         switch (currentProtocol)
         {
-            // melee
             case Protocols.Melee:
-                //Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+            // melee
                 Protocol.Melee();
                 break;
             // ranged
             case Protocols.Ranged:
-                //Behavior.MoveTo(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+
                 Protocol.Ranged();
                 break;
             // lazy
@@ -173,71 +192,39 @@ public class AIData : CharacterData
                 break;
             // guard
             case Protocols.Guard:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
+
                 Protocol.Guard();
                 break;
             // party
             case Protocols.Party:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Party();
                 break;
             // swarm
             case Protocols.Swarm:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Swarm();
                 break;
             // feast
             case Protocols.Feast:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Feast();
                 break;
             // console
             case Protocols.Console:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Console();
                 break;
             // Runaway
             case Protocols.Runaway:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Runaway();
                 break;
             // Conga
             case Protocols.Conga:
-                //Behavior.MoveFrom(new Vector2(Random.Range(-2, 2), Random.Range(-2, 2)), Speed);
                 Protocol.Conga();
                 break;
-            // default
+
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
         }
-
     }
-
-    public float Normalize(float now, float max)
-    {
-        return now / max;
-    }
-    public float NormalizeInt(int now, int max)
-    {
-        return now / (float)max;
-    }
-    /// <summary> Get a normalized value from the value dictionary. if the value is not present, returns -1 </summary>
-    public float getNormalizedValue(string value)
-    {
-        if (!_values.ContainsKey(value))
-        {
-            Debug.LogError(value + " is not a valid AI value, returning -1");
-            return -1f;
-        }
-        return _values[value]();
-    }
-
-    public void ManualDecision()
-    {
-        DecisionTimer = -1f;
-    }
-
     // UpdateHunger()
     // damage me if im hungry
     private void UpdateHunger()

@@ -5,6 +5,11 @@ using System.Linq;
 
 public abstract class AttackBase : MonoBehaviour
 {
+    public AudioClip attackSound;
+    /// <summary>
+    /// should be a PlayAndDestroy variant
+    /// </summary>
+    public GameObject attackSoundPlayer;
     /// <summary> To prevent attack action while still attacking (unless CanBeCancelled)
     /// Also checked by player inventory - if it used a ranged attack, 
     /// clear the current skewer. </summary>
