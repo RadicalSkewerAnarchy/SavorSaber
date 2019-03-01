@@ -225,7 +225,7 @@ public class SignalApplication : MonoBehaviour
     }
     private void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent)
     {
-        emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0f, 1.2f, 0f), Quaternion.identity, parent.transform);
+        emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
         //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
         if(sign > 0)
         {
