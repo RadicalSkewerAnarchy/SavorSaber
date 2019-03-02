@@ -33,7 +33,7 @@ public class Respawner : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Triggering Event: " + name);
+        //Debug.Log("Triggering Event: " + name);
         if(collision.tag == "Respawn")
         {
             currSpawn = collision.GetComponent<SpawnPoint>();
