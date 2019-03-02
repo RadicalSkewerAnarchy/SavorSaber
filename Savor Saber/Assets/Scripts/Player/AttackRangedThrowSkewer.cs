@@ -21,13 +21,20 @@ public class AttackRangedThrowSkewer : AttackRanged
     {
         animator = GetComponent<Animator>();
         dependecies = GetComponents<AttackBase>();
-
-        //has to have either a monster controller or player controller
+        audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
         normalInterval = (1 / (float)chargeLevels) - 0.001f;
         inv = GetComponent<Inventory>();
         r = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<PlaySFX>();
+
+
+    }
+
+    private void Awake()
+    {
+        LoadAssetBundles();
+        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
     }
 
     // Update is called once per frame
