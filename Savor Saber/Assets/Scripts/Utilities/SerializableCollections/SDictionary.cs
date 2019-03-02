@@ -94,6 +94,11 @@ namespace SerializableCollections
         }
         #endregion
     }
+
+    [System.Serializable]
+    public class GameObjectDict : SDictionary<string, GameObject> { }
 }
+
+
 
 

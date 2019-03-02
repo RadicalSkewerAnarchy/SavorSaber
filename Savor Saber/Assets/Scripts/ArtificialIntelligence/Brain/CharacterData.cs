@@ -79,11 +79,11 @@ public class CharacterData : MonoBehaviour
             }
             else if (this.tag == "Player")
             {
-                Respawn();
+                GetComponent<Respawner>().Respawn();
             }
         }
     }
-
+    /// <summary> The death function for non-player characters </summary>
     public void Kill()
     {
         var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
@@ -91,35 +91,4 @@ public class CharacterData : MonoBehaviour
         GetComponent<DropOnDeath>().Drop();
         Destroy(gameObject);
     }
-
-    #region Respawning (Move to player-specific child class)
-    private void Update()
-    {
-        /*
-        if(health <= 0)
-        {
-            if(this.tag == "Player")
-            {
-                Respawn();
-            }            
-        }
-        */
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Respawn")
-        {
-            var rand = Random.Range(.9f, 1.1f);
-            Spawn.x = collision.gameObject.transform.position.x * rand;
-            rand = Random.Range(.9f, 1.1f);
-            Spawn.y = collision.gameObject.transform.position.y * rand;
-            Debug.Log("Respawn Set");
-        }
-    }
-    private void Respawn()
-    {
-        transform.position = Spawn;
-        health = maxHealth;
-    }
-    #endregion
 }

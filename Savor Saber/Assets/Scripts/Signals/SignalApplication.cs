@@ -173,7 +173,7 @@ public class SignalApplication : MonoBehaviour
     {
         if (ReferenceEquals(g, null))
             return;
-        Debug.Log(this.gameObject.name + " is Applying signal to " + g + "===>");
+        //Debug.Log(this.gameObject.name + " is Applying signal to " + g + "===>");
 
         //modification  
         #region SignalAnimations
@@ -205,7 +205,7 @@ public class SignalApplication : MonoBehaviour
                     float value = data.moods[key];
                     value = Mathf.Clamp((value + mod), 0f, 1f);
                     data.moods[key] = value;
-                    Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
+                    //Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
                 }
             }
         }

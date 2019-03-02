@@ -12,7 +12,9 @@ public class SkewerableObject : MonoBehaviour
     /// <summary> Ingredient Data SO. This is what will actually be added to the player's skewer </summary>
     public IngredientData data;
 
-    // Add stuff here for movement type
+    public Timer decayTime = new Timer(10);
+    private bool flickering = false;
+    private SpriteRenderer sp;
 
     //movement values
     public float maxDrift = 4;
@@ -30,10 +32,10 @@ public class SkewerableObject : MonoBehaviour
 
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        sp = GetComponent<SpriteRenderer>();
         float x = transform.position.x + Random.Range(-maxDrift, maxDrift);
         float y = transform.position.y + Random.Range(-maxDrift, maxDrift);
         float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
-
         target = new Vector3(x, y, z);
     }
 
@@ -50,5 +52,28 @@ public class SkewerableObject : MonoBehaviour
             transform.position = origin;
             transform.localScale = halfScale;
         }
+        transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+        if(!flickering)
+        {
+            if (decayTime.Update())
+            {
+                flickering = true;
+                StartCoroutine(FlickerOut());
+            }
+            sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
+        }
+    }
+
+    private IEnumerator FlickerOut()
+    {
+        float time = 0.525f;
+        bool on = true;
+        while (time > 0)
+        {
+            yield return new WaitForSeconds(time -= 0.025f);
+            sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.5f);
+            on = !on;
+        }
+        Destroy(gameObject);
     }
 }

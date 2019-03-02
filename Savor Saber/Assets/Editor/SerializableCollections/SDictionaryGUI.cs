@@ -60,22 +60,15 @@ namespace SerializableCollections
                 }
             }
 
-            public static bool DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, GenericMenu menu, string title, bool oneLine = false)
+            private static void GenericMenuAddGUI<TKey, TValue>(this SDictionary<TKey, TValue> dict, GenericMenu menu)
             {
-                bool ret = false;
-                GUILayout.BeginHorizontal();
-                GUILayout.Label(title + ": " + dict.Count, EditorUtils.Bold);
                 if (EditorGUILayout.DropdownButton(new GUIContent("+"), FocusType.Keyboard))
                 {
                     menu.ShowAsContext();
-                    ret = true;
                 }
-                GUILayout.EndHorizontal();
-                DoGUILayout(dict, valueGUI, oneLine);
-                return ret;
             }
 
-            public static void DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, AddGUI addGUI, string title, bool oneLine = false)
+            public static void DoGUILayout<TKey, TValue>(this SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, AddGUI addGUI, string title, bool oneLine = false, bool showRemove = true)
             {
                 GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(title + ": " + dict.Count, EditorUtils.Bold, GUILayout.MaxWidth(120));
@@ -85,11 +78,11 @@ namespace SerializableCollections
                 GUILayout.EndHorizontal();
                 EditorUtils.Separator();
                 if(dict.Count > 0)
-                    DoGUILayout(dict, valueGUI, oneLine);
+                    DoGUILayout(dict, valueGUI, oneLine, showRemove);
 
             }
 
-            private static void DoGUILayout<TKey, TValue>(SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, bool oneLine)
+            private static void DoGUILayout<TKey, TValue>(SDictionary<TKey, TValue> dict, ValueGUI<TValue> valueGUI, bool oneLine, bool showRemove)
             {
                 EditorGUI.indentLevel++;
                 TKey toDelete = default;
@@ -104,11 +97,14 @@ namespace SerializableCollections
                     GUILayout.Space(1);
                     if (oneLine)
                         dict[key] = valueGUI(dict[key]);
-                    GUILayout.FlexibleSpace();
-                    if (GUILayout.Button("-", GUILayout.Width(45)))
+                    if(showRemove)
                     {
-                        toDelete = key;
-                        delete = true;
+                        GUILayout.FlexibleSpace();
+                        if (GUILayout.Button("-", GUILayout.Width(45)))
+                        {
+                            toDelete = key;
+                            delete = true;
+                        }
                     }
                     GUILayout.EndHorizontal();
                     if (!oneLine)

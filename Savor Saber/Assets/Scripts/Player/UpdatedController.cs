@@ -63,10 +63,7 @@ public class UpdatedController : EntityController
     [Range(0f, 500f)]
     float runSpeed = 100f;
     //////
-    /*[SerializeField]
-    [Range(5f, 1000f)]
-    float deceleration;*/
-    //////
+
     Rigidbody2D rigidBody;
     Animator animatorBody;
     DialogData dialogData;
@@ -96,8 +93,9 @@ public class UpdatedController : EntityController
     public float accelerationTime;
     public float maxSpeed;
     public float accelrationAmount;
+
     public AudioClip dashSFX;
-    private PlaySFX sfxPlayer;
+    private AudioSource sfxSource;
 
     void Awake()
     {      
@@ -116,7 +114,7 @@ public class UpdatedController : EntityController
         currDashes = maxDashes;
         currRunSpeed = runSpeed;
         dialogData = GetComponent<DialogData>();
-        sfxPlayer = GetComponent<PlaySFX>();
+        sfxSource = GetComponent<AudioSource>();
     }
 
     // Detect non-movement input every fram so input isn't dropped
@@ -195,7 +193,7 @@ public class UpdatedController : EntityController
         freezeDirection = true;
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         animatorBody.SetBool("Dashing", true);
-        sfxPlayer.Play(dashSFX);
+        sfxSource.PlayOneShot(dashSFX);
         if (rechargeDashes != null)
         {
             StopCoroutine(rechargeDashes);
@@ -241,6 +239,7 @@ public class UpdatedController : EntityController
 
     private IEnumerator runCR()
     {
+        Debug.Log("starting run");
         running = true;
         currRunSpeed = runSpeed;
         yield return new WaitForSeconds(runTimeBuffer);
@@ -254,6 +253,7 @@ public class UpdatedController : EntityController
 
     private void StopRunning()
     {
+        Debug.Log("stopping run");
         running = false;
         if(run != null)
         {
@@ -290,9 +290,8 @@ public class UpdatedController : EntityController
             else
             {
                 rigidBody.velocity = (movementVector * modSpeed * Time.fixedDeltaTime);
-                StopRunning();
             }
-            if (running && movementVector.magnitude < 0.25)
+            if (running && (movementVector.magnitude < 0.1 || speedMod < 0.5f))
                 StopRunning();
         }
         //////

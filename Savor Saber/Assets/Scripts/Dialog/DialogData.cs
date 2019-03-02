@@ -17,7 +17,7 @@ public class DialogData : MonoBehaviour
     public PortraitDictionary portraitDictionary = new PortraitDictionary();
 
     [System.Serializable]
-    public class PortraitDictionary:SerializableCollections.SDictionary<Gameflow.DialogNodeVN.Emotion, Sprite>
+    public class PortraitDictionary:SerializableCollections.SDictionary<Emotion, Sprite>
     {
 
     }
