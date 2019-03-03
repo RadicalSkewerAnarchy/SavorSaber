@@ -16,6 +16,7 @@ public class Skewer
     /// how much of each flavor is present on the skewer
     /// </summary>
     public Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
+    public Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
 
 
     //methods
@@ -55,7 +56,6 @@ public class Skewer
         ingredientStack.Push(ingredient);
 
         // Sweet = 1, Acquired = 64
-
         for (int f = 1; f <= 64; f = f << 1)
         {
 
@@ -63,14 +63,36 @@ public class Skewer
             {
                 RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
                 flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                //Debug.Log("Amount of flavor " + foundFlavor + " on skewer: " + flavorCountDictionary[foundFlavor]);
+                
             }
+        }
+        if (!ingredientCountDictionary.ContainsKey(ingredient.displayName))
+        {
+            ingredientCountDictionary.Add(ingredient.displayName, 1);
+        }
+        else
+        {
+            ingredientCountDictionary[ingredient.displayName] = ingredientCountDictionary[ingredient.displayName] + 1;
         }
     }
 
     public IngredientData PopIngredient()
     {
-        return ingredientStack.Pop();
+        IngredientData poppedIngredient = ingredientStack.Pop();
+        ingredientCountDictionary[poppedIngredient.displayName] = ingredientCountDictionary[poppedIngredient.displayName] - 1;
+
+        for (int f = 1; f <= 64; f = f << 1)
+        {
+
+            if ((f & (int)poppedIngredient.flavors) > 0)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] - 1;
+
+            }
+        }
+
+        return poppedIngredient;
     }
 
     public IngredientData[] ToArray()

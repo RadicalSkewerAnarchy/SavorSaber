@@ -8,10 +8,10 @@ using UnityEngine;
 public class EventTriggerFlavorInput : FlavorInputManager
 {
     public EventTrigger scene;
-    public override void Feed(RecipeData.Flavors flavor, int magnitude)
+    public override void Feed(IngredientData[] ingredientArray)
     {
         //flavorCountDictionary[flavor] += magnitude;
-        if (magnitude > 0 && !scene.IsActive)
+        if (ingredientArray.Length > 0 && !scene.IsActive)
         {
             scene.Trigger();
         }        

@@ -59,35 +59,15 @@ public class ProjectileSkewer : BaseProjectile
             attackRadius = 2.5f;
         }
 
-        //general hitting 
-        if (flavorCountDictionary != null)
-        { 
-
-            //call the target's feeding function, if it has one
+        if (ingredientArray != null)
+        {
             FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
             if (flavorInput != null)
             {
-                for (int f = 1; f <= 64; f = f << 1)
-                {
-                    //feed all flavors into the target's flavor input manager
-                    //and add them to the signal's dictionary of moods
-                    if (flavorCountDictionary[(RecipeData.Flavors)f] > 0)
-                    {
-                        flavorInput.Feed((RecipeData.Flavors)f, flavorCountDictionary[(RecipeData.Flavors)f]);
-
-                        //if sweet, also instantiate AI signal
-                        if(f == (int)RecipeData.Flavors.Sweet)
-                        {
-                            signal = Instantiate(dropItem, transform.position, Quaternion.identity);
-                            signalApplication = signal.GetComponent<SignalApplication>();
-                            moodMod.Add("Friendliness", flavorCountDictionary[(RecipeData.Flavors)f] / 3);
-                            signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
-                            
-                        }
-                    }
-                }
-            }            
+                flavorInput.Feed(ingredientArray);
+            }
         }
+        
         if (!penetrateTargets)
             Destroy(this.gameObject);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
 
 /// <summary>
 /// Use to give an entity a melee attack 
@@ -40,6 +41,8 @@ public class AttackRanged : AttackBase
     /// how much of each flavor is present on the skewer
     /// </summary>
     public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+    public Dictionary<string, int> ingredientCountDictionary;
+    public IngredientData[] ingredientArray;
 
     /// <summary>
     /// The name of the attack, used to determine animation states
@@ -134,9 +137,10 @@ public class AttackRanged : AttackBase
         {
             projectileData.effectRecipeData = effectRecipeData;
         }
-        if(flavorCountDictionary != null)
+        if(ingredientArray != null)
         {
-            projectileData.flavorCountDictionary = flavorCountDictionary;
+            projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
+            Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
         }
 
         Attacking = true;
