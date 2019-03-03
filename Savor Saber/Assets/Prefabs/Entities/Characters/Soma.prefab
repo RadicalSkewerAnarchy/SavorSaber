@@ -71,13 +71,13 @@ GameObject:
   - component: {fileID: 4055231404074165996}
   - component: {fileID: 4055231404074165997}
   - component: {fileID: 5232973463692504911}
-  - component: {fileID: 4824409693512105908}
   - component: {fileID: 1026942967}
   - component: {fileID: 1026942968}
   - component: {fileID: 3084804184240454975}
   - component: {fileID: 527947531}
   - component: {fileID: 5628215964047290809}
   - component: {fileID: 5591276385788421115}
+  - component: {fileID: 5566830938768214350}
   m_Layer: 8
   m_Name: Soma
   m_TagString: Player
@@ -310,7 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 0}
-  attackSoundPlayer: {fileID: 0}
   CancelPriority: 1
   attack: {fileID: 4969273504346886127, guid: 9d6c099eb2a543b4caa67b13f1879e66, type: 3}
   attackName: Knife
@@ -331,7 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 0}
-  attackSoundPlayer: {fileID: 0}
   CancelPriority: 1
   attack: {fileID: 6266204880724720921, guid: 63a0fc01a5d130643a6cbaa4804871e2, type: 3}
   attackName: Skewer
@@ -352,7 +350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackSound: {fileID: 0}
-  attackSoundPlayer: {fileID: 0}
   CancelPriority: 2
   projectile: {fileID: 1280546296, guid: c0b57d49f3a331049a952c7f9c22c468, type: 3}
   effectRecipeData: {fileID: 0}
@@ -366,32 +363,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 23ebf5c97ad69194cb145d08c6a219c8, type: 3}
   - {fileID: 8300000, guid: 8f2fce5e9693e3c48a6ca5be96e4aeb3, type: 3}
   currLevel: 0
---- !u!114 &4824409693512105908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4055231404074166004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a13daa368f4f2b946b6ea0e6cebc63c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 0
-  Perception: 0
-  MeleeAttackThreshold: 0
-  RangeAttackThreshold: 0
-  maxHealth: 5
-  health: 5
-  PartySize: 3
-  damageSFX: {fileID: 0}
-  deathSFX: {fileID: 0}
-  sfxPlayer: {fileID: 0}
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 0
-  initialFriendliness: 0
 --- !u!114 &1026942967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,3 +538,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac44fd2e78efc9409c192aee3e17721, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5566830938768214350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48e1e4da11f3094ba420dac6500b2ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 0
+  Perception: 0
+  MeleeAttackThreshold: 0
+  RangeAttackThreshold: 0
+  maxHealth: 5
+  health: 5
+  PartySize: 3
+  damageSFX: {fileID: 8300000, guid: 775f7a60b54649e4f8ee6e590621ebf4, type: 3}
+  deathSFX: {fileID: 8300000, guid: 0042ab731928d9c489cdc22c4640ae27, type: 3}
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
+    type: 3}
+  initialFear: 0
+  initialHunger: 0
+  initialHostility: 0
+  initialFriendliness: 0

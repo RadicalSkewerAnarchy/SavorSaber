@@ -57,10 +57,9 @@ public class CharacterData : MonoBehaviour
         #endregion
         Spawn = transform.position;
     }
-    public void DoDamage(int damage)
+    public virtual void DoDamage(int damage)
     {
         health -= damage;
-
         //only play damage SFX if it was not a killing blow so sounds don't overlap
         if (damageSFX != null && health > 0)
         {
@@ -73,14 +72,7 @@ public class CharacterData : MonoBehaviour
         }
         else if (health <= 0)
         {
-            if (this.tag == "Prey" || this.tag == "Predator")
-            {
-                Kill();
-            }
-            else if (this.tag == "Player")
-            {
-                GetComponent<Respawner>().Respawn();
-            }
+            Kill();
         }
     }
     /// <summary> The death function for non-player characters </summary>

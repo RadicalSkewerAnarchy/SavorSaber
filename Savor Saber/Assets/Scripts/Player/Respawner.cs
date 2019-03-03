@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(UpdatedController))]
 public class Respawner : MonoBehaviour
 {
     SpawnPoint currSpawn;
+    UpdatedController controller;
     private Animator anim;
-    bool respawning = false;
+    public bool Respawning { get; private set; } = false;
 
     private void Awake()
     {
         anim = GetComponent<Animator>();
+        controller = GetComponent<UpdatedController>();
     }
 
     public void Respawn()
     {
-        if(respawning == false)
+        if(Respawning == false)
         {
-            respawning = true;
+            Respawning = true;
             StartCoroutine(Die());
         }
 
@@ -26,16 +29,19 @@ public class Respawner : MonoBehaviour
     private IEnumerator Die()
     {
         anim.Play("Wasted");
+        controller.Stop();
+        controller.enabled = false;
         yield return new WaitForSeconds(1);
         currSpawn.Respawn(gameObject);
-        respawning = false;
+        Respawning = false;
+        controller.enabled = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Triggering Event: " + name);
+    {     
         if(collision.tag == "Respawn")
         {
+            Debug.Log("Setting Spawn Point to: " + collision.name);
             currSpawn = collision.GetComponent<SpawnPoint>();
         }
     }
