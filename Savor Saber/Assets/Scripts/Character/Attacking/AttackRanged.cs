@@ -115,7 +115,7 @@ public class AttackRanged : AttackBase
         }
         else if (attackSound == null && audioSource != null)
         {
-            audioSource.clip = attackSound;
+            audioSource.clip = defaultAttackSound;
             audioSource.Play();
         }
         animator.Play(attackName);
