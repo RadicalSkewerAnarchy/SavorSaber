@@ -11,7 +11,20 @@ public class FlavorInputManager : MonoBehaviour
     protected Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
     protected CharacterData characterData;
     protected SpriteRenderer spriteRenderer;
+
     public float dotTicLength = 1;
+    public string favoriteIngredient;
+    public RecipeData.Flavors favoriteFlavors;
+    public int charmThreshhold = 1;
+    public GameObject rewardItem;
+
+
+    private void Start()
+    {
+        InitializeDictionary();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        characterData = GetComponent<CharacterData>();
+    }
 
     public void InitializeDictionary()
     {
@@ -70,7 +83,43 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void RespondToIngredients()
     {
+        CheckCharmEffect();
+    }
 
+    protected void CheckCharmEffect()
+    {
+        if (favoriteIngredient != null &&
+            ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
+            ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
+        {
+            Debug.Log(this.gameObject + " charmed by feeding favorite ingredient!");
+            if(characterData != null)
+            {
+                characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+                if(rewardItem != null)
+                    Instantiate(rewardItem, transform.position, Quaternion.identity);
+            }
+
+        }
+
+        for (int f = 1; f <= 64; f = f << 1)
+        {
+            //only compare entries in favorite flavors
+            if ((f & (int)favoriteFlavors) > 0)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                if (flavorCountDictionary[foundFlavor] >= charmThreshhold)
+                {
+                    Debug.Log(this.gameObject + " charmed by feeding favorite flavor!");
+                    if (characterData != null)
+                    {
+                        characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+                        if (rewardItem != null)
+                            Instantiate(rewardItem, transform.position, Quaternion.identity);
+                    }
+                }
+            }
+        }
     }
 
     public void DamageOverTime(int numTics, float ticLength)
