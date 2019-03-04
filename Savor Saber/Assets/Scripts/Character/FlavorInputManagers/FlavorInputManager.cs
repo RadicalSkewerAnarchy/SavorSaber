@@ -74,7 +74,7 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
                     flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                    Debug.Log(ingredient.displayName + " has flavor " + flavorCountDictionary[foundFlavor]);
+                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
                 }
             }
         }

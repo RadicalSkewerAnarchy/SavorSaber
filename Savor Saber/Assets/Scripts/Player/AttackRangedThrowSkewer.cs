@@ -61,7 +61,6 @@ public class AttackRangedThrowSkewer : AttackRanged
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
             flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
-            ingredientCountDictionary = new Dictionary<string, int>(inv.GetActiveIngredientDictionary());
             ingredientArray = inv.GetActiveSkewer().ToArray();
 
             r.color = Color.white;

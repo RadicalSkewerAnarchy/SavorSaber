@@ -41,7 +41,6 @@ public class AttackRanged : AttackBase
     /// how much of each flavor is present on the skewer
     /// </summary>
     public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
-    public Dictionary<string, int> ingredientCountDictionary;
     public IngredientData[] ingredientArray;
 
     /// <summary>
@@ -142,6 +141,10 @@ public class AttackRanged : AttackBase
             projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
             Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
         }
+        if (flavorCountDictionary != null)
+        {
+            projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
+        }
 
         Attacking = true;
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
@@ -167,7 +170,7 @@ public class AttackRanged : AttackBase
         }
         else if (attackSound == null && audioSource != null)
         {
-            audioSource.clip = attackSound;
+            audioSource.clip = defaultAttackSound;
             audioSource.Play();
         }
         animator.Play(attackName);
@@ -187,6 +190,15 @@ public class AttackRanged : AttackBase
         if (effectRecipeData != null)
         {
             projectileData.effectRecipeData = effectRecipeData;
+        }
+        if (ingredientArray != null)
+        {
+            projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
+            Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
+        }
+        if(flavorCountDictionary != null)
+        {
+            projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
         }
 
         Attacking = true;

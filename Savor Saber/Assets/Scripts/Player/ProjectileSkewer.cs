@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ProjectileSkewer : BaseProjectile
 {
@@ -28,6 +29,8 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
+            //should be obsolete since we're setting the moods of affected creatures directly now
+            /*
             if (flavorCountDictionary != null && flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
             {
                 //attack radius is set by the amount of Savory/Umami on the skewer
@@ -41,6 +44,8 @@ public class ProjectileSkewer : BaseProjectile
                 signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
                 
             }
+            */
+            SetAOE();
 
             Destroy(this.gameObject);
 
@@ -59,14 +64,7 @@ public class ProjectileSkewer : BaseProjectile
             attackRadius = 2.5f;
         }
 
-        if (ingredientArray != null)
-        {
-            FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
-            if (flavorInput != null)
-            {
-                flavorInput.Feed(ingredientArray);
-            }
-        }
+        SetAOE();
         
         if (!penetrateTargets)
             Destroy(this.gameObject);
@@ -77,5 +75,25 @@ public class ProjectileSkewer : BaseProjectile
     private bool IsCollisionMonster(Collider2D collision)
     {
         return collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator";
+    }
+
+    private void SetAOE()
+    {
+        CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
+        ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
+
+        if (ingredientArray != null)
+        {
+            AOEData.ingredientArray = new IngredientData[ingredientArray.Length];
+            Array.Copy(ingredientArray, AOEData.ingredientArray, ingredientArray.Length);
+        }
+        if (flavorCountDictionary != null)
+        {
+            AOEData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
+        }
+
+        AOECircle.enabled = true;
+        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] * 2f + 0.5f;
+        transform.GetChild(0).transform.parent = null;
     }
 }
