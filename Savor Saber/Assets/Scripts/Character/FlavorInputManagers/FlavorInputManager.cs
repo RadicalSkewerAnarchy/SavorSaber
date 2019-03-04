@@ -13,7 +13,7 @@ public class FlavorInputManager : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
 
     public float dotTicLength = 1;
-    public string favoriteIngredient;
+    public string[] favoriteIngredients;
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
     public GameObject rewardItem;
@@ -88,20 +88,24 @@ public class FlavorInputManager : MonoBehaviour
 
     protected void CheckCharmEffect()
     {
-        if (favoriteIngredient != null &&
+        foreach(string favoriteIngredient in favoriteIngredients)
+        {
+            if (favoriteIngredient != null &&
             ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
             ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
-        {
-            Debug.Log(this.gameObject + " charmed by feeding favorite ingredient!");
-            if(characterData != null)
             {
-                characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
-                characterData.moods["Hunger"] = 0;
-                if(rewardItem != null)
-                    Instantiate(rewardItem, transform.position, Quaternion.identity);
-            }
+                Debug.Log(this.gameObject + " charmed by feeding favorite ingredient!");
+                if (characterData != null)
+                {
+                    characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+                    characterData.moods["Hunger"] = 0;
+                    if (rewardItem != null)
+                        Instantiate(rewardItem, transform.position, Quaternion.identity);
+                }
 
+            }
         }
+
 
         for (int f = 1; f <= 64; f = f << 1)
         {
