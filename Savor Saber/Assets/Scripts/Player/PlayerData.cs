@@ -29,14 +29,11 @@ public class PlayerData : CharacterData
             Invincible = true;
             StartCoroutine(IFrames(damage * timeConst));
         }
-        else 
+        else if(!res.Respawning)
         {
-            if (res.Respawning)
-                return;
             var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
             deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
-            res.Respawn();
-            
+            res.Respawn();       
         }
     }
     private IEnumerator IFrames(float time)

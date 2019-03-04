@@ -20,9 +20,6 @@ public class CharacterData : MonoBehaviour
     public int maxHealth;
     public int health;
     public int PartySize = 3;
-    public AudioClip damageSFX;
-    public AudioClip deathSFX;
-    public GameObject sfxPlayer;
     private Vector2 Spawn;
     #endregion
     #region Variance
@@ -39,6 +36,12 @@ public class CharacterData : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] protected float initialFriendliness;
     public Dictionary<string, float> moods = new Dictionary<string, float>();
+    #endregion
+    #region Death and Damage effects
+    public AudioClip damageSFX;
+    public AudioClip deathSFX;
+    public GameObject sfxPlayer;
+    public ParticleSystem damageParticleBurst = null;
     #endregion
 
     void Start()
@@ -57,25 +60,43 @@ public class CharacterData : MonoBehaviour
         #endregion
         Spawn = transform.position;
     }
+    /// <summary> A standard damage function. </summary>
     public virtual void DoDamage(int damage)
     {
         health -= damage;
         //only play damage SFX if it was not a killing blow so sounds don't overlap
-        if (damageSFX != null && health > 0)
+        if (health > 0)
         {
-            var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-            deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+            if(damageSFX != null)
+            {
+                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+            }
+            else
+            {
+                //play generic sound from asset bundle
+            }
+            if (damageParticleBurst != null)
+                damageParticleBurst.Play();
+            StartCoroutine(DamageEffectCr());
         }
-        else if(damageSFX == null && health > 0)
-        {
-            //play generic sound from asset bundle
-        }
-        else if (health <= 0)
+        else // Health <= 0
         {
             Kill();
         }
     }
-    /// <summary> The death function for non-player characters </summary>
+
+    protected IEnumerator DamageEffectCr()
+    {
+        var spr = GetComponent<SpriteRenderer>();
+        if(spr != null)
+        {
+            spr.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.75f);
+            yield return new WaitForSeconds(0.1f);
+            spr.color = Color.white;
+        }
+    }
+    /// <summary> The default death function </summary>
     public void Kill()
     {
         var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
