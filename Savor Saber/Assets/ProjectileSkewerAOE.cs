@@ -39,7 +39,7 @@ public class ProjectileSkewerAOE : MonoBehaviour
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             if(rb != null)
             {
-                Vector2 forceVector = (collision.transform.position - transform.position).normalized * flavorCountDictionary[RecipeData.Flavors.Savory];
+                Vector2 forceVector = (collision.transform.position - transform.position).normalized * flavorCountDictionary[RecipeData.Flavors.Savory] * 1.5f;
                 rb.AddForce(forceVector, ForceMode2D.Impulse);
             }
         }

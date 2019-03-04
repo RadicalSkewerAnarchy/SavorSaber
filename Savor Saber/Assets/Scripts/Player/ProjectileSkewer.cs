@@ -82,6 +82,14 @@ public class ProjectileSkewer : BaseProjectile
     {
         CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
         ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
+        Animator AOEAnimator;
+
+        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        {
+            AOEAnimator = GetComponentInChildren<Animator>();
+            AOEAnimator.SetBool("Explode", true);
+        }
+
 
         if (ingredientArray != null)
         {
@@ -94,7 +102,7 @@ public class ProjectileSkewer : BaseProjectile
         }
 
         AOECircle.enabled = true;
-        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] * 2f + 0.5f;
+        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
         transform.GetChild(0).transform.parent = null;
     }
 }
