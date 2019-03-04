@@ -24,6 +24,7 @@ public class ProjectileSkewerAOE : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Explosion collided with " + collision.gameObject);
         if (ingredientArray != null)
         {
             FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
@@ -49,6 +50,6 @@ public class ProjectileSkewerAOE : MonoBehaviour
     private IEnumerator Explode()
     {
         yield return new WaitForSeconds(explosionLifetime);
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 }
