@@ -158,7 +158,7 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
-            UpdateHunger();
+            //UpdateHunger();
         }
         else
         {
