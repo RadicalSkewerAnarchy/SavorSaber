@@ -109,7 +109,7 @@ public class SignalApplication : MonoBehaviour
 
             // destroy
             //Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject, Time.deltaTime);
+            Destroy(this.gameObject, Time.fixedDeltaTime);
         }
     }
 
