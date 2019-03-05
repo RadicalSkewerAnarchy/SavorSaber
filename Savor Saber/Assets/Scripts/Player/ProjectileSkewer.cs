@@ -82,12 +82,11 @@ public class ProjectileSkewer : BaseProjectile
     {
         CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
         ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
-        Animator AOEAnimator;
+
 
         if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
         {
-            AOEAnimator = GetComponentInChildren<Animator>();
-            AOEAnimator.SetBool("Explode", true);
+            ExplodeEffects();
         }
 
 
@@ -103,6 +102,17 @@ public class ProjectileSkewer : BaseProjectile
 
         AOECircle.enabled = true;
         AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+
+        transform.GetChild(1).transform.parent = transform.GetChild(0).transform;
         transform.GetChild(0).transform.parent = null;
+
+    }
+
+    private void ExplodeEffects()
+    {
+        Animator AOEAnimator = GetComponentInChildren<Animator>();
+        ParticleSystem AOEParticles = GetComponentInChildren<ParticleSystem>();
+        AOEAnimator.SetBool("Explode", true);
+        AOEParticles.Play();
     }
 }
