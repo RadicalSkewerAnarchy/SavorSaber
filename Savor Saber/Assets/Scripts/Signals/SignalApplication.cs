@@ -24,7 +24,7 @@ public class SignalApplication : MonoBehaviour
     [Range(-1f, 1f)]
     public float friendMod = 0;
     #endregion
-    
+
     // private variables
     public bool activate = false;
     public bool isForAwareness = false;
@@ -52,7 +52,7 @@ public class SignalApplication : MonoBehaviour
         this.hitSelf = hitself;
 
         // set whether or not this is for awareness:
-        //      if the dictionary is empty, 
+        //      if the dictionary is empty,
         //      it is for awareness
         isForAwareness = (this.moodMod.Count == 0);
 
@@ -109,7 +109,7 @@ public class SignalApplication : MonoBehaviour
 
             // destroy
             //Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject, 1f);
+            Destroy(this.gameObject, Time.deltaTime);
         }
     }
 
@@ -149,7 +149,7 @@ public class SignalApplication : MonoBehaviour
 
         // activate!!!!
         activate = true;
-        Destroy(gameObject, Time.deltaTime);
+        Destroy(this.gameObject, 0.5f);
     }
 
     // ApplyToAll
@@ -173,14 +173,14 @@ public class SignalApplication : MonoBehaviour
     }
 
     // Apply
-    // Override this given the type of 
+    // Override this given the type of
     // signal that needs to be applied
     private void Apply(GameObject g, AIData data)
     {
         if (ReferenceEquals(g, null))
             return;
 
-        //modification  
+        //modification
         #region SignalAnimations
         string mood = null;
         float mostInfluential = 0;
@@ -221,7 +221,7 @@ public class SignalApplication : MonoBehaviour
         //change middle argument based on creatures offset
         GameObject child = null;
         SignalAnimator(mostInfluential, mood, sign, child, g);
-        
+
         // child.GetComponent<Animator>().Play("FearUpAnimation");
 
         // set decision timer to 0
@@ -279,6 +279,6 @@ public class SignalApplication : MonoBehaviour
         {
             Debug.Log("Destroying emoter");
             Destroy(emoter);
-        }        
-    }    
+        }
+    }
 }
