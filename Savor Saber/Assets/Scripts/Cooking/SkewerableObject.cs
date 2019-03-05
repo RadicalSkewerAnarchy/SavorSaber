@@ -40,15 +40,19 @@ public class SkewerableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!attached)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
-            transform.localScale = halfScale * 2;
-        }
-        else
+        if (attached)
         {
             transform.position = origin;
             transform.localScale = halfScale;
+        }
+        else if (!attached || driftSpeed > 0)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+            transform.localScale = halfScale * 2;
+            // adjust drift speed
+            driftSpeed /= 1.01f;
+            if (driftSpeed <= 0.15)
+                driftSpeed = 0;
         }
     }
 }

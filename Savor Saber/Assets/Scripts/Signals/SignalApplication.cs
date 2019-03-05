@@ -26,7 +26,7 @@ public class SignalApplication : MonoBehaviour
     #endregion
     
     // private variables
-    public bool activate = true;
+    public bool activate = false;
     public bool isForAwareness = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
@@ -109,7 +109,7 @@ public class SignalApplication : MonoBehaviour
 
             // destroy
             //Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject);
+            Destroy(this.gameObject, 1f);
         }
     }
 
@@ -121,7 +121,8 @@ public class SignalApplication : MonoBehaviour
 
         string sm = (signalMaker != null ? signalMaker.name : "null character" );
         //if(interactRadius < 5)
-        //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
+        if (!isForAwareness)
+            Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
         // check tags
         if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
@@ -145,6 +146,9 @@ public class SignalApplication : MonoBehaviour
             // keep track of drops
             dropList.Add(go);
         }
+
+        // activate!!!!
+        activate = true;
     }
 
     // ApplyToAll
@@ -173,7 +177,7 @@ public class SignalApplication : MonoBehaviour
     {
         if (ReferenceEquals(g, null))
             return;
-        Debug.Log(this.gameObject.name + " is Applying signal to " + g + "===>");
+        ///Debug.Log(this.gameObject.name + " is Applying signal to " + g + "===>");
 
         //modification  
         #region SignalAnimations
@@ -205,13 +209,13 @@ public class SignalApplication : MonoBehaviour
                     float value = data.moods[key];
                     value = Mathf.Clamp((value + mod), 0f, 1f);
                     data.moods[key] = value;
-                    Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
+                    //Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
                 }
             }
         }
         else
         {
-            Debug.Log("****************Mood mod of this signal is null: " + this.gameObject.name);
+            //Debug.Log("****************Mood mod of this signal is null: " + this.gameObject.name);
         }
         //change middle argument based on creatures offset
         GameObject child = null;

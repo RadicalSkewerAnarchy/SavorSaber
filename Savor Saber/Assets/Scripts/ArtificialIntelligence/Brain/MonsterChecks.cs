@@ -88,7 +88,7 @@ public class MonsterChecks : MonoBehaviour
     {
         #region Initialize closest vars
         float close = closestDistance;
-        GameObject closestCreature = null;
+        GameObject closestCreature = this.gameObject;
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
@@ -107,7 +107,7 @@ public class MonsterChecks : MonoBehaviour
         }
 
         return closestCreature;
-    } 
+    }
 
 
     /// <summary>
@@ -138,14 +138,14 @@ public class MonsterChecks : MonoBehaviour
 
         return weakest;
     }
-    
+
     /// <summary>
     /// Checks creatures and returns the average group position
     /// </summary>
     /// <returns> Collider2D of closest enemy or friend </returns>
     public Vector2 AverageGroupPosition()
     {
-        float avgx=0f, avgy=0f;
+        float avgx = 0f, avgy = 0f;
         float count = AllCreatures.Count;
         foreach (GameObject Creature in AllCreatures)
         {
@@ -197,7 +197,7 @@ public class MonsterChecks : MonoBehaviour
                     closestDrop = Drop;
                 }
             }
-            
+
         }
         //Debug.Log("Closest drop is reached = " + (closestDrop == null ? "and it is null" : closestDrop.name + closestDrop.GetInstanceID()));
         return closestDrop;
@@ -318,12 +318,17 @@ public class MonsterChecks : MonoBehaviour
     {
         this.specialPosition = v;
     }
+    // get specials
+    public Vector2 GetSpecialPosition()
+    {
+        return this.specialPosition;
+    }
     // reset
     public void ResetSpecials()
     {
-        //this.specialTarget = null;
+        this.specialTarget = null;
         //this.specialLeader = null;
-        this.specialPosition = transform.position;
+        this.specialPosition = new Vector2(0f, 0f);
     }
     public bool AmLeader()
     {
@@ -345,7 +350,7 @@ public class MonsterChecks : MonoBehaviour
         // position to return
         Vector2 pos;
         GameObject cre;
-        if (specialTarget==null && specialPosition==(Vector2)transform.position)
+        if (specialTarget == null && specialPosition == (Vector2)transform.position)
         {
             // randomly choose
             pos = transform.position;
@@ -377,10 +382,21 @@ public class MonsterChecks : MonoBehaviour
         else
         {
             cre = specialTarget;
-            pos = (cre==null ? specialPosition : (Vector2)cre.transform.position);
+            pos = (cre == null ? specialPosition : (Vector2)cre.transform.position);
         }
         // return
         return pos;
+    }
+
+    public void SetRandomPosition(float xx, float yy)
+    {
+        // position to return
+        float xxx = Random.Range(-xx, xx);
+        float yyy = Random.Range(-yy, yy);
+        if (specialPosition == new Vector2(0f, 0f))
+        {
+            specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
+        }
     }
     #endregion
 }

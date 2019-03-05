@@ -49,7 +49,9 @@ public class AIData : CharacterData
         Feast,
         Console,
         Runaway,
-        Conga
+        Conga,
+        Chase,
+        Wander
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -216,6 +218,14 @@ public class AIData : CharacterData
             case Protocols.Conga:
                 Protocol.Conga();
                 break;
+            // Chase
+            case Protocols.Chase:
+                Protocol.Chase();
+                break;
+            // Wander
+            case Protocols.Wander:
+                Protocol.Wander();
+                break;
 
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
@@ -228,7 +238,7 @@ public class AIData : CharacterData
     {
         // have random chance to be hungry
         float rand = Random.Range(0f, 100f);
-        if (rand < 50)
+        if (rand < 5)
         {
             // create a signal that subtracts from my hunger
             InstantiateSignal(0.1f, "Hunger", 0.1f, false, true);
