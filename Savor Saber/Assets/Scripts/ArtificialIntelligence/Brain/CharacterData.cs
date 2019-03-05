@@ -53,10 +53,14 @@ public class CharacterData : MonoBehaviour
     {
         // set mood values into dictionary
         #region Mood Value Setup
-        moods.Add("Fear", initialFear);
-        moods.Add("Hunger", initialHunger);
-        moods.Add("Hostility", initialHostility);
-        moods.Add("Friendliness", initialFriendliness);
+        if (!moods.ContainsKey("Fear"))
+            moods.Add("Fear", initialFear);
+        if (!moods.ContainsKey("Hunger"))
+            moods.Add("Hunger", initialHunger);
+        if (!moods.ContainsKey("Hostility"))
+            moods.Add("Hostility", initialHostility);
+        if (!moods.ContainsKey("Friendliness"))
+            moods.Add("Friendliness", initialFriendliness);
         #endregion
         Spawn = transform.position;
     }
