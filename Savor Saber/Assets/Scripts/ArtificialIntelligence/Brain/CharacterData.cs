@@ -37,11 +37,13 @@ public class CharacterData : MonoBehaviour
     [SerializeField] protected float initialFriendliness;
     public Dictionary<string, float> moods = new Dictionary<string, float>();
     #endregion
-    #region Death and Damage effects
+    #region Effects
     public AudioClip damageSFX;
     public AudioClip deathSFX;
+    public AudioClip eatSFX;
     public GameObject sfxPlayer;
     public ParticleSystem damageParticleBurst = null;
+    public ParticleSystem eatingParticleBurst = null;
     #endregion
 
     void Start()

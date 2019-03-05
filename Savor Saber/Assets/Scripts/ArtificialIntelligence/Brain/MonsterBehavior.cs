@@ -183,6 +183,15 @@ public class MonsterBehavior : MonoBehaviour
 
             #endregion
             AiData.InstantiateSignal(0.1f, "Hunger", -0.25f, false, true);
+            if(AiData.eatingParticleBurst != null)
+            {
+                AiData.eatingParticleBurst.Play();
+            }
+            if(AiData.eatSFX != null)
+            {
+                Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(AiData.eatSFX);
+                Debug.Log("===========================Hunger sound effect playing here");
+            }
             return true;
         }
         else
