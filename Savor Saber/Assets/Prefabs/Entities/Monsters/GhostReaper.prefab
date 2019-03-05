@@ -39,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 3233334487692794146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.307121, y: -0.28770894, z: 0}
-  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -102,8 +102,8 @@ SpriteRenderer:
   m_SortingLayerID: -133389985
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 262ca0160dde9524db93950638d35404, type: 3}
-  m_Color: {r: 0.75183034, g: 0.3160377, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: fa7612829b29f8348a4f01c92d9c11ea, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -123,7 +123,7 @@ Animator:
   m_GameObject: {fileID: 3233334487692794146}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 924a28bae10f7124ba392f2a5538d8c7, type: 2}
+  m_Controller: {fileID: 22100000, guid: af2339860f60f37478a2953fc9ffb8e9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -243,6 +243,13 @@ MonoBehaviour:
   drops:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &1591768285701305987
 MonoBehaviour:
@@ -297,43 +304,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 020000000100000004000000
+    _keys: 01000000
     _values:
-    - _keys:
-      - Friendliness
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.0041656494
-          value: 0
-          inSlope: 0.07826104
-          outSlope: 0.07826104
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.4771779
-        - serializedVersion: 3
-          time: 0.86053264
-          value: 0.34020925
-          inSlope: 1.400534
-          outSlope: 1.400534
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 2.4827585
-          outSlope: 2.4827585
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.12083334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
     - _keys:
       - Hostility
       _values:
@@ -360,32 +332,6 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    - _keys:
-      - Fear
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
   macroValues:
     _keys: []
     _values: []
@@ -405,9 +351,9 @@ MonoBehaviour:
   Speed: 2
   Perception: 10
   MeleeAttackThreshold: 1
-  RangeAttackThreshold: 5
-  maxHealth: 4
-  health: 4
+  RangeAttackThreshold: 4
+  maxHealth: 15
+  health: 15
   PartySize: 3
   damageSFX: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
@@ -415,7 +361,7 @@ MonoBehaviour:
     type: 3}
   initialFear: 0
   initialHunger: 0
-  initialHostility: 0
+  initialHostility: 1
   initialFriendliness: 0
   currentBehavior: 0
   previousBehavior: 0

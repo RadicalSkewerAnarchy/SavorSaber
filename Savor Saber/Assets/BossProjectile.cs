@@ -15,28 +15,30 @@ public class BossProjectile : BaseProjectile
     FireMode firingMode = FireMode.shotgun;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
-
         Debug.Log("BOSS PROJECTILE MADE");
         // randomly determine firing mode
         // create more projectiles based on firing mode
-        int numProjectiles = 5;
-        int spreadProjectiles = 45;
-        int angleDiv = (int)spreadProjectiles / numProjectiles;
+        int numProjectiles = 10;
+        float spreadProjectiles = 45;
+        float angleDiv = spreadProjectiles / numProjectiles;
 
+        GameObject attacker = this.GetComponent<BaseProjectile>().attacker;
         GameObject newAttack;
         BaseProjectile projectileData;
 
-        float firingAngle = Vector3.Angle(this.directionVector, Vector3.right);
-        for (int i = 0; i < numProjectiles; i++)
+        float firingAngle = Vec2Ang(this.directionVector) - (spreadProjectiles / 2);//Vector3.Angle(this.directionVector, Vector3.right) - (angleDiv / 2);
+        for (float i = 0; i < numProjectiles; i++)
         {
-            Debug.Log("Projectile number: " + i);
+            Debug.Log("Projectile angle: " + i);
             newAttack = Instantiate(mainProjectile, transform.position, Quaternion.identity, transform);
-            Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), boss.GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), attacker.GetComponent<Collider2D>());
             projectileData = newAttack.GetComponent<BaseProjectile>();
-            projectileData.directionVector = RotatePoint(this.transform.position, firingAngle * i , this.directionVector) ;
+            projectileData.directionVector = Vector2.ClampMagnitude(Ang2Vec(i*angleDiv + firingAngle), 1f);
+            //.directionVector = RotatePoint(this.transform.position, firingAngle * i , (Vector2)this.transform.position + this.directionVector);
             projectileData.penetrateTargets = true;
+            projectileData.projectileSpeed = 8f;
         }
     }
 
@@ -59,5 +61,15 @@ public class BossProjectile : BaseProjectile
         // return new vector
         // after readjusting from pivot
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y);
+    }
+    // vector to angle
+    public float Vec2Ang(Vector2 angle)
+    {
+        return Mathf.Atan2(angle.y, angle.x) * Mathf.Rad2Deg;
+    }
+    // angle to vector
+    public Vector2 Ang2Vec(float angle)
+    {
+        return new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
     }
 }

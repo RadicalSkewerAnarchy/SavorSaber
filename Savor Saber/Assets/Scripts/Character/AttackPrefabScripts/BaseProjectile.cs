@@ -46,6 +46,11 @@ public class BaseProjectile : MonoBehaviour
     public bool penetrateTargets = false;
 
     /// <summary>
+    /// The thing that created this attack
+    /// </summary>
+    public GameObject attacker = null;
+
+    /// <summary>
     /// what is the AOE of this projectile on impact?
     /// </summary>
     public float attackRadius = 0.5f;
