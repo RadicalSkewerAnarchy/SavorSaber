@@ -104,18 +104,6 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
 
-    // checks if their are enemies, then attempts to attack
-    // if attack cannot happen, becomes lazy
-    public void Guard()
-    {
-        if (AiData.Checks.NumberOfEnemies() > 0)
-        {
-            if (!Behaviour.MeleeAttack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
-            {
-                Lazy();
-            }
-        }
-    }
     //end of aggro region
     #endregion
 
@@ -141,12 +129,12 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        Vector2 pos = Checks.GetRandomPositionType();
+        Vector2 pos = Checks.ClosestCreature().gameObject.transform.position;
         #endregion
 
-        if (Behaviour.MoveFrom(pos, AiData.Speed, 10f))
+        if (!Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
-            Checks.ResetSpecials();
+            Wander();
         }
     }
 
@@ -162,6 +150,24 @@ public partial class MonsterProtocols : MonoBehaviour
         if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
         {
             Checks.ResetSpecials();
+        }
+    }
+
+    // Wander()
+    // go in random directions
+    public void Wander()
+    {
+        // pick a location near me
+        // move towards it
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        Checks.SetRandomPosition(25f, 25f);//Checks.GetRandomPositionType();
+        Vector2 pos = Checks.GetSpecialPosition();
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        {
+            Checks.ResetSpecials();
+            Behaviour.ResetActionTimer();
         }
     }
 
@@ -188,8 +194,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (Behaviour.Socialize())
             {
                 // reset action timer
-                Behaviour.ResetActionTimer();
-                Checks.ResetSpecials();
+                Wander();
             }
         }       
     }
@@ -223,23 +228,6 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
 
-    // Console()
-    // go to a friend in need
-    // increase their friendliness and
-    // decrease their fear and hostility
-    /// <summary>
-    /// If there are friends, socialize and update special position
-    /// </summary>
-    public void Console()
-    {
-        if(AiData.Checks.NumberOfFriends() > 0)
-        {
-            if(Behaviour.Socialize())
-            {
-                Checks.ResetSpecials();
-            }
-        }
-    }
 
     // Conga()
     // become the leader if no leader
@@ -297,11 +285,37 @@ public partial class MonsterProtocols : MonoBehaviour
             }
         }
     }
-    // Wander()
-    // go in random directions
-    public void Wander()
+ 
+
+    // Console()
+    // go to a friend in need
+    // increase their friendliness and
+    // decrease their fear and hostility
+    /// <summary>
+    /// If there are friends, socialize and update special position
+    /// </summary>
+    public void Console()
     {
-    	
+        if (AiData.Checks.NumberOfFriends() > 0)
+        {
+            if (Behaviour.Socialize())
+            {
+                Checks.ResetSpecials();
+            }
+        }
+    }
+
+    // checks if their are enemies, then attempts to attack
+    // if attack cannot happen, becomes lazy
+    public void Guard()
+    {
+        if (AiData.Checks.NumberOfEnemies() > 0)
+        {
+            if (!Behaviour.MeleeAttack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
+            {
+                Lazy();
+            }
+        }
     }
     #endregion
 }
