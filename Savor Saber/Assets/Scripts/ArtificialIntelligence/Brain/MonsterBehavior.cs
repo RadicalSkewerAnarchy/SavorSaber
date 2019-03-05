@@ -236,6 +236,7 @@ public class MonsterBehavior : MonoBehaviour
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;            
+            projectileData.attacker = this.gameObject;            
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             #endregion
         }
