@@ -149,6 +149,7 @@ public class SignalApplication : MonoBehaviour
 
         // activate!!!!
         activate = true;
+        Destroy(gameObject, Time.deltaTime);
     }
 
     // ApplyToAll
@@ -168,6 +169,7 @@ public class SignalApplication : MonoBehaviour
                 }
             }
         }
+        Destroy(gameObject, .5f);
     }
 
     // Apply
