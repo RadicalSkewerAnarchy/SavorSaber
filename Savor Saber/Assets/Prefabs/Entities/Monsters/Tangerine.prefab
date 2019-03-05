@@ -66,7 +66,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &7856977635825537637
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -299,14 +299,35 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 0200000008000000
+    _keys: 0800000002000000060000000a000000
     _values:
     - _keys:
       - Fear
-      - Hunger
-      - Friendliness
-      - Hostility
+      - Comfort
       _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
@@ -330,34 +351,177 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+    - _keys:
+      - Comfort
+      _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1.0023804
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.3993898
-          value: 0.6380143
-          inSlope: -3.2220967
-          outSlope: -3.2220967
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Comfort
+      - Hunger
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.5
+          value: 0.5
+          inSlope: 1.0792457
+          outSlope: 1.0792457
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.06179544
+          outWeight: 0.56998444
         - serializedVersion: 3
-          time: 0.9977156
-          value: 0.00473094
-          inSlope: 0.13304816
-          outSlope: 0.13304816
+          time: 0.57436407
+          value: 0.79271394
+          inSlope: 1.8871194
+          outSlope: 1.8871194
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.4441849
+          inWeight: 0.33333334
+          outWeight: 0.13539848
+        - serializedVersion: 3
+          time: 1.0034702
+          value: 0.9987104
+          inSlope: 0.03721109
+          outSlope: 0.03721109
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.20181602
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Hostility
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  macroValues:
+    _keys:
+    - Comfort
+    _values:
+    - _keys:
+      - Fear
+      - Hunger
+      - EnemieDistance
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.99765015
+          inSlope: -0.9882164
+          outSlope: -0.9882164
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.009433746
+          inSlope: -0.9882164
+          outSlope: -0.9882164
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.997534
+          outSlope: -0.997534
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.9977417
+          value: 0.0047187805
+          inSlope: -0.997534
+          outSlope: -0.997534
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -374,22 +538,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.9997864
+          time: 0.49771118
+          value: 0.50707626
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -397,73 +547,26 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.6495798
-          value: 0.71410555
-          inSlope: -0.32893953
-          outSlope: -0.32893953
+          time: 0.4988169
+          value: 0.0010279715
+          inSlope: 1.0032294
+          outSlope: 1.0032294
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0.5007358
-        - serializedVersion: 3
-          time: 0.9910036
-          value: 0.09030279
-          inSlope: -3.0001469
-          outSlope: -3.0001469
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.22868994
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1.0000045
-          value: 0.0049476475
-          inSlope: -3.48386
-          outSlope: -3.48386
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.031822655
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Fear
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: -0.006248474
-          inSlope: 0
-          outSlope: 0
+          time: 1.0013763
+          value: 0.0010279715
+          inSlope: Infinity
+          outSlope: Infinity
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.6645819
-          value: 0.9422319
-          inSlope: 3.7726512
-          outSlope: 3.7726512
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.09677241
           outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1.0125122
-          value: 1.1937523
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-  macroValues:
-    _keys: []
-    _values: []
   data: {fileID: 0}
 --- !u!114 &4590983733872952246
 MonoBehaviour:
@@ -477,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 5
+  Speed: 3
   Perception: 5
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
