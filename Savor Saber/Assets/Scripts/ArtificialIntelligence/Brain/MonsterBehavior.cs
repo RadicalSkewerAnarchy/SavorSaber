@@ -244,7 +244,9 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
+            Debug.Log("Instantiating Happiness Signal");
             AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
+            ResetActionTimer();
             return true;
         }
         else
