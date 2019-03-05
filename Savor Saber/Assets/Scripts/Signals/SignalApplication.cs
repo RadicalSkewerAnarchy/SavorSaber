@@ -109,7 +109,7 @@ public class SignalApplication : MonoBehaviour
 
             // destroy
             //Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject, 1f);
+            Destroy(this.gameObject, Time.deltaTime);
         }
     }
 
@@ -149,6 +149,7 @@ public class SignalApplication : MonoBehaviour
 
         // activate!!!!
         activate = true;
+        Destroy(this.gameObject, 0.5f);
     }
 
     // ApplyToAll
