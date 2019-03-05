@@ -37,8 +37,7 @@ public abstract class AttackBase : MonoBehaviour
 
     protected void LoadAssetBundles()
     {
-        sfx_bundle = AssetBundleManager.getAssetBundle("sfx");
-        Debug.Log(sfx_bundle);
+        sfx_bundle = AssetBundleManager.getAssetBundle(name);
         if (sfx_bundle == null)
             StartCoroutine(LoadAB("sfx"));
     }
@@ -49,6 +48,7 @@ public abstract class AttackBase : MonoBehaviour
         sfx_bundle = AssetBundleManager.getAssetBundle(url);
         Debug.Log("In LoadAB, sfx_bundle = " + sfx_bundle);
         defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
+        Debug.Log("Default attack sound null? " + defaultAttackSound == null);
         yield return null;
     }
 }

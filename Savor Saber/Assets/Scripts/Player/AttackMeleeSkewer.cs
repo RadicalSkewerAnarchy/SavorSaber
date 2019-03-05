@@ -29,7 +29,8 @@ public class AttackMeleeSkewer : AttackMelee
     private void Awake()
     {
         LoadAssetBundles();
-        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
+        //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>("sfx_damage");
+
     }
 
     public override void Attack()
@@ -39,11 +40,13 @@ public class AttackMeleeSkewer : AttackMelee
         {
             audioSource.clip = attackSound;
             audioSource.Play();
+            Debug.Log("Playing override sound");
         }
         else if (attackSound == null && audioSource != null)
         {
-            audioSource.clip = attackSound;
+            audioSource.clip = defaultAttackSound;
             audioSource.Play();
+            Debug.Log("Playing default sound");
         }
         animator.Play(attackName);
 

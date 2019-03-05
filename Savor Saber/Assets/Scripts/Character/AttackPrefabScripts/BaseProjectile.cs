@@ -71,6 +71,8 @@ public class BaseProjectile : MonoBehaviour
     /// how much of each flavor is present on the skewer
     /// </summary>
     public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+    public Dictionary<string, int> ingredientCountDictionary;
+    public IngredientData[] ingredientArray;
 
     /// <summary>
     /// Direction and rotation fields

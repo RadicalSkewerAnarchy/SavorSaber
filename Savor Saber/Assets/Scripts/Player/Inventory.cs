@@ -18,8 +18,6 @@ public class Inventory : MonoBehaviour {
     /// Fields related to inventory visual representation
     /// </summary>
     public int maxItemsPerSkewer = 3;
-    public Image[] skewerSprites = new Image[3];
-    public Sprite emptySprite;
 
     /// <summary>
     /// Fields related to actual inventory tracking
@@ -31,10 +29,6 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Fields related to cooking
     /// </summary>
-    public GameObject recipeDatabaseObject;
-    private RecipeDatabase recipeDatabase;
-    public AttackRanged rangedAttack;
-    //[System.NonSerialized]
     public bool nearCampfire = false;
 
     /// <summary>
@@ -55,7 +49,6 @@ public class Inventory : MonoBehaviour {
         quiver[1] = new Skewer();
         quiver[2] = new Skewer();
         CanSwap = true;
-        recipeDatabase = recipeDatabaseObject.GetComponent<RecipeDatabase>();
         sfxPlayer = GetComponent<PlaySFX>();
 
         //initialize dictionaries 
@@ -69,11 +62,6 @@ public class Inventory : MonoBehaviour {
     {
         //Detect swapping input
         GetSkewerSwapInput();
-
-        //Debug.Log("Majority flavor on active skewer: " + GetMajorityFlavor(false, true));
-        //Debug.Log("Majority flavor on all skewers: " + GetMajorityFlavor(true, true));
-        //Debug.Log("Has exactly 2 pears on active skewer: " + HasIngredients("Pear", 2, false, true));
-        //Debug.Log("Has 4 pears on all skewers: " + HasIngredients("Pear", 4, true, false));
     }
 
     #region utility functions
@@ -187,7 +175,7 @@ public class Inventory : MonoBehaviour {
     {
         quiver[activeSkewer].ClearItems();
         quiver[activeSkewer].ResetDictionary();
-        UpdateSkewerVisual();
+        //UpdateSkewerVisual();
     }
 
     /// <summary>
@@ -214,6 +202,10 @@ public class Inventory : MonoBehaviour {
         return quiver[activeSkewer].flavorCountDictionary;
     }
 
+    public Dictionary<string, int> GetActiveIngredientDictionary()
+    {
+        return quiver[activeSkewer].ingredientCountDictionary;
+    }
     /// <summary>
     /// Returns the majority flavor on either the active skewer or all skewers. 
     /// Can return either Acquired or None if there is a tie
@@ -342,6 +334,8 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Update the visuals to display the current inventory state
     /// </summary>
+    /// 
+    /*
     private void UpdateSkewerVisual()
     {
         //convert the active skewer stack to an array and reverse it
@@ -368,6 +362,7 @@ public class Inventory : MonoBehaviour {
             }
         }
     }
+    */
 
     /// <summary>
     /// Handle input for buttons to swap skewers

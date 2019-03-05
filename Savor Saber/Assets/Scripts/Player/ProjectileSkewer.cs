@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ProjectileSkewer : BaseProjectile
 {
@@ -28,6 +29,8 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
+            //should be obsolete since we're setting the moods of affected creatures directly now
+            /*
             if (flavorCountDictionary != null && flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
             {
                 //attack radius is set by the amount of Savory/Umami on the skewer
@@ -41,6 +44,8 @@ public class ProjectileSkewer : BaseProjectile
                 signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
                 
             }
+            */
+            SetAOE();
 
             Destroy(this.gameObject);
 
@@ -49,6 +54,7 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Skewer collided with " + collision.gameObject);
         //attack radius is set by the amount of Savory/Umami on the skewer
         if(flavorCountDictionary != null)
         {
@@ -59,35 +65,8 @@ public class ProjectileSkewer : BaseProjectile
             attackRadius = 2.5f;
         }
 
-        //general hitting 
-        if (flavorCountDictionary != null)
-        { 
-
-            //call the target's feeding function, if it has one
-            FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
-            if (flavorInput != null)
-            {
-                for (int f = 1; f <= 64; f = f << 1)
-                {
-                    //feed all flavors into the target's flavor input manager
-                    //and add them to the signal's dictionary of moods
-                    if (flavorCountDictionary[(RecipeData.Flavors)f] > 0)
-                    {
-                        flavorInput.Feed((RecipeData.Flavors)f, flavorCountDictionary[(RecipeData.Flavors)f]);
-
-                        //if sweet, also instantiate AI signal
-                        if(f == (int)RecipeData.Flavors.Sweet)
-                        {
-                            signal = Instantiate(dropItem, transform.position, Quaternion.identity);
-                            signalApplication = signal.GetComponent<SignalApplication>();
-                            moodMod.Add("Friendliness", flavorCountDictionary[(RecipeData.Flavors)f] / 3);
-                            signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
-                            
-                        }
-                    }
-                }
-            }            
-        }
+        SetAOE();
+        
         if (!penetrateTargets)
             Destroy(this.gameObject);
 
@@ -97,5 +76,43 @@ public class ProjectileSkewer : BaseProjectile
     private bool IsCollisionMonster(Collider2D collision)
     {
         return collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator";
+    }
+
+    private void SetAOE()
+    {
+        CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
+        ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
+
+
+        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        {
+            ExplodeEffects();
+        }
+
+
+        if (ingredientArray != null)
+        {
+            AOEData.ingredientArray = new IngredientData[ingredientArray.Length];
+            Array.Copy(ingredientArray, AOEData.ingredientArray, ingredientArray.Length);
+        }
+        if (flavorCountDictionary != null)
+        {
+            AOEData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
+        }
+
+        AOECircle.enabled = true;
+        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+
+        transform.GetChild(1).transform.parent = transform.GetChild(0).transform;
+        transform.GetChild(0).transform.parent = null;
+
+    }
+
+    private void ExplodeEffects()
+    {
+        Animator AOEAnimator = GetComponentInChildren<Animator>();
+        ParticleSystem AOEParticles = GetComponentInChildren<ParticleSystem>();
+        AOEAnimator.SetBool("Explode", true);
+        AOEParticles.Play();
     }
 }
