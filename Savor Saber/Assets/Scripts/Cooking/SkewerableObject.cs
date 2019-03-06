@@ -12,6 +12,7 @@ public class SkewerableObject : MonoBehaviour
     /// <summary> Ingredient Data SO. This is what will actually be added to the player's skewer </summary>
     public IngredientData data;
 
+    public bool decay = true;
     public Timer decayTime = new Timer(10);
     private bool flickering = false;
     private SpriteRenderer sp;
@@ -53,7 +54,7 @@ public class SkewerableObject : MonoBehaviour
             transform.localScale = halfScale;
         }
         transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
-        if(!flickering)
+        if(!flickering && decay)
         {
             if (decayTime.Update())
             {
