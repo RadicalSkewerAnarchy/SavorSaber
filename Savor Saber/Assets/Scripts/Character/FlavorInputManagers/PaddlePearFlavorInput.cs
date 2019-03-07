@@ -26,6 +26,14 @@ public class PaddlePearFlavorInput : FlavorInputManager
             //Only reset the spicy stat or else no other stats will work
             flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
         }
+        if (flavorCountDictionary[RecipeData.Flavors.Sweet] >= 0)
+        {
+            characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+            characterData.moods["Fear"] = -0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+            characterData.moods["Hostility"] = -0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
+            flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
+        }
+
         CheckCharmEffect();
     }
 }
