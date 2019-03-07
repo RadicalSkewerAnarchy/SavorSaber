@@ -7,17 +7,29 @@ using UnityEngine;
 /// </summary>
 public class DropOnDeath : MonoBehaviour
 {
-    /// <summary> The objects to be instatiated when Drop() is called (should be prefabs) </summary>
+    [Range(0, 100)]
+    public int chance;
+    /// <summary> The objects to be instatiated when Drop() is called (should be prefabs). </summary>
     public GameObject[] drops;
+    /// <summary> The signals to be dropped (will always drop) </summary>
+    public GameObject[] signalDrops;
     /// <summary> Instantiates all prefabs in drops[] </summary>
     public void Drop()
     {
+        float thresh = (float)chance / 100;
         foreach (var obj in drops)
+        {
+            if(Random.value < thresh)
+            {
+                var d = GameObject.Instantiate(obj);
+                d.transform.position = transform.position;
+            }
+        }
+        foreach(var obj in signalDrops)
         {
             var d = GameObject.Instantiate(obj);
             d.transform.position = transform.position;
         }
         //Debug.Log(this.gameObject.name + " has ****DIED****");
-
     }
 }

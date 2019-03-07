@@ -6,17 +6,12 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
+    private const float bunceForce = 150;
 
     // Start is called before the first frame update
     void Start()
     {
         sfxPlayer = GetComponent<PlaySFXRandPitch>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)
@@ -30,12 +25,33 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             if (characterData != null)
             {
                 characterData.DoDamage((int)meleeDamage);
-
+            }
+            Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
+            if(body != null)
+            {
+                float angle = Vector2.Angle(transform.position, collision.transform.position);
+                var vector = AngleToVector(angle, false) * bunceForce;
+                if (transform.position.x > collision.transform.position.x)
+                    vector.x *= -1;
+                if (transform.position.y > collision.transform.position.y)
+                    vector.y *= -1;
+                body.AddForce(vector);
             }
         }
         else if (collision.gameObject.tag == "SkewerableObject")
         {
             collision.gameObject.GetComponent<SkewerableObject>().attached = false;
         }
+    }
+
+    private Vector2 AngleToVector(float angle, bool inDegrees)
+    {
+        if (inDegrees == true)
+            angle = angle * (Mathf.PI / 180);
+        Vector2 vec = new Vector2();
+        //TRIGONOMETRY WOOOOOOOO
+        vec.x = -1 * Mathf.Cos(angle);
+        vec.y = Mathf.Sin(angle);
+        return vec;
     }
 }

@@ -47,6 +47,15 @@ public class SkewerableObject : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
             transform.localScale = halfScale * 2;
+            if (!flickering)
+            {
+                if (decayTime.Update())
+                {
+                    flickering = true;
+                    StartCoroutine(FlickerOut());
+                }
+                sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
+            }
         }
         else
         {
@@ -54,15 +63,6 @@ public class SkewerableObject : MonoBehaviour
             transform.localScale = halfScale;
         }
         transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
-        if(!flickering && decay)
-        {
-            if (decayTime.Update())
-            {
-                flickering = true;
-                StartCoroutine(FlickerOut());
-            }
-            sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
-        }
     }
 
     private IEnumerator FlickerOut()
