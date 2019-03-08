@@ -8,6 +8,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     private PlaySFXRandPitch sfxPlayer;
     [Range(1,10)]
     public float bunceForce = 3;
+    public float dropBunceForce = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -27,27 +28,26 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             {
                 characterData.DoDamage((int)meleeDamage);
             }
-            Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
-            if(body != null)
-            {
-                var ForceDir = collision.transform.position - transform.parent.position;
-                body.AddForce(ForceDir.normalized * bunceForce, ForceMode2D.Impulse);
-            }
+            DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
         }
         else if (collision.gameObject.tag == "SkewerableObject")
         {
-            collision.gameObject.GetComponent<SkewerableObject>().attached = false;
+            var objComp = collision.gameObject.GetComponent<SkewerableObject>();
+            if (objComp.attached)
+            {
+                objComp.attached = false;
+            }
+            else
+                DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), dropBunceForce);
         }
     }
 
-    private Vector2 AngleToVector(float angle, bool inDegrees)
+    private void DoKnockBack(Rigidbody2D body, float forceScale)
     {
-        if (inDegrees == true)
-            angle = angle * (Mathf.PI / 180);
-        Vector2 vec = new Vector2();
-        //TRIGONOMETRY WOOOOOOOO
-        vec.x = -1 * Mathf.Cos(angle);
-        vec.y = Mathf.Sin(angle);
-        return vec;
+        if (body != null)
+        {
+            var ForceDir = body.transform.position - transform.parent.position;
+            body.AddForce(ForceDir.normalized * forceScale, ForceMode2D.Impulse);
+        }
     }
 }
