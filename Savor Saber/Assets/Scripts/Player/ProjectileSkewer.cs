@@ -45,7 +45,7 @@ public class ProjectileSkewer : BaseProjectile
                 
             }
             */
-            SetAOE();
+            //SetAOE();
 
             Destroy(this.gameObject);
 
@@ -56,16 +56,25 @@ public class ProjectileSkewer : BaseProjectile
     {
         Debug.Log("Skewer collided with " + collision.gameObject);
         //attack radius is set by the amount of Savory/Umami on the skewer
-        if(flavorCountDictionary != null)
+
+        //feed via explosion if it has Umami
+        if(flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
         {
-            attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+            SetAOE();
         }
         else
         {
-            attackRadius = 2.5f;
+            if (ingredientArray != null)
+            {
+                FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
+                if (flavorInput != null)
+                {
+                    flavorInput.Feed(ingredientArray);
+                }
+            }
         }
 
-        SetAOE();
+
         
         if (!penetrateTargets)
             Destroy(this.gameObject);

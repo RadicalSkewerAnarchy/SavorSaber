@@ -9,8 +9,8 @@ public class CharacterDataHealthBar : MonoBehaviour
     public CharacterData cData = null;
     private void Update()
     {
-        if(cData.maxHealth != 0)
-            slider.value = (float)cData.health / cData.maxHealth;
+        //if(cData.maxHealth != 0)
+            //slider.value = (float)cData.health / cData.maxHealth;
         Debug.Log(cData.health / cData.maxHealth);
     }
 }

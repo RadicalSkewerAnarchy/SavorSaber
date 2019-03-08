@@ -94,10 +94,9 @@ public class FlavorInputManager : MonoBehaviour
             ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
             ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
             {
-                Debug.Log(this.gameObject + " charmed by feeding favorite ingredient!");
+                Debug.Log(this.gameObject + " fed favorite ingredient!");
                 if (characterData != null)
                 {
-                    characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
                     characterData.moods["Hunger"] = 0;
                     if (rewardItem != null)
                         Instantiate(rewardItem, transform.position, Quaternion.identity);
@@ -118,7 +117,6 @@ public class FlavorInputManager : MonoBehaviour
                     Debug.Log(this.gameObject + " charmed by feeding favorite flavor!");
                     if (characterData != null)
                     {
-                        characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
                         characterData.moods["Hunger"] = 0;
                         if (rewardItem != null)
                             Instantiate(rewardItem, transform.position, Quaternion.identity);

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //[RequireComponent(typeof(MeleeAttack))]
 public class CharacterData : MonoBehaviour
-{   
+{
     public Vector2 Position
     {
         get
@@ -44,6 +45,7 @@ public class CharacterData : MonoBehaviour
     public GameObject sfxPlayer;
     public ParticleSystem damageParticleBurst = null;
     public ParticleSystem eatingParticleBurst = null;
+    protected Slider healthBar;
     #endregion
 
     void Start()
@@ -73,6 +75,12 @@ public class CharacterData : MonoBehaviour
         //only play damage SFX if it was not a killing blow so sounds don't overlap
         if (health > 0)
         {
+            if(healthBar != null)
+            {
+                Debug.Log("Update health bar");
+                healthBar.value = (float)health / maxHealth;
+            }
+
             if(damageSFX != null)
             {
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
