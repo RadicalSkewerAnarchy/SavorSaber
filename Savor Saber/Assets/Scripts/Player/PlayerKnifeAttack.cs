@@ -6,7 +6,8 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
-    private const float bunceForce = 150;
+    [Range(1,10)]
+    public float bunceForce = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +30,8 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             Rigidbody2D body = collision.GetComponent<Rigidbody2D>();
             if(body != null)
             {
-                float angle = Vector2.Angle(transform.position, collision.transform.position);
-                var vector = AngleToVector(angle, false) * bunceForce;
-                if (transform.position.x > collision.transform.position.x)
-                    vector.x *= -1;
-                if (transform.position.y > collision.transform.position.y)
-                    vector.y *= -1;
-                body.AddForce(vector);
+                var ForceDir = collision.transform.position - transform.parent.position;
+                body.AddForce(ForceDir.normalized * bunceForce, ForceMode2D.Impulse);
             }
         }
         else if (collision.gameObject.tag == "SkewerableObject")

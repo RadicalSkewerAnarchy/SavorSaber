@@ -45,7 +45,8 @@ public class CharacterData : MonoBehaviour
     public GameObject sfxPlayer;
     public ParticleSystem damageParticleBurst = null;
     public ParticleSystem eatingParticleBurst = null;
-    protected Slider healthBar;
+    public Slider healthBar;
+    protected Coroutine barCr = null;
     #endregion
 
     void Start()
@@ -77,10 +78,13 @@ public class CharacterData : MonoBehaviour
         {
             if(healthBar != null)
             {
+                healthBar.gameObject.SetActive(true);
                 Debug.Log("Update health bar");
                 healthBar.value = (float)health / maxHealth;
+                if (barCr != null)
+                    StopCoroutine(barCr);
+                barCr = StartCoroutine(ShowHealthBar());
             }
-
             if(damageSFX != null)
             {
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
@@ -99,7 +103,14 @@ public class CharacterData : MonoBehaviour
             Kill();
         }
     }
-
+    /// <summary> Show the health bar for a short amount of time </summary>
+    protected IEnumerator ShowHealthBar()
+    {
+        yield return new WaitForSeconds(3);
+        healthBar.gameObject.SetActive(false);
+        barCr = null;
+    }
+    /// <summary> Play a short color flash when the character is damaged </summary>
     protected IEnumerator DamageEffectCr()
     {
         var spr = GetComponent<SpriteRenderer>();

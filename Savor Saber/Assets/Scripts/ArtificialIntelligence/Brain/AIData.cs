@@ -88,10 +88,6 @@ public class AIData : CharacterData
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
-
-        Transform healthCanvas = this.gameObject.transform.GetChild(0);
-        Debug.Log(healthCanvas.gameObject);
-        healthBar = healthCanvas.GetComponentInChildren<Slider>();
         #endregion
         #region Initialize Data
         InitializeCharacterData();

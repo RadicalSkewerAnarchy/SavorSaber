@@ -191,7 +191,7 @@ public class AttackMelee : AttackBase
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;
-        GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
+        GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity, transform);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
 
         newAttackCollider.direction = attackCapsuleDirection;
