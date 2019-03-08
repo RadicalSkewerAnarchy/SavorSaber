@@ -25,7 +25,7 @@ public class ProjectileSkewerAOE : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Explosion collided with " + collision.gameObject);
-        if (ingredientArray != null)
+        if (ingredientArray != null && collision.tag != "Player")
         {
             FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
             if (flavorInput != null)
@@ -34,7 +34,7 @@ public class ProjectileSkewerAOE : MonoBehaviour
             }
         }
 
-        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && collision.tag != "Player")
         {
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             if(rb != null)
