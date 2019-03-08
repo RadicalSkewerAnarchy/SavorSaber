@@ -50,11 +50,7 @@ public class EventTrigger : MonoBehaviour
     {
         IsActive = true;
         if (type == Type.Cutscene)
-        {
-            player.GetComponent<CameraController>().Detatched = true;
-            foreach(var obj in disableOnCutscene)
-                obj.SetActive(false);
-        }               
+            DoCutscenePrep(true);
         plCon.enabled = false;
         plCon.Stop();
         scene.ResetScene();
@@ -63,11 +59,7 @@ public class EventTrigger : MonoBehaviour
     protected virtual void FinishEvent()
     {
         if (type == Type.Cutscene)
-        {
-            player.GetComponent<CameraController>().Detatched = false;
-            foreach (var obj in disableOnCutscene)
-                obj.SetActive(true);
-        }           
+            DoCutscenePrep(false);       
         plCon.enabled = true;       
         callOnCompletion.Invoke();
         IsActive = false;
@@ -75,5 +67,15 @@ public class EventTrigger : MonoBehaviour
         {  
             Destroy(gameObject);
         }
+    }
+
+    protected void DoCutscenePrep(bool start)
+    {
+        player.GetComponent<CameraController>().Detatched = start;
+        var attacks = player.GetComponents<AttackBase>();
+        foreach (var attack in attacks)
+            attack.enabled = !start;
+        foreach (var obj in disableOnCutscene)
+            obj.SetActive(!start);
     }
 }
