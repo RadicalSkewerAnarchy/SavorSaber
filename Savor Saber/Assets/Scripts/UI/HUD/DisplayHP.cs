@@ -12,7 +12,7 @@ public class DisplayHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject play = GameObject.FindGameObjectsWithTag("Player")[0];
+        GameObject play = GameObject.FindGameObjectWithTag("Player");
         playerData = play.GetComponent<CharacterData>();
     }
 
