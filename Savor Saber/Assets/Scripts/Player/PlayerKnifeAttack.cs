@@ -18,15 +18,16 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        // layer 11 is Monster layer
-        if (collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator")
+        GameObject g = collision.gameObject;
+        string t = g.tag;
+        if (t == "Prey" || t == "Predator")
         {
-            //Debug.Log("Applying Knife Effect: " + collision);
             sfxPlayer.PlayRandPitch(damageSFX);
-            CharacterData characterData = collision.gameObject.GetComponent<CharacterData>();
-            if (characterData != null)
+            CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
+            //Debug.Log("THERE IS CHARACTER COLLISION");
+            if (charData != null)
             {
-                characterData.DoDamage((int)meleeDamage);
+                charData.DoDamage((int)meleeDamage);
             }
             DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
         }
@@ -49,5 +50,13 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             var ForceDir = body.transform.position - transform.parent.position;
             body.AddForce(ForceDir.normalized * forceScale, ForceMode2D.Impulse);
         }
+        /*else if (g.GetComponent<DestructableEnvironment>() != null)
+        {
+            Destroy(g);
+        }
+        else
+        {
+            //Debug.Log("This is something i cant hit: " + g.name);
+        }*/
     }
 }

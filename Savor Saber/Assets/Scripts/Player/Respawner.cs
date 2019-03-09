@@ -38,7 +38,8 @@ public class Respawner : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-    {     
+    {
+        //Debug.Log("Triggering Event: " + name);
         if(collision.tag == "Respawn")
         {
             Debug.Log("Setting Spawn Point to: " + collision.name);
