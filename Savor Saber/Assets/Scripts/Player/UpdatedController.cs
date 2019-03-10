@@ -83,6 +83,7 @@ public class UpdatedController : EntityController
     private Dictionary<Control, float> doubleTapTrackers;
     private Control[] keys;
     private bool running = false;
+    private bool rechargingFromEmpty = false;
     private Coroutine rechargeDashes;
     public float dashRechargeTime = 1f;
     public UnityEngine.UI.Text debugText;
@@ -179,7 +180,7 @@ public class UpdatedController : EntityController
 
     private void StartDash(bool decrement = true)
     {
-        if (decrement && currDashes <= 0)
+        if (rechargingFromEmpty || (decrement && currDashes <= 0))
             return;
         dashVector = GetMovementVector();
         if (dashVector.SqrMagnitude() == 0)
@@ -188,6 +189,8 @@ public class UpdatedController : EntityController
             currDashes--;
         if(debugText != null)
             debugText.text = "Dashes: " + currDashes;
+        if (currDashes == 0)
+            rechargingFromEmpty = true;
         dashing = true;
         dashCurrTime = 0;
         freezeDirection = true;
@@ -234,6 +237,7 @@ public class UpdatedController : EntityController
             if(debugText != null)
                 debugText.text = "Dashes: " + currDashes;
         }
+        rechargingFromEmpty = false;
         rechargeDashes = null;
     }
 
