@@ -25,7 +25,9 @@ public class MonsterMeleeAttack : BaseMeleeAttack
     {
         //Debug.Log("THERE IS NO CHARACTERCOLLISION");
         //monsterChecks.Enemies.Clear();
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator")
+        GameObject g = collision.gameObject;
+        string t = g.tag;
+        if (t == "Player" || t == "Prey" || t == "Predator")
         {            
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
@@ -34,6 +36,10 @@ public class MonsterMeleeAttack : BaseMeleeAttack
             {
                 charData.DoDamage((int)meleeDamage);
             }                       
+        }
+        else if (g.GetComponent<DestructableEnvironment>() != null)
+        {
+            g.GetComponent<DestructableEnvironment>().Detonate();
         }
     }
 }
