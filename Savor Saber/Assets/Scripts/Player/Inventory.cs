@@ -422,7 +422,12 @@ public class Inventory : MonoBehaviour {
 
     public void UpdateUI()
     {
-        inventoryUI.UpdateSkewerUI();
+        if(inventoryUI != null)
+            inventoryUI.UpdateSkewerUI();
+        else
+        {
+            Debug.LogWarning("Error: Inventory.cs needs a reference to HUD to visualize skewers");
+        }
     }
 
     #endregion
