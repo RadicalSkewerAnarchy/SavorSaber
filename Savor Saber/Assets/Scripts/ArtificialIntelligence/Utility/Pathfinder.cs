@@ -19,10 +19,11 @@ public class Pathfinder : MonoBehaviour
     /// <param name="target"></param>
     public void AStar(TileNode current, TileNode target)
     {
-        TileNode parent = null;
+        
 
 
 
 
     }
 }
+//http://gigi.nullneuron.net/gigilabs/a-pathfinding-example-in-c/

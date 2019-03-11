@@ -7,19 +7,21 @@ using UnityEngine.Tilemaps;
 public class GraphNodePopulator : MonoBehaviour
 {
     public GameObject nodePrefab;
+    public Tile[] discoveredTiles;
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
-    bool setCollision = false;
-    private void Start()
-    {
+    bool setCollision = true;
+    private void Start()    {
+        
         /// List of all tilemaps
         activeTileMaps = GetComponentsInChildren<Tilemap>();
         foreach(var activeTiles in activeTileMaps)
         {
+            setCollision = false;
             /// retrieve renderer for layer data
-            if (activeTiles.GetComponent<CompositeCollider2D>())
+            if (activeTiles.GetComponent<TilemapCollider2D>() == null)
             {
-                setCollision = true;
+                break;
             }
             /// tile bounds set based on current tilemap
             bounds = activeTiles.cellBounds;
@@ -34,9 +36,10 @@ public class GraphNodePopulator : MonoBehaviour
                     Vector3 current = activeTiles.CellToWorld(local);
                     if (activeTiles.HasTile(local))
                     {
-                        GameObject tile = Instantiate(nodePrefab, local + new Vector3(.5f, .5f, 0), new Quaternion(0, 0, 0, 1));
-                        tile.transform.SetParent(GetComponentInParent<Grid>().transform);
+                        GameObject tile = Instantiate(nodePrefab, current + new Vector3(.5f, .5f, 0), new Quaternion(0, 0, 0, 1));
+                        tile.transform.SetParent(activeTiles.transform);
                         tile.GetComponent<TileNode>().isCollision = setCollision;
+
                     }
                 }
             }
