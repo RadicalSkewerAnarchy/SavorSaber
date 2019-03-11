@@ -132,7 +132,7 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.ClosestCreature().gameObject.transform.position;
         #endregion
 
-        if (!Behaviour.MoveFrom(pos, AiData.Speed, 1f))
+        if (!Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
             Wander(15f, 15f);
         }
