@@ -132,9 +132,9 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.ClosestCreature().gameObject.transform.position;
         #endregion
 
-        if (!Behaviour.MoveFrom(pos, AiData.Speed, 10f))
+        if (!Behaviour.MoveFrom(pos, AiData.Speed, 1f))
         {
-            Wander();
+            Wander(15f, 15f);
         }
     }
 
@@ -147,7 +147,7 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
         #endregion
 
-        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
         {
             Checks.ResetSpecials();
         }
@@ -155,16 +155,16 @@ public partial class MonsterProtocols : MonoBehaviour
 
     // Wander()
     // go in random directions
-    public void Wander()
+    public void Wander(float rx, float ry)
     {
         // pick a location near me
         // move towards it
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        Checks.SetRandomPosition(25f, 25f);//Checks.GetRandomPositionType();
+        Checks.SetRandomPosition(rx, ry);//Checks.GetRandomPositionType();
         Vector2 pos = Checks.GetSpecialPosition();
         #endregion
-        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
         {
             Checks.ResetSpecials();
             Behaviour.ResetActionTimer();
@@ -194,7 +194,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (Behaviour.Socialize())
             {
                 // reset action timer
-                Wander();
+                Wander(10f, 10f);
             }
         }       
     }
@@ -236,10 +236,11 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            GameObject near = Checks.ClosestCreature();
-            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            //GameObject near = Checks.ClosestCreature();
+            //Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
-            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f, 1f);
+            // reset action timer
+            Wander(15f, 5f);
         }
         else if (Checks.specialTarget == null)
         {

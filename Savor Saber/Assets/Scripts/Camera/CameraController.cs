@@ -78,7 +78,7 @@ public class CameraController : MonoBehaviour
     // FixedUpdate removes jitter to Rigidbody movement
     void FixedUpdate()
     {
-        Debug.Log("In camera controller");
+        //Debug.Log("In camera controller");
 
         //what the fuck are you doing so far away
         if(Vector3.Distance(camera.position, transform.position) > 50f)

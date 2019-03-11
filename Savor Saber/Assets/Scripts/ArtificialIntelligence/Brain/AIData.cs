@@ -225,7 +225,7 @@ public class AIData : CharacterData
                 break;
             // Wander
             case Protocols.Wander:
-                Protocol.Wander();
+                Protocol.Wander(5f, 5f);
                 break;
 
             default:
