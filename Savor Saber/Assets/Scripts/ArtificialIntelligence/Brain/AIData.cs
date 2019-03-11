@@ -32,7 +32,8 @@ public class AIData : CharacterData
         Attack,
         Flee,
         Socialize,
-        Feed
+        Feed,
+        Console
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;

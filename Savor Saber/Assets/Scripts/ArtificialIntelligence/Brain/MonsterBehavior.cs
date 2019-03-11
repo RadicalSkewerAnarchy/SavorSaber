@@ -111,6 +111,7 @@ public class MonsterBehavior : MonoBehaviour
         AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
+            AiData.InstantiateSignal(1f, "Fear", -0.1f, false, true);
             return true;
         }
         else
@@ -264,7 +265,31 @@ public class MonsterBehavior : MonoBehaviour
             ActionTimer -= Time.deltaTime;
             return false;
         }
+    } 
+    /// <summary>
+    /// Spawns one friend signal per action
+    /// </summary>
+    public bool Console()
+    {
+        AnimatorBody.Play("Socialize");
+        AiData.currentBehavior = AIData.Behave.Console;
+        if (ActionTimer < 0)
+        {
+            // create signal 
+            // change signal radius
+            // change signal values (--fear)
+            //Debug.Log("Instantiating Calming Signal");
+            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.2f, true, true);
+            ResetActionTimer();
+            return true;
+        }
+        else
+        {
+            ActionTimer -= Time.deltaTime;
+            return false;
+        }
     }
+
     /// <summary>
     /// Returns a normalized direction
     /// </summary>

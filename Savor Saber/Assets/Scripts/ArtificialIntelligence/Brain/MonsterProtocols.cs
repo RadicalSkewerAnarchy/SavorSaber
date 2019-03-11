@@ -253,6 +253,29 @@ public partial class MonsterProtocols : MonoBehaviour
             Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
+
+    // Console()
+    // go to a friend in need
+    // increase their friendliness and
+    // decrease their fear and hostility
+    /// <summary>
+    /// If there are friends, socialize and update special position
+    /// </summary>
+    public void Console()
+    {
+        // move to
+        #region Get Nearest + Null Check
+        Vector2 pos = Checks.WeakestCreature().transform.position;
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 5f))
+        {
+            if (Behaviour.Console())
+            {
+                Wander(3f, 3f);
+            }
+        }
+    }
+
     // end of pacifict region
     #endregion
 
@@ -286,25 +309,7 @@ public partial class MonsterProtocols : MonoBehaviour
             }
         }
     }
- 
 
-    // Console()
-    // go to a friend in need
-    // increase their friendliness and
-    // decrease their fear and hostility
-    /// <summary>
-    /// If there are friends, socialize and update special position
-    /// </summary>
-    public void Console()
-    {
-        if (AiData.Checks.NumberOfFriends() > 0)
-        {
-            if (Behaviour.Socialize())
-            {
-                Checks.ResetSpecials();
-            }
-        }
-    }
 
     // checks if their are enemies, then attempts to attack
     // if attack cannot happen, becomes lazy

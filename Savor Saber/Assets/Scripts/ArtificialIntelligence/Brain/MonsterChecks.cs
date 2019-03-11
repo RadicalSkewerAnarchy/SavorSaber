@@ -136,7 +136,7 @@ public class MonsterChecks : MonoBehaviour
             }
         }
 
-        return weakest;
+        return ( weakest==null ? this.gameObject : weakest );
     }
 
     /// <summary>
