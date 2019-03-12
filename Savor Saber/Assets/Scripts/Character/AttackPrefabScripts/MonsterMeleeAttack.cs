@@ -39,7 +39,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         }
         else if (g.GetComponent<DestructableEnvironment>() != null)
         {
-            g.GetComponent<DestructableEnvironment>().Detonate();
+            g.GetComponent<DestructableEnvironment>().Destroy();
         }
     }
 }

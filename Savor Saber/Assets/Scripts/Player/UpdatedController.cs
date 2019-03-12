@@ -216,7 +216,6 @@ public class UpdatedController : EntityController
 
     private void StopDash()
     {
-        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         freezeDirection = false;
         dashCurrTime = 0;
         dashing = false;
@@ -263,7 +262,8 @@ public class UpdatedController : EntityController
         {
             StopCoroutine(run);
             run = null;           
-        }          
+        }
+        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 
     private Vector2 GetMovementVector()

@@ -72,7 +72,7 @@ public class SkewerableObject : MonoBehaviour
         while (time > 0)
         {
             yield return new WaitForSeconds(time -= 0.025f);
-            sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.5f);
+            sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.75f);
             on = !on;
         }
         Destroy(gameObject);

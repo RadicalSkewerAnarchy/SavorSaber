@@ -41,6 +41,10 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             else
                 DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), dropBunceForce);
         }
+        else if (g.GetComponent<DestructableEnvironment>() != null)
+        {
+            g.GetComponent<DestructableEnvironment>().Destroy();
+        }
     }
 
     private void DoKnockBack(Rigidbody2D body, float forceScale)
