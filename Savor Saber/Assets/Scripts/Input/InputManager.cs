@@ -75,11 +75,17 @@ public class InputManager : MonoBehaviour
     public static float GetAxis(InputAxis a)
     {
         float c = Input.GetAxis(main.gamepadControls[a].ToString());
-        return c != 0 ? c : Input.GetAxis(main.keyboardControls[a].ToString());
+        if(c == 0)
+        {
+            c = Input.GetAxis(main.keyboardControls[a].ToString());
+            if(c == 0)
+                c = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
+        }
+        return c;
     }
     public static bool GetButton(Control c)
     {
-        return Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.gamepadControls[c]);
+        return Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKey(main.gamepadControls[c]);
     }
     public static bool GetButton(Control c, InputAxis a)
     {
@@ -87,7 +93,7 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonDown(Control c)
     {
-        return Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.gamepadControls[c]);
+        return Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKeyDown(main.gamepadControls[c]);
     }
     public static bool GetButtonDown(Control c, InputAxis a)
     {
@@ -95,7 +101,7 @@ public class InputManager : MonoBehaviour
     }
     public static bool GetButtonUp(Control c)
     {
-        return Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.gamepadControls[c]);
+        return Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKeyUp(main.gamepadControls[c]);
     }
     public static bool GetButtonUp(Control c, InputAxis a)
     {
