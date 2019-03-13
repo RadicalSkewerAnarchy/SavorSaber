@@ -114,7 +114,7 @@ public partial class MonsterProtocols : MonoBehaviour
     /// If idle, update awareness and reset timers
     /// </summary>
     public void Lazy()
-    {             
+    {          
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();

@@ -336,4 +336,10 @@ public class MonsterBehavior : MonoBehaviour
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
     #endregion
+    public bool NavTo(Vector2 target)
+    {
+        //AiData.navMeshAgent.destination = GameObject.Find("TileNode(Clone)").transform.position;
+        AiData.navMeshAgent.destination = new Vector3(0,0,0);
+        return true;
+    }
 }

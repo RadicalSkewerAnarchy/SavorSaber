@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 /// <summary>
 /// ONLY REQUIRE FOR DEBUGGING OR HARDCODED ABSTRACT BehaviorS
 /// </summary>
@@ -71,6 +72,7 @@ public class AIData : CharacterData
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
+    public NavMeshAgent navMeshAgent;
     #endregion
     #region Unfinished
     public SignalApplication Awareness = null;
@@ -87,6 +89,11 @@ public class AIData : CharacterData
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        #region Initialize Navmesh
+        navMeshAgent.speed = Speed;
+        navMeshAgent.Warp(transform.position);
+        #endregion
         #endregion
         #region Initialize Data
         InitializeCharacterData();
