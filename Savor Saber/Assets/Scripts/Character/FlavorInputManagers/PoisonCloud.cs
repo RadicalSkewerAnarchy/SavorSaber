@@ -67,7 +67,7 @@ public class PoisonCloud : MonoBehaviour
     {
         //things to happen before delay
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.25f);
 
         //things to happen after delay
         DamageOverTime();

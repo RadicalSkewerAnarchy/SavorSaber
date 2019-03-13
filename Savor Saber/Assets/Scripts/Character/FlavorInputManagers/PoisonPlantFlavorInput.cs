@@ -16,12 +16,13 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
     public override void RespondToIngredients()
     {
         //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0 && flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
         {
             isFed = true;
             OpenPlant();
         }
         // reset so you have to feed it both flavors at once
+        // nevermind
         ResetDictionary();
     }
 
