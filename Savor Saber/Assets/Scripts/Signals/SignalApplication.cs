@@ -133,7 +133,7 @@ public class SignalApplication : MonoBehaviour
             bool isMe = (signalMaker != null ? this.signalMaker.name.Equals(go.name) : false );
 
             // if ANY of these...
-            if ((isMe && hitSelf) || (hitAll && !isMe))
+            if ((hitSelf && hitAll) || (isMe && hitSelf) || (hitAll && !isMe))
             {
                 // add to list
                 //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
