@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour {
     private void Update()
     {
         //Detect swapping input
-        GetSkewerSwapInput();
+        //GetSkewerSwapInput();
     }
 
     #region utility functions

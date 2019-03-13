@@ -16,7 +16,7 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
     public override void RespondToIngredients()
     {
         //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
             isFed = true;
             OpenPlant();
@@ -39,6 +39,7 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
         CircleCollider2D poison = GetComponentInChildren<CircleCollider2D>();
         poison.enabled = false;
         ParticleSystem poisonParticles = GetComponent<ParticleSystem>();
+
         poisonParticles.Stop();
         spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
     }
