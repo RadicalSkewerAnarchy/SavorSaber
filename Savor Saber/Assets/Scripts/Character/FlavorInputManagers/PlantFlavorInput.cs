@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(CircleCollider2D))]
 public class PlantFlavorInput : FlavorInputManager
 {
     [System.NonSerialized]
@@ -20,7 +19,6 @@ public class PlantFlavorInput : FlavorInputManager
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        characterData = GetComponent<CharacterData>();
     }
 
     public override void RespondToIngredients()

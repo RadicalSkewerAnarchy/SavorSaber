@@ -5,7 +5,7 @@ using UnityEngine;
 public class MarshPlantFlavorInput : PlantFlavorInput
 {
     BoxCollider2D boxCollider;
-    CircleCollider2D recieverCollider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +14,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         characterData = GetComponent<CharacterData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponentInChildren<BoxCollider2D>();
-        recieverCollider = GetComponent<CircleCollider2D>();
+        //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
     public override void RespondToIngredients()
@@ -22,8 +22,9 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
         {
-            isFed = true;
             OpenPlant();
+            isFed = true;
+            spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
         }
     }
 
@@ -33,12 +34,20 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
     public override void ClosePlant()
     {
-        boxCollider.enabled = true;
-        spriteRenderer.color = Color.red;
+        if (!isFed)
+        {
+            boxCollider.enabled = true;
+            spriteRenderer.color = Color.red;
+        }
+
     }
     public override void OpenPlant()
     {
-        boxCollider.enabled = false;
-        spriteRenderer.color = Color.white;
+        if (!isFed)
+        {
+            boxCollider.enabled = false;
+            spriteRenderer.color = Color.white;
+        }
+
     }
 }
