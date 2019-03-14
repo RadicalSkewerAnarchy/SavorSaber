@@ -18,7 +18,7 @@ public class SkewerableObject : MonoBehaviour
     private SpriteRenderer sp;
 
     //movement values
-    public float maxDrift = 4;
+    public float maxDrift = 2;
     public float driftSpeed = 1;
     public bool attached = false;
 
@@ -34,8 +34,8 @@ public class SkewerableObject : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
-        float x = Random.Range(-maxDrift, maxDrift);
-        float y = Random.Range(-maxDrift, maxDrift);
+        float x = Random.Range(-maxDrift, maxDrift) / 4;
+        float y = Random.Range(-maxDrift, maxDrift) / 4;
         //float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
         target = new Vector2(x, y);
 
