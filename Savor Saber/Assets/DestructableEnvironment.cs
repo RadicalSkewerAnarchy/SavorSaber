@@ -34,7 +34,7 @@ public class DestructableEnvironment : MonoBehaviour
         float thresh = (float)dropChance / 100;
         if(particles != null)
             particles.Play();
-        if(Random.value <= thresh)
+        if(dropOnDestroy != null && Random.value <= thresh)
             Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
         StartCoroutine(Regrow());
     }

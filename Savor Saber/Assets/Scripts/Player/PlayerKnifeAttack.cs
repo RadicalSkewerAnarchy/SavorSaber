@@ -45,6 +45,12 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         {
             g.GetComponent<DestructableEnvironment>().Destroy();
         }
+        else if (t == "Reflectable")
+        {
+            var body = g.GetComponent<BaseProjectile>();
+            if(body != null)
+                body.directionVector *= -1;
+        }
     }
 
     private void DoKnockBack(Rigidbody2D body, float forceScale)
