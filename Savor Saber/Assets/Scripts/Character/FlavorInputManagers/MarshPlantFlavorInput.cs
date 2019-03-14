@@ -20,7 +20,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     public override void RespondToIngredients()
     {
         //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
             OpenPlant();
             isFed = true;
