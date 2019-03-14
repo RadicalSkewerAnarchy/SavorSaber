@@ -2,28 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonCloud : MonoBehaviour
+public class WaterfallDamage : MonoBehaviour
 {
+
+    public bool pepperInCloud = false;
+    public int damagePerTic = 5;
     CharacterData characterData;
-    public int dotTicLength;
-    bool playerInCloud;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.name == "GhostReaper")
         {
             characterData = collision.gameObject.GetComponent<CharacterData>();
-            playerInCloud = true;
+            pepperInCloud = true;
             DamageOverTime();
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.name == "GhostReaper")
         {
             characterData = null;
-            playerInCloud = false;
+            pepperInCloud = false;
             StopCoroutine(ExecuteAfterSeconds());
         }
     }
@@ -31,14 +32,14 @@ public class PoisonCloud : MonoBehaviour
     public void DamageOverTime()
     {
         bool killingBlow = false;
-        if (playerInCloud)
+        if (pepperInCloud)
         {
             //test to see if this tic will inflict a killing blow
-            if (characterData.health - 1 <= 0)
+            if (characterData.health - damagePerTic <= 0)
                 killingBlow = true;
 
-            characterData.DoDamage(1);
-            Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
+            characterData.DoDamage(damagePerTic);
+            //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
                 return;
@@ -63,4 +64,5 @@ public class PoisonCloud : MonoBehaviour
 
         yield return null;
     }
+}
 }
