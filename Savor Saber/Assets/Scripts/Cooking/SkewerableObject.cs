@@ -34,18 +34,25 @@ public class SkewerableObject : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
-        float x = transform.position.x + Random.Range(-maxDrift, maxDrift);
-        float y = transform.position.y + Random.Range(-maxDrift, maxDrift);
-        float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
-        target = new Vector3(x, y, z);
+        float x = Random.Range(-maxDrift, maxDrift);
+        float y = Random.Range(-maxDrift, maxDrift);
+        //float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
+        target = new Vector2(x, y);
+
+        if (!attached)
+        {
+            rb.AddForce(target, ForceMode2D.Impulse);
+        }
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         if (!attached)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
             transform.localScale = halfScale * 2;
             if (!flickering)
             {
@@ -62,7 +69,7 @@ public class SkewerableObject : MonoBehaviour
             transform.position = origin;
             transform.localScale = halfScale;
         }
-        transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
     }
 
     private IEnumerator FlickerOut()
