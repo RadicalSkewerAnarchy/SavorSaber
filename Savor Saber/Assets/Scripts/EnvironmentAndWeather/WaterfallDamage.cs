@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class WaterfallDamage : MonoBehaviour
 {
-
+    [System.NonSerialized]
     public bool pepperInCloud = false;
     public int damagePerTic = 5;
     CharacterData characterData;
+    SpriteRenderer sr;
+
+    private void Start()
+    {
+        //the spriterenderer exists to more easily show the bounds of the trigger
+        //so it is disabled on play
+        sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.enabled = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Object in waterfall");
         if (collision.gameObject.name == "GhostReaper")
         {
+            Debug.Log("confirmed as reaper");
             characterData = collision.gameObject.GetComponent<CharacterData>();
             pepperInCloud = true;
             DamageOverTime();
@@ -23,6 +35,7 @@ public class WaterfallDamage : MonoBehaviour
     {
         if (collision.gameObject.name == "GhostReaper")
         {
+
             characterData = null;
             pepperInCloud = false;
             StopCoroutine(ExecuteAfterSeconds());
