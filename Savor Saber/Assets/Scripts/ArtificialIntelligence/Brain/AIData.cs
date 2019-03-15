@@ -32,7 +32,8 @@ public class AIData : CharacterData
         Attack,
         Flee,
         Socialize,
-        Feed
+        Feed,
+        Console
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;
@@ -225,7 +226,7 @@ public class AIData : CharacterData
                 break;
             // Wander
             case Protocols.Wander:
-                Protocol.Wander();
+                Protocol.Wander(5f, 5f);
                 break;
 
             default:
@@ -266,14 +267,5 @@ public class AIData : CharacterData
         }
     }
 
-    // InstantiateSignal()
-    // create a signal that subtracts
-    public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
-    {
-        GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity) as GameObject;
-        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-        signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
 
-        return obtainSurroundings;
-    }
 }
