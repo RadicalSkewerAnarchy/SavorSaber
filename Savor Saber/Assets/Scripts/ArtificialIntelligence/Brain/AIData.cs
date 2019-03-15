@@ -58,6 +58,7 @@ public class AIData : CharacterData
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
+    public List<TileNode> path;
     #endregion
     #region Timers
     [SerializeField]
@@ -96,6 +97,7 @@ public class AIData : CharacterData
         InitializeCharacterData();
         InitializeNormalValues();
         #endregion
+        path = new List<TileNode>();
 
         _vectors = new Dictionary<string, Vector2> {
             {"Player", new Vector2(0f, 0f) }

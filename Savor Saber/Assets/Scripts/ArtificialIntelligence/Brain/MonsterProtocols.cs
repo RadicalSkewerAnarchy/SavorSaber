@@ -115,7 +115,7 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        Behaviour.NavTo();
+        NavTo();
         /*
         if (Behaviour.Idle())
         {
@@ -317,6 +317,29 @@ public partial class MonsterProtocols : MonoBehaviour
             {
                 Lazy();
             }
+        }
+    }
+
+    public void NavTo()
+    {
+        bool moving = false;
+        // if agent is on tilemap
+        if(Checks.currentTile != null)
+        {
+            Debug.Log("Current tile is not null");
+            /// if path is empty, fill it based on destination
+            if (AiData.path.Count < 1)
+            {
+                AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, Behaviour.pathfinder.allNodes.transform.GetChild(23).GetComponent<TileNode>());
+                Debug.Log("Path Set");
+            }else if(AiData.path.Count > 1)
+            {
+                if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
+                {
+                    AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
+                    Debug.Log("New target node: " + AiData.path[AiData.path.Count - 1]);
+                }
+            }                                                    
         }
     }
     #endregion

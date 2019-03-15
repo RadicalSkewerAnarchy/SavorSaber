@@ -17,7 +17,7 @@ public class MonsterBehavior : MonoBehaviour
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
-    Pathfinder pathfinder;
+    public Pathfinder pathfinder;
     #endregion
     #region ActionTimer
     /// <summary>
@@ -129,7 +129,7 @@ public class MonsterBehavior : MonoBehaviour
     {
         AiData.currentBehavior = AIData.Behave.Chase;
         var current = new Vector2(transform.position.x, transform.position.y);
-        if (Vector2.Distance(current, target) <= .5f)
+        if (Vector2.Distance(current, target) <= .01f)
         {
             return true;
         }
@@ -139,10 +139,11 @@ public class MonsterBehavior : MonoBehaviour
             AnimatorBody.Play("Move");
             target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
-            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
-            transform.Translate(target/500f);
-            //RigidBody.AddForce(target);
+            //RigidBody.AddForce(target * speed * Time.deltaTime * 1000f);
+            transform.Translate(target);
+            
             #endregion
             return false;
         }
@@ -339,42 +340,5 @@ public class MonsterBehavior : MonoBehaviour
         // after readjusting from pivot
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
-    #endregion
-    public bool NavTo()
-    {   
-        if(Checks.currentTile != null)
-        {
-            if (ActionTimer < 0)
-            {
-                var path = pathfinder.AStar(Checks.currentTile, pathfinder.allNodes.transform.GetChild(23).GetComponent<TileNode>());
-                foreach(var node in path)
-                {
-                    Debug.Log("NODE ID: " + node.gameObject.GetInstanceID());
-                }
-                StartCoroutine(MoveToNode(path));
-                return true;
-            }
-            else
-            {
-                ActionTimer -= Time.deltaTime;
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }   
-    }
-
-    IEnumerator MoveToNode(List<TileNode> path)
-    {
-        if(path.Count > 0)
-        {
-            while(MoveTo(path[path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold) == false){
-                yield return null;
-            }
-            path.Remove(path[path.Count - 1]);            
-            StartCoroutine(MoveToNode(path));
-        }    
-    }
+    #endregion    
 }
