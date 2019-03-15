@@ -115,14 +115,14 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        NavTo();
-        /*
+        //NavTo();
+
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }*/
+        }
     }
 
     // Runaway()
