@@ -49,7 +49,10 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         {
             var body = g.GetComponent<BaseProjectile>();
             if(body != null)
+            {
                 body.directionVector *= -1;
+                Physics2D.IgnoreCollision(body.GetComponent<Collider2D>(), body.attacker.GetComponent<Collider2D>(), false);
+            }              
         }
     }
 
