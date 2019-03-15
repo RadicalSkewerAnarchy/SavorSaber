@@ -93,6 +93,8 @@ public class UpdatedController : EntityController
     #endregion
 
     public AudioClip dashSFX;
+    public AudioClip cantDashSfx;
+    public AudioClip dashRechargeSfx;
     private AudioSource sfxSource;
 
     void Awake()
@@ -175,7 +177,10 @@ public class UpdatedController : EntityController
     private void StartDash(bool decrement = true)
     {
         if (RechargingFromEmpty || (decrement && CurrDashes <= 0))
+        {
+            sfxSource.PlayOneShot(cantDashSfx);
             return;
+        }
         dashVector = GetMovementVector();
         if (dashVector.SqrMagnitude() == 0)
             return;
@@ -221,6 +226,8 @@ public class UpdatedController : EntityController
 
     private IEnumerator rechargeDashesCR()
     {
+        if (CurrDashes >= maxDashes)
+            yield break;
         yield return new WaitForSeconds(0.33f);
         while(CurrDashes < maxDashes)
         {
@@ -229,6 +236,7 @@ public class UpdatedController : EntityController
         }
         RechargingFromEmpty = false;
         rechargeDashes = null;
+        sfxSource.PlayOneShot(dashRechargeSfx);
     }
 
     private IEnumerator runCR()
