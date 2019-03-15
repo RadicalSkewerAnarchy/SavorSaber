@@ -74,6 +74,7 @@ public class CharacterData : MonoBehaviour
     public virtual void DoDamage(int damage)
     {
         health -= damage;
+        InstantiateSignal(damage * 2, "Fear", 0.2f, true, true);
         //only play damage SFX if it was not a killing blow so sounds don't overlap
         if (health > 0)
         {
@@ -139,10 +140,10 @@ public class CharacterData : MonoBehaviour
     // create a signal that subtracts
     public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
     {
-        GameObject obtainSurroundings = Instantiate(signalPrefab, transform.position, Quaternion.identity) as GameObject;
+        GameObject obtainSurroundings = Instantiate(signalPrefab, transform.position, Quaternion.identity, transform) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
         signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
-
+        signalModifier.Activate();
         return obtainSurroundings;
     }
 }
