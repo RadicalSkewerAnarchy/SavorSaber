@@ -98,8 +98,8 @@ public class Pathfinder : MonoBehaviour
                 } else {
                     cameFrom.Add(neighbor, current);
                 }
-                    gScore[neighbor] = tempScore;
-                fScore[neighbor] = gScore[neighbor] + Vector3.Distance(neighbor.transform.position, target.transform.position); // + heuristic cost estimate
+                gScore[neighbor] = tempScore;
+                fScore[neighbor] = gScore[neighbor]; //+ Vector3.Distance(neighbor.transform.position, target.transform.position); // + heuristic cost estimate
 
             }
         }

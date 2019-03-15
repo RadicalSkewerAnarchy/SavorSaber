@@ -54,7 +54,7 @@ public class GraphNodePopulator : MonoBehaviour
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.5f, .5f, 0), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
-                    tile.GetComponent<TileNode>().walkable = walkable;
+                    tile.GetComponent<TileNode>().SetWalkable(walkable);
                     tiles[i + 1].Add(tile.GetComponent<TileNode>());
                     j++;
                 }
@@ -74,14 +74,14 @@ public class GraphNodePopulator : MonoBehaviour
                 }
                 var neighbors = node.GetComponent<TileNode>().neighbors;
                 // index error bug if looping is done???
-                neighbors.Add(tiles[x - 1][y - 1]);
+                //neighbors.Add(tiles[x - 1][y - 1]);
                 neighbors.Add(tiles[x - 1][y]);
-                neighbors.Add(tiles[x - 1][y + 1]);
+                //neighbors.Add(tiles[x - 1][y + 1]);
                 neighbors.Add(tiles[x][y - 1]);
                 neighbors.Add(tiles[x][y + 1]);
-                neighbors.Add(tiles[x + 1][y - 1]);
+                //neighbors.Add(tiles[x + 1][y - 1]);
                 neighbors.Add(tiles[x + 1][y]);
-                neighbors.Add(tiles[x + 1][y + 1]);
+                //neighbors.Add(tiles[x + 1][y + 1]);
                 var neighborsCopy = new List<TileNode>(neighbors);
                 foreach(var neighbor in neighborsCopy)
                 {

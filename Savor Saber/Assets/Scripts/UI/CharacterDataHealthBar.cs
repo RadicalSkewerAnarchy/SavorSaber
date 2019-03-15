@@ -11,6 +11,6 @@ public class CharacterDataHealthBar : MonoBehaviour
     {
         if(cData.maxHealth != 0)
             slider.value = (float)cData.health / cData.maxHealth;
-        Debug.Log(cData.health / cData.maxHealth);
+        //Debug.Log(cData.health / cData.maxHealth);
     }
 }

@@ -11,4 +11,27 @@ public class TileNode : MonoBehaviour
     {
         neighbors = new List<TileNode>();
     }*/
+    private void Awake()
+    {
+        SetWalkable(true);
+    }
+    public void SetWalkable(bool on)
+    {
+        walkable = on;
+        if (!on)
+        {
+            Destroy(gameObject.GetComponent<BoxCollider2D>());
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {        
+        if (collision.GetType() == typeof(BoxCollider2D))
+        {
+            if (collision.gameObject.GetComponent<MonsterChecks>() != null)
+            {
+                collision.gameObject.GetComponent<MonsterChecks>().currentTile = gameObject.GetComponent<TileNode>();
+            }
+        }                     
+    }
 }
+

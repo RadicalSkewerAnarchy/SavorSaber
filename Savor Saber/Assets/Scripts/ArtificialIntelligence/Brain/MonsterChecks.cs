@@ -12,6 +12,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public AIData AiData;
     public GameObject signalPrefab;
+    public BoxCollider2D boxCollider;
 
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
@@ -338,6 +339,7 @@ public class MonsterChecks : MonoBehaviour
         return amLeader;
     }
     #endregion
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<TileNode>() != null)
@@ -347,7 +349,7 @@ public class MonsterChecks : MonoBehaviour
                 currentTile = collision.gameObject.GetComponent<TileNode>();
             }
         }
-    }
+    }*/
     #region POSITION RANDOMIZATION
     /// <summary>
     /// Given some distribution, return a vector2 of:
