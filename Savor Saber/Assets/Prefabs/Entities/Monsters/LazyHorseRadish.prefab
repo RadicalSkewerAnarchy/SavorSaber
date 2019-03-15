@@ -212,9 +212,9 @@ GameObject:
   - component: {fileID: 407378639}
   - component: {fileID: 407378638}
   - component: {fileID: 407378637}
-  - component: {fileID: 407378653}
+  - component: {fileID: 374463474130383166}
   m_Layer: 0
-  m_Name: HorseRadish (1)
+  m_Name: LazyHorseRadish
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -685,7 +685,6 @@ MonoBehaviour:
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 0.3
   Checks: {fileID: 0}
-  navMeshAgent: {fileID: 0}
   Awareness: {fileID: 0}
   Friends: []
   Enemies: []
@@ -724,6 +723,7 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
+  currentTile: {fileID: 0}
 --- !u!114 &407378641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,28 +834,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _direction: 0
   invert: 0
---- !u!195 &407378653
-NavMeshAgent:
+--- !u!114 &374463474130383166
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 407378636}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 1
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 3
-  m_BaseOffset: 1.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNodes: {fileID: 0}
 --- !u!1 &749150864
 GameObject:
   m_ObjectHideFlags: 0

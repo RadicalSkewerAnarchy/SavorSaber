@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
+//[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class MonsterBehavior : MonoBehaviour
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
+    Pathfinder pathfinder;
     #endregion
     #region ActionTimer
     /// <summary>
@@ -72,6 +74,7 @@ public class MonsterBehavior : MonoBehaviour
         AnimatorBody = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         controller = GetComponent<MonsterController>();
+        pathfinder = GetComponent<Pathfinder>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -336,10 +339,10 @@ public class MonsterBehavior : MonoBehaviour
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
     #endregion
-    public bool NavTo(Vector2 target)
-    {
-        //AiData.navMeshAgent.destination = GameObject.Find("TileNode(Clone)").transform.position;
-        AiData.navMeshAgent.destination = new Vector3(0,0,0);
+    public bool NavTo()
+    {       
+        var path = pathfinder.AStar(Checks.currentTile, pathfinder.allNodes.transform.GetChild(23).GetComponent<TileNode>());
+        Debug.Log("Path Found : ");        
         return true;
     }
 }

@@ -6,22 +6,36 @@ public class Pathfinder : MonoBehaviour
 {
     Dictionary<TileNode, float> gScore;
     Dictionary<TileNode, float> fScore;
-    public GameObject[] allNodes; 
+    public GameObject allNodes; 
 
     public void Start()
     {
         InitGraph();
+        allNodes = GameObject.Find("Walkable");
     }
     private void InitGraph()
     {
         gScore = new Dictionary<TileNode, float>();
         fScore = new Dictionary<TileNode, float>();
-        var nodeList = GameObject.Find("Walkable");
-        for(int i = 0; i < nodeList.transform.childCount; i++)
+        //var nodeList = GameObject.Find("Walkable");
+        for(int i = 0; i < allNodes.transform.childCount; i++)
         {
-            gScore.Add(nodeList.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
-            fScore.Add(nodeList.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
+            gScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
+            fScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
         }
+        Debug.Log("Graph initialized");
+    }
+
+    public List<TileNode> GetShortestPath(Dictionary<TileNode, TileNode> cameFrom, TileNode current)
+    {
+        List<TileNode> path = new List<TileNode>();
+        path.Add(current);
+        while (cameFrom.ContainsKey(current))
+        {
+            current = cameFrom[current];
+            path.Add(current);
+        }
+        return path;
     }
 
     /// <summary>
@@ -30,8 +44,9 @@ public class Pathfinder : MonoBehaviour
     /// </summary>
     /// <param name="start"></param>
     /// <param name="target"></param>
-    public TileNode[] AStar(TileNode start, TileNode target)
+    public List<TileNode> AStar(TileNode start, TileNode target)
     {
+        Debug.Log("START/TARGET RECEIVED : " + start.gameObject.GetInstanceID() + "/" + target.gameObject.GetInstanceID());
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();
         // set of discovered but unevaluated nodes
@@ -42,7 +57,6 @@ public class Pathfinder : MonoBehaviour
         gScore[start] = 0;
         // total cost of getting from start to goal through this node, partly known, partly heuristic
         fScore[start] = Vector3.Distance(start.transform.position, target.transform.position);
-
         while (open.Count > 0)
         {
             TileNode current = null;
@@ -58,11 +72,11 @@ public class Pathfinder : MonoBehaviour
             if(current.GetInstanceID() == target.GetInstanceID())
             {
                 //GOAL IS REACHED, RETURN PATH
-                break;
+                Debug.Log("PATH FOUND");
+                return GetShortestPath(cameFrom, current);
             }
             open.Remove(current);
             closed.Add(current);
-
             foreach(var neighbor in current.neighbors)
             {
                 if (closed.Contains(neighbor))
@@ -88,4 +102,4 @@ public class Pathfinder : MonoBehaviour
         return null;
     }
 }
-//http://gigi.nullneuron.net/gigilabs/a-pathfinding-example-in-c/
+//https://en.wikipedia.org/wiki/A*_search_algorithm

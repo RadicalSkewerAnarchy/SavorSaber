@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[ExecuteInEditMode]
+//[ExecuteInEditMode]
 public class GraphNodePopulator : MonoBehaviour
 {
     public GameObject nodePrefab;
@@ -36,6 +36,7 @@ public class GraphNodePopulator : MonoBehaviour
             int i = 0, j = 0;
             for (int x = bounds.xMin; x < bounds.xMax; x++)
             {
+                /// list of lists, this increments the X counter
                 tiles.Add(new List<TileNode>());
                 for (int y = bounds.yMin; y < bounds.yMax; y++)
                 {

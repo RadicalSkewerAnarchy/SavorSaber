@@ -114,13 +114,15 @@ public partial class MonsterProtocols : MonoBehaviour
     /// If idle, update awareness and reset timers
     /// </summary>
     public void Lazy()
-    {          
+    {
+        Behaviour.NavTo();
+        /*
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }
+        }*/
     }
 
     // Runaway()
