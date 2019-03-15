@@ -22,6 +22,7 @@ public class ButtonLycheeMove : MonoBehaviour, IPointerEnterHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         MoveLychee();
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(this.gameObject);
     }
 
     public void MoveLychee()
