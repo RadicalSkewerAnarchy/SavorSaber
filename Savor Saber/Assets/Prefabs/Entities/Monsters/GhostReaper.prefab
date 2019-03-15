@@ -309,10 +309,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 010000000b00000008000000
+    _keys: 010000000b0000000800000000000000
     _values:
     - _keys:
-      - Hyper
+      - Shoot
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -338,27 +338,27 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     - _keys:
-      - PlayerDistance
+      - Friendliness
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: -0.9937515
-          outSlope: -0.9937515
-          tangentMode: 34
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.006248474
-          inSlope: -0.9937515
-          outSlope: -0.9937515
-          tangentMode: 34
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -369,42 +369,95 @@ MonoBehaviour:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: -0.012500763
-          value: 0.7874985
-          inSlope: 5.357189
-          outSlope: 5.357189
-          tangentMode: 34
+          time: -0.003479004
+          value: -0.021442413
+          inSlope: Infinity
+          outSlope: Infinity
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.045832068
-          value: 1.0999985
+          time: 0.04348123
+          value: 1.0038986
           inSlope: Infinity
           outSlope: Infinity
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0
+          outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.17499542
-          value: -0.08124542
-          inSlope: -9.145349
-          outSlope: -9.145349
+          time: 0.1530304
+          value: -0.013660431
+          inSlope: -9.288607
+          outSlope: -9.288607
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Smack
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
   macroValues:
     _keys:
-    - Hyper
+    - Smack
+    - Shoot
     _values:
     - _keys:
+      - PlayerDistance
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: -0.00017547607
+          value: 0.9980469
+          inSlope: 0.4498147
+          outSlope: 0.4498147
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.3108512
+        - serializedVersion: 3
+          time: 0.099121094
+          value: -0.0194664
+          inSlope: -51.518875
+          outSlope: -51.518875
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.037609175
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - PlayerDistance
       - Health
-      - Hostility
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -434,18 +487,18 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -467,7 +520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   Perception: 10
-  MeleeAttackThreshold: 1
+  MeleeAttackThreshold: 2
   RangeAttackThreshold: 6
   maxHealth: 45
   health: 45
@@ -548,7 +601,7 @@ MonoBehaviour:
   ResetTimer: 0
   ResetTimerReset: 0
   ResetTimerVariance: 0
-  attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
+  attack: {fileID: 5276454197400023434, guid: b8424795531621047ba09b78583f75ce, type: 3}
   projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
     type: 3}
   attackDuration: 1
