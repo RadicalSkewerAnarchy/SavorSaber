@@ -8,6 +8,7 @@ public class ButtonLycheeMove : MonoBehaviour, IPointerEnterHandler
 {
     public Image cursorSprite;
     public bool startSelected;
+    private AudioSource selectSound;
 
     void Start()
     {
@@ -15,6 +16,7 @@ public class ButtonLycheeMove : MonoBehaviour, IPointerEnterHandler
         {
             MoveLychee();
         }
+        selectSound = GetComponent<AudioSource>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -26,5 +28,10 @@ public class ButtonLycheeMove : MonoBehaviour, IPointerEnterHandler
     {
         Debug.Log("selected");
         cursorSprite.rectTransform.anchoredPosition = this.transform.localPosition - new Vector3(220, -8, 0);
+
+        if(selectSound != null)
+        {
+            selectSound.Play();
+        }
     }
 }
