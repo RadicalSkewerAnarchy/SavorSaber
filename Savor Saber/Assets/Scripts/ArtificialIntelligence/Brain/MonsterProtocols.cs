@@ -115,14 +115,14 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        //NavTo();
-
+        NavTo(false);
+        /*
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }
+        }*/
     }
 
     // Runaway()
@@ -325,9 +325,9 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
 
-    public void NavTo()
+    public void NavTo(bool towards)
     {
-        bool moving = false;
+        // bool moving = false;
         // if agent is on tilemap
         if(Checks.currentTile != null)
         {
@@ -336,17 +336,16 @@ public partial class MonsterProtocols : MonoBehaviour
             if (AiData.path.Count < 1)
             {
                 var closest = AiData.Checks.ClosestCreature();
-                //var overlapTile = Physics2D.OverlapCircle(AiData.Checks.ClosestCreature().gameObject.transform.position, 1f, 0);
-                
-                AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, closest.GetComponent<MonsterChecks>().currentTile);
-                Debug.Log("Path Set from: " + Checks.currentTile + " to: " + closest.GetComponent<MonsterChecks>().currentTile);
-            }else if(AiData.path.Count > 1)
-            {
-                
+                if(closest != null && closest.GetComponent<MonsterChecks>() != null)
+                {
+                    AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, closest.GetComponent<MonsterChecks>().currentTile);
+                }
+            }
+            else if(AiData.path.Count >= 1)
+            {                
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
                     AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
-                    //Debug.Log("New target node: " + AiData.path[AiData.path.Count - 1]);
                 }
             }                                                    
         }

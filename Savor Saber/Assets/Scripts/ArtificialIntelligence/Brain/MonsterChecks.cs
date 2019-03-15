@@ -24,7 +24,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     GameObject ClosestFriendly;
     GameObject ClosestEnemy;
-    float closestDistance = 10000000f;
+    float closestDistance;
 
     /// <summary>
     /// Special Targets and Locations
@@ -39,6 +39,7 @@ public class MonsterChecks : MonoBehaviour
 
     private void Start()
     {
+        closestDistance = Mathf.Infinity;
         AiData = GetComponent<AIData>();
         GameObject soma = GameObject.FindGameObjectWithTag("Player");
 
@@ -96,6 +97,7 @@ public class MonsterChecks : MonoBehaviour
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
+            Debug.Log("Checking creatures");
             #region Check if Creature Deleted
             if (Creature == null)
             {
@@ -105,6 +107,7 @@ public class MonsterChecks : MonoBehaviour
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
             if (dist < close)
             {
+                Debug.Log("Closest is found");
                 close = dist;
                 closestCreature = Creature;
             }

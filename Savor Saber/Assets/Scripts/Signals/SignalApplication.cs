@@ -107,6 +107,7 @@ public class SignalApplication : MonoBehaviour
                     //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
                     //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
                     hitList.Add(go.gameObject);
+                    //Debug.Log("MY ID: " + signalMaker.GetInstanceID() + " CREATURE ADDED TO HITLIST ID: " + go.gameObject.GetInstanceID());
                 }
             }
             else if (go.tag == "SkewerableObject" && isForAwareness)
