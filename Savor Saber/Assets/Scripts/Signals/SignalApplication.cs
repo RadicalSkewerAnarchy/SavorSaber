@@ -26,7 +26,7 @@ public class SignalApplication : MonoBehaviour
     #endregion
 
     // private variables
-    public bool activate = false;
+    public bool hasActivated = false;
     public bool isForAwareness = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
@@ -61,7 +61,7 @@ public class SignalApplication : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // update radius
         CircleCollider2D collider = GetComponent<CircleCollider2D>();
@@ -82,74 +82,61 @@ public class SignalApplication : MonoBehaviour
             moodMod.Add("Friendliness", friendMod);
     }
 
-    public void Update()
+    public void Activate()
     {
-        if (activate)
+        var objects = Physics2D.OverlapCircleAll(transform.position, interactRadius);
+        foreach (var go in objects)
         {
-            // if data is being requested,
-            // then obtain hit list after
-            // instantiation
-            // apply only if it's NOT for awareness
-            if (!isForAwareness)
-            {
-                ApplyToAll();
-            }
-            // inform signal maker of those here
-            else if (signalMaker != null)
-            {
-                {
-                    signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
-                    //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
-                    signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
-                    signalMaker.GetComponent<AIData>().Awareness = null;
-                }
-            }
-
-            activate = false;
-
-            // destroy
-            //Debug.Log("this signal should destroy istelf");
-            Destroy(this.gameObject, Time.fixedDeltaTime);
-        }
-    }
-
-    // COLLECT THE HIT LIST
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        // get objects
-        GameObject go = collision.gameObject;
-
-        string sm = (signalMaker != null ? signalMaker.name : "null character" );
-        //if(interactRadius < 5)
-        //if (!isForAwareness)
+            string sm = (signalMaker != null ? signalMaker.name : "null character");
+            //if(interactRadius < 5)
+            //if (!isForAwareness)
             //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
-        // check tags
-        if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
-        {
-            //Debug.Log(go.name + "is tagged properly --> " + go.tag);
-
-            // create boolean cases
-            bool isMe = (signalMaker != null ? this.signalMaker.name.Equals(go.name) : false );
-
-            // if ANY of these...
-            if ((isMe && hitSelf) || (hitAll && !isMe))
+            // check tags
+            if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
             {
-                // add to list
-                //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
-                //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
-                hitList.Add(go);
+                //Debug.Log(go.name + "is tagged properly --> " + go.tag);
+
+                // create boolean cases
+                bool isMe = (signalMaker != null ? this.signalMaker.name.Equals(go.name) : false);
+
+                // if ANY of these...
+                if ((hitSelf && hitAll) || (isMe && hitSelf) || (hitAll && !isMe))
+                {
+                    // add to list
+                    //Debug.Log(sm + "'s HIT LIST ++ --> " + go.name);
+                    //Debug.Log("Compare: (true plz) " + signalMaker.ToString().Equals(go.ToString()));
+                    hitList.Add(go.gameObject);
+                }
+            }
+            else if (go.tag == "SkewerableObject" && isForAwareness)
+            {
+                // keep track of drops
+                dropList.Add(go.gameObject);
             }
         }
-        else if (go.tag == "SkewerableObject" && isForAwareness)
+        if (!isForAwareness)
         {
-            // keep track of drops
-            dropList.Add(go);
+            ApplyToAll();
         }
+        // inform signal maker of those here
+        else if (signalMaker != null)
+        {
+            {
+                signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+                //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
+                signalMaker.GetComponent<AIData>().Awareness = null;
+            }
+        }
+        hasActivated = true;
+        Destroy(gameObject, Time.fixedDeltaTime);
+    }
 
-        // activate!!!!
-        activate = true;
-        Destroy(this.gameObject, 0.5f);
+    private void Start()
+    {
+        if (!hasActivated)
+            Activate();
     }
 
     // ApplyToAll
@@ -169,7 +156,6 @@ public class SignalApplication : MonoBehaviour
                 }
             }
         }
-        Destroy(gameObject, .5f);
     }
 
     // Apply

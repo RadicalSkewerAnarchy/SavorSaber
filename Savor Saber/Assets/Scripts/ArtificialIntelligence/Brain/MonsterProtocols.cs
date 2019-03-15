@@ -115,14 +115,14 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        NavTo();
-        /*
+        //NavTo();
+
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }*/
+        }
     }
 
     // Runaway()
@@ -136,7 +136,7 @@ public partial class MonsterProtocols : MonoBehaviour
 
         if (!Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
-            Wander();
+            Wander(15f, 15f);
         }
     }
 
@@ -149,7 +149,7 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
         #endregion
 
-        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
         {
             Checks.ResetSpecials();
         }
@@ -157,16 +157,16 @@ public partial class MonsterProtocols : MonoBehaviour
 
     // Wander()
     // go in random directions
-    public void Wander()
+    public void Wander(float rx, float ry)
     {
         // pick a location near me
         // move towards it
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        Checks.SetRandomPosition(25f, 25f);//Checks.GetRandomPositionType();
+        Checks.SetRandomPosition(rx, ry);//Checks.GetRandomPositionType();
         Vector2 pos = Checks.GetSpecialPosition();
         #endregion
-        if (Behaviour.MoveTo(pos, AiData.Speed, 10f))
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
         {
             Checks.ResetSpecials();
             Behaviour.ResetActionTimer();
@@ -196,7 +196,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (Behaviour.Socialize())
             {
                 // reset action timer
-                Wander();
+                Wander(10f, 10f);
             }
         }       
     }
@@ -238,10 +238,11 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            GameObject near = Checks.ClosestCreature();
-            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            //GameObject near = Checks.ClosestCreature();
+            //Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
-            Behaviour.MoveFrom(pos, AiData.Speed / 1.5f, 1f);
+            // reset action timer
+            Wander(15f, 5f);
         }
         else if (Checks.specialTarget == null)
         {
@@ -254,6 +255,29 @@ public partial class MonsterProtocols : MonoBehaviour
             Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
+
+    // Console()
+    // go to a friend in need
+    // increase their friendliness and
+    // decrease their fear and hostility
+    /// <summary>
+    /// If there are friends, socialize and update special position
+    /// </summary>
+    public void Console()
+    {
+        // move to
+        #region Get Nearest + Null Check
+        Vector2 pos = Checks.WeakestCreature().transform.position;
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 5f))
+        {
+            if (Behaviour.Console())
+            {
+                Wander(3f, 3f);
+            }
+        }
+    }
+
     // end of pacifict region
     #endregion
 
@@ -286,25 +310,7 @@ public partial class MonsterProtocols : MonoBehaviour
             }
         }
     }
- 
 
-    // Console()
-    // go to a friend in need
-    // increase their friendliness and
-    // decrease their fear and hostility
-    /// <summary>
-    /// If there are friends, socialize and update special position
-    /// </summary>
-    public void Console()
-    {
-        if (AiData.Checks.NumberOfFriends() > 0)
-        {
-            if (Behaviour.Socialize())
-            {
-                Checks.ResetSpecials();
-            }
-        }
-    }
 
     // checks if their are enemies, then attempts to attack
     // if attack cannot happen, becomes lazy

@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 0
+  chance: 100
   drops:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
@@ -413,9 +413,11 @@ MonoBehaviour:
   maxHealth: 10
   health: 10
   PartySize: 3
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
   initialFear: 0
   initialHunger: 0
-  initialHostility: 0
+  initialHostility: 1
   initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
@@ -429,6 +431,7 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
+  path: []
   DecisionTimer: 0
   DecisionTimerReset: 5
   DecisionTimerVariance: 2
@@ -464,6 +467,7 @@ MonoBehaviour:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  boxCollider: {fileID: 0}
   Friends: []
   Enemies: []
   AllCreatures: []
@@ -471,6 +475,7 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
+  currentTile: {fileID: 0}
 --- !u!114 &2570449443912586966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinder: {fileID: 0}
   ActionTimer: 0
   ActionTimerReset: 10
   ActionTimerVariance: 2
@@ -551,6 +557,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5560342085740728572}
     m_Modifications:
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -666,11 +677,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -718,6 +724,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5560342085740728572}
     m_Modifications:
+    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterHurtParticle
+      objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -772,11 +783,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterHurtParticle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8810df0ddde908745878a508b9576c92, type: 3}

@@ -18,11 +18,13 @@ public class DestructableEnvironment : MonoBehaviour
     public ParticleSystem particles = null;
 
     private SpriteRenderer spr;
+    private AudioSource src;
 
     private void Start()
     {
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = normalSprite;
+        src = GetComponent<AudioSource>();
     }
 
     public void Destroy()
@@ -36,6 +38,8 @@ public class DestructableEnvironment : MonoBehaviour
             particles.Play();
         if(dropOnDestroy != null && Random.value <= thresh)
             Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
+        if (src != null)
+            src.Play();
         StartCoroutine(Regrow());
     }
     private IEnumerator Regrow()

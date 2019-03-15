@@ -22,6 +22,7 @@ public class CharacterData : MonoBehaviour
     public int health;
     public int PartySize = 3;
     private Vector2 Spawn;
+    public GameObject signalPrefab;
     #endregion
     #region Variance
     float VDown = 9 / 10;
@@ -73,6 +74,7 @@ public class CharacterData : MonoBehaviour
     public virtual void DoDamage(int damage)
     {
         health -= damage;
+        InstantiateSignal(damage * 2, "Fear", 0.2f, true, true);
         //only play damage SFX if it was not a killing blow so sounds don't overlap
         if (health > 0)
         {
@@ -102,6 +104,10 @@ public class CharacterData : MonoBehaviour
         {
             Kill();
         }
+
+        // create a fear signal
+        float hp = (maxHealth - health) / maxHealth;
+        InstantiateSignal(3f, "Fear", hp + 0.1f, true, true);
     }
     /// <summary> Show the health bar for a short amount of time </summary>
     protected IEnumerator ShowHealthBar()
@@ -128,5 +134,16 @@ public class CharacterData : MonoBehaviour
         deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
         GetComponent<DropOnDeath>().Drop();
         Destroy(gameObject);
+    }
+
+    // InstantiateSignal()
+    // create a signal that subtracts
+    public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
+    {
+        GameObject obtainSurroundings = Instantiate(signalPrefab, transform.position, Quaternion.identity, transform) as GameObject;
+        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+        signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
+        signalModifier.Activate();
+        return obtainSurroundings;
     }
 }

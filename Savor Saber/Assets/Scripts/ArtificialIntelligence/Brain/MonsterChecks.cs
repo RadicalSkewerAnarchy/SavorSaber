@@ -140,7 +140,7 @@ public class MonsterChecks : MonoBehaviour
             }
         }
 
-        return weakest;
+        return ( weakest==null ? this.gameObject : weakest );
     }
 
     /// <summary>
@@ -274,7 +274,7 @@ public class MonsterChecks : MonoBehaviour
     public GameObject ClosestLeader()
     {
         bool foundLeader = false;
-        //bool foundSpecial = false;
+        bool foundSpecial = false;
         foreach (GameObject Creature in AllCreatures)
         {
             #region Check if Creature Deleted
@@ -289,12 +289,19 @@ public class MonsterChecks : MonoBehaviour
             }
             if (Creature == specialTarget)
             {
-                //foundSpecial = true;
+                foundSpecial = true;
             }
         }
         // only return positions if target OR leader are found
         if (!foundLeader) { specialLeader = null; }
-        return specialTarget;
+        //if (!foundSpecial) { specialTarget = null; }
+        return (specialTarget == null ? this.gameObject : specialTarget);
+    }
+
+    // am leader
+    public bool AmLeader()
+    {
+        return amLeader;
     }
     #endregion
 
@@ -333,10 +340,6 @@ public class MonsterChecks : MonoBehaviour
         this.specialTarget = null;
         //this.specialLeader = null;
         this.specialPosition = new Vector2(0f, 0f);
-    }
-    public bool AmLeader()
-    {
-        return amLeader;
     }
     #endregion
     /*
