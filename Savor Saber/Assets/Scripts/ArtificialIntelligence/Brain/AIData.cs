@@ -107,7 +107,8 @@ public class AIData : CharacterData
             {"Hostility", () => moods["Hostility"] },
             {"Friendliness", () => moods["Friendliness"] },
             {"EnemyDistance", () => Normalize(Vector2.Distance(transform.position, Enemies[0].transform.position), Perception) },
-            {"Health", () => NormalizeInt(health, maxHealth) }
+            {"Health", () => NormalizeInt(health, maxHealth) },
+            {"PlayerDistance", () => Normalize(Vector2.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position), Perception) }
         };
     }
     /// <summary>

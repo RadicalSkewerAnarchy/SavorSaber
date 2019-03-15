@@ -21,7 +21,7 @@ public class BossProjectile : BaseProjectile
         // randomly determine firing mode
         // create more projectiles based on firing mode
         int numProjectiles = Random.Range(1, 4) + Random.Range(1, 4) + 3;
-        float spreadProjectiles = Random.Range(45f, 90f);
+        float spreadProjectiles = Random.Range(0f, 360f);
         float angleDiv = spreadProjectiles / numProjectiles;
 
         GameObject attacker = this.GetComponent<BaseProjectile>().attacker;
