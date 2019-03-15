@@ -5,21 +5,20 @@ using UnityEngine.UI;
 
 public class DisplayHP : MonoBehaviour
 {
-
-    public CharacterData playerData;
-    public RectTransform barCover;
+    private CharacterData playerData;
+    private Image barCover;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject play = GameObject.FindGameObjectsWithTag("Player")[0];
+        GameObject play = GameObject.FindGameObjectWithTag("Player");
         playerData = play.GetComponent<CharacterData>();
+        barCover = GetComponent<Image>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float hpScale = 1.0f - ((float)playerData.health / (float)playerData.maxHealth);
-        barCover.transform.localScale = new Vector3(hpScale, 1.0f, 1.0f);
+        barCover.fillAmount = (float)playerData.health / playerData.maxHealth;
     }
 }

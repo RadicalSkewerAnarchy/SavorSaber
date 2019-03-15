@@ -60,7 +60,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -243,9 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chance: 10
   drops:
   - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
-  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
+  signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &6411723353759096251
 MonoBehaviour:
@@ -499,8 +500,8 @@ MonoBehaviour:
   Perception: 5
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
-  maxHealth: 4
-  health: 4
+  maxHealth: 12
+  health: 12
   PartySize: 3
   initialFear: 0
   initialHunger: 0.5
@@ -512,7 +513,8 @@ MonoBehaviour:
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
   damageParticleBurst: {fileID: 9104267052077239286}
-  eatingParticleBurst: {fileID: 0}
+  eatingParticleBurst: {fileID: 6498637921045461228}
+  healthBar: {fileID: 2628503269000358483}
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -593,11 +595,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dotTicLength: 1
-  favoriteIngredients: []
-  favoriteFlavors: 1
+  favoriteIngredients:
+  - Acorn
+  - Wheat
+  - SugarCane
+  - CatTail
+  favoriteFlavors: 0
   charmThreshhold: 1
   rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
     type: 3}
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!70 &2766135195253760641
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -716,11 +723,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6411723353759096192}
     m_Modifications:
-    - target: {fileID: 192815478391924568, guid: 4b76023d501bc4a4e87ede5649192021,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterEatingParticle
-      objectReference: {fileID: 0}
     - target: {fileID: 7687137625313275881, guid: 4b76023d501bc4a4e87ede5649192021,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -776,11 +778,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 192815478391924568, guid: 4b76023d501bc4a4e87ede5649192021,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterEatingParticle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b76023d501bc4a4e87ede5649192021, type: 3}
 --- !u!4 &8265548201463952324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7687137625313275881, guid: 4b76023d501bc4a4e87ede5649192021,
+    type: 3}
+  m_PrefabInstance: {fileID: 1737002674818571309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6498637921045461228 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4770682515654108353, guid: 4b76023d501bc4a4e87ede5649192021,
     type: 3}
   m_PrefabInstance: {fileID: 1737002674818571309}
   m_PrefabAsset: {fileID: 0}
@@ -896,16 +909,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: cData
-      value: 
-      objectReference: {fileID: 2903048292295415507}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -915,6 +918,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
@@ -931,6 +939,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: cData
+      value: 
+      objectReference: {fileID: 2903048292295415507}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
 --- !u!224 &2427488285460643369 stripped
@@ -939,3 +952,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 2324345124612735083}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2628503269000358483 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305095066010790456, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2324345124612735083}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

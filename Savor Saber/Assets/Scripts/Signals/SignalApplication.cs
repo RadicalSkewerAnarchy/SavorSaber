@@ -121,8 +121,8 @@ public class SignalApplication : MonoBehaviour
 
         string sm = (signalMaker != null ? signalMaker.name : "null character" );
         //if(interactRadius < 5)
-        if (!isForAwareness)
-            Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
+        //if (!isForAwareness)
+            //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
 
         // check tags
         if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")

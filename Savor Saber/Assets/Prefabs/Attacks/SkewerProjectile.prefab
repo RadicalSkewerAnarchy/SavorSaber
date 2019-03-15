@@ -121,9 +121,14 @@ MonoBehaviour:
   projectileDamage: 2
   projectileKnockback: 0
   penetrateTargets: 0
+  attacker: {fileID: 0}
   attackRadius: 0.5
   range: 12
   ingredientArray: []
+  audioPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
+  sweetSFX: {fileID: 8300000, guid: 9f21cfb56fef888459252ff5bf03ee00, type: 3}
+  spicySFX: {fileID: 8300000, guid: f374d2013acc1924bbd1f86e283b5f86, type: 3}
 --- !u!114 &7862083922890303634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +179,7 @@ GameObject:
   - component: {fileID: 5973483734912583135}
   - component: {fileID: 6492893738150415951}
   - component: {fileID: 6745047453821042560}
+  - component: {fileID: 2993821318215010712}
   m_Layer: 11
   m_Name: Exploder
   m_TagString: Untagged
@@ -281,8 +287,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -133389985
-  m_SortingLayer: 4
+  m_SortingLayerID: -828437997
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -314,6 +320,102 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!82 &2993821318215010712
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7630812640799199288}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 22ed8855b1e01cf4b9b2a1cf834d4c8d, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 15
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &4513419720772190046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -424,32 +526,32 @@ PrefabInstance:
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.r
-      value: 0.8773585
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.g
-      value: 0.38173482
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key1.b
-      value: 0.012415428
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.r
-      value: 0.764151
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.g
-      value: 0.13336597
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key2.b
-      value: 0.13336597
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
@@ -459,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime2
-      value: 65535
+      value: 65342
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
@@ -469,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.g
-      value: 0.8297396
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
@@ -479,7 +581,7 @@ PrefabInstance:
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.b
-      value: 0.2216981
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5007362978930354490, guid: 288aaa4686ccbe74d9b2aa41fa297e70,
         type: 3}

@@ -16,7 +16,7 @@ public class Timer
     public float Increment(float delta) => currTime += delta;
     public float Increment() => currTime += Time.deltaTime;
     public float IncrementFixed() => currTime += Time.fixedDeltaTime;
-    public bool Update(float delta) => (currTime += delta) < time;
-    public bool Update() => (currTime += Time.deltaTime) < time;
-    public bool UpdateFixed() => (currTime += Time.fixedDeltaTime) < time;
+    public bool Update(float delta) => (currTime += delta) >= time;
+    public bool Update() => (currTime += Time.deltaTime) >= time;
+    public bool UpdateFixed() => (currTime += Time.fixedDeltaTime) >= time;
 }

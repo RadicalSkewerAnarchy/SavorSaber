@@ -18,7 +18,7 @@ public class SkewerableObject : MonoBehaviour
     private SpriteRenderer sp;
 
     //movement values
-    public float maxDrift = 4;
+    public float maxDrift = 2;
     public float driftSpeed = 1;
     public bool attached = false;
 
@@ -34,35 +34,42 @@ public class SkewerableObject : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
-        float x = transform.position.x + Random.Range(-maxDrift, maxDrift);
-        float y = transform.position.y + Random.Range(-maxDrift, maxDrift);
-        float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
-        target = new Vector3(x, y, z);
+        float x = Random.Range(-maxDrift, maxDrift) / 4;
+        float y = Random.Range(-maxDrift, maxDrift) / 4;
+        //float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
+        target = new Vector2(x, y);
+
+        if (!attached)
+        {
+            rb.AddForce(target, ForceMode2D.Impulse);
+        }
     }
+
+
 
     // Update is called once per frame
     void Update()
     {
         if (!attached)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
             transform.localScale = halfScale * 2;
+            if (!flickering)
+            {
+                if (decayTime.Update())
+                {
+                    flickering = true;
+                    StartCoroutine(FlickerOut());
+                }
+                sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
+            }
         }
         else
         {
             transform.position = origin;
             transform.localScale = halfScale;
         }
-        transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
-        if(!flickering && decay)
-        {
-            if (decayTime.Update())
-            {
-                flickering = true;
-                StartCoroutine(FlickerOut());
-            }
-            sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
-        }
+        //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
     }
 
     private IEnumerator FlickerOut()
@@ -72,7 +79,7 @@ public class SkewerableObject : MonoBehaviour
         while (time > 0)
         {
             yield return new WaitForSeconds(time -= 0.025f);
-            sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.5f);
+            sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.75f);
             on = !on;
         }
         Destroy(gameObject);

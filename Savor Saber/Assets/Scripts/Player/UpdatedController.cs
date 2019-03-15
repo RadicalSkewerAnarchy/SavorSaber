@@ -44,25 +44,19 @@ public class UpdatedController : EntityController
         }
     }
 
-    //////
     [System.NonSerialized]
     [Range(0f, 1f)]
     public float speedMod = 1f;
-    //////
     [System.NonSerialized]
     public bool freezeDirection = false;
-    //////
     [SerializeField]
     bool DebugBool = false;
-    //////
     [SerializeField]
     [Range(100f, 500f)]
     float speed = 100f;
-    //////
     [SerializeField]
     [Range(0f, 500f)]
     float runSpeed = 100f;
-    //////
 
     Rigidbody2D rigidBody;
     Animator animatorBody;
@@ -71,28 +65,32 @@ public class UpdatedController : EntityController
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
 
+    #region Dashing Fields
     public float dashTime;
     public AnimationCurve dashSpeed;
     public float dashScale;
     public int maxDashes = 3;
-    private int currDashes;
+    public float CurrDashes { get; private set; }
     private bool dashing = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
     public float doubleTapTime;
     private Dictionary<Control, float> doubleTapTrackers;
     private Control[] keys;
-    private bool running = false;
+    
+    public bool RechargingFromEmpty { get; private set; } = false;
     private Coroutine rechargeDashes;
-    public float dashRechargeTime = 1f;
-    public UnityEngine.UI.Text debugText;
+    #endregion
 
+    #region Running Fields
+    private bool running = false;
     private Coroutine run;
     private float currRunSpeed;
     public float runTimeBuffer;
     public float accelerationTime;
     public float maxSpeed;
     public float accelrationAmount;
+    #endregion
 
     public AudioClip dashSFX;
     private AudioSource sfxSource;
@@ -111,7 +109,7 @@ public class UpdatedController : EntityController
         };
         keys = new Control[doubleTapTrackers.Count];
         doubleTapTrackers.Keys.CopyTo(keys, 0);
-        currDashes = maxDashes;
+        CurrDashes = maxDashes;
         currRunSpeed = runSpeed;
         dialogData = GetComponent<DialogData>();
         sfxSource = GetComponent<AudioSource>();
@@ -125,15 +123,12 @@ public class UpdatedController : EntityController
         else
             CheckForDoubleTaps();
         if (running && InputManager.GetAxis(InputAxis.Horizontal) == 0 && InputManager.GetAxis(InputAxis.Vertical) == 0)
-            StopRunning();
+            StopRunning();       
     }
 
     void FixedUpdate()
     {
-        /*Two functions are used here in order to allow easy edition of
-        movement and stopping behavior as well as immediate frame by frame updates*/
         MoveAgent();
-        //StopAgent();
         AnimateAgent();
     }
 
@@ -179,15 +174,15 @@ public class UpdatedController : EntityController
 
     private void StartDash(bool decrement = true)
     {
-        if (decrement && currDashes <= 0)
+        if (RechargingFromEmpty || (decrement && CurrDashes <= 0))
             return;
         dashVector = GetMovementVector();
         if (dashVector.SqrMagnitude() == 0)
             return;
         if (decrement)
-            currDashes--;
-        if(debugText != null)
-            debugText.text = "Dashes: " + currDashes;
+            CurrDashes = Mathf.Max(0, CurrDashes - 1);
+        if (CurrDashes <= 0.15f)
+            RechargingFromEmpty = true;
         dashing = true;
         dashCurrTime = 0;
         freezeDirection = true;
@@ -213,7 +208,6 @@ public class UpdatedController : EntityController
 
     private void StopDash()
     {
-        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
         freezeDirection = false;
         dashCurrTime = 0;
         dashing = false;
@@ -227,13 +221,13 @@ public class UpdatedController : EntityController
 
     private IEnumerator rechargeDashesCR()
     {
-        while(currDashes < maxDashes)
+        yield return new WaitForSeconds(0.33f);
+        while(CurrDashes < maxDashes)
         {
-            yield return new WaitForSeconds(dashRechargeTime);
-            currDashes++;
-            if(debugText != null)
-                debugText.text = "Dashes: " + currDashes;
+            yield return new WaitForFixedUpdate();
+            CurrDashes += Time.fixedDeltaTime;
         }
+        RechargingFromEmpty = false;
         rechargeDashes = null;
     }
 
@@ -259,7 +253,8 @@ public class UpdatedController : EntityController
         {
             StopCoroutine(run);
             run = null;           
-        }          
+        }
+        rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 
     private Vector2 GetMovementVector()

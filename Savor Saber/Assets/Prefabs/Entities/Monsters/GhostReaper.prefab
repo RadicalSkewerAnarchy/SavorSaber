@@ -40,7 +40,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.307121, y: -0.28770894, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 9185037771186717478}
+  - {fileID: 163062201630287225}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,7 +59,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 2
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -128,7 +130,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -238,8 +240,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chance: 100
   drops:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
@@ -250,6 +253,8 @@ MonoBehaviour:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
+  signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &1591768285701305987
 MonoBehaviour:
@@ -261,8 +266,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   displayName: GhostPepper
   deathSfx: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
@@ -277,8 +282,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09c7a8ad0ed6a2843b78463200380cbc, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   curve:
     serializedVersion: 2
     m_Curve:
@@ -346,14 +351,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   Speed: 2
   Perception: 10
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 4
-  maxHealth: 15
-  health: 15
+  maxHealth: 45
+  health: 45
   PartySize: 3
   initialFear: 0
   initialHunger: 0
@@ -367,6 +372,7 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 4575833907128136578}
   eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
     type: 3}
+  healthBar: {fileID: 8844424530795747164}
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -377,7 +383,7 @@ MonoBehaviour:
   Awareness: {fileID: 0}
   Friends: []
   Enemies: []
-  FoodPreference:
+  FoodPreference: 
 --- !u!114 &6178614702161348263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -388,8 +394,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114358243984535835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,8 +406,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 855506bed9018d046a30cc6d87bf0b60, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -422,8 +428,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   ActionTimer: 0
   ActionTimerReset: 10
   ActionTimerVariance: 2
@@ -461,8 +467,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7020de4b1a89c3746974b5ed344fd2cd, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   dotTicLength: 1
   favoriteIngredients: []
   favoriteFlavors: 0
@@ -478,8 +484,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84078e1ff25819c469ecf0e294516541, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _direction: 0
   invert: 0
 --- !u!1001 &5545900853488310088
@@ -683,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: cData
-      value:
+      value: 
       objectReference: {fileID: 7427304364512388856}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
@@ -718,3 +724,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 9117079055975906660}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8844424530795747164 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305095066010790456, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 9117079055975906660}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

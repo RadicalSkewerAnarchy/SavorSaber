@@ -17,7 +17,9 @@ public class FlavorInputManager : MonoBehaviour
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
     public GameObject rewardItem;
+    public AudioClip rewardSFX;
 
+    private bool fedFavoriteIngredient = false;
 
     private void Start()
     {
@@ -94,15 +96,22 @@ public class FlavorInputManager : MonoBehaviour
             ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
             ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
             {
-                Debug.Log(this.gameObject + " charmed by feeding favorite ingredient!");
+                Debug.Log(this.gameObject + " fed favorite ingredient!");
+                fedFavoriteIngredient = true;
+
                 if (characterData != null)
                 {
-                    characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
                     characterData.moods["Hunger"] = 0;
                     if (rewardItem != null)
                         Instantiate(rewardItem, transform.position, Quaternion.identity);
                 }
-
+                AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
+                if(rewardSFXPlayer != null)
+                {
+                    rewardSFXPlayer.clip = rewardSFX;
+                    rewardSFXPlayer.Play();
+                }
+                ingredientCountDictionary[favoriteIngredient] = 0;
             }
         }
 
@@ -116,13 +125,20 @@ public class FlavorInputManager : MonoBehaviour
                 if (flavorCountDictionary[foundFlavor] >= charmThreshhold)
                 {
                     Debug.Log(this.gameObject + " charmed by feeding favorite flavor!");
+                    fedFavoriteIngredient = true;
                     if (characterData != null)
                     {
-                        characterData.moods["Friendliness"] = 0.125f * flavorCountDictionary[RecipeData.Flavors.Sweet];
                         characterData.moods["Hunger"] = 0;
                         if (rewardItem != null)
                             Instantiate(rewardItem, transform.position, Quaternion.identity);
                     }
+                    AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
+                    if (rewardSFXPlayer != null)
+                    {
+                        rewardSFXPlayer.clip = rewardSFX;
+                        rewardSFXPlayer.Play();
+                    }
+                    flavorCountDictionary[foundFlavor] = 0;
                 }
             }
         }
@@ -163,4 +179,17 @@ public class FlavorInputManager : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// Used by the skewer projectile to make sure it's not feeding a favorite ingredient
+    /// Avoids overlapping sfx
+    /// </summary>
+    public bool FedFavorite()
+    {
+        if (fedFavoriteIngredient)
+        {
+            fedFavoriteIngredient = false;
+            return true;
+        }
+        else return false;
+    }
 }

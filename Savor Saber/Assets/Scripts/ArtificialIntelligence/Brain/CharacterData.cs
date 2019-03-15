@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //[RequireComponent(typeof(MeleeAttack))]
 public class CharacterData : MonoBehaviour
-{   
+{
     public Vector2 Position
     {
         get
@@ -44,6 +45,8 @@ public class CharacterData : MonoBehaviour
     public GameObject sfxPlayer;
     public ParticleSystem damageParticleBurst = null;
     public ParticleSystem eatingParticleBurst = null;
+    public Slider healthBar;
+    protected Coroutine barCr = null;
     #endregion
 
     void Start()
@@ -73,6 +76,15 @@ public class CharacterData : MonoBehaviour
         //only play damage SFX if it was not a killing blow so sounds don't overlap
         if (health > 0)
         {
+            if(healthBar != null)
+            {
+                healthBar.gameObject.SetActive(true);
+                Debug.Log("Update health bar");
+                healthBar.value = (float)health / maxHealth;
+                if (barCr != null)
+                    StopCoroutine(barCr);
+                barCr = StartCoroutine(ShowHealthBar());
+            }
             if(damageSFX != null)
             {
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
@@ -91,7 +103,14 @@ public class CharacterData : MonoBehaviour
             Kill();
         }
     }
-
+    /// <summary> Show the health bar for a short amount of time </summary>
+    protected IEnumerator ShowHealthBar()
+    {
+        yield return new WaitForSeconds(3);
+        healthBar.gameObject.SetActive(false);
+        barCr = null;
+    }
+    /// <summary> Play a short color flash when the character is damaged </summary>
     protected IEnumerator DamageEffectCr()
     {
         var spr = GetComponent<SpriteRenderer>();

@@ -23,6 +23,13 @@ public class GhostPepperFlavorInput : FlavorInputManager
             characterData.health += flavorCountDictionary[RecipeData.Flavors.Spicy];
             flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
         }
+        if (flavorCountDictionary[RecipeData.Flavors.Sweet] >= 0)
+        {
+            characterData.moods["Friendliness"] = 1;
+            characterData.moods["Fear"] = -1;
+            characterData.moods["Hostility"] = -1;
+            flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
+        }
         CheckCharmEffect();
     }
 }

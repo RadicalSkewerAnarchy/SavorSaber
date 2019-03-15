@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Fields related to inventory visual representation
     /// </summary>
+    public DisplayInventory inventoryUI;
     public int maxItemsPerSkewer = 3;
 
     /// <summary>
@@ -156,6 +157,7 @@ public class Inventory : MonoBehaviour {
         {
             quiver[activeSkewer].PushIngredient(ingredient);
             //UpdateSkewerVisual();
+            UpdateUI();
         }
     }
 
@@ -165,6 +167,7 @@ public class Inventory : MonoBehaviour {
     public IngredientData RemoveFromSkewer()
     {
         IngredientData topIngredient = quiver[activeSkewer].PopIngredient();
+        UpdateUI();
         return topIngredient;
     }
 
@@ -175,6 +178,7 @@ public class Inventory : MonoBehaviour {
     {
         quiver[activeSkewer].ClearItems();
         quiver[activeSkewer].ResetDictionary();
+        UpdateUI();
         //UpdateSkewerVisual();
     }
 
@@ -184,6 +188,7 @@ public class Inventory : MonoBehaviour {
     public void ClearActiveRecipe()
     {
         quiver[activeSkewer].finishedRecipe = null;
+        UpdateUI();
     }
 
     /// <summary>
@@ -378,6 +383,7 @@ public class Inventory : MonoBehaviour {
                 activeSkewer = numberOfSkewers - 1;
 
             sfxPlayer.Play(swapSFX);
+            UpdateUI();
 
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
@@ -388,6 +394,7 @@ public class Inventory : MonoBehaviour {
                 activeSkewer = 0;
 
             sfxPlayer.Play(swapSFX);
+            UpdateUI();
 
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
@@ -410,6 +417,16 @@ public class Inventory : MonoBehaviour {
         {
             //Debug.Log("Player left campfire");
             nearCampfire = false;
+        }
+    }
+
+    public void UpdateUI()
+    {
+        if(inventoryUI != null)
+            inventoryUI.UpdateSkewerUI();
+        else
+        {
+            Debug.LogWarning("Error: Inventory.cs needs a reference to HUD to visualize skewers");
         }
     }
 

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 2472033054144126651}
   - component: {fileID: 5790457105946965403}
   - component: {fileID: 6224546822748682538}
-  - component: {fileID: 4566081286597994209}
+  - component: {fileID: 1275489918107125856}
   - component: {fileID: 1715713223517123993}
   m_Layer: 0
   m_Name: Tangerine
@@ -59,8 +59,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_LinearDrag: 2
+  m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
@@ -242,9 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chance: 15
   drops:
   - {fileID: 5017578403985159878, guid: 96fc83805b66eb24dbd83a4874b83f8f, type: 3}
-  - {fileID: 5017578403985159878, guid: 96fc83805b66eb24dbd83a4874b83f8f, type: 3}
+  signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &8820779743352325380
 MonoBehaviour:
@@ -582,10 +583,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 3
   Perception: 5
-  MeleeAttackThreshold: 0.5
+  MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
-  maxHealth: 6
-  health: 6
+  maxHealth: 18
+  health: 18
   PartySize: 2
   initialFear: 0
   initialHunger: 0
@@ -599,6 +600,7 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 1887243489091584028}
   eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
     type: 3}
+  healthBar: {fileID: 7570691634841912206}
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -644,7 +646,6 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
-  currentTile: {fileID: 0}
 --- !u!114 &5790457105946965403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -683,7 +684,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &4566081286597994209
+--- !u!114 &1275489918107125856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -692,14 +693,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 1146680916424175402}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a4f727ab2c7a34f8eef78454ab69e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 39194a9e9440b2247afe821273574295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dotTicLength: 1
-  favoriteIngredients: []
+  favoriteIngredients:
+  - Shroom
+  - SugarCane
+  - CatTail
   favoriteFlavors: 0
   charmThreshhold: 1
-  rewardItem: {fileID: 0}
+  rewardItem: {fileID: 5017578403985159878, guid: 96fc83805b66eb24dbd83a4874b83f8f,
+    type: 3}
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!114 &1715713223517123993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,11 +727,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9176538327199367806}
     m_Modifications:
-    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterHurtParticle
-      objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -781,6 +782,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterHurtParticle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8810df0ddde908745878a508b9576c92, type: 3}
 --- !u!4 &2878685753242621671 stripped
@@ -802,11 +808,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9176538327199367806}
     m_Modifications:
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -912,16 +913,21 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 100
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: cData
-      value: 
-      objectReference: {fileID: 4590983733872952246}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -937,16 +943,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
+      propertyPath: m_SizeDelta.x
+      value: 100
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: cData
+      value: 
+      objectReference: {fileID: 4590983733872952246}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
 --- !u!224 &7843587878225680372 stripped
@@ -955,3 +961,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7866545785843362230}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7570691634841912206 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 305095066010790456, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7866545785843362230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

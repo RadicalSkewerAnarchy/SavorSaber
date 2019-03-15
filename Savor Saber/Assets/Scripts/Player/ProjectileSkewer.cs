@@ -6,9 +6,14 @@ using System;
 public class ProjectileSkewer : BaseProjectile
 {
 
-    SignalApplication signalApplication;
-    GameObject signal;
+    //SignalApplication signalApplication;
+    //GameObject signal;
     Dictionary<string, float> moodMod = new Dictionary<string, float>();
+    bool detonating = false;
+    public GameObject audioPlayer;
+    public AudioClip sweetSFX;
+    public AudioClip spicySFX;
+
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +50,7 @@ public class ProjectileSkewer : BaseProjectile
                 
             }
             */
-            SetAOE();
+            //SetAOE();
 
             Destroy(this.gameObject);
 
@@ -54,22 +59,44 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "ThrowThrough")
+            return;
         Debug.Log("Skewer collided with " + collision.gameObject);
         //attack radius is set by the amount of Savory/Umami on the skewer
-        if(flavorCountDictionary != null)
+
+        if (ingredientArray != null)
         {
-            attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
-        }
-        else
-        {
-            attackRadius = 2.5f;
+            FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
+            if (flavorInput != null)
+            {
+                if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
+                {
+                    detonating = true;
+                    SetAOE();
+                }
+                else
+                {
+
+                    flavorInput.Feed(ingredientArray);
+                    bool fedFavorite = flavorInput.FedFavorite();
+                    if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
+                    {
+                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                        sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
+                    }
+                    else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
+                    {
+                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                        sfx.GetComponent<AudioSource>().volume = 0.5f;
+                        sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
+                    }
+                }
+
+            }
         }
 
-        SetAOE();
-        
         if (!penetrateTargets)
             Destroy(this.gameObject);
-
     }
 
     //save space in earlier checks
@@ -82,13 +109,15 @@ public class ProjectileSkewer : BaseProjectile
     {
         CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
         ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
+        AudioSource boomSFX = GetComponentInChildren<AudioSource>();
 
+        if (boomSFX != null)
+            boomSFX.Play();
 
         if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
         {
             ExplodeEffects();
         }
-
 
         if (ingredientArray != null)
         {
@@ -112,7 +141,62 @@ public class ProjectileSkewer : BaseProjectile
     {
         Animator AOEAnimator = GetComponentInChildren<Animator>();
         ParticleSystem AOEParticles = GetComponentInChildren<ParticleSystem>();
-        AOEAnimator.SetBool("Explode", true);
+        if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Sweet)
+            AOEAnimator.SetBool("ExplodeSweet", true);
+        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Spicy)
+            AOEAnimator.SetBool("ExplodeSpicy", true);
+        else
+            AOEAnimator.SetBool("ExplodeSavory", true);
         AOEParticles.Play();
+    }
+
+    private RecipeData.Flavors GetMajorityFlavor(RecipeData.Flavors ignore)
+    {
+        int highest = 0;
+        int lastCount = 0;
+        int majorityFlavor = 0;
+        bool tied = false;
+        for (int f = 1; f <= 64; f = f << 1)
+        {
+            if(f != (int)ignore && flavorCountDictionary[(RecipeData.Flavors)f] > highest)
+            {
+                highest = flavorCountDictionary[(RecipeData.Flavors)f];
+                if (highest == lastCount)
+                    tied = true;
+                else
+                    tied = false;
+                lastCount = highest;
+                majorityFlavor = f;
+            }
+        }
+        if (tied)
+            return RecipeData.Flavors.None;
+        else
+            return (RecipeData.Flavors)majorityFlavor;
+    }
+
+    private RecipeData.Flavors GetMajorityFlavor()
+    {
+        int highest = 0;
+        int lastCount = 0;
+        int majorityFlavor = 0;
+        bool tied = false;
+        for (int f = 1; f <= 64; f = f << 1)
+        {
+            if (flavorCountDictionary[(RecipeData.Flavors)f] > highest)
+            {
+                highest = flavorCountDictionary[(RecipeData.Flavors)f];
+                if (highest == lastCount)
+                    tied = true;
+                else
+                    tied = false;
+                lastCount = highest;
+                majorityFlavor = f;
+            }
+        }
+        if (tied)
+            return RecipeData.Flavors.None;
+        else
+            return (RecipeData.Flavors)majorityFlavor;
     }
 }

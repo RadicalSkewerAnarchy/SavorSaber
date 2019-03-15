@@ -38,6 +38,8 @@ public class ControlProfile : ScriptableObject
         {Control.Left, KeyCode.A},
         {Control.Right, KeyCode.D},
     };
+    public AxisDict secondaryAxes = new AxisDict() { };
+    public KeyCodeDict secondaryKeyBinds = new KeyCodeDict() { };
     public KeyCode this[Control c]
     {
         get

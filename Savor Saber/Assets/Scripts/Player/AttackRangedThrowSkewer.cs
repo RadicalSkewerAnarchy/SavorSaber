@@ -14,7 +14,6 @@ public class AttackRangedThrowSkewer : AttackRanged
     private float normalInterval;
     private Inventory inv;
     private PlaySFX sfxPlayer;
-    //SpriteRenderer r;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +26,6 @@ public class AttackRangedThrowSkewer : AttackRanged
         inv = GetComponent<Inventory>();
         r = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<PlaySFX>();
-
-
     }
 
     private void Awake()
@@ -79,8 +76,6 @@ public class AttackRangedThrowSkewer : AttackRanged
         Attacking = true;
         CanBeCanceled = false;
         inv.CanSwap = false;
-        //inv.ClearActiveSkewer();
-        //inv.ClearActiveRecipe();
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
             //Debug.Log("Charge Level Equals: " + currLevel);
