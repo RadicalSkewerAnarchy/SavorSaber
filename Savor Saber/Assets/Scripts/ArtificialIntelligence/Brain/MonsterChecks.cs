@@ -342,7 +342,10 @@ public class MonsterChecks : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<TileNode>() != null)
         {
-            currentTile = collision.gameObject.GetComponent<TileNode>();
+            if (collision.gameObject.GetComponent<TileNode>().walkable)
+            {
+                currentTile = collision.gameObject.GetComponent<TileNode>();
+            }
         }
     }
     #region POSITION RANDOMIZATION

@@ -342,7 +342,10 @@ public class MonsterBehavior : MonoBehaviour
     public bool NavTo()
     {       
         var path = pathfinder.AStar(Checks.currentTile, pathfinder.allNodes.transform.GetChild(23).GetComponent<TileNode>());
-        Debug.Log("Path Found : ");        
+        foreach(var node in path)
+        {
+            Debug.Log("NODE: " + node.gameObject.GetInstanceID());
+        }  
         return true;
     }
 }

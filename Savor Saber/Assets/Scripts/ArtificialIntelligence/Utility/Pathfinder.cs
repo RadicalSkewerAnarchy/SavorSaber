@@ -34,6 +34,7 @@ public class Pathfinder : MonoBehaviour
         {
             current = cameFrom[current];
             path.Add(current);
+            //Debug.Log("Item in path: " + current.gameObject.GetInstanceID());
         }
         return path;
     }
@@ -46,11 +47,11 @@ public class Pathfinder : MonoBehaviour
     /// <param name="target"></param>
     public List<TileNode> AStar(TileNode start, TileNode target)
     {
-        Debug.Log("START/TARGET RECEIVED : " + start.gameObject.GetInstanceID() + "/" + target.gameObject.GetInstanceID());
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();
         // set of discovered but unevaluated nodes
         List<TileNode> open = new List<TileNode>();
+        open.Add(start);
         // the most efficient previous node mapped
         Dictionary<TileNode, TileNode> cameFrom = new Dictionary<TileNode, TileNode>();
         // the tilenode with its cost from the start node
@@ -60,7 +61,7 @@ public class Pathfinder : MonoBehaviour
         while (open.Count > 0)
         {
             TileNode current = null;
-            float min = 0;
+            float min = Mathf.Infinity;
             foreach(var node in open)
             {
                 if(fScore[node] < min)
@@ -69,10 +70,9 @@ public class Pathfinder : MonoBehaviour
                     current = node;
                 }
             }
-            if(current.GetInstanceID() == target.GetInstanceID())
+            if(current.gameObject.GetInstanceID() == target.gameObject.GetInstanceID())
             {
                 //GOAL IS REACHED, RETURN PATH
-                Debug.Log("PATH FOUND");
                 return GetShortestPath(cameFrom, current);
             }
             open.Remove(current);
@@ -92,9 +92,14 @@ public class Pathfinder : MonoBehaviour
                 {
                     continue;
                 }
-                cameFrom.Add(neighbor, current);
-                gScore[neighbor] = tempScore;
-                fScore[neighbor] = gScore[neighbor]; // + heuristic cost estimate
+                if (cameFrom.ContainsKey(neighbor))
+                {
+                    cameFrom[neighbor] = current;
+                } else {
+                    cameFrom.Add(neighbor, current);
+                }
+                    gScore[neighbor] = tempScore;
+                fScore[neighbor] = gScore[neighbor] + Vector3.Distance(neighbor.transform.position, target.transform.position); // + heuristic cost estimate
 
             }
         }
