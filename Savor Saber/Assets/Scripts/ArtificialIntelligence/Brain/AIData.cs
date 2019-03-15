@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
+
 /// <summary>
 /// ONLY REQUIRE FOR DEBUGGING OR HARDCODED ABSTRACT BehaviorS
 /// </summary>
@@ -57,6 +59,7 @@ public class AIData : CharacterData
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
+    public List<TileNode> path;
     #endregion
     #region Timers
     [SerializeField]
@@ -66,13 +69,14 @@ public class AIData : CharacterData
     public float DecisionTimerReset = 10f;
     [SerializeField]
     [Range(0f, 4f)]
-    public float DecisionTimerVariance = 2f;    
+    public float DecisionTimerVariance = 2f;
     #endregion
     #region Components
     private MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
+
     #endregion
     #region Unfinished
     public SignalApplication Awareness = null;
@@ -83,7 +87,7 @@ public class AIData : CharacterData
     #endregion
     #endregion
     private void Start()
-    {        
+    {
         #region Initialize Components
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
@@ -94,6 +98,7 @@ public class AIData : CharacterData
         InitializeCharacterData();
         InitializeNormalValues();
         #endregion
+        path = new List<TileNode>();
 
         _vectors = new Dictionary<string, Vector2> {
             {"Player", new Vector2(0f, 0f) }
@@ -127,7 +132,7 @@ public class AIData : CharacterData
     {
         return now / (float)max;
     }
-    /// <summary> 
+    /// <summary>
     ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
     /// </summary>
     public float getNormalizedValue(string value)

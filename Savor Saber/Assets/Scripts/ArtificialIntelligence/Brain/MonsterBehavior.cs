@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
+//[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class MonsterBehavior : MonoBehaviour
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
+    public Pathfinder pathfinder;
     #endregion
     #region ActionTimer
     /// <summary>
@@ -72,6 +74,7 @@ public class MonsterBehavior : MonoBehaviour
         AnimatorBody = GetComponent<Animator>();
         RigidBody = GetComponent<Rigidbody2D>();
         controller = GetComponent<MonsterController>();
+        pathfinder = GetComponent<Pathfinder>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -127,7 +130,7 @@ public class MonsterBehavior : MonoBehaviour
     {
         AiData.currentBehavior = AIData.Behave.Chase;
         var current = new Vector2(transform.position.x, transform.position.y);
-        if (Vector2.Distance(current, target) <= threshold)
+        if (Vector2.Distance(current, target) <= .01f)
         {
             return true;
         }
@@ -139,7 +142,9 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
+            //RigidBody.AddForce(target * speed * Time.deltaTime * 1000f);
             transform.Translate(target);
+            
             #endregion
             return false;
         }
@@ -360,5 +365,5 @@ public class MonsterBehavior : MonoBehaviour
         // after readjusting from pivot
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
-    #endregion
+    #endregion    
 }

@@ -12,6 +12,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public AIData AiData;
     public GameObject signalPrefab;
+    public BoxCollider2D boxCollider;
 
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
@@ -33,6 +34,7 @@ public class MonsterChecks : MonoBehaviour
     public Vector2 specialPosition;
     bool amLeader = false;
     bool positionAcquired = false;
+    public TileNode currentTile = null;
     #endregion
 
     private void Start()
@@ -52,6 +54,8 @@ public class MonsterChecks : MonoBehaviour
 
         // specials
         specialPosition = transform.position;
+
+        currentTile = new TileNode();
     }
 
     #region AWARENESS
@@ -338,7 +342,17 @@ public class MonsterChecks : MonoBehaviour
         this.specialPosition = new Vector2(0f, 0f);
     }
     #endregion
-
+    /*
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.GetComponent<TileNode>() != null)
+        {
+            if (collision.gameObject.GetComponent<TileNode>().walkable)
+            {
+                currentTile = collision.gameObject.GetComponent<TileNode>();
+            }
+        }
+    }*/
     #region POSITION RANDOMIZATION
     /// <summary>
     /// Given some distribution, return a vector2 of:
