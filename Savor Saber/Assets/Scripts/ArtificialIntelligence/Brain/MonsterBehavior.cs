@@ -238,7 +238,7 @@ public class MonsterBehavior : MonoBehaviour
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;            
             projectileData.attacker = this.gameObject;            
-            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
+            StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
             #endregion
         }
         return true;

@@ -105,8 +105,10 @@ public class BaseProjectile : MonoBehaviour
             penetrateTargets = false;
 
         spawnPosition = transform.position;
+        Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
- 
+        //Debug.Log(directionVector);
+
     }
 
     // Update is called once per frame
@@ -115,7 +117,9 @@ public class BaseProjectile : MonoBehaviour
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
+        {
             Destroy(this.gameObject);
+        }
     }
 
     protected void SetGeometry()
