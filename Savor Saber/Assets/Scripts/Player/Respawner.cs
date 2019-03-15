@@ -8,6 +8,7 @@ public class Respawner : MonoBehaviour
     SpawnPoint currSpawn;
     UpdatedController controller;
     AttackBase[] attacks;
+    CharacterData data;
     private Animator anim;
     public bool Respawning { get; private set; } = false;
 
@@ -16,6 +17,7 @@ public class Respawner : MonoBehaviour
         anim = GetComponent<Animator>();
         controller = GetComponent<UpdatedController>();
         attacks = GetComponents<AttackBase>();
+        data = GetComponent<CharacterData>();
     }
 
     public void Respawn()
@@ -50,6 +52,7 @@ public class Respawner : MonoBehaviour
         {
             Debug.Log("Setting Spawn Point to: " + collision.name);
             currSpawn = collision.GetComponent<SpawnPoint>();
+            data.health = data.maxHealth;
         }
     }
 }

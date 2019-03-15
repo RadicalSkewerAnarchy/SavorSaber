@@ -59,11 +59,10 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "ThrowThrough")
+            return;
         Debug.Log("Skewer collided with " + collision.gameObject);
         //attack radius is set by the amount of Savory/Umami on the skewer
-
-
-
 
         if (ingredientArray != null)
         {
