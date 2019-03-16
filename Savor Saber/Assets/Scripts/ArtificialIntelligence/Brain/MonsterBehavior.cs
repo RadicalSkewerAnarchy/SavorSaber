@@ -219,7 +219,7 @@ public class MonsterBehavior : MonoBehaviour
             AnimatorBody.Play("Melee");
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
-            newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
+            newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             #endregion
             return true;
