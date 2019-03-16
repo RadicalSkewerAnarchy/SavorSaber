@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 1623600273}
   - component: {fileID: 2766135195253760641}
   - component: {fileID: 7081134690172526553}
+  - component: {fileID: 307149032777373619}
+  - component: {fileID: 544845623881945742}
   m_Layer: 0
   m_Name: PaddlePear
   m_TagString: Prey
@@ -520,6 +522,7 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
+  path: []
   DecisionTimer: 0
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 2
@@ -555,6 +558,7 @@ MonoBehaviour:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  boxCollider: {fileID: 0}
   Friends: []
   Enemies: []
   AllCreatures: []
@@ -562,6 +566,7 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
+  currentTile: {fileID: 0}
 --- !u!114 &1707353156324864275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,6 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinder: {fileID: 0}
   ActionTimer: 1
   ActionTimerReset: 10
   ActionTimerVariance: 2
@@ -637,6 +643,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _direction: 0
   invert: 0
+--- !u!114 &307149032777373619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNodes: {fileID: 0}
+--- !u!61 &544845623881945742
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &949843241222598460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,6 +689,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6411723353759096192}
     m_Modifications:
+    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterHurtParticle
+      objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -699,11 +749,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterHurtParticle
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8810df0ddde908745878a508b9576c92, type: 3}
 --- !u!4 &4871533744204504333 stripped
@@ -725,6 +770,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6411723353759096192}
     m_Modifications:
+    - target: {fileID: 192815478391924568, guid: 4b76023d501bc4a4e87ede5649192021,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterEatingParticle
+      objectReference: {fileID: 0}
     - target: {fileID: 7687137625313275881, guid: 4b76023d501bc4a4e87ede5649192021,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -780,11 +830,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 192815478391924568, guid: 4b76023d501bc4a4e87ede5649192021,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterEatingParticle
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b76023d501bc4a4e87ede5649192021, type: 3}
 --- !u!4 &8265548201463952324 stripped
@@ -806,6 +851,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6411723353759096192}
     m_Modifications:
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -911,21 +961,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
+      propertyPath: cData
+      value: 
+      objectReference: {fileID: 2903048292295415507}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -941,11 +981,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: cData
-      value: 
-      objectReference: {fileID: 2903048292295415507}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
 --- !u!224 &2427488285460643369 stripped

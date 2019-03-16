@@ -114,15 +114,13 @@ public partial class MonsterProtocols : MonoBehaviour
     /// If idle, update awareness and reset timers
     /// </summary>
     public void Lazy()
-    {
-        NavTo(false);
-        /*
+    {        
         if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }*/
+        }
     }
 
     // Runaway()
@@ -149,8 +147,9 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
         #endregion
 
-        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
-        {
+        /*if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
+        {*/
+        if(NavTo(true, Checks.ClosestCreature())) {
             Checks.ResetSpecials();
         }
     }
@@ -190,6 +189,7 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
 
         // move to
+
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
             // socialize
@@ -252,7 +252,8 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             GameObject near = Checks.ClosestLeader();
             Vector2 pos = near.transform.position;
-            Behaviour.MoveTo(pos, AiData.Speed, 1f);
+            NavTo(true, near);
+            //Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
 
@@ -268,14 +269,16 @@ public partial class MonsterProtocols : MonoBehaviour
         // move to
         #region Get Nearest + Null Check
         Vector2 pos = Checks.WeakestCreature().transform.position;
+        GameObject target = Checks.WeakestCreature();
         #endregion
-        if (Behaviour.MoveTo(pos, AiData.Speed, 5f))
+        if (NavTo(true, target))
         {
             if (Behaviour.Console())
             {
                 Wander(3f, 3f);
             }
         }
+        
     }
 
     // end of pacifict region
@@ -325,30 +328,30 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
 
-    public void NavTo(bool towards)
+    public bool NavTo(bool towards, GameObject target)
     {
         // bool moving = false;
         // if agent is on tilemap
         if(Checks.currentTile != null)
         {
+            AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target.GetComponent<MonsterChecks>().currentTile);
             //Debug.Log("Current tile is not null");
             /// if path is empty, fill it based on destination
-            if (AiData.path.Count < 1)
-            {
-                var closest = AiData.Checks.ClosestCreature();
-                if(closest != null && closest.GetComponent<MonsterChecks>() != null)
-                {
-                    AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, closest.GetComponent<MonsterChecks>().currentTile);
-                }
-            }
-            else if(AiData.path.Count >= 1)
+            
+            if(AiData.path.Count >= 1)
             {                
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
                     AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
                 }
-            }                                                    
+                return false;
+            }
+            else if(AiData.path.Count < 1)
+            {
+                return true;
+            }
         }
+        return false;
     }
     #endregion
 }

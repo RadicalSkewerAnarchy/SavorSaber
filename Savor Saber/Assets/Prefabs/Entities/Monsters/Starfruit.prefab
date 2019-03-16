@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 8322185740235962441}
   - component: {fileID: 6638201680379141435}
   - component: {fileID: 5497011577834468809}
+  - component: {fileID: 3354968052852382605}
   m_Layer: 0
   m_Name: Starfruit
   m_TagString: Prey
@@ -458,6 +459,7 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
+  path: []
   DecisionTimer: 0
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 0.3
@@ -493,6 +495,7 @@ MonoBehaviour:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  boxCollider: {fileID: 0}
   Friends: []
   Enemies: []
   AllCreatures: []
@@ -500,6 +503,7 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
+  currentTile: {fileID: 0}
 --- !u!114 &3327682311895378136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinder: {fileID: 0}
   ActionTimer: 0
   ActionTimerReset: 10
   ActionTimerVariance: 2
@@ -588,6 +593,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.25}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &3354968052852382605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3825258288289163761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNodes: {fileID: 0}
 --- !u!1 &6022052075366631449
 GameObject:
   m_ObjectHideFlags: 0

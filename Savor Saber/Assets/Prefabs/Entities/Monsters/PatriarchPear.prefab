@@ -9807,6 +9807,7 @@ GameObject:
   - component: {fileID: 3731581536222324354}
   - component: {fileID: 6611929061611348362}
   - component: {fileID: 5706956452478506490}
+  - component: {fileID: 5491122747666713794}
   m_Layer: 0
   m_Name: PatriarchPear
   m_TagString: Prey
@@ -10287,6 +10288,7 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
+  path: []
   DecisionTimer: 0
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 2
@@ -10322,6 +10324,7 @@ MonoBehaviour:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  boxCollider: {fileID: 0}
   Friends: []
   Enemies: []
   AllCreatures: []
@@ -10329,6 +10332,7 @@ MonoBehaviour:
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   specialPosition: {x: 0, y: 0}
+  currentTile: {fileID: 0}
 --- !u!114 &1902115651943444912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10341,6 +10345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinder: {fileID: 0}
   ActionTimer: 1
   ActionTimerReset: 10
   ActionTimerVariance: 2
@@ -10401,6 +10406,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _direction: 0
   invert: 0
+--- !u!114 &5491122747666713794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6862601172263914498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNodes: {fileID: 0}
 --- !u!1 &7300592670295209974
 GameObject:
   m_ObjectHideFlags: 0
