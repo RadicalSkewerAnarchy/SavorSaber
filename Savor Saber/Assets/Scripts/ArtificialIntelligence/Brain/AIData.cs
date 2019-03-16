@@ -280,5 +280,6 @@ public class AIData : CharacterData
         GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity, transform) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
         signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
+        return obtainSurroundings;
     }
 }
