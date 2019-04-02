@@ -93,7 +93,7 @@ public class MonsterChecks : MonoBehaviour
     {
         #region Initialize closest vars
         float close = closestDistance;
-        GameObject closestCreature = this.gameObject;
+        GameObject closestCreature = null;
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
@@ -345,6 +345,43 @@ public class MonsterChecks : MonoBehaviour
         this.specialPosition = new Vector2(0f, 0f);
     }
     #endregion
+
+    // given any position, determine what tile that position is on(if it is)
+    // if it's not, don't navigate there
+    public TileNode GetNearestNode(Vector2 pos)
+    {
+        TileNode targetTile = null;
+        float sizeCheck = .25f;
+        int maxTries = 5;
+
+        for (var i = 0; i < maxTries; i++)
+        {
+            var availableNodes = Physics2D.OverlapCircleAll(pos, sizeCheck);
+            var validNodes = new List<Collider2D>();
+            foreach (var node in availableNodes)
+            {
+                if (node.GetComponent<TileNode>() != null)
+                {
+                    validNodes.Add(node);
+                }
+            }
+
+            if (validNodes.Count > 0)
+            {
+                // RETURN VALID TILE
+                Debug.Log("choosing from " + validNodes.Count + " possible nodes");
+                targetTile = validNodes[(int)Random.Range(0, validNodes.Count)].GetComponent<TileNode>();
+                return targetTile;
+            }
+            else
+            {
+                sizeCheck *= 2;
+                Debug.Log("DOUBLING TILECHECK SIZE");
+            }
+        }
+
+        return targetTile;
+    }
     /*
     private void OnTriggerEnter2D(Collider2D collision)
     {

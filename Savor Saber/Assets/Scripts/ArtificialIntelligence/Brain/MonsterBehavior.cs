@@ -35,7 +35,7 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// biase
     /// </summary>
-    private float biasAngle = 15f;
+    private float biasAngle = 0f;
     private float biasAngleMod;
     private float biasMovementAngle;
     #endregion
@@ -138,7 +138,7 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Move
             AnimatorBody.Play("Move");           
-            target = RotatePoint(current, biasMovementAngle, target);
+            //target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);

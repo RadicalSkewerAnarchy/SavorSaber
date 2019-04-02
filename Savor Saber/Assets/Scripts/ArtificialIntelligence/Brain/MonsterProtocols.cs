@@ -114,13 +114,27 @@ public partial class MonsterProtocols : MonoBehaviour
     /// If idle, update awareness and reset timers
     /// </summary>
     public void Lazy()
-    {        
-        if (Behaviour.Idle())
+    {
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        //Vector2 pos = new Vector2(-15.5f, .5f);
+        GameObject creature = Checks.ClosestCreature();
+        Vector2 pos;
+        if (creature != null)
+            pos = creature.gameObject.transform.position;
+        else
+            return;
+
+        TileNode realPos = Checks.GetNearestNode(pos);
+        Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
+        NavTo(realPos);
+        #endregion
+        /*if (Behaviour.Idle())
         {
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }
+        }*/
     }
 
     // Runaway()
@@ -149,9 +163,7 @@ public partial class MonsterProtocols : MonoBehaviour
 
         /*if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
         {*/
-        if(NavTo(true, Checks.ClosestCreature())) {
-            Checks.ResetSpecials();
-        }
+       
     }
 
     // Wander()
@@ -252,7 +264,6 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             GameObject near = Checks.ClosestLeader();
             Vector2 pos = near.transform.position;
-            NavTo(true, near);
             //Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
@@ -271,13 +282,7 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.WeakestCreature().transform.position;
         GameObject target = Checks.WeakestCreature();
         #endregion
-        if (NavTo(true, target))
-        {
-            if (Behaviour.Console())
-            {
-                Wander(3f, 3f);
-            }
-        }
+        
         
     }
 
@@ -319,25 +324,22 @@ public partial class MonsterProtocols : MonoBehaviour
     // if attack cannot happen, becomes lazy
     public void Guard()
     {
-        if (AiData.Checks.NumberOfEnemies() > 0)
-        {
-            if (!Behaviour.MeleeAttack(AiData.Checks.ClosestCreature().gameObject.transform.position, AiData.Speed))
-            {
-                Lazy();
-            }
-        }
+        
     }
-
-    public bool NavTo(bool towards, GameObject target)
+    // in order to work with vector2, we must take in a vector2/vector3 and determine what tile overlaps at that position(if it overlaps at all)
+    // in order to work based on the tilemap, we can access the neighbor tiles and determine the one that is furthest away/closest to the target then select that tile
+    // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
+    public bool NavTo(TileNode target)
     {
         // bool moving = false;
         // if agent is on tilemap
-        if(Checks.currentTile != null)
+        var curTile = Checks.GetNearestNode((Vector2)transform.position);
+        if(curTile != target)
         {
-            AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target.GetComponent<MonsterChecks>().currentTile);
+            // Set the path based on AStar algorithm of the currentTile
+            AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
             //Debug.Log("Current tile is not null");
-            /// if path is empty, fill it based on destination
-            
+            /// if path is empty, fill it based on destination            
             if(AiData.path.Count >= 1)
             {                
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))

@@ -36,6 +36,7 @@ public class GraphNodePopulator : MonoBehaviour
             int i = 0, j = 0;
             for (int x = bounds.xMin; x < bounds.xMax; x++)
             {
+                j = 0;
                 /// list of lists, this increments the X counter
                 tiles.Add(new List<TileNode>());
                 for (int y = bounds.yMin; y < bounds.yMax; y++)
@@ -54,6 +55,8 @@ public class GraphNodePopulator : MonoBehaviour
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.5f, .5f, 0), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
+                    tile.GetComponent<TileNode>().x = i;
+                    tile.GetComponent<TileNode>().y = j;
                     tile.GetComponent<TileNode>().SetWalkable(walkable);
                     tiles[i + 1].Add(tile.GetComponent<TileNode>());
                     j++;
