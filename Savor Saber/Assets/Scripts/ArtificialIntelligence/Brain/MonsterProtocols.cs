@@ -117,14 +117,14 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        //Vector2 pos = new Vector2(-15.5f, .5f);
+        // Vector2 pos = new Vector2(-9.5f, -3.5f);
         GameObject creature = Checks.ClosestCreature();
         Vector2 pos;
         if (creature != null)
             pos = creature.gameObject.transform.position;
         else
             return;
-
+        //pos = new Vector2(-2.5f, -2.5f);
         TileNode realPos = Checks.GetNearestNode(pos);
         Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
         NavTo(realPos);
@@ -337,19 +337,27 @@ public partial class MonsterProtocols : MonoBehaviour
         if(curTile != target)
         {
             // Set the path based on AStar algorithm of the currentTile
-            AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
-            //Debug.Log("Current tile is not null");
-            /// if path is empty, fill it based on destination            
-            if(AiData.path.Count >= 1)
+            if(AiData.path == null)
+            {
+                AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
+                if(AiData.path.Count < 1)
+                {
+                    return false;
+                }
+            }            
+            /// if path is empty, fill it based on destination
+            while (AiData.path.Count >= 1)
             {                
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
+                   
                     AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
                 }
                 return false;
             }
-            else if(AiData.path.Count < 1)
+            if(AiData.path.Count < 1)
             {
+                AiData.path = null;
                 return true;
             }
         }

@@ -130,7 +130,7 @@ public class MonsterBehavior : MonoBehaviour
     {
         AiData.currentBehavior = AIData.Behave.Chase;
         var current = new Vector2(transform.position.x, transform.position.y);
-        if (Vector2.Distance(current, target) <= .01f)
+        if (Vector2.Distance(current, target) <= threshold)
         {
             return true;
         }
@@ -138,10 +138,11 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Move
             AnimatorBody.Play("Move");           
-            //target = RotatePoint(current, biasMovementAngle, target);
+            target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
+            //RigidBody.AddForce(current * speed * Time.deltaTime * 1000);
             transform.Translate(target);
             
             #endregion

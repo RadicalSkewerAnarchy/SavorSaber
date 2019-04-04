@@ -97,7 +97,7 @@ public class MonsterChecks : MonoBehaviour
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
-            Debug.Log("Checking creatures");
+           // Debug.Log("Checking creatures");
             #region Check if Creature Deleted
             if (Creature == null)
             {
@@ -107,7 +107,7 @@ public class MonsterChecks : MonoBehaviour
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
             if (dist < close)
             {
-                Debug.Log("Closest is found");
+                //Debug.Log("Closest is found");
                 close = dist;
                 closestCreature = Creature;
             }
@@ -369,14 +369,14 @@ public class MonsterChecks : MonoBehaviour
             if (validNodes.Count > 0)
             {
                 // RETURN VALID TILE
-                Debug.Log("choosing from " + validNodes.Count + " possible nodes");
+                // Debug.Log("choosing from " + validNodes.Count + " possible nodes");
                 targetTile = validNodes[(int)Random.Range(0, validNodes.Count)].GetComponent<TileNode>();
                 return targetTile;
             }
             else
             {
                 sizeCheck *= 2;
-                Debug.Log("DOUBLING TILECHECK SIZE");
+                // Debug.Log("DOUBLING TILECHECK SIZE");
             }
         }
 
