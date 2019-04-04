@@ -126,7 +126,7 @@ public partial class MonsterProtocols : MonoBehaviour
             return;
         //pos = new Vector2(-2.5f, -2.5f);
         TileNode realPos = Checks.GetNearestNode(pos);
-        Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
+        //Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
         NavTo(realPos);
         #endregion
         /*if (Behaviour.Idle())
@@ -334,6 +334,10 @@ public partial class MonsterProtocols : MonoBehaviour
         // bool moving = false;
         // if agent is on tilemap
         var curTile = Checks.GetNearestNode((Vector2)transform.position);
+        if(curTile == null)
+        {
+            return false;
+        }
         if(curTile != target)
         {
             // Set the path based on AStar algorithm of the currentTile
