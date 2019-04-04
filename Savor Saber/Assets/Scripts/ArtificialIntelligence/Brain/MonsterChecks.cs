@@ -17,6 +17,7 @@ public class MonsterChecks : MonoBehaviour
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<GameObject> AllCreatures;
+    public List<GameObject> AllPlants;
     public List<GameObject> AllDrops;
 
     /// <summary>
@@ -51,6 +52,7 @@ public class MonsterChecks : MonoBehaviour
 
         // clear often
         AllCreatures = new List<GameObject>();
+        AllPlants = new List<GameObject>();
         AllDrops = new List<GameObject>();
 
         // specials
@@ -179,6 +181,38 @@ public class MonsterChecks : MonoBehaviour
     /// Return Closest Drop
     /// </summary>
     /// <returns></returns>
+    public GameObject ClosestPlant()
+    {
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestPlant = null;
+        #endregion
+        foreach (GameObject Plant in AllPlants)
+        {
+            #region Check if Creature Deleted
+            if (Plant == null)
+                continue;
+            if (Plant.GetComponent<DestructableEnvironment>().destroyed)
+                continue;
+            #endregion
+            //Debug.Log("Potential Plant: " + Creature.GetInstanceID());
+            //Debug.Log(Plant.GetInstanceID() + " is a drop");
+            float dist = Vector2.Distance(transform.position, Plant.transform.position);
+            if (dist < close)
+            {
+                close = dist;
+                closestPlant = Plant;
+            }
+
+        }
+        //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
+        return closestPlant;
+    }
+    
+    /// <summary>
+    /// Return Closest Drop
+    /// </summary>
+    /// <returns></returns>
     public GameObject ClosestDrop()
     {
         #region Initialize Friend and Enemy
@@ -194,17 +228,13 @@ public class MonsterChecks : MonoBehaviour
             }
             #endregion
             //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
-            if (Drop.tag == "SkewerableObject")
+            //Debug.Log(Drop.GetInstanceID() + " is a drop");
+            float dist = Vector2.Distance(transform.position, Drop.transform.position);
+            if (dist < close)
             {
-                //Debug.Log(Drop.GetInstanceID() + " is a drop");
-                float dist = Vector2.Distance(transform.position, Drop.transform.position);
-                if (dist < close)
-                {
-                    close = dist;
-                    closestDrop = Drop;
-                }
+                close = dist;
+                closestDrop = Drop;
             }
-
         }
         //Debug.Log("Closest drop is reached = " + (closestDrop == null ? "and it is null" : closestDrop.name + closestDrop.GetInstanceID()));
         return closestDrop;

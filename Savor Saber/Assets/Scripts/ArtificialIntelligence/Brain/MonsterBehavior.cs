@@ -177,7 +177,7 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>  
     public bool Feed(GameObject drop)
     {
-        Debug.Log("Feed Reached");
+        //Debug.Log("Feed Reached");
         if(drop != null)
         {
             #region Eat

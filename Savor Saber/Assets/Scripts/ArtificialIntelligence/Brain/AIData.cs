@@ -168,7 +168,7 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
-            //UpdateHunger();
+            UpdateHunger();
         }
         else
         {
@@ -186,7 +186,7 @@ public class AIData : CharacterData
         {
             case Protocols.Melee:
             // melee
-                Protocol.Melee();
+                Protocol.Melee(null);
                 break;
             // ranged
             case Protocols.Ranged:

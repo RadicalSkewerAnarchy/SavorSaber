@@ -12,6 +12,7 @@ public class SignalApplication : MonoBehaviour
     // hit and mod list
     [SerializeField]
     public List<GameObject> hitList = new List<GameObject>();
+    public List<GameObject> plantList = new List<GameObject>();
     public List<GameObject> dropList = new List<GameObject>();
     public Dictionary<string, float> moodMod = new Dictionary<string, float>();
     #region MoodMods
@@ -110,12 +111,17 @@ public class SignalApplication : MonoBehaviour
                     //Debug.Log("MY ID: " + signalMaker.GetInstanceID() + " CREATURE ADDED TO HITLIST ID: " + go.gameObject.GetInstanceID());
                 }
             }
-            else if (go.tag == "SkewerableObject" && isForAwareness)
+            else if (isForAwareness)
             {
                 // keep track of drops
-                dropList.Add(go.gameObject);
+                if(go.tag == "SkewerableObject")
+                    dropList.Add(go.gameObject);
+                else if(go.tag == "ThrowThrough")
+                    plantList.Add(go.gameObject);
             }
         }
+
+        // APPLICATION
         if (!isForAwareness)
         {
             ApplyToAll();
@@ -125,7 +131,7 @@ public class SignalApplication : MonoBehaviour
         {
             {
                 signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
-                //Debug.Log(signalMaker.gameObject.name + " number surrounded by " + hitList.Count);
+                signalMaker.GetComponent<MonsterChecks>().AllPlants = plantList;
                 signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
                 signalMaker.GetComponent<AIData>().Awareness = null;
             }
