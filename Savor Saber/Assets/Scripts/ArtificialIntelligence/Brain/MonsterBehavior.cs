@@ -129,7 +129,7 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
         AiData.currentBehavior = AIData.Behave.Chase;
-        var current = new Vector2(transform.position.x, transform.position.y);
+        var current = new Vector2(transform.position.x, transform.position.y+.25f);
         if (Vector2.Distance(current, target) <= threshold)
         {
             return true;
@@ -142,9 +142,9 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
-            //RigidBody.AddForce(current * speed * Time.deltaTime * 1000);
-            transform.Translate(target);
-            
+            RigidBody.velocity = target * speed * 5;
+            //RigidBody.AddForce(transform.forward, ForceMode2D.Impulse);
+            //transform.Translate(target);            
             #endregion
             return false;
         }
