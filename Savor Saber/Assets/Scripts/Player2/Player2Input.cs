@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class PlayerTwoInput : MonoBehaviour
+public class Player2Input : MonoBehaviour
 {
     public GameObject pressStartToJoin;
     public GameObject characterSelect;
@@ -14,11 +14,7 @@ public class PlayerTwoInput : MonoBehaviour
         var names = Input.GetJoystickNames();
         if (names.Where((s) => !string.IsNullOrWhiteSpace(s)).Count() < 2)
             return;
-        if(playerTwoActive)
-        {
-
-        }
-        else 
+        if(!playerTwoActive)
         {
             pressStartToJoin.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Joystick2Button7))

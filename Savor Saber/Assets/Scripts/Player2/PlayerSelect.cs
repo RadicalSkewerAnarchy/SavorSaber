@@ -9,11 +9,13 @@ public class PlayerSelect : MonoBehaviour
     public int selected;
     public Text nameText;
     public Image image;
+    private GameObject player;
 
     private void Awake()
     {
         selected = characters.Length / 2;
         SetSelected();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
@@ -37,6 +39,9 @@ public class PlayerSelect : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Joystick2Button7))
         {
+            var ch = Instantiate(characters[selected].playerPrefab);
+            ch.transform.position = player.transform.position;
+            gameObject.SetActive(false);
         }
 
     }
