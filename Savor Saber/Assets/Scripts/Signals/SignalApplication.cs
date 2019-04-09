@@ -214,11 +214,14 @@ public class SignalApplication : MonoBehaviour
         // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
         // data.ManualDecision();
     }
-    private void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent)
+    public void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent, bool useParent = true)
     {
-        emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
+        if(useParent)
+            emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
+        else
+            emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
         //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
-        if(sign > 0)
+        if (sign > 0)
         {
             if (mood == "Friendliness")
             {

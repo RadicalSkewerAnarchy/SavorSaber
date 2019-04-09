@@ -5,9 +5,17 @@ using System.Linq;
 
 public class Player2Input : MonoBehaviour
 {
+    public static Player2Input instance = null;
     public GameObject pressStartToJoin;
     public GameObject characterSelect;
-    bool playerTwoActive = false;
+    public bool playerTwoActive = false;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
     // Update is called once per frame
     void Update()
     {

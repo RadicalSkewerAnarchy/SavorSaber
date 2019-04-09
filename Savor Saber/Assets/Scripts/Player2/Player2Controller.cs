@@ -7,6 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Player2Controller : EntityController
 {
+    public AudioClip emoteSfx;
+    private PlaySFX sfxPlayer;
+    public GameObject emoteSignal;
+    private GameObject player;
+
     [SerializeField]
     private Direction _direction;
     public override Direction Direction
@@ -60,13 +65,33 @@ public class Player2Controller : EntityController
         currRunSpeed = runSpeed;
         dialogData = GetComponent<DialogData>();
         sfxSource = GetComponent<AudioSource>();
+        sfxPlayer = GetComponent<PlaySFX>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Detect non-movement input every fram so input isn't dropped
     private void Update()
     {
         if (running && GetMovementVector().sqrMagnitude == 0)
-            StopRunning();       
+            StopRunning();
+        if (Input.GetKeyDown(KeyCode.Joystick2Button0))
+        {
+            var sig = Instantiate(emoteSignal);
+            sig.transform.position = transform.position + new Vector3(0, 20, 0);
+            var sigApp = sig.GetComponent<SignalApplication>();
+            if(sigApp != null)
+                sigApp.SignalAnimator(1, "Friendliness", 1, sig, gameObject, false);
+            sfxPlayer.Play(emoteSfx);
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button2))
+        {
+            transform.position = player.transform.position;
+        }
+        else if (Input.GetKeyDown(KeyCode.Joystick2Button7))
+        {
+            Player2Input.instance.playerTwoActive = false;
+            Destroy(gameObject);
+        }
     }
 
     void FixedUpdate()
