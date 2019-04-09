@@ -16,12 +16,13 @@ public class PlayerData : CharacterData
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
     }
-    public override void DoDamage(int damage)
+    public override bool DoDamage(int damage)
     {
+        bool dead = false;
         if (damage > 0)
         {
             if (Invincible)
-                return;
+                return false;
             health -= damage;
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
@@ -33,11 +34,13 @@ public class PlayerData : CharacterData
             }
             else if (!res.Respawning)
             {
+                dead = true;
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
                 deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
                 res.Respawn();
             }
         }
+        return dead;
     }
     private IEnumerator IFrames(float time)
     {

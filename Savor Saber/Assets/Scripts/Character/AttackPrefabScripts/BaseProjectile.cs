@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+    CharacterData myCharData;
+
     /// <summary>
     /// A prefab to be instantiated when the projectile is terminated
     /// </summary>
@@ -108,6 +110,7 @@ public class BaseProjectile : MonoBehaviour
         Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
         //Debug.Log(directionVector);
+        myCharData = GetComponent<CharacterData>();
 
     }
 
@@ -167,12 +170,13 @@ public class BaseProjectile : MonoBehaviour
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
         CharacterData characterData = go.GetComponent<CharacterData>();
-        if (characterData == null)
-            return;
-        characterData.DoDamage((int)projectileDamage);
-        if (!penetrateTargets)
-            Destroy(this.gameObject);
-
-
+        if (characterData != null)
+        {
+            myCharData.damageDealt += (int)projectileDamage;
+            if (characterData.DoDamage((int)projectileDamage))
+                myCharData.entitiesKilled += 1;
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
+        }
     }
 }
