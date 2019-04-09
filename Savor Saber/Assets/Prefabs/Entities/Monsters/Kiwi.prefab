@@ -9939,11 +9939,11 @@ GameObject:
   - component: {fileID: 5489704670483222716}
   - component: {fileID: 4265656135856224533}
   - component: {fileID: 107852808191949421}
-  - component: {fileID: 7957493700871494357}
   - component: {fileID: 5080594587700175668}
   - component: {fileID: 7260808440097120433}
   - component: {fileID: 5171015911848543708}
   - component: {fileID: 7029470052022662508}
+  - component: {fileID: 2689935146351963695}
   m_Layer: 0
   m_Name: Kiwi
   m_TagString: Prey
@@ -10164,9 +10164,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chance: 10
+  chance: 100
   drops:
-  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
+  - {fileID: 3084288572110961057, guid: bf0f806c1624ee24d8f23f74855f7d66, type: 3}
+  - {fileID: 3084288572110961057, guid: bf0f806c1624ee24d8f23f74855f7d66, type: 3}
+  - {fileID: 3084288572110961057, guid: bf0f806c1624ee24d8f23f74855f7d66, type: 3}
   signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &4345409977259581039
@@ -10181,7 +10183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: PaddlePear
+  displayName: KiwiBird
   deathSfx: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
@@ -10510,29 +10512,6 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackDuration: 1
   isAttacking: 0
---- !u!114 &7957493700871494357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7655859700072271457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a4f727ab2c7a34f8eef78454ab69e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Acorn
-  - Wheat
-  - SugarCane
-  - CatTail
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
-    type: 3}
-  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!70 &5080594587700175668
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -10602,6 +10581,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2689935146351963695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7655859700072271457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTicLength: 1
+  favoriteIngredients:
+  - Wheat
+  - Pear
+  - Kiwi
+  favoriteFlavors: 0
+  charmThreshhold: 1
+  rewardItem: {fileID: 3084288572110961057, guid: bf0f806c1624ee24d8f23f74855f7d66,
+    type: 3}
+  amountRewardItem: 2
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!1 &8266604187976866058
 GameObject:
   m_ObjectHideFlags: 0

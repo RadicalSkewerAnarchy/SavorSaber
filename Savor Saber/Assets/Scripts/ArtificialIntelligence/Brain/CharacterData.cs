@@ -73,41 +73,44 @@ public class CharacterData : MonoBehaviour
     /// <summary> A standard damage function. </summary>
     public virtual void DoDamage(int damage)
     {
-        health -= damage;
-        InstantiateSignal(damage * 2, "Fear", 0.2f, true, true);
-        //only play damage SFX if it was not a killing blow so sounds don't overlap
-        if (health > 0)
+        if (damage > 0)
         {
-            if(healthBar != null)
+            health -= damage;
+            InstantiateSignal(damage * 2, "Fear", 0.2f, true, true);
+            //only play damage SFX if it was not a killing blow so sounds don't overlap
+            if (health > 0)
             {
-                healthBar.gameObject.SetActive(true);
-                Debug.Log("Update health bar");
-                healthBar.value = (float)health / maxHealth;
-                if (barCr != null)
-                    StopCoroutine(barCr);
-                barCr = StartCoroutine(ShowHealthBar());
+                if (healthBar != null)
+                {
+                    healthBar.gameObject.SetActive(true);
+                    Debug.Log("Update health bar");
+                    healthBar.value = (float)health / maxHealth;
+                    if (barCr != null)
+                        StopCoroutine(barCr);
+                    barCr = StartCoroutine(ShowHealthBar());
+                }
+                if (damageSFX != null)
+                {
+                    var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                    deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+                }
+                else
+                {
+                    //play generic sound from asset bundle
+                }
+                if (damageParticleBurst != null)
+                    damageParticleBurst.Play();
+                StartCoroutine(DamageEffectCr());
             }
-            if(damageSFX != null)
+            else // Health <= 0
             {
-                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-                deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+                Kill();
             }
-            else
-            {
-                //play generic sound from asset bundle
-            }
-            if (damageParticleBurst != null)
-                damageParticleBurst.Play();
-            StartCoroutine(DamageEffectCr());
-        }
-        else // Health <= 0
-        {
-            Kill();
-        }
 
-        // create a fear signal
-        float hp = (maxHealth - health) / maxHealth;
-        InstantiateSignal(3f, "Fear", hp + 0.1f, true, true);
+            // create a fear signal
+            float hp = (maxHealth - health) / maxHealth;
+            InstantiateSignal(3f, "Fear", hp + 0.1f, true, true);
+        }
     }
     /// <summary> Show the health bar for a short amount of time </summary>
     protected IEnumerator ShowHealthBar()

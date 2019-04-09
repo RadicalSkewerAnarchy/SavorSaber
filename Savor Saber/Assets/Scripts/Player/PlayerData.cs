@@ -18,22 +18,25 @@ public class PlayerData : CharacterData
     }
     public override void DoDamage(int damage)
     {
-        if (Invincible)
-            return;
-        health -= damage;
-        //only play damage SFX if it was not a killing blow so sounds don't overlap
-        if (health > 0)
+        if (damage > 0)
         {
-            var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-            deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
-            Invincible = true;
-            StartCoroutine(IFrames(damage * timeConst));
-        }
-        else if(!res.Respawning)
-        {
-            var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-            deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
-            res.Respawn();       
+            if (Invincible)
+                return;
+            health -= damage;
+            //only play damage SFX if it was not a killing blow so sounds don't overlap
+            if (health > 0)
+            {
+                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+                Invincible = true;
+                StartCoroutine(IFrames(damage * timeConst));
+            }
+            else if (!res.Respawning)
+            {
+                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
+                res.Respawn();
+            }
         }
     }
     private IEnumerator IFrames(float time)

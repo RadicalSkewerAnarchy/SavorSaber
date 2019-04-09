@@ -13,6 +13,7 @@ public class ProjectileSkewer : BaseProjectile
     public GameObject audioPlayer;
     public AudioClip sweetSFX;
     public AudioClip spicySFX;
+    public bool fed = false;
 
 
     // Start is called before the first frame update
@@ -25,6 +26,7 @@ public class ProjectileSkewer : BaseProjectile
         SetGeometry();
         spawnPosition = transform.position;
 
+        //penetrateTargets = false;
     }
 
     // Update is called once per frame
@@ -59,44 +61,49 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "ThrowThrough")
-            return;
-        Debug.Log("Skewer collided with " + collision.gameObject);
-        //attack radius is set by the amount of Savory/Umami on the skewer
+        if (!fed)
+        { 
+            if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
+                return;
+            Debug.Log("Skewer collided with " + collision.gameObject);
+            //attack radius is set by the amount of Savory/Umami on the skewer
 
-        if (ingredientArray != null)
-        {
-            FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
-            if (flavorInput != null)
+            if (ingredientArray != null)
             {
-                if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
+                FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
+                if (flavorInput != null)
                 {
-                    detonating = true;
-                    SetAOE();
-                }
-                else
-                {
-
-                    flavorInput.Feed(ingredientArray);
-                    bool fedFavorite = flavorInput.FedFavorite();
-                    if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
+                    if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
                     {
-                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                        sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
+                        detonating = true;
+                        SetAOE();
                     }
-                    else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
+                    else
                     {
-                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                        sfx.GetComponent<AudioSource>().volume = 0.5f;
-                        sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
+                        // FEEEED MEEEE
+                        flavorInput.Feed(ingredientArray);
+                        fed = true;
+                        Destroy(this.gameObject);
+                        //=================================
+                        bool fedFavorite = flavorInput.FedFavorite();
+                        if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
+                        {
+                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                            sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
+                        }
+                        else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
+                        {
+                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                            sfx.GetComponent<AudioSource>().volume = 0.5f;
+                            sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
+                        }
                     }
-                }
 
+                }
             }
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
         }
-
-        if (!penetrateTargets)
-            Destroy(this.gameObject);
     }
 
     //save space in earlier checks
