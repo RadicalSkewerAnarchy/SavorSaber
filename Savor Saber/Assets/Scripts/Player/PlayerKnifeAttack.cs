@@ -6,7 +6,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
-    CharacterData myCharData;
+    PlayerData myCharData;
     [Range(1,10)]
     public float bunceForce = 3;
     public float dropBunceForce = 1;
@@ -15,7 +15,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     void Start()
     {
         sfxPlayer = GetComponent<PlaySFXRandPitch>();
-        myCharData = GetComponent<CharacterData>();
+        myCharData = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
     }
 
     public override void OnTriggerEnter2D(Collider2D collision)

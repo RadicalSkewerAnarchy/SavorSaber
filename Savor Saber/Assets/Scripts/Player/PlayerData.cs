@@ -10,12 +10,14 @@ public class PlayerData : CharacterData
     private const float timeConst = 1.25f;
     private SpriteRenderer sp;
     private Respawner res;
+
     private void Awake()
     {
         InitializeCharacterData();
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
     }
+
     public override bool DoDamage(int damage)
     {
         bool dead = false;
@@ -42,6 +44,7 @@ public class PlayerData : CharacterData
         }
         return dead;
     }
+
     private IEnumerator IFrames(float time)
     {
         Timer t = new Timer(time);
