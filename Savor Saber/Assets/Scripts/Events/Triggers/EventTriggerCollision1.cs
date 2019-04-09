@@ -11,9 +11,12 @@ public class EventTriggerCollisionPatriarch : EventTrigger
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Triggering Event: " + name);
-        GetComponent<Collider2D>().enabled = false;
-        Trigger();
+        if(collision.gameObject.name == "PatriarchPear")
+        {
+            Debug.Log("Triggering Event: " + name);
+            GetComponent<Collider2D>().enabled = false;
+            Trigger();
+        }
     }
     protected override void FinishEvent()
     {

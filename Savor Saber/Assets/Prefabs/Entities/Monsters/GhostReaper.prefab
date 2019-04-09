@@ -131,7 +131,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -241,8 +241,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   chance: 100
   drops:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
@@ -267,8 +267,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   displayName: GhostPepper
   deathSfx: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
@@ -283,8 +283,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09c7a8ad0ed6a2843b78463200380cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   curve:
     serializedVersion: 2
     m_Curve:
@@ -310,10 +310,10 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 010000000b00000008000000
+    _keys: 010000000b0000000800000000000000
     _values:
     - _keys:
-      - Hyper
+      - Shoot
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -339,27 +339,27 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     - _keys:
-      - PlayerDistance
+      - Friendliness
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: -0.9937515
-          outSlope: -0.9937515
-          tangentMode: 34
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.006248474
-          inSlope: -0.9937515
-          outSlope: -0.9937515
-          tangentMode: 34
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -370,42 +370,95 @@ MonoBehaviour:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: -0.012500763
-          value: 0.7874985
-          inSlope: 5.357189
-          outSlope: 5.357189
-          tangentMode: 34
+          time: -0.003479004
+          value: -0.021442413
+          inSlope: Infinity
+          outSlope: Infinity
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.045832068
-          value: 1.0999985
+          time: 0.04348123
+          value: 1.0038986
           inSlope: Infinity
           outSlope: Infinity
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 0
+          outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.17499542
-          value: -0.08124542
-          inSlope: -9.145349
-          outSlope: -9.145349
+          time: 0.1530304
+          value: -0.013660431
+          inSlope: -9.288607
+          outSlope: -9.288607
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Smack
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
   macroValues:
     _keys:
-    - Hyper
+    - Smack
+    - Shoot
     _values:
     - _keys:
+      - PlayerDistance
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: -0.00017547607
+          value: 0.9980469
+          inSlope: 0.4498147
+          outSlope: 0.4498147
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.3108512
+        - serializedVersion: 3
+          time: 0.099121094
+          value: -0.0194664
+          inSlope: -51.518875
+          outSlope: -51.518875
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.037609175
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - PlayerDistance
       - Health
-      - Hostility
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -435,18 +488,18 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -464,16 +517,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Speed: 2
   Perception: 10
-  MeleeAttackThreshold: 1
+  MeleeAttackThreshold: 2
   RangeAttackThreshold: 6
-  maxHealth: 45
-  health: 45
+  maxHealth: 20
+  health: 20
   PartySize: 3
-  signalPrefab: {fileID: 0}
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
   initialFear: 0
   initialHunger: 0
   initialHostility: 1
@@ -498,7 +552,7 @@ MonoBehaviour:
   Awareness: {fileID: 0}
   Friends: []
   Enemies: []
-  FoodPreference: 
+  FoodPreference:
 --- !u!114 &6178614702161348263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -509,8 +563,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &114358243984535835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -521,8 +575,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 855506bed9018d046a30cc6d87bf0b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -545,8 +599,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   pathfinder: {fileID: 0}
   ActionTimer: 0
   ActionTimerReset: 10
@@ -554,7 +608,7 @@ MonoBehaviour:
   ResetTimer: 0
   ResetTimerReset: 0
   ResetTimerVariance: 0
-  attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
+  attack: {fileID: 5276454197400023434, guid: b8424795531621047ba09b78583f75ce, type: 3}
   projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
     type: 3}
   attackDuration: 1
@@ -585,8 +639,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7020de4b1a89c3746974b5ed344fd2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   dotTicLength: 1
   favoriteIngredients: []
   favoriteFlavors: 0
@@ -603,8 +657,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84078e1ff25819c469ecf0e294516541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _direction: 0
   invert: 0
 --- !u!114 &1803955150230692
@@ -617,8 +671,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   allNodes: {fileID: 0}
 --- !u!1001 &5545900853488310088
 PrefabInstance:
@@ -818,11 +872,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: cData
-      value: 
-      objectReference: {fileID: 7427304364512388856}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -848,6 +897,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
 --- !u!224 &9185037771186717478 stripped
@@ -866,5 +920,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:

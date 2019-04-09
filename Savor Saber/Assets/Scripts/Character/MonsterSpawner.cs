@@ -19,6 +19,7 @@ public class MonsterSpawner : MonoBehaviour
     public int maxTries = 100;
     private Collider2D collider;
     private float currTime = 0f;
+    public bool spawnAttatched = true;
 
     private void Start()
     {
@@ -61,7 +62,7 @@ public class MonsterSpawner : MonoBehaviour
 
                     // if it's a skewerable object,
                     // set momentum to 0
-                    if (newObj.tag == "SkewerableObject")
+                    if (newObj.tag == "SkewerableObject" && spawnAttatched)
                     {
                         //Debug.Log("skewerable object drift speed being set to 0");
                         newObj.GetComponent<SkewerableObject>().attached = true;

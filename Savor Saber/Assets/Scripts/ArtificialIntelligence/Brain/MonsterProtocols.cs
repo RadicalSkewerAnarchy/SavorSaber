@@ -51,7 +51,7 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Melee()
     {
         #region Get Nearest + Null Check
-        var weakest = Checks.WeakestCreature();
+        var weakest = Checks.ClosestCreature();
         Vector2 pos;
         if (weakest != null)
         {
