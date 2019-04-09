@@ -112,7 +112,7 @@ public class MonsterChecks : MonoBehaviour
                 closestCreature = Creature;
             }
         }
-
+        if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
         return closestCreature;
     }
 
@@ -454,6 +454,13 @@ public class MonsterChecks : MonoBehaviour
         {
             specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
         }
+    }
+
+    public List<TileNode> GetLongestPath(TileNode tile)
+    {
+        List<TileNode> path = null;
+        path = AiData.Behavior.pathfinder.AStar(currentTile, tile);
+        return path;
     }
     #endregion
 }

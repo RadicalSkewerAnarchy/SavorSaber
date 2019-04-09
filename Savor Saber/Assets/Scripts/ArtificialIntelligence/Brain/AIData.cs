@@ -72,7 +72,7 @@ public class AIData : CharacterData
     public float DecisionTimerVariance = 2f;
     #endregion
     #region Components
-    private MonsterBehavior Behavior;
+    public MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;

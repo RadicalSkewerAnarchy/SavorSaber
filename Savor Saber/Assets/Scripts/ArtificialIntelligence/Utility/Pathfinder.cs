@@ -47,6 +47,10 @@ public class Pathfinder : MonoBehaviour
     /// <param name="target"></param>
     public List<TileNode> AStar(TileNode start, TileNode target)
     {
+        if(start == null || target == null)
+        {
+            return null;
+        }
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();
         // set of discovered but unevaluated nodes
