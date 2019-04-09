@@ -24,14 +24,17 @@ public class TileNode : MonoBehaviour
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
-    {        
-        if (collision.GetType() == typeof(BoxCollider2D))
+    {
+        if (walkable)
         {
-            if (collision.gameObject.GetComponent<MonsterChecks>() != null)
+            if (collision.GetType() == typeof(BoxCollider2D))
             {
-                collision.gameObject.GetComponent<MonsterChecks>().currentTile = gameObject.GetComponent<TileNode>();
+                if (collision.gameObject.GetComponentInParent<MonsterChecks>() != null)
+                {
+                    collision.transform.parent.GetComponent<MonsterChecks>().currentTile = gameObject.GetComponent<TileNode>();
+                }
             }
-        }                     
+        }     
     }
 }
 

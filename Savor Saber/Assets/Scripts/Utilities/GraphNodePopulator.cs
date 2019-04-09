@@ -52,7 +52,7 @@ public class GraphNodePopulator : MonoBehaviour
                         parent = navMeshData.transform.GetChild(1);
                         walkable = false;
                     }
-                    GameObject tile = Instantiate(nodePrefab, current + new Vector3(.5f, .5f, 0), new Quaternion(0, 0, 0, 1));
+                    GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f, .25f, 0), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
                     tile.GetComponent<TileNode>().x = i;

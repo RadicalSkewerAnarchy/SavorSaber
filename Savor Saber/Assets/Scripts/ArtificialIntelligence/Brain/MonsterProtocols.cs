@@ -62,10 +62,10 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-
+        TileNode tile = Checks.GetNearestNode(pos);
         if (!CheckThreshold(pos, AiData.MeleeAttackThreshold))
         {
-            if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
+            if (NavTo(tile))
             {
                 Behaviour.MeleeAttack(pos, AiData.Speed);
             }
@@ -94,10 +94,12 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-
+        var targetPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        var newPos = Vector3.ClampMagnitude(pos - targetPos, AiData.RangeAttackThreshold);
+        TileNode tile = Checks.GetNearestNode(pos);
         if (CheckThreshold(pos, AiData.RangeAttackThreshold))
         {
-            if (Behaviour.MoveFrom(pos, AiData.Speed, AiData.RangeAttackThreshold))
+            if (NavTo(tile))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
             }
@@ -115,26 +117,13 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
-        // Vector2 pos = new Vector2(-9.5f, -3.5f);
-        GameObject creature = Checks.ClosestCreature();
-        Vector2 pos;
-        if (creature != null)
-            pos = creature.gameObject.transform.position;
-        else
-            return;
-        //pos = new Vector2(-2.5f, -2.5f);
-        TileNode realPos = Checks.GetNearestNode(pos);
-        //Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
-        NavTo(realPos);
-        #endregion
-        /*if (Behaviour.Idle())
+        if (Behaviour.Idle())
         {
+            Wander(2f, 2f);
             Checks.AwareHowMany();
             Behaviour.ResetActionTimer();
             Checks.ResetSpecials();
-        }*/
+        }
     }
 
     // Runaway()
@@ -153,16 +142,18 @@ public partial class MonsterProtocols : MonoBehaviour
     }
 
     // Chase()
-    // move away from the nearest anything
+    // move towards the nearest anything
     public void Chase()
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
         Vector2 pos = Checks.ClosestCreature().transform.position;//Checks.GetRandomPositionType();
         #endregion
-
-        /*if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
-        {*/
+        TileNode tile = Checks.GetNearestNode(pos);
+        if (NavTo(tile))
+        {
+            Wander(15f, 15f);
+        }
        
     }
 
@@ -177,7 +168,8 @@ public partial class MonsterProtocols : MonoBehaviour
         Checks.SetRandomPosition(rx, ry);//Checks.GetRandomPositionType();
         Vector2 pos = Checks.GetSpecialPosition();
         #endregion
-        if (Behaviour.MoveTo(pos, AiData.Speed, 1f))
+        TileNode tile = Checks.GetNearestNode(pos);
+        if (NavTo(tile))
         {
             Checks.ResetSpecials();
             Behaviour.ResetActionTimer();
@@ -344,7 +336,10 @@ public partial class MonsterProtocols : MonoBehaviour
             if(AiData.path == null)
             {
                 AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
-                if(AiData.path.Count < 1)
+                if(AiData.path == null)
+                {
+                    return false;
+                }else if(AiData.path.Count < 1)
                 {
                     return false;
                 }

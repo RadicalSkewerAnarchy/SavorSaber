@@ -142,7 +142,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
-            RigidBody.velocity = target * speed * 5;        
+            RigidBody.velocity = target * speed;        
             #endregion
             return false;
         }
