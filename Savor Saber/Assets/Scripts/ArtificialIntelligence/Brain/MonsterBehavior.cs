@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
+[RequireComponent(typeof(FlavorInputManager))]
 //[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
@@ -17,6 +18,7 @@ public class MonsterBehavior : MonoBehaviour
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
+    FlavorInputManager flavor;
     public Pathfinder pathfinder;
     #endregion
     #region ActionTimer
@@ -75,6 +77,7 @@ public class MonsterBehavior : MonoBehaviour
         RigidBody = GetComponent<Rigidbody2D>();
         controller = GetComponent<MonsterController>();
         pathfinder = GetComponent<Pathfinder>();
+        flavor = GetComponent<FlavorInputManager>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -183,7 +186,15 @@ public class MonsterBehavior : MonoBehaviour
             #region Eat
             AnimatorBody.Play("Feed");
             AiData.currentBehavior = AIData.Behave.Feed;
-            AiData.Stomach.Enqueue(drop.GetComponent<SkewerableObject>().data);
+            IngredientData ingredient = drop.GetComponent<SkewerableObject>().data;
+            AiData.Stomach.Enqueue(ingredient);
+            IngredientData[] ingredientArray = new IngredientData[1];
+            ingredientArray[0] = ingredient;
+
+            // activate flavor input manager
+            flavor.Feed(ingredientArray);
+
+            // deactivate drop
             drop.SetActive(false);
             Destroy(drop);
 
@@ -196,7 +207,7 @@ public class MonsterBehavior : MonoBehaviour
             if(AiData.eatSFX != null)
             {
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(AiData.eatSFX);
-                Debug.Log("===========================Hunger sound effect playing here");
+                //Debug.Log("===========================Hunger sound effect playing here");
             }
             return true;
         }

@@ -98,7 +98,7 @@ public class FlavorInputManager : MonoBehaviour
                 float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
                 if (amountOnSkewer > 0)
                 {
-                    Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
+                    //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
                     fedFavoriteIngredient = true;
 
                     if (rewardItem != null)
