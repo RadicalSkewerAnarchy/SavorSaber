@@ -142,6 +142,8 @@ public class CharacterData : MonoBehaviour
         var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
         deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
         GetComponent<DropOnDeath>().Drop();
+        if (gameObject.name == "GhostReaper")
+            FlagManager.SetFlag("reaperdead", "true");
         Destroy(gameObject);
     }
 

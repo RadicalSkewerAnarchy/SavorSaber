@@ -284,5 +284,13 @@ public class AIData : CharacterData
       
     }
 
-
+    // InstantiateSignal()
+    // create a signal that subtracts
+    public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
+    {
+        GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity, transform) as GameObject;
+        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
+        signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
+        return obtainSurroundings;
+    }
 }

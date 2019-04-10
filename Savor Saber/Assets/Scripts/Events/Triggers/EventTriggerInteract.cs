@@ -5,7 +5,13 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class EventTriggerInteract : EventTrigger
 {
+    public GameObject chatIcon;
     private bool playerInRange;
+
+    private void Start()
+    {
+        chatIcon.SetActive(true);
+    }
 
     private void Update()
     {
@@ -30,6 +36,13 @@ public class EventTriggerInteract : EventTrigger
             playerInRange = true;
         }
 
+    }
+
+    protected override void FinishEvent()
+    {
+        if(!repeatable)
+            chatIcon.SetActive(false);
+        base.FinishEvent();       
     }
 
 }
