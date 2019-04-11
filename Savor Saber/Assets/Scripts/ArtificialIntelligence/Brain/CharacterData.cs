@@ -18,6 +18,7 @@ public class CharacterData : MonoBehaviour
     public float Perception;
     public float MeleeAttackThreshold;
     public float RangeAttackThreshold;
+    public float EngageHostileThreshold;
     public int maxHealth;
     public int health;
     public int PartySize = 3;

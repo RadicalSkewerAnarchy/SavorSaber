@@ -63,7 +63,7 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         #endregion
         TileNode tile = Checks.GetNearestNode(pos);
-        if (!CheckThreshold(pos, AiData.MeleeAttackThreshold))
+        if (!CheckThreshold(pos, AiData.EngageHostileThreshold))
         {
             if (NavTo(tile))
             {
@@ -97,7 +97,7 @@ public partial class MonsterProtocols : MonoBehaviour
         var targetPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
         var newPos = Vector3.ClampMagnitude(pos - targetPos, AiData.RangeAttackThreshold);
         TileNode tile = Checks.GetNearestNode(pos);
-        if (CheckThreshold(pos, AiData.RangeAttackThreshold))
+        if (CheckThreshold(pos, AiData.EngageHostileThreshold))
         {
             if (NavTo(tile))
             {
@@ -137,7 +137,7 @@ public partial class MonsterProtocols : MonoBehaviour
         if (Checks.ClosestCreature() != null)
         {
             pos = Checks.ClosestCreature().transform.position;
-            if (Vector2.Distance(pos, transform.position) < AiData.RangeAttackThreshold)
+            if (Vector2.Distance(pos, transform.position) < AiData.EngageHostileThreshold)
             {
                 Debug.Log("Navigating away");
 
