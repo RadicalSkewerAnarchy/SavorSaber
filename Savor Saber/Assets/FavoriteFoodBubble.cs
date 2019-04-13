@@ -13,6 +13,8 @@ public class FavoriteFoodBubble : MonoBehaviour
     public bool reset = true;
     public Sprite favoriteFood;
     GameObject player;
+    public GameObject audioPlayer;
+    public AudioClip audio;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class FavoriteFoodBubble : MonoBehaviour
     void Update()
     {
         Show();
-        if (Input.GetKeyDown("space"))
+        if (InputManager.GetButton(Control.Interact))
         {
             if (Vector2.Distance(player.transform.position, this.transform.position) < 2)
             {
@@ -50,6 +52,13 @@ public class FavoriteFoodBubble : MonoBehaviour
                 // set sprite
                 fruitRender.sprite = d.image;
                 StartCoroutine(EndAfterSeconds(2));
+
+                if (audio != null)
+                {
+                    GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                    sfx.GetComponent<PlayAndDestroy>().Play(audio);
+                    sfx.GetComponent<AudioSource>().volume /=2 ;
+                }
                 reset = false;
             }
 
