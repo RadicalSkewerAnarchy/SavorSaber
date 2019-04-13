@@ -264,13 +264,13 @@ public class SignalApplication : MonoBehaviour
             else if (mood == "Hunger")
             {
 
-                Debug.Log("YUMMY");
+                //Debug.Log("YUMMY");
                 emoter.GetComponent<Animator>().Play("HungerDownAnimation");
             }
         }
         else
         {
-            Debug.Log("Destroying emoter");
+            //Debug.Log("Destroying emoter");
             Destroy(emoter);
         }
     }

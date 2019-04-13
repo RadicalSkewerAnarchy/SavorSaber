@@ -63,12 +63,12 @@ public class FlavorInputManager : MonoBehaviour
             if (ingredientCountDictionary.ContainsKey(ingredient.displayName))
             {
                 ingredientCountDictionary[ingredient.displayName] = ingredientCountDictionary[ingredient.displayName] + 1;
-                Debug.Log("Ate one " + ingredient.displayName);
+                //Debug.Log("Ate one " + ingredient.displayName);
             }
             else
             {
                 ingredientCountDictionary.Add(ingredient.displayName, 1);
-                Debug.Log("Ate one " + ingredient.displayName);
+                //Debug.Log("Ate one " + ingredient.displayName);
             }
 
             // mod hunger
@@ -178,7 +178,7 @@ public class FlavorInputManager : MonoBehaviour
                 killingBlow = true;
 
             characterData.DoDamage(1);
-            Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
+            //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
                 return;
