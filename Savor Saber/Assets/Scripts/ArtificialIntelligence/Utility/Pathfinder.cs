@@ -11,7 +11,8 @@ public class Pathfinder : MonoBehaviour
     public void Start()
     {
         InitGraph();
-        allNodes = GameObject.Find("Walkable");
+        allNodes = GameObject.Find("Grid 16px");
+        allNodes = allNodes.transform.Find("Collision").Find("Walkable").gameObject;
     }
     private void InitGraph()
     {
