@@ -6,9 +6,6 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 {
     BoxCollider2D boxCollider;
 
-    public Sprite closedSprite;
-    public Sprite openSprite;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -40,8 +37,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         if (!isFed)
         {
             boxCollider.enabled = true;
-            //spriteRenderer.color = Color.red;
-            spriteRenderer.sprite = closedSprite;
+            spriteRenderer.color = Color.red;
         }
 
     }
@@ -50,8 +46,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         if (!isFed)
         {
             boxCollider.enabled = false;
-            //spriteRenderer.color = Color.white;
-            spriteRenderer.sprite = openSprite;
+            spriteRenderer.color = Color.white;
         }
 
     }

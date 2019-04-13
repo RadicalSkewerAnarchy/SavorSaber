@@ -22,7 +22,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     {
         GameObject g = collision.gameObject;
         string t = g.tag;
-        if (t == "Prey" || t == "Predator" || t == "Drone")
+        if (t == "Prey" || t == "Predator")
         {
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
