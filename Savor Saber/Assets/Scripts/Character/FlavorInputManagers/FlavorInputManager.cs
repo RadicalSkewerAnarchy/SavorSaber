@@ -17,6 +17,7 @@ public class FlavorInputManager : MonoBehaviour
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
     public GameObject rewardItem;
+    public int amountRewardItem = 2;
     public AudioClip rewardSFX;
 
     private bool fedFavoriteIngredient = false;
@@ -76,17 +77,64 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
                     flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+                    //Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
                 }
             }
         }
-        RespondToIngredients();
+        //RespondToIngredients();
+        SpawnReward(ingredientArray);
     }
+
+
+    protected void SpawnReward(IngredientData[] ingredientArray)
+    {
+        // looking only at favorite ingredients...
+        foreach (string favoriteIngredient in favoriteIngredients)
+        {
+            // if the ingredients on the skewer are my favorites...
+            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
+            {
+                // am i actually being fed this...
+                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
+                if (amountOnSkewer > 0)
+                {
+                    //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
+                    fedFavoriteIngredient = true;
+
+                    if (rewardItem != null)
+                    {
+                        int spawned = 0;
+                        for (int j = 0; j < amountOnSkewer; j++)
+                        {
+                            for (int i = 0; i < amountRewardItem; i++)
+                            {
+                                Instantiate(rewardItem, transform.position, Quaternion.identity);
+                                spawned++;
+                            }
+                        }
+                        Debug.Log("Spawned: " + spawned);
+                    }
+                }
+
+                AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
+                if (rewardSFXPlayer != null)
+                {
+                    rewardSFXPlayer.clip = rewardSFX;
+                    rewardSFXPlayer.Play();
+                }
+
+                ingredientCountDictionary[favoriteIngredient] = 0;
+            }
+        }
+    }
+
 
     public virtual void RespondToIngredients()
     {
         CheckCharmEffect();
+        //SpawnReward();
     }
+
 
     protected void CheckCharmEffect()
     {
@@ -101,7 +149,11 @@ public class FlavorInputManager : MonoBehaviour
 
                 if (characterData != null)
                 {
+                    // need this statement?
+                    // or make negative hunger signal?
                     characterData.moods["Hunger"] = 0;
+                    // more juice
+                    // give more things for feeding the fruitant
                     if (rewardItem != null)
                         Instantiate(rewardItem, transform.position, Quaternion.identity);
                 }
@@ -115,7 +167,7 @@ public class FlavorInputManager : MonoBehaviour
             }
         }
 
-
+        
         for (int f = 1; f <= 64; f = f << 1)
         {
             //only compare entries in favorite flavors

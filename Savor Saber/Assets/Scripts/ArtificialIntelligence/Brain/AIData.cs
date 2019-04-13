@@ -168,7 +168,7 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
-            //UpdateHunger();
+            UpdateHunger();
         }
         else
         {
@@ -186,7 +186,7 @@ public class AIData : CharacterData
         {
             case Protocols.Melee:
             // melee
-                Protocol.Melee();
+                Protocol.Melee(null);
                 break;
             // ranged
             case Protocols.Ranged:
@@ -245,20 +245,18 @@ public class AIData : CharacterData
     private void UpdateHunger()
     {
         // have random chance to be hungry
+        float hunger = moods["Hunger"];
         float rand = Random.Range(0f, 100f);
-        if (rand < 5)
+        if (rand < 7)
         {
             // create a signal that subtracts from my hunger
-            InstantiateSignal(0.1f, "Hunger", 0.1f, false, true);
+            InstantiateSignal(0.1f, "Hunger", 0.05f, false, true);
 
-            // die or
-            // change sprite color
-            float hunger = moods["Hunger"];
-            //Debug.Log("Im getting hungrier: " + this.gameObject.name + "'s hunger = " + hunger);
+            // die
             if (hunger >= 1f)
             {
                 // hurt me
-                health -= 1;
+                health -= 3;
                 if (health <= 0)
                 {
                     // ded
@@ -266,11 +264,24 @@ public class AIData : CharacterData
                     me.Kill();
                 }
             }
-            else if (hunger >= 0.75f)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(116f, 116f, 0f);
-            }
         }
+
+        // change color
+        float rotColor = 50f+(hunger*100f);
+        bool updateColor = (this.gameObject.GetComponent<SpriteRenderer>().color.r != rotColor);
+        if (updateColor)
+        {
+            if (hunger > 0.75f)
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(rotColor, rotColor, 0f);
+            }
+            else
+            {
+                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f);
+            }
+
+        }
+      
     }
 
     // InstantiateSignal()

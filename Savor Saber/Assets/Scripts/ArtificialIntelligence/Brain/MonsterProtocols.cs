@@ -48,18 +48,20 @@ public partial class MonsterProtocols : MonoBehaviour
     /// <summary>
     /// If the target is outside of our range, move to it and attack. Else, attack.
     /// </summary>
-    public void Melee()
+    public void Melee(GameObject target)
     {
         #region Get Nearest + Null Check
         var weakest = Checks.ClosestCreature();
         Vector2 pos;
-        if (weakest != null)
+        if (target != null)
         {
-            pos = weakest.transform.position;
+            pos = target.transform.position;
         }
         else
         {
-            pos = transform.position;
+            pos = Checks.WeakestCreature().transform.position;
+            if (pos == null)
+                pos = this.transform.position;
         }
         #endregion
         TileNode tile = Checks.GetNearestNode(pos);
@@ -251,22 +253,34 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Surroundings        
         GameObject cDrop = Checks.ClosestDrop();
-
+        GameObject cHittable;
         #endregion
-       
-        if(cDrop != null)
+        if (cDrop != null)
         {
-            //Debug.Log("drop is not null");
+            // go to the nearest drop
             if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
             {
                 Behaviour.Feed(cDrop);
             }
-        }          
-      
-        else if (this.tag == "Predator")
+        }
+        else
         {
-            Debug.Log("I AM A HUNGRE PADDLE PREDATOR");
-            Melee();
+            // go to nearest thing that drops drops
+            if (this.tag == "Prey")
+            {
+                cHittable = Checks.ClosestPlant();
+                //Debug.Log("closest plant is " + cHittable.name);
+            }
+            else
+            {
+                cHittable = Checks.ClosestCreature();
+            }
+
+            // go to the nearest drop
+            if (cHittable != null)
+                Melee(cHittable);
+            else
+                Wander(10f, 10f);
         }
     }
 
