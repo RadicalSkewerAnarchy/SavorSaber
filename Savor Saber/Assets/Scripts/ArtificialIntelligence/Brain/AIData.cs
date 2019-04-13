@@ -267,17 +267,18 @@ public class AIData : CharacterData
         }
 
         // change color
-        float rotColor = 50f+(hunger*100f);
+        float rotColor = 0.5f+(hunger / 2);
         bool updateColor = (this.gameObject.GetComponent<SpriteRenderer>().color.r != rotColor);
         if (updateColor)
         {
+            SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
             if (hunger > 0.75f)
             {
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(rotColor, rotColor, 0f);
+                sr.color = new Color(rotColor, rotColor, 0f, sr.color.a);
             }
             else
             {
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f);
+                sr.color = new Color(1.0f, 1.0f, 1.0f, sr.color.a);
             }
 
         }

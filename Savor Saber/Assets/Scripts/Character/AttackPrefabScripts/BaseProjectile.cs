@@ -175,7 +175,7 @@ public class BaseProjectile : MonoBehaviour
         if (characterData != null)
         {
             //myCharData.damageDealt += (int)projectileDamage;
-            Debug.Log("Dealing DMG");
+            //Debug.Log("Dealing DMG");
             if (characterData.DoDamage((int)projectileDamage))
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)

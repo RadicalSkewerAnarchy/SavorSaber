@@ -17,6 +17,7 @@ public class TeleportTile : MonoBehaviour
     public bool fadeOut = true;
     [Range(0.0f, 1.0f)]
     public float fadeSpeed = 0.01f;
+    public float fadeAmount = 1.0f;
 
     public GameObject[] otherTeleports;
 
@@ -25,38 +26,37 @@ public class TeleportTile : MonoBehaviour
     {
         sprite = teleporter.GetComponent<SpriteRenderer>();
         data = teleporter.GetComponent<AIData>();
-        teleTimer = teleTimerReset + 10 * Random.Range(-teleTimerVariance, teleTimerVariance);
+        teleTimer = teleTimerReset + 5 * Random.Range(-teleTimerVariance, teleTimerVariance);
     }
 
     // update
     private void Update()
     {
-        teleTimer -= Time.deltaTime;
-        if (teleTimer <= 0 && notAlreadyTeleporting())
+        if (notAlreadyTeleporting())
         {
-            teleporting = true;
-            teleTimer = teleTimerReset + 10 * Random.Range(-teleTimerVariance, teleTimerVariance);
-        }
-
-        if (teleporting)
-        {
-            Teleport();
+            teleTimer -= Time.deltaTime;
+            if (teleporting)
+            {
+                Teleport();
+            }
+            else if (teleTimer <= 0)
+            {
+                teleporting = true;
+            }
         }
     }
 
     private bool notAlreadyTeleporting()
     {
-        bool tele = true;
         foreach (var tile in otherTeleports)
         {
-            TeleportTile t = GetComponent<TeleportTile>();
+            TeleportTile t = tile.GetComponent<TeleportTile>();
             if (t.teleporting)
             {
-                tele = false;
+                return false;
             }
         }
-
-        return tele;
+        return true;
     }
 
     private void Teleport()
@@ -65,10 +65,11 @@ public class TeleportTile : MonoBehaviour
         // affect color
         if (fadeOut)
         {
-            col.a = Mathf.Max(col.a - fadeSpeed, 0);
+            fadeAmount = Mathf.Max(fadeAmount - fadeSpeed, 0);
+            col.a = fadeAmount;
             //Debug.Log("sprite alpha after " + col.a);
             sprite.color = col;
-            if (col.a <= 0)
+            if (fadeAmount <= 0)
             {
                 // update position here
 
@@ -80,13 +81,15 @@ public class TeleportTile : MonoBehaviour
         }
         else
         {
-            col.a = Mathf.Min(col.a + fadeSpeed, 1);
-            //Debug.Log("sprite alpha after " + col.a);
+            fadeAmount = Mathf.Min(fadeAmount + fadeSpeed, 1);
+            col.a = fadeAmount;
             sprite.color = col;
-            if (col.a >= 1)
+            if (fadeAmount >= 1)
             {
                 teleporting = false;
                 fadeOut = true;
+
+                teleTimer = teleTimerReset + 5 * Random.Range(-teleTimerVariance, teleTimerVariance);
             }
         }
     }
