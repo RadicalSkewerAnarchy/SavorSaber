@@ -165,6 +165,7 @@ public class FlavorInputManager : MonoBehaviour
 
     protected void CheckCharmEffect()
     {
+        characterData.DoDamage(-3);
         characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
 

@@ -256,7 +256,7 @@ public class AIData : CharacterData
             if (hunger >= 1f)
             {
                 // hurt me
-                health -= 3;
+                DoDamage(3);
                 if (health <= 0)
                 {
                     // ded

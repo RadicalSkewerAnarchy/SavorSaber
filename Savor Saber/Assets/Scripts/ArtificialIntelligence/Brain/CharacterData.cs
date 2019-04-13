@@ -44,6 +44,7 @@ public class CharacterData : MonoBehaviour
     #endregion
     #region Effects
     public AudioClip damageSFX;
+    public AudioClip healSFX;
     public AudioClip deathSFX;
     public AudioClip eatSFX;
     public GameObject sfxPlayer;
@@ -115,6 +116,32 @@ public class CharacterData : MonoBehaviour
             // create a fear signal
             float hp = (maxHealth - health) / maxHealth;
             InstantiateSignal(damage *2 , "Fear", hp + 0.1f, true, true);
+        }
+        if (damage < 0)
+        {
+            health -= damage;
+            //only play damage SFX if it was not a killing blow so sounds don't overlap
+            if (health > 0)
+            {
+                if (healthBar != null)
+                {
+                    healthBar.gameObject.SetActive(true);
+                    Debug.Log("Update health bar");
+                    healthBar.value = (float)health / maxHealth;
+                    if (barCr != null)
+                        StopCoroutine(barCr);
+                    barCr = StartCoroutine(ShowHealthBar());
+                }
+                if (healSFX != null)
+                {
+                    var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                    deathSoundObj.GetComponent<PlayAndDestroy>().Play(healSFX);
+                }
+            }
+
+            // create a anti fear signal
+            float hp = (health) / maxHealth;
+            InstantiateSignal(damage, "Fear", -hp, true, true);
         }
         return dead;
     }
