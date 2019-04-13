@@ -250,7 +250,7 @@ public class MonsterBehavior : MonoBehaviour
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
-            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity, transform);
+            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity);
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;            

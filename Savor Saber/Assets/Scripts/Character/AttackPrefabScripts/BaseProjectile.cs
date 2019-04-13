@@ -107,7 +107,7 @@ public class BaseProjectile : MonoBehaviour
             penetrateTargets = false;
 
         spawnPosition = transform.position;
-        Debug.Log("Spawn = " + spawnPosition);
+        //Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
         //Debug.Log(directionVector);
         myCharData = GetComponent<CharacterData>();
