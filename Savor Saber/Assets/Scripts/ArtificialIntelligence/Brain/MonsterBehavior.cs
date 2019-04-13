@@ -199,7 +199,7 @@ public class MonsterBehavior : MonoBehaviour
             Destroy(drop);
 
             #endregion
-            AiData.InstantiateSignal(0.1f, "Hunger", -0.25f, false, true);
+            AiData.InstantiateSignal(0.1f, "Hunger", -0.1f, false, true);
             if(AiData.eatingParticleBurst != null)
             {
                 AiData.eatingParticleBurst.Play();
