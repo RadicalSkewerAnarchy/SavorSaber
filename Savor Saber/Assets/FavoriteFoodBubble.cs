@@ -31,7 +31,7 @@ public class FavoriteFoodBubble : MonoBehaviour
         Show();
         if (InputManager.GetButton(Control.Interact))
         {
-            if (Vector2.Distance(player.transform.position, this.transform.position) < 2)
+            if (Vector2.Distance(player.transform.position, this.transform.position) < 4)
             {
                 show = true;
             }
