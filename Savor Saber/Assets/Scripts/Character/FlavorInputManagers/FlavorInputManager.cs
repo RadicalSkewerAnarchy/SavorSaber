@@ -56,6 +56,7 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray)
     {
+        Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
@@ -71,7 +72,8 @@ public class FlavorInputManager : MonoBehaviour
             }
 
             // mod hunger
-            characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
+            if (characterData != null)
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
 
             for (int f = 1; f <= 64; f = f << 1)
             {
@@ -80,7 +82,7 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
                     flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                    //Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
                 }
             }
         }

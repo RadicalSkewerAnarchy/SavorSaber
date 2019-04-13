@@ -66,7 +66,7 @@ public class TeleportTile : MonoBehaviour
         if (fadeOut)
         {
             col.a = Mathf.Max(col.a - fadeSpeed, 0);
-            Debug.Log("sprite alpha after " + col.a);
+            //Debug.Log("sprite alpha after " + col.a);
             sprite.color = col;
             if (col.a <= 0)
             {
@@ -81,7 +81,7 @@ public class TeleportTile : MonoBehaviour
         else
         {
             col.a = Mathf.Min(col.a + fadeSpeed, 1);
-            Debug.Log("sprite alpha after " + col.a);
+            //Debug.Log("sprite alpha after " + col.a);
             sprite.color = col;
             if (col.a >= 1)
             {
