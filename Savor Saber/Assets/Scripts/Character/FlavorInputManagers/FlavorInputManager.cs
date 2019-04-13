@@ -81,7 +81,7 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
         }
-        //RespondToIngredients();
+        RespondToIngredients();
         SpawnReward(ingredientArray);
     }
 
@@ -131,14 +131,14 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void RespondToIngredients()
     {
-        CheckCharmEffect();
+        //CheckCharmEffect();
         //SpawnReward();
     }
 
 
     protected void CheckCharmEffect()
     {
-        foreach(string favoriteIngredient in favoriteIngredients)
+        /*foreach(string favoriteIngredient in favoriteIngredients)
         {
             if (favoriteIngredient != null &&
             ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
@@ -149,9 +149,6 @@ public class FlavorInputManager : MonoBehaviour
 
                 if (characterData != null)
                 {
-                    // need this statement?
-                    // or make negative hunger signal?
-                    characterData.moods["Hunger"] = 0;
                     // more juice
                     // give more things for feeding the fruitant
                     if (rewardItem != null)
@@ -165,10 +162,10 @@ public class FlavorInputManager : MonoBehaviour
                 }
                 ingredientCountDictionary[favoriteIngredient] = 0;
             }
-        }
+        }*/
 
-        
-        for (int f = 1; f <= 64; f = f << 1)
+
+        /*for (int f = 1; f <= 64; f = f << 1)
         {
             //only compare entries in favorite flavors
             if ((f & (int)favoriteFlavors) > 0)
@@ -193,7 +190,7 @@ public class FlavorInputManager : MonoBehaviour
                     flavorCountDictionary[foundFlavor] = 0;
                 }
             }
-        }
+        }*/
     }
 
     public void DamageOverTime(int numTics, float ticLength)
