@@ -22,31 +22,33 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            OpenPlant();
             isFed = true;
-            spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
         }
     }
 
     private void Update()
     {
+        ClosePlant();
+        OpenPlant();
     }
 
+    // prevent player
     public override void ClosePlant()
     {
         if (!isFed)
         {
             boxCollider.enabled = true;
-            spriteRenderer.color = Color.red;
         }
 
     }
+
+    // allow player through
     public override void OpenPlant()
     {
-        if (!isFed)
+        if (isFed)
         {
             boxCollider.enabled = false;
-            spriteRenderer.color = Color.white;
+            spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
         }
 
     }

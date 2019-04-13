@@ -107,7 +107,7 @@ public class BaseProjectile : MonoBehaviour
             penetrateTargets = false;
 
         spawnPosition = transform.position;
-        Debug.Log("Spawn = " + spawnPosition);
+        //Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
         //Debug.Log(directionVector);
         myCharData = GetComponent<CharacterData>();
@@ -171,12 +171,15 @@ public class BaseProjectile : MonoBehaviour
         // Debug.Log("Projectile trigger entered");
         if (go.tag == "SkewerableObject")
             return;
+        if (go == attacker)
+            return;
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)
         {
-            myCharData.damageDealt += (int)projectileDamage;
+            //myCharData.damageDealt += (int)projectileDamage;
+            //Debug.Log("Dealing DMG");
             if (characterData.DoDamage((int)projectileDamage))
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)

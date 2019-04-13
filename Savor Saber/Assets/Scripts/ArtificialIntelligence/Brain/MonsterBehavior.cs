@@ -197,7 +197,7 @@ public class MonsterBehavior : MonoBehaviour
             Destroy(drop);
 
             #endregion
-            AiData.InstantiateSignal(0.1f, "Hunger", -0.25f, false, true);
+            AiData.InstantiateSignal(0.1f, "Hunger", -0.1f, false, true);
             if(AiData.eatingParticleBurst != null)
             {
                 AiData.eatingParticleBurst.Play();
@@ -248,7 +248,7 @@ public class MonsterBehavior : MonoBehaviour
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
-            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity, transform);
+            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity);
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;            
@@ -270,7 +270,7 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            Debug.Log("Instantiating Happiness Signal");
+            //Debug.Log("Instantiating Happiness Signal");
             AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
             ResetActionTimer();
             return true;

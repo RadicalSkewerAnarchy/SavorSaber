@@ -14,6 +14,22 @@ public class RecipeDatabase : MonoBehaviour
     /// </summary>
     public RecipeData[] recipes;
 
+    // ingredient data
+    public Dictionary<string, IngredientData> allIngredients;
+    public string[] ingredientNames;
+    public IngredientData[] ingredientDatas;
+
+    private void Start()
+    {
+        allIngredients = new Dictionary<string, IngredientData>();
+        for ( var i = 0; i < ingredientNames.Length; i++)
+        {
+            string s = ingredientNames[i];
+            IngredientData d = ingredientDatas[i];
+            allIngredients.Add(s, d);
+        }
+    }
+
     /// <summary>
     /// Would be called when the player cooks their food, probably in the inventory 
     /// manager script.
