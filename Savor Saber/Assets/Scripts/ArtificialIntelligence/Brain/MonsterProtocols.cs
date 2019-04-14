@@ -64,6 +64,35 @@ public partial class MonsterProtocols : MonoBehaviour
                 pos = this.transform.position;
         }
         #endregion
+
+        if (!CheckThreshold(pos, AiData.EngageHostileThreshold))
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+            {
+                Behaviour.MeleeAttack(pos, AiData.Speed);
+            }
+        }
+        else
+        {
+            Behaviour.MeleeAttack(pos, AiData.Speed);
+        }       
+    }
+    public void NavMelee(GameObject target)
+    {
+        #region Get Nearest + Null Check
+        var weakest = Checks.ClosestCreature();
+        Vector2 pos;
+        if (target != null)
+        {
+            pos = target.transform.position;
+        }
+        else
+        {
+            pos = Checks.WeakestCreature().transform.position;
+            if (pos == null)
+                pos = this.transform.position;
+        }
+        #endregion
         TileNode tile = Checks.GetNearestNode(pos);
         if (!CheckThreshold(pos, AiData.EngageHostileThreshold))
         {
@@ -75,14 +104,38 @@ public partial class MonsterProtocols : MonoBehaviour
         else
         {
             Behaviour.MeleeAttack(pos, AiData.Speed);
-        }       
+        }
     }
+
+
     // Ranged()
     // move from a target and launch a projectile
     /// <summary>
     /// If the target is outside of our range, move to it and attack. Else, attack.
     /// </summary>
     public void Ranged()
+    {
+        #region Get Nearest + Null Check
+        var nearestEnemy = AiData.Checks.ClosestCreature();
+        Vector2 pos;
+        if (nearestEnemy != null)
+        {
+            pos = nearestEnemy.gameObject.transform.position;
+        }
+        else
+        {
+            pos = transform.position;
+        }
+        #endregion
+        if (CheckThreshold(pos, AiData.EngageHostileThreshold))
+        {
+            if (Behaviour.MoveFrom(pos, AiData.Speed, 0.5f))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+    }
+    public void NavRanged()
     {
         #region Get Nearest + Null Check
         var nearestEnemy = AiData.Checks.ClosestCreature();
@@ -135,6 +188,22 @@ public partial class MonsterProtocols : MonoBehaviour
 
         #region Get Nearest + Null Checks
         Vector2 pos;
+        GameObject creature = Checks.ClosestCreature();
+        if (creature != null)
+            pos = creature.transform.position;
+        else
+            pos = transform.position;
+        #endregion        
+        if (Behaviour.MoveFrom(pos, AiData.Speed, 1.0f))
+        {
+            Wander(5f, 5f); 
+        }
+    }
+    public void NavRunaway()
+    {
+
+        #region Get Nearest + Null Checks
+        Vector2 pos;
         TileNode awayTile;
         if (Checks.ClosestCreature() != null)
         {
@@ -148,7 +217,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 awayTile = Checks.GetNearestNode(pos);
                 Debug.Log("NEAREST TILE IS: " + awayTile.name);
                 NavTo(awayTile);
-            }          
+            }
         }
         /*// For now, fun away from your first enemy (SOMA most likely)
         
@@ -184,6 +253,36 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Chase()
     {
         #region Get Nearest + Null Checks
+        Vector2 pos;
+        GameObject creature = Checks.ClosestCreature();
+        if (creature != null)
+            pos = creature.transform.position;
+        else
+            pos = transform.position;
+        #endregion        
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            Wander(2f, 2f);
+        }
+    }
+    public void Chase(GameObject ch)
+    {
+        #region Get Nearest + Null Checks
+        Vector2 pos;
+        GameObject creature = ch;
+        if (creature != null)
+            pos = creature.transform.position;
+        else
+            pos = transform.position;
+        #endregion        
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            Wander(2f, 2f);
+        }
+    }
+    public void NavChase()
+    {
+        #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
         Vector2 pos;
         GameObject creature = Checks.ClosestCreature();
@@ -196,26 +295,25 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
     }
 
-    // Chase()
-    // move towards the nearest anything
-    public void Chase(GameObject ch)
-    {
-        #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
-        Vector2 pos;
-        GameObject creature = ch;
-        if (creature != null)
-        {
-            pos = creature.transform.position;
-            TileNode tile = Checks.GetNearestNode(pos);
-            NavTo(tile);
-        }
-        #endregion
-    }
+    
 
     // Wander()
     // go in random directions
     public void Wander(float rx, float ry)
+    {
+        // pick a location near me
+        // move towards it
+        #region Get Nearest + Null Checks
+        Checks.SetRandomPosition(rx, ry);
+        Vector2 pos = Checks.GetSpecialPosition();
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            Checks.ResetSpecials();
+            Behaviour.ResetActionTimer();
+        }
+    }
+    public void NavWander(float rx, float ry)
     {
         // pick a location near me
         // move towards it
@@ -249,7 +347,6 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
 
         // move to
-
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
             // socialize
@@ -310,11 +407,12 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            //GameObject near = Checks.SomePlant();
-            //Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
+            GameObject near = Checks.SomePlant();
+            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
+            Behaviour.MoveTo(pos, AiData.Speed, 0.5f);
             // reset action timer
-            Wander(15f, 15f);
+            //Wander(15f, 15f);
 
         }
         else if (Checks.specialTarget == null)

@@ -132,7 +132,8 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
         AiData.currentBehavior = AIData.Behave.Chase;
-        var current = new Vector2(transform.position.x, transform.position.y+.25f);
+        //var current = new Vector2(transform.position.x, transform.position.y+.25f);
+        Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold)
         {
             return true;
@@ -140,11 +141,11 @@ public class MonsterBehavior : MonoBehaviour
         else
         {
             #region Move
-            AnimatorBody.Play("Move");           
+            AnimatorBody.Play("Move");
             target = (target - current);
-            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            RigidBody.velocity = target * speed;        
+            RigidBody.velocity = target;       
             #endregion
             return false;
         }
@@ -154,16 +155,16 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool MoveFrom(Vector2 target, float speed, float threshold)
     {
-        AiData.currentBehavior = AIData.Behave.Flee;     
-        var current = new Vector2(transform.position.x, transform.position.y);
-        if(Vector2.Distance(current, target) <= threshold - 1)
+        AiData.currentBehavior = AIData.Behave.Flee;
+        Vector2 current = transform.position;
+        if (Vector2.Distance(current, target) <= threshold)
         {
             #region Move
             AnimatorBody.Play("Move");
-            target = (target - current);
-            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
-            controller.Direction = DirectionMethods.FromVec2(-1 * target);
-            transform.Translate(-1*target);
+            target = (current - target);
+            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            controller.Direction = DirectionMethods.FromVec2(target);
+            RigidBody.velocity = target * speed * Time.deltaTime;
             #endregion
             return false;
         }

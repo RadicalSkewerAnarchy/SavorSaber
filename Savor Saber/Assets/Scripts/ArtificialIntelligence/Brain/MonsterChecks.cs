@@ -491,15 +491,13 @@ public class MonsterChecks : MonoBehaviour
 
     public void SetRandomPosition(float xx, float yy)
     {
-        if (specialPosition == null)
+        // position to return
+        float xxx = Random.Range(-xx, xx);
+        float yyy = Random.Range(-yy, yy);
+        if (specialPosition == new Vector2(0f, 0f))
         {
-            // position to return
-            float xxx = Random.Range(-xx, xx);
-            float yyy = Random.Range(-yy, yy);
-            if (specialPosition == new Vector2(0f, 0f))
-            {
-                specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
-            }
+            specialPosition = (Vector2)transform.position + new Vector2(xxx, yyy);
+            Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
         }
     }
 
