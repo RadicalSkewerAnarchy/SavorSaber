@@ -14,7 +14,7 @@ public class ProjectileSkewer : BaseProjectile
     public AudioClip sweetSFX;
     public AudioClip spicySFX;
     public bool fed = false;
-
+    public GameObject dropTemplate;
 
     // Start is called before the first frame update
     void Start()
@@ -36,26 +36,8 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
-            //should be obsolete since we're setting the moods of affected creatures directly now
-            /*
-            if (flavorCountDictionary != null && flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
-            {
-                //attack radius is set by the amount of Savory/Umami on the skewer
-                attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
-
-                signal = Instantiate(dropItem, transform.position, Quaternion.identity);
-                signalApplication = signal.GetComponent<SignalApplication>();
-                moodMod.Add("Friendliness", flavorCountDictionary[RecipeData.Flavors.Sweet] / 3);
-                moodMod.Add("Fear", flavorCountDictionary[RecipeData.Flavors.Sweet] / -3);
-                moodMod.Add("Hostility", flavorCountDictionary[RecipeData.Flavors.Sweet] / -3);
-                signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
-                
-            }
-            */
-            //SetAOE();
-
+            SpawnDropsOnMiss();
             Destroy(this.gameObject);
-
         }
     }
 
@@ -100,9 +82,34 @@ public class ProjectileSkewer : BaseProjectile
                     }
 
                 }
+                //if you hit something (and aren't penetrating) but can't feed it
+                else if (!penetrateTargets)
+                {
+                    SpawnDropsOnMiss();
+                }
             }
             if (!penetrateTargets)
                 Destroy(this.gameObject);
+        }
+    }
+
+    private void SpawnDropsOnMiss()
+    {
+        SkewerableObject ingredient;
+        GameObject drop;
+        SpriteRenderer sr;
+        for (int i = 0; i < ingredientArray.Length; i++)
+        {
+            if (ingredientArray[i] != null && dropTemplate != null)
+            {
+                drop = Instantiate(dropTemplate, transform.position, Quaternion.identity);
+                ingredient = drop.GetComponent<SkewerableObject>();
+                sr = drop.GetComponent<SpriteRenderer>();
+
+                ingredient.data = ingredientArray[i];
+                sr.sprite = ingredientArray[i].image;
+            }
+
         }
     }
 
