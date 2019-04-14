@@ -492,5 +492,10 @@ public class MonsterChecks : MonoBehaviour
         path = AiData.Behavior.pathfinder.AStar(currentTile, tile);
         return path;
     }
+
+    public void SetCurrentTile()
+    {
+        currentTile = GetNearestNode(this.transform.position);
+    }
     #endregion
 }

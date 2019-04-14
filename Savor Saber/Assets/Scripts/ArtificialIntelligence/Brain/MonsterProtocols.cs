@@ -375,6 +375,7 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if(Checks.currentTile == null)
         {
+            Checks.SetCurrentTile();
             return false;
         }
         if(Checks.currentTile == target)
@@ -389,7 +390,7 @@ public partial class MonsterProtocols : MonoBehaviour
         int i = AiData.path.Count;
         foreach(var node in AiData.path)
         {
-            if(Behaviour.MoveTo(AiData.path[i-1].transform.position, AiData.Speed,.05f))
+            if (Behaviour.MoveTo(AiData.path[i - 1].transform.position, AiData.Speed, 1f)) ;
             {
                 i--;
             }

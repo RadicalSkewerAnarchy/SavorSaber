@@ -141,9 +141,8 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Move
             AnimatorBody.Play("Move");           
-            target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
-            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
             controller.Direction = DirectionMethods.FromVec2(target);
             RigidBody.velocity = target * speed;        
             #endregion
