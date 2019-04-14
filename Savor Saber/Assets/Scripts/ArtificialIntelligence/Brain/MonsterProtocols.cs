@@ -390,17 +390,12 @@ public partial class MonsterProtocols : MonoBehaviour
     // in order to work based on the tilemap, we can access the neighbor tiles and determine the one that is furthest away/closest to the target then select that tile
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
     public bool NavTo(TileNode target)
-    {
-        if(Checks.currentTile == null)
-        {
-            Checks.SetCurrentTile();
-            return false;
-        }
-        if(Checks.currentTile == target)
+    {      
+        if(Checks.currentTile == target || target == null)
         {
             return true;
         }
-        AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
+        AiData.path = Behaviour.pathfinder.AStar(target);
         if(AiData.path == null)
         {
             return false;
