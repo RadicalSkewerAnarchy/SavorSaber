@@ -497,7 +497,7 @@ public class MonsterChecks : MonoBehaviour
         if (specialPosition == new Vector2(0f, 0f))
         {
             specialPosition = (Vector2)transform.position + new Vector2(xxx, yyy);
-            Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
+            //Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
         }
     }
 
