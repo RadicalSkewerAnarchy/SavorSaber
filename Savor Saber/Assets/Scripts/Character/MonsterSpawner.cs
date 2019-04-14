@@ -6,7 +6,7 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     public AIGroup group = null;
-
+    public GameObject allNodes;
     public bool loop = true;
     public bool spawnOnStart = true;
     public float loopTime = 15f;
@@ -55,6 +55,10 @@ public class MonsterSpawner : MonoBehaviour
                 if (collider.OverlapPoint(spawnPos) && Physics2D.OverlapPoint(spawnPos, 0) == null)
                 {
                     var newObj = Instantiate(go);
+                    if(newObj.GetComponent<Pathfinder>() != null)
+                    {
+                        newObj.GetComponent<Pathfinder>().allNodes = allNodes;
+                    }
                     newObj.transform.position = spawnPos;
                     spawned = true;
                     trackedObjects.Add(newObj);

@@ -98,7 +98,7 @@ public class DialogPlayer : MonoBehaviour
 
     public IEnumerator Scroll(string lineOfText)
     {
-        Debug.Log("Text: " + lineOfText);
+        //Debug.Log("Text: " + lineOfText);
         int letter = 0;
         dialogText.text = "";
         state = State.Scrolling;

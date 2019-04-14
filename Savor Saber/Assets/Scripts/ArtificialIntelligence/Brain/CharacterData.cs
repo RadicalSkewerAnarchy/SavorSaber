@@ -89,7 +89,7 @@ public class CharacterData : MonoBehaviour
                 if (healthBar != null)
                 {
                     healthBar.gameObject.SetActive(true);
-                    Debug.Log("Update health bar");
+                    //Debug.Log("Update health bar");
                     healthBar.value = (float)health / maxHealth;
                     if (barCr != null)
                         StopCoroutine(barCr);

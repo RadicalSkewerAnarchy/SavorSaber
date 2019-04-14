@@ -114,7 +114,7 @@ public class MonsterChecks : MonoBehaviour
                 closestCreature = Creature;
             }
         }
-        if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
+        //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
         return closestCreature;
     }
 

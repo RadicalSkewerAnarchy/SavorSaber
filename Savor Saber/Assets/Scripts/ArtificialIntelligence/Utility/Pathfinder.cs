@@ -24,7 +24,7 @@ public class Pathfinder : MonoBehaviour
             gScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
             fScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
         }
-        Debug.Log("Graph initialized");
+        //Debug.Log("Graph initialized");
     }
 
     public List<TileNode> GetShortestPath(Dictionary<TileNode, TileNode> cameFrom, TileNode current)
