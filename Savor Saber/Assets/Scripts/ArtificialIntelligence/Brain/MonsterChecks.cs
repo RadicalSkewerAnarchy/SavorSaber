@@ -208,7 +208,19 @@ public class MonsterChecks : MonoBehaviour
         //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
         return closestPlant;
     }
-    
+
+    /// <summary>
+    /// Return Closest Drop
+    /// </summary>
+    /// <returns></returns>
+    public GameObject SomePlant()
+    {
+        #region Initialize Friend and Enemy
+        GameObject closestPlant = AllPlants[Random.Range(0, AllPlants.Count-1)];
+        #endregion
+        //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
+        return closestPlant;
+    }
     /// <summary>
     /// Return Closest Drop
     /// </summary>
@@ -239,6 +251,8 @@ public class MonsterChecks : MonoBehaviour
         //Debug.Log("Closest drop is reached = " + (closestDrop == null ? "and it is null" : closestDrop.name + closestDrop.GetInstanceID()));
         return closestDrop;
     }
+
+
 
     /// <returns> Vector2 of Closest Enemy or Friend </returns>
     public Vector2 NearestEnemyPosition()
@@ -477,12 +491,15 @@ public class MonsterChecks : MonoBehaviour
 
     public void SetRandomPosition(float xx, float yy)
     {
-        // position to return
-        float xxx = Random.Range(-xx, xx);
-        float yyy = Random.Range(-yy, yy);
-        if (specialPosition == new Vector2(0f, 0f))
+        if (specialPosition == null)
         {
-            specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
+            // position to return
+            float xxx = Random.Range(-xx, xx);
+            float yyy = Random.Range(-yy, yy);
+            if (specialPosition == new Vector2(0f, 0f))
+            {
+                specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
+            }
         }
     }
 

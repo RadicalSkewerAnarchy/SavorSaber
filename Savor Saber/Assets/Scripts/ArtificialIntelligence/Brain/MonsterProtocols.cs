@@ -186,9 +186,27 @@ public partial class MonsterProtocols : MonoBehaviour
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
         Vector2 pos;
-        if (Checks.ClosestCreature() != null)
+        GameObject creature = Checks.ClosestCreature();
+        if (creature != null)
         {
-            pos = Checks.ClosestCreature().transform.position;
+            pos = creature.transform.position;
+            TileNode tile = Checks.GetNearestNode(pos);
+            NavTo(tile);
+        }
+        #endregion
+    }
+
+    // Chase()
+    // move towards the nearest anything
+    public void Chase(GameObject ch)
+    {
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        Vector2 pos;
+        GameObject creature = ch;
+        if (creature != null)
+        {
+            pos = creature.transform.position;
             TileNode tile = Checks.GetNearestNode(pos);
             NavTo(tile);
         }
@@ -292,11 +310,12 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            //GameObject near = Checks.ClosestCreature();
+            //GameObject near = Checks.SomePlant();
             //Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
             // reset action timer
-            Wander(15f, 5f);
+            Wander(15f, 15f);
+
         }
         else if (Checks.specialTarget == null)
         {
@@ -305,8 +324,7 @@ public partial class MonsterProtocols : MonoBehaviour
         else
         {
             GameObject near = Checks.ClosestLeader();
-            Vector2 pos = near.transform.position;
-            //Behaviour.MoveTo(pos, AiData.Speed, 1f);
+            Chase(near);
         }
     }
 
