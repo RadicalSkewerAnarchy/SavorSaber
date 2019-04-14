@@ -11,8 +11,8 @@ public class Pathfinder : MonoBehaviour
     public void Start()
     {
         InitGraph();
-        allNodes = GameObject.Find("Grid 16px");
-        allNodes = allNodes.transform.Find("Collision").Find("Walkable").gameObject;
+        //allNodes = GameObject.Find("Grid 16px");
+        //allNodes = allNodes.transform.Find("Collision").Find("Walkable").gameObject;
     }
     private void InitGraph()
     {
@@ -46,10 +46,22 @@ public class Pathfinder : MonoBehaviour
     /// </summary>
     /// <param name="start"></param>
     /// <param name="target"></param>
-    public List<TileNode> AStar(TileNode start, TileNode target)
+    public List<TileNode> AStar(TileNode target)
     {
-        if(start == null || target == null)
+        TileNode start = null;
+        float minDist = Mathf.Infinity;
+        for (int i = 0; i < allNodes.transform.childCount; i++)
         {
+            float nodeDist = Vector3.Distance(transform.position, allNodes.transform.GetChild(i).position);
+            if (nodeDist < minDist)
+            {
+                minDist = nodeDist;
+                start = allNodes.transform.GetChild(i).GetComponent<TileNode>();
+            }
+        }
+        if (start == null || target == null)
+        {
+            Debug.Log("Current agent or target is not on tilemap");
             return null;
         }
         // set of evaluated nodes

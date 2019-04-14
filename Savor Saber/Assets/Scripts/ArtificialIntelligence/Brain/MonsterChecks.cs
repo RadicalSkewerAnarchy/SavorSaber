@@ -504,7 +504,7 @@ public class MonsterChecks : MonoBehaviour
     public List<TileNode> GetLongestPath(TileNode tile)
     {
         List<TileNode> path = null;
-        path = AiData.Behavior.pathfinder.AStar(currentTile, tile);
+        path = AiData.Behavior.pathfinder.AStar(tile);
         return path;
     }
 

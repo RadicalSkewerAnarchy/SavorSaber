@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 3;
+    int clusterLimit = 5;
     private void Start()
     {
         tiles = new List<List<TileNode>>();
@@ -24,7 +24,6 @@ public class GraphNodePopulator : MonoBehaviour
     {
         /// List of all tilemaps
         activeTileMaps = GetComponentsInChildren<Tilemap>();
-        bool first = true;
         List<Tilemap> inactiveTileMaps = new List<Tilemap>();
         foreach(var active in activeTileMaps)
         {
@@ -72,8 +71,7 @@ public class GraphNodePopulator : MonoBehaviour
                     tile.GetComponent<TileNode>().y = j;
                     tile.GetComponent<TileNode>().SetWalkable(walkable);
                     tiles[i].Add(tile.GetComponent<TileNode>());
-                }    
-               
+                }
                 j++;
             }
             i++;
