@@ -351,20 +351,15 @@ public partial class MonsterProtocols : MonoBehaviour
         if(curTile != target)
         {
             // Set the path based on AStar algorithm of the currentTile
-            if(AiData.path == null)
+            if (AiData.path == null)
             {
                 AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
-                if(AiData.path.Count < 1)
-                {
-                    return false;
-                }
             }            
             /// if path is empty, fill it based on destination
-            while (AiData.path.Count >= 1)
+            if (AiData.path.Count >= 1)
             {                
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
-                   
                     AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
                 }
                 return false;
