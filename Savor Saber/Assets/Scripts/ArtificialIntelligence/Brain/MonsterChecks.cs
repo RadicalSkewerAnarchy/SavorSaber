@@ -192,8 +192,10 @@ public class MonsterChecks : MonoBehaviour
             #region Check if Creature Deleted
             if (Plant == null)
                 continue;
-            if (Plant.GetComponent<DestructableEnvironment>().destroyed)
-                continue;
+
+            if (Plant.GetComponent<DestructableEnvironment>() == null)
+                if(Plant.GetComponent<DestructableEnvironment>().destroyed)
+                    continue;
             #endregion
             //Debug.Log("Potential Plant: " + Creature.GetInstanceID());
             //Debug.Log(Plant.GetInstanceID() + " is a drop");
