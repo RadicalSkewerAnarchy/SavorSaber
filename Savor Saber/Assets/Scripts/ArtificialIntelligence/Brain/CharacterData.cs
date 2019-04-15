@@ -120,7 +120,7 @@ public class CharacterData : MonoBehaviour
         }
         if (damage < 0)
         {
-            health -= damage;
+            health = Mathf.Max(health - damage, maxHealth);
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {
