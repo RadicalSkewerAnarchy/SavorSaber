@@ -216,7 +216,14 @@ public class MonsterChecks : MonoBehaviour
     public GameObject SomePlant()
     {
         #region Initialize Friend and Enemy
-        GameObject closestPlant = AllPlants[Random.Range(0, AllPlants.Count-1)];
+        GameObject closestPlant;
+        if (AllPlants.Count == 0)
+        {
+            //Debug.Log("No Plant");
+            closestPlant = null;
+        }
+        else
+            closestPlant = AllPlants[Random.Range(0, AllPlants.Count - 1)];
         #endregion
         //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
         return closestPlant;
@@ -496,7 +503,13 @@ public class MonsterChecks : MonoBehaviour
         float yyy = Random.Range(-yy, yy);
         if (specialPosition == new Vector2(0f, 0f))
         {
-            specialPosition = (Vector2)transform.position + new Vector2(xxx, yyy);
+            var plant = SomePlant();
+            Vector2 pos;
+            if (plant == null)
+                pos = (Vector2)this.transform.position;
+            else
+                pos = (Vector2)plant.transform.position;
+            specialPosition = (((Vector2)transform.position + new Vector2(xxx, yyy)) + pos)/2f;
             //Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
         }
     }

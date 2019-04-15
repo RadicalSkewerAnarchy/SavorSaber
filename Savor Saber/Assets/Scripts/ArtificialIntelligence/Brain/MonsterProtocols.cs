@@ -407,12 +407,10 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            GameObject near = Checks.SomePlant();
-            Vector2 pos = (near == null ? (Vector2)transform.position : (Vector2)near.transform.position);
             //Vector2 pos = Checks.AverageGroupPosition();
-            Behaviour.MoveTo(pos, AiData.Speed, 0.5f);
+            //Behaviour.MoveTo(pos, AiData.Speed, 0.5f);
             // reset action timer
-            //Wander(15f, 15f);
+            Wander(2f, 2f);
 
         }
         else if (Checks.specialTarget == null)
