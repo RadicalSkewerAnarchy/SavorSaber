@@ -58,7 +58,7 @@ public class GraphNodePopulator : MonoBehaviour
                 }
                 if((x % clusterLimit == 0 && y % clusterLimit == 0) && walkable)
                 {
-                    GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f, .25f, 0), new Quaternion(0, 0, 0, 1));
+                    GameObject tile = Instantiate(nodePrefab, current, new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
                     tile.GetComponent<TileNode>().x = i;
