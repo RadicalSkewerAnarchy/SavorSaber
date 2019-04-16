@@ -525,20 +525,24 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             return true;
         }
-        AiData.path = Behaviour.pathfinder.AStar(target);
-        if(AiData.path == null)
+        if (AiData.path[0] != target)
         {
-            return false;
-        }
-        foreach(var node in AiData.path)
-        {
-            if (Behaviour.MoveTo(node.transform.position, AiData.Speed, 1f));
+            AiData.path = Behaviour.pathfinder.AStar(target);
+            if (AiData.path == null)
             {
-                Checks.currentTile = node;                
+                return false;
             }
+            foreach (var node in AiData.path)
+            {
+                if (Behaviour.MoveTo(node.transform.position, AiData.Speed, 1f))
+                {
+                    Checks.currentTile = node;
+                }
+            }
+            return true;
         }
-        return true;
-        /*
+
+            /*
         // bool moving = false;
         // if agent is on tilemap
         var curTile = Checks.GetNearestNode((Vector2)transform.position);
@@ -581,7 +585,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 return true;
             }
         }*/
-        //return false;
+        return false;
     }
     #endregion
 }

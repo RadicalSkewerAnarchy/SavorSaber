@@ -7,6 +7,7 @@ public class MonsterSpawner : MonoBehaviour
 {
     public AIGroup group = null;
     public GameObject allNodes;
+    public TileNode currentTile;
     public bool loop = true;
     public bool spawnOnStart = true;
     public float loopTime = 15f;
@@ -27,6 +28,16 @@ public class MonsterSpawner : MonoBehaviour
         collider = GetComponent<Collider2D>();
         if (spawnOnStart)
             Spawn();
+        float minDistance = Mathf.Infinity;
+        foreach(var node in allNodes.GetComponentsInChildren<TileNode>())
+        {
+            var distance = Vector2.Distance(node.transform.position, transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                currentTile = node;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -58,6 +69,14 @@ public class MonsterSpawner : MonoBehaviour
                     if(newObj.GetComponent<Pathfinder>() != null)
                     {
                         newObj.GetComponent<Pathfinder>().allNodes = allNodes;
+                    }
+                    if(newObj.GetComponent<MonsterChecks>() != null)
+                    {
+                        newObj.GetComponent<MonsterChecks>().currentTile = currentTile;
+                    }
+                    if(newObj.GetComponent<SkewerableObject>() != null)
+                    {
+                        newObj.GetComponent<SkewerableObject>().currentTile = currentTile;
                     }
                     newObj.transform.position = spawnPos;
                     spawned = true;

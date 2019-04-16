@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 3;
+    int clusterLimit = 2;
     private void Start()
     {
         tiles = new List<List<TileNode>>();
@@ -70,41 +70,28 @@ public class GraphNodePopulator : MonoBehaviour
             }
             i++;
         }
-            /*
-            /// iterate over every node in the tile matrix
-            for (int x = 2; x < tiles.Count - 1; x++)
+        if(tiles.Count > 2)
+        {
+            for (int x = 1; x < tiles.Count - 2; x++)
             {
-                for (int y = 1; y < tiles[x].Count - 1; y++)
+                if (tiles[x].Count > 2)
                 {
-                    // for every node, get it's neighbors list
-                    var node = tiles[x][y];
-                    if (!node.walkable)
+                    for (int y = 1; y < tiles[x].Count - 2; y++)
                     {
-                        continue;
-                    }
-                    var neighbors = node.GetComponent<TileNode>().neighbors;
-                // index error bug if looping is done???
-                //neighbors.Add(tiles[x - 1][y - 1]);
-                    Debug.Log("Tiles X count: " + tiles.Count + " Tiles Y count: " + tiles[x].Count);
-                    /*
-                    neighbors.Add(tiles[x - 1][y]);
-                    //neighbors.Add(tiles[x - 1][y + 1]);
-                    neighbors.Add(tiles[x][y - 1]);
-                    neighbors.Add(tiles[x][y + 1]);
-                    //neighbors.Add(tiles[x + 1][y - 1]);
-                    neighbors.Add(tiles[x + 1][y]);
-                   // neighbors.Add(tiles[x + 1][y + 1]);
-                    
-                    var neighborsCopy = new List<TileNode>(neighbors);
-                    foreach (var neighbor in neighborsCopy)
-                    {
-                        if (!neighbor.walkable)
+                        var col = tiles[x];
+                        var node = col[y].GetComponent<TileNode>();
+                        for (int m = -1; m <= 1; m++)
                         {
-                            neighbors.Remove(neighbor);
+                            col = tiles[x + m];
+                            for (int n = -1; n <= 1; n++)
+                            {
+                                var tempNode = col[y + n];
+                                node.neighbors.Add(tempNode);
+                            }
                         }
                     }
                 }
-            }*/
-        
+            }
+        }               
     }
 }
