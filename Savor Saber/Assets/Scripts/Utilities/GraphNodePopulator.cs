@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 5;
+    int clusterLimit = 3;
     private void Start()
     {
         tiles = new List<List<TileNode>>();
@@ -52,17 +52,11 @@ public class GraphNodePopulator : MonoBehaviour
                 Vector3 current = activeTiles.CellToWorld(local);
                 inactiveTiles.CellToWorld(localInactive);
                 var parent = activeTiles.transform.GetChild(0);
-                if(activeTiles.HasTile(local))
+                if(activeTiles.HasTile(local) || inactiveTiles.HasTile(local))
                 {
-                    parent = activeTiles.transform.GetChild(1);
                     walkable = false;
                 }
-                if (inactiveTiles.HasTile(local))
-                {
-                    parent = activeTiles.transform.GetChild(1);
-                    walkable = false;
-                }
-                if(x % clusterLimit == 0 && y % clusterLimit == 0)
+                if((x % clusterLimit == 0 && y % clusterLimit == 0) && walkable)
                 {
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f, .25f, 0), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);

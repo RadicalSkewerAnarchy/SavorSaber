@@ -398,6 +398,40 @@ public partial class MonsterProtocols : MonoBehaviour
                 Wander(10f, 10f);
         }
     }
+    public void NavFeast()
+    {
+        #region Surroundings        
+        GameObject cDrop = Checks.ClosestDrop();
+        GameObject cHittable;
+        #endregion
+        if (cDrop != null)
+        {
+            // go to the nearest drop
+            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
+            {
+                Behaviour.Feed(cDrop);
+            }
+        }
+        else
+        {
+            // go to nearest thing that drops drops
+            if (this.tag == "Prey")
+            {
+                cHittable = Checks.ClosestPlant();
+                //Debug.Log("closest plant is " + cHittable.name);
+            }
+            else
+            {
+                cHittable = Checks.ClosestCreature();
+            }
+
+            // go to the nearest drop
+            if (cHittable != null)
+                Melee(cHittable);
+            else
+                Wander(10f, 10f);
+        }
+    }
 
 
     // Conga()
@@ -496,12 +530,11 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             return false;
         }
-        int i = AiData.path.Count;
         foreach(var node in AiData.path)
         {
-            if (Behaviour.MoveTo(AiData.path[i - 1].transform.position, AiData.Speed, 1f)) ;
+            if (Behaviour.MoveTo(node.transform.position, AiData.Speed, 1f));
             {
-                i--;
+                Checks.currentTile = node;                
             }
         }
         return true;
