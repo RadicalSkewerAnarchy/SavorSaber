@@ -85,6 +85,7 @@ public class AIData : CharacterData
     public List<RecipeData.Flavors> FoodPreference;
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
+    private bool enabled = false;
     #endregion
     private void Start()
     {
@@ -122,7 +123,10 @@ public class AIData : CharacterData
     /// </summary>
     private void LateUpdate()
     {
-        UpdateProtocol();
+        if (enabled)
+        {
+            UpdateProtocol();
+        }
     }
     public float Normalize(float now, float max)
     {
@@ -131,6 +135,14 @@ public class AIData : CharacterData
     public float NormalizeInt(int now, int max)
     {
         return now / (float)max;
+    }
+    private void OnBecameVisible()
+    {
+        enabled = true;
+    }
+    private void OnBecameInvisible()
+    {
+        enabled = false;
     }
     /// <summary>
     ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
