@@ -70,23 +70,27 @@ public class GraphNodePopulator : MonoBehaviour
             }
             i++;
         }
-        if(tiles.Count > 2)
+        if(tiles.Count > 4)
         {
             for (int x = 1; x < tiles.Count - 2; x++)
             {
-                if (tiles[x].Count > 2)
+                if (tiles[x].Count > 4)
                 {
                     for (int y = 1; y < tiles[x].Count - 2; y++)
                     {
-                        var col = tiles[x];
-                        var node = col[y].GetComponent<TileNode>();
+                        var node = tiles[x][y].GetComponent<TileNode>();
                         for (int m = -1; m <= 1; m++)
                         {
-                            col = tiles[x + m];
                             for (int n = -1; n <= 1; n++)
                             {
-                                var tempNode = col[y + n];
-                                node.neighbors.Add(tempNode);
+                                try
+                                {
+                                    node.neighbors.Add(tiles[x + m][y + n]);
+                                }
+                                catch (System.ArgumentOutOfRangeException ex)
+                                {
+
+                                }
                             }
                         }
                     }
