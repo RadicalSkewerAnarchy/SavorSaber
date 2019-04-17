@@ -75,7 +75,7 @@ public partial class MonsterProtocols : MonoBehaviour
         else
         {
             Behaviour.MeleeAttack(pos, AiData.Speed);
-        }       
+        }
     }
     public void NavMelee(GameObject target)
     {
@@ -193,10 +193,10 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = creature.transform.position;
         else
             pos = transform.position;
-        #endregion        
+        #endregion
         if (Behaviour.MoveFrom(pos, AiData.Speed, 1.0f))
         {
-            Wander(5f, 5f); 
+            Wander(5f, 5f);
         }
     }
     public void NavRunaway()
@@ -220,7 +220,7 @@ public partial class MonsterProtocols : MonoBehaviour
             }
         }
         /*// For now, fun away from your first enemy (SOMA most likely)
-        
+
         Vector2 pos;
         List<TileNode> path = null;
         int count = 0;
@@ -243,9 +243,9 @@ public partial class MonsterProtocols : MonoBehaviour
                     }
                 }
                 NavTo(farthestTile);
-            }            
+            }
         }*/
-        #endregion        
+        #endregion
     }
 
     // Chase()
@@ -259,7 +259,7 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = creature.transform.position;
         else
             pos = transform.position;
-        #endregion        
+        #endregion
         if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
         {
             Wander(2f, 2f);
@@ -274,7 +274,7 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = creature.transform.position;
         else
             pos = transform.position;
-        #endregion        
+        #endregion
         if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
         {
             Wander(2f, 2f);
@@ -295,7 +295,7 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
     }
 
-    
+
 
     // Wander()
     // go in random directions
@@ -355,7 +355,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 // reset action timer
                 Wander(10f, 10f);
             }
-        }       
+        }
     }
 
     // plants currently not implemented
@@ -366,7 +366,7 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Feast()
     {
-        #region Surroundings        
+        #region Surroundings
         GameObject cDrop = Checks.ClosestDrop();
         GameObject cHittable;
         #endregion
@@ -400,7 +400,7 @@ public partial class MonsterProtocols : MonoBehaviour
     }
     public void NavFeast()
     {
-        #region Surroundings        
+        #region Surroundings
         GameObject cDrop = Checks.ClosestDrop();
         GameObject cHittable;
         #endregion
@@ -472,14 +472,14 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos = Checks.WeakestCreature().transform.position;
         GameObject target = Checks.WeakestCreature();
         #endregion
-        
-        
+
+
     }
 
     // end of pacifict region
     #endregion
 
-    #region Unimplemented Protocols    
+    #region Unimplemented Protocols
     // Swarm()
     // given enough friends
     // and few enemies
@@ -514,13 +514,13 @@ public partial class MonsterProtocols : MonoBehaviour
     // if attack cannot happen, becomes lazy
     public void Guard()
     {
-        
+
     }
     // in order to work with vector2, we must take in a vector2/vector3 and determine what tile overlaps at that position(if it overlaps at all)
     // in order to work based on the tilemap, we can access the neighbor tiles and determine the one that is furthest away/closest to the target then select that tile
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
     public bool NavTo(TileNode target)
-    {      
+    {
         if(Checks.currentTile == target || target == null)
         {
             return true;
@@ -553,27 +553,15 @@ public partial class MonsterProtocols : MonoBehaviour
         if(curTile != target)
         {
             // Set the path based on AStar algorithm of the currentTile
-            //if(AiData.path == null)
-            //{
+            if (AiData.path == null)
+            {
                 AiData.path = Behaviour.pathfinder.AStar(Checks.currentTile, target);
-                if(AiData.path == null)
-                {
-                    return false;
-                }else if(AiData.path.Count <= 1)
-                {
-                    return false;
-                }
-                foreach(var node in AiData.path)
-                {
-                node.GetComponent<SpriteRenderer>().enabled = true;
-                }
-            //}            
+            }
             /// if path is empty, fill it based on destination
-            while (AiData.path.Count >= 1)
-            {                
+            if (AiData.path.Count >= 1)
+            {
                 if (Behaviour.MoveTo(AiData.path[AiData.path.Count - 1].transform.position, AiData.Speed, AiData.MeleeAttackThreshold))
                 {
-                    AiData.path[AiData.path.Count - 1].GetComponent<SpriteRenderer>().enabled = false;
                     AiData.path.Remove(AiData.path[AiData.path.Count - 1]);
                     Debug.Log("Navigated to next tile");
                 }
