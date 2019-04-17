@@ -253,7 +253,7 @@ public class AIData : CharacterData
             InstantiateSignal(0.1f, "Hunger", 0.05f, false, true);
 
             // die
-            if (hunger >= 1f)
+            /*if (hunger >= 1f)
             {
                 // hurt me
                 DoDamage(3);
@@ -263,7 +263,7 @@ public class AIData : CharacterData
                     Monster me = this.gameObject.GetComponent<Monster>();
                     me.Kill();
                 }
-            }
+            }*/
         }
 
         // change color
