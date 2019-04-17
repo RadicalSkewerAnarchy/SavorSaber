@@ -7,7 +7,7 @@ using UnityEngine;
 public class DroneFlavorInput : FlavorInputManager
 {
     private int slowDuration = 6;
-    private bool slowed;
+    private bool slowed = false;
     private int slowTimer = 0;
     private WaitForSeconds OneSecondTic = new WaitForSeconds(1);
 
@@ -22,7 +22,7 @@ public class DroneFlavorInput : FlavorInputManager
     public override void RespondToIngredients()
     {
         //handle spicy - Does damage over time
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] >= 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
             spriteRenderer.color = Color.red;
             DamageOverTime(2 * flavorCountDictionary[RecipeData.Flavors.Spicy], dotTicLength);
@@ -31,28 +31,39 @@ public class DroneFlavorInput : FlavorInputManager
         }
 
         //handle sweet - Pacifies drone
-        if (flavorCountDictionary[RecipeData.Flavors.Sweet] >= 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
         {
             flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
         }
 
         //handle sour - Does more damage to high-health targets
-        if(flavorCountDictionary[RecipeData.Flavors.Sour] >= 0)
+        if(flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
         {
+            Debug.Log("Sour Processing: Enemy health at " + characterData.health + "/" + characterData.maxHealth);
+
             float health = characterData.health;
-            int damage = 1 + 1 * (int)(characterData.health / 4);
+            //damage boost equals 1/6 of the creature's health at one flavor, 1/2 health at full flavor
+            int damage = 1 + 1 * (int)(characterData.health / 6) * flavorCountDictionary[RecipeData.Flavors.Sour];
+
+            Debug.Log("Resulting damage: " + damage);
+
             characterData.DoDamage(damage);
+
+            Debug.Log("Enemy health reduced to " + characterData.health + "/" + characterData.maxHealth);
+
             flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
         }
 
         //handle salty - Reduce Speed
-        if (flavorCountDictionary[RecipeData.Flavors.Salty] >= 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Salty] > 0)
         {
-            slowed = true;
+            
+            //if you're already slowed, just increase the duration. Don't stack coroutines.
             if (!slowed)
                 StartCoroutine(SlowDown());
             else
-                slowTimer += slowDuration;
+                slowTimer += 2 * flavorCountDictionary[RecipeData.Flavors.Salty];
+
             flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
         }
 
@@ -60,15 +71,22 @@ public class DroneFlavorInput : FlavorInputManager
 
     private IEnumerator SlowDown()
     {
+        slowed = true;
         float baseSpeed = characterData.Speed;
         characterData.Speed = baseSpeed / (1 + flavorCountDictionary[RecipeData.Flavors.Salty]);
 
-        slowTimer = slowDuration;
-        while(slowTimer-- > 0)
-        {
-            yield return OneSecondTic;
-        }
+        Debug.Log("Begin slow. Speed reduced to " + characterData.Speed);
 
+        slowTimer = slowDuration;
+        while(slowTimer > 0)
+        {
+            Debug.Log("Seconds remaining on slow: " + slowTimer);
+            yield return OneSecondTic;
+            slowTimer--;
+        }
+        
         characterData.Speed = baseSpeed;
+        slowed = false;
+        Debug.Log("End slow. Speed returned to " + characterData.Speed);
     }
 }
