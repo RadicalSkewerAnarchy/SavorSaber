@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class InfoDisplay : MonoBehaviour
 {
     public bool isMap = true;
@@ -18,10 +20,11 @@ public class InfoDisplay : MonoBehaviour
     private bool showingInfo = false;
 
     private GameObject infoBox;
+    private AudioSource audio;
 
     void Start()
     {
-        
+        audio = GetComponent<AudioSource>(); 
     }
 
 
@@ -30,6 +33,9 @@ public class InfoDisplay : MonoBehaviour
 
         if (InputManager.GetButtonDown(Control.Interact)&& playerInRange && !showingInfo)
         {
+            audio.pitch = 2;
+            audio.Play();
+
             infoBox = Instantiate(infoToDisplay, new Vector3(0, 0, 0), Quaternion.identity);
             infoBox.transform.SetParent(UICanvas.transform);
             infoBox.transform.localPosition = new Vector3(0, 0, 0);
@@ -48,6 +54,9 @@ public class InfoDisplay : MonoBehaviour
         }
         else if (showingInfo && (InputManager.GetButtonDown(Control.Interact) || InputManager.GetButtonDown(Control.Cancel)))
         {
+            audio.pitch = 0.75f;
+            audio.Play();
+
             Destroy(infoBox.gameObject);
             showingInfo = false;
         }
