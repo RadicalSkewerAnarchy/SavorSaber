@@ -404,9 +404,22 @@ public class MonsterChecks : MonoBehaviour
     public TileNode GetNearestNode(Vector2 pos)
     {
         TileNode targetTile = null;
-        float sizeCheck = .25f;
-        int maxTries = 5;
-
+        float minDist = Mathf.Infinity;
+        for(int i = 0; i < GetComponent<Pathfinder>().transform.GetChildCount()-1; i++)
+        {
+            var node = GetComponent<Pathfinder>().transform.GetChild(i);
+            var dist = Vector2.Distance(node.transform.position, pos);
+            if (dist < AiData.EngageHostileThreshold)
+            {
+                if(dist < minDist)
+                {
+                    minDist = dist;
+                    targetTile = node.GetComponent<TileNode>();
+                }
+            }
+        }
+        /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
+        /*
         for (var i = 0; i < maxTries; i++)
         {
             var availableNodes = Physics2D.OverlapCircleAll(pos, sizeCheck);
@@ -431,7 +444,7 @@ public class MonsterChecks : MonoBehaviour
                 sizeCheck *= 2;
                 // Debug.Log("DOUBLING TILECHECK SIZE");
             }
-        }
+        }*/
 
         return targetTile;
     }
