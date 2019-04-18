@@ -405,7 +405,7 @@ public class MonsterChecks : MonoBehaviour
     {
         TileNode targetTile = null;
         float minDist = Mathf.Infinity;
-        for(int i = 0; i < GetComponent<Pathfinder>().transform.GetChildCount()-1; i++)
+        for(int i = 0; i < GetComponent<Pathfinder>().transform.childCount-1; i++)
         {
             var node = GetComponent<Pathfinder>().transform.GetChild(i);
             var dist = Vector2.Distance(node.transform.position, pos);
