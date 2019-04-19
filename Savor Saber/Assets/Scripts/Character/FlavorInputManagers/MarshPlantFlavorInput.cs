@@ -25,13 +25,14 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
             isFed = true;
+            OpenPlant();
         }
     }
 
     private void Update()
     {
-        ClosePlant();
-        OpenPlant();
+        //ClosePlant();
+        //OpenPlant();
     }
 
     // prevent player
