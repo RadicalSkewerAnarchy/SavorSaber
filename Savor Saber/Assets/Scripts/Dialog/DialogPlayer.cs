@@ -98,14 +98,39 @@ public class DialogPlayer : MonoBehaviour
 
     public IEnumerator Scroll(string lineOfText)
     {
-        //Debug.Log("Text: " + lineOfText);
+        var tagOffsets = new List<int>();
+        var tags = ParseTags(lineOfText, out tagOffsets);
+        int tagInd = 0;
+        bool inTag = false;
+
+        int count = 0; // need separate count with letter jumping around from tags
         int letter = 0;
         dialogText.text = "";
         state = State.Scrolling;
         while (state != State.Cancel && (letter < lineOfText.Length - 1))
         {
-            dialogText.text += lineOfText[letter++];
-            if ((letter + 1) % 3 == 0)
+            if(tagInd < tagOffsets.Count && letter == tagOffsets[tagInd])
+            {
+                if(inTag)
+                {
+                    letter += tags[tagInd++].Length;
+                    inTag = false;
+                    continue;
+                }
+                else
+                {
+                    letter += tags[tagInd].Length;
+                    dialogText.text += tags[tagInd] + tags[++tagInd];
+                    inTag = true;
+                    continue;
+                }
+            }
+            if (inTag)
+                dialogText.text = dialogText.text.Insert(letter, lineOfText[letter++].ToString());
+            else
+                dialogText.text += lineOfText[letter++];
+            count = (count + 1) % 3;
+            if (count == 0)
                 audioPlayer.Play();
             yield return new WaitForSeconds(typeSpeed);
         }
@@ -113,6 +138,25 @@ public class DialogPlayer : MonoBehaviour
         state = State.Waiting;
         yield return new WaitWhile(() => state == State.Waiting);
         state = State.Inactive;
+    }
+    private List<string> ParseTags(string line, out List<int> offsets)
+    {
+        offsets = new List<int>();
+        var tags = new List<string>();
+        int firstInd = line.IndexOf('<', 0);
+        if (firstInd == -1)
+            return tags;
+
+        for (int i = firstInd; i < line.Length;)
+        {
+            i = line.IndexOf('<', i);
+            int j = line.IndexOf('>', i);
+            string tag = line.Substring(i, (j - i) + 1);
+            offsets.Add(i);
+            tags.Add(tag);
+            i = j + 1;
+        }
+        return tags;
     }
     protected Vector2 GetActorUISpace(GameObject actor)
     {
@@ -122,4 +166,5 @@ public class DialogPlayer : MonoBehaviour
         Vector2 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
         return proportionalPosition - UIOffset;
     }
+
 }
