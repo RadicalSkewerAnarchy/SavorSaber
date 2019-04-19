@@ -72,7 +72,7 @@ public class AIData : CharacterData
     public float DecisionTimerVariance = 2f;
     #endregion
     #region Components
-    private MonsterBehavior Behavior;
+    public MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
     public MonsterChecks Checks;
     private UtilityCurves Curves;
@@ -85,6 +85,7 @@ public class AIData : CharacterData
     public List<RecipeData.Flavors> FoodPreference;
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
+    private bool enabled = false;
     #endregion
     private void Start()
     {
@@ -122,7 +123,10 @@ public class AIData : CharacterData
     /// </summary>
     private void LateUpdate()
     {
-        UpdateProtocol();
+        if (enabled)
+        {
+            UpdateProtocol();
+        }
     }
     public float Normalize(float now, float max)
     {
@@ -131,6 +135,14 @@ public class AIData : CharacterData
     public float NormalizeInt(int now, int max)
     {
         return now / (float)max;
+    }
+    private void OnBecameVisible()
+    {
+        enabled = true;
+    }
+    private void OnBecameInvisible()
+    {
+        enabled = false;
     }
     /// <summary>
     ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
@@ -168,7 +180,7 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
-            //UpdateHunger();
+            UpdateHunger();
         }
         else
         {
@@ -186,7 +198,7 @@ public class AIData : CharacterData
         {
             case Protocols.Melee:
             // melee
-                Protocol.Melee();
+                Protocol.Melee(null);
                 break;
             // ranged
             case Protocols.Ranged:
@@ -245,32 +257,44 @@ public class AIData : CharacterData
     private void UpdateHunger()
     {
         // have random chance to be hungry
+        float hunger = moods["Hunger"];
         float rand = Random.Range(0f, 100f);
-        if (rand < 5)
+        if (rand < 7)
         {
             // create a signal that subtracts from my hunger
-            InstantiateSignal(0.1f, "Hunger", 0.1f, false, true);
+            InstantiateSignal(0.1f, "Hunger", 0.05f, false, true);
 
-            // die or
-            // change sprite color
-            float hunger = moods["Hunger"];
-            //Debug.Log("Im getting hungrier: " + this.gameObject.name + "'s hunger = " + hunger);
-            if (hunger >= 1f)
+            // die
+            /*if (hunger >= 1f)
             {
                 // hurt me
-                health -= 1;
+                DoDamage(3);
                 if (health <= 0)
                 {
                     // ded
                     Monster me = this.gameObject.GetComponent<Monster>();
                     me.Kill();
                 }
-            }
-            else if (hunger >= 0.75f)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().color = new Color(116f, 116f, 0f);
-            }
+            }*/
         }
+
+        // change color
+        float rotColor = 0.5f+(hunger / 2);
+        bool updateColor = (this.gameObject.GetComponent<SpriteRenderer>().color.r != rotColor);
+        if (updateColor)
+        {
+            SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+            if (hunger > 0.75f)
+            {
+                sr.color = new Color(rotColor, rotColor, 0f, sr.color.a);
+            }
+            else
+            {
+                sr.color = new Color(1.0f, 1.0f, 1.0f, sr.color.a);
+            }
+
+        }
+      
     }
 
     // InstantiateSignal()

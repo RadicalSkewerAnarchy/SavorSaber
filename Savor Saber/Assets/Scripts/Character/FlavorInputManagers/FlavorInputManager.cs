@@ -17,6 +17,7 @@ public class FlavorInputManager : MonoBehaviour
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
     public GameObject rewardItem;
+    public int amountRewardItem = 2;
     public AudioClip rewardSFX;
 
     private bool fedFavoriteIngredient = false;
@@ -55,19 +56,24 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray)
     {
+        Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
             if (ingredientCountDictionary.ContainsKey(ingredient.displayName))
             {
                 ingredientCountDictionary[ingredient.displayName] = ingredientCountDictionary[ingredient.displayName] + 1;
-                Debug.Log("Ate one " + ingredient.displayName);
+                //Debug.Log("Ate one " + ingredient.displayName);
             }
             else
             {
                 ingredientCountDictionary.Add(ingredient.displayName, 1);
-                Debug.Log("Ate one " + ingredient.displayName);
+                //Debug.Log("Ate one " + ingredient.displayName);
             }
+
+            // mod hunger
+            if (characterData != null)
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
 
             for (int f = 1; f <= 64; f = f << 1)
             {
@@ -81,67 +87,86 @@ public class FlavorInputManager : MonoBehaviour
             }
         }
         RespondToIngredients();
+        SpawnReward(ingredientArray);
     }
 
-    public virtual void RespondToIngredients()
-    {
-        CheckCharmEffect();
-    }
 
-    protected void CheckCharmEffect()
+    protected void SpawnReward(IngredientData[] ingredientArray)
     {
-        foreach(string favoriteIngredient in favoriteIngredients)
+        // looking only at favorite ingredients...
+        foreach (string favoriteIngredient in favoriteIngredients)
         {
-            if (favoriteIngredient != null &&
-            ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
-            ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
+            // if the ingredients on the skewer are my favorites...
+            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
             {
-                Debug.Log(this.gameObject + " fed favorite ingredient!");
-                fedFavoriteIngredient = true;
-
-                if (characterData != null)
+                // am i actually being fed this...
+                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
+                if (amountOnSkewer > 0)
                 {
-                    characterData.moods["Hunger"] = 0;
+                    //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
+                    fedFavoriteIngredient = true;
+
                     if (rewardItem != null)
-                        Instantiate(rewardItem, transform.position, Quaternion.identity);
+                    {
+                        int spawned = 0;
+                        for (int j = 0; j < amountOnSkewer; j++)
+                        {
+                            for (int i = 0; i < amountRewardItem; i++)
+                            {
+                                Instantiate(rewardItem, transform.position, Quaternion.identity);
+                                spawned++;
+                            }
+                        }
+                        Debug.Log("Spawned: " + spawned);
+                    }
                 }
+
                 AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
-                if(rewardSFXPlayer != null)
+                if (rewardSFXPlayer != null)
                 {
                     rewardSFXPlayer.clip = rewardSFX;
                     rewardSFXPlayer.Play();
                 }
+
                 ingredientCountDictionary[favoriteIngredient] = 0;
             }
         }
+    }
 
 
-        for (int f = 1; f <= 64; f = f << 1)
+    public virtual void RespondToIngredients()
+    {
+        //handle spicy
+        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            //only compare entries in favorite flavors
-            if ((f & (int)favoriteFlavors) > 0)
+            if(favoriteFlavors != RecipeData.Flavors.Spicy)
             {
-                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                if (flavorCountDictionary[foundFlavor] >= charmThreshhold)
-                {
-                    Debug.Log(this.gameObject + " charmed by feeding favorite flavor!");
-                    fedFavoriteIngredient = true;
-                    if (characterData != null)
-                    {
-                        characterData.moods["Hunger"] = 0;
-                        if (rewardItem != null)
-                            Instantiate(rewardItem, transform.position, Quaternion.identity);
-                    }
-                    AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
-                    if (rewardSFXPlayer != null)
-                    {
-                        rewardSFXPlayer.clip = rewardSFX;
-                        rewardSFXPlayer.Play();
-                    }
-                    flavorCountDictionary[foundFlavor] = 0;
-                }
+                DamageOverTime(5, 5);
             }
         }
+        //handle sweet
+        if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
+        {
+            if (favoriteFlavors != RecipeData.Flavors.Sweet)
+            {
+                CheckCharmEffect();
+            }
+        }
+        //handle umami
+        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        {
+            if (favoriteFlavors != RecipeData.Flavors.Savory)
+            {
+                // nothing for now
+            }
+        }
+    }
+
+
+    protected void CheckCharmEffect()
+    {
+        characterData.DoDamage(-3);
+        characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
 
     public void DamageOverTime(int numTics, float ticLength)
@@ -154,7 +179,7 @@ public class FlavorInputManager : MonoBehaviour
                 killingBlow = true;
 
             characterData.DoDamage(1);
-            Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
+            //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
                 return;
@@ -193,3 +218,60 @@ public class FlavorInputManager : MonoBehaviour
         else return false;
     }
 }
+
+
+#region Old Code
+/*foreach(string favoriteIngredient in favoriteIngredients)
+        {
+            if (favoriteIngredient != null &&
+            ingredientCountDictionary.ContainsKey(favoriteIngredient) &&
+            ingredientCountDictionary[favoriteIngredient] >= charmThreshhold)
+            {
+                Debug.Log(this.gameObject + " fed favorite ingredient!");
+                fedFavoriteIngredient = true;
+
+                if (characterData != null)
+                {
+                    // more juice
+                    // give more things for feeding the fruitant
+                    if (rewardItem != null)
+                        Instantiate(rewardItem, transform.position, Quaternion.identity);
+                }
+                AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
+                if(rewardSFXPlayer != null)
+                {
+                    rewardSFXPlayer.clip = rewardSFX;
+                    rewardSFXPlayer.Play();
+                }
+                ingredientCountDictionary[favoriteIngredient] = 0;
+            }
+        }*/
+
+
+/*for (int f = 1; f <= 64; f = f << 1)
+{
+    //only compare entries in favorite flavors
+    if ((f & (int)favoriteFlavors) > 0)
+    {
+        RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+        if (flavorCountDictionary[foundFlavor] >= charmThreshhold)
+        {
+            Debug.Log(this.gameObject + " charmed by feeding favorite flavor!");
+            fedFavoriteIngredient = true;
+            if (characterData != null)
+            {
+                characterData.moods["Hunger"] = 0;
+                if (rewardItem != null)
+                    Instantiate(rewardItem, transform.position, Quaternion.identity);
+            }
+            AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
+            if (rewardSFXPlayer != null)
+            {
+                rewardSFXPlayer.clip = rewardSFX;
+                rewardSFXPlayer.Play();
+            }
+            flavorCountDictionary[foundFlavor] = 0;
+        }
+    }
+}*/
+#endregion

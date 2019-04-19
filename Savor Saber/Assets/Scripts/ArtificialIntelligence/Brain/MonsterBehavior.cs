@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(AIData))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
+[RequireComponent(typeof(FlavorInputManager))]
 //[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
@@ -17,6 +18,7 @@ public class MonsterBehavior : MonoBehaviour
     AIData AiData;
     MonsterChecks Checks;
     MonsterController controller;
+    FlavorInputManager flavor;
     public Pathfinder pathfinder;
     #endregion
     #region ActionTimer
@@ -35,7 +37,7 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// biase
     /// </summary>
-    private float biasAngle = 15f;
+    private float biasAngle = 0f;
     private float biasAngleMod;
     private float biasMovementAngle;
     #endregion
@@ -75,6 +77,7 @@ public class MonsterBehavior : MonoBehaviour
         RigidBody = GetComponent<Rigidbody2D>();
         controller = GetComponent<MonsterController>();
         pathfinder = GetComponent<Pathfinder>();
+        flavor = GetComponent<FlavorInputManager>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -129,8 +132,9 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
         AiData.currentBehavior = AIData.Behave.Chase;
-        var current = new Vector2(transform.position.x, transform.position.y);
-        if (Vector2.Distance(current, target) <= .01f)
+        //var current = new Vector2(transform.position.x, transform.position.y+.25f);
+        Vector2 current = transform.position;
+        if (Vector2.Distance(current, target) <= threshold)
         {
             return true;
         }
@@ -138,13 +142,10 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Move
             AnimatorBody.Play("Move");
-            target = RotatePoint(current, biasMovementAngle, target);
             target = (target - current);
-            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            //RigidBody.AddForce(target * speed * Time.deltaTime * 1000f);
-            transform.Translate(target);
-            
+            RigidBody.velocity = target;       
             #endregion
             return false;
         }
@@ -154,16 +155,16 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool MoveFrom(Vector2 target, float speed, float threshold)
     {
-        AiData.currentBehavior = AIData.Behave.Flee;     
-        var current = new Vector2(transform.position.x, transform.position.y);
-        if(Vector2.Distance(current, target) <= threshold - 1)
+        AiData.currentBehavior = AIData.Behave.Flee;
+        Vector2 current = transform.position;
+        if (Vector2.Distance(current, target) <= threshold)
         {
             #region Move
             AnimatorBody.Play("Move");
-            target = (target - current);
-            target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
-            controller.Direction = DirectionMethods.FromVec2(-1 * target);
-            transform.Translate(-1*target);
+            target = (current - target);
+            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            controller.Direction = DirectionMethods.FromVec2(target);
+            RigidBody.velocity = target * speed * Time.deltaTime;
             #endregion
             return false;
         }
@@ -177,18 +178,26 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>  
     public bool Feed(GameObject drop)
     {
-        Debug.Log("Feed Reached");
+        //Debug.Log("Feed Reached");
         if(drop != null)
         {
             #region Eat
             AnimatorBody.Play("Feed");
             AiData.currentBehavior = AIData.Behave.Feed;
-            AiData.Stomach.Enqueue(drop.GetComponent<SkewerableObject>().data);
+            IngredientData ingredient = drop.GetComponent<SkewerableObject>().data;
+            AiData.Stomach.Enqueue(ingredient);
+            IngredientData[] ingredientArray = new IngredientData[1];
+            ingredientArray[0] = ingredient;
+
+            // activate flavor input manager
+            flavor.Feed(ingredientArray);
+
+            // deactivate drop
             drop.SetActive(false);
             Destroy(drop);
 
             #endregion
-            AiData.InstantiateSignal(0.1f, "Hunger", -0.25f, false, true);
+            AiData.InstantiateSignal(0.1f, "Hunger", -0.1f, false, true);
             if(AiData.eatingParticleBurst != null)
             {
                 AiData.eatingParticleBurst.Play();
@@ -196,7 +205,7 @@ public class MonsterBehavior : MonoBehaviour
             if(AiData.eatSFX != null)
             {
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(AiData.eatSFX);
-                Debug.Log("===========================Hunger sound effect playing here");
+                //Debug.Log("===========================Hunger sound effect playing here");
             }
             return true;
         }
@@ -219,7 +228,8 @@ public class MonsterBehavior : MonoBehaviour
             AnimatorBody.Play("Melee");
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
-            newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
+            newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
+            newAttackCollider.transform.position += new Vector3(0, this.GetComponent<CapsuleCollider2D>().offset.y, 0);
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             #endregion
             return true;
@@ -238,7 +248,7 @@ public class MonsterBehavior : MonoBehaviour
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
-            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity, transform);
+            GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity);
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
             projectileData.directionVector = normalizedVec;            
@@ -260,7 +270,7 @@ public class MonsterBehavior : MonoBehaviour
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
-            Debug.Log("Instantiating Happiness Signal");
+            //Debug.Log("Instantiating Happiness Signal");
             AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
             ResetActionTimer();
             return true;

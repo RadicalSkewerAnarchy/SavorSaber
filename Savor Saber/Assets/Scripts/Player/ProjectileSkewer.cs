@@ -13,7 +13,8 @@ public class ProjectileSkewer : BaseProjectile
     public GameObject audioPlayer;
     public AudioClip sweetSFX;
     public AudioClip spicySFX;
-
+    public bool fed = false;
+    public GameObject dropTemplate;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,7 @@ public class ProjectileSkewer : BaseProjectile
         SetGeometry();
         spawnPosition = transform.position;
 
+        //penetrateTargets = false;
     }
 
     // Update is called once per frame
@@ -34,69 +36,81 @@ public class ProjectileSkewer : BaseProjectile
 
         if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
         {
-            //should be obsolete since we're setting the moods of affected creatures directly now
-            /*
-            if (flavorCountDictionary != null && flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
-            {
-                //attack radius is set by the amount of Savory/Umami on the skewer
-                attackRadius = 2 * flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
-
-                signal = Instantiate(dropItem, transform.position, Quaternion.identity);
-                signalApplication = signal.GetComponent<SignalApplication>();
-                moodMod.Add("Friendliness", flavorCountDictionary[RecipeData.Flavors.Sweet] / 3);
-                moodMod.Add("Fear", flavorCountDictionary[RecipeData.Flavors.Sweet] / -3);
-                moodMod.Add("Hostility", flavorCountDictionary[RecipeData.Flavors.Sweet] / -3);
-                signalApplication.SetSignalParameters(null, attackRadius, moodMod, true, true);
-                
-            }
-            */
-            //SetAOE();
-
+            SpawnDropsOnMiss();
             Destroy(this.gameObject);
-
         }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "ThrowThrough")
-            return;
-        Debug.Log("Skewer collided with " + collision.gameObject);
-        //attack radius is set by the amount of Savory/Umami on the skewer
+        if (!fed)
+        { 
+            if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
+                return;
+            Debug.Log("Skewer collided with " + collision.gameObject);
+            //attack radius is set by the amount of Savory/Umami on the skewer
 
-        if (ingredientArray != null)
-        {
-            FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
-            if (flavorInput != null)
+            if (ingredientArray != null)
             {
-                if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
+                FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
+                if (flavorInput != null)
                 {
-                    detonating = true;
-                    SetAOE();
+                    if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
+                    {
+                        detonating = true;
+                        SetAOE();
+                    }
+                    else
+                    {
+                        // FEEEED MEEEE
+                        flavorInput.Feed(ingredientArray);
+                        fed = true;
+                        Destroy(this.gameObject);
+                        //=================================
+                        bool fedFavorite = flavorInput.FedFavorite();
+                        if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
+                        {
+                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                            sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
+                        }
+                        else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
+                        {
+                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
+                            sfx.GetComponent<AudioSource>().volume = 0.5f;
+                            sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
+                        }
+                    }
+
                 }
-                else
+                //if you hit something (and aren't penetrating) but can't feed it
+                else if (!penetrateTargets)
                 {
-
-                    flavorInput.Feed(ingredientArray);
-                    bool fedFavorite = flavorInput.FedFavorite();
-                    if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
-                    {
-                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                        sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
-                    }
-                    else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
-                    {
-                        GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                        sfx.GetComponent<AudioSource>().volume = 0.5f;
-                        sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
-                    }
+                    SpawnDropsOnMiss();
                 }
-
             }
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
         }
+    }
 
-        if (!penetrateTargets)
-            Destroy(this.gameObject);
+    private void SpawnDropsOnMiss()
+    {
+        SkewerableObject ingredient;
+        GameObject drop;
+        SpriteRenderer sr;
+        for (int i = 0; i < ingredientArray.Length; i++)
+        {
+            if (ingredientArray[i] != null && dropTemplate != null)
+            {
+                drop = Instantiate(dropTemplate, transform.position, Quaternion.identity);
+                ingredient = drop.GetComponent<SkewerableObject>();
+                sr = drop.GetComponent<SpriteRenderer>();
+
+                ingredient.data = ingredientArray[i];
+                sr.sprite = ingredientArray[i].image;
+            }
+
+        }
     }
 
     //save space in earlier checks

@@ -241,7 +241,7 @@ public class UpdatedController : EntityController
 
     private IEnumerator runCR()
     {
-        Debug.Log("starting run");
+        //Debug.Log("starting run");
         running = true;
         currRunSpeed = runSpeed;
         yield return new WaitForSeconds(runTimeBuffer);
@@ -255,7 +255,7 @@ public class UpdatedController : EntityController
 
     private void StopRunning()
     {
-        Debug.Log("stopping run");
+        //Debug.Log("stopping run");
         running = false;
         if(run != null)
         {

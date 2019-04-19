@@ -17,6 +17,7 @@ public class MonsterChecks : MonoBehaviour
     public List<GameObject> Friends;
     public List<GameObject> Enemies;
     public List<GameObject> AllCreatures;
+    public List<GameObject> AllPlants;
     public List<GameObject> AllDrops;
 
     /// <summary>
@@ -24,7 +25,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     GameObject ClosestFriendly;
     GameObject ClosestEnemy;
-    float closestDistance = 10000000f;
+    float closestDistance;
 
     /// <summary>
     /// Special Targets and Locations
@@ -39,6 +40,7 @@ public class MonsterChecks : MonoBehaviour
 
     private void Start()
     {
+        closestDistance = Mathf.Infinity;
         AiData = GetComponent<AIData>();
         GameObject soma = GameObject.FindGameObjectWithTag("Player");
 
@@ -50,6 +52,7 @@ public class MonsterChecks : MonoBehaviour
 
         // clear often
         AllCreatures = new List<GameObject>();
+        AllPlants = new List<GameObject>();
         AllDrops = new List<GameObject>();
 
         // specials
@@ -92,10 +95,11 @@ public class MonsterChecks : MonoBehaviour
     {
         #region Initialize closest vars
         float close = closestDistance;
-        GameObject closestCreature = this.gameObject;
+        GameObject closestCreature = null;
         #endregion
         foreach (GameObject Creature in AllCreatures)
         {
+           // Debug.Log("Checking creatures");
             #region Check if Creature Deleted
             if (Creature == null)
             {
@@ -105,11 +109,12 @@ public class MonsterChecks : MonoBehaviour
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
             if (dist < close)
             {
+                //Debug.Log("Closest is found");
                 close = dist;
                 closestCreature = Creature;
             }
         }
-
+        //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
         return closestCreature;
     }
 
@@ -176,6 +181,59 @@ public class MonsterChecks : MonoBehaviour
     /// Return Closest Drop
     /// </summary>
     /// <returns></returns>
+    public GameObject ClosestPlant()
+    {
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestPlant = null;
+        #endregion
+        foreach (GameObject Plant in AllPlants)
+        {
+            #region Check if Creature Deleted
+            if (Plant == null)
+                continue;
+
+            if (Plant.GetComponent<DestructableEnvironment>() == null)
+                if(Plant.GetComponent<DestructableEnvironment>().destroyed)
+                    continue;
+            #endregion
+            //Debug.Log("Potential Plant: " + Creature.GetInstanceID());
+            //Debug.Log(Plant.GetInstanceID() + " is a drop");
+            float dist = Vector2.Distance(transform.position, Plant.transform.position);
+            if (dist < close)
+            {
+                close = dist;
+                closestPlant = Plant;
+            }
+
+        }
+        //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
+        return closestPlant;
+    }
+
+    /// <summary>
+    /// Return Closest Drop
+    /// </summary>
+    /// <returns></returns>
+    public GameObject SomePlant()
+    {
+        #region Initialize Friend and Enemy
+        GameObject closestPlant;
+        if (AllPlants.Count == 0)
+        {
+            //Debug.Log("No Plant");
+            closestPlant = null;
+        }
+        else
+            closestPlant = AllPlants[Random.Range(0, AllPlants.Count - 1)];
+        #endregion
+        //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
+        return closestPlant;
+    }
+    /// <summary>
+    /// Return Closest Drop
+    /// </summary>
+    /// <returns></returns>
     public GameObject ClosestDrop()
     {
         #region Initialize Friend and Enemy
@@ -191,21 +249,19 @@ public class MonsterChecks : MonoBehaviour
             }
             #endregion
             //Debug.Log("Potential Drop: " + Creature.GetInstanceID());
-            if (Drop.tag == "SkewerableObject")
+            //Debug.Log(Drop.GetInstanceID() + " is a drop");
+            float dist = Vector2.Distance(transform.position, Drop.transform.position);
+            if (dist < close)
             {
-                //Debug.Log(Drop.GetInstanceID() + " is a drop");
-                float dist = Vector2.Distance(transform.position, Drop.transform.position);
-                if (dist < close)
-                {
-                    close = dist;
-                    closestDrop = Drop;
-                }
+                close = dist;
+                closestDrop = Drop;
             }
-
         }
         //Debug.Log("Closest drop is reached = " + (closestDrop == null ? "and it is null" : closestDrop.name + closestDrop.GetInstanceID()));
         return closestDrop;
     }
+
+
 
     /// <returns> Vector2 of Closest Enemy or Friend </returns>
     public Vector2 NearestEnemyPosition()
@@ -342,6 +398,56 @@ public class MonsterChecks : MonoBehaviour
         this.specialPosition = new Vector2(0f, 0f);
     }
     #endregion
+
+    // given any position, determine what tile that position is on(if it is)
+    // if it's not, don't navigate there
+    public TileNode GetNearestNode(Vector2 pos)
+    {
+        TileNode targetTile = null;
+        float minDist = Mathf.Infinity;
+        for(int i = 0; i < GetComponent<Pathfinder>().transform.childCount-1; i++)
+        {
+            var node = GetComponent<Pathfinder>().transform.GetChild(i);
+            var dist = Vector2.Distance(node.transform.position, pos);
+            if (dist < AiData.EngageHostileThreshold)
+            {
+                if(dist < minDist)
+                {
+                    minDist = dist;
+                    targetTile = node.GetComponent<TileNode>();
+                }
+            }
+        }
+        /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
+        /*
+        for (var i = 0; i < maxTries; i++)
+        {
+            var availableNodes = Physics2D.OverlapCircleAll(pos, sizeCheck);
+            var validNodes = new List<Collider2D>();
+            foreach (var node in availableNodes)
+            {
+                if (node.GetComponent<TileNode>() != null)
+                {
+                    validNodes.Add(node);
+                }
+            }
+
+            if (validNodes.Count > 0)
+            {
+                // RETURN VALID TILE
+                // Debug.Log("choosing from " + validNodes.Count + " possible nodes");
+                targetTile = validNodes[(int)Random.Range(0, validNodes.Count)].GetComponent<TileNode>();
+                return targetTile;
+            }
+            else
+            {
+                sizeCheck *= 2;
+                // Debug.Log("DOUBLING TILECHECK SIZE");
+            }
+        }*/
+
+        return targetTile;
+    }
     /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -412,8 +518,27 @@ public class MonsterChecks : MonoBehaviour
         float yyy = Random.Range(-yy, yy);
         if (specialPosition == new Vector2(0f, 0f))
         {
-            specialPosition = transform.position + new Vector3(xxx, yyy, 0f);
+            var plant = SomePlant();
+            Vector2 pos;
+            if (plant == null)
+                pos = (Vector2)this.transform.position;
+            else
+                pos = (Vector2)plant.transform.position;
+            specialPosition = (((Vector2)transform.position + new Vector2(xxx, yyy)) + pos)/2f;
+            //Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
         }
+    }
+
+    public List<TileNode> GetLongestPath(TileNode tile)
+    {
+        List<TileNode> path = null;
+        path = AiData.Behavior.pathfinder.AStar(tile);
+        return path;
+    }
+
+    public void SetCurrentTile()
+    {
+        currentTile = GetNearestNode(this.transform.position);
     }
     #endregion
 }

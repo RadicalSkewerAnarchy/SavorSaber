@@ -11,7 +11,7 @@ public class EventFade : MonoBehaviour
     public float speed = 0.1f;
     public void Play()
     {
-        Debug.Log("derp");
+        //Debug.Log("derp");
         StartCoroutine(PlayEvent());
     }
     public IEnumerator PlayEvent()

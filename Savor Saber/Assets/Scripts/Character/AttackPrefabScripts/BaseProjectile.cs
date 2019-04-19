@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+    CharacterData myCharData;
+
     /// <summary>
     /// A prefab to be instantiated when the projectile is terminated
     /// </summary>
@@ -105,9 +107,10 @@ public class BaseProjectile : MonoBehaviour
             penetrateTargets = false;
 
         spawnPosition = transform.position;
-        Debug.Log("Spawn = " + spawnPosition);
+        //Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
         //Debug.Log(directionVector);
+        myCharData = GetComponent<CharacterData>();
 
     }
 
@@ -160,19 +163,27 @@ public class BaseProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.GetType() == typeof(BoxCollider2D))
+        {
+            Physics2D.IgnoreCollision(collision, gameObject.GetComponent<CapsuleCollider2D>());
+        }
         GameObject go = collision.gameObject;
         // Debug.Log("Projectile trigger entered");
         if (go.tag == "SkewerableObject")
             return;
+        if (go == attacker)
+            return;
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
         CharacterData characterData = go.GetComponent<CharacterData>();
-        if (characterData == null)
-            return;
-        characterData.DoDamage((int)projectileDamage);
-        if (!penetrateTargets)
-            Destroy(this.gameObject);
-
-
+        if (characterData != null)
+        {
+            //myCharData.damageDealt += (int)projectileDamage;
+            //Debug.Log("Dealing DMG");
+            if (characterData.DoDamage((int)projectileDamage))
+                myCharData.entitiesKilled += 1;
+            if (!penetrateTargets)
+                Destroy(this.gameObject);
+        }
     }
 }

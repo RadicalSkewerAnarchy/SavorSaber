@@ -9829,6 +9829,7 @@ Transform:
   - {fileID: 5450380517746260232}
   - {fileID: 8809603593802193916}
   - {fileID: 2632894650512189725}
+  - {fileID: 2370229066658730217}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10138,8 +10139,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1
-          value: 1
+          time: 1.008667
+          value: 0.9005852
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -10268,16 +10269,20 @@ MonoBehaviour:
   Perception: 10
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
+  EngageHostileThreshold: 0
   maxHealth: 100
   health: 100
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  damageDealt: 0
+  entitiesKilled: 0
   initialFear: 0
   initialHunger: 0
   initialHostility: 0
   initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
+  healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
@@ -10292,6 +10297,7 @@ MonoBehaviour:
   DecisionTimer: 0
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 2
+  Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
   Friends: []
@@ -10328,6 +10334,7 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   AllCreatures: []
+  AllPlants: []
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
@@ -10375,6 +10382,7 @@ MonoBehaviour:
   charmThreshhold: 1
   rewardItem: {fileID: 4084962922675323153, guid: 0f3340712367e104887ce1128e461a64,
     type: 3}
+  amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!70 &6611929061611348362
 CapsuleCollider2D:
@@ -10467,6 +10475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   group: {fileID: 0}
+  allNodes: {fileID: 0}
   loop: 1
   spawnOnStart: 1
   loopTime: 1
@@ -10476,6 +10485,7 @@ MonoBehaviour:
   trackedObjects: []
   maxSpawnedEntites: 1
   maxTries: 100
+  spawnAttatched: 1
 --- !u!1 &7300592670295209974
 GameObject:
   m_ObjectHideFlags: 0
@@ -10685,3 +10695,83 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1001 &7151326566803624637
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 9183176342616779035}
+    m_Modifications:
+    - target: {fileID: 913700424908465189, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_Name
+      value: FavoriteFoodSpeech
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03849125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.008766
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 397395681929018882, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: fruitant
+      value: 
+      objectReference: {fileID: 6862601172263914498}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c114ed1ceb1fd6647bbe5d2dd2541c45, type: 3}
+--- !u!4 &2370229066658730217 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+    type: 3}
+  m_PrefabInstance: {fileID: 7151326566803624637}
+  m_PrefabAsset: {fileID: 0}

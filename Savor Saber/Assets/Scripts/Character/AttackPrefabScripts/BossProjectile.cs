@@ -34,7 +34,7 @@ public class BossProjectile : BaseProjectile
     private void Start()
     {
 
-        Debug.Log("Boss Proj: attacker = " + this.attacker.name + "... angle = " + this.directionVector);
+        //Debug.Log("Boss Proj: attacker = " + this.attacker.name + "... angle = " + this.directionVector);
         // go through children and set values
 
         BaseProjectile projectileData;
@@ -46,7 +46,7 @@ public class BossProjectile : BaseProjectile
             projectileData = child.GetComponent<BaseProjectile>();
 
             projectileData.directionVector = Vector2.ClampMagnitude(Ang2Vec(firingAngleIterate * (i) + firingAngleStart), 1f);
-            Debug.Log("Projectile angle: " + projectileData.directionVector);
+            //Debug.Log("Projectile angle: " + projectileData.directionVector);
 
             projectileData.penetrateTargets = true;
             projectileData.attacker = this.attacker;
