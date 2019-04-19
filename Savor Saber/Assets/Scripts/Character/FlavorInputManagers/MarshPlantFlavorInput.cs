@@ -5,6 +5,8 @@ using UnityEngine;
 public class MarshPlantFlavorInput : PlantFlavorInput
 {
     BoxCollider2D boxCollider;
+    public Sprite openSprite;
+    public Sprite closedSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -35,21 +37,21 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     // prevent player
     public override void ClosePlant()
     {
+        spriteRenderer.sprite = closedSprite;
         if (!isFed)
         {
             boxCollider.enabled = true;
         }
-
     }
 
     // allow player through
     public override void OpenPlant()
     {
+        spriteRenderer.sprite = openSprite;
         if (isFed)
         {
             boxCollider.enabled = false;
             spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
         }
-
     }
 }
