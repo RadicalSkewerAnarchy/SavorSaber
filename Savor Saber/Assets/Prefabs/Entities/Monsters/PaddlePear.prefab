@@ -20,10 +20,10 @@ GameObject:
   - component: {fileID: 5158955316715184632}
   - component: {fileID: 7842350833140496129}
   - component: {fileID: 1707353156324864275}
-  - component: {fileID: 1623600273}
   - component: {fileID: 2766135195253760641}
   - component: {fileID: 7081134690172526553}
   - component: {fileID: 307149032777373619}
+  - component: {fileID: 1411470462990942303}
   m_Layer: 0
   m_Name: PaddlePear
   m_TagString: Prey
@@ -339,18 +339,18 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -470,6 +470,7 @@ MonoBehaviour:
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
+  congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
 --- !u!114 &1707353156324864275
@@ -495,30 +496,6 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackDuration: 1
   isAttacking: 0
---- !u!114 &1623600273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411723353759096250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a4f727ab2c7a34f8eef78454ab69e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Acorn
-  - Wheat
-  - SugarCane
-  - CatTail
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
-    type: 3}
-  amountRewardItem: 1
-  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!70 &2766135195253760641
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -562,6 +539,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+--- !u!114 &1411470462990942303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6411723353759096250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTicLength: 1
+  favoriteIngredients:
+  - Acorn
+  favoriteFlavors: 1
+  charmThreshhold: 1
+  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
+    type: 3}
+  amountRewardItem: 2
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!1001 &433932540774903821
 PrefabInstance:
   m_ObjectHideFlags: 0

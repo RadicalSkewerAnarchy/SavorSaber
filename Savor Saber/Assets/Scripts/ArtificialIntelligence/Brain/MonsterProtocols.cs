@@ -127,16 +127,14 @@ public partial class MonsterProtocols : MonoBehaviour
         else
             return;
         //pos = new Vector2(-2.5f, -2.5f);
-        TileNode realPos = Checks.GetNearestNode(pos);
+        /*TileNode realPos = Checks.GetNearestNode(pos);
         Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
-        NavTo(realPos);
+        NavTo(realPos);*/
         #endregion
-        /*if (Behaviour.Idle())
+        if (Behaviour.Idle())
         {
-            Checks.AwareHowMany();
-            Behaviour.ResetActionTimer();
-            Checks.ResetSpecials();
-        }*/
+            Wander(2f, 2f);
+        }
     }
 
     // Runaway()
@@ -145,10 +143,12 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
-        Vector2 pos = Checks.ClosestCreature().gameObject.transform.position;
+        //GameObject near = Checks.ClosestCreature();
+        //Vector2 pos = (near == null ? this.transform.position : near.transform.position);
+        Vector2 pos = Checks.AverageGroupPosition();
         #endregion
 
-        if (!Behaviour.MoveFrom(pos, AiData.Speed, 10f))
+        if (Behaviour.MoveFrom(pos, AiData.Speed, 10f))
         {
             Wander(15f, 15f);
         }
@@ -270,15 +270,16 @@ public partial class MonsterProtocols : MonoBehaviour
             // reset action timer
             Wander(15f, 5f);
         }
+        else if (Checks.specialLeader != null)
+        {
+            //Debug.Log("my leader: " + Checks.specialLeader.name);
+            GameObject near = Checks.FollowTheLeader();
+            Vector2 pos = near.transform.position;
+            Behaviour.MoveTo(pos, 4, 1.5f);
+        }
         else if (Checks.specialTarget == null)
         {
             if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
-        }
-        else
-        {
-            GameObject near = Checks.ClosestLeader();
-            Vector2 pos = near.transform.position;
-            //Behaviour.MoveTo(pos, AiData.Speed, 1f);
         }
     }
 

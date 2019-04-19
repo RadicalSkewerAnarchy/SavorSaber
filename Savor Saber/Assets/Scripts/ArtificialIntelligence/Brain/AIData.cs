@@ -156,19 +156,21 @@ public class AIData : CharacterData
     {
         if (DecisionTimer < 0)
         {
-            // CALCULATE AND ACQUIRE NEW STATE:
-            currentProtocol = Curves.DecideState();
-
-            //Debug.Log(this.gameObject.name + " is getting a New Protocol: " + currentProtocol);
-
-            // RESET DECISION TIMER
-            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            // disable recalculate behavior on CONGA
+            if (currentProtocol != Protocols.Conga)
+            {
+                // CALCULATE AND ACQUIRE NEW STATE:
+                currentProtocol = Curves.DecideState();
+            }
 
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
             UpdateHunger();
+            
+            // RESET DECISION TIMER
+            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
         }
         else
         {
@@ -251,19 +253,6 @@ public class AIData : CharacterData
         {
             // create a signal that subtracts from my hunger
             InstantiateSignal(0.1f, "Hunger", 0.05f, false, true);
-
-            // die
-            /*if (hunger >= 1f)
-            {
-                // hurt me
-                DoDamage(3);
-                if (health <= 0)
-                {
-                    // ded
-                    Monster me = this.gameObject.GetComponent<Monster>();
-                    me.Kill();
-                }
-            }*/
         }
 
         // change color
@@ -293,5 +282,19 @@ public class AIData : CharacterData
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
         signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
         return obtainSurroundings;
+    }
+
+    // getters for monster info
+    public MonsterBehavior getBehavior()
+    {
+        return this.Behavior;
+    }
+    public MonsterProtocols getProtocol()
+    {
+        return this.Protocol;
+    }
+    public MonsterChecks getChecks()
+    {
+        return this.Checks;
     }
 }

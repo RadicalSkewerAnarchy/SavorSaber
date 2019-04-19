@@ -115,7 +115,7 @@ public class CharacterData : MonoBehaviour
 
             // create a fear signal
             float hp = (maxHealth - health) / maxHealth;
-            InstantiateSignal(damage *2 , "Fear", hp + 0.1f, true, true);
+            InstantiateSignal(damage *2 , "Fear",  0.25f, true, true);
         }
         if (damage < 0)
         {

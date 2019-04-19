@@ -11,13 +11,13 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        characterData = GetComponent<CharacterData>();
+        characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponentInChildren<BoxCollider2D>();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
-    public override void RespondToIngredients()
+    public override void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)

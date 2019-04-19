@@ -9,7 +9,8 @@ public class FlavorInputManager : MonoBehaviour
     /// </summary>
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
-    protected CharacterData characterData;
+    //protected CharacterData characterData;
+    protected AIData characterData;
     protected SpriteRenderer spriteRenderer;
 
     public float dotTicLength = 1;
@@ -26,7 +27,11 @@ public class FlavorInputManager : MonoBehaviour
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        characterData = GetComponent<CharacterData>();
+
+        // differentiate between ai and char data
+        characterData = GetComponent<AIData>();
+        if (characterData == null)
+            characterData = (AIData)GetComponent<CharacterData>();
     }
 
     public void InitializeDictionary()
@@ -54,7 +59,7 @@ public class FlavorInputManager : MonoBehaviour
         flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
     }
 
-    public virtual void Feed(IngredientData[] ingredientArray)
+    public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
@@ -86,7 +91,8 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
         }
-        RespondToIngredients();
+
+        RespondToIngredients(fedByPlayer);
         SpawnReward(ingredientArray);
     }
 
@@ -134,23 +140,30 @@ public class FlavorInputManager : MonoBehaviour
     }
 
 
-    public virtual void RespondToIngredients()
+    public virtual void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            if(favoriteFlavors != RecipeData.Flavors.Spicy)
+            if(favoriteFlavors == RecipeData.Flavors.Spicy)
             {
-                DamageOverTime(5, 5);
+            }
+            else
+            {
+
             }
         }
         //handle sweet
         if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
         {
-            if (favoriteFlavors != RecipeData.Flavors.Sweet)
+            if (fedByPlayer)
             {
-                CheckCharmEffect();
+                if (favoriteFlavors == RecipeData.Flavors.Sweet)
+                {
+                    CheckCharmEffect((favoriteFlavors == RecipeData.Flavors.Sweet));
+                }
             }
+          
         }
         //handle umami
         if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
@@ -163,10 +176,55 @@ public class FlavorInputManager : MonoBehaviour
     }
 
 
-    protected void CheckCharmEffect()
+    protected void CheckCharmEffect(bool favorite)
     {
-        characterData.DoDamage(-3);
-        characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
+        // the amount of time that a fruitant is charmed
+        Debug.Log("CHARMED");
+        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 15f : 5f);
+        StartCharm(time);
+        //characterData.DoDamage(-3);
+        //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
+    }
+
+    protected void StartCharm(float time)
+    {
+        // get protocols
+
+        //Debug.Log("should be CHARMED for " + time + " seconds");
+        MonsterProtocols proto = characterData.getProtocol();
+        MonsterChecks check = characterData.getChecks();
+        // initiate conga
+        characterData.currentProtocol = AIData.Protocols.Conga;
+        // set leader to Soma
+        check.specialLeader = GameObject.FindGameObjectWithTag("Player");
+        // get ready to stop it
+        StartCoroutine(ExecuteCharm(time));
+    }
+
+    protected void StopCharm()
+    {
+        // get protocols
+        MonsterProtocols proto = characterData.getProtocol();
+        MonsterChecks check = characterData.getChecks();
+        // no leader
+        check.ResetSpecials();
+        check.specialLeader = null;
+        check.congaPosition = -1;
+        // initiate conga
+        characterData.currentProtocol = AIData.Protocols.Lazy;
+
+        Debug.Log("no longer CHARMED");
+    }
+    protected IEnumerator ExecuteCharm(float time)
+    {
+        //things to happen before delay
+
+        yield return new WaitForSeconds(time);
+
+        //things to happen after delay
+        StopCharm();
+
+        yield return null;
     }
 
     public void DamageOverTime(int numTics, float ticLength)
