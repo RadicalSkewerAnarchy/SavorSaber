@@ -63,7 +63,7 @@ public class ProjectileSkewer : BaseProjectile
                     else
                     {
                         // FEEEED MEEEE
-                        flavorInput.Feed(ingredientArray);
+                        flavorInput.Feed(ingredientArray, true);
                         fed = true;
                         Destroy(this.gameObject);
                         //=================================

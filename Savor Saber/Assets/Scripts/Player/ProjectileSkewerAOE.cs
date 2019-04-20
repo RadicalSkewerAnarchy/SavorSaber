@@ -30,7 +30,7 @@ public class ProjectileSkewerAOE : MonoBehaviour
             FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
             if (flavorInput != null)
             {
-                flavorInput.Feed(ingredientArray);
+                flavorInput.Feed(ingredientArray, true);
             }
         }
 

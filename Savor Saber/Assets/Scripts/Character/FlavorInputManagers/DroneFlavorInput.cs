@@ -16,10 +16,10 @@ public class DroneFlavorInput : FlavorInputManager
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        characterData = GetComponent<CharacterData>();
+        characterData = GetComponent<AIData>();
     }
 
-    public override void RespondToIngredients()
+    public override void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy - Does damage over time
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)

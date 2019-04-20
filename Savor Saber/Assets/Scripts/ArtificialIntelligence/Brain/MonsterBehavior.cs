@@ -117,7 +117,7 @@ public class MonsterBehavior : MonoBehaviour
         AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
-            AiData.InstantiateSignal(1f, "Fear", -0.1f, false, true);
+            AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
             return true;
         }
         else
@@ -162,9 +162,9 @@ public class MonsterBehavior : MonoBehaviour
             #region Move
             AnimatorBody.Play("Move");
             target = (current - target);
-            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            RigidBody.velocity = target * speed * Time.deltaTime;
+            RigidBody.velocity = target;
             #endregion
             return false;
         }
@@ -190,7 +190,7 @@ public class MonsterBehavior : MonoBehaviour
             ingredientArray[0] = ingredient;
 
             // activate flavor input manager
-            flavor.Feed(ingredientArray);
+            flavor.Feed(ingredientArray, false);
 
             // deactivate drop
             drop.SetActive(false);

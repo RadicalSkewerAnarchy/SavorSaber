@@ -9,7 +9,7 @@ using System.Linq;
 public class EventTriggerFlavorInput : FlavorInputManager
 {
     public EventTrigger scene;
-    public override void Feed(IngredientData[] ingredientArray)
+    public void Feed(IngredientData[] ingredientArray)
     {
         Debug.Log("Raindeer feed");
         if (ingredientArray.Length >= 0 && !scene.IsActive)

@@ -13,7 +13,7 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
 
     }
 
-    public override void RespondToIngredients()
+    public override void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
