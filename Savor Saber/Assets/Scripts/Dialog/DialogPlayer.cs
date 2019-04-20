@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogPlayer : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class DialogPlayer : MonoBehaviour
     protected GameObject dialogBox;
     protected RectTransform dialogRectTransform;
 
-    protected Text dialogText;
+    protected TextMeshProUGUI dialogText;
+    //protected Text dialogText;
     protected Image dialogImage;
     private AudioSource audioPlayer;
     #endregion
@@ -44,7 +46,7 @@ public class DialogPlayer : MonoBehaviour
             dialogBox.transform.SetParent(UICanvas.transform);
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
             dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-            dialogText = dialogBox.transform.GetChild(2).GetComponent<Text>();
+            dialogText = dialogBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();//dialogBox.transform.GetChild(2).GetComponent<Text>();
             audioPlayer = dialogBox.GetComponent<AudioSource>();
             //set dialog box portrait
             Transform portrait = dialogBox.transform.GetChild(1);
@@ -119,9 +121,17 @@ public class DialogPlayer : MonoBehaviour
                 }
                 else
                 {
-                    letter += tags[tagInd].Length;
-                    dialogText.text += tags[tagInd] + tags[++tagInd];
-                    inTag = true;
+                    if(tags[tagInd].Contains("sprite"))
+                    {
+                        letter += tags[tagInd].Length;
+                        dialogText.text += tags[tagInd++];
+                    }
+                    else
+                    {
+                        letter += tags[tagInd].Length;
+                        dialogText.text += tags[tagInd] + tags[++tagInd];
+                        inTag = true;
+                    }
                     continue;
                 }
             }
@@ -164,7 +174,8 @@ public class DialogPlayer : MonoBehaviour
         Vector2 viewportPosition = Camera.main.WorldToViewportPoint(actor.transform.position);
         Vector2 UIOffset = new Vector2((float)canvasRect.sizeDelta.x / 2f, -70f);
         Vector2 proportionalPosition = new Vector3(viewportPosition.x * canvasRect.sizeDelta.x, viewportPosition.y * canvasRect.sizeDelta.y);
-        return proportionalPosition - UIOffset;
+        Vector2 position = proportionalPosition - UIOffset;
+        return new Vector2(Mathf.Floor(position.x), Mathf.Floor(position.y));
     }
 
 }
