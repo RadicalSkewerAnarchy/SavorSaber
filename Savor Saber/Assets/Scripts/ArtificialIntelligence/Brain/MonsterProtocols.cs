@@ -204,7 +204,7 @@ public partial class MonsterProtocols : MonoBehaviour
         //Vector2 pos = (near == null ? this.transform.position : near.transform.position);
         Vector2 pos = Checks.AverageGroupPosition();
         #endregion
-        if (Behaviour.MoveFrom(pos, AiData.Speed, 1.0f))
+        if (Behaviour.MoveFrom(pos, AiData.Speed, 15f))
         {
         	// Idle spawns a calm effect --> recovers from fear
             Lazy();
@@ -469,8 +469,8 @@ public partial class MonsterProtocols : MonoBehaviour
         {
         	// still gotta conga!!
         	// even with no leader
-            GameObject near = Checks.ClosestLeader();
-            Chase(near);
+            //GameObject near = Checks.ClosestLeader();
+            //Chase(near);
         }
         else 
         {

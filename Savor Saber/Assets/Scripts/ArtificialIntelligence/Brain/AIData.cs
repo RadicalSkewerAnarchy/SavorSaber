@@ -168,12 +168,19 @@ public class AIData : CharacterData
     {
         if (DecisionTimer < 0)
         {
-            // disable recalculate behavior on CONGA
-            if (currentProtocol != Protocols.Conga)
+            bool decideState = true;
+            // CONGA LOGIC
+            // as long as fear is not 1, stay conga
+            if (currentProtocol == Protocols.Conga)
             {
-                // CALCULATE AND ACQUIRE NEW STATE:
-                currentProtocol = Curves.DecideState();
+                if (moods["Fear"] != 1)
+                    decideState = false;
             }
+
+            // DECIDE
+            // CALCULATE AND ACQUIRE NEW STATE:
+            if (decideState)
+                currentProtocol = Curves.DecideState();
 
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();

@@ -150,7 +150,6 @@ public class FlavorInputManager : MonoBehaviour
             }
             else
             {
-
             }
         }
         //handle sweet
