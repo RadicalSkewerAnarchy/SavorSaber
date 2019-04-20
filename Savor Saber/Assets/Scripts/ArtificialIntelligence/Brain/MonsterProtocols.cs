@@ -206,8 +206,11 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
         if (Behaviour.MoveFrom(pos, AiData.Speed, 15f))
         {
-        	// Idle spawns a calm effect --> recovers from fear
-            Lazy();
+            // Idle spawns a calm effect --> recovers from fear
+            if (Behaviour.Idle())
+            {
+                Wander(2f, 2f);
+            }
         }
     }
     public void NavRunaway()

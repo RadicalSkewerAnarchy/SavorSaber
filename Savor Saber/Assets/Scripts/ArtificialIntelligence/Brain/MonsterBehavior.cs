@@ -31,6 +31,7 @@ public class MonsterBehavior : MonoBehaviour
     public float ResetTimer;
     public float ResetTimerReset;
     public float ResetTimerVariance;
+    bool actionAvailable = true;
     bool left = false;
     #endregion
     #region Bias
@@ -117,7 +118,11 @@ public class MonsterBehavior : MonoBehaviour
         AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
-            AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
+            if (actionAvailable)
+            {
+                AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
+                actionAvailable = false;
+            }
             return true;
         }
         else
@@ -331,6 +336,7 @@ public class MonsterBehavior : MonoBehaviour
     public void ResetActionTimer()
     {
         ResetMovementBias();
+        actionAvailable = true;
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
     /// <summary>
