@@ -24,7 +24,9 @@ public class SkewerableObject : MonoBehaviour
 
     private Vector3 target;
     private Vector3 origin;
-    private Vector3 halfScale = new Vector3(0.75f, 0.75f, 1f);
+    private Vector3 halfScale = new Vector3(0.5f, 0.5f, 1f);
+
+    public TileNode currentTile;
 
     // Use this for initialization
     void Start()

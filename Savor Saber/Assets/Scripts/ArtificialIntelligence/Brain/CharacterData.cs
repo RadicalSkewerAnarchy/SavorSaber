@@ -18,6 +18,7 @@ public class CharacterData : MonoBehaviour
     public float Perception;
     public float MeleeAttackThreshold;
     public float RangeAttackThreshold;
+    public float EngageHostileThreshold;
     public int maxHealth;
     public int health;
     public int PartySize = 3;
@@ -88,7 +89,7 @@ public class CharacterData : MonoBehaviour
                 if (healthBar != null)
                 {
                     healthBar.gameObject.SetActive(true);
-                    Debug.Log("Update health bar");
+                    //Debug.Log("Update health bar");
                     healthBar.value = (float)health / maxHealth;
                     if (barCr != null)
                         StopCoroutine(barCr);
@@ -119,7 +120,7 @@ public class CharacterData : MonoBehaviour
         }
         if (damage < 0)
         {
-            health -= damage;
+            health = Mathf.Max(health - damage, maxHealth);
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {

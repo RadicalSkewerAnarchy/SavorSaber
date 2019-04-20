@@ -12,18 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae504df65aae7f4a9124a6a77c1ad12, type: 3}
   m_Name: LastSession
   m_EditorClassIdentifier: 
-  editorStates:
-  - {fileID: 114570969194143926}
+  editorStates: []
   saveName: Assets\ScriptableObjects\DialogScenes\WillyWonka
   savePath: Assets\ScriptableObjects\DialogScenes\WillyWonka.asset
   livesInScene: 0
   nodes:
-  - {fileID: 114576106335183216}
-  - {fileID: 114450425342952092}
-  - {fileID: 114146048735890444}
-  - {fileID: 114808450723991764}
-  - {fileID: 114846119495504184}
-  - {fileID: 114461706905665544}
+  - {fileID: 114429722499554504}
+  - {fileID: 114277459346129230}
+  - {fileID: 114951745902790860}
+  - {fileID: 114385407944419644}
+  - {fileID: 114953066470697274}
+  - {fileID: 114964925830260138}
+  - {fileID: 114497766349274756}
+  - {fileID: 114740387365295218}
+  - {fileID: 114667292580895874}
+  - {fileID: 114041445929407100}
   groups: []
 --- !u!114 &114146048735890444
 MonoBehaviour:
@@ -186,7 +189,29 @@ MonoBehaviour:
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114749067889985108
+--- !u!114 &114429722499554504
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
+  m_Name: Pan Camera
+  m_EditorClassIdentifier: 
+  position: {x: 412.8, y: -138.8}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114122629534948150}
+  fromPreviousIN: {fileID: 114766147638931730}
+  waitUntilFinished: 0
+  movementType: 0
+  target: 
+  maxPullSpeed: 0
+  snapTime: 0
+--- !u!114 &114435139086521170
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,7 +232,69 @@ MonoBehaviour:
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114752344641761052
+--- !u!114 &114497766349274756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 110, y: -150}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114937059876976770}
+  fromPreviousIN: {fileID: 114654824173947370}
+  characterName: Character Name
+  text: I have a very good feeling about this!
+  actor: Soma
+  emotion: 1
+--- !u!114 &114509816864412132
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  direction: 0
+  maxConnectionCount: 1
+  styleID: 
+  _connections: []
+  side: 0
+  sidePosition: 0
+  sideOffset: 0
+--- !u!114 &114585834286325038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114953066470697274}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114611809658473682}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114610055368755418
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -240,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 114576106335183216}
+  body: {fileID: 0}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
@@ -258,8 +345,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05d26699c2c95e43a8c82b5f9c2f141, type: 3}
-  m_Name: Gameflow End
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114497766349274756}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114384175883149458}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114657363390607956
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114157417541533888}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114667292580895874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
   m_EditorClassIdentifier: 
   position: {x: -118.400024, y: -105}
   dynamicConnectionPorts: []
@@ -307,7 +436,48 @@ MonoBehaviour:
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114873722774021856
+--- !u!114 &114860581346573164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  direction: 0
+  maxConnectionCount: 1
+  styleID: 
+  _connections: []
+  side: 0
+  sidePosition: 0
+  sideOffset: 0
+--- !u!114 &114913873859058726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 0}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114917790801438720
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,7 +519,132 @@ MonoBehaviour:
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &114937870136762038
+--- !u!114 &114946407933689448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -10, y: 100}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 0}
+  fromPreviousIN: {fileID: 114962107979818592}
+  characterName: Character Name
+  text: Once you have one on your skewer, just throw it (L) into a Paddle Pear's mouth.
+  actor: Amrita
+  emotion: 1
+--- !u!114 &114951745902790860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
+  m_Name: Dialog Start
+  m_EditorClassIdentifier: 
+  position: {x: -1300, y: -220}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114965291614062336}
+  dependencies: []
+  actors:
+  - Soma
+  - PatriarchPear
+  unityEvents:
+  - FadeOut
+--- !u!114 &114953066470697274
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2148eedaaee840e4d8cf2a066bbd68ea, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  position: {x: -781.69995, y: -76.19997}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114585834286325038}
+  fromPreviousIN: {fileID: 114147679056905626}
+  waitUntilFinished: 1
+  waitTime: 2
+--- !u!114 &114957980202293222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 468.70496, y: -684.49506}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 0}
+  fromPreviousIN: {fileID: 114970072874813480}
+  characterName: Character Name
+  text: Mana set up another campsite near the marsh.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &114962107979818592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114946407933689448}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 0}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114964925830260138
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -190, y: -150}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114384175883149458}
+  fromPreviousIN: {fileID: 114157417541533888}
+  characterName: Character Name
+  text: To a world of Pure Imagination!
+  actor: PatriarchPear
+  emotion: 2
+--- !u!114 &114965291614062336
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -368,5 +663,26 @@ MonoBehaviour:
   _connections:
   - {fileID: 114752344641761052}
   side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114970072874813480
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114957980202293222}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 0}
+  side: 4
   sidePosition: 30
   sideOffset: 0

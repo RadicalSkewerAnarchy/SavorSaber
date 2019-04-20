@@ -37,7 +37,10 @@ public class TeleportTile : MonoBehaviour
             teleTimer -= Time.deltaTime;
             if (teleporting)
             {
-                Teleport();
+                if (teleporter != null)
+                    Teleport();
+                else
+                    Destroy(this.gameObject);
             }
             else if (teleTimer <= 0)
             {

@@ -311,7 +311,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 010000000b0000000800000000000000
+    _keys: 010000000b000000080000000000000006000000
     _values:
     - _keys:
       - Shoot
@@ -426,6 +426,32 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+    - _keys:
+      - Hunger
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   macroValues:
     _keys:
     - Smack
@@ -524,6 +550,7 @@ MonoBehaviour:
   Perception: 10
   MeleeAttackThreshold: 2
   RangeAttackThreshold: 6
+  EngageHostileThreshold: 4
   maxHealth: 20
   health: 20
   PartySize: 3
@@ -542,7 +569,7 @@ MonoBehaviour:
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
   damageParticleBurst: {fileID: 4575833907128136578}
-  eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
+  eatingParticleBurst: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
     type: 3}
   healthBar: {fileID: 8844424530795747164}
   currentBehavior: 0
@@ -552,6 +579,7 @@ MonoBehaviour:
   DecisionTimer: 0
   DecisionTimerReset: 2
   DecisionTimerVariance: 0
+  Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
   Friends: []
@@ -975,7 +1003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,

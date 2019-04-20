@@ -24,8 +24,6 @@ GameObject:
   - component: {fileID: 3427734949844128077}
   - component: {fileID: 6230704303760914807}
   - component: {fileID: 2817615788990947547}
-  - component: {fileID: 5179529982076891344}
-  - component: {fileID: 3813504158110934273}
   m_Layer: 0
   m_Name: HorseRadish
   m_TagString: Prey
@@ -578,6 +576,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
+  EngageHostileThreshold: 0
   maxHealth: 36
   health: 36
   PartySize: 3
@@ -596,7 +595,7 @@ MonoBehaviour:
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
   damageParticleBurst: {fileID: 578021685741336474}
-  eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
+  eatingParticleBurst: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
     type: 3}
   healthBar: {fileID: 1196825030626935752}
   currentBehavior: 0
@@ -606,6 +605,7 @@ MonoBehaviour:
   DecisionTimer: 0
   DecisionTimerReset: 0.25
   DecisionTimerVariance: 0.3
+  Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
   Friends: []
@@ -671,6 +671,27 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackDuration: 1
   isAttacking: 0
+--- !u!114 &5909306682804108178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885113460597749827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90a4f727ab2c7a34f8eef78454ab69e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTicLength: 1
+  favoriteIngredients:
+  - Pear
+  favoriteFlavors: 2
+  charmThreshhold: 0
+  rewardItem: {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5,
+    type: 3}
+  amountRewardItem: 2
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!114 &801385354610976386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,51 +774,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
---- !u!61 &5179529982076891344
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885113460597749827}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 2, y: 1.5}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &3813504158110934273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885113460597749827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients: []
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 0}
 --- !u!1001 &1486205875639855600
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -915,12 +891,22 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 120
       objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 120
@@ -938,16 +924,6 @@ PrefabInstance:
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,

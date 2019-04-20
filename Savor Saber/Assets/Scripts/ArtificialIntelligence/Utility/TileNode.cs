@@ -18,20 +18,18 @@ public class TileNode : MonoBehaviour
     public void SetWalkable(bool on)
     {
         walkable = on;
-        if (!on)
+        if (!walkable)
         {
             Destroy(gameObject.GetComponent<BoxCollider2D>());
         }
     }
+    
     private void OnTriggerEnter2D(Collider2D collision)
-    {        
-        if (collision.GetType() == typeof(BoxCollider2D))
+    {
+        if(collision.GetType() == typeof(CompositeCollider2D))
         {
-            if (collision.gameObject.GetComponent<MonsterChecks>() != null)
-            {
-                collision.gameObject.GetComponent<MonsterChecks>().currentTile = gameObject.GetComponent<TileNode>();
-            }
-        }                     
+            Destroy(gameObject.GetComponent<BoxCollider2D>());
+        }
     }
 }
 

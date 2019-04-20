@@ -163,6 +163,10 @@ public class BaseProjectile : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.GetType() == typeof(BoxCollider2D))
+        {
+            Physics2D.IgnoreCollision(collision, gameObject.GetComponent<CapsuleCollider2D>());
+        }
         GameObject go = collision.gameObject;
         // Debug.Log("Projectile trigger entered");
         if (go.tag == "SkewerableObject")
