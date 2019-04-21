@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 5098209837898382596}
   - component: {fileID: 5098209837898382594}
   - component: {fileID: 5098209837898382595}
-  m_Layer: 0
+  - component: {fileID: 1963839471}
+  m_Layer: 12
   m_Name: DroneSpawner
   m_TagString: ThrowThrough
   m_Icon: {fileID: 0}
@@ -96,8 +97,11 @@ MonoBehaviour:
   droneType: {fileID: 7874833132442233986, guid: 7a072c03e44e906419ba50688b48ad6e,
     type: 3}
   allNodes: {fileID: 0}
-  maxDrones: 3
+  maxDrones: 5
   spawnInterval: 7
+  onSprite: {fileID: 21300000, guid: 39f8ed995bd8b6349b1cfc2d50d2c9a2, type: 3}
+  offSprite: {fileID: 21300000, guid: 0d7375e508a18234d8804b698f6cea38, type: 3}
+  deadSprite: {fileID: 21300000, guid: 088dcc365ac1aad46852f5b484fc25e8, type: 3}
 --- !u!82 &5098209837898382595
 AudioSource:
   m_ObjectHideFlags: 0
@@ -194,3 +198,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!70 &1963839471
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5098209837898382593}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.48}
+  m_Size: {x: 1.67, y: 0.76}
+  m_Direction: 1
