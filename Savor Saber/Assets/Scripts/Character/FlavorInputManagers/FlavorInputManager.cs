@@ -229,8 +229,9 @@ public class FlavorInputManager : MonoBehaviour
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
-        int shots = flavorCountDictionary[RecipeData.Flavors.Spicy] * (favorite ? 3 : 2);
-        int pellets = flavorCountDictionary[RecipeData.Flavors.Spicy] + (favorite ? 4 : 1);
+        var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
+        int shots = spice + (favorite ? 3 : 1) + (spice == 3 ? 3 : 0);
+        int pellets = spice + (favorite ? 2 : 1);
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
 
