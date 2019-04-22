@@ -46,6 +46,7 @@ public class DestructableEnvironment : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnTime);
         spr.sprite = normalSprite;
+        health = 1;
         destroyed = false;
     }
 }
