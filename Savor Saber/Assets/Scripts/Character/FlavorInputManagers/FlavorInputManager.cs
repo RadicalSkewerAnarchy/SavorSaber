@@ -231,20 +231,7 @@ public class FlavorInputManager : MonoBehaviour
         Debug.Log("CURRIED");
         int shots = flavorCountDictionary[RecipeData.Flavors.Spicy] * (favorite ? 3 : 2);
         int pellets = flavorCountDictionary[RecipeData.Flavors.Spicy] + (favorite ? 4 : 1);
-        StartCurry(shots, pellets);
-    }
-
-    protected void StartCurry(int shots, int pellets)
-    {
-        // get ready to stop it
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
-    }
-
-    protected void StopCurry()
-    {
-        // initiate conga
-        characterData.currentProtocol = AIData.Protocols.Lazy;
-        Debug.Log("no longer CURRIED");
     }
 
     protected IEnumerator ExecuteCurry(float time, int shots, int pellets)
@@ -259,6 +246,10 @@ public class FlavorInputManager : MonoBehaviour
 
         // spawn the amount of shots with the amount of pellets
         var s = shots;
+
+        // toggle between red and more red
+        SpriteRenderer sr = this.GetComponent<SpriteRenderer>();
+        sr.color = Color.red;
         while (s > 0)
         {
             yield return new WaitForSeconds(time);
@@ -268,7 +259,7 @@ public class FlavorInputManager : MonoBehaviour
             {
                 // spawn curry ball at an angle
                 newAttack = Instantiate(behave.projectile, transform.position, Quaternion.identity);
-                Vector2 dir = Vector2.ClampMagnitude(pv.Ang2Vec((split + Random.Range(-split/4, split/4)) * (i)), 1f);
+                Vector2 dir = Vector2.ClampMagnitude(pv.Ang2Vec((split * i) + (s * 30)), 1f);/*+ Random.Range(-split/4, split/4)*/
 
                 BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
 
@@ -281,7 +272,7 @@ public class FlavorInputManager : MonoBehaviour
             s--;
         }
         //things to happen after delay
-        StopCurry();
+        Debug.Log("no longer CURRIED");
         yield return null;
     }
     #endregion
