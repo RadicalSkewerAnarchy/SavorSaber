@@ -72,6 +72,7 @@ public class EventTrigger : MonoBehaviour
     protected void DoCutscenePrep(bool start)
     {
         player.GetComponent<CameraController>().Detatched = start;
+        player.GetComponent<Rigidbody2D>().isKinematic = start;
         var attacks = player.GetComponents<AttackBase>();
         foreach (var attack in attacks)
             attack.enabled = !start;

@@ -32,6 +32,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public GameObject specialTarget = null;
     public GameObject specialLeader = null;
+    public int congaPosition = -1;
     public Vector2 specialPosition;
     bool amLeader = false;
     bool positionAcquired = false;
@@ -192,11 +193,9 @@ public class MonsterChecks : MonoBehaviour
             #region Check if Creature Deleted
             if (Plant == null)
                 continue;
-
-            if (Plant.GetComponent<DestructableEnvironment>() == null)
-                if(Plant.GetComponent<DestructableEnvironment>().destroyed)
-                    continue;
-            #endregion
+            DestructableEnvironment d = Plant.GetComponent<DestructableEnvironment>();
+            if (d != null && d.destroyed)
+                continue;
             //Debug.Log("Potential Plant: " + Creature.GetInstanceID());
             //Debug.Log(Plant.GetInstanceID() + " is a drop");
             float dist = Vector2.Distance(transform.position, Plant.transform.position);
@@ -354,6 +353,73 @@ public class MonsterChecks : MonoBehaviour
         return (specialTarget == null ? this.gameObject : specialTarget);
     }
 
+    public GameObject FollowTheLeader()
+    {
+        // if i dont have a position in the conga
+        if (congaPosition == -1)
+        {
+            int highestPos = -1;
+            GameObject highestLeader = null;
+            foreach (GameObject Creature in AllCreatures)
+            {
+                #region Check if Creature Deleted
+                if (Creature == null || Creature.tag == "Player")
+                {
+                    continue;
+                }
+                #endregion
+                MonsterChecks check = Creature.GetComponent<MonsterChecks>();
+                int cp = check.congaPosition;
+                if (cp > highestPos)
+                {
+                    highestPos = cp;
+                    highestLeader = Creature;
+                }
+            }
+
+            // set special target
+            this.congaPosition = highestPos + 1;
+            this.specialTarget = (this.congaPosition <= 0 ? specialLeader : highestLeader);
+        }
+        else
+        {
+            // if i already have a position
+            int lowestPos = -1;
+            int newPos = this.congaPosition;
+            GameObject lowestLeader = this.specialLeader;
+
+            foreach (GameObject Creature in AllCreatures)
+            {
+                #region Check if Creature Deleted
+                if (Creature == null || Creature.tag == "Player")
+                {
+                    continue;
+                }
+                #endregion
+
+                MonsterChecks check = Creature.GetComponent<MonsterChecks>();
+                int cp = check.congaPosition;
+
+                if (cp > lowestPos && cp < this.congaPosition)
+                {
+                    lowestPos = cp;
+                    lowestLeader = Creature;
+                }
+                if (cp == newPos)
+                {
+                    newPos++;
+                }
+            }
+            // set special target
+            this.congaPosition = newPos;
+            this.specialTarget = lowestLeader;
+        }
+
+        // return special target
+        Debug.Log("position in conga = " + this.congaPosition);
+        return specialTarget;
+    }
+
     // am leader
     public bool AmLeader()
     {
@@ -448,6 +514,7 @@ public class MonsterChecks : MonoBehaviour
 
         return targetTile;
     }
+    #endregion
     /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
