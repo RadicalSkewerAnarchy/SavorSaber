@@ -127,13 +127,24 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        if (CheckThreshold(pos, AiData.EngageHostileThreshold))
+        var rat = AiData.RangeAttackThreshold;
+        var eht = AiData.EngageHostileThreshold;
+        var engage = CheckRangedThreshold(pos, rat, eht);
+        if (engage < 0)
         {
-            if (Behaviour.MoveFrom(pos, AiData.Speed, 0.5f))
+            if (Behaviour.MoveFrom(pos, AiData.Speed, rat - eht))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
             }
         }
+        else if (engage > 0)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, rat + eht))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+        else Behaviour.RangedAttack(pos, AiData.Speed);
     }
     public void NavRanged()
     {

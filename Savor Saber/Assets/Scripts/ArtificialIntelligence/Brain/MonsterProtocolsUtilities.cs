@@ -18,6 +18,23 @@ public partial class MonsterProtocols : MonoBehaviour
             return true;
         }
     }
+
+    /// <summary>
+    /// returns -1 if too close, +1 if too far, 0 if just right
+    /// </summary>
+    private int CheckRangedThreshold(Vector2 pos, float dist, float threshold)
+    {
+        var distance = Vector2.Distance(pos, AiData.gameObject.transform.position);
+        if (distance < (dist - threshold))
+        {
+            return -1;
+        }
+        else if (distance > (dist + threshold))
+        {
+            return 1;
+        }
+        else return 0;
+    }
     /// <summary>
     /// empty for now but will be used in the future when Enemies exists
     /// </summary>
