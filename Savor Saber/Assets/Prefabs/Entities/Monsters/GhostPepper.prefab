@@ -78,12 +78,12 @@ GameObject:
   - component: {fileID: 6397378702098026692}
   - component: {fileID: 2570449443912586966}
   - component: {fileID: 2146767120013908669}
-  - component: {fileID: 2132770960937228029}
   - component: {fileID: 7652353787555290133}
   - component: {fileID: 2481682784615806019}
+  - component: {fileID: 681381842631641068}
   m_Layer: 0
   m_Name: GhostPepper
-  m_TagString: Predator
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -305,8 +305,6 @@ MonoBehaviour:
   chance: 100
   drops:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
   signalDrops: []
 --- !u!114 &7847147330112535166
 MonoBehaviour:
@@ -361,71 +359,86 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 020000000100000004000000
+    _keys: 020000000800000006000000
     _values:
     - _keys:
-      - Friendliness
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.0041656494
-          value: 0
-          inSlope: 0.07826104
-          outSlope: 0.07826104
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.4771779
-        - serializedVersion: 3
-          time: 0.86053264
-          value: 0.34020925
-          inSlope: 1.400534
-          outSlope: 1.400534
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 2.4827585
-          outSlope: 2.4827585
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.12083334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Hostility
+      - Fear
+      - Hunger
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.25
-          inSlope: 0.26250076
-          outSlope: 0.26250076
-          tangentMode: 34
+          value: 1.0019531
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.51250076
-          inSlope: 0.26250076
-          outSlope: 0.26250076
-          tangentMode: 34
+          value: 0.0019493103
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1.0019531
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.0019493103
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
     - _keys:
       - Fear
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Hunger
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -466,8 +479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
-  Perception: 10
+  Speed: 1.5
+  Perception: 5
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
   EngageHostileThreshold: 0
@@ -480,7 +493,7 @@ MonoBehaviour:
   entitiesKilled: 0
   initialFear: 0
   initialHunger: 0
-  initialHostility: 1
+  initialHostility: 0
   initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   healSFX: {fileID: 0}
@@ -540,6 +553,7 @@ MonoBehaviour:
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
+  congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
 --- !u!114 &2570449443912586966
@@ -562,7 +576,7 @@ MonoBehaviour:
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
-  projectile: {fileID: 3494384851677285723, guid: ab9f0bb195e5bd7439541dca657e22aa,
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
   isAttacking: 0
@@ -579,30 +593,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.75}
+  m_Offset: {x: 0, y: 0.36}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2132770960937228029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7662058140339396009}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7020de4b1a89c3746974b5ed344fd2cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Tangerine
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945,
-    type: 3}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!114 &7652353787555290133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,7 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: 0
-  invert: 0
+  invert: 1
 --- !u!114 &2481682784615806019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,6 +623,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+--- !u!114 &681381842631641068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7662058140339396009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTicLength: 0.25
+  favoriteIngredients:
+  - Tangerine
+  favoriteFlavors: 2
+  charmThreshhold: 1
+  rewardItem: {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945,
+    type: 3}
+  amountRewardItem: 2
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!1001 &860611445761507306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -752,9 +766,9 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_AnchorMax.x
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,

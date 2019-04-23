@@ -127,13 +127,24 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        if (CheckThreshold(pos, AiData.EngageHostileThreshold))
+        var rat = AiData.RangeAttackThreshold;
+        var eht = AiData.EngageHostileThreshold;
+        var engage = CheckRangedThreshold(pos, rat, eht);
+        if (engage < 0)
         {
-            if (Behaviour.MoveFrom(pos, AiData.Speed, 0.5f))
+            if (Behaviour.MoveFrom(pos, AiData.Speed, rat - eht))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
             }
         }
+        else if (engage > 0)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, rat + eht))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+        else Behaviour.RangedAttack(pos, AiData.Speed);
     }
     public void NavRanged()
     {
@@ -172,12 +183,24 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
+        #region Get Nearest + Null Checks
+        // For now, fun away from your first enemy (SOMA most likely)
+        // Vector2 pos = new Vector2(-9.5f, -3.5f);
+        /*GameObject creature = Checks.ClosestCreature();
+        Vector2 pos;
+        if (creature != null)
+            pos = creature.gameObject.transform.position;
+        else
+            return;
+         */
+        //pos = new Vector2(-2.5f, -2.5f);
+        /*TileNode realPos = Checks.GetNearestNode(pos);
+        Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
+        NavTo(realPos);*/
+        #endregion
         if (Behaviour.Idle())
         {
             Wander(2f, 2f);
-            Checks.AwareHowMany();
-            Behaviour.ResetActionTimer();
-            Checks.ResetSpecials();
         }
     }
 
@@ -187,21 +210,22 @@ public partial class MonsterProtocols : MonoBehaviour
     {
 
         #region Get Nearest + Null Checks
-        Vector2 pos;
-        GameObject creature = Checks.ClosestCreature();
-        if (creature != null)
-            pos = creature.transform.position;
-        else
-            pos = transform.position;
+        // For now, fun away from your first enemy (SOMA most likely)
+        //GameObject near = Checks.ClosestCreature();
+        //Vector2 pos = (near == null ? this.transform.position : near.transform.position);
+        Vector2 pos = Checks.AverageGroupPosition();
         #endregion
-        if (Behaviour.MoveFrom(pos, AiData.Speed, 1.0f))
+        if (Behaviour.MoveFrom(pos, AiData.Speed, 15f))
         {
-            Wander(5f, 5f);
+            // Idle spawns a calm effect --> recovers from fear
+            if (Behaviour.Idle())
+            {
+                Wander(2f, 2f);
+            }
         }
     }
     public void NavRunaway()
     {
-
         #region Get Nearest + Null Checks
         Vector2 pos;
         TileNode awayTile;
@@ -441,20 +465,31 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.AmLeader())
         {
-            //Vector2 pos = Checks.AverageGroupPosition();
-            //Behaviour.MoveTo(pos, AiData.Speed, 0.5f);
-            // reset action timer
+            // YOURE THE LEADER!!
+        	// GO GO GO
             Wander(2f, 2f);
 
         }
+        else if (Checks.specialLeader != null)
+        {
+            // FOLLOW THE LEADER!!
+            // LEFT RIGHT LEFT
+            GameObject near = Checks.FollowTheLeader();
+            Vector2 pos = near.transform.position;
+            // make default speed for consistency? additive?
+            Behaviour.MoveTo(pos, AiData.Speed + 3, 1.5f);
+        }
         else if (Checks.specialTarget == null)
         {
-            if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
+        	// still gotta conga!!
+        	// even with no leader
+            //GameObject near = Checks.ClosestLeader();
+            //Chase(near);
         }
-        else
+        else 
         {
-            GameObject near = Checks.ClosestLeader();
-            Chase(near);
+        	// decide leader if no one around
+        	if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
         }
     }
 
@@ -467,13 +502,16 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Console()
     {
-        // move to
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.WeakestCreature().transform.position;
-        GameObject target = Checks.WeakestCreature();
+        #region Get Nearest + Null Checks
+        Vector2 pos = Checks.AverageGroupPosition();
         #endregion
-
-
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            if (Behaviour.Console())
+            {
+                Wander(2f, 2f);
+            }
+        }
     }
 
     // end of pacifict region

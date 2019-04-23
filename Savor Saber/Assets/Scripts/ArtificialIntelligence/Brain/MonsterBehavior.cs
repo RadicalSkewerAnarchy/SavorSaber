@@ -31,6 +31,7 @@ public class MonsterBehavior : MonoBehaviour
     public float ResetTimer;
     public float ResetTimerReset;
     public float ResetTimerVariance;
+    bool actionAvailable = true;
     bool left = false;
     #endregion
     #region Bias
@@ -117,7 +118,11 @@ public class MonsterBehavior : MonoBehaviour
         AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
-            AiData.InstantiateSignal(1f, "Fear", -0.1f, false, true);
+            if (actionAvailable)
+            {
+                AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
+                actionAvailable = false;
+            }
             return true;
         }
         else
@@ -162,9 +167,9 @@ public class MonsterBehavior : MonoBehaviour
             #region Move
             AnimatorBody.Play("Move");
             target = (current - target);
-            //target = Vector2.ClampMagnitude(target, speed * Time.deltaTime);
+            target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            RigidBody.velocity = target * speed * Time.deltaTime;
+            RigidBody.velocity = target;
             #endregion
             return false;
         }
@@ -190,7 +195,7 @@ public class MonsterBehavior : MonoBehaviour
             ingredientArray[0] = ingredient;
 
             // activate flavor input manager
-            flavor.Feed(ingredientArray);
+            flavor.Feed(ingredientArray, false);
 
             // deactivate drop
             drop.SetActive(false);
@@ -229,7 +234,7 @@ public class MonsterBehavior : MonoBehaviour
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
             newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
-            newAttackCollider.transform.position += new Vector3(0, this.GetComponent<CapsuleCollider2D>().offset.y, 0);
+            newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             #endregion
             return true;
@@ -294,7 +299,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
-            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.2f, true, true);
+            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.4f, true, true);
             ResetActionTimer();
             return true;
         }
@@ -331,6 +336,7 @@ public class MonsterBehavior : MonoBehaviour
     public void ResetActionTimer()
     {
         ResetMovementBias();
+        actionAvailable = true;
         ActionTimer = ActionTimerReset + Random.Range(-ActionTimerVariance, ActionTimerVariance);
     }
     /// <summary>

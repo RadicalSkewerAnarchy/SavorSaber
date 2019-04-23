@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MathUtils;
 
 public class FlavorInputManager : MonoBehaviour
 {
@@ -9,9 +10,10 @@ public class FlavorInputManager : MonoBehaviour
     /// </summary>
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
-    protected CharacterData characterData;
+    //protected CharacterData characterData;
+    protected AIData characterData;
     protected SpriteRenderer spriteRenderer;
-
+    private PointVector pv = new PointVector();
     public float dotTicLength = 1;
     public string[] favoriteIngredients;
     public RecipeData.Flavors favoriteFlavors;
@@ -26,7 +28,11 @@ public class FlavorInputManager : MonoBehaviour
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        characterData = GetComponent<CharacterData>();
+
+        // differentiate between ai and char data
+        characterData = GetComponent<AIData>();
+        if (characterData == null)
+            characterData = (AIData)GetComponent<CharacterData>();
     }
 
     public void InitializeDictionary()
@@ -54,7 +60,7 @@ public class FlavorInputManager : MonoBehaviour
         flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
     }
 
-    public virtual void Feed(IngredientData[] ingredientArray)
+    public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
@@ -86,7 +92,8 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
         }
-        RespondToIngredients();
+
+        RespondToIngredients(fedByPlayer);
         SpawnReward(ingredientArray);
     }
 
@@ -134,23 +141,24 @@ public class FlavorInputManager : MonoBehaviour
     }
 
 
-    public virtual void RespondToIngredients()
+    public virtual void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            if(favoriteFlavors != RecipeData.Flavors.Spicy)
+            if (fedByPlayer)
             {
-                DamageOverTime(5, 5);
+                CurryBalls((favoriteFlavors == RecipeData.Flavors.Spicy));
             }
         }
         //handle sweet
         if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
         {
-            if (favoriteFlavors != RecipeData.Flavors.Sweet)
+            if (fedByPlayer)
             {
-                CheckCharmEffect();
+                CheckCharmEffect((favoriteFlavors == RecipeData.Flavors.Sweet));
             }
+          
         }
         //handle umami
         if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
@@ -160,14 +168,116 @@ public class FlavorInputManager : MonoBehaviour
                 // nothing for now
             }
         }
+
+        // reset flavor dicts
+        ResetDictionary();
     }
 
-
-    protected void CheckCharmEffect()
+    #region CHARM
+    protected void CheckCharmEffect(bool favorite)
     {
-        characterData.DoDamage(-3);
-        characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
+        // the amount of time that a fruitant is charmed
+        Debug.Log("CHARMED");
+        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 60f : 30f);
+        StartCharm(time);
+        //characterData.DoDamage(-3);
+        //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
+
+    protected void StartCharm(float time)
+    {
+        // get protocols
+
+        //Debug.Log("should be CHARMED for " + time + " seconds");
+        MonsterProtocols proto = characterData.getProtocol();
+        MonsterChecks check = characterData.getChecks();
+        // initiate conga
+        characterData.currentProtocol = AIData.Protocols.Conga;
+        // set leader to Soma
+        check.specialLeader = GameObject.FindGameObjectWithTag("Player");
+        // get ready to stop it
+        StartCoroutine(ExecuteCharm(time));
+    }
+
+    protected void StopCharm()
+    {
+        // get protocols
+        MonsterProtocols proto = characterData.getProtocol();
+        MonsterChecks check = characterData.getChecks();
+        // no leader
+        check.ResetSpecials();
+        check.specialLeader = null;
+        check.congaPosition = -1;
+        // initiate conga
+        characterData.currentProtocol = AIData.Protocols.Lazy;
+
+        Debug.Log("no longer CHARMED");
+    }
+
+    protected IEnumerator ExecuteCharm(float time)
+    {
+        //things to happen before delay
+        yield return new WaitForSeconds(time);
+        //things to happen after delay
+        StopCharm();
+        yield return null;
+    }
+    #endregion
+
+    #region CURRY
+    protected void CurryBalls (bool favorite)
+    {
+        // the amount of time that a fruitant is charmed
+        Debug.Log("CURRIED");
+        var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
+        int shots = spice + (favorite ? 3 : 1) + (spice == 3 ? 3 : 0);
+        int pellets = spice + (favorite ? 2 : 1);
+        StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
+    }
+
+    protected IEnumerator ExecuteCurry(float time, int shots, int pellets)
+    {
+        //things to happen before delay
+        GameObject newAttack;
+        MonsterBehavior behave = this.GetComponent<MonsterBehavior>(); 
+
+        // null check on curryball projectile
+        if (behave.projectile == null)
+            yield return null;
+
+        // spawn the amount of shots with the amount of pellets
+        var s = shots;
+
+        // toggle between red and more red
+        SpriteRenderer sr = this.GetComponent<SpriteRenderer>();
+        sr.color = Color.red;
+        while (s > 0)
+        {
+            yield return new WaitForSeconds(time);
+            // spawn curry balls
+            var split = 360 / pellets;
+            for(int i = 0; i < pellets; i++)
+            {
+                // spawn curry ball at an angle
+                newAttack = Instantiate(behave.projectile, transform.position, Quaternion.identity);
+                Vector2 dir = Vector2.ClampMagnitude(pv.Ang2Vec((split * i) + (s * 30)), 1f);/*+ Random.Range(-split/4, split/4)*/
+
+                BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
+
+                projectileData.directionVector = dir;
+                projectileData.penetrateTargets = true;
+                projectileData.attacker = this.gameObject;
+                projectileData.projectileSpeed = 3f;
+                projectileData.range = 4f;
+            }
+            s--;
+        }
+        //things to happen after delay
+        Debug.Log("no longer CURRIED");
+        yield return null;
+    }
+    #endregion
+
 
     public void DamageOverTime(int numTics, float ticLength)
     {
