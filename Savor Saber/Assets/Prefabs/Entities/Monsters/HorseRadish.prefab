@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 3427734949844128077}
   - component: {fileID: 6230704303760914807}
   - component: {fileID: 2817615788990947547}
+  - component: {fileID: 7665701375855398550}
   m_Layer: 0
   m_Name: HorseRadish
   m_TagString: Prey
@@ -86,7 +87,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -104,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -133389985
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c1c8075eb7c948c45b88ac85232b2821, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -646,6 +647,7 @@ MonoBehaviour:
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
+  congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
 --- !u!114 &2987118065909645386
@@ -671,27 +673,6 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackDuration: 1
   isAttacking: 0
---- !u!114 &5909306682804108178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885113460597749827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90a4f727ab2c7a34f8eef78454ab69e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Pear
-  favoriteFlavors: 2
-  charmThreshhold: 0
-  rewardItem: {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5,
-    type: 3}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!114 &801385354610976386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,6 +755,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+--- !u!114 &7665701375855398550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885113460597749827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotTicLength: 1
+  favoriteIngredients:
+  - Pear
+  favoriteFlavors: 1
+  charmThreshhold: 1
+  rewardItem: {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5,
+    type: 3}
+  amountRewardItem: 2
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!1001 &1486205875639855600
 PrefabInstance:
   m_ObjectHideFlags: 0

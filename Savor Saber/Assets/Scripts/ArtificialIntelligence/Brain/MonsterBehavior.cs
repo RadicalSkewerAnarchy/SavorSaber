@@ -234,7 +234,7 @@ public class MonsterBehavior : MonoBehaviour
             GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
             CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
             newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);            
-            newAttackCollider.transform.position += new Vector3(0, this.GetComponent<CapsuleCollider2D>().offset.y, 0);
+            newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, true));
             #endregion
             return true;
@@ -299,7 +299,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
-            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.2f, true, true);
+            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.4f, true, true);
             ResetActionTimer();
             return true;
         }

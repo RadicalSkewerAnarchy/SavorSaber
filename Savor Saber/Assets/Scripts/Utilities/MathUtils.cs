@@ -92,6 +92,55 @@ namespace MathUtils
             max += shiftBy;
         }
     }
+
+    [System.Serializable]
+    public class PointVector
+    {
+        /// <summary>
+        /// change point rotated around pivot point by angle
+        /// </summary>
+        /// <param name="pivotPoint">anchor position</param>
+        /// <param name="angle">angle</param>
+        /// <param name="changePoint">old destination</param>
+        /// <returns>Vector2 new position</returns>
+        public Vector2 RotatePoint(Vector2 pivotPoint, float angle, Vector2 changePoint)
+        {
+            // sin and cos
+            float sin = Mathf.Sin(Mathf.Deg2Rad * angle);
+            float cos = Mathf.Cos(Mathf.Deg2Rad * angle);
+
+            // translate point back to origin
+            changePoint.x -= pivotPoint.x;
+            changePoint.y -= pivotPoint.y;
+
+            // rotate point
+            float xnew = changePoint.x * cos - changePoint.y * sin;
+            float ynew = changePoint.x * sin + changePoint.y * cos;
+
+            // return new vector
+            // after readjusting from pivot
+            return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y);
+        }
+
+        /// <summary>
+        /// vector to angle in degreses
+        /// </summary>
+        /// <param name="angle">as a normal vector</param>
+        /// <returns>Float</returns>
+        public float Vec2Ang(Vector2 angle)
+        {
+            return Mathf.Atan2(angle.y, angle.x) * Mathf.Rad2Deg;
+        }
+        /// <summary>
+        /// angle to vector
+        /// </summary>
+        /// <param name="angle">angle in degrees</param>
+        /// <returns></returns>
+        public Vector2 Ang2Vec(float angle)
+        {
+            return new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle));
+        }
+    }
 }
 
 

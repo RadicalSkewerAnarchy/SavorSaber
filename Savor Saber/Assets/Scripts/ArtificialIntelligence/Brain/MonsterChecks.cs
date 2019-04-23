@@ -416,7 +416,7 @@ public class MonsterChecks : MonoBehaviour
         }
 
         // return special target
-        Debug.Log("position in conga = " + this.congaPosition);
+        //Debug.Log("position in conga = " + this.congaPosition);
         return specialTarget;
     }
 

@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+    public bool hurtPlayer = true;
+
     CharacterData myCharData;
 
     /// <summary>
@@ -175,6 +177,9 @@ public class BaseProjectile : MonoBehaviour
             return;
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
+        if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
+            return;
+
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)
         {
@@ -184,6 +189,19 @@ public class BaseProjectile : MonoBehaviour
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)
                 Destroy(this.gameObject);
+        }
+        else if (go.tag == "ThrowThrough")
+        {
+            DestructableEnvironment envData = go.GetComponent<DestructableEnvironment>();
+            //myCharData.damageDealt += (int)projectileDamage;
+            //Debug.Log("Dealing DMG");
+            if (envData != null)
+            {
+                envData.health -= (int)Mathf.Max(projectileDamage, 1);
+                envData.Destroy();
+                if (!penetrateTargets)
+                    Destroy(this.gameObject);
+            }
         }
     }
 }
