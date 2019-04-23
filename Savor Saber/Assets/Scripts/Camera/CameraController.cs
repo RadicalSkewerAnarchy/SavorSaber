@@ -88,15 +88,11 @@ public class CameraController : MonoBehaviour
     public IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
     {
         Vector2 currVelocity = Vector2.zero;
-        float currZoomVelocity = 0;
-        float currZoom = zoomer.assetsPPU;
         while (Vector2.Distance(camera.position, point) > 0.01f)
         {
             yield return new WaitForFixedUpdate();
-            currZoom = Mathf.SmoothDamp(currZoom, 100, ref currZoomVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
             var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
             camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
-            zoomer.assetsPPU = Mathf.FloorToInt(currZoom);
         }
         camera.position = new Vector3(point.x, point.y, camera.position.z);
     }
