@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance = null;
     private bool _detatched;
     public bool Detatched
     {
@@ -31,7 +32,15 @@ public class CameraController : MonoBehaviour
     private float maxSpeed = 1000f;
     private Vector2 currVelocity = Vector2.zero;
     private bool returning = false;
+    private bool shaking = false;
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -132,6 +141,38 @@ public class CameraController : MonoBehaviour
         var targetPos = Vector2.Lerp(transform.position, target.position, Mathf.Clamp01(radius / distance));
         //Move towards the target point (with smoothing)
         SmoothStep(targetPos, this.snapTime, this.maxSpeed);
+    }
+
+    /// <summary> Shake the Camera. Intensity should probably be 2 or lower </summary>
+    public void Shake(float time, float intensity)
+    {
+        if (shaking)
+            return;
+        shaking = true;
+        StartCoroutine(ShakeCr(time, intensity));
+    }
+
+    private IEnumerator ShakeCr(float time, float intensity)
+    {
+        bool wasDetatched = Detatched;
+        Vector3 originalPos = camera.position;
+        int count = 0;
+        float currTime = 0;
+        while (currTime < time)
+        {
+            Vector2 newPos = Random.insideUnitCircle * intensity;
+            camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
+            if(wasDetatched && Detatched && ++count >= 5)
+            {
+                camera.position = originalPos;
+                count = 0;
+            }
+            yield return new WaitForEndOfFrame();
+            currTime += Time.deltaTime;
+        }
+        if (wasDetatched && Detatched)
+            camera.position = originalPos;
+        shaking = false;
     }
 
     private void SmoothStep(Vector2 targetPos, float time, float maxSpeed)
