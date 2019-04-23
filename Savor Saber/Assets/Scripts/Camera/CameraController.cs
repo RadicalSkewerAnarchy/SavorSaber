@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CameraController : MonoBehaviour
 {
+    public const int standardZoom = 32;
     public static CameraController instance = null;
     private bool _detatched;
     public bool Detatched
@@ -26,6 +27,7 @@ public class CameraController : MonoBehaviour
     public Vector2 deadzone = new Vector2(1.5f, 1.25f);
 
     new private Transform camera;
+    
     private Transform target = null;
     private float radius = 5f;
     private float snapTime = 0.5f;
@@ -33,6 +35,11 @@ public class CameraController : MonoBehaviour
     private Vector2 currVelocity = Vector2.zero;
     private bool returning = false;
     private bool shaking = false;
+
+    // Zooming stuff
+    private UnityEngine.U2D.PixelPerfectCamera zoomer;
+    private int targetZoom = standardZoom;
+    private float currZoom = standardZoom;
 
     private void Awake()
     {
@@ -45,6 +52,12 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         camera = GameObject.FindWithTag("MainCamera").transform;
+        zoomer = camera.GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
+    }
+    public void SetZoom(int targetPPU)
+    {
+        currZoom = zoomer.assetsPPU;
+        targetZoom = targetPPU;
     }
     /// <summary> Set a point of interest as the current target </summary>
     public void SetTarget(GameObject target, float maxPull, float maxSpeed, float snapTime)
@@ -75,11 +88,15 @@ public class CameraController : MonoBehaviour
     public IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
     {
         Vector2 currVelocity = Vector2.zero;
+        float currZoomVelocity = 0;
+        float currZoom = zoomer.assetsPPU;
         while (Vector2.Distance(camera.position, point) > 0.01f)
         {
             yield return new WaitForFixedUpdate();
+            currZoom = Mathf.SmoothDamp(currZoom, 100, ref currZoomVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
             var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
             camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom);
         }
         camera.position = new Vector3(point.x, point.y, camera.position.z);
     }
@@ -88,9 +105,18 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         //Debug.Log("In camera controller");
-
+        if (zoomer.assetsPPU < targetZoom)
+        {
+            currZoom += 1f;
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom);
+        }
+        if (zoomer.assetsPPU > targetZoom)
+        {
+            currZoom -= 1f;
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom); ;
+        }
         //what the fuck are you doing so far away
-        if(Vector3.Distance(camera.position, transform.position) > 50f)
+        if (Vector3.Distance(camera.position, transform.position) > 50f)
         {
             camera.position = new Vector3(transform.position.x, transform.position.y, camera.position.z);
         }
@@ -138,7 +164,8 @@ public class CameraController : MonoBehaviour
     {
         //Calculate the target point (bounded by the radius)
         float distance = Vector2.Distance(transform.position, target.position);
-        var targetPos = Vector2.Lerp(transform.position, target.position, Mathf.Clamp01(radius / distance));
+        float lerpFactor = Mathf.Clamp01(radius / distance);
+        var targetPos = Vector2.Lerp(transform.position, target.position, lerpFactor);
         //Move towards the target point (with smoothing)
         SmoothStep(targetPos, this.snapTime, this.maxSpeed);
     }
