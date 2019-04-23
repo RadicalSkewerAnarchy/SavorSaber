@@ -7,7 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class DestructableEnvironment : MonoBehaviour
 {
+    public bool allowRegrow = true;
     public int health;
+    private int healthReset;
     [Range(0, 100)]
     public int dropChance = 100;
     public GameObject dropOnDestroy;
@@ -16,6 +18,11 @@ public class DestructableEnvironment : MonoBehaviour
     public float respawnTime;
     public bool destroyed = false;
     public ParticleSystem particles = null;
+    public float wiggleTime = 4f;
+    public float wiggleSpeed = 0.3f;
+    public float wiggleAmplitude = 0.25f;
+
+    private Vector2 origin;
 
     private SpriteRenderer spr;
     private AudioSource src;
@@ -25,28 +32,59 @@ public class DestructableEnvironment : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = normalSprite;
         src = GetComponent<AudioSource>();
+        healthReset = health;
+        origin = this.transform.position;
     }
 
     public void Destroy()
     {
         if (destroyed)
             return;
+
+        if (particles != null)
+            particles.Play();
+        if (src != null)
+            src.Play();
+
+        StartCoroutine(Wiggle(wiggleTime, wiggleSpeed, wiggleAmplitude));
+
+        if (health > 0)
+            return;
         destroyed = true;
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
-        if(particles != null)
-            particles.Play();
         if(dropOnDestroy != null && Random.value <= thresh)
             Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
-        if (src != null)
-            src.Play();
-        StartCoroutine(Regrow());
+
+        if (allowRegrow)
+            StartCoroutine(Regrow());
+        else
+        {
+            this.GetComponent<Collider2D>().enabled = false;
+        }
     }
     private IEnumerator Regrow()
     {
         yield return new WaitForSeconds(respawnTime);
         spr.sprite = normalSprite;
-        health = 1;
+        health = healthReset;
         destroyed = false;
+    }
+    private IEnumerator Wiggle(float time, float speed, float amplitude)
+    {
+        var speedCount = 0f;
+        var tick = time;
+        while (tick > 0)
+        {
+            Debug.Log("wiggling");
+            yield return new WaitForSeconds(Time.deltaTime);
+
+            this.transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);
+            speedCount += 15000 * Time.deltaTime;
+            tick -= speed;
+        }
+
+        this.transform.position = origin;
+        yield return null;
     }
 }

@@ -194,8 +194,7 @@ public class BaseProjectile : MonoBehaviour
             if (envData != null)
             {
                 envData.health -= (int)Mathf.Max(projectileDamage, 1);
-                if (envData.health <= 0)
-                    envData.Destroy();
+                envData.Destroy();
                 if (!penetrateTargets)
                     Destroy(this.gameObject);
             }
