@@ -471,19 +471,27 @@ public class MonsterChecks : MonoBehaviour
     {
         TileNode targetTile = null;
         float minDist = Mathf.Infinity;
-        for(int i = 0; i < GetComponent<Pathfinder>().allNodes.transform.childCount-1; i++)
+        if(GetComponent<Pathfinder>() != null)
         {
-            var node = GetComponent<Pathfinder>().allNodes.transform.GetChild(i);
-            var dist = Vector2.Distance(node.transform.position, pos);
-            //if (dist < AiData.EngageHostileThreshold)
-            //{
-                if(dist < minDist)
+            if (GetComponent<Pathfinder>().allNodes != null)
+            {
+                for (int i = 0; i < GetComponent<Pathfinder>().allNodes.transform.childCount - 1; i++)
                 {
-                    minDist = dist;
-                    targetTile = node.GetComponent<TileNode>();
+                    var node = GetComponent<Pathfinder>().allNodes.transform.GetChild(i);
+                    var dist = Vector2.Distance(node.transform.position, pos);
+                    //if (dist < AiData.EngageHostileThreshold)
+                    //{
+                    if (dist < minDist)
+                    {
+                        minDist = dist;
+                        targetTile = node.GetComponent<TileNode>();
+                    }
+                    //}
                 }
-            //}
+            }
         }
+        
+       
         //Debug.Log("Closest tile found is : " + targetTile.gameObject.name);
         /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
         /*
