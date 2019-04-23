@@ -197,7 +197,8 @@ public partial class MonsterProtocols : MonoBehaviour
     // move away from the nearest anything
     public void Runaway()
     {
-
+        NavRunaway();
+        /*
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
         //GameObject near = Checks.ClosestCreature();
@@ -211,26 +212,35 @@ public partial class MonsterProtocols : MonoBehaviour
             {
                 Wander(2f, 2f);
             }
-        }
+        }*/
     }
     public void NavRunaway()
     {
-        #region Get Nearest + Null Checks
-        Vector2 pos;
-        TileNode awayTile;
-        if (Checks.ClosestCreature() != null)
+        float maxDist = 0;
+        TileNode targetTile = null;
+        if(Checks.ClosestCreature() != null)
         {
-            pos = Checks.ClosestCreature().transform.position;
-            if (Vector2.Distance(pos, transform.position) < AiData.EngageHostileThreshold)
+            Checks.SetCurrentTile();
+            if (Checks.currentTile != null)
             {
-                Debug.Log("Navigating away");
-
-                pos = Vector2.ClampMagnitude(pos, 1);
-                //pos *= 2;
-                awayTile = Checks.GetNearestNode(pos);
-                Debug.Log("NEAREST TILE IS: " + awayTile.name);
-                NavTo(awayTile);
-            }
+                foreach (var neighbor in Checks.currentTile.neighbors)
+                {
+                    foreach (var neighborneighbor in Checks.currentTile.neighbors)
+                    {
+                        var distance = Vector2.Distance(Checks.NearestEnemyPosition(), neighborneighbor.transform.position);
+                        if (distance > maxDist)
+                        {
+                            maxDist = distance;
+                            targetTile = neighborneighbor;
+                        }
+                    }
+                }
+                if(targetTile != null)
+                {
+                    Debug.Log("Target tile: " + targetTile.gameObject.name + " is not null, branched from neighbor of :" + Checks.currentTile.gameObject.name);
+                    NavTo(targetTile);
+                }
+            }        
         }
         /*// For now, fun away from your first enemy (SOMA most likely)
 
@@ -344,7 +354,7 @@ public partial class MonsterProtocols : MonoBehaviour
     }
 
     // end of neutral region
-    #endregion
+    //#endregion
 
     #region Pacifist Protocols
     // checks if there are enough friends to party

@@ -39,7 +39,7 @@ public class MonsterChecks : MonoBehaviour
     public TileNode currentTile = null;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         closestDistance = Mathf.Infinity;
         AiData = GetComponent<AIData>();
@@ -59,7 +59,7 @@ public class MonsterChecks : MonoBehaviour
         // specials
         specialPosition = transform.position;
 
-        currentTile = new TileNode();
+        SetCurrentTile();
     }
 
     #region AWARENESS
@@ -471,19 +471,20 @@ public class MonsterChecks : MonoBehaviour
     {
         TileNode targetTile = null;
         float minDist = Mathf.Infinity;
-        for(int i = 0; i < GetComponent<Pathfinder>().transform.childCount-1; i++)
+        for(int i = 0; i < GetComponent<Pathfinder>().allNodes.transform.childCount-1; i++)
         {
-            var node = GetComponent<Pathfinder>().transform.GetChild(i);
+            var node = GetComponent<Pathfinder>().allNodes.transform.GetChild(i);
             var dist = Vector2.Distance(node.transform.position, pos);
-            if (dist < AiData.EngageHostileThreshold)
-            {
+            //if (dist < AiData.EngageHostileThreshold)
+            //{
                 if(dist < minDist)
                 {
                     minDist = dist;
                     targetTile = node.GetComponent<TileNode>();
                 }
-            }
+            //}
         }
+        //Debug.Log("Closest tile found is : " + targetTile.gameObject.name);
         /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
         /*
         for (var i = 0; i < maxTries; i++)
@@ -605,7 +606,7 @@ public class MonsterChecks : MonoBehaviour
 
     public void SetCurrentTile()
     {
-        currentTile = GetNearestNode(this.transform.position);
+        currentTile = GetNearestNode(transform.position);
     }
     #endregion
 }

@@ -8,13 +8,12 @@ public class GraphNodePopulator : MonoBehaviour
 {
     public GameObject nodePrefab;
     public Tile[] discoveredTiles;
-    public Tilemap navMeshData;
     public List<List<TileNode>> tiles;
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
     int clusterLimit = 3;
-    private void Start()
+    private void Awake()
     {
         tiles = new List<List<TileNode>>();
         tiles.Add(new List<TileNode>());
@@ -34,6 +33,7 @@ public class GraphNodePopulator : MonoBehaviour
         }
         var activeTiles = inactiveTileMaps[0];
         var inactiveTiles = inactiveTileMaps[1];
+        Debug.Log("Inactive and active tiles found");
         /// iterates through tilemap based on bounds
         int i = 0, j = 0;
         bounds = activeTiles.cellBounds;
