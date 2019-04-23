@@ -299,7 +299,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
-            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.2f, true, true);
+            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.4f, true, true);
             ResetActionTimer();
             return true;
         }

@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 4382814324426532099}
   m_Layer: 0
   m_Name: GhostReaper
-  m_TagString: Predator
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 3233334487692794146}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.307121, y: -0.28770894, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 9185037771186717478}
   - {fileID: 163062201630287225}
@@ -251,11 +251,6 @@ MonoBehaviour:
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
   signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &1591768285701305987
@@ -270,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: GhostPepper
+  displayName: GhostReaper
   deathSfx: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
@@ -311,42 +306,16 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 010000000b000000080000000000000006000000
+    _keys: 020000000700000006000000
     _values:
     - _keys:
-      - Shoot
+      - Hunger
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
           value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Friendliness
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -355,71 +324,36 @@ MonoBehaviour:
           outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 1
+          value: 0.0038986206
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Fear
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1.0019531
           inSlope: 2
           outSlope: 2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Health
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.003479004
-          value: -0.021442413
-          inSlope: Infinity
-          outSlope: Infinity
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.04348123
-          value: 1.0038986
-          inSlope: Infinity
-          outSlope: Infinity
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.1530304
-          value: -0.013660431
-          inSlope: -9.288607
-          outSlope: -9.288607
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Smack
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
+          value: 0.0019493103
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -434,8 +368,8 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
-          outSlope: 0
+          inSlope: 2
+          outSlope: 2
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -453,86 +387,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   macroValues:
-    _keys:
-    - Smack
-    - Shoot
-    _values:
-    - _keys:
-      - PlayerDistance
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.00017547607
-          value: 0.9980469
-          inSlope: 0.4498147
-          outSlope: 0.4498147
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.3108512
-        - serializedVersion: 3
-          time: 0.099121094
-          value: -0.0194664
-          inSlope: -51.518875
-          outSlope: -51.518875
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.037609175
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - PlayerDistance
-      - Health
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    _keys: []
+    _values: []
   data: {fileID: 0}
 --- !u!114 &7427304364512388856
 MonoBehaviour:
@@ -551,8 +407,8 @@ MonoBehaviour:
   MeleeAttackThreshold: 2
   RangeAttackThreshold: 6
   EngageHostileThreshold: 4
-  maxHealth: 20
-  health: 20
+  maxHealth: 50
+  health: 50
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -560,7 +416,7 @@ MonoBehaviour:
   entitiesKilled: 0
   initialFear: 0
   initialHunger: 0
-  initialHostility: 1
+  initialHostility: 0
   initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   healSFX: {fileID: 0}
@@ -620,6 +476,7 @@ MonoBehaviour:
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
+  congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
 --- !u!114 &3315464637141941916
@@ -642,7 +499,7 @@ MonoBehaviour:
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 5276454197400023434, guid: b8424795531621047ba09b78583f75ce, type: 3}
-  projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
   isAttacking: 0
@@ -675,7 +532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: 0
-  invert: 0
+  invert: 1
 --- !u!114 &1803955150230692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,13 +558,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients: []
-  favoriteFlavors: 0
+  dotTicLength: 0.25
+  favoriteIngredients:
+  - Tangerine
+  favoriteFlavors: 2
   charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 0}
+  rewardItem: {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945,
+    type: 3}
+  amountRewardItem: 3
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!1001 &989786305601120027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -778,12 +637,12 @@ PrefabInstance:
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}

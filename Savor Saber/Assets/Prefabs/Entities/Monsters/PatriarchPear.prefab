@@ -10125,25 +10125,25 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     - _keys:
-      - Comfort
+      - Fear
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 1.008667
-          value: 0.9005852
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
+          time: 1
+          value: 1
+          inSlope: 1
+          outSlope: 1
+          tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -10151,107 +10151,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   macroValues:
-    _keys:
-    - Comfort
-    _values:
-    - _keys:
-      - Fear
-      - Friendliness
-      - Health
-      - Hunger
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1.005435
-          inSlope: -0.9733534
-          outSlope: -0.9733534
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.032081604
-          inSlope: -0.9733534
-          outSlope: -0.9733534
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: -0.98125076
-          outSlope: -0.98125076
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 0.018749237
-          inSlope: 0.10169181
-          outSlope: 0.10169181
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.24583334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    _keys: []
+    _values: []
   data: {fileID: 0}
 --- !u!114 &2562548580391046298
 MonoBehaviour:
@@ -10338,6 +10239,7 @@ MonoBehaviour:
   AllDrops: []
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
+  congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
 --- !u!114 &1902115651943444912
@@ -10360,7 +10262,8 @@ MonoBehaviour:
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
-  projectile: {fileID: 0}
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
+    type: 3}
   attackDuration: 1
   isAttacking: 0
 --- !u!70 &6611929061611348362
@@ -10405,7 +10308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
+  dotTicLength: 0.3
   favoriteIngredients:
   - Acorn
   favoriteFlavors: 1
@@ -10475,7 +10378,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   group: {fileID: 0}
-  allNodes: {fileID: 0}
   loop: 1
   spawnOnStart: 1
   loopTime: 1
