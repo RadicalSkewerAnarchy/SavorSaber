@@ -24,8 +24,8 @@ public class ElectricAOE : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object in waterfall");
-        if (collision.gameObject.tag == "Player")
+        Debug.Log("Object in waterfall" );
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
             Debug.Log("confirmed as reaper");
             characterData = collision.gameObject.GetComponent<CharacterData>();
@@ -36,7 +36,7 @@ public class ElectricAOE : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
             StopCoroutine(ExecuteAfterSeconds());
             characterData = null;
