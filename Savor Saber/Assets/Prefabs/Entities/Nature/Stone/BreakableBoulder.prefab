@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1196429383}
   - component: {fileID: 6821134235882377831}
   - component: {fileID: 964010971083995030}
-  - component: {fileID: 1196429385}
+  - component: {fileID: 7095666437842040140}
   m_Layer: 0
   m_Name: BreakableBoulder
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1196429384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.34, y: 9.86, z: 0.11109513}
-  m_LocalScale: {x: 2.7557082, y: 3.6132812, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -93,8 +93,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae11695d2d75954d96805c620f25535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!60 &1196429385
-PolygonCollider2D:
+  health: 0
+  dropChance: 100
+  dropOnDestroy: {fileID: 0}
+  normalSprite: {fileID: 0}
+  destroyedSprite: {fileID: 0}
+  respawnTime: 0
+  destroyed: 0
+  particles: {fileID: 0}
+--- !u!70 &7095666437842040140
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,27 +114,6 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.64, y: 0.64}
-    newSize: {x: 6, y: 6}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.09759927, y: 0.24379969}
-      - {x: 0.052999735, y: 0.29839945}
-      - {x: -0.0675993, y: 0.28219938}
-      - {x: -0.113598585, y: 0.20759964}
-      - {x: -0.2721994, y: -0.050800085}
-      - {x: -0.27759957, y: -0.21299958}
-      - {x: -0.016397238, y: -0.33620024}
-      - {x: 0.13499832, y: -0.25519896}
-      - {x: 0.25059962, y: -0.26700068}
-      - {x: 0.3101766, y: -0.14431405}
-      - {x: 0.20199895, y: -0.07000017}
-      - {x: 0.16679955, y: 0.052199364}
+  m_Offset: {x: 0, y: 0.75}
+  m_Size: {x: 1.21, y: 2}
+  m_Direction: 0
