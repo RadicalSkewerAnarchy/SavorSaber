@@ -23,7 +23,9 @@ public class DropOnDeath : MonoBehaviour
             {
                 var d = GameObject.Instantiate(obj);
                 d.transform.position = transform.position;
-                d.GetComponent<SkewerableObject>().currentTile = GetComponent<MonsterChecks>().currentTile;
+                SkewerableObject dSkewObj = d.GetComponent<SkewerableObject>();
+                if(dSkewObj != null)
+                    dSkewObj.currentTile = GetComponent<MonsterChecks>().currentTile;
             }
         }
         foreach(var obj in signalDrops)
