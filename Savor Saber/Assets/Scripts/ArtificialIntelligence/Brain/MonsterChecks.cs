@@ -137,6 +137,10 @@ public class MonsterChecks : MonoBehaviour
             {
                 continue;
             }
+            if (Creature.tag == "Predator")
+            {
+                continue;
+            }
             #endregion
             float dist = Creature.GetComponent<CharacterData>().health;
             if (dist < weak)

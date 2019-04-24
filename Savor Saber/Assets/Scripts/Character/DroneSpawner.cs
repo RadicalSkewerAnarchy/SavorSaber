@@ -56,7 +56,7 @@ public class DroneSpawner : MonoBehaviour
         }
     }
 
-    void SpawnDrones()
+    public void SpawnDrones()
     {
         for(int i = 0; i < maxDrones; i++)
         {
