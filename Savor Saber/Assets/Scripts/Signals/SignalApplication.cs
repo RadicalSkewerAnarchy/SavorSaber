@@ -223,58 +223,23 @@ public class SignalApplication : MonoBehaviour
     }
     public void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent, bool useParent = true)
     {
+        ParticleSystem[] emitters = null;
         if(useParent)
-            emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
+            emitters = parent.GetComponentsInChildren<ParticleSystem>();
+            //emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
         else
-            emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
-        //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
-        if (sign > 0)
+           //emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
+            emitters = transform.parent.GetComponentsInChildren<ParticleSystem>();
+        if(mostInfluential != 0)
         {
-            if (mood == "Friendliness")
+            foreach (var emitter in emitters)
             {
-                //Debug.Log("Setting animation to friendly");
-                emoter.GetComponent<Animator>().Play("FriendUpAnimation");
+                if (emitter.tag.Contains(mood))
+                {
+                    emitter.Play();
+                    break;
+                }
             }
-            else if (mood == "Hostility")
-            {
-                emoter.GetComponent<Animator>().Play("HostilityUpAnimation");
-            }
-            else if (mood == "Fear")
-            {
-                emoter.GetComponent<Animator>().Play("FearUpAnimation");
-            }
-            else if (mood == "Hunger")
-            {
-
-                //Debug.Log("Setting animation to FAMINE");
-                emoter.GetComponent<Animator>().Play("HungerUpAnimation");
-            }
-        }
-        else if(sign < 0)
-        {
-            if (mood == "Friendliness")
-            {
-                emoter.GetComponent<Animator>().Play("FriendDownAnimation");
-            }
-            else if (mood == "Hostility")
-            {
-                emoter.GetComponent<Animator>().Play("HostilityDownAnimation");
-            }
-            else if (mood == "Fear")
-            {
-                emoter.GetComponent<Animator>().Play("FearDownAnimation");
-            }
-            else if (mood == "Hunger")
-            {
-
-                //Debug.Log("YUMMY");
-                emoter.GetComponent<Animator>().Play("HungerDownAnimation");
-            }
-        }
-        else
-        {
-            //Debug.Log("Destroying emoter");
-            Destroy(emoter);
-        }
+        }   
     }
 }
