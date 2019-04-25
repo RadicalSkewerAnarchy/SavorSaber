@@ -79,7 +79,14 @@ public class FlavorInputManager : MonoBehaviour
 
             // mod hunger
             if (characterData != null)
+            {
                 characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
+                if (fedByPlayer)
+                {
+                    characterData.InstantiateSignal(1f, "Friendliness", 0.3f, true, true);
+                }
+            }
+                
 
             for (int f = 1; f <= 64; f = f << 1)
             {
