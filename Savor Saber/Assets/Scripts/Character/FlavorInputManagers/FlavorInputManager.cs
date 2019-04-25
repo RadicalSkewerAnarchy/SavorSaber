@@ -105,8 +105,9 @@ public class FlavorInputManager : MonoBehaviour
     {
         // looking only at favorite ingredients...
         bool moreFriendly = (characterData != null);
-        if (moreFriendly)
+        if (moreFriendly && fedByPlayer)
             characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
+
         foreach (string favoriteIngredient in favoriteIngredients)
         {
             // if the ingredients on the skewer are my favorites...
