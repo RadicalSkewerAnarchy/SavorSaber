@@ -80,11 +80,7 @@ public class FlavorInputManager : MonoBehaviour
             // mod hunger
             if (characterData != null)
             {
-                characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
-                if (fedByPlayer)
-                {
-                    characterData.InstantiateSignal(1f, "Friendliness", 0.3f, true, true);
-                }
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.3f, false, true);
             }
                 
 
@@ -101,13 +97,16 @@ public class FlavorInputManager : MonoBehaviour
         }
 
         RespondToIngredients(fedByPlayer);
-        SpawnReward(ingredientArray);
+        SpawnReward(ingredientArray, fedByPlayer);
     }
 
 
-    protected void SpawnReward(IngredientData[] ingredientArray)
+    protected void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         // looking only at favorite ingredients...
+        bool moreFriendly = (characterData != null);
+        if (moreFriendly)
+            characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
         foreach (string favoriteIngredient in favoriteIngredients)
         {
             // if the ingredients on the skewer are my favorites...
