@@ -229,17 +229,27 @@ public class SignalApplication : MonoBehaviour
             //emoter = Instantiate(ChildAnimationAgent, parent.transform.position, Quaternion.identity, parent.transform);
         else
            //emoter = Instantiate(ChildAnimationAgent, parent.transform.position + new Vector3(0,0.5f,0), Quaternion.identity);
-            emitters = transform.parent.GetComponentsInChildren<ParticleSystem>();
-        if(mostInfluential != 0)
+        emitters = transform.parent.GetComponentsInChildren<ParticleSystem>();
+        if(mostInfluential > 0)
         {
             foreach (var emitter in emitters)
             {
-                if (emitter.tag.Contains(mood))
+                if (emitter.tag.Contains(mood) && emitter.tag.Contains("Up"))
                 {
                     emitter.Play();
                     break;
                 }
             }
-        }   
+        } else if(mostInfluential < 0)
+        {
+            foreach (var emitter in emitters)
+            {
+                if (emitter.tag.Contains(mood) && emitter.tag.Contains("Down"))
+                {
+                    emitter.Play();
+                    break;
+                }
+            }
+        }
     }
 }
