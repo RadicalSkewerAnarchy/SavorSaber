@@ -24,7 +24,6 @@ public class SkewerableObject : MonoBehaviour
 
     private Vector3 target;
     private Vector3 origin;
-    private Vector3 halfScale = new Vector3(0.5f, 0.5f, 1f);
 
     public TileNode currentTile;
 
@@ -55,7 +54,6 @@ public class SkewerableObject : MonoBehaviour
         if (!attached)
         {
             //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
-            transform.localScale = halfScale * 2;
             if (!flickering)
             {
                 if (decayTime.Update())
@@ -69,7 +67,6 @@ public class SkewerableObject : MonoBehaviour
         else
         {
             transform.position = origin;
-            transform.localScale = halfScale;
         }
         //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
     }

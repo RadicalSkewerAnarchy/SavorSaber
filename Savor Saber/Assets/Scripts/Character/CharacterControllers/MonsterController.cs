@@ -13,9 +13,9 @@ public class MonsterController : EntityController
         {
             _direction = value;
             if (value == Direction.East || value == Direction.SouthEast || value == Direction.NorthEast)
-                renderer.flipX = invert ? true : false;
+                renderer.flipX = invert;
             else if (value == Direction.West || value == Direction.NorthWest || value == Direction.SouthWest)
-                renderer.flipX = invert ? false : true;
+                renderer.flipX = !invert;
 
         }
     }

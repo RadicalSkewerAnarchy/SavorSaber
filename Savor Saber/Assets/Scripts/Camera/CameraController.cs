@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CameraController : MonoBehaviour
 {
+    public const int standardZoom = 32;
+    public static CameraController instance = null;
     private bool _detatched;
     public bool Detatched
     {
@@ -25,17 +27,37 @@ public class CameraController : MonoBehaviour
     public Vector2 deadzone = new Vector2(1.5f, 1.25f);
 
     new private Transform camera;
+    
     private Transform target = null;
     private float radius = 5f;
     private float snapTime = 0.5f;
     private float maxSpeed = 1000f;
     private Vector2 currVelocity = Vector2.zero;
     private bool returning = false;
+    private bool shaking = false;
 
+    // Zooming stuff
+    private UnityEngine.U2D.PixelPerfectCamera zoomer;
+    private int targetZoom = standardZoom;
+    private float currZoom = standardZoom;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
         camera = GameObject.FindWithTag("MainCamera").transform;
+        zoomer = camera.GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
+    }
+    public void SetZoom(int targetPPU)
+    {
+        currZoom = zoomer.assetsPPU;
+        targetZoom = targetPPU;
     }
     /// <summary> Set a point of interest as the current target </summary>
     public void SetTarget(GameObject target, float maxPull, float maxSpeed, float snapTime)
@@ -79,9 +101,18 @@ public class CameraController : MonoBehaviour
     void FixedUpdate()
     {
         //Debug.Log("In camera controller");
-
+        if (zoomer.assetsPPU < targetZoom)
+        {
+            currZoom += 1f;
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom);
+        }
+        if (zoomer.assetsPPU > targetZoom)
+        {
+            currZoom -= 1f;
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom); ;
+        }
         //what the fuck are you doing so far away
-        if(Vector3.Distance(camera.position, transform.position) > 50f)
+        if (Vector3.Distance(camera.position, transform.position) > 50f)
         {
             camera.position = new Vector3(transform.position.x, transform.position.y, camera.position.z);
         }
@@ -129,9 +160,42 @@ public class CameraController : MonoBehaviour
     {
         //Calculate the target point (bounded by the radius)
         float distance = Vector2.Distance(transform.position, target.position);
-        var targetPos = Vector2.Lerp(transform.position, target.position, Mathf.Clamp01(radius / distance));
+        float lerpFactor = Mathf.Clamp01(radius / distance);
+        var targetPos = Vector2.Lerp(transform.position, target.position, lerpFactor);
         //Move towards the target point (with smoothing)
         SmoothStep(targetPos, this.snapTime, this.maxSpeed);
+    }
+
+    /// <summary> Shake the Camera. Intensity should probably be 2 or lower </summary>
+    public void Shake(float time, float intensity)
+    {
+        if (shaking)
+            return;
+        shaking = true;
+        StartCoroutine(ShakeCr(time, intensity));
+    }
+
+    private IEnumerator ShakeCr(float time, float intensity)
+    {
+        bool wasDetatched = Detatched;
+        Vector3 originalPos = camera.position;
+        int count = 0;
+        float currTime = 0;
+        while (currTime < time)
+        {
+            Vector2 newPos = Random.insideUnitCircle * intensity;
+            camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
+            if(wasDetatched && Detatched && ++count >= 5)
+            {
+                camera.position = originalPos;
+                count = 0;
+            }
+            yield return new WaitForEndOfFrame();
+            currTime += Time.deltaTime;
+        }
+        if (wasDetatched && Detatched)
+            camera.position = originalPos;
+        shaking = false;
     }
 
     private void SmoothStep(Vector2 targetPos, float time, float maxSpeed)
