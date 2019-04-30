@@ -1,5 +1,76 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1351963118123270874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2179177526996581855}
+  - component: {fileID: 8967330789364912148}
+  - component: {fileID: 7942622459183560690}
+  m_Layer: 2
+  m_Name: Spawn2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2179177526996581855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351963118123270874}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.45, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6925031642007766652}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &8967330789364912148
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351963118123270874}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
+--- !u!114 &7942622459183560690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351963118123270874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52e05735ce0222340bbbfcadf539a90c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  group: {fileID: 0}
+  loop: 1
+  spawnOnStart: 1
+  loopTime: 3
+  spawnObjects:
+  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
+  spawnSignals: []
+  trackedObjects: []
+  maxSpawnedEntites: 1
+  maxTries: 100
+  spawnAttatched: 1
 --- !u!1 &3338064173004295680
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +82,6 @@ GameObject:
   - component: {fileID: 6925031642007766652}
   - component: {fileID: 4553137643843745403}
   - component: {fileID: 7630759939264738890}
-  - component: {fileID: 7243298276033748069}
   m_Layer: 0
   m_Name: Bush2
   m_TagString: Untagged
@@ -29,7 +99,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5857930559832814492}
+  - {fileID: 2179177526996581855}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -107,13 +179,61 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.6433859, y: 0.8284879}
   m_EdgeRadius: 0
---- !u!114 &7243298276033748069
+--- !u!1 &6014956085567580513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5857930559832814492}
+  - component: {fileID: 9201333045836810272}
+  - component: {fileID: 7951632238846378144}
+  m_Layer: 2
+  m_Name: Spawn1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5857930559832814492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014956085567580513}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.34, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6925031642007766652}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &9201333045836810272
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6014956085567580513}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
+--- !u!114 &7951632238846378144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3338064173004295680}
+  m_GameObject: {fileID: 6014956085567580513}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52e05735ce0222340bbbfcadf539a90c, type: 3}
@@ -125,11 +245,8 @@ MonoBehaviour:
   loopTime: 3
   spawnObjects:
   - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
-  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
-  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
-  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
   spawnSignals: []
   trackedObjects: []
-  maxSpawnedEntites: 4
+  maxSpawnedEntites: 1
   maxTries: 100
   spawnAttatched: 1

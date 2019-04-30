@@ -44,7 +44,9 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         }
         else if (g.GetComponent<DestructableEnvironment>() != null)
         {
-            g.GetComponent<DestructableEnvironment>().Destroy();
+            DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();
+            de.health -= ((int)meleeDamage);
+            de.Destroy();
         }
     }
 }

@@ -24,7 +24,7 @@ public class ElectricAOE : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object in waterfall" );
+        Debug.Log("Object in waterfall");
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
             Debug.Log("confirmed as reaper");

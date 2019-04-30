@@ -79,7 +79,10 @@ public class FlavorInputManager : MonoBehaviour
 
             // mod hunger
             if (characterData != null)
-                characterData.InstantiateSignal(0.5f, "Hunger", -0.1f, false, true);
+            {
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.3f, false, true);
+            }
+                
 
             for (int f = 1; f <= 64; f = f << 1)
             {
@@ -94,13 +97,17 @@ public class FlavorInputManager : MonoBehaviour
         }
 
         RespondToIngredients(fedByPlayer);
-        SpawnReward(ingredientArray);
+        SpawnReward(ingredientArray, fedByPlayer);
     }
 
 
-    protected void SpawnReward(IngredientData[] ingredientArray)
+    protected void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         // looking only at favorite ingredients...
+        bool moreFriendly = (characterData != null);
+        if (moreFriendly && fedByPlayer)
+            characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
+
         foreach (string favoriteIngredient in favoriteIngredients)
         {
             // if the ingredients on the skewer are my favorites...
@@ -230,8 +237,9 @@ public class FlavorInputManager : MonoBehaviour
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
         var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
-        int shots = spice + (favorite ? 3 : 1) + (spice == 3 ? 3 : 0);
-        int pellets = spice + (favorite ? 2 : 1);
+        int shots =   spice + spice*(favorite ? 3 : 2) + (spice == 3 ? 3 : 0);
+        int pellets = spice + (favorite ? 2 : 1) + (spice == 3 ? 1 : 0);
+        dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
 

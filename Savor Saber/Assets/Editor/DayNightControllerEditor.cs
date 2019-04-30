@@ -24,5 +24,6 @@ public class DayNightControllerEditor : Editor
             targ.timeTable[tod] = EditorGUILayout.FloatField(new GUIContent("Hours in " + tod.ToString()), targ.timeTable[tod]);
         if (!targ.timeTable.CheckSum())
             EditorGUILayout.HelpBox("Hours in day does not add up to 24", MessageType.Warning);
+        EditorUtils.SetSceneDirtyIfGUIChanged(target);
     }
 }
