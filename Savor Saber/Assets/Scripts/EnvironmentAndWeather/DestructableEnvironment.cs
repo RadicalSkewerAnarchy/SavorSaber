@@ -57,15 +57,16 @@ public class DestructableEnvironment : MonoBehaviour
             Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
 
         if (allowRegrow)
-            StartCoroutine(Regrow());
-        else
         {
-            this.GetComponent<Collider2D>().enabled = false;
+            StartCoroutine(Regrow());
         }
+
+        this.GetComponent<Collider2D>().enabled = false;
     }
     private IEnumerator Regrow()
     {
         yield return new WaitForSeconds(respawnTime);
+        this.GetComponent<Collider2D>().enabled = true;
         spr.sprite = normalSprite;
         health = healthReset;
         destroyed = false;
