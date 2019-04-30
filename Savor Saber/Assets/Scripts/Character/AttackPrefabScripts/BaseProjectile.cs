@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+    public bool hurtPlayer = true;
+
     CharacterData myCharData;
 
     /// <summary>
@@ -175,6 +177,8 @@ public class BaseProjectile : MonoBehaviour
             return;
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
+        if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
+            return;
 
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)

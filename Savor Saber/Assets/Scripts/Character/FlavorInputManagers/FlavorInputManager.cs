@@ -185,7 +185,7 @@ public class FlavorInputManager : MonoBehaviour
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CHARMED");
-        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 30f : 20f);
+        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 60f : 30f);
         StartCharm(time);
         //characterData.DoDamage(-3);
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);

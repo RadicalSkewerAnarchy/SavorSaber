@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerKnifeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
+    public AudioClip fruitBunceSFX;
     private PlaySFXRandPitch sfxPlayer;
     PlayerData myCharData;
     [Range(1,10)]
@@ -22,7 +23,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
     {
         GameObject g = collision.gameObject;
         string t = g.tag;
-        if (t == "Prey" || t == "Predator")
+        if (t == "Predator")
         {
             sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
@@ -35,7 +36,12 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             }
             DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
         }
-        else if (collision.gameObject.tag == "SkewerableObject")
+        else if (t == "Prey")
+        {
+            sfxPlayer.PlayRandPitch(fruitBunceSFX);
+            DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
+        }
+        else if (t == "SkewerableObject")
         {
             var objComp = collision.gameObject.GetComponent<SkewerableObject>();
             if (objComp.attached)
@@ -69,13 +75,5 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             var ForceDir = body.transform.position - transform.parent.position;
             body.AddForce(ForceDir.normalized * forceScale, ForceMode2D.Impulse);
         }
-        /*else if (g.GetComponent<DestructableEnvironment>() != null)
-        {
-            Destroy(g);
-        }
-        else
-        {
-            //Debug.Log("This is something i cant hit: " + g.name);
-        }*/
     }
 }

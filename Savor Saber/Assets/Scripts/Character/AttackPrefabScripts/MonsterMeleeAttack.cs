@@ -36,7 +36,8 @@ public class MonsterMeleeAttack : BaseMeleeAttack
             //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
             {
-                myCharData.damageDealt += (int)meleeDamage;
+                if(myCharData != null)
+                    myCharData.damageDealt += (int)meleeDamage;
                 if (charData.DoDamage((int)meleeDamage))
                     myCharData.entitiesKilled += 1;
             }                       

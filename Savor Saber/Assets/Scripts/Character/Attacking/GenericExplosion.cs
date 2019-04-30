@@ -9,6 +9,9 @@ public class GenericExplosion : MonoBehaviour
 {
     public float explosionLifetime = 1;
     public float explosionForce = 1;
+    public float shakeTime = 0.2f;
+    [Range(0, 2)]
+    public float shakeIntensity = 0.1f;
 
 
     void Awake()
@@ -16,7 +19,7 @@ public class GenericExplosion : MonoBehaviour
         StartCoroutine(Explode());
         AudioSource explodeAudio = GetComponent<AudioSource>();
         Animator explodeAnim = GetComponent<Animator>();
-
+        CameraController.instance?.Shake(shakeTime, shakeIntensity);
         explodeAudio.Play();
         explodeAnim.SetBool("Explode", true);
     }

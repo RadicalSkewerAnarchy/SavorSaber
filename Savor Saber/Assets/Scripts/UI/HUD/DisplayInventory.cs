@@ -17,11 +17,12 @@ public class DisplayInventory : MonoBehaviour
     public Text cookedText;
     public Inventory skewerInventory; 
     public Image[] skewerSpritesActive = new Image[3];
-    public Image[] skewerSpritesLeft   = new Image[3];
-    public Image[] skewerSpritesRight  = new Image[3];
+    public Image[] skewerSpritesUp   = new Image[3];
+    public Image[] skewerSpritesDown  = new Image[3];
+    public Image[] skewerHandleSprites = new Image[3];
 
     public Image[] flavorIcons = new Image[6];
-    public Sprite[] flavorTextures = new Sprite[6];
+    public Sprite[] flavorTextures = new Sprite[7];
     public Sprite emptySprite;
 
     private Dictionary<RecipeData.Flavors, Sprite> iconDictionary;
@@ -39,6 +40,7 @@ public class DisplayInventory : MonoBehaviour
         iconDictionary.Add(RecipeData.Flavors.Sour, flavorTextures[3]);
         iconDictionary.Add(RecipeData.Flavors.Salty, flavorTextures[4]);
         iconDictionary.Add(RecipeData.Flavors.Savory, flavorTextures[5]);
+        iconDictionary.Add(RecipeData.Flavors.Acquired, flavorTextures[6]);
 
         Array.Reverse(flavorIcons);
     }
@@ -122,21 +124,21 @@ public class DisplayInventory : MonoBehaviour
             if (i < dropLeftArray.Length)
             {
                 //print("showing " + dropLeftArray[i].flavors + " at index " + i);
-                skewerSpritesLeft[i].sprite = dropLeftArray[i].image;
+                skewerSpritesUp[i].sprite = dropLeftArray[i].image;
             }
             else
             {
-                skewerSpritesLeft[i].sprite = emptySprite;
+                skewerSpritesUp[i].sprite = emptySprite;
             }
 
             if (i < dropRightArray.Length)
             {
                 //print("showing " + dropRightArray[i].flavors + " at index " + i);
-                skewerSpritesRight[i].sprite = dropRightArray[i].image;
+                skewerSpritesDown[i].sprite = dropRightArray[i].image;
             }
             else
             {
-                skewerSpritesRight[i].sprite = emptySprite;
+                skewerSpritesDown[i].sprite = emptySprite;
             }
         }
     }
@@ -185,7 +187,7 @@ public class DisplayInventory : MonoBehaviour
                 if (flavorsFound >= 2)
                     break;
             }
-
+            
             //assign icons appropriately
             int index1 = i * 2;
             int index2 = (i * 2) + 1;
@@ -210,6 +212,25 @@ public class DisplayInventory : MonoBehaviour
     {
         UpdateSkewerVisual();
         UpdateFlavorIcons();
+    }
+
+    public void SwapHandles(bool up)
+    {
+        if(up)
+        {
+            var tempSprite = skewerHandleSprites[0].sprite;
+            skewerHandleSprites[0].sprite = skewerHandleSprites[1].sprite;
+            skewerHandleSprites[1].sprite = skewerHandleSprites[2].sprite;
+            skewerHandleSprites[2].sprite = tempSprite;
+        }
+        else
+        {
+            var tempSprite = skewerHandleSprites[2].sprite;
+            skewerHandleSprites[2].sprite = skewerHandleSprites[1].sprite;
+            skewerHandleSprites[1].sprite = skewerHandleSprites[0].sprite;
+            skewerHandleSprites[0].sprite = tempSprite;
+        }
+
     }
     #endregion
 }
