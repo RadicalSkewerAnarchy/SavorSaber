@@ -28,6 +28,7 @@ public class SignalApplication : MonoBehaviour
 
     // private variables
     public bool hasActivated = false;
+    private bool particleActive = false;
     public bool isForAwareness = false;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
@@ -232,11 +233,14 @@ public class SignalApplication : MonoBehaviour
         emitters = transform.parent.GetComponentsInChildren<ParticleSystem>();
         if(mostInfluential > 0)
         {
+            //if their is a signal with a modification
             foreach (var emitter in emitters)
             {
+                //
                 if (emitter.tag.Contains(mood) && emitter.tag.Contains("Up"))
                 {
-                    emitter.Play();
+                    StartCoroutine(playEmitter(emitter));
+                    //emitter.Play();
                     break;
                 }
             }
@@ -246,10 +250,21 @@ public class SignalApplication : MonoBehaviour
             {
                 if (emitter.tag.Contains(mood) && emitter.tag.Contains("Down"))
                 {
-                    emitter.Play();
+                    StartCoroutine(playEmitter(emitter));
                     break;
                 }
             }
+        }
+    }
+
+    IEnumerator playEmitter(ParticleSystem emitter)
+    {
+        if(!particleActive)
+        {
+            particleActive = true;
+            emitter.Play();
+            yield return new WaitForSeconds(emitter.duration);
+            particleActive = false;
         }
     }
 }
