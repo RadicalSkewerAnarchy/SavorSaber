@@ -269,7 +269,14 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Vector2 of Closest Enemy or Friend </returns>
     public Vector2 NearestEnemyPosition()
     {
-        return ClosestCreature().gameObject.transform.position;
+        if (ClosestCreature() == null)
+        {
+            return Vector2.zero;
+        }
+        else
+        {
+            return ClosestCreature().gameObject.transform.position;
+        }
     }
     public Vector2 NearestFriendPosition()
     {
@@ -473,6 +480,7 @@ public class MonsterChecks : MonoBehaviour
     // if it's not, don't navigate there
     public TileNode GetNearestNode(Vector2 pos)
     {
+        /*
         TileNode targetTile = null;
         float minDist = Mathf.Infinity;
         if(GetComponent<Pathfinder>() != null)
@@ -493,12 +501,14 @@ public class MonsterChecks : MonoBehaviour
                     //}
                 }
             }
-        }
-        
-       
+        }*/
+
+
         //Debug.Log("Closest tile found is : " + targetTile.gameObject.name);
         /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
-        /*
+        int maxTries = 5;
+        float sizeCheck = .5f;
+        TileNode targetTile = null;
         for (var i = 0; i < maxTries; i++)
         {
             var availableNodes = Physics2D.OverlapCircleAll(pos, sizeCheck);
@@ -523,12 +533,12 @@ public class MonsterChecks : MonoBehaviour
                 sizeCheck *= 2;
                 // Debug.Log("DOUBLING TILECHECK SIZE");
             }
-        }*/
+        }
 
         return targetTile;
     }
     #endregion
-    /*
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<TileNode>() != null)
@@ -538,7 +548,7 @@ public class MonsterChecks : MonoBehaviour
                 currentTile = collision.gameObject.GetComponent<TileNode>();
             }
         }
-    }*/
+    }
     #region POSITION RANDOMIZATION
     /// <summary>
     /// Given some distribution, return a vector2 of:

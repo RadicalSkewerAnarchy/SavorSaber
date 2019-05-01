@@ -14,10 +14,9 @@ public partial class MonsterProtocols : MonoBehaviour
     #endregion
     TileNode targetTile;
 
-		    #region Booleans
 		    bool runningCoRoutine = false;
+            bool creatureMoving = false;
 		    #endregion
-	    #endregion
 	#endregion
 
     private void Start()
@@ -209,6 +208,8 @@ public partial class MonsterProtocols : MonoBehaviour
     // move away from the nearest anything
     public void Runaway()
     {
+        NavRunaway();
+        /*
         if(Behaviour.ActionTimer < 0)
         {
             NavRunaway();
@@ -237,33 +238,32 @@ public partial class MonsterProtocols : MonoBehaviour
     public void NavRunaway()
     {
         float maxDist = 0;
-        Debug.Log("Navigating runaway");
-
+        //Debug.Log("Navigating runaway");
+        Checks.SetCurrentTile();/*
         if (Checks.currentTile == null)
         {
             Checks.SetCurrentTile();
-            Debug.Log("Setting Current Tile");
-        }
+            //Debug.Log("Setting Current Tile");
+        }*/
         if (Checks.currentTile != null)
         {
-    
+            //Debug.Log(Checks.currentTile.name);
+            if (Checks.NearestEnemyPosition() == Vector2.zero) return;
             foreach (var neighbor in Checks.currentTile.neighbors)
             {
-                foreach (var neighborneighbor in neighbor.neighbors)
+                var distance = Vector2.Distance(Checks.ClosestCreature().transform.position, neighbor.transform.position);
+                if(distance > maxDist)
                 {
-                    var distance = Vector2.Distance(Checks.NearestEnemyPosition(), neighborneighbor.transform.position);
-                    if (distance > maxDist)
-                    {
-                        //Debug.Log("Farthest closest node found");
-                        maxDist = distance;
-                        targetTile = neighborneighbor;
-                    }
+                    maxDist = distance;
+                    targetTile = neighbor;
                 }
             }
             if (targetTile != null)
             {
-                Debug.Log("Target tile: " + targetTile.gameObject.name + " is not null, branched from neighbor of :" + Checks.currentTile.gameObject.name);
-                NavTo(targetTile);
+                if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
+                {
+                    StartCoroutine(MoveCreatureToTarget(targetTile));
+                }
             }
         }       
         

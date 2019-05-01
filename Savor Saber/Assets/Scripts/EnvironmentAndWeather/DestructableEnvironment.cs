@@ -77,7 +77,7 @@ public class DestructableEnvironment : MonoBehaviour
         var tick = time;
         while (tick > 0)
         {
-            Debug.Log("wiggling");
+            //Debug.Log("wiggling");
             yield return new WaitForSeconds(Time.deltaTime);
 
             this.transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);

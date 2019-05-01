@@ -23,13 +23,5 @@ public class TileNode : MonoBehaviour
             Destroy(gameObject.GetComponent<BoxCollider2D>());
         }
     }
-    
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.GetType() == typeof(CompositeCollider2D))
-        {
-            Destroy(gameObject.GetComponent<BoxCollider2D>());
-        }
-    }
 }
 

@@ -42,6 +42,7 @@ public class GraphNodePopulator : MonoBehaviour
             j = 0;
             /// list of lists, this increments the X counter
             tiles.Add(new List<TileNode>());
+            
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 walkable = true;
@@ -56,9 +57,9 @@ public class GraphNodePopulator : MonoBehaviour
                 {
                     walkable = false;
                 }
-                if((y % clusterLimit == 0) && walkable)
+                if((y % clusterLimit == 0) && (x % clusterLimit == 0) && walkable)
                 {
-                    GameObject tile = Instantiate(nodePrefab, current, new Quaternion(0, 0, 0, 1));
+                    GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f,.25f), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
                     tile.GetComponent<TileNode>().x = i;
@@ -79,10 +80,11 @@ public class GraphNodePopulator : MonoBehaviour
                     for (int y = 1; y < tiles[x].Count - 2; y++)
                     {
                         var node = tiles[x][y].GetComponent<TileNode>();
-                        for (int m = -1; m <= 1; m++)
+                        for (int m = -clusterLimit; m <= clusterLimit; m+= clusterLimit)
                         {
                             for (int n = -1; n <= 1; n++)
                             {
+                                if (Mathf.Abs(n) == Mathf.Abs((m/clusterLimit))) continue;
                                 try
                                 {
                                     node.neighbors.Add(tiles[x + m][y + n]);
