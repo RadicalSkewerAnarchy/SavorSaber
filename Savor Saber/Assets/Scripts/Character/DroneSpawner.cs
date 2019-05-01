@@ -23,6 +23,7 @@ public class DroneSpawner : MonoBehaviour
     private AudioSource spawnAudio;
     private Pathfinder pf;
     private SpriteRenderer sr;
+    private Light light;
     ParticleSystem teleportRings;
 
     private bool blocked = false;
@@ -37,6 +38,7 @@ public class DroneSpawner : MonoBehaviour
         spawnAudio = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         teleportRings = GetComponent<ParticleSystem>();
+        light = GetComponentInChildren<Light>();
 
         StartCoroutine(SpawnLoop());
 
@@ -53,7 +55,7 @@ public class DroneSpawner : MonoBehaviour
         {
             Debug.Log("OFF");
             sr.sprite = offSprite;
-            sr.color = Color.red;
+            light.color = Color.red;
             blocked = true;
             teleportRings.Stop();
         }
@@ -61,7 +63,7 @@ public class DroneSpawner : MonoBehaviour
         {
             Debug.Log("ON");
             sr.sprite = onSprite;
-            sr.color = Color.white;
+            light.color = Color.green;
             teleportRings.Play();
             blocked = false;
         }
