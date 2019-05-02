@@ -7,13 +7,22 @@ public class ElectricAOE : MonoBehaviour
 
     private CharacterData characterData;
     private bool inAOE = false;
+    private bool active = true;
+    private SpriteRenderer sr;
+    private WaitForSeconds fieldDelay;
+
     public int damagePerTic = 1;
     public float damageRate = 1f;
+    /// <summary>
+    /// The number of seconds that the field can be disabled for
+    /// </summary>
+    public int disruptiontime = 5;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sr = GetComponent<SpriteRenderer>();
+        fieldDelay = new WaitForSeconds(disruptiontime);
     }
 
     // Update is called once per frame
@@ -22,10 +31,16 @@ public class ElectricAOE : MonoBehaviour
         
     }
 
+    public void DisableForSeconds()
+    {
+        if(active)
+            StartCoroutine(FieldTimer());
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Object in waterfall");
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
+        if (active && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
         {
             Debug.Log("Damaging valid target with electric field");
             characterData = collision.gameObject.GetComponent<CharacterData>();
@@ -78,5 +93,17 @@ public class ElectricAOE : MonoBehaviour
         DamageOverTime();
 
         yield return null;
+    }
+
+    protected IEnumerator FieldTimer()
+    {
+        active = false;
+        sr.enabled = false;
+
+        yield return fieldDelay;
+
+        active = true;
+        sr.enabled = true;
+
     }
 }

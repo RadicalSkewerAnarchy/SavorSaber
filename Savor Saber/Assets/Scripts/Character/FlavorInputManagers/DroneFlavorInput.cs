@@ -11,12 +11,18 @@ public class DroneFlavorInput : FlavorInputManager
     private int slowTimer = 0;
     private WaitForSeconds OneSecondTic = new WaitForSeconds(1);
 
+    public bool hasElectricField = false;
+    private ElectricAOE electricField;
+
     // Start is called before the first frame update
     void Start()
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
+
+        if (hasElectricField)
+            electricField = GetComponentInChildren<ElectricAOE>();
     }
 
     public override void RespondToIngredients(bool fedByPlayer)
@@ -39,17 +45,14 @@ public class DroneFlavorInput : FlavorInputManager
         //handle sour - Does more damage to high-health targets
         if(flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
         {
-            Debug.Log("Sour Processing: Enemy health at " + characterData.health + "/" + characterData.maxHealth);
 
             float health = characterData.health;
             //damage boost equals 1/6 of the creature's health at one flavor, 1/2 health at full flavor
             int damage = 1 + 1 * (int)(characterData.health / 6) * flavorCountDictionary[RecipeData.Flavors.Sour];
-
-            Debug.Log("Resulting damage: " + damage);
-
             characterData.DoDamage(damage);
 
-            Debug.Log("Enemy health reduced to " + characterData.health + "/" + characterData.maxHealth);
+            if (hasElectricField && electricField != null)
+                electricField.DisableForSeconds();
 
             flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
         }
