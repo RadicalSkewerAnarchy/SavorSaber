@@ -27,7 +27,7 @@ public class ElectricAOE : MonoBehaviour
         Debug.Log("Object in waterfall");
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
-            Debug.Log("confirmed as reaper");
+            Debug.Log("Damaging valid target with electric field");
             characterData = collision.gameObject.GetComponent<CharacterData>();
             inAOE = true;
             DamageOverTime();

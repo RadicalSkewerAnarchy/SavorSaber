@@ -31,7 +31,8 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         string t = g.tag;
         if (t == "Player" || t == "Prey" || t == "Predator")
         {            
-            sfxPlayer.PlayRandPitch(damageSFX);
+            if(damageSFX != null)
+                sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
             //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
