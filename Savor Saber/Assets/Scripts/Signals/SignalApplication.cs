@@ -263,16 +263,6 @@ public class SignalApplication : MonoBehaviour
 
     IEnumerator playEmitter(ParticleSystem emitter)
     {
-        /*
-        if(!particleActive)
-        {
-            Debug.Log("Coroutine started, particle playing with tag: " + emitter.tag);
-            particleActive = true;
-            emitter.Play();
-            yield return new WaitForSeconds(emitter.duration);
-            emitter.Pause();    
-            particleActive = false;
-        }*/
         if (!particleActive)
         {
             particleActive = true;
