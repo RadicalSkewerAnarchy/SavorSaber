@@ -30,6 +30,7 @@ public class SignalApplication : MonoBehaviour
     public bool hasActivated = false;
     private bool particleActive = false;
     public bool isForAwareness = false;
+    private Queue<ParticleSystem> particleQueue;
     // if both hit enemies and hit friends are false, hit EVERYTHING
     bool hitSelf = true;
     bool hitAll = true;
@@ -72,6 +73,7 @@ public class SignalApplication : MonoBehaviour
         //ChildAnimationAgent.AddComponent<Animator>();
         //Debug.Log("signal with radius = " + interactRadius);
         gameObject.name = gameObject.name + gameObject.GetInstanceID().ToString();
+        particleQueue = new Queue<ParticleSystem>();
 
         // set any default dictionary values
         if (fearMod != 0)
@@ -239,9 +241,9 @@ public class SignalApplication : MonoBehaviour
                 //
                 if (emitter.tag.Contains(mood) && emitter.tag.Contains("Up"))
                 {
-                    StartCoroutine(playEmitter(emitter));
-                    //emitter.Play();
-                    break;
+                    particleQueue.Enqueue(emitter);
+                    //StartCoroutine(playEmitter(emitter));
+                    //break;
                 }
             }
         } else if(mostInfluential < 0)
@@ -250,21 +252,39 @@ public class SignalApplication : MonoBehaviour
             {
                 if (emitter.tag.Contains(mood) && emitter.tag.Contains("Down"))
                 {
-                    StartCoroutine(playEmitter(emitter));
-                    break;
+                    particleQueue.Enqueue(emitter);
+                    //StartCoroutine(playEmitter(emitter));
+                    //break;
                 }
             }
         }
+        StartCoroutine(playEmitter(null));
     }
 
     IEnumerator playEmitter(ParticleSystem emitter)
     {
+        /*
         if(!particleActive)
         {
+            Debug.Log("Coroutine started, particle playing with tag: " + emitter.tag);
             particleActive = true;
             emitter.Play();
             yield return new WaitForSeconds(emitter.duration);
+            emitter.Pause();    
+            particleActive = false;
+        }*/
+        if (!particleActive)
+        {
+            particleActive = true;
+            while (particleQueue.Count > 0)
+            {
+                var currentEmitter = particleQueue.Dequeue();
+                currentEmitter.Play();
+                yield return new WaitForSeconds(currentEmitter.duration);
+                currentEmitter.Pause();
+            }
             particleActive = false;
         }
+        
     }
 }
