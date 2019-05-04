@@ -39,7 +39,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
             {
                 if(myCharData != null)
                     myCharData.damageDealt += (int)meleeDamage;
-                if (charData.DoDamage((int)meleeDamage))
+                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
                     myCharData.entitiesKilled += 1;
             }                       
         }
