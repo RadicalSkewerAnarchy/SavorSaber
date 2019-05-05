@@ -20,11 +20,11 @@ GameObject:
   - component: {fileID: 6677514028057774228}
   - component: {fileID: 8639770712118812269}
   - component: {fileID: 901491239409096831}
-  - component: {fileID: 3667186792692667412}
   - component: {fileID: 5006796550576820999}
   - component: {fileID: 4979908746722448060}
   - component: {fileID: 963237053135567594}
   - component: {fileID: 5277558909959737931}
+  - component: {fileID: 8055180839980965654}
   m_Layer: 0
   m_Name: DroneTransport
   m_TagString: Predator
@@ -107,7 +107,7 @@ SpriteRenderer:
   m_SortingLayerID: -133389985
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e777190cfc3747c4f9f92448003b111b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 41afe38b52aa32747a37b5b801aae326, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -447,22 +447,6 @@ MonoBehaviour:
     type: 3}
   attackDuration: 1
   isAttacking: 0
---- !u!58 &3667186792692667412
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5006796550576820992}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!114 &5006796550576820999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,6 +466,7 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  hasElectricField: 0
 --- !u!114 &4979908746722448060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +507,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToDrop: []
+--- !u!61 &8055180839980965654
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006796550576820992}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.1875, y: 2.1875}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.1875, y: 2.1875}
+  m_EdgeRadius: 0
 --- !u!1 &8584568696665660001
 GameObject:
   m_ObjectHideFlags: 0
