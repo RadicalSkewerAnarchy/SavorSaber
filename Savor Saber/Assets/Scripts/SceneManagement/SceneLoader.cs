@@ -5,12 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-    string[] scenes;
+    public string[] sceneNames;
     // Start is called before the first frame update
     void Start()
     {
-        var sceneList = new List<Scene>();
-        //foreach(var name in scenes)
-        //    sceneList.Add(SceneManager.LoadScene(name))
+        foreach (var name in sceneNames)
+            SceneManager.LoadScene(name, LoadSceneMode.Additive);
     }
 }

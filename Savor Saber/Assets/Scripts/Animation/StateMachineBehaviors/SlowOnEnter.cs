@@ -6,11 +6,11 @@ public class SlowOnEnter : StateMachineBehaviour
 {
     [Range(0f, 1f)]
     public float slowDownMultiplier = 0.25f;
-    UpdatedController PlayerController;
+    PlayerController PlayerController;
     //OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerController = GameObject.FindObjectOfType<UpdatedController>();
+        PlayerController = GameObject.FindObjectOfType<PlayerController>();
         PlayerController.speedMod = slowDownMultiplier;
     }
 
