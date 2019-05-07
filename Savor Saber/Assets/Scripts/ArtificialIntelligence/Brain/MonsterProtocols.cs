@@ -474,10 +474,17 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             // FOLLOW THE LEADER!!
             // LEFT RIGHT LEFT
-            GameObject near = Checks.FollowTheLeader();
-            Vector2 pos = near.transform.position;
-            // make default speed for consistency? additive?
-            Behaviour.MoveTo(pos, AiData.Speed + 3, 1.5f);
+            GameObject drone = Checks.ClosestDrone();
+            if (drone == null)
+            {
+                GameObject near = Checks.FollowTheLeader();
+                Vector2 pos = near.transform.position;
+                Behaviour.MoveTo(pos, AiData.Speed + 3, 1.5f);
+            }
+            else
+            {
+                Melee(drone);
+            }
         }
         else if (Checks.specialTarget == null)
         {
