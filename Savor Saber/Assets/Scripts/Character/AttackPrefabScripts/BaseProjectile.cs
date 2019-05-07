@@ -10,7 +10,11 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+    /// <summary>
+    /// Should this projectile hurt certain factions?
+    /// </summary>
     public bool hurtPlayer = true;
+    public bool hurtDrones = true;
 
     CharacterData myCharData;
 
@@ -179,13 +183,15 @@ public class BaseProjectile : MonoBehaviour
             Instantiate(dropItem, transform.position, Quaternion.identity);
         if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
             return;
+        if (go.tag == "Predator" && !hurtDrones)
+            return;
 
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)
         {
             //myCharData.damageDealt += (int)projectileDamage;
             //Debug.Log("Dealing DMG");
-            if (characterData.DoDamage((int)projectileDamage))
+            if (characterData.DoDamage((int)projectileDamage) && myCharData != null)
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)
                 Destroy(this.gameObject);
