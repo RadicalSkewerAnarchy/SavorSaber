@@ -137,6 +137,10 @@ public class MonsterChecks : MonoBehaviour
             {
                 continue;
             }
+            if (Creature.tag == "Predator")
+            {
+                continue;
+            }
             #endregion
             float dist = Creature.GetComponent<CharacterData>().health;
             if (dist < weak)
@@ -416,7 +420,7 @@ public class MonsterChecks : MonoBehaviour
         }
 
         // return special target
-        Debug.Log("position in conga = " + this.congaPosition);
+        //Debug.Log("position in conga = " + this.congaPosition);
         return specialTarget;
     }
 

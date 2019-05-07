@@ -121,7 +121,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -139,7 +139,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -133389985
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a8a7fad4701cc544985749ee65c88985, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -337,7 +337,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 020000000800000006000000
+    _keys: 02000000080000000600000004000000
     _values:
     - _keys:
       - Hunger
@@ -347,21 +347,21 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0.69981
+          value: 0.90112305
           inSlope: 0
           outSlope: 0
-          tangentMode: 34
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.33333334
+          outWeight: 0
         - serializedVersion: 3
           time: 1
-          value: 0.69981
+          value: 0.033138275
           inSlope: 0
           outSlope: 0
-          tangentMode: 34
+          tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -370,7 +370,7 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.90058476
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -435,6 +435,32 @@ MonoBehaviour:
           inSlope: 1
           outSlope: 1
           tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Friendliness
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 2
+          outSlope: 2
+          tangentMode: 0
           weightedMode: 0
           inWeight: 0
           outWeight: 0
@@ -553,7 +579,8 @@ MonoBehaviour:
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
-  projectile: {fileID: 0}
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
+    type: 3}
   attackDuration: 1
   isAttacking: 0
 --- !u!70 &2766135195253760641
@@ -611,9 +638,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
+  dotTicLength: 0.3
   favoriteIngredients:
   - Acorn
+  - Wheat
   favoriteFlavors: 1
   charmThreshhold: 1
   rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
@@ -777,12 +805,6 @@ PrefabInstance:
 --- !u!4 &4871533744204504333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
-    type: 3}
-  m_PrefabInstance: {fileID: 949843241222598460}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &9104267052077239286 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8319942642036876490, guid: 8810df0ddde908745878a508b9576c92,
     type: 3}
   m_PrefabInstance: {fileID: 949843241222598460}
   m_PrefabAsset: {fileID: 0}

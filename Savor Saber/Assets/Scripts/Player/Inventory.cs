@@ -23,7 +23,7 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// Fields related to actual inventory tracking
     /// </summary>
-    private int activeSkewer = 0;
+    public int activeSkewer = 0;
     private int numberOfSkewers = 3;
     private Skewer[] quiver;
 
@@ -384,7 +384,8 @@ public class Inventory : MonoBehaviour {
 
             sfxPlayer.Play(swapSFX);
             UpdateUI();
-
+            if (inventoryUI != null)
+                inventoryUI.SwapHandles(true);
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
         else if (InputManager.GetButtonDown(Control.SwapSkewerRight))
@@ -395,7 +396,8 @@ public class Inventory : MonoBehaviour {
 
             sfxPlayer.Play(swapSFX);
             UpdateUI();
-
+            if (inventoryUI != null)
+                inventoryUI.SwapHandles(false);
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
     }

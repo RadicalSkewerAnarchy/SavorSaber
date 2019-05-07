@@ -31,19 +31,23 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         string t = g.tag;
         if (t == "Player" || t == "Prey" || t == "Predator")
         {            
-            sfxPlayer.PlayRandPitch(damageSFX);
+            if(damageSFX != null)
+                sfxPlayer.PlayRandPitch(damageSFX);
             CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
             //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
             {
-                myCharData.damageDealt += (int)meleeDamage;
-                if (charData.DoDamage((int)meleeDamage))
+                if(myCharData != null)
+                    myCharData.damageDealt += (int)meleeDamage;
+                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
                     myCharData.entitiesKilled += 1;
             }                       
         }
         else if (g.GetComponent<DestructableEnvironment>() != null)
         {
-            g.GetComponent<DestructableEnvironment>().Destroy();
+            DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();
+            de.health -= ((int)meleeDamage);
+            de.Destroy();
         }
     }
 }

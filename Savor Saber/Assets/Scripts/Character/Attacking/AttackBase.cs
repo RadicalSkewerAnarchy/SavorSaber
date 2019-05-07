@@ -46,9 +46,9 @@ public abstract class AttackBase : MonoBehaviour
     {
         AssetBundleManager.LoadAssetBundle(url);
         sfx_bundle = AssetBundleManager.getAssetBundle(url);
-        Debug.Log("In LoadAB, sfx_bundle = " + sfx_bundle);
+        //Debug.Log("In LoadAB, sfx_bundle = " + sfx_bundle);
         defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>(name);
-        Debug.Log("Default attack sound null? " + defaultAttackSound == null);
+        //Debug.Log("Default attack sound null? " + defaultAttackSound == null);
         yield return null;
     }
 }

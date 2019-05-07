@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 3427734949844128077}
   - component: {fileID: 6230704303760914807}
   - component: {fileID: 2817615788990947547}
+  - component: {fileID: 7665701375855398550}
   m_Layer: 0
   m_Name: HorseRadish
   m_TagString: Prey
@@ -119,7 +120,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +138,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -133389985
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c1c8075eb7c948c45b88ac85232b2821, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -335,95 +336,18 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 06000000080000000a000000
+    _keys: 060000000800000002000000
     _values:
     - _keys:
       - Hunger
-      - Comfort
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Comfort
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0.9971065
-          inSlope: -3.3753223
-          outSlope: -3.3753223
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.104166664
-        - serializedVersion: 3
-          time: 1
-          value: 0.010169983
-          inSlope: -0.9869365
-          outSlope: -0.9869365
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Comfort
-      - Hostility
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -440,6 +364,9 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+    - _keys:
+      - Fear
+      _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
@@ -454,8 +381,58 @@ MonoBehaviour:
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 2
-          outSlope: 2
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Fear
+      - Hunger
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.49811935
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.009754181
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.50032806
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.011108398
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -464,134 +441,8 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
   macroValues:
-    _keys:
-    - Comfort
-    _values:
-    - _keys:
-      - Friendliness
-      - Fear
-      - Hostility
-      - EnemyDistance
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0.0028717732
-          value: -0.044961028
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.32677668
-          value: 0.8964802
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.04943154
-          value: 0.030426601
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.04005681
-          value: -0.0495283
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: -0.0056818184
-          value: -0.033018872
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.49743098
-          value: -0.03301887
-          inSlope: 0.000000029467465
-          outSlope: 0.000000029467465
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.5
-          value: 0.3018868
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.99715906
-          value: 0
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0.002837441
-          value: -0.0012148619
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.96593404
-          value: 0.50543326
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.96884155
-          value: -0.02203263
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 136
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
+    _keys: []
+    _values: []
   data: {fileID: 0}
 --- !u!114 &1044033828032691699
 MonoBehaviour:
@@ -696,13 +547,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
   ActionTimer: 0
-  ActionTimerReset: 10
+  ActionTimerReset: 5
   ActionTimerVariance: 2
   ResetTimer: 0
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
-  projectile: {fileID: 0}
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
+    type: 3}
   attackDuration: 1
   isAttacking: 0
 --- !u!114 &801385354610976386
@@ -718,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: 0
-  invert: 0
+  invert: 1
 --- !u!60 &3427734949844128077
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -773,7 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _direction: 0
-  invert: 0
+  invert: 1
 --- !u!114 &2817615788990947547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,7 +784,7 @@ PrefabInstance:
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
@@ -942,12 +794,12 @@ PrefabInstance:
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 250
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 32
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}

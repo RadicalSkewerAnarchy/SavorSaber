@@ -55,6 +55,7 @@ public class ProjectileSkewer : BaseProjectile
                 FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
                 if (flavorInput != null)
                 {
+                    Debug.Log("Flavor input of " + collision.gameObject + " not null");
                     if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
                     {
                         detonating = true;

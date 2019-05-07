@@ -51,7 +51,7 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Melee(GameObject target)
     {
         #region Get Nearest + Null Check
-        var weakest = Checks.ClosestCreature();
+        var weakest = Checks.WeakestCreature();
         Vector2 pos;
         if (target != null)
         {
@@ -116,7 +116,7 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Ranged()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
+        var nearestEnemy = AiData.Checks.WeakestCreature();
         Vector2 pos;
         if (nearestEnemy != null)
         {
@@ -127,13 +127,24 @@ public partial class MonsterProtocols : MonoBehaviour
             pos = transform.position;
         }
         #endregion
-        if (CheckThreshold(pos, AiData.EngageHostileThreshold))
+        var rat = AiData.RangeAttackThreshold;
+        var eht = AiData.EngageHostileThreshold;
+        var engage = CheckRangedThreshold(pos, rat, eht);
+        if (engage < 0)
         {
-            if (Behaviour.MoveFrom(pos, AiData.Speed, 0.5f))
+            if (Behaviour.MoveFrom(pos, AiData.Speed, rat - eht))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
             }
         }
+        else if (engage > 0)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, rat + eht))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+        else Behaviour.RangedAttack(pos, AiData.Speed);
     }
     public void NavRanged()
     {
@@ -491,13 +502,16 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Console()
     {
-        // move to
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.WeakestCreature().transform.position;
-        GameObject target = Checks.WeakestCreature();
+        #region Get Nearest + Null Checks
+        Vector2 pos = Checks.AverageGroupPosition();
         #endregion
-
-
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            if (Behaviour.Console())
+            {
+                Wander(2f, 2f);
+            }
+        }
     }
 
     // end of pacifict region

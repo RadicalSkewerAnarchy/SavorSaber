@@ -14,7 +14,8 @@ public class PointOfInterest : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("Capturing camera");
-            collision.gameObject.GetComponent<CameraController>().SetTarget(gameObject.gameObject, maxPullDistance, maxPullSpeed, snapTime);
+            var cam = collision.gameObject.GetComponent<CameraController>();
+            cam.SetTarget(gameObject.gameObject, maxPullDistance, maxPullSpeed, snapTime);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
