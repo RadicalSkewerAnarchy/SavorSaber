@@ -156,25 +156,17 @@ public class DisplayInventory : MonoBehaviour
         IngredientData[] dropActiveArray = skewerInventory.GetActiveSkewer().ToArray();
         Array.Reverse(dropActiveArray);
 
-        //MAKING CHANGES
-
         //check each ingredient of the active skewer 
         for (int i = 0; i < 3; i++)
         {
             //failsafe to update all three slots even if there aren't three ingredients
             if(i >= dropActiveArray.Length)
             {
-                int index1a = i * 2;
-                int index2a = (i * 2) + 1;
-
-                flavorIcons[index1a].sprite = emptySprite;
-                flavorIcons[index2a].sprite = emptySprite;
-
+                flavorIcons[i].sprite = emptySprite;
                 continue;
             }
 
-            RecipeData.Flavors flavor1, flavor2;
-            flavor1 = flavor2 = RecipeData.Flavors.None;
+            RecipeData.Flavors flavor1 = RecipeData.Flavors.None;
 
             int flavorsFound = 0;
             IngredientData currentIngredient = dropActiveArray[i];
@@ -188,29 +180,13 @@ public class DisplayInventory : MonoBehaviour
 
                     if (flavorsFound == 1)
                         flavor1 = (RecipeData.Flavors)f;
-                    else if (flavorsFound == 2)
-                        flavor2 = (RecipeData.Flavors)f;
                 }
-                if (flavorsFound >= 2)
+                if (flavorsFound >= 1)
                     break;
             }
             
-            //assign icons appropriately
-            int index1 = i * 2;
-            int index2 = (i * 2) + 1;
-
             if (flavor1 != RecipeData.Flavors.None)
-                flavorIcons[index1].sprite = iconDictionary[flavor1];
-            else
-                flavorIcons[index1].sprite = emptySprite;
-
-            if (flavor2 != RecipeData.Flavors.None)
-                flavorIcons[index2].sprite = iconDictionary[flavor2];
-            else
-                flavorIcons[index2].sprite = emptySprite;
-
-
-
+            flavorIcons[i].sprite = flavor1 != RecipeData.Flavors.None ? emptySprite : iconDictionary[flavor1];
         }
 
     }
