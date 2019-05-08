@@ -23,10 +23,12 @@ public class DroneSpawner : MonoBehaviour
     private AudioSource spawnAudio;
     private Pathfinder pf;
     private SpriteRenderer sr;
+    private Light light;
     ParticleSystem teleportRings;
 
     private bool blocked = false;
-    private int objectsBlocking = 0;
+    private Collider2D[] overlappingObject = null;
+    private bool overlapped = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,23 +38,53 @@ public class DroneSpawner : MonoBehaviour
         spawnAudio = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         teleportRings = GetComponent<ParticleSystem>();
+        light = GetComponentInChildren<Light>();
+
         StartCoroutine(SpawnLoop());
+
 
     }
 
     private void Update()
     {
-        if(objectsBlocking > 0)
+        //create an overlap test box that only checks default
+
+        overlapped = CheckValidCollisions();
+
+        if(overlapped)
         {
+            Debug.Log("OFF");
             sr.sprite = offSprite;
+            light.color = Color.red;
             blocked = true;
             teleportRings.Stop();
         }
         else
         {
+            Debug.Log("ON");
             sr.sprite = onSprite;
+            light.color = Color.green;
             teleportRings.Play();
             blocked = false;
+        }
+    }
+
+    private bool CheckValidCollisions()
+    {
+        overlappingObject = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, 0.35f), new Vector2(1.5f, 0.75f), 0f);
+
+        if (overlappingObject.Length == 0)
+            return false;
+        else
+        {
+            foreach(Collider2D collider in overlappingObject)
+            {
+                if (collider.gameObject.layer == 0 || collider.gameObject.layer == 8)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
@@ -85,19 +117,6 @@ public class DroneSpawner : MonoBehaviour
         yield return intervalDelay;
         SpawnDrones();
         yield return null;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        objectsBlocking++;
-        Debug.Log("New blocking object: " + collision.gameObject);
-        Debug.Log("Teleporter blocked by " + objectsBlocking + " objects");
-    }
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        objectsBlocking--;
-        Debug.Log("Removed blocking object: " + collision.gameObject);
-        Debug.Log("Teleporter blocked by " + objectsBlocking + " objects");
     }
 
 }

@@ -146,18 +146,18 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.74
+  m_audioClip: {fileID: 8300000, guid: ea6498f9460e0ec42b84a4640ffc4511, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.649
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0.3
   MinDistance: 1
-  MaxDistance: 30
+  MaxDistance: 18
   Pan2D: 0
   rolloffMode: 2
   BypassEffects: 0
@@ -361,9 +361,9 @@ MonoBehaviour:
   initialHunger: 0
   initialHostility: 1
   initialFriendliness: 0
-  damageSFX: {fileID: 8300000, guid: 45050fe34614e0c4a82019a8b587625d, type: 3}
+  damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 0}
-  deathSFX: {fileID: 8300000, guid: 22ed8855b1e01cf4b9b2a1cf834d4c8d, type: 3}
+  deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
@@ -445,6 +445,8 @@ MonoBehaviour:
   projectile: {fileID: 3494384851677285723, guid: ab9f0bb195e5bd7439541dca657e22aa,
     type: 3}
   attackDuration: 1
+  meleeAttackDuration: 0.5
+  meleeAttackDelay: 0.25
   isAttacking: 0
 --- !u!58 &6815470992871143661
 CircleCollider2D:
@@ -481,6 +483,7 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  hasElectricField: 0
 --- !u!114 &2985091234829434437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,6 +659,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4998334802170643235, guid: 30605d015852ce3419fa21e6ce3826b7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30605d015852ce3419fa21e6ce3826b7, type: 3}
 --- !u!4 &5297769974280953604 stripped

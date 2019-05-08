@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(UpdatedController))]
+[RequireComponent(typeof(PlayerController))]
 public class Respawner : MonoBehaviour
 {
     SpawnPoint currSpawn;
-    UpdatedController controller;
+    PlayerController controller;
     AttackBase[] attacks;
     CharacterData data;
     private Animator anim;
@@ -15,7 +15,7 @@ public class Respawner : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        controller = GetComponent<UpdatedController>();
+        controller = GetComponent<PlayerController>();
         attacks = GetComponents<AttackBase>();
         data = GetComponent<CharacterData>();
     }
