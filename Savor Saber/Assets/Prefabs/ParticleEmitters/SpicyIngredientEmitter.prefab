@@ -171,7 +171,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 3
-      minScalar: 1
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -224,7 +224,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 0.9479667, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -287,7 +287,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.4
-      minScalar: 0.2
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -662,7 +662,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 10.772693
+    angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -977,7 +977,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 15
+        scalar: 150
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -1364,7 +1364,7 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.98133034, b: 0.25943398, a: 1}
-        key1: {r: 0.990566, g: 0.9661133, b: 0.2569865, a: 0.5019608}
+        key1: {r: 0.990566, g: 0.9661133, b: 0.2569865, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0.5019608}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
@@ -1393,8 +1393,8 @@ ParticleSystem:
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 0.48298138, b: 0.0990566, a: 1}
-        key1: {r: 1, g: 0.5145898, b: 0.16509432, a: 0.5176471}
-        key2: {r: 0.26415092, g: 0.2629049, b: 0.2629049, a: 0}
+        key1: {r: 1, g: 0.5145898, b: 0.16509432, a: 0}
+        key2: {r: 0.26415092, g: 0.2629049, b: 0.2629049, a: 0.5176471}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1410,7 +1410,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 65535
-        atime2: 0
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1423,7 +1423,7 @@ ParticleSystem:
     enabled: 1
     mode: 1
     timeMode: 2
-    fps: 3
+    fps: 0.5
     frameOverTime:
       serializedVersion: 2
       minMaxState: 1
@@ -1539,10 +1539,9 @@ ParticleSystem:
     uvChannelMask: -1
     randomRow: 1
     sprites:
-    - sprite: {fileID: 21300004, guid: 2e81447ae33572d45af38314b637a60a, type: 3}
-    - sprite: {fileID: 21300006, guid: 2e81447ae33572d45af38314b637a60a, type: 3}
-    - sprite: {fileID: 21300010, guid: 2e81447ae33572d45af38314b637a60a, type: 3}
-    - sprite: {fileID: 0}
+    - sprite: {fileID: 21300008, guid: b16812901c349d2489381e0c8cbd1daf, type: 3}
+    - sprite: {fileID: 21300002, guid: b16812901c349d2489381e0c8cbd1daf, type: 3}
+    - sprite: {fileID: 21300000, guid: b16812901c349d2489381e0c8cbd1daf, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -3943,12 +3942,12 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minVertexDistance: 0.2
-    textureMode: 0
+    textureMode: 1
     ribbonCount: 1
     shadowBias: 0.5
     worldSpace: 0
     dieWithParticles: 1
-    sizeAffectsWidth: 1
+    sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
     inheritParticleColor: 1
     generateLightingData: 0
@@ -4718,7 +4717,7 @@ ParticleSystemRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 49543379e552fdd41a61aae15deb4ebc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4840,15 +4839,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8572635710701248837, guid: a1134144ecb8f4c4188f52b95b717423,
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
         type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.49056602
       objectReference: {fileID: 0}
-    - target: {fileID: 8572635710701248837, guid: a1134144ecb8f4c4188f52b95b717423,
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
         type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 0.49056602
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8572635710701248832, guid: a1134144ecb8f4c4188f52b95b717423,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key1.b
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1134144ecb8f4c4188f52b95b717423, type: 3}

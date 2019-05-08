@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class DisplayDash : MonoBehaviour
 {
-    private UpdatedController playerData;
+    private PlayerController playerData;
     private Image barCover;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject play = GameObject.FindGameObjectWithTag("Player");
-        playerData = play.GetComponent<UpdatedController>();
+        playerData = play.GetComponent<PlayerController>();
         barCover = GetComponent<Image>();
     }
 

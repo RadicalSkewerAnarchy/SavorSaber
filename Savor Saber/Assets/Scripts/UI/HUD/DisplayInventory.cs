@@ -6,6 +6,7 @@ using System;
 
 public class DisplayInventory : MonoBehaviour
 {
+    public static DisplayInventory instance;
 
     #region fields
 
@@ -46,7 +47,13 @@ public class DisplayInventory : MonoBehaviour
     }
     void Awake()
     {
-        
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(transform);
+        }
+        else
+            Destroy(gameObject);
     }
 
     // Update is called once per frame

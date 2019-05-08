@@ -18,6 +18,7 @@ public enum TimeOfDay
 
 public class DayNightController : MonoBehaviour, IPausable
 {
+    public static DayNightController instance;
     public const int hoursPerDay = 24;
     private static readonly int numPhases = EnumUtils.Count<TimeOfDay>();
 
@@ -71,6 +72,17 @@ public class DayNightController : MonoBehaviour, IPausable
         { TimeOfDay.Dusk, 2 },
         { TimeOfDay.Night, 7 },
     };
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(transform);
+        }
+        else
+            Destroy(gameObject);
+    }
 
     void Start()
     {
