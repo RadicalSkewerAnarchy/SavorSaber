@@ -22,6 +22,22 @@ public class DayNightController : MonoBehaviour, IPausable
     public const int hoursPerDay = 24;
     private static readonly int numPhases = EnumUtils.Count<TimeOfDay>();
 
+    public bool IsDayTime
+    {
+        get
+        {
+            return CurrTimeOfDay == TimeOfDay.Morning || CurrTimeOfDay == TimeOfDay.Day || CurrTimeOfDay == TimeOfDay.Evening;
+        }
+    }
+
+    public bool IsNightTime
+    {
+        get
+        {
+            return CurrTimeOfDay == TimeOfDay.Dusk || CurrTimeOfDay == TimeOfDay.Night || CurrTimeOfDay == TimeOfDay.Dawn;
+        }
+    }
+
     public bool Paused { get; set; }
 
     [SerializeField] private float _lengthOfDay = 240;
@@ -47,8 +63,8 @@ public class DayNightController : MonoBehaviour, IPausable
 
     /// <summary> The time in Game Hours it takes to transition for one TimeOfDay to the next</summary>
     public float transitionTime = 1;
-
-    public TimeOfDay CurrTimeOfDay { get; private set; }
+    [SerializeField] private TimeOfDay currTimeOfDay = TimeOfDay.Day;
+    public TimeOfDay CurrTimeOfDay { get => currTimeOfDay; private set => currTimeOfDay = value; }
 
     // Weather and Season dat
 
@@ -86,7 +102,6 @@ public class DayNightController : MonoBehaviour, IPausable
 
     void Start()
     {
-        CurrTimeOfDay = TimeOfDay.Day;
         StartCoroutine(AdvanceTime(true));
     }
 
@@ -141,6 +156,15 @@ public class DayNightController : MonoBehaviour, IPausable
         }
         else
             StartCoroutine(transition(t, 0.15f));
+    }
+    public void SetTimeOfDayImmediate(TimeOfDay t)
+    {
+        StopAllCoroutines();
+        CurrTimeOfDay = t;
+        RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
+            currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
+        CurrTimeOfDay = t;
+        StartCoroutine(AdvanceTime(true));
     }
 
     [System.Serializable] public class TimeTableDict : SDictionary<TimeOfDay, float>
