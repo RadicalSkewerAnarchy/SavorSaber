@@ -18,9 +18,10 @@ public class DestructableEnvironment : MonoBehaviour
     public float respawnTime;
     public bool destroyed = false;
     public ParticleSystem particles = null;
-    public float wiggleTime = 4f;
-    public float wiggleSpeed = 0.3f;
-    public float wiggleAmplitude = 0.25f;
+    public float wiggleTime = 2f;
+    public float wiggleSpeed = 0.2f;
+    [Range(0, 0.3f)]
+    public float wiggleAmplitude = 0.05f;
 
     private Vector2 origin;
 
