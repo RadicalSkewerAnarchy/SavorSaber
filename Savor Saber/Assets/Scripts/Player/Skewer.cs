@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Class for packaging a stack of ingredients and a completed recipe.
 /// </summary>
-public class Skewer
+public class Skewer : IEnumerable<IngredientData>
 {
     //fields
     public Stack<IngredientData> ingredientStack = new Stack<IngredientData>();
@@ -112,5 +112,15 @@ public class Skewer
     public void ClearRecipe()
     {
         finishedRecipe = null;
+    }
+
+    public IEnumerator<IngredientData> GetEnumerator()
+    {
+        return ingredientStack.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return ingredientStack.GetEnumerator();
     }
 }

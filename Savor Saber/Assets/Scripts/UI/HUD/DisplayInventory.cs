@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 
 public class DisplayInventory : MonoBehaviour
 {
@@ -17,14 +18,19 @@ public class DisplayInventory : MonoBehaviour
     public Text conTextPrompt;
     public Text cookedText;
     public Inventory skewerInventory; 
+
     public Image[] skewerSpritesActive = new Image[3];
-    public Image[] skewerSpritesUp   = new Image[3];
-    public Image[] skewerSpritesDown  = new Image[3];
+    public Image[] skewerSpritesSub1   = new Image[3];
+    public Image[] skewerSpritesSub2   = new Image[3];
     public Image[] skewerHandleSprites = new Image[3];
 
-    public Image[] flavorIcons = new Image[6];
+    public Image[] flavorIconsActive = new Image[3];
+    public Image[] flavorIconsSub1 = new Image[3];
+    public Image[] flavorIconsSub2 = new Image[3];
+
     public Sprite[] flavorTextures = new Sprite[7];
     public Sprite emptySprite;
+    public Sprite noFlavorSprite;
 
     private Dictionary<RecipeData.Flavors, Sprite> iconDictionary;
 
@@ -42,8 +48,7 @@ public class DisplayInventory : MonoBehaviour
         iconDictionary.Add(RecipeData.Flavors.Salty, flavorTextures[4]);
         iconDictionary.Add(RecipeData.Flavors.Savory, flavorTextures[5]);
         iconDictionary.Add(RecipeData.Flavors.Acquired, flavorTextures[6]);
-
-        Array.Reverse(flavorIcons);
+        iconDictionary.Add(RecipeData.Flavors.None, noFlavorSprite);
     }
     void Awake()
     {
@@ -54,14 +59,6 @@ public class DisplayInventory : MonoBehaviour
         }
         else
             Destroy(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //UpdateSkewerPrompt();
-        //UpdateSkewerVisual();
-        //UpdateFlavorIcons();
     }
 
     #region utility functions
@@ -90,88 +87,40 @@ public class DisplayInventory : MonoBehaviour
     /// <summary>
     /// Update the visuals to display the current inventory state
     /// </summary>
-    private void UpdateSkewerVisual()
+    private void UpdateSkewerVisual(IngredientData[] ingredientData, Image[] ingredientImg)
     {
-        //convert the active skewer stack to an array and reverse it
-        IngredientData[] dropActiveArray = skewerInventory.GetActiveSkewer().ToArray();
-        IngredientData[] dropLeftArray = skewerInventory.GetLeftSkewer().ToArray();
-        IngredientData[] dropRightArray = skewerInventory.GetRightSkewer().ToArray();
-        IngredientData[] reverseDropActiveArray = new IngredientData[dropActiveArray.Length];
-        IngredientData[] reverseDropLeftArray = new IngredientData[dropLeftArray.Length];
-        IngredientData[] reverseDropRightArray = new IngredientData[dropRightArray.Length];
-        for (int a = 0; a < dropActiveArray.Length; a++)
-        {
-            reverseDropActiveArray[a] = dropActiveArray[dropActiveArray.Length - (a + 1)];
-        }
-        for (int a = 0; a < dropLeftArray.Length; a++)
-        {
-            reverseDropLeftArray[a] = dropLeftArray[dropLeftArray.Length - (a + 1)];
-        }
-        for (int a = 0; a < dropRightArray.Length; a++)
-        {
-            reverseDropRightArray[a] = dropRightArray[dropRightArray.Length - (a + 1)];
-        }
-        dropActiveArray = reverseDropActiveArray;
-        dropLeftArray = reverseDropLeftArray;
-        dropRightArray = reverseDropRightArray;
-
-        //display the sprite associated with each IngredientData in the resulting array
+        // display the sprite associated with each IngredientData in the given array
         for (int i = 0; i < skewerInventory.maxItemsPerSkewer; i++)
         {
-            if (i < dropActiveArray.Length)
+            if (i < ingredientData.Length)
             {
-                //print("showing " + dropActiveArray[i].flavors + " at index " + i);
-                skewerSpritesActive[i].sprite = dropActiveArray[i].image;
+                ingredientImg[i].sprite = ingredientData[i].image;
             }
             else
             {
-                skewerSpritesActive[i].sprite = emptySprite;
-            }
-
-            if (i < dropLeftArray.Length)
-            {
-                //print("showing " + dropLeftArray[i].flavors + " at index " + i);
-                skewerSpritesUp[i].sprite = dropLeftArray[i].image;
-            }
-            else
-            {
-                skewerSpritesUp[i].sprite = emptySprite;
-            }
-
-            if (i < dropRightArray.Length)
-            {
-                //print("showing " + dropRightArray[i].flavors + " at index " + i);
-                skewerSpritesDown[i].sprite = dropRightArray[i].image;
-            }
-            else
-            {
-                skewerSpritesDown[i].sprite = emptySprite;
+                ingredientImg[i].sprite = emptySprite;
             }
         }
     }
 
-    private void UpdateFlavorIcons()
+    private void UpdateFlavorIcons(IngredientData[] ingredientData, Image[] flavorIconImg)
     {
-        //int numFlavors1, numFlavors2, numFlavors3;
-        IngredientData[] dropActiveArray = skewerInventory.GetActiveSkewer().ToArray();
-        Array.Reverse(dropActiveArray);
-
-        //check each ingredient of the active skewer 
+        // check each ingredient of the active skewer 
         for (int i = 0; i < 3; i++)
         {
-            //failsafe to update all three slots even if there aren't three ingredients
-            if(i >= dropActiveArray.Length)
+            // failsafe to update all three slots even if there aren't three ingredients
+            if(i >= ingredientData.Length)
             {
-                flavorIcons[i].sprite = emptySprite;
+                flavorIconImg[i].sprite = emptySprite;
                 continue;
             }
 
             RecipeData.Flavors flavor1 = RecipeData.Flavors.None;
 
             int flavorsFound = 0;
-            IngredientData currentIngredient = dropActiveArray[i];
+            IngredientData currentIngredient = ingredientData[i];
 
-            //check for the presence of each flavor, 
+            // check for the presence of each flavor, 
             for (int f = 1; f <= 64; f = f << 1)
             {
                 if((f & (int)currentIngredient.flavors) > 0)
@@ -185,16 +134,26 @@ public class DisplayInventory : MonoBehaviour
                     break;
             }
             
-            if (flavor1 != RecipeData.Flavors.None)
-            flavorIcons[i].sprite = flavor1 != RecipeData.Flavors.None ? emptySprite : iconDictionary[flavor1];
+            flavorIconImg[i].sprite = iconDictionary[flavor1];
         }
 
     }
 
     public void UpdateSkewerUI()
     {
-        UpdateSkewerVisual();
-        UpdateFlavorIcons();
+        // Get ingredient arrays (Reverse of the skewer stacks)
+        IngredientData[] skewerIngredientsActive  = skewerInventory.GetActiveSkewer().Reverse().ToArray();
+        IngredientData[] skewerIngredientsLeft  = skewerInventory.GetLeftSkewer().Reverse().ToArray();
+        IngredientData[] skewerIngredientsRight = skewerInventory.GetRightSkewer().Reverse().ToArray();
+        // Display ingredient sprites
+        UpdateSkewerVisual(skewerIngredientsActive, skewerSpritesActive);
+        // UpdateSkewerVisual(skewerIngredientsLeft, skewerSpritesSub1);
+        // UpdateSkewerVisual(skewerIngredientsRight, skewerSpritesSub2);
+
+        // Display Flavor Icons
+        UpdateFlavorIcons(skewerIngredientsActive, flavorIconsActive);
+        UpdateFlavorIcons(skewerIngredientsLeft, flavorIconsSub1);
+        UpdateFlavorIcons(skewerIngredientsRight, flavorIconsSub2);
     }
 
     public void SwapHandles(bool up)

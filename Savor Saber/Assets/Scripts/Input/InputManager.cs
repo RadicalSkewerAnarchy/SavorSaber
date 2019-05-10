@@ -64,11 +64,11 @@ public class InputManager : MonoBehaviour
         if (main == null)
         {
             main = this;
+            DontDestroyOnLoad(transform);
         }
         else
         {
             Destroy(gameObject);
-            DontDestroyOnLoad(transform);
         }
     }
 
@@ -78,7 +78,7 @@ public class InputManager : MonoBehaviour
         if(c == 0)
         {
             c = Input.GetAxis(main.keyboardControls[a].ToString());
-            if(c == 0)
+            if(c == 0 && main.keyboardControls.secondaryAxes.ContainsKey(a))
                 c = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
         }
         return c;
