@@ -15,9 +15,10 @@ public class DisplayInventory : MonoBehaviour
     /// Fields related to inventory visual representation
     /// </summary>
 
+    public GameObject disableDuringCutscene;
+   
     public Text conTextPrompt;
     public Text cookedText;
-    public Inventory skewerInventory; 
 
     public Image[] skewerSpritesActive = new Image[3];
     public Image[] skewerSpritesSub1   = new Image[3];
@@ -33,6 +34,7 @@ public class DisplayInventory : MonoBehaviour
     public Sprite noFlavorSprite;
 
     private Dictionary<RecipeData.Flavors, Sprite> iconDictionary;
+    private Inventory skewerInventory;
 
     #endregion
 
@@ -49,6 +51,8 @@ public class DisplayInventory : MonoBehaviour
         iconDictionary.Add(RecipeData.Flavors.Savory, flavorTextures[5]);
         iconDictionary.Add(RecipeData.Flavors.Acquired, flavorTextures[6]);
         iconDictionary.Add(RecipeData.Flavors.None, noFlavorSprite);
+
+        skewerInventory = PlayerController.instance.GetComponent<Inventory>();
     }
     void Awake()
     {
