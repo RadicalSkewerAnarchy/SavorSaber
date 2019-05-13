@@ -32,7 +32,7 @@ public class GraphNodePopulator : MonoBehaviour
             }
         }
         var activeTiles = inactiveTileMaps[0];
-        var inactiveTiles = inactiveTileMaps[1];
+        //var inactiveTiles = inactiveTileMaps[1];
         Debug.Log("Inactive and active tiles found");
         /// iterates through tilemap based on bounds
         int i = 0, j = 0;
@@ -48,12 +48,12 @@ public class GraphNodePopulator : MonoBehaviour
                 walkable = true;
                 /// sets local position hard casted as int based on current x,y iteration
                 Vector3Int local = new Vector3Int(x, y, (int)activeTiles.transform.position.z);
-                Vector3Int localInactive = new Vector3Int(x, y, (int)inactiveTiles.transform.position.z);
+                //Vector3Int localInactive = new Vector3Int(x, y, (int)inactiveTiles.transform.position.z);
                 /// takes real world x,y position as an int and gets specific tile from tilemap at that location
                 Vector3 current = activeTiles.CellToWorld(local);
-                inactiveTiles.CellToWorld(localInactive);
+                //inactiveTiles.CellToWorld(localInactive);
                 var parent = activeTiles.transform.GetChild(0);
-                if(activeTiles.HasTile(local) || inactiveTiles.HasTile(local))
+                if(activeTiles.HasTile(local)/* || inactiveTiles.HasTile(local)*/)
                 {
                     walkable = false;
                 }

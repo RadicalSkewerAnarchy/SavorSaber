@@ -51,17 +51,5 @@ public partial class MonsterProtocols : MonoBehaviour
         yield return null;
         runningCoRoutine = false;
     }
-    protected IEnumerator MoveCreatureToTarget(TileNode tile)
-    {
-        if (!creatureMoving)
-        {
-            creatureMoving = true;
-        }
-        while(!Behaviour.MoveTo(tile.transform.position, AiData.Speed, .5f))
-        {
-            yield return null;
-        }
-        creatureMoving = false;
-        
-    }
+
 }

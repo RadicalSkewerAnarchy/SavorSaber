@@ -237,6 +237,7 @@ public partial class MonsterProtocols : MonoBehaviour
     }
     public void NavRunaway()
     {
+        //Debug.Log("navrunningaway");
         float maxDist = 0;
         //Debug.Log("Navigating runaway");
         Checks.SetCurrentTile();/*
@@ -247,10 +248,13 @@ public partial class MonsterProtocols : MonoBehaviour
         }*/
         if (Checks.currentTile != null)
         {
+            
             //Debug.Log(Checks.currentTile.name);
             if (Checks.NearestEnemyPosition() == Vector2.zero) return;
+            //Debug.Log("Nearestenemy exists");
             foreach (var neighbor in Checks.currentTile.neighbors)
             {
+                //Debug.Log("Tiles have neighbors");
                 var distance = Vector2.Distance(Checks.ClosestCreature().transform.position, neighbor.transform.position);
                 if(distance > maxDist)
                 {
@@ -260,9 +264,12 @@ public partial class MonsterProtocols : MonoBehaviour
             }
             if (targetTile != null)
             {
+                Debug.Log("Targettile is not null");
                 if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
                 {
-                    StartCoroutine(MoveCreatureToTarget(targetTile));
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, .5f);
+                    //Debug.Log("coroutine started");
+                    //StartCoroutine(MoveCreatureToTarget(targetTile));
                 }
             }
         }       

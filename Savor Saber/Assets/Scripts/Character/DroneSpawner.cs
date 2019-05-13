@@ -53,7 +53,7 @@ public class DroneSpawner : MonoBehaviour
 
         if(overlapped)
         {
-            Debug.Log("OFF");
+            //Debug.Log("OFF");
             sr.sprite = offSprite;
             light.color = Color.red;
             blocked = true;
