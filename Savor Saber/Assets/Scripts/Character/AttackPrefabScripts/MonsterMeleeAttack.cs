@@ -8,6 +8,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
     private PlaySFXRandPitch sfxPlayer;
     public MonsterChecks monsterChecks;
     public CharacterData myCharData;
+    public GameObject myAttacker;
 
     // Start is called before the first frame update
     void Start()
@@ -29,21 +30,45 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         //monsterChecks.Enemies.Clear();
         GameObject g = collision.gameObject;
         string t = g.tag;
-        if (t == "Player" || t == "Prey" || t == "Predator")
-        {            
-            if(damageSFX != null)
-                sfxPlayer.PlayRandPitch(damageSFX);
-            CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
-            //Debug.Log("THERE IS CHARACTER COLLISION");
-            if (charData != null)
+        //string m = myAttacker.tag;
+        string m = "Prey";
+
+        if (m == "Prey")
+        {
+            if (t == "Predator")
             {
-                if(myCharData != null)
-                    myCharData.damageDealt += (int)meleeDamage;
-                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
-                    myCharData.entitiesKilled += 1;
-            }                       
+                if (damageSFX != null)
+                    sfxPlayer.PlayRandPitch(damageSFX);
+                CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
+                //Debug.Log("THERE IS CHARACTER COLLISION");
+                if (charData != null)
+                {
+                    if (myCharData != null)
+                        myCharData.damageDealt += (int)meleeDamage;
+                    if (charData.DoDamage((int)meleeDamage) && myCharData != null)
+                        myCharData.entitiesKilled += 1;
+                }
+            }
         }
-        else if (g.GetComponent<DestructableEnvironment>() != null)
+        else if(m == "Predator")
+        { 
+            if (t == "Player" || t == "Prey")
+            {
+                if (damageSFX != null)
+                    sfxPlayer.PlayRandPitch(damageSFX);
+                CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
+                //Debug.Log("THERE IS CHARACTER COLLISION");
+                if (charData != null)
+                {
+                    if (myCharData != null)
+                        myCharData.damageDealt += (int)meleeDamage;
+                    if (charData.DoDamage((int)meleeDamage) && myCharData != null)
+                        myCharData.entitiesKilled += 1;
+                }
+            }
+        }
+
+        if (g.GetComponent<DestructableEnvironment>() != null)
         {
             DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();
             de.health -= ((int)meleeDamage);

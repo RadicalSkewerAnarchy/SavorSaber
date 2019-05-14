@@ -139,9 +139,8 @@ public class MonsterBehavior : MonoBehaviour
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
         AiData.currentBehavior = AIData.Behave.Chase;
-        //var current = new Vector2(transform.position.x, transform.position.y+.25f);
         Vector2 current = transform.position;
-        if (Vector2.Distance(current, target) <= threshold)
+        if (Vector2.Distance(current, target) <= threshold || current == target)
         {
             return true;
         }
@@ -162,11 +161,14 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool MoveFrom(Vector2 target, float speed, float threshold)
     {
-        AiData.currentBehavior = AIData.Behave.Flee;
         Vector2 current = transform.position;
-        if (Vector2.Distance(current, target) <= threshold)
+        if (target == current)
+            return true;
+
+        if (Vector2.Distance(current, target) < threshold)
         {
             #region Move
+            AiData.currentBehavior = AIData.Behave.Flee;
             AnimatorBody.Play("Move");
             target = (current - target);
             target = Vector2.ClampMagnitude(target, speed);
@@ -245,7 +247,10 @@ public class MonsterBehavior : MonoBehaviour
 
         GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
-        newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
+        //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
+        //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
+        newAttack.transform.Rotate((Vector2)this.transform.position - target);
+        newAttackCollider.size = new Vector2(10f, 10f);
         newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
     }
