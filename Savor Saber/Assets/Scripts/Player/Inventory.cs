@@ -14,10 +14,6 @@ public class Inventory : MonoBehaviour {
 
     public bool CanSwap { get; set; }
 
-    /// <summary>
-    /// Fields related to inventory visual representation
-    /// </summary>
-    public DisplayInventory inventoryUI;
     public int maxItemsPerSkewer = 3;
 
     /// <summary>
@@ -384,8 +380,7 @@ public class Inventory : MonoBehaviour {
 
             sfxPlayer.Play(swapSFX);
             UpdateUI();
-            if (inventoryUI != null)
-                inventoryUI.SwapHandles(true);
+            //DisplayInventory.instance?.SwapHandles(true);
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
         else if (InputManager.GetButtonDown(Control.SwapSkewerRight))
@@ -396,8 +391,7 @@ public class Inventory : MonoBehaviour {
 
             sfxPlayer.Play(swapSFX);
             UpdateUI();
-            if (inventoryUI != null)
-                inventoryUI.SwapHandles(false);
+            //DisplayInventory.instance?.SwapHandles(false);
             Debug.Log("Swapping skewer to " + activeSkewer);
         }
     }
@@ -424,12 +418,7 @@ public class Inventory : MonoBehaviour {
 
     public void UpdateUI()
     {
-        if(inventoryUI != null)
-            inventoryUI.UpdateSkewerUI();
-        else
-        {
-            Debug.LogWarning("Error: Inventory.cs needs a reference to HUD to visualize skewers");
-        }
+        DisplayInventory.instance?.UpdateSkewerUI();
     }
 
     #endregion

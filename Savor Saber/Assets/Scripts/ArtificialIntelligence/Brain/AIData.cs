@@ -173,7 +173,7 @@ public class AIData : CharacterData
             // as long as fear is not 1, stay conga
             if (currentProtocol == Protocols.Conga)
             {
-                if (moods["Fear"] != 1)
+                if (moods["Hunger"] != 1)
                     decideState = false;
             }
 

@@ -102,23 +102,9 @@ public class PlayerController : EntityController
     {  
         if(instance == null)
         {
-            rigidBody = GetComponent<Rigidbody2D>();
-            animatorBody = GetComponent<Animator>();
-            Direction = _direction;
-            doubleTapTrackers = new Dictionary<Control, float>()
-            {
-                { Control.Up, 0 },
-                { Control.Down, 0 },
-                { Control.Left, 0 },
-                { Control.Right, 0 },
-            };
-            keys = new Control[doubleTapTrackers.Count];
-            doubleTapTrackers.Keys.CopyTo(keys, 0);
-            CurrDashes = maxDashes;
-            currRunSpeed = runSpeed;
-            dialogData = GetComponent<DialogData>();
-            sfxSource = GetComponent<AudioSource>();
+            instance = this;
             DontDestroyOnLoad(transform);
+            Initialize();
         }
         else
         {
@@ -126,7 +112,27 @@ public class PlayerController : EntityController
         }
     }
 
-    // Detect non-movement input every fram so input isn't dropped
+    private void Initialize()
+    {
+        rigidBody = GetComponent<Rigidbody2D>();
+        animatorBody = GetComponent<Animator>();
+        Direction = _direction;
+        doubleTapTrackers = new Dictionary<Control, float>()
+            {
+                { Control.Up, 0 },
+                { Control.Down, 0 },
+                { Control.Left, 0 },
+                { Control.Right, 0 },
+            };
+        keys = new Control[doubleTapTrackers.Count];
+        doubleTapTrackers.Keys.CopyTo(keys, 0);
+        CurrDashes = maxDashes;
+        currRunSpeed = runSpeed;
+        dialogData = GetComponent<DialogData>();
+        sfxSource = GetComponent<AudioSource>();
+    }
+
+    // Detect non-movement input every frame so input isn't dropped
     private void Update()
     {
         if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))

@@ -48,7 +48,6 @@ public class MonsterChecks : MonoBehaviour
         // Know who is friend and foe
         Friends = AiData.Friends;
         Enemies = AiData.Enemies;
-        Enemies.Add(soma);
         Friends.Add(soma);
 
         // clear often
@@ -200,6 +199,7 @@ public class MonsterChecks : MonoBehaviour
             DestructableEnvironment d = Plant.GetComponent<DestructableEnvironment>();
             if (d != null && d.destroyed)
                 continue;
+            #endregion
             //Debug.Log("Potential Plant: " + Creature.GetInstanceID());
             //Debug.Log(Plant.GetInstanceID() + " is a drop");
             float dist = Vector2.Distance(transform.position, Plant.transform.position);
@@ -264,7 +264,40 @@ public class MonsterChecks : MonoBehaviour
         return closestDrop;
     }
 
-
+    /// <summary>
+    /// Checks creatures and returns closest
+    /// </summary>
+    /// <returns> Collider2D of closest enemy or friend </returns>
+    public GameObject ClosestDrone()
+    {
+        #region Initialize closest vars
+        float close = closestDistance;
+        GameObject closeDrone = null;
+        #endregion
+        foreach (GameObject Creature in AllCreatures)
+        {
+            // Debug.Log("Checking creatures");
+            #region Check if Creature Deleted
+            if (Creature == null)
+            {
+                continue;
+            }
+            if (Creature.tag != "Predator")
+            {
+                continue;
+            }
+            #endregion
+            float dist = Vector2.Distance(transform.position, Creature.transform.position);
+            if (dist < close)
+            {
+                //Debug.Log("Closest is found");
+                close = dist;
+                closeDrone = Creature;
+            }
+        }
+        //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
+        return closeDrone;
+    }
 
     /// <returns> Vector2 of Closest Enemy or Friend </returns>
     public Vector2 NearestEnemyPosition()
@@ -518,7 +551,6 @@ public class MonsterChecks : MonoBehaviour
 
         return targetTile;
     }
-    #endregion
     /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
