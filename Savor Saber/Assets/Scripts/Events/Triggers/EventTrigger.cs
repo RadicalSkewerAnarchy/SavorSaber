@@ -21,13 +21,13 @@ public class EventTrigger : MonoBehaviour
     public GameObject[] disableOnCutscene;
     protected EventGraph scene;
     protected GameObject player;
-    protected UpdatedController plCon;
+    protected PlayerController plCon;
 
     protected void InitializeBase()
     {
         scene = GetComponent<EventGraph>();
         player = GameObject.FindGameObjectWithTag("Player");
-        plCon = player.GetComponent<UpdatedController>();
+        plCon = player.GetComponent<PlayerController>();
     }
     private void Awake()
     {
