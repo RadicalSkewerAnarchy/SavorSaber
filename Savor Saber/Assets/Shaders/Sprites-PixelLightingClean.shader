@@ -15,23 +15,25 @@
     {
         Tags 
 		{ 
-			"LightMode" = "ForwardAdd"
 			"Queue" = "Transparent"
 			"IgnoreProjector" = "True"
 			"RenderType" = "Transparent"
 			"PreviewType" = "Plane"
 			"CanUseSpriteAtlas" = "True"
-
 		}
         LOD 100
 
 		Cull Off
-		Lighting On
+		Lighting Off
 		ZWrite Off
-		Blend One OneMinusSrcAlpha
 
         Pass
         {
+			Blend One OneMinusSrcAlpha
+			Tags
+			{
+				"LightMode" = "ForwardBase"
+			}
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -58,5 +60,66 @@
 
             ENDCG
         }
+
+		Pass
+		{
+			Blend One One
+			BlendOp Max
+			Tags
+			{
+				"LightMode" = "ForwardAdd"
+			}
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			
+			#include "UnityCG.cginc"
+
+			struct appdata
+			{
+				float4 vertex   : POSITION;
+				float4 color    : COLOR;
+				float2 texcoord : TEXCOORD0;
+			};
+
+			struct v2f
+			{
+				float4 vertex   : SV_POSITION;
+				fixed4 color : COLOR;
+				float2 texcoord : TEXCOORD0;
+				float4 vertexInWorldCoords: TEXCOORD1;
+			};
+
+			uniform float4 _LightColor0; //From UnityCG
+
+			v2f vert(appdata IN)
+			{
+				v2f OUT;
+				OUT.vertex = IN.vertex;
+				OUT.color = IN.color;
+				OUT.texcoord - IN.texcoord;
+				OUT.vertexInWorldCoords = mul(unity_ObjectToWorld, IN.vertex); 
+				return OUT;
+			}
+
+			fixed4 frag(v2f IN) : SV_Target
+			{	
+				float3 P = IN.vertexInWorldCoords.xyz;
+				//float3 N = normalize(i.normal);
+				//float3 V = normalize(_WorldSpaceCameraPos);
+				float3 L = normalize(_WorldSpaceLightPos0.xyz - P);
+
+				float dist = length(_WorldSpaceLightPos0.xyz - P);
+
+				float mult = 1;
+				if (dist > 10)
+					mult = 0;
+
+				return _LightColor0 * mult;
+			}
+
+
+			ENDCG
+		}
     }
 }
