@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FreezeDirection : StateMachineBehaviour
 {
-    UpdatedController PlayerController;
+    PlayerController PlayerController;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        PlayerController = GameObject.FindObjectOfType<UpdatedController>();
+        PlayerController = GameObject.FindObjectOfType<PlayerController>();
         PlayerController.freezeDirection = true;
     }
 

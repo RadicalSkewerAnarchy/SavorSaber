@@ -18,18 +18,17 @@ public class EventTrigger : MonoBehaviour
     public bool repeatable = false;
     public UnityEvent callOnStart;
     public UnityEvent callOnCompletion;
-    public GameObject[] disableOnCutscene;
     protected EventGraph scene;
     protected GameObject player;
-    protected UpdatedController plCon;
+    protected PlayerController plCon;
 
     protected void InitializeBase()
     {
-        scene = GetComponent<EventGraph>();
-        player = GameObject.FindGameObjectWithTag("Player");
-        plCon = player.GetComponent<UpdatedController>();
+        scene = GetComponent<EventGraph>();      
+        plCon = PlayerController.instance;
+        player = plCon.gameObject;
     }
-    private void Awake()
+    private void Start()
     {
         InitializeBase();
     }
@@ -76,7 +75,6 @@ public class EventTrigger : MonoBehaviour
         var attacks = player.GetComponents<AttackBase>();
         foreach (var attack in attacks)
             attack.enabled = !start;
-        foreach (var obj in disableOnCutscene)
-            obj.SetActive(!start);
+        DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
     }
 }

@@ -51,9 +51,15 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindCamera();
+    }
+
+    void FindCamera()
+    {
         camera = GameObject.FindWithTag("MainCamera").transform;
         zoomer = camera.GetComponent<UnityEngine.U2D.PixelPerfectCamera>();
     }
+
     public void SetZoom(int targetPPU)
     {
         currZoom = zoomer.assetsPPU;
@@ -100,6 +106,8 @@ public class CameraController : MonoBehaviour
     // FixedUpdate removes jitter to Rigidbody movement
     void FixedUpdate()
     {
+        if (camera == null || zoomer == null)
+            FindCamera();
         //Debug.Log("In camera controller");
         if (zoomer.assetsPPU < targetZoom)
         {

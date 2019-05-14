@@ -113,6 +113,21 @@ public class EventGraph : MonoBehaviour
                 var node = currNode as SetFlagNode;
                 FlagManager.SetFlag(node.flagName, node.value);
             }
+            else if (currNode is EnableChildObjectNode)
+            {
+                var node = currNode as EnableChildObjectNode;
+                GameObject target = null;
+                if (Actors.ContainsKey(node.parent))
+                    target = Actors[node.parent].gameObject;
+                else if (Dependencies.ContainsKey(node.parent))
+                    target = Dependencies[node.parent];
+                else
+                {
+                    Debug.LogError("Improper EnableChildObjectNode config: " + node.parent + " is not an Actor or Depenency");
+                }
+                var child = target?.transform.Find(node.childName);
+                child?.gameObject.SetActive(!node.disable);
+            }
             lastNode = currNode;
             currNode = Next();
         }

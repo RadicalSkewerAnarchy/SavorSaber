@@ -18,14 +18,16 @@ public class DestructableEnvironment : MonoBehaviour
     public float respawnTime;
     public bool destroyed = false;
     public ParticleSystem particles = null;
-    public float wiggleTime = 4f;
-    public float wiggleSpeed = 0.3f;
-    public float wiggleAmplitude = 0.25f;
+    public float wiggleTime = 2f;
+    public float wiggleSpeed = 0.2f;
+    [Range(0, 0.3f)]
+    public float wiggleAmplitude = 0.05f;
 
     private Vector2 origin;
 
     private SpriteRenderer spr;
     private AudioSource src;
+    private Animator anim;
 
     private void Start()
     {
@@ -34,6 +36,7 @@ public class DestructableEnvironment : MonoBehaviour
         src = GetComponent<AudioSource>();
         healthReset = health;
         origin = this.transform.position;
+        anim = GetComponent<Animator>();
     }
 
     public void Destroy()
@@ -51,6 +54,8 @@ public class DestructableEnvironment : MonoBehaviour
         if (health > 0)
             return;
         destroyed = true;
+        if (anim != null)
+            anim.enabled = false;
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
         if (dropOnDestroy != null && Random.value <= thresh)
@@ -68,6 +73,8 @@ public class DestructableEnvironment : MonoBehaviour
         yield return new WaitForSeconds(respawnTime);
         this.GetComponent<Collider2D>().enabled = true;
         spr.sprite = normalSprite;
+        if(anim != null)
+            anim.enabled = true;
         health = healthReset;
         destroyed = false;
     }
