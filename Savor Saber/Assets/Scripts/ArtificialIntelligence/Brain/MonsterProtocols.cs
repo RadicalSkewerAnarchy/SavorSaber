@@ -121,10 +121,13 @@ public partial class MonsterProtocols : MonoBehaviour
         if (nearestEnemy != null)
         {
             pos = nearestEnemy.gameObject.transform.position;
+            //Debug.Log(this.gameObject + " found nearest enemy at " + pos);
+            //Debug.Log("My position: " + transform.position);
         }
         else
         {
             pos = transform.position;
+            return;
         }
         #endregion
         var rat = AiData.RangeAttackThreshold;
