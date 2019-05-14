@@ -249,7 +249,7 @@ public class MonsterBehavior : MonoBehaviour
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
         //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
         //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
-        newAttack.transform.Rotate((Vector2)this.transform.position - target);
+        newAttack.transform.Rotate(target -(Vector2)this.transform.position);
         newAttackCollider.size = new Vector2(10f, 10f);
         newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
