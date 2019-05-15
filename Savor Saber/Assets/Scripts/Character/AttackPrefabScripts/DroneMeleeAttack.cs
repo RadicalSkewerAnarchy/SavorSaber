@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterMeleeAttack : BaseMeleeAttack
+public class DroneMeleeAttack : BaseMeleeAttack
 {
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
@@ -30,8 +30,8 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         //monsterChecks.Enemies.Clear();
         GameObject g = collision.gameObject;
         string t = g.tag;
-
-        if (t == "Predator")
+        //string m = myAttacker.tag;
+        if (t == "Player" || t == "Prey")
         {
             if (damageSFX != null)
                 sfxPlayer.PlayRandPitch(damageSFX);
@@ -45,7 +45,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
                     myCharData.entitiesKilled += 1;
             }
         }
-        
+
         if (g.GetComponent<DestructableEnvironment>() != null)
         {
             DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();

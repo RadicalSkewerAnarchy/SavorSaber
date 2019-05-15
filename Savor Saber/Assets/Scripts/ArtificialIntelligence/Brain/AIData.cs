@@ -266,7 +266,7 @@ public class AIData : CharacterData
     private void UpdateHunger()
     {
         // have random chance to be hungry
-        float hunger = moods["Hunger"];
+        //float hunger = moods["Hunger"];
         float rand = Random.Range(0f, 100f);
         if (rand < 7)
         {
@@ -275,7 +275,7 @@ public class AIData : CharacterData
         }
 
         // change color
-        float rotColor = 0.5f+(hunger / 2);
+        /*float rotColor = 0.5f+(hunger / 2);
         bool updateColor = (this.gameObject.GetComponent<SpriteRenderer>().color.r != rotColor);
         if (updateColor)
         {
@@ -289,7 +289,7 @@ public class AIData : CharacterData
                 sr.color = new Color(1.0f, 1.0f, 1.0f, sr.color.a);
             }
 
-        }
+        }*/
       
     }
 
