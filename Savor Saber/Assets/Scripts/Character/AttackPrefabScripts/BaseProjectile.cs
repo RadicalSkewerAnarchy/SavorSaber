@@ -118,6 +118,8 @@ public class BaseProjectile : MonoBehaviour
         //Debug.Log(directionVector);
         myCharData = GetComponent<CharacterData>();
 
+        Debug.Log("Projectile spawned with direction vector " + directionVector);
+
     }
 
     // Update is called once per frame

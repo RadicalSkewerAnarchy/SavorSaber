@@ -29,7 +29,7 @@
 		Lighting On
 		ZWrite Off
 		Blend One OneMinusSrcAlpha
-
+		
         Pass
         {
             CGPROGRAM
@@ -134,7 +134,7 @@
 				//float3 V = normalize(_WorldSpaceCameraPos);
 				float3 L = normalize(_WorldSpaceLightPos0.xyz - P);
 
-				float diffuseVal = 0.5;// max(abs(L.x + L.y), 0);//max(dot(N, L), 0);
+				float diffuseVal = max(abs(L.x + L.y), 0);//max(dot(N, L), 0);
 				float3 diffuse = _LightColor0.rgb * diffuseVal;
 
 				float3 ambient = UNITY_LIGHTMODEL_AMBIENT.rgb; //Ambient light
