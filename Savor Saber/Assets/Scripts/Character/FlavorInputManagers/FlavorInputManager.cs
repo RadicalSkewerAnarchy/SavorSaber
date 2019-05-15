@@ -103,6 +103,8 @@ public class FlavorInputManager : MonoBehaviour
 
     protected void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
+        if (!fedByPlayer)
+            return;
         // looking only at favorite ingredients...
         bool moreFriendly = (characterData != null);
         if (moreFriendly && fedByPlayer)
@@ -201,7 +203,9 @@ public class FlavorInputManager : MonoBehaviour
         // initiate conga
         characterData.currentProtocol = AIData.Protocols.Conga;
         // set leader to Soma
-        check.specialLeader = GameObject.FindGameObjectWithTag("Player");
+        check.specialLeader = PlayerController.instance.gameObject;
+        // add self to player's party
+        PlayerController.instance.GetComponent<PlayerData>().party.Add(gameObject);
         // get ready to stop it
         StartCoroutine(ExecuteCharm(time));
     }
@@ -215,6 +219,8 @@ public class FlavorInputManager : MonoBehaviour
         check.ResetSpecials();
         check.specialLeader = null;
         check.congaPosition = -1;
+        // remove self from player's party
+        PlayerController.instance.GetComponent<PlayerData>().party.Remove(gameObject);
         // initiate conga
         characterData.currentProtocol = AIData.Protocols.Lazy;
 

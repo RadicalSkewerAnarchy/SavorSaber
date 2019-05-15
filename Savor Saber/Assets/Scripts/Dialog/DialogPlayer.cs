@@ -153,13 +153,8 @@ public class DialogPlayer : MonoBehaviour
     {
         offsets = new List<int>();
         var tags = new List<string>();
-        int firstInd = line.IndexOf('<', 0);
-        if (firstInd == -1)
-            return tags;
-
-        for (int i = firstInd; i < line.Length;)
+        for (int i = line.IndexOf('<', 0); i != -1; i = line.IndexOf('<', i))
         {
-            i = line.IndexOf('<', i);
             int j = line.IndexOf('>', i);
             string tag = line.Substring(i, (j - i) + 1);
             offsets.Add(i);

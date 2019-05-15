@@ -40,6 +40,13 @@ public class EventGraph : MonoBehaviour
             return (currNode as BaseNodeOUT).Next;
         else if (currNode is GameflowBranchNode)
             return Branch(currNode as GameflowBranchNode);
+        else if (currNode is DialogEndNode)
+        {
+            var trig = GetComponent<EventTrigger>();
+            if (trig != null)
+                trig.playCompletionEvents = (currNode as DialogEndNode).playCompletionEvents;
+            return null;
+        }
         else
             return null;
     }
@@ -97,21 +104,29 @@ public class EventGraph : MonoBehaviour
             }
             else if (currNode is CutsceneEventNode)
             {
+                Coroutine routine = null;
                 if (currNode is WaitNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.Wait(currNode as WaitNode));
+                    routine = StartCoroutine(CutsceneNodeEvents.Wait(currNode as WaitNode));
                 else if (currNode is MoveCharacterNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.MoveCharacter(currNode as MoveCharacterNode, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.MoveCharacter(currNode as MoveCharacterNode, Actors, Dependencies));
                 else if (currNode is SetCharacterDirectionNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.SetCharacterDirection(currNode as SetCharacterDirectionNode, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.SetCharacterDirection(currNode as SetCharacterDirectionNode, Actors, Dependencies));
                 else if (currNode is PanCameraNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.PanCamera(currNode as PanCameraNode, player, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.PanCamera(currNode as PanCameraNode, player, Actors, Dependencies));
                 else if (currNode is PlayUnityEventNode)
                     Events[(currNode as PlayUnityEventNode).eventName].Invoke();
+                if ((currNode as CutsceneEventNode).waitUntilFinished)
+                    yield return routine;
             }
             else if (currNode is SetFlagNode)
             {
                 var node = currNode as SetFlagNode;
                 FlagManager.SetFlag(node.flagName, node.value);
+            }
+            else if (currNode is SetQuestTextNode)
+            {
+                var node = currNode as SetQuestTextNode;
+                QuestManager.instance?.SetText(node.text);
             }
             else if (currNode is EnableChildObjectNode)
             {

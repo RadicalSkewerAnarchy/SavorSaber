@@ -40,7 +40,8 @@ public static class CutsceneNodeEvents
             float lastX = characterTr.position.x;
             bool negative = characterTr.position.x > xLeniency.max;
             float dist = node.speed * Time.fixedDeltaTime * (negative ? -1 : 1);
-            controller.Direction = negative ? Direction.West : Direction.East;
+            if(controller != null)
+                controller.Direction = negative ? Direction.West : Direction.East;
             if (Mathf.Abs(dist) > Mathf.Abs(destinationTr.position.x - characterTr.position.x))
             {
                 characterTr.position = destinationTr.position;
@@ -57,7 +58,8 @@ public static class CutsceneNodeEvents
             float lastY = characterTr.position.y;
             bool negative = characterTr.position.y > yLeniency.max;
             float dist = node.speed * Time.fixedDeltaTime * (negative ? -1 : 1);
-            controller.Direction = negative ? Direction.South : Direction.North;
+            if (controller != null)
+                controller.Direction = negative ? Direction.South : Direction.North;
             if (Mathf.Abs(dist) > Mathf.Abs(destinationTr.position.y - characterTr.position.y))
             {
                 characterTr.position = destinationTr.position;
@@ -70,7 +72,8 @@ public static class CutsceneNodeEvents
         }
         if (animator != null)
             animator.SetBool("Moving", false);
-        controller.Direction = node.endFacing;
+        if (controller != null)
+            controller.Direction = node.endFacing;
     }
 
     public static IEnumerator SetCharacterDirection(SetCharacterDirectionNode node, EventGraph.ActorDict actors, GameObjectDict dependencies)

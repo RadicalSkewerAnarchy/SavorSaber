@@ -8,6 +8,7 @@ using UnityEngine;
 public class FlagManager : MonoBehaviour
 {
     private static FlagManager instance;
+    public const string undefined = "undefined";
     private Dictionary<string, string> flags = new Dictionary<string, string>();
     private void Awake()
     {
@@ -30,7 +31,7 @@ public class FlagManager : MonoBehaviour
     {
         if(instance.flags.ContainsKey(flag))
             return instance.flags[flag];
-        Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"undefined\"");
-        return "undefined";
+        Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"" + undefined + "\"");
+        return undefined;
     }
 }

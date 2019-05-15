@@ -457,6 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6425489280590855075}
+  - component: {fileID: 1771855365}
   m_Layer: 5
   m_Name: QuestUI
   m_TagString: Untagged
@@ -478,13 +479,26 @@ RectTransform:
   - {fileID: 3567554533797311523}
   - {fileID: 319435063432408736}
   m_Father: {fileID: 2180717040619979874}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -2, y: 0}
   m_SizeDelta: {x: 640, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1771855365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104196812603198044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7a0c18b8b0b30e49aab1a588a4535bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 3137568471809347161}
 --- !u!1 &2144053101090807942
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +832,7 @@ GameObject:
   - component: {fileID: 2180717040619979879}
   - component: {fileID: 2180717040619979875}
   - component: {fileID: 2347701539621451352}
+  - component: {fileID: 1480688003}
   m_Layer: 5
   m_Name: PlayerHUD
   m_TagString: Untagged
@@ -836,10 +851,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 5750595720164732187}
-  - {fileID: 6425489280590855075}
   - {fileID: 2180717040823467646}
   - {fileID: 3714445798040282807}
+  - {fileID: 6425489280590855075}
+  - {fileID: 5750595720164732187}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -923,7 +938,6 @@ MonoBehaviour:
   disableDuringCutscene: {fileID: 4065767433304774554}
   conTextPrompt: {fileID: 2180717040090617547}
   cookedText: {fileID: 2180717040801922190}
-  skewerInventory: {fileID: 0}
   skewerSpritesActive:
   - {fileID: 2180717041160811201}
   - {fileID: 2180717039816308125}
@@ -974,7 +988,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6ac2299c4f9e56940933a217b270ca20, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1058,6 +1072,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1480688003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2180717040619979878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c40ed328fa80ac544b75f5c02c668c66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wait: 0
+  fadeType: 0
+  src: {fileID: 2347701539621451352}
+  time: 3
 --- !u!1 &2180717040718602307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,7 +1405,7 @@ RectTransform:
   - {fileID: 2180717040757729904}
   - {fileID: 2180717040718602304}
   m_Father: {fileID: 2180717040619979874}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1981,7 +2011,7 @@ Transform:
   - {fileID: 8414525997671036262}
   - {fileID: 7760078602560718358}
   m_Father: {fileID: 2180717040619979874}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4190893506827501465
 GameObject:
@@ -2847,7 +2877,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Find Paddle Pat
+  m_Text: No Quests
 --- !u!114 &946258024502075574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3005,7 +3035,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2180717040619979874}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
