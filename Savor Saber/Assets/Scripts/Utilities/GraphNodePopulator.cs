@@ -38,13 +38,11 @@ public class GraphNodePopulator : MonoBehaviour
         /// iterates through tilemap based on bounds
         int i = 0, j = 0;
         bounds = activeTiles.cellBounds;
-		tilesArr = new TileNode[bounds.xMax][];
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             j = 0;
             /// list of lists, this increments the X counter
             tiles.Add(new List<TileNode>());
-			tilesArr[j] = new TileNode[bounds.yMax];
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 walkable = true;
@@ -72,8 +70,8 @@ public class GraphNodePopulator : MonoBehaviour
 					//tilesArr[i][j] = tile.GetComponent<TileNode>();
 					j+=clusterLimit;
                 }else{
-					var tempTile = new TileNode();
-					tiles[i].Add(tempTile);
+					var tempTile = Instantiate(nodePrefab, current, new Quaternion(0,0,0,1));
+					tiles[i].Add(tempTile.GetComponent<TileNode>());
 					j+=clusterLimit;
 					//tilesArr[i][j] = tempTile;
 				}

@@ -103,7 +103,6 @@ public class PlayerController : EntityController
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
             Initialize();
         }
         else
