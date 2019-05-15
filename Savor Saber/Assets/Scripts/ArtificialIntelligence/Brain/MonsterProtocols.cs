@@ -57,11 +57,13 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             pos = target.transform.position;
         }
-        else
+        else if (weakest != null)
         {
             pos = Checks.WeakestCreature().transform.position;
-            if (pos == null)
-                pos = this.transform.position;
+        }
+        else
+        {
+            return;
         }
         #endregion
 
