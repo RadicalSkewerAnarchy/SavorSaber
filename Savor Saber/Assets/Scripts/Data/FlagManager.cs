@@ -15,7 +15,6 @@ public class FlagManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.transform);
         }
         else
             Destroy(this);

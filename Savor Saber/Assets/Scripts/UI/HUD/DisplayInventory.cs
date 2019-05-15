@@ -59,7 +59,6 @@ public class DisplayInventory : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
         }
         else
             Destroy(gameObject);

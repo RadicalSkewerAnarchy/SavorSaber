@@ -94,7 +94,6 @@ public class DayNightController : MonoBehaviour, IPausable
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
         }
         else
             Destroy(gameObject);

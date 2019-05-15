@@ -11,7 +11,6 @@ public class GlobalCamera : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
         }
         else
             Destroy(gameObject);
