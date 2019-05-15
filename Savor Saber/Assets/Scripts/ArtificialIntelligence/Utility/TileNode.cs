@@ -6,11 +6,14 @@ public class TileNode : MonoBehaviour
 {
     public float x = 0, y = 0;
     public bool walkable = true;
+	public bool active = false;
     public List<TileNode> neighbors;
     /*private void Awake()
     {
         neighbors = new List<TileNode>();
     }*/
+
+
     private void Awake()
     {
         SetWalkable(true);
@@ -24,4 +27,3 @@ public class TileNode : MonoBehaviour
         }
     }
 }
-

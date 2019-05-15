@@ -248,7 +248,7 @@ public partial class MonsterProtocols : MonoBehaviour
         }*/
         if (Checks.currentTile != null)
         {
-            
+
             //Debug.Log(Checks.currentTile.name);
             if (Checks.NearestEnemyPosition() == Vector2.zero) return;
             //Debug.Log("Nearestenemy exists");
@@ -264,16 +264,16 @@ public partial class MonsterProtocols : MonoBehaviour
             }
             if (targetTile != null)
             {
-                Debug.Log("Targettile is not null");
+                Debug.Log("Targettile is not null, tile id: " +targetTile.name);
                 if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
                 {
-                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, .5f);
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1f);
                     //Debug.Log("coroutine started");
                     //StartCoroutine(MoveCreatureToTarget(targetTile));
                 }
             }
-        }       
-        
+        }
+
         #endregion
     }
 
@@ -491,7 +491,7 @@ public partial class MonsterProtocols : MonoBehaviour
             //GameObject near = Checks.ClosestLeader();
             //Chase(near);
         }
-        else 
+        else
         {
         	// decide leader if no one around
         	if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
@@ -564,7 +564,7 @@ public partial class MonsterProtocols : MonoBehaviour
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
     public bool NavTo(TileNode target)
     {
-        
+
         if(Checks.currentTile == target)
         {
             Debug.Log("AT TARGET");
@@ -595,9 +595,9 @@ public partial class MonsterProtocols : MonoBehaviour
             else
             {
                 Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 1f);
-            }              
+            }
         }
-        
+
 
             /*
         // bool moving = false;
