@@ -34,7 +34,7 @@ public class GraphNodePopulator : MonoBehaviour
         }
         var activeTiles = inactiveTileMaps[0];
         //var inactiveTiles = inactiveTileMaps[1];
-        Debug.Log("Inactive and active tiles found");
+        //Debug.Log("Inactive and active tiles found");
         /// iterates through tilemap based on bounds
         int i = 0, j = 0;
         bounds = activeTiles.cellBounds;
