@@ -13,15 +13,25 @@ public class RecipeDatabase : MonoBehaviour
     /// there's a better way to do this.
     /// </summary>
     public RecipeData[] recipes;
+    public Dictionary<RecipeData.Flavors, string> flavorToString = new Dictionary<RecipeData.Flavors, string>();
+    //public Dictionary<RecipeData.Flavors, sprite> flavorToSprite = new Dictionary<RecipeData.Flavors, Sprite>();
+
 
     // ingredient data
     public Dictionary<string, IngredientData> allIngredients;
+    public Dictionary<string, Sprite> allFlavors;
     //public string[] ingredientNames;
     public IngredientData[] ingredientDatas;
+    public string[] flavorNames;
+    public Sprite[] flavorSprites;
 
-    private void Start()
+    private void Awake()
     {
+        InitializeDictionary();
+
         allIngredients = new Dictionary<string, IngredientData>();
+        allFlavors = new Dictionary<string, Sprite>();
+
         for ( var i = 0; i < ingredientDatas.Length; i++)
         {
             //string s = ingredientNames[i];
@@ -29,8 +39,28 @@ public class RecipeDatabase : MonoBehaviour
             string display = d.displayName;
             allIngredients.Add(display, d);
         }
+        // flavors
+        for ( var i = 0; i < flavorNames.Length; i++)
+        {
+            //string s = ingredientNames[i];
+            string s = flavorNames[i];
+            Sprite d = flavorSprites[i];
+            allFlavors.Add(s, d);
+        }
     }
 
+
+    public void InitializeDictionary()
+    {
+        flavorToString.Add(RecipeData.Flavors.Sweet, "Sweet");
+        flavorToString.Add(RecipeData.Flavors.Sour, "Sour");
+        flavorToString.Add(RecipeData.Flavors.Spicy, "Spicy");
+        flavorToString.Add(RecipeData.Flavors.Salty, "Salty");
+        flavorToString.Add(RecipeData.Flavors.Savory, "Savory");
+        flavorToString.Add(RecipeData.Flavors.Bitter, "Bitter");
+        flavorToString.Add(RecipeData.Flavors.Acquired, "Acquired");
+        flavorToString.Add(RecipeData.Flavors.None, "None");
+    }
     /// <summary>
     /// Would be called when the player cooks their food, probably in the inventory 
     /// manager script.
