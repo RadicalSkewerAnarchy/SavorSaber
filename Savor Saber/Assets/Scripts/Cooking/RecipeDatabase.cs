@@ -16,17 +16,18 @@ public class RecipeDatabase : MonoBehaviour
 
     // ingredient data
     public Dictionary<string, IngredientData> allIngredients;
-    public string[] ingredientNames;
+    //public string[] ingredientNames;
     public IngredientData[] ingredientDatas;
 
     private void Start()
     {
         allIngredients = new Dictionary<string, IngredientData>();
-        for ( var i = 0; i < ingredientNames.Length; i++)
+        for ( var i = 0; i < ingredientDatas.Length; i++)
         {
-            string s = ingredientNames[i];
+            //string s = ingredientNames[i];
             IngredientData d = ingredientDatas[i];
-            allIngredients.Add(s, d);
+            string display = d.displayName;
+            allIngredients.Add(display, d);
         }
     }
 
