@@ -288,6 +288,7 @@ public class FlavorInputManager : MonoBehaviour
         }
         //things to happen after delay
         Debug.Log("no longer CURRIED");
+        spriteRenderer.color = Color.white;
         yield return null;
     }
     #endregion

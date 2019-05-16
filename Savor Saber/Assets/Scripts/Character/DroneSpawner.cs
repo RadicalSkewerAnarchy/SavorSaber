@@ -61,7 +61,7 @@ public class DroneSpawner : MonoBehaviour
         }
         else
         {
-           // Debug.Log("ON");
+            //Debug.Log("ON");
             sr.sprite = onSprite;
             light.color = Color.green;
             teleportRings.Play();

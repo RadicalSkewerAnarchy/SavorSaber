@@ -19,10 +19,13 @@ public class Pathfinder : MonoBehaviour
         gScore = new Dictionary<TileNode, float>();
         fScore = new Dictionary<TileNode, float>();
         //var nodeList = GameObject.Find("Walkable");
-        for(int i = 0; i < allNodes.transform.childCount; i++)
+        if(allNodes != null)
         {
-            gScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
-            fScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
+            for (int i = 0; i < allNodes.transform.childCount; i++)
+            {
+                gScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
+                fScore.Add(allNodes.transform.GetChild(i).GetComponent<TileNode>(), Mathf.Infinity);
+            }
         }
         //Debug.Log("Graph initialized");
     }
