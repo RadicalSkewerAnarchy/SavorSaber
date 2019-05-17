@@ -16,30 +16,21 @@ public class CurryBallProjectile : BaseProjectile
             if(envData.destroyed)
             {
                 string value = FlagManager.GetFlag("EnvDestroyedByFire");
-                if (value == "Done")
-                    return;
-                if (value == FlagManager.undefined)
+                if (value == FlagManager.undefined || value == "0")
+                    return;                   
+                int numLeft = int.Parse(value);
+                if(numLeft <= 1)
                 {
-                    FlagManager.SetFlag("EnvDestroyedByFire", "9");
+                    FlagManager.SetFlag("EnvDestroyedByFire", "0");
                     if (QuestManager.instance.GetText().Contains("Burn"))
-                        QuestManager.instance.SetText(QuestManager.instance.GetText().Replace("10", "9"));
-                }                    
+                        QuestManager.instance.SetText("Talk to {amrita}");
+                }          
                 else
                 {
-                    int numLeft = int.Parse(value);
-                    if(numLeft <= 1)
-                    {
-                        FlagManager.SetFlag("EnvDestroyedByFire", "Done");
-                        if (QuestManager.instance.GetText().Contains("Burn"))
-                            QuestManager.instance.SetText("Talk to Amrita");
-                    }          
-                    else
-                    {
-                        FlagManager.SetFlag("EnvDestroyedByFire", (numLeft - 1).ToString());
-                        if (QuestManager.instance.GetText().Contains("Burn"))
-                            QuestManager.instance.SetText(QuestManager.instance.GetText().Replace(numLeft.ToString(), (numLeft - 1).ToString()));
-                    }                     
-                }                  
+                    FlagManager.SetFlag("EnvDestroyedByFire", (numLeft - 1).ToString());
+                    if (QuestManager.instance.GetText().Contains("Burn"))
+                        QuestManager.instance.SetText("{color,spicy,Burn} {flag,EnvDestroyedByFire} objects");
+                }                                                   
             }               
         }
     }

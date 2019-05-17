@@ -99,6 +99,7 @@ public class DialogPlayer : MonoBehaviour
 
     public IEnumerator Scroll(string lineOfText)
     {
+        lineOfText = TextMacros.instance.Parse(lineOfText);
         var tagOffsets = new List<int>();
         var tags = ParseTags(lineOfText, out tagOffsets);
         int tagInd = 0;
