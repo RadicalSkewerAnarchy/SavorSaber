@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(AudioSource))]
 public class MarshPlantFlavorInput : PlantFlavorInput
 {
     BoxCollider2D boxCollider;
     public Sprite openSprite;
     public Sprite closedSprite;
+
+    public AudioClip closeSFX;
+    public AudioClip openSFX;
+    private AudioSource sfxPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +22,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponentInChildren<BoxCollider2D>();
+        sfxPlayer = GetComponent<AudioSource>();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
@@ -39,6 +46,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     public override void ClosePlant()
     {
         spriteRenderer.sprite = closedSprite;
+        sfxPlayer.clip = closeSFX;
+        sfxPlayer.Play();
         if (!isFed)
         {
             boxCollider.enabled = true;
@@ -49,6 +58,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     public override void OpenPlant()
     {
         spriteRenderer.sprite = openSprite;
+        sfxPlayer.clip = openSFX;
+        sfxPlayer.Play();
         if (isFed)
         {
             boxCollider.enabled = false;
