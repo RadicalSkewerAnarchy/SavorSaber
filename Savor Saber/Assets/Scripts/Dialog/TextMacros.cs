@@ -33,18 +33,7 @@ public class TextMacros : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            macroMap = new Dictionary<string, MacroFn>()
-            {
-                {"test", (args) => "test" },
-                {"flag", (args) => FlagManager.GetFlag(args[1]) },
-                {"color", ColorMacro },
-                #region Character Name Shortcuts
-                {"soma", (args) => ColorMacro("color","soma", "Soma") },
-                {"mana", (args) => ColorMacro("color","mana", "Mana") },
-                {"amrita", (args) => ColorMacro("color","amrita", "Amrita") },
-                {"nec", (args) => ColorMacro("color","nec", "Nec") },
-                #endregion
-            };
+            InitMacros();
         }
         else
         {
@@ -52,6 +41,31 @@ public class TextMacros : MonoBehaviour
             DontDestroyOnLoad(transform);
         }
         
+    }
+
+    private void InitMacros()
+    {
+        macroMap = new Dictionary<string, MacroFn>()
+        {
+            {"test", (args) => "test" },
+            {"flag", (args) => FlagManager.GetFlag(args[1]) },
+            {"color", ColorMacro },
+            {"img", ImgMacro },
+            #region Character Name Shortcuts
+            {"soma", (args) => ColorMacro("color","soma", "Soma") },
+            {"mana", (args) => ColorMacro("color","mana", "Mana") },
+            {"amrita", (args) => ColorMacro("color","amrita", "Amrita") },
+            {"nec", (args) => ColorMacro("color","nec", "Nec") },
+            #endregion
+            #region Flavor Name Shortcuts
+            {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + ImgMacro("img","IconSpicy") },
+            {"sweet",  (args) => ColorMacro("color","sweet", "Sweet") + ImgMacro("img","IconSweet") },
+            {"bitter", (args) => ColorMacro("color","bitter", "Bitter") + ImgMacro("img","IconBitter") },
+            {"sour",   (args) => ColorMacro("color","sour", "Sour") + ImgMacro("img","IconSour") },
+            {"umami",  (args) => ColorMacro("color","umami", "Umami") + ImgMacro("img","IconUmami") },
+            {"salty",  (args) => ColorMacro("color","salty", "Salty") + ImgMacro("img","IconSalty") },
+            #endregion
+        };
     }
 
     public string Parse(string line)
@@ -82,5 +96,12 @@ public class TextMacros : MonoBehaviour
         if (args.Length < 3)
             return "Error: format is {color, colorName, text}";
         return "<color=" + colorMap[args[1]] + ">" + args[2] + "</color>";
+    }
+
+    public string ImgMacro(params string[] args)
+    {
+        if (args.Length < 2)
+            return "Error: format is {color, imgName}";
+        return " <sprite=\"" + args[1] + "\" index=0> ";
     }
 }
