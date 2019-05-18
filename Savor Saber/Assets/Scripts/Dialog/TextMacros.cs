@@ -15,12 +15,13 @@ public class TextMacros : MonoBehaviour
     private Dictionary<string, string> colorMap = new Dictionary<string, string>
     {
         // Flavors
-        {"spicy", "#FF2300" },
+        {"spicy", "#F16651" },
         {"sweet", "#EF9D9E" },
         {"bitter", "#8BC8FF" },
-        {"sour", "#05937C" },
+        {"sour", "#c1ff3c" },
         {"umami", "#FF8D00" },
-        {"salty", "#968356" },
+        {"salty", "#BBAA87" },
+        {"noFlavor", "#cccccc" },
         // Characters
         {"soma","#159DB2"},
         {"mana", "#DB5A78" },
@@ -50,7 +51,9 @@ public class TextMacros : MonoBehaviour
             {"test", (args) => "test" },
             {"flag", (args) => FlagManager.GetFlag(args[1]) },
             {"color", ColorMacro },
+            {"c", ColorMacro },
             {"img", ImgMacro },
+            {"control", ControlMacro },
             #region Character Name Shortcuts
             {"soma", (args) => ColorMacro("color","soma", "Soma") },
             {"mana", (args) => ColorMacro("color","mana", "Mana") },
@@ -58,12 +61,12 @@ public class TextMacros : MonoBehaviour
             {"nec", (args) => ColorMacro("color","nec", "Nec") },
             #endregion
             #region Flavor Name Shortcuts
-            {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + ImgMacro("img","IconSpicy") },
-            {"sweet",  (args) => ColorMacro("color","sweet", "Sweet") + ImgMacro("img","IconSweet") },
-            {"bitter", (args) => ColorMacro("color","bitter", "Bitter") + ImgMacro("img","IconBitter") },
-            {"sour",   (args) => ColorMacro("color","sour", "Sour") + ImgMacro("img","IconSour") },
-            {"umami",  (args) => ColorMacro("color","umami", "Umami") + ImgMacro("img","IconUmami") },
-            {"salty",  (args) => ColorMacro("color","salty", "Salty") + ImgMacro("img","IconSalty") },
+            {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + " " + ImgMacro("img","IconSpicy") },
+            {"sweet",  (args) => ColorMacro("color","sweet", "Sweet") + " " + ImgMacro("img","IconSweet") },
+            {"bitter", (args) => ColorMacro("color","bitter", "Bitter") + " " + ImgMacro("img","IconBitter") },
+            {"sour",   (args) => ColorMacro("color","sour", "Sour") + " " + ImgMacro("img","IconSour") },
+            {"umami",  (args) => ColorMacro("color","umami", "Umami") + " " + ImgMacro("img","IconUmami") },
+            {"salty",  (args) => ColorMacro("color","salty", "Salty") + " " + ImgMacro("img","IconSalty") },
             #endregion
         };
     }
@@ -102,6 +105,51 @@ public class TextMacros : MonoBehaviour
     {
         if (args.Length < 2)
             return "Error: format is {color, imgName}";
-        return " <sprite=\"" + args[1] + "\" index=0> ";
+        return "<sprite=\"" + args[1] + "\" index=0> ";
+    }
+
+    private Dictionary<KeyCode, string> controlMap = new Dictionary<KeyCode, string>()
+    {
+        {KeyCode.J, "KeyJ" },
+        {KeyCode.K, "KeyK" },
+        {KeyCode.L, "KeyL" },
+        {KeyCode.W, "KeyW" },
+        {KeyCode.A, "KeyA" },
+        {KeyCode.S, "KeyS" },
+        {KeyCode.D, "KeyD" },
+        {KeyCode.Z, "KeyZ" },
+        {KeyCode.X, "KeyX" },
+        {KeyCode.C, "KeyC" },
+        {KeyCode.UpArrow, "KeyUp" },
+        {KeyCode.DownArrow, "KeyDown" },
+        {KeyCode.LeftArrow, "KeyLeft" },
+        {KeyCode.RightArrow, "KeyRight" },
+        {KeyCode.Space, "KeySpace" },
+        {KeyCode.Joystick1Button0, "JoyA" },
+        {KeyCode.Joystick1Button1, "JoyB" },
+        {KeyCode.Joystick1Button2, "JoyX" },
+        {KeyCode.Joystick1Button3, "JoyY" },
+    };
+
+    public string ControlMacro(params string[] args)
+    {
+        var keyBinds = InputManager.Controls.keyBinds;
+        string imgKey = string.Empty;
+        switch (args[1])
+        {
+            case "slash":
+                imgKey = controlMap[keyBinds[Control.Knife]];
+                break;
+            case "skewer":
+                imgKey = controlMap[keyBinds[Control.Skewer]];
+                break;
+            case "throw":
+                imgKey = controlMap[keyBinds[Control.Throw]];
+                break;
+            case "interact":
+                imgKey = controlMap[keyBinds[Control.Interact]];
+                break;
+        }
+        return ImgMacro("img", imgKey);
     }
 }
