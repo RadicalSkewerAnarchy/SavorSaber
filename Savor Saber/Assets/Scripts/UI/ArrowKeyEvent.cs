@@ -40,10 +40,10 @@ public class ArrowKeyEvent : MonoBehaviour
                 Finish();
             else
             {
-                if(upCr != null)
+                if (upCr != null)
                     StopCoroutine(upCr);
                 up.transform.position = upTr;
-                StartCoroutine(Wiggle(upCr, up.gameObject, 1f, 0.2f, 2f));
+                StartCoroutine(Shake(upCr, up.gameObject, 0.2f, 0.2f, 0.05f));
             }
                 
         }
@@ -53,12 +53,38 @@ public class ArrowKeyEvent : MonoBehaviour
                 Finish();
             else
             {
-                if(downCr != null)
+                if (downCr != null)
                     StopCoroutine(downCr);
                 down.transform.position = downTr;
-                downCr = StartCoroutine(Wiggle(downCr,down.gameObject, 1f, 0.2f, 2f));
+                downCr = StartCoroutine(Shake(downCr,down.gameObject, 0.2f, 0.2f, 0.05f));
             }
                 
+        }
+        else if (InputManager.GetButtonDown(Control.Left))
+        {
+            if (++count >= pressGoal)
+                Finish();
+            else
+            {
+                if (leftCr != null)
+                    StopCoroutine(leftCr);
+                left.transform.position = leftTr;
+                leftCr = StartCoroutine(Shake(leftCr, left.gameObject, 0.2f, 0.2f, 0.05f));
+            }
+
+        }
+        else if (InputManager.GetButtonDown(Control.Right))
+        {
+            if (++count >= pressGoal)
+                Finish();
+            else
+            {
+                if (rightCr != null)
+                    StopCoroutine(rightCr);
+                right.transform.position = rightTr;
+                rightCr = StartCoroutine(Shake(rightCr, right.gameObject, 0.2f, 0.2f, 0.05f));
+            }
+
         }
     }
 
@@ -67,15 +93,14 @@ public class ArrowKeyEvent : MonoBehaviour
         onFinish.Invoke();
     }
 
-    private IEnumerator Wiggle(Coroutine cr, GameObject go, float time, float speed, float amplitude)
+    private IEnumerator Shake(Coroutine cr, GameObject go, float time, float speed, float amplitude)
     {
         Vector2 origin = go.transform.position;
-        var count = time;
+        var count = 0f;
         while (count < time)
         {
-            //Debug.Log("wiggling");
             yield return new WaitForEndOfFrame();
-            go.transform.position = (Vector2)go.transform.position + Random.insideUnitCircle * amplitude;
+            go.transform.position = origin + Random.insideUnitCircle * amplitude;
             count += Time.deltaTime;
         }
         cr = null;
