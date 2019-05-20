@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 3;
+    int clusterLimit = 6;
     private void Awake()
     {
         tiles = new List<List<TileNode>>();
