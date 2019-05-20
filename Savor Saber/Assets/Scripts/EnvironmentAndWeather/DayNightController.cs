@@ -117,6 +117,12 @@ public class DayNightController : MonoBehaviour, IPausable
         TransitionToTimeOfDay(CurrTimeOfDay.Next(), transitionTime);
     }
 
+    public void Next()
+    {
+        StopAllCoroutines();
+        TransitionToTimeOfDay(currTimeOfDay.Next(), transitionTime);
+    }
+
     public void TransitionToTimeOfDay(TimeOfDay t, float transitionTime)
     {
         StartCoroutine(transition(t, transitionTime));

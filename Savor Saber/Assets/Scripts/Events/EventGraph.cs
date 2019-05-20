@@ -20,12 +20,19 @@ public class EventGraph : MonoBehaviour
     private GameObject player;
     private BaseNode currNode = null;
     private BaseNode lastNode = null;
+    private bool stopped = false;
     /// <summary> Initialized the root node (for if next dialogue is called in DialogManager's awake function </summary>
     public void ResetScene()
     {
         currNode = Graph.getStartNode();
         dialog.Initialize();
     }
+    /// <summary> Resume playing the event graph if it had been previously stopped</summary>
+    public void Restart()
+    {
+        stopped = false;
+    }
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -142,6 +149,11 @@ public class EventGraph : MonoBehaviour
                 }
                 var child = target?.transform.Find(node.childName);
                 child?.gameObject.SetActive(!node.disable);
+            }
+            else if (currNode is StopNode)
+            {
+                stopped = true;
+                yield return new WaitWhile(() => stopped);
             }
             lastNode = currNode;
             currNode = Next();
