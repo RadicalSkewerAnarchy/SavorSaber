@@ -94,7 +94,6 @@ public class DayNightController : MonoBehaviour, IPausable
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
         }
         else
             Destroy(gameObject);
@@ -116,6 +115,12 @@ public class DayNightController : MonoBehaviour, IPausable
             currTime += Time.deltaTime;                     
         }
         TransitionToTimeOfDay(CurrTimeOfDay.Next(), transitionTime);
+    }
+
+    public void Next()
+    {
+        StopAllCoroutines();
+        TransitionToTimeOfDay(currTimeOfDay.Next(), transitionTime);
     }
 
     public void TransitionToTimeOfDay(TimeOfDay t, float transitionTime)

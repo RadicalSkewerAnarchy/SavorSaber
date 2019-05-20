@@ -151,7 +151,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            RigidBody.velocity = target;       
+            RigidBody.velocity = target * speed;       
             #endregion
             return false;
         }
@@ -249,8 +249,8 @@ public class MonsterBehavior : MonoBehaviour
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
         //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
         //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
-        newAttack.transform.Rotate((Vector2)this.transform.position - target);
-        newAttackCollider.size = new Vector2(10f, 10f);
+        newAttack.transform.Rotate(target -(Vector2)this.transform.position);
+        newAttackCollider.size = new Vector2(1f, 3f);
         newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
     }

@@ -10,6 +10,7 @@ public class PlayerData : CharacterData
     private const float timeConst = 1.25f;
     private SpriteRenderer sp;
     private Respawner res;
+    public List<GameObject> party = new List<GameObject>();
 
     private void Awake()
     {

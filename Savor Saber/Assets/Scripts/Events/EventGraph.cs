@@ -20,12 +20,19 @@ public class EventGraph : MonoBehaviour
     private GameObject player;
     private BaseNode currNode = null;
     private BaseNode lastNode = null;
+    private bool stopped = false;
     /// <summary> Initialized the root node (for if next dialogue is called in DialogManager's awake function </summary>
     public void ResetScene()
     {
         currNode = Graph.getStartNode();
         dialog.Initialize();
     }
+    /// <summary> Resume playing the event graph if it had been previously stopped</summary>
+    public void Restart()
+    {
+        stopped = false;
+    }
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -40,6 +47,13 @@ public class EventGraph : MonoBehaviour
             return (currNode as BaseNodeOUT).Next;
         else if (currNode is GameflowBranchNode)
             return Branch(currNode as GameflowBranchNode);
+        else if (currNode is DialogEndNode)
+        {
+            var trig = GetComponent<EventTrigger>();
+            if (trig != null)
+                trig.playCompletionEvents = (currNode as DialogEndNode).playCompletionEvents;
+            return null;
+        }
         else
             return null;
     }
@@ -97,21 +111,29 @@ public class EventGraph : MonoBehaviour
             }
             else if (currNode is CutsceneEventNode)
             {
+                Coroutine routine = null;
                 if (currNode is WaitNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.Wait(currNode as WaitNode));
+                    routine = StartCoroutine(CutsceneNodeEvents.Wait(currNode as WaitNode));
                 else if (currNode is MoveCharacterNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.MoveCharacter(currNode as MoveCharacterNode, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.MoveCharacter(currNode as MoveCharacterNode, Actors, Dependencies));
                 else if (currNode is SetCharacterDirectionNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.SetCharacterDirection(currNode as SetCharacterDirectionNode, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.SetCharacterDirection(currNode as SetCharacterDirectionNode, Actors, Dependencies));
                 else if (currNode is PanCameraNode)
-                    yield return StartCoroutine(CutsceneNodeEvents.PanCamera(currNode as PanCameraNode, player, Actors, Dependencies));
+                    routine = StartCoroutine(CutsceneNodeEvents.PanCamera(currNode as PanCameraNode, player, Actors, Dependencies));
                 else if (currNode is PlayUnityEventNode)
                     Events[(currNode as PlayUnityEventNode).eventName].Invoke();
+                if ((currNode as CutsceneEventNode).waitUntilFinished)
+                    yield return routine;
             }
             else if (currNode is SetFlagNode)
             {
                 var node = currNode as SetFlagNode;
                 FlagManager.SetFlag(node.flagName, node.value);
+            }
+            else if (currNode is SetQuestTextNode)
+            {
+                var node = currNode as SetQuestTextNode;
+                QuestManager.instance?.SetText(node.text);
             }
             else if (currNode is EnableChildObjectNode)
             {
@@ -127,6 +149,11 @@ public class EventGraph : MonoBehaviour
                 }
                 var child = target?.transform.Find(node.childName);
                 child?.gameObject.SetActive(!node.disable);
+            }
+            else if (currNode is StopNode)
+            {
+                stopped = true;
+                yield return new WaitWhile(() => stopped);
             }
             lastNode = currNode;
             currNode = Next();

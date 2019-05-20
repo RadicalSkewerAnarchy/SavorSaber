@@ -8,13 +8,17 @@ using UnityEngine;
 public class FlagManager : MonoBehaviour
 {
     private static FlagManager instance;
+    public const string undefined = "undefined";
     private Dictionary<string, string> flags = new Dictionary<string, string>();
+    public List<string> keysToInit = new List<string>();
+    public List<string> initValues = new List<string>();
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.transform);
+            for (int i = 0; i < Mathf.Min(keysToInit.Count, initValues.Count); ++i)
+                SetFlag(keysToInit[i], initValues[i]);
         }
         else
             Destroy(this);
@@ -30,7 +34,7 @@ public class FlagManager : MonoBehaviour
     {
         if(instance.flags.ContainsKey(flag))
             return instance.flags[flag];
-        Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"undefined\"");
-        return "undefined";
+        Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"" + undefined + "\"");
+        return undefined;
     }
 }

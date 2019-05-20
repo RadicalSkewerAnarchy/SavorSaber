@@ -30,44 +30,22 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         //monsterChecks.Enemies.Clear();
         GameObject g = collision.gameObject;
         string t = g.tag;
-        //string m = myAttacker.tag;
-        string m = "Prey";
 
-        if (m == "Prey")
+        if (t == "Predator")
         {
-            if (t == "Predator")
+            if (damageSFX != null)
+                sfxPlayer.PlayRandPitch(damageSFX);
+            CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
+            //Debug.Log("THERE IS CHARACTER COLLISION");
+            if (charData != null)
             {
-                if (damageSFX != null)
-                    sfxPlayer.PlayRandPitch(damageSFX);
-                CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
-                //Debug.Log("THERE IS CHARACTER COLLISION");
-                if (charData != null)
-                {
-                    if (myCharData != null)
-                        myCharData.damageDealt += (int)meleeDamage;
-                    if (charData.DoDamage((int)meleeDamage) && myCharData != null)
-                        myCharData.entitiesKilled += 1;
-                }
+                if (myCharData != null)
+                    myCharData.damageDealt += (int)meleeDamage;
+                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
+                    myCharData.entitiesKilled += 1;
             }
         }
-        else if(m == "Predator")
-        { 
-            if (t == "Player" || t == "Prey")
-            {
-                if (damageSFX != null)
-                    sfxPlayer.PlayRandPitch(damageSFX);
-                CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
-                //Debug.Log("THERE IS CHARACTER COLLISION");
-                if (charData != null)
-                {
-                    if (myCharData != null)
-                        myCharData.damageDealt += (int)meleeDamage;
-                    if (charData.DoDamage((int)meleeDamage) && myCharData != null)
-                        myCharData.entitiesKilled += 1;
-                }
-            }
-        }
-
+        
         if (g.GetComponent<DestructableEnvironment>() != null)
         {
             DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();

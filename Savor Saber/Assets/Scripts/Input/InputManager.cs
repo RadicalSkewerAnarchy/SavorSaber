@@ -48,6 +48,9 @@ public class InputManager : MonoBehaviour
 {
     private static InputManager main;
 
+    private bool controllerMode = false;
+    public static bool ControllerMode { get => main.controllerMode; }
+    public static ControlProfile Controls { get => main.controllerMode ? main.gamepadControls : main.keyboardControls; }
     public ControlProfile keyboardControls = null;
     public ControlProfile gamepadControls = null;
 
@@ -75,37 +78,86 @@ public class InputManager : MonoBehaviour
     public static float GetAxis(InputAxis a)
     {
         float c = Input.GetAxis(main.gamepadControls[a].ToString());
-        if(c == 0)
+        if(c != 0)
         {
-            c = Input.GetAxis(main.keyboardControls[a].ToString());
-            if(c == 0 && main.keyboardControls.secondaryAxes.ContainsKey(a))
-                c = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
+            main.controllerMode = true;
+            return c;
         }
+        c = Input.GetAxis(main.keyboardControls[a].ToString());
+        if(c == 0 && main.keyboardControls.secondaryAxes.ContainsKey(a))
+            c = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
+        if(c != 0)
+            main.controllerMode = false;
         return c;
     }
     public static bool GetButton(Control c)
     {
-        return Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKey(main.gamepadControls[c]);
+        bool b = Input.GetKey(main.gamepadControls[c]);
+        if(b)
+        {
+            main.controllerMode = true;
+            return b;
+        }
+        b = Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.keyboardControls.secondaryKeyBinds[c]);
+        if (b)
+            main.controllerMode = false;
+        return b;
     }
     public static bool GetButton(Control c, InputAxis a)
     {
-        return GetButton(c) || main.axisButtons[main.gamepadControls[a]].GetButton();
+        bool b = GetButton(c);
+        if (b)
+            return b;
+        b = main.axisButtons[main.gamepadControls[a]].GetButton();
+        if(b)
+            main.controllerMode = true;
+        return b;
     }
     public static bool GetButtonDown(Control c)
     {
-        return Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKeyDown(main.gamepadControls[c]);
+        bool b = Input.GetKeyDown(main.gamepadControls[c]);
+        if (b)
+        {
+            main.controllerMode = true;
+            return b;
+        }
+        b = Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.keyboardControls.secondaryKeyBinds[c]);
+        if (b)
+            main.controllerMode = false;
+        return b;
     }
     public static bool GetButtonDown(Control c, InputAxis a)
     {
-        return main.axisButtons[main.gamepadControls[a]].GetButtonDown() || GetButtonDown(c);
+        bool b = GetButtonDown(c);
+        if (b)
+            return b;
+        b = main.axisButtons[main.gamepadControls[a]].GetButtonDown();
+        if (b)
+            main.controllerMode = true;
+        return b;
     }
     public static bool GetButtonUp(Control c)
     {
-        return Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.keyboardControls.secondaryKeyBinds[c]) || Input.GetKeyUp(main.gamepadControls[c]);
+        bool b = Input.GetKeyUp(main.gamepadControls[c]);
+        if (b)
+        {
+            main.controllerMode = true;
+            return b;
+        }
+        b = Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.keyboardControls.secondaryKeyBinds[c]);
+        if (b)
+            main.controllerMode = false;
+        return b;
     }
     public static bool GetButtonUp(Control c, InputAxis a)
     {
-        return main.axisButtons[main.gamepadControls[a]].GetButtonUp() || GetButtonDown(c);
+        bool b = GetButtonUp(c);
+        if (b)
+            return b;
+        b = main.axisButtons[main.gamepadControls[a]].GetButtonUp();
+        if (b)
+            main.controllerMode = true;
+        return b;
     }
 
     [System.Serializable] public class ControlDict : SerializableCollections.SDictionary<string, ControlProfile> { }

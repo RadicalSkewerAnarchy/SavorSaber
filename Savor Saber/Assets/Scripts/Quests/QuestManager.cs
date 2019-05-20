@@ -1,63 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
-    public List<Quest> quests;
+    public static QuestManager instance;
+    [SerializeField] private TextMeshProUGUI text;
 
-    public void SetDone(string questName, bool done)
+    private void Awake()
     {
-        var quest = FindQuest(questName);
-        if (quest != null)
+        if(instance == null)
         {
-            quest.isDone = done;
+            instance = this;
         }
-    }
-    public void SetDone(QuestData data, bool done)
-    {
-        var quest = FindQuest(data);
-        if (quest != null)
+        else
         {
-            quest.isDone = done;
+            Destroy(gameObject);
         }
     }
 
-    public bool TurnIn(string questName)
+    public void SetText(string text)
     {
-        var quest = FindQuest(questName);
-        if (quest != null)
-        {
-            if (!quest.isDone)
-                return false;
-
-        }
-        return false;
-    }
-    public bool TurnIn(QuestData data)
-    {
-        var quest = FindQuest(data);
-        if (quest != null)
-        {
-            return false;
-        }
-        return false;
+        this.text.text = TextMacros.instance.Parse(text);
     }
 
-    private Quest FindQuest(string questName)
+    public string GetText()
     {
-        return quests.FirstOrDefault((q) => q.data.displayName == questName);
-    }
-
-    private Quest FindQuest(QuestData data)
-    {
-        return quests.FirstOrDefault((q) => q.data == data);
-    }
-
-    public class Quest
-    {
-        public QuestData data;
-        public bool isDone;
+        return text.text;
     }
 }

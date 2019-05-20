@@ -18,6 +18,7 @@ public class EventTrigger : MonoBehaviour
     public bool repeatable = false;
     public UnityEvent callOnStart;
     public UnityEvent callOnCompletion;
+    [HideInInspector] public bool playCompletionEvents = true;
     protected EventGraph scene;
     protected GameObject player;
     protected PlayerController plCon;
@@ -59,8 +60,10 @@ public class EventTrigger : MonoBehaviour
     {
         if (type == Type.Cutscene)
             DoCutscenePrep(false);       
-        plCon.enabled = true;       
-        callOnCompletion.Invoke();
+        plCon.enabled = true;
+        if(playCompletionEvents)
+            callOnCompletion.Invoke();
+        playCompletionEvents = true;
         IsActive = false;
         if (!repeatable)
         {  
@@ -75,6 +78,13 @@ public class EventTrigger : MonoBehaviour
         var attacks = player.GetComponents<AttackBase>();
         foreach (var attack in attacks)
             attack.enabled = !start;
+        var party = player.GetComponent<PlayerData>().party;
+        foreach (var partyMember in party)
+        {
+            var AI = partyMember.GetComponent<AIData>();
+            if (AI != null)
+                AI.enabled = !start;
+        }
         DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
     }
 }

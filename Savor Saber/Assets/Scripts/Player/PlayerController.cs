@@ -103,7 +103,6 @@ public class PlayerController : EntityController
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(transform);
             Initialize();
         }
         else
@@ -220,7 +219,9 @@ public class PlayerController : EntityController
     private void Dash()
     {
         var dSpeed = dashSpeed.Evaluate(dashCurrTime / dashTime) * dashScale * speedMod;
-        rigidBody.velocity = (dashVector / dashVector.magnitude * dSpeed * Time.fixedDeltaTime);
+        float mag = dashVector.magnitude;
+        if(mag != 0)
+            rigidBody.velocity = (dashVector / mag * dSpeed * Time.fixedDeltaTime);
         dashCurrTime += Time.fixedDeltaTime;
         if (dashCurrTime >= dashTime)
             StopDash();
