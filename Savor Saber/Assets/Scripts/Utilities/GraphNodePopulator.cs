@@ -73,9 +73,7 @@ public class GraphNodePopulator : MonoBehaviour
 					var tempTile = Instantiate(nodePrefab, current, new Quaternion(0,0,0,1));
 					tiles[i].Add(tempTile.GetComponent<TileNode>());
 					j+=clusterLimit;
-					//tilesArr[i][j] = tempTile;
 				}
-                //j++;
             }
             i++;
         }
