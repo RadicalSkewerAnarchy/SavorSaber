@@ -62,7 +62,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 3
+  Speed: 1.25
   Perception: 5
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 0
@@ -691,18 +691,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
-      propertyPath: InitialModule.rotation3D
-      value: 0
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
@@ -952,23 +947,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
-      propertyPath: ShapeModule.donutRadius
-      value: 0.2583212
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 0.67695636
+      objectReference: {fileID: 0}
+    - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 0.2583212
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a031989af5dbfb142be6ba118c5ce474, type: 3}
@@ -1182,16 +1177,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1220,41 +1205,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 58.44
       objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 58.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -1.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1503663281861661792, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 58.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 4444480572691301930, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: cData
-      value: 
-      objectReference: {fileID: 7371423779528155545}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
 --- !u!114 &8340736942424766331 stripped
