@@ -11,12 +11,12 @@ public partial class MonsterProtocols : MonoBehaviour
 		    AIData AiData;
 		    MonsterBehavior Behaviour;
 		    MonsterChecks Checks;
-		    #endregion
+    #endregion
+    TileNode targetTile;
 
-		    #region Booleans
 		    bool runningCoRoutine = false;
+            bool creatureMoving = false;
 		    #endregion
-	    #endregion
 	#endregion
 
     private void Start()
@@ -213,7 +213,18 @@ public partial class MonsterProtocols : MonoBehaviour
     // move away from the nearest anything
     public void Runaway()
     {
-
+        NavRunaway();
+        /*
+        if(Behaviour.ActionTimer < 0)
+        {
+            NavRunaway();
+            Behaviour.ResetActionTimer();
+        }
+        else
+        {
+            Behaviour.ActionTimer -= Time.deltaTime;
+        }
+        /*
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)
         //GameObject near = Checks.ClosestCreature();
@@ -227,53 +238,47 @@ public partial class MonsterProtocols : MonoBehaviour
             {
                 Wander(2f, 2f);
             }
-        }
+        }*/
     }
     public void NavRunaway()
     {
-        #region Get Nearest + Null Checks
-        Vector2 pos;
-        TileNode awayTile;
-        if (Checks.ClosestCreature() != null)
+        //Debug.Log("navrunningaway");
+        float maxDist = 0;
+        //Debug.Log("Navigating runaway");
+        Checks.SetCurrentTile();/*
+        if (Checks.currentTile == null)
         {
-            pos = Checks.ClosestCreature().transform.position;
-            if (Vector2.Distance(pos, transform.position) < AiData.EngageHostileThreshold)
-            {
-                Debug.Log("Navigating away");
+            Checks.SetCurrentTile();
+            //Debug.Log("Setting Current Tile");
+        }*/
+        if (Checks.currentTile != null)
+        {
 
-                pos = Vector2.ClampMagnitude(pos, 1);
-                //pos *= 2;
-                awayTile = Checks.GetNearestNode(pos);
-                Debug.Log("NEAREST TILE IS: " + awayTile.name);
-                NavTo(awayTile);
+            //Debug.Log(Checks.currentTile.name);
+            if (Checks.NearestEnemyPosition() == Vector2.zero) return;
+            //Debug.Log("Nearestenemy exists");
+            foreach (var neighbor in Checks.currentTile.neighbors)
+            {
+                //Debug.Log("Tiles have neighbors");
+                var distance = Vector2.Distance(Checks.ClosestCreature().transform.position, neighbor.transform.position);
+                if(distance > maxDist)
+                {
+                    maxDist = distance;
+                    targetTile = neighbor;
+                }
+            }
+            if (targetTile != null)
+            {
+                //Debug.Log("Targettile is not null, tile id: " +targetTile.name);
+                if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
+                {
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1f);
+                    //Debug.Log("coroutine started");
+                    //StartCoroutine(MoveCreatureToTarget(targetTile));
+                }
             }
         }
-        /*// For now, fun away from your first enemy (SOMA most likely)
 
-        Vector2 pos;
-        List<TileNode> path = null;
-        int count = 0;
-        if (Checks.ClosestCreature() != null)
-        {
-            pos = Checks.ClosestCreature().transform.position;
-            TileNode farthestTile = null;
-            float farthestTileDistance = Vector2.Distance(pos, transform.position);
-            if(farthestTileDistance < AiData.RangeAttackThreshold)
-            {
-                foreach (var neighbor in Checks.currentTile.neighbors)
-                {
-                    foreach(var neighborneighbor in neighbor.neighbors)
-                    {
-                        path = Checks.GetLongestPath(neighborneighbor);
-                        if(path.Count > count)
-                        {
-                            farthestTile = path[0];
-                        }
-                    }
-                }
-                NavTo(farthestTile);
-            }
-        }*/
         #endregion
     }
 
@@ -360,7 +365,7 @@ public partial class MonsterProtocols : MonoBehaviour
     }
 
     // end of neutral region
-    #endregion
+    //#endregion
 
     #region Pacifist Protocols
     // checks if there are enough friends to party
@@ -498,7 +503,7 @@ public partial class MonsterProtocols : MonoBehaviour
             //GameObject near = Checks.ClosestLeader();
             //Chase(near);
         }
-        else 
+        else
         {
         	// decide leader if no one around
         	if (!runningCoRoutine) { StartCoroutine(DecideLeader()); }
@@ -571,26 +576,40 @@ public partial class MonsterProtocols : MonoBehaviour
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
     public bool NavTo(TileNode target)
     {
-        if(Checks.currentTile == target || target == null)
+
+        if(Checks.currentTile == target)
         {
+            Debug.Log("AT TARGET");
             return true;
         }
-        if (AiData.path[0] != target)
+        if(Checks.currentTile == null || target == null)
         {
+            Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
+            return false;
+        }
+        if(AiData.path == null || AiData.path.Count == 0)
+        {
+            Debug.Log("Path being drawn from target to destination");
+            Checks.SetCurrentTile();
             AiData.path = Behaviour.pathfinder.AStar(target);
-            if (AiData.path == null)
-            {
-                return false;
-            }
-            foreach (var node in AiData.path)
-            {
-                if (Behaviour.MoveTo(node.transform.position, AiData.Speed, 1f))
-                {
-                    Checks.currentTile = node;
-                }
-            }
-            return true;
         }
+        if (AiData.path == null)
+        {
+            return false;
+        }
+        for(int i = AiData.path.Count-1; i > 0; i--)
+        {
+            if (Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 1f))
+            {
+                Checks.currentTile = AiData.path[i];
+                AiData.path.Remove(AiData.path[i]);
+            }
+            else
+            {
+                Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 1f);
+            }
+        }
+
 
             /*
         // bool moving = false;

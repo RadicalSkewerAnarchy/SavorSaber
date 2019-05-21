@@ -51,4 +51,5 @@ public partial class MonsterProtocols : MonoBehaviour
         yield return null;
         runningCoRoutine = false;
     }
+
 }

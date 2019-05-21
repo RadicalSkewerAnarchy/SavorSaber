@@ -32,7 +32,6 @@ public class DialogPlayer : MonoBehaviour
     protected RectTransform dialogRectTransform;
 
     protected TextMeshProUGUI dialogText;
-    //protected Text dialogText;
     protected Image dialogImage;
     private AudioSource audioPlayer;
     #endregion
@@ -100,6 +99,7 @@ public class DialogPlayer : MonoBehaviour
 
     public IEnumerator Scroll(string lineOfText)
     {
+        lineOfText = TextMacros.instance.Parse(lineOfText);
         var tagOffsets = new List<int>();
         var tags = ParseTags(lineOfText, out tagOffsets);
         int tagInd = 0;
@@ -149,6 +149,8 @@ public class DialogPlayer : MonoBehaviour
         yield return new WaitWhile(() => state == State.Waiting);
         state = State.Inactive;
     }
+
+    #region Rich Text Tag Support
     private List<string> ParseTags(string line, out List<int> offsets)
     {
         offsets = new List<int>();
@@ -163,6 +165,8 @@ public class DialogPlayer : MonoBehaviour
         }
         return tags;
     }
+    #endregion
+
     protected Vector2 GetActorUISpace(GameObject actor)
     {
         RectTransform canvasRect = UICanvas.GetComponent<RectTransform>();
@@ -172,5 +176,4 @@ public class DialogPlayer : MonoBehaviour
         Vector2 position = proportionalPosition - UIOffset;
         return new Vector2(Mathf.Floor(position.x), Mathf.Floor(position.y));
     }
-
 }

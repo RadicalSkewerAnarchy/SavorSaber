@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
-    [SerializeField] private Text text;
+    [SerializeField] private TextMeshProUGUI text;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class QuestManager : MonoBehaviour
 
     public void SetText(string text)
     {
-        this.text.text = text;
+        this.text.text = TextMacros.instance.Parse(text);
     }
 
     public string GetText()

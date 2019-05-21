@@ -10,11 +10,15 @@ public class FlagManager : MonoBehaviour
     private static FlagManager instance;
     public const string undefined = "undefined";
     private Dictionary<string, string> flags = new Dictionary<string, string>();
+    public List<string> keysToInit = new List<string>();
+    public List<string> initValues = new List<string>();
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            for (int i = 0; i < Mathf.Min(keysToInit.Count, initValues.Count); ++i)
+                SetFlag(keysToInit[i], initValues[i]);
         }
         else
             Destroy(this);
