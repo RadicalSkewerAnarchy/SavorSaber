@@ -28,6 +28,9 @@ public enum InputAxis
     Horizontal,
     Vertical,
     Dash,
+    Skewer,
+    Slash,
+    Throw,
 }
 
 public enum AxisName
@@ -46,7 +49,7 @@ public enum AxisName
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager main;
+    public static InputManager main;
 
     private bool controllerMode = false;
     public static bool ControllerMode { get => main.controllerMode; }
@@ -131,7 +134,7 @@ public class InputManager : MonoBehaviour
         bool b = GetButtonDown(c);
         if (b)
             return b;
-        b = main.axisButtons[main.gamepadControls[a]].GetButtonDown();
+        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonDown() : false;
         if (b)
             main.controllerMode = true;
         return b;
@@ -154,10 +157,19 @@ public class InputManager : MonoBehaviour
         bool b = GetButtonUp(c);
         if (b)
             return b;
-        b = main.axisButtons[main.gamepadControls[a]].GetButtonUp();
+        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonUp() : false;
         if (b)
             main.controllerMode = true;
         return b;
+    }
+
+    public void SetKeyboardProfile(ControlProfile c)
+    {
+        keyboardControls = c;
+    }
+    public void SetGamepadProfile(ControlProfile c)
+    {
+        gamepadControls = c;
     }
 
     [System.Serializable] public class ControlDict : SerializableCollections.SDictionary<string, ControlProfile> { }

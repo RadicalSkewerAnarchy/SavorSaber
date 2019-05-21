@@ -28,7 +28,7 @@ public class ButtonLycheeMove : MonoBehaviour, IPointerEnterHandler
     public void MoveLychee()
     {
         Debug.Log("selected");
-        cursorSprite.rectTransform.anchoredPosition = this.transform.localPosition - new Vector3(220, -8, 0);
+        cursorSprite.rectTransform.localPosition = this.transform.localPosition - new Vector3(220, -8, 0);
 
         if(selectSound != null)
         {

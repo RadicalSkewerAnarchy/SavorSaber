@@ -19,6 +19,8 @@ public class ControlProfile : ScriptableObject
         {InputAxis.Horizontal, default},
         {InputAxis.Vertical, default},
         {InputAxis.Dash, default},
+        {InputAxis.Skewer, default},
+        {InputAxis.Slash, default},
     };
     public KeyCodeDict keyBinds = new KeyCodeDict()
     {

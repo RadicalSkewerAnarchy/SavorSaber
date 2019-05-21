@@ -38,7 +38,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     void Update()
     {
         //conditions to throw: Must either have ingredients OR a cooked recipe
-        if (InputManager.GetButtonDown(control) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
+        if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
         {
             chargedAttack = true;
             center = r.bounds.center;
@@ -53,7 +53,7 @@ public class AttackRangedThrowSkewer : AttackRanged
                 StartCoroutine(Charge());
             }
         }
-        if (InputManager.GetButtonUp(control) && Attacking)
+        if (InputManager.GetButtonUp(control, axis) && Attacking)
         {
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
