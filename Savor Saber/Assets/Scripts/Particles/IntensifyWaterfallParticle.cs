@@ -22,10 +22,10 @@ public class IntensifyWaterfallParticle : MonoBehaviour
         steamOpacity = 4f;
         steamColor = new Color(255, 255, 255);
         waterColor = new Color(0, 253, 255);
-        GetComponent<Renderer>().sortingLayerName = ("AboveObjects");
+        // GetComponent<Renderer>().sortingLayerName = ("AboveObjects");
         foreach(var render in GetComponentsInChildren<Renderer>())
         {
-            render.sortingLayerName = ("AboveObjects");
+            // render.sortingLayerName = ("AboveObjects");
         }
     }
 
