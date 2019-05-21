@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 6;
+    int clusterLimit = 3;
     private void Awake()
     {
         tiles = new List<List<TileNode>>();
@@ -25,6 +25,7 @@ public class GraphNodePopulator : MonoBehaviour
         /// List of all tilemaps
         activeTileMaps = GetComponentsInChildren<Tilemap>();
         List<Tilemap> inactiveTileMaps = new List<Tilemap>();
+        var graph = GraphSingleton.Instance;
         foreach(var active in activeTileMaps)
         {
             if(active.GetComponent<TilemapCollider2D>() != null)
@@ -67,10 +68,12 @@ public class GraphNodePopulator : MonoBehaviour
                     tile.GetComponent<TileNode>().SetWalkable(walkable);
 					tile.GetComponent<TileNode>().active = true;
                     tiles[i].Add(tile.GetComponent<TileNode>());
-					//tilesArr[i][j] = tile.GetComponent<TileNode>();
+                    //tilesArr[i][j] = tile.GetComponent<TileNode>();
+                    graph.tiles.Add(tile);
 					j+=clusterLimit;
                 }else{
-					var tempTile = Instantiate(nodePrefab, current, new Quaternion(0,0,0,1));
+					var tempTile = Instantiate(nodePrefab, current, new Quaternion(0,0,0,1), activeTiles.transform.GetChild(1));
+                    tempTile.GetComponent<TileNode>().SetWalkable(false);
 					tiles[i].Add(tempTile.GetComponent<TileNode>());
 					j+=clusterLimit;
 				}
@@ -81,35 +84,39 @@ public class GraphNodePopulator : MonoBehaviour
         for (int x = 0; x < tiles.Count - clusterLimit; x++)
         {
 
-                for (int y = 0; y < tiles[x].Count - clusterLimit; y++)
+            for (int y = 0; y < tiles[x].Count - clusterLimit; y++)
+            {
+				if(!tiles[x][y].active) continue;
+                var node = tiles[x][y];
+                for (int m = -clusterLimit; m <= clusterLimit; m+= clusterLimit)
                 {
-					if(!tiles[x][y].active) continue;
-                    var node = tiles[x][y];
-                    for (int m = -clusterLimit; m <= clusterLimit; m+= clusterLimit)
+                    for (int n = -clusterLimit; n <= clusterLimit; n+= clusterLimit)
                     {
-                        for (int n = -clusterLimit; n <= clusterLimit; n+= clusterLimit)
+						//node.neighbors.Add(tiles[x+m][y+n]);
+						if(m == 0 && n == 0) continue;
+                        try
                         {
-							//node.neighbors.Add(tiles[x+m][y+n]);
-							if(m == 0 && n == 0) continue;
-                            try
-                            {
-								if(tiles[x+m][y+n].active)	node.neighbors.Add(tiles[x+m][y+n]);
+							if(tiles[x+m][y+n].active)	node.neighbors.Add(tiles[x+m][y+n]);
 
-                            //node.neighbors.Add(tiles[x + m][y + n]);
-							//if((tiles[x+m][y+n].x != 0  ) && ( tiles[x+m][y+n].y != 0)){
-							//	node.neighbors.Add(tiles[x+m][y+n]);
-							//}
-                            }
-                            catch (System.ArgumentOutOfRangeException ex)
-                            {
-								//Debug.Log("OutOfRange");
-								//Debug.Log("tiles.length + tiles[x].length " + tiles.Count +  " | " + tiles[x].Count + " | Responsible tiles | " + tiles[x][y].x + ", " + tiles[x][y].y);
-                            }
-
-
+                        //node.neighbors.Add(tiles[x + m][y + n]);
+						//if((tiles[x+m][y+n].x != 0  ) && ( tiles[x+m][y+n].y != 0)){
+						//	node.neighbors.Add(tiles[x+m][y+n]);
+						//}
                         }
+                        catch (System.ArgumentOutOfRangeException ex)
+                        {
+							//Debug.Log("OutOfRange");
+							//Debug.Log("tiles.length + tiles[x].length " + tiles.Count +  " | " + tiles[x].Count + " | Responsible tiles | " + tiles[x][y].x + ", " + tiles[x][y].y);
+                        }
+
+
                     }
                 }
-        	}
+            }
+        }
+        foreach(var tileList in tiles)
+        {
+            tileList.RemoveAll(tile => tile.active == false);
+        }
     }
 }
