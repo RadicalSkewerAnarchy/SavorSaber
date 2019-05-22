@@ -22,9 +22,8 @@ public class WaterfallDamage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Object in waterfall");
-        if (collision.gameObject.name == "GhostReaper")
+        if (collision.gameObject.tag == "Predator")
         {
-            Debug.Log("confirmed as reaper");
             characterData = collision.gameObject.GetComponent<CharacterData>();
             pepperInCloud = true;
             DamageOverTime();
@@ -33,9 +32,8 @@ public class WaterfallDamage : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "GhostReaper")
+        if (collision.gameObject.tag == "Predator")
         {
-
             characterData = null;
             pepperInCloud = false;
             StopCoroutine(ExecuteAfterSeconds());
