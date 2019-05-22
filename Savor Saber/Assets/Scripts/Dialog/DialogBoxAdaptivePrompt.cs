@@ -12,17 +12,17 @@ public class DialogBoxAdaptivePrompt : MonoBehaviour
     void Start()
     {
         prompt = GetComponent<Text>();
-        string[] names = Input.GetJoystickNames();
 
-        if(names.Length == 0)
+        if(InputManager.ControllerMode)
         {
-            prompt.text = "(Space) ->";
-            Debug.Log("Dialog box detects keyboard");
+
+            prompt.text = "(A) ->";
+            Debug.Log("Dialog box detects xbox controller");
         }
         else
         {
-            prompt.text = "(Y) ->";
-            Debug.Log("Dialog box detects xbox controller");
+            prompt.text = "(Space) ->";
+            Debug.Log("Dialog box detects keyboard");
         }
     }
 

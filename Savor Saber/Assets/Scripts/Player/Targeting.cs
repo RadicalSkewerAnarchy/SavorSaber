@@ -8,6 +8,7 @@ public class Targeting : MonoBehaviour
     private EntityController controller;
     private Inventory inventory;
     private SpriteRenderer sr;
+    private AttackRangedThrowSkewer attack;
 
     private bool active;
 
@@ -17,6 +18,8 @@ public class Targeting : MonoBehaviour
     private bool holdActivate = false; //this sucks, don't use it
     [SerializeField]
     private bool activateOnSkewer = false;
+    [SerializeField]
+    private bool chargeActivate = false;
 
 
     // Start is called before the first frame update
@@ -25,6 +28,7 @@ public class Targeting : MonoBehaviour
         controller = GetComponentInParent<EntityController>();
         inventory = GetComponentInParent<Inventory>();
         sr = GetComponent<SpriteRenderer>();
+        attack = GetComponentInParent<AttackRangedThrowSkewer>();
     }
 
     // Update is called once per frame
@@ -102,6 +106,19 @@ public class Targeting : MonoBehaviour
         else if (activateOnSkewer)
         {
             if (!inventory.ActiveSkewerEmpty())
+            {
+                active = true;
+                sr.enabled = true;
+            }
+            else
+            {
+                active = false;
+                sr.enabled = false;
+            }
+        }
+        else if (chargeActivate)
+        {
+            if (attack.currLevel > 0)
             {
                 active = true;
                 sr.enabled = true;
