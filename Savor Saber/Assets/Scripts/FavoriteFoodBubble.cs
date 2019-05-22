@@ -5,7 +5,7 @@ using UnityEngine;
 public class FavoriteFoodBubble : MonoBehaviour
 {
     public GameObject fruitant;
-    public GameObject fruit;
+    public GameObject fruitDisplay;
     public SpriteRenderer bubbleRender;
     public SpriteRenderer fruitRender;
     public FlavorInputManager flavors;
@@ -21,7 +21,7 @@ public class FavoriteFoodBubble : MonoBehaviour
     {
         flavors = fruitant.GetComponent<FlavorInputManager>();
         bubbleRender = GetComponent<SpriteRenderer>();
-        fruitRender = fruit.GetComponent<SpriteRenderer>();
+        fruitRender = fruitDisplay.GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -29,9 +29,10 @@ public class FavoriteFoodBubble : MonoBehaviour
     void Update()
     {
         Show();
+
         if (InputManager.GetButton(Control.Interact))
         {
-            if (Vector2.Distance(player.transform.position, this.transform.position) < 4)
+            if (Vector2.Distance(player.transform.position, this.transform.position) < 3)
             {
                 show = true;
             }
@@ -45,19 +46,41 @@ public class FavoriteFoodBubble : MonoBehaviour
             if (reset)
             {
                 // get random favorite
-                int len = flavors.favoriteIngredients.Length;
-                string ff = flavors.favoriteIngredients[Random.Range(0, len-1)];
-                IngredientData d = player.GetComponentInChildren<RecipeDatabase>().allIngredients[ff];
+
+                RecipeDatabase rdb = player.GetComponentInChildren<RecipeDatabase>();
+                Sprite s;
+                if (Random.Range(0f, 1.0f) < 0.5f)
+                {
+                    // random ingredient
+                    int len = flavors.favoriteIngredients.Length;
+                    string fav = flavors.favoriteIngredients[Random.Range(0, len - 1)];
+                    // get from ingredients
+                    IngredientData d = rdb.allIngredients[fav];
+                    // display
+                    s = d.image;
+                }
+                else
+                {
+                    // favorite flavor
+                    Debug.Log(flavors.favoriteFlavors);
+                    string ff = rdb.flavorToString[flavors.favoriteFlavors];
+                    Debug.Log(ff);
+                    // get image from database
+                    //s = rdb.allFlavors[ff];
+                    s = rdb.allFlavors[ff];
+                }
+
+                Debug.Log(s.name);
+                fruitRender.sprite = s;
 
                 // set sprite
-                fruitRender.sprite = d.image;
                 StartCoroutine(EndAfterSeconds(2));
 
                 if (audio != null)
                 {
                     GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
                     sfx.GetComponent<PlayAndDestroy>().Play(audio);
-                    sfx.GetComponent<AudioSource>().volume /=2 ;
+                    sfx.GetComponent<AudioSource>().volume /= 2;
                 }
                 reset = false;
             }

@@ -16,11 +16,11 @@ public class CharacterData : MonoBehaviour
     #region Values for Behaviors
     public float Speed;
     public float Perception;
-    public float MeleeAttackThreshold;
-    public float RangeAttackThreshold;
-    public float EngageHostileThreshold;
-    public int maxHealth;
-    public int health;
+    public float MeleeAttackThreshold = 1f;
+    public float RangeAttackThreshold = 2f;
+    public float EngageHostileThreshold = 5f;
+    public int maxHealth = 10;
+    public int health = 10;
     public int PartySize = 3;
     private Vector2 Spawn;
     public GameObject signalPrefab;

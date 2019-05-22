@@ -4733,7 +4733,7 @@ ParticleSystem:
 --- !u!199 &1553634806826153956
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4942,7 +4942,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -5253,11 +5253,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 2
+  Speed: 0.5
   Perception: 5
   MeleeAttackThreshold: 1
-  RangeAttackThreshold: 0
-  EngageHostileThreshold: 0
+  RangeAttackThreshold: 5
+  EngageHostileThreshold: 2
   maxHealth: 4
   health: 4
   PartySize: 3
@@ -5350,7 +5350,8 @@ MonoBehaviour:
   ResetTimerReset: 0
   ResetTimerVariance: 0
   attack: {fileID: 3113099086786420128, guid: 1a576d792dbe4ab4bbddcd056c746f62, type: 3}
-  projectile: {fileID: 0}
+  projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
+    type: 3}
   attackDuration: 1
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
@@ -5817,6 +5818,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4074087019532039368}
     m_Modifications:
+    - target: {fileID: 6490759784845256633, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_Name
+      value: HungryFruitantEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.435
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -5857,30 +5878,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.093
-      objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.435
-      objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256633, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: m_Name
-      value: HungryFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
-      propertyPath: InitialModule.startSize.minScalar
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: InitialModule.startSize.scalar
-      value: 0.2
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
@@ -5889,18 +5890,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0.45
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
-      propertyPath: ShapeModule.donutRadius
-      value: 0.32577562
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 0.34831193
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 0.32577562
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f522648c4c9b9846bfc7aa7d05698e3, type: 3}
@@ -5917,6 +5923,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3638173566648841202}
     m_Modifications:
+    - target: {fileID: 913700424908465189, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
+        type: 3}
+      propertyPath: m_Name
+      value: FavoriteFoodSpeech
+      objectReference: {fileID: 0}
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5972,11 +5983,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 913700424908465189, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
-        type: 3}
-      propertyPath: m_Name
-      value: FavoriteFoodSpeech
-      objectReference: {fileID: 0}
     - target: {fileID: 397395681929018882, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: fruitant
@@ -5997,6 +6003,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4074087019532039368}
     m_Modifications:
+    - target: {fileID: 8362748139089023926, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_Name
+      value: HappyFruitantEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.272
+      objectReference: {fileID: 0}
+    - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -6037,30 +6063,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
+    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.272
-      objectReference: {fileID: 0}
-    - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 8362748139089023926, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: m_Name
-      value: HappyFruitantEmitter
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.21352458
       objectReference: {fileID: 0}
     - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
       propertyPath: ShapeModule.donutRadius
       value: 1.1316743
-      objectReference: {fileID: 0}
-    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 0.21352458
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33c909520f360e4c83220a347dc693c, type: 3}
@@ -6077,6 +6088,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4074087019532039368}
     m_Modifications:
+    - target: {fileID: 7334068112926748696, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_Name
+      value: FedFruitantEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.334
+      objectReference: {fileID: 0}
+    - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.507
+      objectReference: {fileID: 0}
+    - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -6117,21 +6148,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.334
-      objectReference: {fileID: 0}
-    - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.507
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334068112926748696, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: m_Name
-      value: FedFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -6162,6 +6178,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4074087019532039368}
     m_Modifications:
+    - target: {fileID: 3982082007988838920, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: m_Name
+      value: FearSwirlFruitantEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.255
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.398
+      objectReference: {fileID: 0}
+    - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -6201,21 +6237,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.255
-      objectReference: {fileID: 0}
-    - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.398
-      objectReference: {fileID: 0}
-    - target: {fileID: 3982082007988838920, guid: 0583b091df470bd4c958b4e83716f488,
-        type: 3}
-      propertyPath: m_Name
-      value: FearSwirlFruitantEmitter
       objectReference: {fileID: 0}
     - target: {fileID: 626760171828635250, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
