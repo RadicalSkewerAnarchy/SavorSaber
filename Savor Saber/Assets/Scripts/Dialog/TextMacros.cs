@@ -138,10 +138,18 @@ public class TextMacros : MonoBehaviour
         switch (args[1])
         {
             case "slash":
-                imgKey = controlMap[keyBinds[Control.Knife]];
+                var keySlash = keyBinds[Control.Knife];
+                if (keySlash == KeyCode.None)
+                    imgKey = "JoyRT";
+                else
+                    imgKey = controlMap[keySlash];
                 break;
             case "skewer":
-                imgKey = controlMap[keyBinds[Control.Skewer]];
+                var keySkewer = keyBinds[Control.Skewer];
+                if (keySkewer == KeyCode.None)
+                    imgKey = "JoyLT";
+                else
+                    imgKey = controlMap[keySkewer];
                 break;
             case "throw":
                 imgKey = controlMap[keyBinds[Control.Throw]];

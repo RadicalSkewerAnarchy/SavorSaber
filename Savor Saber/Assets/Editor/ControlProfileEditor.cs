@@ -17,6 +17,8 @@ public class ControlProfileEditor : Editor
         c.axes.DoGUILayout(valGUIAxis, () => c.axes.EnumAddGUIVal(), "Axis Names", true);
         SDictionaryGUI.ValueGUI<KeyCode> valGUIKeyBind = (key) => (KeyCode)EditorGUILayout.EnumPopup(key);
         c.keyBinds.DoGUILayout(valGUIKeyBind, () => c.keyBinds.EnumAddGUI(), "Bindings", true);
+        SDictionaryGUI.ValueGUI<Sprite> valGUISprite = (key) => EditorGUILayout.ObjectField(key, typeof(Sprite),false) as Sprite;
+        c.sprites.DoGUILayout(valGUISprite, () => c.sprites.EnumAddGUIVal(), "Sprites", true);
         showSecondaries = EditorGUILayout.ToggleLeft(new GUIContent("Show Secondaries"), showSecondaries);
         if(showSecondaries)
         {

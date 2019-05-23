@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum Control
 {
@@ -64,7 +65,7 @@ public class InputManager : MonoBehaviour
         { AxisName.RightTrigger, new AxisButton(AxisName.RightTrigger) },
         { AxisName.BothTriggers, new AxisButton(AxisName.BothTriggers) },
     };
-   
+    private float checkTime = 0;
     private void Awake()
     {
         if (main == null)
@@ -75,6 +76,16 @@ public class InputManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    private void Update()
+    {
+        // May Switch input switching mode later
+        checkTime += Time.deltaTime;
+        if (checkTime > 1)
+        {
+            controllerMode = Input.GetJoystickNames().Any((s) => !string.IsNullOrEmpty(s));
+            checkTime = 0;
         }
     }
 

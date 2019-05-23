@@ -76,6 +76,14 @@ public class InfoDisplay : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = false;
+            if(showingInfo)
+            {
+                audio.pitch = 0.75f;
+                audio.Play();
+
+                Destroy(infoBox.gameObject);
+                showingInfo = false;
+            }
         }
     }
 

@@ -26,7 +26,7 @@ public class InputModeSelectButtonColor : MonoBehaviour
             onControllerABXY.SetSelected();
             onControllerTriggers.SetUnselected();
         }
-        else if (InputManager.main.keyboardControls.displayName == "Triggers")
+        else if (InputManager.main.gamepadControls.displayName == "Triggers")
         {
             onControllerABXY.SetUnselected();
             onControllerTriggers.SetSelected();
