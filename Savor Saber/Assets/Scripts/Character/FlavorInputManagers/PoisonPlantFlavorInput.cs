@@ -18,8 +18,8 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            isFed = true;
-            OpenPlant();
+            //isFed = true;
+            //OpenPlant();
         }
         // reset so you have to feed it both flavors at once
         // nevermind
