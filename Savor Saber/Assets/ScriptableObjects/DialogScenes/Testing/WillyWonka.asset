@@ -1,0 +1,372 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ae504df65aae7f4a9124a6a77c1ad12, type: 3}
+  m_Name: WillyWonka
+  m_EditorClassIdentifier: 
+  editorStates:
+  - {fileID: 114439118302217760}
+  saveName: Assets\ScriptableObjects\DialogScenes\WillyWonka
+  savePath: Assets\ScriptableObjects\DialogScenes\WillyWonka.asset
+  livesInScene: 0
+  nodes:
+  - {fileID: 114687066968267324}
+  - {fileID: 114387365782566824}
+  - {fileID: 114052495829887890}
+  - {fileID: 114329266649361488}
+  - {fileID: 114077192518253748}
+  - {fileID: 114268471785881440}
+  groups: []
+--- !u!114 &114052495829887890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2148eedaaee840e4d8cf2a066bbd68ea, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  position: {x: -781.69995, y: -76.19997}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114915231644167778}
+  fromPreviousIN: {fileID: 114196264311737894}
+  waitUntilFinished: 1
+  waitTime: 1
+--- !u!114 &114077192518253748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -480, y: -190}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114498292916453012}
+  fromPreviousIN: {fileID: 114862324255734590}
+  characterName: Character Name
+  text: Welcome! To a world of Pure Imagination!
+  actor: PatriarchPear
+  emotion: 1
+--- !u!114 &114196264311737894
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114052495829887890}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114755654747021386}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114268471785881440
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
+  m_Name: Dialog Start
+  m_EditorClassIdentifier: 
+  position: {x: -1300, y: -220}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114398852701348798}
+  dependencies: []
+  actors:
+  - PatriarchPear
+  unityEvents:
+  - FadeOut
+--- !u!114 &114329266649361488
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a05d26699c2c95e43a8c82b5f9c2f141, type: 3}
+  m_Name: Gameflow End
+  m_EditorClassIdentifier: 
+  position: {x: -118.400024, y: -105}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  fromPreviousIN: {fileID: 114434313416355874}
+--- !u!114 &114387365782566824
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
+  m_Name: Pan Camera
+  m_EditorClassIdentifier: 
+  position: {x: -1020, y: -310}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114398473154521858}
+  fromPreviousIN: {fileID: 114646043426617078}
+  waitUntilFinished: 1
+  movementType: 0
+  target: PatriarchPear
+  maxPullSpeed: 100
+  snapTime: 0.01
+--- !u!114 &114398473154521858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114387365782566824}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114816831909092708}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114398852701348798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114268471785881440}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114646043426617078}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114434313416355874
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114329266649361488}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114498292916453012}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114439118302217760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
+  m_Name: MainEditorState
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  parentEditor: {fileID: 0}
+  selectedNode: {fileID: 0}
+  panOffset: {x: 331.39993, y: 22.399994}
+  zoom: 1.2
+--- !u!114 &114498292916453012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114077192518253748}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114434313416355874}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114646043426617078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114387365782566824}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114398852701348798}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114687066968267324
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bab16cf61b90f4ab537fe713c7b2d1, type: 3}
+  m_Name: Play Unity Event
+  m_EditorClassIdentifier: 
+  position: {x: -740, y: -250}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 114755654747021386}
+  fromPreviousIN: {fileID: 114816831909092708}
+  waitUntilFinished: 1
+  eventName: FadeOut
+--- !u!114 &114755654747021386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114687066968267324}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114196264311737894}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114816831909092708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114687066968267324}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114398473154521858}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114862324255734590
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 114077192518253748}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114915231644167778}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &114915231644167778
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 114052495829887890}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 114862324255734590}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
