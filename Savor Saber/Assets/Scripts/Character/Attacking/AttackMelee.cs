@@ -61,6 +61,7 @@ public class AttackMelee : AttackBase
     public float attackDuration = 0.5f;
 
     public Control control;
+    public InputAxis axis;
 
     protected GameObject currAttackObject = null;
     #endregion
@@ -85,7 +86,7 @@ public class AttackMelee : AttackBase
     // Update is called once per frame
     void Update()
     {     
-        if (InputManager.GetButtonDown(control))
+        if (InputManager.GetButtonDown(control, axis))
         {
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = GetActiveAttack();        

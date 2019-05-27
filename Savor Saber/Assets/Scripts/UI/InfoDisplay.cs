@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class InfoDisplay : MonoBehaviour
 {
     public bool isMap = true;
@@ -76,6 +76,14 @@ public class InfoDisplay : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = false;
+            if(showingInfo)
+            {
+                audio.pitch = 0.75f;
+                audio.Play();
+
+                Destroy(infoBox.gameObject);
+                showingInfo = false;
+            }
         }
     }
 

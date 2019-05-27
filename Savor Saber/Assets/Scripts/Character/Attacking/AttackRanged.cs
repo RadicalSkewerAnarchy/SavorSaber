@@ -57,6 +57,7 @@ public class AttackRanged : AttackBase
     /// what input axis, if any, should be accepted to trigger this attack
     /// </summary>
     public Control control;
+    public InputAxis axis;
 
     #endregion
 
@@ -80,7 +81,7 @@ public class AttackRanged : AttackBase
     // Update is called once per frame
     void Update()
     {
-        if (InputManager.GetButtonDown(control))
+        if (InputManager.GetButtonDown(control, axis))
         {
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = GetActiveAttack();

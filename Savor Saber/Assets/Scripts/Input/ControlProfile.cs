@@ -14,11 +14,14 @@ public class ControlProfile : ScriptableObject
 
     public string displayName;
     public InputSource inputSource;
+    public KeySpriteDict sprites = new KeySpriteDict();
     public AxisDict axes = new AxisDict()
     {
         {InputAxis.Horizontal, default},
         {InputAxis.Vertical, default},
         {InputAxis.Dash, default},
+        {InputAxis.Skewer, default},
+        {InputAxis.Slash, default},
     };
     public KeyCodeDict keyBinds = new KeyCodeDict()
     {
@@ -54,6 +57,7 @@ public class ControlProfile : ScriptableObject
             return axes[a];
         }
     }
+    [System.Serializable] public class KeySpriteDict : SerializableCollections.SDictionary<Control, Sprite> { }
     [System.Serializable] public class KeyCodeDict : SerializableCollections.SDictionary<Control, KeyCode> { }
     [System.Serializable] public class AxisDict : SerializableCollections.SDictionary<InputAxis, AxisName> { }
 }

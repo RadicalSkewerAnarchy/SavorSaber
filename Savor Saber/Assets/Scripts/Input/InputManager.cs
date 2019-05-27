@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public enum Control
 {
@@ -28,6 +29,9 @@ public enum InputAxis
     Horizontal,
     Vertical,
     Dash,
+    Skewer,
+    Slash,
+    Throw,
 }
 
 public enum AxisName
@@ -46,7 +50,7 @@ public enum AxisName
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager main;
+    public static InputManager main;
 
     private bool controllerMode = false;
     public static bool ControllerMode { get => main.controllerMode; }
@@ -61,7 +65,7 @@ public class InputManager : MonoBehaviour
         { AxisName.RightTrigger, new AxisButton(AxisName.RightTrigger) },
         { AxisName.BothTriggers, new AxisButton(AxisName.BothTriggers) },
     };
-   
+    private float checkTime = 0;
     private void Awake()
     {
         if (main == null)
@@ -72,6 +76,16 @@ public class InputManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+    private void Update()
+    {
+        // May Switch input switching mode later
+        checkTime += Time.deltaTime;
+        if (checkTime > 1)
+        {
+            controllerMode = Input.GetJoystickNames().Any((s) => !string.IsNullOrEmpty(s));
+            checkTime = 0;
         }
     }
 
@@ -131,7 +145,7 @@ public class InputManager : MonoBehaviour
         bool b = GetButtonDown(c);
         if (b)
             return b;
-        b = main.axisButtons[main.gamepadControls[a]].GetButtonDown();
+        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonDown() : false;
         if (b)
             main.controllerMode = true;
         return b;
@@ -154,10 +168,19 @@ public class InputManager : MonoBehaviour
         bool b = GetButtonUp(c);
         if (b)
             return b;
-        b = main.axisButtons[main.gamepadControls[a]].GetButtonUp();
+        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonUp() : false;
         if (b)
             main.controllerMode = true;
         return b;
+    }
+
+    public void SetKeyboardProfile(ControlProfile c)
+    {
+        keyboardControls = c;
+    }
+    public void SetGamepadProfile(ControlProfile c)
+    {
+        gamepadControls = c;
     }
 
     [System.Serializable] public class ControlDict : SerializableCollections.SDictionary<string, ControlProfile> { }

@@ -40,7 +40,7 @@ public class PauseManager : MonoBehaviour
         PlaySound();
     }
 
-    private void Unpause()
+    public void Unpause()
     {
         Time.timeScale = 1;
         pauseCanvas.gameObject.SetActive(false);
