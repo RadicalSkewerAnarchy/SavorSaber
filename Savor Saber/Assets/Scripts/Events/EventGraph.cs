@@ -35,8 +35,14 @@ public class EventGraph : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = PlayerController.instance.gameObject;
         dialog = GetComponent<DialogPlayer>();
+        if(_actors.ContainsKey("Soma"))
+        {
+            _actors["Soma"] = player.GetComponent<DialogData>();
+        }
+        else
+            _actors.Add("Soma", player.GetComponent<DialogData>());
         currNode = Graph.getStartNode();
     }
 
