@@ -23,6 +23,9 @@ public class EventGraphEditor : Editor
                 foreach (string ID in startNode.actors)
                     if (!scene.Actors.ContainsKey(ID))
                         scene.Actors.Add(ID, null);
+                //foreach (string ID in scene.Actors.Keys)
+                //    if (!startNode.actors.Contains(ID))
+                //        scene.Actors.Remove(ID);
                 scene.Actors.DoGUILayout((obj) => EditorGUILayout.ObjectField(obj, typeof(DialogData), true) as DialogData, () => { }, "Actors", true, false);
             }
             else
@@ -32,6 +35,9 @@ public class EventGraphEditor : Editor
                 foreach (string ID in startNode.dependencies)
                     if (!scene.Dependencies.ContainsKey(ID))
                         scene.Dependencies.Add(ID, null);
+                //foreach (string ID in scene.Dependencies.Keys)
+                //    if (!startNode.dependencies.Contains(ID))
+                //        scene.Dependencies.Remove(ID);
                 scene.Dependencies.DoGUILayout((obj) => EditorGUILayout.ObjectField(obj, typeof(GameObject), true) as GameObject, () => { }, "Dependencies", true, false);
             }
             else
@@ -41,6 +47,9 @@ public class EventGraphEditor : Editor
                 foreach (string ID in startNode.unityEvents)
                     if (!scene.Events.ContainsKey(ID))
                         scene.Events.Add(ID, new UnityEvent());
+                //foreach (string ID in scene.Events.Keys)
+                //    if (!startNode.unityEvents.Contains(ID))
+                //        scene.Events.Remove(ID);
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("_events"),true);
                 //scene.Events.DoGUILayout((obj) => EditorGUILayout.PropertyField(serializedObject.FindProperty("_events")), () => { }, "Dependencies", true, false);
             }
