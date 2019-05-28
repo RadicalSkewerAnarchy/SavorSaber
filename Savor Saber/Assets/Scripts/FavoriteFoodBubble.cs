@@ -29,11 +29,10 @@ public class FavoriteFoodBubble : MonoBehaviour
     void Update()
     {
         Show();
-
-        // add in one more if statement
+        
         // only do it when there is no cutscene
-        //if (not in cutscene)
-        //{
+        if (!EventTrigger.InCutscene)
+        {
             if (InputManager.GetButton(Control.Interact))
             {
                 if (Vector2.Distance(player.transform.position, this.transform.position) < 3)
@@ -41,7 +40,7 @@ public class FavoriteFoodBubble : MonoBehaviour
                     show = true;
                 }
             }
-        //}
+        }
     }
 
     private void Show()
