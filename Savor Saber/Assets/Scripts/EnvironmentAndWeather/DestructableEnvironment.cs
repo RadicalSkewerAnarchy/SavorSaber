@@ -23,6 +23,8 @@ public class DestructableEnvironment : MonoBehaviour
     [Range(0, 0.3f)]
     public float wiggleAmplitude = 0.05f;
 
+    public bool skewerable = false;
+
     private Vector2 origin;
 
     private SpriteRenderer spr;

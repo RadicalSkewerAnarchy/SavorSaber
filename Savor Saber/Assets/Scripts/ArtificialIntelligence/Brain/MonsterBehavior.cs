@@ -142,6 +142,7 @@ public class MonsterBehavior : MonoBehaviour
         Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
+            AnimatorBody.Play("Idle");
             return true;
         }
         else
@@ -179,6 +180,7 @@ public class MonsterBehavior : MonoBehaviour
         }
         else
         {
+            AnimatorBody.Play("Idle");
             return true;
         }
     }
@@ -239,6 +241,8 @@ public class MonsterBehavior : MonoBehaviour
             #endregion
             return true;
         }
+
+        AnimatorBody.Play("Idle");
         return false;        
     }
     private IEnumerator MeleeDelay(Vector2 target, float speed)
@@ -275,6 +279,8 @@ public class MonsterBehavior : MonoBehaviour
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
             #endregion
         }
+
+        AnimatorBody.Play("Idle");
         return true;
     }
     /// <summary>
@@ -290,7 +296,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (++friendliness)
             //Debug.Log("Instantiating Happiness Signal");
-            AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
+            AiData.InstantiateSignal(2f, "Friendliness", 0.1f, true, false);
             ResetActionTimer();
             return true;
         }
@@ -313,7 +319,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
-            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.4f, true, true);
+            AiData.InstantiateSignal(2f, "Fear", -0.25f, true, true);
             ResetActionTimer();
             return true;
         }
