@@ -31,6 +31,8 @@ public enum Emotion
     NecSmile,
     ManaEmbarassed,
     ManaTsun,
+    AmritaSurprised,
+    AmritaSerious,
 }
 
 [System.Serializable]
