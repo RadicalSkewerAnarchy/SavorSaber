@@ -55,12 +55,14 @@ public class TextMacros : MonoBehaviour
             {"img", ImgMacro },
             {"control", ControlMacro },
             {"goalItem", GoalItemMacro },
+            {"goalFruitant", GoalFruitantMacro },
             {"devourer", DevourerMacro },
             #region Character Name Shortcuts
             {"soma", (args) => ColorMacro("color","soma", "Soma") },
             {"mana", (args) => ColorMacro("color","mana", "Mana") },
             {"amrita", (args) => ColorMacro("color","amrita", "Amrita") },
             {"nec", (args) => ColorMacro("color","nec", "Nec") },
+            {"nectar", (args) => ColorMacro("color","nec", "Nectar") },
             #endregion
             #region Flavor Name Shortcuts
             {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + " " + ImgMacro("img","IconSpicy") },
@@ -115,6 +117,13 @@ public class TextMacros : MonoBehaviour
         if(FlagManager.GetFlag("goal") == "Marsh")
             return "Golden Pear" + ImgMacro("img", "DropGoldenPear");
         return "Golden Prickle Pear" + ImgMacro("img", "DropGoldenPricklepear");      
+    }
+
+    public string GoalFruitantMacro(params string[] args)
+    {
+        if (FlagManager.GetFlag("goal") == "Marsh")
+            return "Paddle Patriarch";
+        return "Prickle Patriarch";
     }
 
     public string DevourerMacro(params string[] args)
