@@ -54,11 +54,15 @@ public class TextMacros : MonoBehaviour
             {"c", ColorMacro },
             {"img", ImgMacro },
             {"control", ControlMacro },
+            {"goalItem", GoalItemMacro },
+            {"goalFruitant", GoalFruitantMacro },
+            {"devourer", DevourerMacro },
             #region Character Name Shortcuts
             {"soma", (args) => ColorMacro("color","soma", "Soma") },
             {"mana", (args) => ColorMacro("color","mana", "Mana") },
             {"amrita", (args) => ColorMacro("color","amrita", "Amrita") },
             {"nec", (args) => ColorMacro("color","nec", "Nec") },
+            {"nectar", (args) => ColorMacro("color","nec", "Nectar") },
             #endregion
             #region Flavor Name Shortcuts
             {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + " " + ImgMacro("img","IconSpicy") },
@@ -104,8 +108,27 @@ public class TextMacros : MonoBehaviour
     public string ImgMacro(params string[] args)
     {
         if (args.Length < 2)
-            return "Error: format is {color, imgName}";
+            return "Error: format is {img, imgName}";
         return "<sprite=\"" + args[1] + "\" index=0> ";
+    }
+
+    public string GoalItemMacro(params string[] args)
+    {
+        if(FlagManager.GetFlag("goal") == "Marsh")
+            return "Golden Pear" + ImgMacro("img", "DropGoldenPear");
+        return "Golden Prickle Pear" + ImgMacro("img", "DropGoldenPricklepear");      
+    }
+
+    public string GoalFruitantMacro(params string[] args)
+    {
+        if (FlagManager.GetFlag("goal") == "Marsh")
+            return "Paddle Patriarch";
+        return "Prickle Patriarch";
+    }
+
+    public string DevourerMacro(params string[] args)
+    {
+        return (FlagManager.GetFlag("goal") == "Marsh") ? "Raindeer" : "Chinchilla";
     }
 
     private Dictionary<KeyCode, string> controlMap = new Dictionary<KeyCode, string>()
