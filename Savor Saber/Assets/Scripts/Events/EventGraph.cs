@@ -7,7 +7,7 @@ using SerializableCollections;
 
 [RequireComponent(typeof(DialogPlayer))]
 public class EventGraph : MonoBehaviour
-{
+{ 
     [SerializeField] private ActorDict _actors = new ActorDict();
     public ActorDict Actors { get => _actors; }
     [SerializeField] private GameObjectDict _dependencies = new GameObjectDict();
