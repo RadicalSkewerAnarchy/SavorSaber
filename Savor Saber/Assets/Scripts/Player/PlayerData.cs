@@ -50,7 +50,7 @@ public class PlayerData : CharacterData
     {
         Timer t = new Timer(time);
         bool on = false;
-        while (t.Update(flickerTime))
+        while (!t.Update(flickerTime))
         {           
             sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.5f);
             on = !on;
