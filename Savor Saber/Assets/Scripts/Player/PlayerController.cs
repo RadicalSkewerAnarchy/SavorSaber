@@ -73,6 +73,7 @@ public class PlayerController : EntityController
     public int maxDashes = 3;
     public float CurrDashes { get; private set; }
     private bool dashing = false;
+    public bool riding = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
     public float doubleTapTime;
@@ -343,15 +344,30 @@ public class PlayerController : EntityController
 
     void AnimateAgent()
     {
-        if(dialogData.inConversation)
+        if (dialogData.inConversation)
         {
             animatorBody.SetBool("Moving", false);
             animatorBody.SetBool("Running", false);
             return;
         }
+
+        if (riding)
+        {
+            animatorBody.SetBool("Moving", false);
+            animatorBody.SetBool("Running", false);
+            animatorBody.SetBool("Riding", true);
+            animatorBody.Play("Riding");
+            return;
+        }
+        else
+        {
+            animatorBody.SetBool("Riding", false);
+        }
+
         var movementVector = GetMovementVector();
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
-        if(movementVector != Vector2.zero)
+
+        if (movementVector != Vector2.zero)
         {
             animatorBody.SetBool("Moving", true);
             animatorBody.SetBool("Running", running);

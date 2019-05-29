@@ -314,6 +314,10 @@ public partial class MonsterProtocols : MonoBehaviour
             Wander(2f, 2f);
         }
     }
+    public void Chase(Vector3 go)
+    {
+        Behaviour.MoveTo(this.transform.position + go, AiData.Speed, 1.0f);
+    }
     public void NavChase()
     {
         #region Get Nearest + Null Checks

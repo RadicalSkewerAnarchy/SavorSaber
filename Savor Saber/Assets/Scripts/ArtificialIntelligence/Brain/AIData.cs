@@ -55,7 +55,8 @@ public class AIData : CharacterData
         Runaway,
         Conga,
         Chase,
-        Wander
+        Wander,
+        Ride
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -85,7 +86,8 @@ public class AIData : CharacterData
     public List<RecipeData.Flavors> FoodPreference;
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
-    private bool enabled = false;
+    public bool enabled = false;
+    public Vector2 rideVector;
     #endregion
     private void Start()
     {
@@ -201,7 +203,7 @@ public class AIData : CharacterData
     /// <summary>
     /// Case switch based on current protocol
     /// </summary>
-    private void ProtocolSwitch()
+    public void ProtocolSwitch()
     {
         switch (currentProtocol)
         {
@@ -255,7 +257,11 @@ public class AIData : CharacterData
             case Protocols.Wander:
                 Protocol.Wander(5f, 5f);
                 break;
-
+            // Wander
+            case Protocols.Ride:
+                Protocol.Chase(rideVector);
+                break;
+                
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
