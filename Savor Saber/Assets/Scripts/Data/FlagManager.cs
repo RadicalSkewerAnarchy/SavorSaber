@@ -21,7 +21,7 @@ public class FlagManager : MonoBehaviour
                 SetFlag(keysToInit[i], initValues[i]);
         }
         else
-            Destroy(this);
+            Destroy(gameObject);
     }
     public static void SetFlag(string flag, string data)
     {

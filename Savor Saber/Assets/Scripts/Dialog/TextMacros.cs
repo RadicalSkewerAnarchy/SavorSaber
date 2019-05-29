@@ -38,8 +38,7 @@ public class TextMacros : MonoBehaviour
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(transform);
+            Destroy(gameObject);
         }
         
     }
