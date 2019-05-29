@@ -83,8 +83,10 @@ public class GraphNodePopulator : MonoBehaviour
 
         for (int x = 0; x < tilesArr.GetLength(0) - clusterLimit; x++)
         {
-            if(tilesArr.GetLength(x) <= clusterLimit ) continue;
-            for (int y = 0; y < tilesArr.GetLength(x) - clusterLimit; y++)
+             Debug.Log(x);
+            Debug.Log(tilesArr.GetLength(1));        
+            if(tilesArr.GetLength(1) <= clusterLimit ) continue;
+            for (int y = 0; y < tilesArr.GetLength(1) - clusterLimit; y++)
             {
                 if(tilesArr[x,y] == null) continue;
 
@@ -100,9 +102,11 @@ public class GraphNodePopulator : MonoBehaviour
 						if(m == 0 && n == 0) continue;
                         try
                         {
-
+                            
 							//if(tiles[x+m][y+n].active)	node.neighbors.Add(tiles[x+m][y+n]);
-                            if(tilesArr[x+m,y+n].active) node.neighbors.Add(tilesArr[x+m, y+n]);
+                            if(tilesArr[x+m, y+n] != null) {
+                                if(tilesArr[x+m,y+n].active) node.neighbors.Add(tilesArr[x+m, y+n]);
+                            }
 
                         //node.neighbors.Add(tiles[x + m][y + n]);
 						//if((tiles[x+m][y+n].x != 0  ) && ( tiles[x+m][y+n].y != 0)){
