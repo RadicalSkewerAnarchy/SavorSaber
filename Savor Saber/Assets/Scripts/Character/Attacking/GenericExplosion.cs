@@ -22,7 +22,7 @@ public class GenericExplosion : MonoBehaviour
         {
             AudioSource explodeAudio = GetComponent<AudioSource>();
             Animator explodeAnim = GetComponent<Animator>();
-            CameraController.instance?.Shake(shakeTime, shakeIntensity);
+            CameraController.instance?.Shake(shakeTime, 0.1f, shakeIntensity);
             explodeAudio.Play();
             explodeAnim.SetBool("Explode", true);
         }

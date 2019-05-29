@@ -8,9 +8,10 @@ using UnityEngine;
 public class CameraProxy : MonoBehaviour
 {
     public float time;
+    public float fadeTime;
     public float intensity;
     public void Shake()
     {
-        CameraController.instance.Shake(time, intensity);
+        CameraController.instance.Shake(time, fadeTime, intensity);
     }
 }
