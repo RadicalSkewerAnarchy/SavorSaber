@@ -3,25 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
-public class EventTriggerCollisionPatriarch : EventTrigger
+public class EventTriggerCollisionFlag : EventTrigger
 {
+    public string flag;
+    public string value;
     private void Start()
     {
         InitializeBase();
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.name == "PatriarchPear")
+        if(FlagManager.GetFlag(flag) == value)
         {
             Debug.Log("Triggering Event: " + name);
-            GetComponent<Collider2D>().enabled = false;
+            var colliders = GetComponents<Collider2D>();
+            foreach (var c in colliders)
+                c.enabled = false;
             Trigger();
         }
     }
     protected override void FinishEvent()
     {
         if (repeatable)
-            GetComponent<Collider2D>().enabled = true;
+        {
+            var colliders = GetComponents<Collider2D>();
+            foreach (var c in colliders)
+                c.enabled = true;
+        }
         base.FinishEvent();
     }
 }
