@@ -172,6 +172,11 @@ public class DayNightController : MonoBehaviour, IPausable
         StartCoroutine(AdvanceTime(true));
     }
 
+    public void GoToNight()
+    {
+        SetTimeOfDayImmediate(TimeOfDay.Night);
+    }
+
     [System.Serializable] public class TimeTableDict : SDictionary<TimeOfDay, float>
     {
         public bool CheckSum()
