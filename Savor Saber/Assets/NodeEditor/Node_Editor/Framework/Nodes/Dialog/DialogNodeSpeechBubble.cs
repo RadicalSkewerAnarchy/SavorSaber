@@ -14,7 +14,7 @@ namespace Gameflow
         public const string ID = "Speech Bubble Dialog Node";
         public override string GetID { get { return ID; } }
 
-        public override string Title { get { return "VN Dialog"; } }
+        public override string Title { get { return "Speech Bubble Dialog"; } }
         public override Vector2 MinSize { get { return new Vector2(250, 60); } }
 
         public string actor;

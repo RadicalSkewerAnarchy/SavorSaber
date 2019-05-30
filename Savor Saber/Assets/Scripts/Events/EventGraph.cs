@@ -7,7 +7,7 @@ using SerializableCollections;
 
 [RequireComponent(typeof(DialogPlayer))]
 public class EventGraph : MonoBehaviour
-{
+{ 
     [SerializeField] private ActorDict _actors = new ActorDict();
     public ActorDict Actors { get => _actors; }
     [SerializeField] private GameObjectDict _dependencies = new GameObjectDict();
@@ -35,9 +35,20 @@ public class EventGraph : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         dialog = GetComponent<DialogPlayer>();
         currNode = Graph.getStartNode();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitWhile(() => PlayerController.instance == null);
+        player = PlayerController.instance.gameObject;
+        if(_actors.ContainsKey("Soma"))
+        {
+            _actors["Soma"] = player.GetComponent<DialogData>();
+        }
+        else
+            _actors.Add("Soma", player.GetComponent<DialogData>());       
     }
 
     #region Branching and graph traversal

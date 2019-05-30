@@ -15,6 +15,7 @@ public enum WeatherType
 [RequireComponent(typeof(WindController))]
 public class WeatherController : MonoBehaviour
 {
+    public static WeatherController instance;
     private WeatherType _weather = WeatherType.Sun;
     public WeatherType Weather { get => _weather; set => SetWeather(value); }
     private bool fading = false;
@@ -25,6 +26,16 @@ public class WeatherController : MonoBehaviour
     public WeatherDict weatherData = new WeatherDict();
     private WindController windController;
     private Weather weatherObj;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+            Destroy(gameObject);
+    }
 
     private void Start()
     {
