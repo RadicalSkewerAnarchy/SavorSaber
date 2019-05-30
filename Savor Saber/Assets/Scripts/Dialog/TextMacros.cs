@@ -113,21 +113,21 @@ public class TextMacros : MonoBehaviour
 
     public string GoalItemMacro(params string[] args)
     {
-        if(FlagManager.GetFlag("goal") == "Marsh")
-            return "Golden Pear" + ImgMacro("img", "DropGoldenPear");
-        return "Golden Prickle Pear" + ImgMacro("img", "DropGoldenPricklepear");      
+        if(FlagManager.GetFlag("goal") == "Desert")
+            return "Golden Prickle Pear " + ImgMacro("img", "DropGoldenPricklepear");
+        return "Golden Pear " + ImgMacro("img", "DropGoldenPear");            
     }
 
     public string GoalFruitantMacro(params string[] args)
     {
-        if (FlagManager.GetFlag("goal") == "Marsh")
-            return "Paddle Patriarch";
-        return "Prickle Patriarch";
+        if (FlagManager.GetFlag("goal") == "Desert")
+            return "Prickle Patriarch";
+        return "Paddle Patriarch";      
     }
 
     public string DevourerMacro(params string[] args)
     {
-        return (FlagManager.GetFlag("goal") == "Marsh") ? "Raindeer" : "Chinchilla";
+        return (FlagManager.GetFlag("goal") == "Desert") ? "Chinchilla" : "Raindeer";
     }
 
     private Dictionary<KeyCode, string> controlMap = new Dictionary<KeyCode, string>()
