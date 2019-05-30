@@ -9,6 +9,7 @@ public class LightFlicker : MonoBehaviour, IPausable {
     public float intensityGainMax = 1f;
     public float flickerTimeMin = 0.1f;
     public float flickerTimeMax = 1f;
+    [HideInInspector]
     public float initialIntensity;
     private float initialRange;
 
