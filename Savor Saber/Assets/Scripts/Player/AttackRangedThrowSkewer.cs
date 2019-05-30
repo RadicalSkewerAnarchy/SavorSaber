@@ -37,6 +37,15 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
+        if(Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
+        {
+            StopAllCoroutines();
+            r.color = Color.white;
+            currLevel = 0;
+            Attacking = false;
+            chargedAttack = false;
+            return;
+        }
         //conditions to throw: Must either have ingredients OR a cooked recipe
         if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
         {
