@@ -16,7 +16,8 @@ public class DisplayInventory : MonoBehaviour
     /// </summary>
 
     public GameObject disableDuringCutscene;
-   
+
+    public Image HealthBarImage;
     public Text conTextPrompt;
     public Text cookedText;
 

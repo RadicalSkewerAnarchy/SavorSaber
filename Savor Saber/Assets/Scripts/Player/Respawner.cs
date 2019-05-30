@@ -11,6 +11,8 @@ public class Respawner : MonoBehaviour
     CharacterData data;
     private Animator anim;
     public bool Respawning { get; private set; } = false;
+    public AudioClip healSFX;
+    private PlaySFX sfxPlayer;
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class Respawner : MonoBehaviour
         controller = GetComponent<PlayerController>();
         attacks = GetComponents<AttackBase>();
         data = GetComponent<CharacterData>();
+        sfxPlayer = GetComponent<PlaySFX>();
     }
 
     public void Respawn()
@@ -52,7 +55,15 @@ public class Respawner : MonoBehaviour
         {
             Debug.Log("Setting Spawn Point to: " + collision.name);
             currSpawn = collision.GetComponent<SpawnPoint>();
-            data.health = data.maxHealth;
+
+            //only heal if it's needed
+            if(data.health < data.maxHealth)
+            {
+                data.health = data.maxHealth;
+                sfxPlayer.Play(healSFX);
+            }
+            
+            
         }
     }
 }

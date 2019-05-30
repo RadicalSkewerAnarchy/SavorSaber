@@ -34,6 +34,7 @@ public class Inventory : MonoBehaviour {
     public AudioClip swapSFX;
     public AudioClip cookSFX;
     public AudioClip cantCookSFX;
+    public AudioClip fullSFX;
     private PlaySFX sfxPlayer;
 
     #endregion
@@ -154,6 +155,10 @@ public class Inventory : MonoBehaviour {
             quiver[activeSkewer].PushIngredient(ingredient);
             //UpdateSkewerVisual();
             UpdateUI();
+        }
+        else if (ActiveSkewerFull())
+        {
+            sfxPlayer.Play(fullSFX);
         }
     }
 
