@@ -7,13 +7,16 @@ using UnityEngine;
 /// </summary>
 public class SetWeatherProxy : MonoBehaviour
 {
+    public AreaChange areaWeather;
     public void SetWeather(string weather)
     {
+        var weatherType = WeatherType.Sun;
         if (weather == "rain")
-            WeatherController.instance.Weather = WeatherType.Rain;
+            weatherType = WeatherType.Rain;
         else if (weather == "snow")
-            WeatherController.instance.Weather = WeatherType.Snow;
-        else
-            WeatherController.instance.Weather = WeatherType.Sun;
+            weatherType = WeatherType.Snow;
+        WeatherController.instance.Weather = weatherType;
+        if (areaWeather != null)
+            areaWeather.weather = weatherType;
     }
 }
