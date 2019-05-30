@@ -16,7 +16,9 @@ public class FuitantMount : MonoBehaviour
 
     // player refs
     private GameObject player;
-    private Rigidbody2D playerRB;
+    private PlayerController controller;
+    private SpriteRenderer fruitantRenderer;
+    private SpriteRenderer playerRenderer;
     private bool mounted = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
@@ -26,12 +28,14 @@ public class FuitantMount : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerRB = player.GetComponent<Rigidbody2D>();
+        controller = player.GetComponent<PlayerController>();
+        playerRenderer = player.GetComponent<SpriteRenderer>();
         fruitantData = thisFruitant.GetComponent<AIData>();
+        fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (mountable)
         {
@@ -41,18 +45,23 @@ public class FuitantMount : MonoBehaviour
                 if (InputManager.GetButtonDown(Control.Dash))
                 {
                     Demount();
+                    return;
                 }
+
+                // move the fruitant
+                fruitantData.rideVector = controller.GetMovementVector();
 
                 // move player to here
                 player.transform.position = this.transform.position;
+                playerRenderer.flipX = fruitantRenderer.flipX;
 
-                fruitantData.rideVector = playerRB.velocity.normalized;
             }
             else
             {
                 if (InputManager.GetButtonDown(Control.Dash))
                 {
                     Mount();
+                    return;
                 }
             }
         }
@@ -69,12 +78,16 @@ public class FuitantMount : MonoBehaviour
     void Mount()
     {
         Debug.Log("Mounting");
-        // disable fruitant brain
-        fruitantData.enabled = false;
+        // set fruitant data
         fruitantData.rideVector = new Vector2(0, 0);
         fruitantData.currentProtocol = AIData.Protocols.Ride;
+
         // enable riding
-        player.GetComponent<PlayerController>().riding = true;
+        controller.riding = true;
+        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
+
+        // change player layering
+        playerRenderer.sortingLayerName = "AboveObjects";
 
         // mounted
         mounted = true;
@@ -83,10 +96,17 @@ public class FuitantMount : MonoBehaviour
     void Demount()
     {
         Debug.Log("Demounting");
-        // enable fruitant brain
-        fruitantData.enabled = true;
+
+        // set fruitant data
+        fruitantData.currentProtocol = AIData.Protocols.Lazy;
+
         // disable riding
-        player.GetComponent<PlayerController>().riding = false;
+        controller.riding = false;
+        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
+
+        // change player layering
+        playerRenderer.sortingLayerName = "Objects";
+        playerRenderer.flipX = false;
 
         // mounted
         mounted = false;

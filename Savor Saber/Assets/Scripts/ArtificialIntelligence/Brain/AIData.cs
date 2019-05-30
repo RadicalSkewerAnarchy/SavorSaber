@@ -87,7 +87,7 @@ public class AIData : CharacterData
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
     public bool enabled = false;
-    public Vector2 rideVector;
+    public Vector3 rideVector;
     #endregion
     private void Start()
     {
@@ -123,13 +123,15 @@ public class AIData : CharacterData
     /// <summary>
     /// Updates protocol
     /// </summary>
-    private void LateUpdate()
+    private void Update()
     {
         if (enabled)
         {
             UpdateProtocol();
         }
     }
+
+
     public float Normalize(float now, float max)
     {
         return now / max;
@@ -177,6 +179,10 @@ public class AIData : CharacterData
             {
                 if (moods["Hunger"] != 1)
                     decideState = false;
+            }
+            else if (currentProtocol == Protocols.Ride)
+            {
+                decideState = false;
             }
 
             // DECIDE
@@ -257,11 +263,11 @@ public class AIData : CharacterData
             case Protocols.Wander:
                 Protocol.Wander(5f, 5f);
                 break;
-            // Wander
+            // ride
             case Protocols.Ride:
+                Debug.Log(rideVector);
                 Protocol.Chase(rideVector);
                 break;
-                
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;

@@ -282,10 +282,11 @@ public class PlayerController : EntityController
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 
-    private Vector2 GetMovementVector()
+    public Vector2 GetMovementVector()
     {
         var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
         var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
+        //Debug.Log("getting movement " + new Vector2(moveHorizontal, moveVertical));
         return new Vector2(moveHorizontal, moveVertical);
     }
 
@@ -299,7 +300,7 @@ public class PlayerController : EntityController
         }
         else if (dashing)
             Dash();
-        else
+        else if (!riding)
         {
             var movementVector = GetMovementVector();
             var modSpeed = (running ? currRunSpeed : speed) * speedMod;
@@ -353,8 +354,6 @@ public class PlayerController : EntityController
 
         if (riding)
         {
-            animatorBody.SetBool("Moving", false);
-            animatorBody.SetBool("Running", false);
             animatorBody.SetBool("Riding", true);
             animatorBody.Play("Riding");
             return;
