@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
 [RequireComponent(typeof(FlavorInputManager))]
+[RequireComponent(typeof(PlaySFX))]
 //[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
@@ -14,6 +15,7 @@ public class MonsterBehavior : MonoBehaviour
     #region GlobalVariables
     #region Components
     Rigidbody2D RigidBody;
+    PlaySFX sfxPlayer;
     Animator AnimatorBody;
     AIData AiData;
     MonsterChecks Checks;
@@ -68,6 +70,7 @@ public class MonsterBehavior : MonoBehaviour
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
     public bool isAttacking = false;
+    public AudioClip meleeSFX;
     #endregion
     #endregion
     private void Start()
@@ -81,6 +84,7 @@ public class MonsterBehavior : MonoBehaviour
         controller = GetComponent<MonsterController>();
         pathfinder = GetComponent<Pathfinder>();
         flavor = GetComponent<FlavorInputManager>();
+        sfxPlayer = GetComponent<PlaySFX>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -235,6 +239,7 @@ public class MonsterBehavior : MonoBehaviour
             isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
+            sfxPlayer.Play(meleeSFX);
             StartCoroutine(MeleeDelay(target, speed));
             #endregion
             return true;

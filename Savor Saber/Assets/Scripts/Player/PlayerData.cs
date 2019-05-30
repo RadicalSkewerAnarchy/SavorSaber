@@ -12,11 +12,16 @@ public class PlayerData : CharacterData
     private Respawner res;
     public List<GameObject> party = new List<GameObject>();
 
+    public int lowHealthThreshhold = 2;
+    public AudioClip lowHealthSFX;
+    private PlaySFX altSFXPlayer;
+
     private void Awake()
     {
         InitializeCharacterData();
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
+        altSFXPlayer = GetComponent<PlaySFX>();
     }
 
     public override bool DoDamage(int damage)
@@ -31,7 +36,12 @@ public class PlayerData : CharacterData
             if (health > 0)
             {
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-                deathSoundObj.GetComponent<PlayAndDestroy>().Play(damageSFX);
+                altSFXPlayer.Play(damageSFX);
+
+                //play low hp warning if you're at low health
+                if(health == lowHealthThreshhold)
+                    altSFXPlayer.Play(lowHealthSFX);
+
                 Invincible = true;
                 StartCoroutine(IFrames(damage * timeConst));
             }
@@ -39,7 +49,7 @@ public class PlayerData : CharacterData
             {
                 dead = true;
                 var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
-                deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
+                altSFXPlayer.Play(deathSFX);
                 res.Respawn();
             }
         }

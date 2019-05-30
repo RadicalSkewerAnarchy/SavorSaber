@@ -20,10 +20,12 @@ GameObject:
   - component: {fileID: 5445398522374347477}
   - component: {fileID: 6979483296022875180}
   - component: {fileID: 1997354381611502142}
-  - component: {fileID: 2728843062111258197}
   - component: {fileID: 5927032140592398662}
   - component: {fileID: 5919570652110356733}
   - component: {fileID: 1901821160085956779}
+  - component: {fileID: 6621874500885473662}
+  - component: {fileID: 6620815273218764335}
+  - component: {fileID: 5345413155261556198}
   m_Layer: 17
   m_Name: DroneBoss
   m_TagString: Predator
@@ -106,7 +108,7 @@ SpriteRenderer:
   m_SortingLayerID: -133389985
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 39de2361e3c9a9b4f89cf6356eae33fa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28bcab337c435094783794db0c4cea1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -456,8 +458,8 @@ MonoBehaviour:
   MeleeAttackThreshold: 1.5
   RangeAttackThreshold: 5
   EngageHostileThreshold: 2
-  maxHealth: 35
-  health: 35
+  maxHealth: 45
+  health: 45
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -551,25 +553,10 @@ MonoBehaviour:
   projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
     type: 3}
   attackDuration: 1.5
-  meleeAttackDuration: 0.5
+  meleeAttackDuration: 0.75
   meleeAttackDelay: 0.5
   isAttacking: 0
---- !u!58 &2728843062111258197
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5927032140592398657}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
+  meleeSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!114 &5927032140592398662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -617,6 +604,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+--- !u!70 &6621874500885473662
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927032140592398657}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.24}
+  m_Size: {x: 1.36, y: 1.23}
+  m_Direction: 0
+--- !u!114 &6620815273218764335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927032140592398657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f909b47d8022784885a34d16203219e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
+  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
+--- !u!114 &5345413155261556198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927032140592398657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c8427de39b66254d9252d98a5e62103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2142579261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -637,7 +667,7 @@ PrefabInstance:
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.34
+      value: -0.38
       objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
@@ -824,6 +854,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -835,16 +875,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
