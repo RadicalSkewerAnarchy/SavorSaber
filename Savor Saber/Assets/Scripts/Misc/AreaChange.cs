@@ -19,12 +19,19 @@ public class AreaChange : MonoBehaviour
     public WeatherData lightProfile;
     public AudioClip nightMusic;
     public AudioClip dayMusic;
+    public AudioClip nightBgs;
+    public AudioClip dayBgs;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (CurrArea == area)
             return;
-        BGMManager.instance.CrossFadeBgm(DayNightController.instance.IsDayTime ? dayMusic : nightMusic, 3);
+        BGMManager.instance.AreaBgmDay = dayMusic;
+        BGMManager.instance.AreaBgmNight = nightMusic;
+        BGMManager.instance.AreaBgsDay = dayBgs;
+        BGMManager.instance.AreaBgsNight = nightBgs;
+
+        BGMManager.instance.FadeToAreaSounds();
         WeatherController.instance.Weather = weather;
         DayNightController.instance.currWeather = lightProfile;
         CurrArea = area;
