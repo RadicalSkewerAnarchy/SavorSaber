@@ -64,7 +64,7 @@ public class PlayerData : CharacterData
         {           
             sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, on ? 1 : 0.5f);
             on = !on;
-            Debug.Log("Iframes");
+            //Debug.Log("Iframes");
             yield return new WaitForSeconds(flickerTime);
         } 
         sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, 1);
