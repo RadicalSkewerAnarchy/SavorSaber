@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
 [RequireComponent(typeof(FlavorInputManager))]
+[RequireComponent(typeof(PlaySFX))]
 //[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
@@ -14,6 +15,7 @@ public class MonsterBehavior : MonoBehaviour
     #region GlobalVariables
     #region Components
     Rigidbody2D RigidBody;
+    PlaySFX sfxPlayer;
     Animator AnimatorBody;
     AIData AiData;
     MonsterChecks Checks;
@@ -68,6 +70,7 @@ public class MonsterBehavior : MonoBehaviour
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
     public bool isAttacking = false;
+    public AudioClip meleeSFX;
     #endregion
     #endregion
     private void Start()
@@ -81,6 +84,7 @@ public class MonsterBehavior : MonoBehaviour
         controller = GetComponent<MonsterController>();
         pathfinder = GetComponent<Pathfinder>();
         flavor = GetComponent<FlavorInputManager>();
+        sfxPlayer = GetComponent<PlaySFX>();
         #endregion
         ActionTimer = -1f;
         ActionTimerReset = 5f;
@@ -142,6 +146,7 @@ public class MonsterBehavior : MonoBehaviour
         Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
+            AnimatorBody.Play("Idle");
             return true;
         }
         else
@@ -179,6 +184,7 @@ public class MonsterBehavior : MonoBehaviour
         }
         else
         {
+            AnimatorBody.Play("Idle");
             return true;
         }
     }
@@ -235,10 +241,13 @@ public class MonsterBehavior : MonoBehaviour
             isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
+            sfxPlayer.Play(meleeSFX);
             StartCoroutine(MeleeDelay(target, speed));
             #endregion
             return true;
         }
+
+        AnimatorBody.Play("Idle");
         return false;        
     }
     private IEnumerator MeleeDelay(Vector2 target, float speed)
@@ -275,6 +284,8 @@ public class MonsterBehavior : MonoBehaviour
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
             #endregion
         }
+
+        AnimatorBody.Play("Idle");
         return true;
     }
     /// <summary>
@@ -290,7 +301,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (++friendliness)
             //Debug.Log("Instantiating Happiness Signal");
-            AiData.InstantiateSignal((AiData.Perception / 2), "Friendliness", 0.25f, true, false);
+            AiData.InstantiateSignal(2f, "Friendliness", 0.1f, true, false);
             ResetActionTimer();
             return true;
         }
@@ -313,7 +324,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
-            AiData.InstantiateSignal((AiData.Perception), "Fear", -0.4f, true, true);
+            AiData.InstantiateSignal(2f, "Fear", -0.25f, true, true);
             ResetActionTimer();
             return true;
         }

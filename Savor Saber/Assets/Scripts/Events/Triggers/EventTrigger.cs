@@ -13,6 +13,7 @@ public class EventTrigger : MonoBehaviour
         Cutscene,
     }
 
+    public static bool InCutscene { get; private set; }
     public Type type = Type.Cutscene;
     public bool IsActive { get; protected set; }
     public bool repeatable = false;
@@ -86,5 +87,6 @@ public class EventTrigger : MonoBehaviour
                 AI.enabled = !start;
         }
         DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
+        InCutscene = start;
     }
 }

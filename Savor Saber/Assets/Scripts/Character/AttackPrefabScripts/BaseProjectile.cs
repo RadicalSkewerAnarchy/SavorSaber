@@ -118,7 +118,7 @@ public class BaseProjectile : MonoBehaviour
         //Debug.Log(directionVector);
         myCharData = GetComponent<CharacterData>();
 
-        Debug.Log("Projectile spawned with direction vector " + directionVector);
+        //Debug.Log("Projectile spawned with direction vector " + directionVector);
 
     }
 
@@ -181,12 +181,12 @@ public class BaseProjectile : MonoBehaviour
             return;
         if (go == attacker)
             return;
-        if (dropItem != null)
-            Instantiate(dropItem, transform.position, Quaternion.identity);
         if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
             return;
         if (go.tag == "Predator" && !hurtDrones)
             return;
+        if (dropItem != null)
+            Instantiate(dropItem, transform.position, Quaternion.identity);
 
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)

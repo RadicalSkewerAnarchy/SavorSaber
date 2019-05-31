@@ -12,13 +12,19 @@ public class EventTriggerCollision : EventTrigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Triggering Event: " + name);
-        GetComponent<Collider2D>().enabled = false;
+        var colliders = GetComponents<Collider2D>();
+        foreach (var c in colliders)
+            c.enabled = false;
         Trigger();
     }
     protected override void FinishEvent()
     {
         if (repeatable)
-            GetComponent<Collider2D>().enabled = true;
+        {
+            var colliders = GetComponents<Collider2D>();
+            foreach (var c in colliders)
+                c.enabled = true;
+        }
         base.FinishEvent();
     }
 }

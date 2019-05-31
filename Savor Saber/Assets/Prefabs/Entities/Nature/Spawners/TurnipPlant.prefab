@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7471663290396819779}
   - component: {fileID: 1019707450916832753}
   - component: {fileID: 4653491979169833156}
+  - component: {fileID: 8686117883355462073}
   m_Layer: 13
   m_Name: TurnipPlant
   m_TagString: ThrowThrough
@@ -30,7 +31,8 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -14.4, y: 4.75, z: 0.14304394}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 8291311888317437245}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,6 +135,7 @@ MonoBehaviour:
   wiggleTime: 2
   wiggleSpeed: 0.2
   wiggleAmplitude: 0.05
+  skewerable: 1
 --- !u!82 &4653491979169833156
 AudioSource:
   m_ObjectHideFlags: 0
@@ -229,3 +232,99 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &8686117883355462073
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8840911464111653400}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!1001 &5275413204408359459
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4856291459292809296}
+    m_Modifications:
+    - target: {fileID: 14832289076724700, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_Name
+      value: GrassParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ffce79f0f9d0b14b8ecd7171d212f74, type: 3}
+--- !u!4 &8291311888317437245 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4190212839052939038, guid: 5ffce79f0f9d0b14b8ecd7171d212f74,
+    type: 3}
+  m_PrefabInstance: {fileID: 5275413204408359459}
+  m_PrefabAsset: {fileID: 0}

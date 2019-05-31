@@ -29,12 +29,16 @@ public class FavoriteFoodBubble : MonoBehaviour
     void Update()
     {
         Show();
-
-        if (InputManager.GetButton(Control.Interact))
+        
+        // only do it when there is no cutscene
+        if (!EventTrigger.InCutscene)
         {
-            if (Vector2.Distance(player.transform.position, this.transform.position) < 3)
+            if (InputManager.GetButton(Control.Interact))
             {
-                show = true;
+                if (Vector2.Distance(player.transform.position, this.transform.position) < 3)
+                {
+                    show = true;
+                }
             }
         }
     }
@@ -49,8 +53,8 @@ public class FavoriteFoodBubble : MonoBehaviour
 
                 RecipeDatabase rdb = player.GetComponentInChildren<RecipeDatabase>();
                 Sprite s;
-                if (Random.Range(0f, 1.0f) < 0.5f)
-                {
+                //if (Random.Range(0f, 1.0f) < 0.5f)
+                //{
                     // random ingredient
                     int len = flavors.favoriteIngredients.Length;
                     string fav = flavors.favoriteIngredients[Random.Range(0, len - 1)];
@@ -58,8 +62,8 @@ public class FavoriteFoodBubble : MonoBehaviour
                     IngredientData d = rdb.allIngredients[fav];
                     // display
                     s = d.image;
-                }
-                else
+                //}
+                /*else
                 {
                     // favorite flavor
                     Debug.Log(flavors.favoriteFlavors);
@@ -68,7 +72,7 @@ public class FavoriteFoodBubble : MonoBehaviour
                     // get image from database
                     //s = rdb.allFlavors[ff];
                     s = rdb.allFlavors[ff];
-                }
+                }*/
 
                 Debug.Log(s.name);
                 fruitRender.sprite = s;
