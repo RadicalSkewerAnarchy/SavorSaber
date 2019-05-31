@@ -20,12 +20,13 @@ public class SkewerableObject : MonoBehaviour
     //movement values
     public float maxDrift = 2;
     public float driftSpeed = 1;
-    public bool attached = false;
+    private bool attached = false;
 
-    private Vector3 target;
     private Vector3 origin;
 
     public TileNode currentTile;
+
+    public bool Attached { get => attached; set => attached = value; }
 
     // Use this for initialization
     void Start()
@@ -35,14 +36,12 @@ public class SkewerableObject : MonoBehaviour
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
-        float x = Random.Range(-maxDrift, maxDrift) / 4;
-        float y = Random.Range(-maxDrift, maxDrift) / 4;
-        //float z = transform.position.z + Random.Range(-maxDrift, maxDrift);
-        target = new Vector2(x, y);
 
-        if (!attached)
+        if (!Attached)
         {
-            rb.AddForce(target, ForceMode2D.Impulse);
+            float x = Random.Range(-maxDrift, maxDrift) / 4;
+            float y = Random.Range(-maxDrift, maxDrift) / 4;
+            rb.AddForce(new Vector2(x, y), ForceMode2D.Impulse);
         }
     }
 
@@ -51,7 +50,7 @@ public class SkewerableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!attached)
+        if (!Attached)
         {
             //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
             if (!flickering)

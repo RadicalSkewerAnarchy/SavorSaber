@@ -8,6 +8,13 @@ public class PlayerSkewerAttack : BaseMeleeAttack
     public AudioClip pickUpSFX;
     public AudioClip cantPickUpSFX;
     private PlaySFX sfxPlayer;
+    public float bunceForce = 3;
+    private Transform parentTransform;
+
+    void Start()
+    {
+        parentTransform = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     public override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -44,6 +51,21 @@ public class PlayerSkewerAttack : BaseMeleeAttack
             {
                 sfxPlayer.Play(cantPickUpSFX);
             }
+        }
+
+        //do knockback effects
+        if (collision.gameObject.tag == "Predator" || collision.gameObject.tag == "Prey")
+        {
+            DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
+        }
+    }
+
+    private void DoKnockBack(Rigidbody2D body, float forceScale)
+    {
+        if (body != null)
+        {
+            var ForceDir = body.transform.position - parentTransform.position;
+            body.AddForce(ForceDir.normalized * forceScale, ForceMode2D.Impulse);
         }
     }
 }   

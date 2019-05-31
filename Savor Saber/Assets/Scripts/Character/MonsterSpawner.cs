@@ -88,7 +88,7 @@ public class MonsterSpawner : MonoBehaviour
                     if (newObj.tag == "SkewerableObject" && spawnAttatched)
                     {
                         //Debug.Log("skewerable object drift speed being set to 0");
-                        newObj.GetComponent<SkewerableObject>().attached = true;
+                        newObj.GetComponent<SkewerableObject>().Attached = true;
                     }
 
                     break;
