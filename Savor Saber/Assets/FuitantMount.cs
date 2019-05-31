@@ -16,8 +16,13 @@ public class FuitantMount : MonoBehaviour
 
     // player refs
     private GameObject player;
+    [SerializeField]
     private PlayerController controller;
+    [SerializeField]
     private SpriteRenderer fruitantRenderer;
+    [SerializeField]
+    private MonsterController fruitantController;
+    [SerializeField]
     private SpriteRenderer playerRenderer;
     private bool mounted = false;
     private bool mountable = false;
@@ -31,6 +36,7 @@ public class FuitantMount : MonoBehaviour
         controller = player.GetComponent<PlayerController>();
         playerRenderer = player.GetComponent<SpriteRenderer>();
         fruitantData = thisFruitant.GetComponent<AIData>();
+        fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
     }
 
@@ -53,7 +59,7 @@ public class FuitantMount : MonoBehaviour
 
                 // move player to here
                 player.transform.position = this.transform.position;
-                playerRenderer.flipX = fruitantRenderer.flipX;
+                playerRenderer.flipX = (fruitantController.invert ? fruitantRenderer.flipX : !fruitantRenderer.flipX);
 
             }
             else
