@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 1526011709116615456}
   - component: {fileID: 7223982420583207564}
   - component: {fileID: 4853353301255729737}
-  - component: {fileID: 3178581117812069632}
   - component: {fileID: 390392277}
   m_Layer: 0
   m_Name: Strawbeery
@@ -466,6 +465,8 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   FoodPreference: 
+  enabled: 0
+  rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &2516883946231080080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +531,7 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   isAttacking: 0
+  meleeSFX: {fileID: 0}
 --- !u!114 &1526011709116615456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,26 +575,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.62}
   m_Size: {x: 0.71, y: 0.97}
   m_Direction: 0
---- !u!114 &3178581117812069632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330165596561426964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Clover
-  favoriteFlavors: 1
-  charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 0}
 --- !u!114 &390392277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,7 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dotTicLength: 1
   favoriteIngredients:
-  - Wheat
+  - Clover
   favoriteFlavors: 1
   charmThreshhold: 1
   rewardItem: {fileID: 1630939979561768358, guid: 055c0671384de6c40969a6d1716ce9da,
