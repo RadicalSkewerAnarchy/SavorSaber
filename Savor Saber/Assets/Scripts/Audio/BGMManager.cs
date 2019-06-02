@@ -38,11 +38,34 @@ public class BGMManager : MonoBehaviour
     {
         bgmSrc = bgmContainer.GetComponents<AudioSource>();
         bgsSrc = bgsContainer.GetComponents<AudioSource>();
+        DayNightController.instance.OnDay += GoToDayMusic;
+        DayNightController.instance.OnNight += GoToNightMusic;
+    }
+
+    public void GoToNightMusic()
+    {
+        if(CurrBgmSource.clip == AreaBgmDay)
+        {
+            FadeToAreaSounds();
+        }
+    }
+
+    public void GoToDayMusic()
+    {
+        if (CurrBgmSource.clip == AreaBgmNight)
+        {
+            FadeToAreaSounds();
+        }
     }
 
     public void SetBGM(AudioClip song)
     {
         CurrBgmSource.clip = song;
+    }
+
+    public void FadeBGMToSilence(float fadeTime = 3)
+    {
+        CrossFadeBgm(null, fadeTime);
     }
 
     public void FadeToAreaSounds()
