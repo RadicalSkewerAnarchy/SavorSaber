@@ -13,7 +13,7 @@ public class InfoDisplay : MonoBehaviour
     /// <summary>
     /// A UI Image showing whatever info you want to appear on-screen
     /// </summary>
-    public GameObject infoToDisplay;
+    public GameObject[] infoToDisplay;
     public Vector2 youAreHereCoordinates;
 
     private bool playerInRange = false;
@@ -21,6 +21,9 @@ public class InfoDisplay : MonoBehaviour
 
     private GameObject infoBox;
     private AudioSource audio;
+    private int infoIndex = 0;
+
+    private PlayerController controller;
 
     void Start()
     {
@@ -31,12 +34,44 @@ public class InfoDisplay : MonoBehaviour
     void Update()
     {
 
-        if (InputManager.GetButtonDown(Control.Interact)&& playerInRange && !showingInfo)
+        CheckOpen();
+
+
+        if (showingInfo && infoToDisplay.Length > 1 && InputManager.GetButtonDown(Control.Right))
+        {
+            infoIndex++;
+            if (infoIndex >= infoToDisplay.Length)
+                infoIndex = 0;
+
+            Destroy(infoBox);
+            infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            infoBox.transform.SetParent(UICanvas.transform);
+            infoBox.transform.localPosition = new Vector3(0, 0, 0);
+            infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        }
+        else if (showingInfo && infoToDisplay.Length > 1 && InputManager.GetButtonDown(Control.Left))
+        {
+            infoIndex--;
+            if (infoIndex < 0)
+                infoIndex = infoToDisplay.Length - 1;
+
+            Destroy(infoBox);
+            infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
+            infoBox.transform.SetParent(UICanvas.transform);
+            infoBox.transform.localPosition = new Vector3(0, 0, 0);
+            infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        }
+
+    }
+
+    private void CheckOpen()
+    {
+        if (InputManager.GetButtonDown(Control.Interact) && playerInRange && !showingInfo)
         {
             audio.pitch = 2;
             audio.Play();
 
-            infoBox = Instantiate(infoToDisplay, new Vector3(0, 0, 0), Quaternion.identity);
+            infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
             infoBox.transform.SetParent(UICanvas.transform);
             infoBox.transform.localPosition = new Vector3(0, 0, 0);
             infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
@@ -45,29 +80,32 @@ public class InfoDisplay : MonoBehaviour
             if (isMap)
             {
                 Transform arrow = infoBox.transform.GetChild(0);
-                if(arrow != null)
+                if (arrow != null)
                     arrow.localPosition = youAreHereCoordinates;
             }
-
-
+            controller.enabled = false;        
             showingInfo = true;
         }
+        //close the whole box
         else if (showingInfo && (InputManager.GetButtonDown(Control.Interact) || InputManager.GetButtonDown(Control.Cancel)))
         {
             audio.pitch = 0.75f;
             audio.Play();
 
             Destroy(infoBox.gameObject);
+            controller.enabled = true;
             showingInfo = false;
         }
-
     }
+
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             playerInRange = true;
+            controller = collision.gameObject.GetComponent<PlayerController>();
         }
     }
 
@@ -78,11 +116,13 @@ public class InfoDisplay : MonoBehaviour
             playerInRange = false;
             if(showingInfo)
             {
+                /*
                 audio.pitch = 0.75f;
                 audio.Play();
 
                 Destroy(infoBox.gameObject);
                 showingInfo = false;
+                */
             }
         }
     }

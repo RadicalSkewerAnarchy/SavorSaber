@@ -160,6 +160,10 @@ public class ProjectileSkewer : BaseProjectile
             AOEAnimator.SetBool("ExplodeSweet", true);
         else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Spicy)
             AOEAnimator.SetBool("ExplodeSpicy", true);
+        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Sour)
+            AOEAnimator.SetBool("ExplodeSour", true);
+        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Salty)
+            AOEAnimator.SetBool("ExplodeSalty", true);
         else
             AOEAnimator.SetBool("ExplodeSavory", true);
         AOEParticles.Play();
