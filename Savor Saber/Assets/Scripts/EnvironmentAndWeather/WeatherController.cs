@@ -19,7 +19,7 @@ public class WeatherController : MonoBehaviour
     private WeatherType _weather = WeatherType.Sun;
     public WeatherType Weather { get => _weather; set => SetWeather(value); }
     private bool fading = false;
-    private float fadeTime = 12;
+    private float fadeTime = 5;
     private WeatherType buffer = WeatherType.None;
     public WeatherType Buffer => buffer;
 
