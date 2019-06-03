@@ -6,12 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class SpeechBubbleSwapper : MonoBehaviour
 {
-
+    bool controllerMode = false;
     private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        controllerMode = InputManager.ControllerMode;
     }
 
     // Update is called once per frame
@@ -24,7 +26,14 @@ public class SpeechBubbleSwapper : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            animator.Play("SpaceHint");
+            if (controllerMode)
+            {
+                animator.Play("YHint");
+            }
+            else
+            {
+                animator.Play("SpaceHint");
+            }
         }
     }
 
