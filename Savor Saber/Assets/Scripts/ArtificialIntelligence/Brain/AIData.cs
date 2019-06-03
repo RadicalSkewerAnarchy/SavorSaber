@@ -86,7 +86,7 @@ public class AIData : CharacterData
     public List<RecipeData.Flavors> FoodPreference;
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
-    public bool enabled = false;
+    public bool updateAI = false;
     public Vector3 rideVector;
     #endregion
     private void Start()
@@ -125,7 +125,7 @@ public class AIData : CharacterData
     /// </summary>
     private void Update()
     {
-        if (enabled)
+        if (updateAI)
         {
             UpdateProtocol();
         }
@@ -142,11 +142,13 @@ public class AIData : CharacterData
     }
     private void OnBecameVisible()
     {
-        enabled = true;
+        updateAI = true;
     }
     private void OnBecameInvisible()
     {
-        enabled = false;
+        var plDat = PlayerController.instance?.GetComponent<PlayerData>()?.party;
+        if (plDat == null || !plDat.Contains(gameObject))
+            updateAI = false;
     }
     /// <summary>
     ///  Get a normalized value from the value dictionary. if the value is not present, returns -1

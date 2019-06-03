@@ -84,7 +84,7 @@ public class AttackMelee : AttackBase
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {     
         if (InputManager.GetButtonDown(control, axis))
         {
@@ -188,7 +188,8 @@ public class AttackMelee : AttackBase
             audioSource.Play();
             //Debug.Log("Playing default sound");
         }
-        animator.Play(attackName);
+        animator.Play(attackName,0,0);
+        //animator.Play(attackName);
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;

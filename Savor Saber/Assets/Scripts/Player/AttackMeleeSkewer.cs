@@ -48,7 +48,7 @@ public class AttackMeleeSkewer : AttackMelee
             audioSource.Play();
             Debug.Log("Playing default sound");
         }
-        animator.Play(attackName);
+        animator.Play(attackName,0,0);
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;
