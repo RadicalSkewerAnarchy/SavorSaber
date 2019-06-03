@@ -272,7 +272,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 //Debug.Log("Targettile is not null, tile id: " +targetTile.name);
                 if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
                 {
-                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1f);
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 0.1f);
                     //Debug.Log("coroutine started");
                     //StartCoroutine(MoveCreatureToTarget(targetTile));
                 }

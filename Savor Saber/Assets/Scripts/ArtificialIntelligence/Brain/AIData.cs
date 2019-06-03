@@ -188,7 +188,15 @@ public class AIData : CharacterData
             // DECIDE
             // CALCULATE AND ACQUIRE NEW STATE:
             if (decideState)
-                currentProtocol = Curves.DecideState();
+            {
+                if (Checks.AwareHowManyEnemies() == 0)
+                    currentProtocol = Curves.DecideState();
+                else
+                {
+                    currentProtocol = Protocols.Runaway;
+                    //Debug.Log(this.name + " should be running away");
+                }
+            }
 
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
