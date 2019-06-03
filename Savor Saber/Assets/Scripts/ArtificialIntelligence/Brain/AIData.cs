@@ -125,7 +125,7 @@ public class AIData : CharacterData
     /// </summary>
     private void Update()
     {
-        if (enabled)
+        if (enabled && !EventTrigger.InCutscene)
         {
             UpdateProtocol();
         }

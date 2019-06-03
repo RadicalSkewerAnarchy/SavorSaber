@@ -241,7 +241,8 @@ public class MonsterBehavior : MonoBehaviour
             isAttacking = true;
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
-            sfxPlayer.Play(meleeSFX);
+            if (meleeSFX != null)
+                sfxPlayer.Play(meleeSFX);
             StartCoroutine(MeleeDelay(target, speed));
             #endregion
             return true;
