@@ -5,29 +5,38 @@ using MathUtils;
 
 public class FlavorInputManager : MonoBehaviour
 {
-    /// <summary>
-    /// How much of each flavor this entity has been fed
-    /// </summary>
+    #region Feeding
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
-    //protected CharacterData characterData;
-    protected AIData characterData;
-    protected SpriteRenderer spriteRenderer;
-    private PointVector pv = new PointVector();
-    public float dotTicLength = 1;
     public string[] favoriteIngredients;
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
+    private bool fedFavoriteIngredient = false;
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
+    #endregion
 
-    private bool fedFavoriteIngredient = false;
+    #region Components
+    private AudioSource sfxPlayer;
+    protected AIData characterData;
+    protected SpriteRenderer spriteRenderer;
+    #endregion
+
+    #region Other
+    private PointVector pv = new PointVector();
+    public float dotTicLength = 1;
+    private int electricBaseTime = 10;
+    public GameObject electricFieldTemplate;
+    public AudioClip electricSFX;
+    private bool isElectric = false;
+    #endregion
 
     private void Start()
     {
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        sfxPlayer = GetComponent<AudioSource>();
 
         // differentiate between ai and char data
         characterData = GetComponent<AIData>();
@@ -137,11 +146,10 @@ public class FlavorInputManager : MonoBehaviour
                     }
                 }
 
-                AudioSource rewardSFXPlayer = GetComponent<AudioSource>();
-                if (rewardSFXPlayer != null)
+                if (sfxPlayer != null)
                 {
-                    rewardSFXPlayer.clip = rewardSFX;
-                    rewardSFXPlayer.Play();
+                    sfxPlayer.clip = rewardSFX;
+                    sfxPlayer.Play();
                 }
 
                 ingredientCountDictionary[favoriteIngredient] = 0;
@@ -177,7 +185,17 @@ public class FlavorInputManager : MonoBehaviour
                 // nothing for now
             }
         }
-
+        //handle sour
+        if (flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
+        {
+            if (favoriteFlavors != RecipeData.Flavors.Savory)
+            {
+                if (fedByPlayer && !isElectric)
+                {
+                    StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour]));
+                }
+            }
+        }
         // reset flavor dicts
         ResetDictionary();
     }
@@ -293,6 +311,24 @@ public class FlavorInputManager : MonoBehaviour
     }
     #endregion
 
+    #region SOUR
+    protected IEnumerator ElectricTimer(float time)
+    {
+        //things to happen before delay
+        isElectric = true;
+        GameObject electricField = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity);
+        electricField.transform.parent = gameObject.transform;
+        sfxPlayer.clip = electricSFX;
+        sfxPlayer.Play();
+
+        yield return new WaitForSeconds(time);
+
+        //things to happen after delay
+        Destroy(electricField);
+        isElectric = false;
+        yield return null;
+    }
+    #endregion
 
     public void DamageOverTime(int numTics, float ticLength)
     {

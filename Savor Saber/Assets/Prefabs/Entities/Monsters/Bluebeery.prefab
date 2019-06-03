@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 3178581117812069632}
   - component: {fileID: 390392277}
   m_Layer: 0
-  m_Name: Strawbeery
+  m_Name: Bluebeery
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,6 +466,8 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   FoodPreference: 
+  enabled: 0
+  rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &2516883946231080080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,6 +532,7 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   isAttacking: 0
+  meleeSFX: {fileID: 0}
 --- !u!114 &1526011709116615456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,12 +583,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3330165596561426964}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
   favoriteIngredients:
   - Clover
   favoriteFlavors: 1
@@ -593,6 +595,9 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 0}
+  dotTicLength: 1
+  electricFieldTemplate: {fileID: 0}
+  electricSFX: {fileID: 0}
 --- !u!114 &390392277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,7 +610,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
   favoriteIngredients:
   - Wheat
   favoriteFlavors: 1
@@ -613,7 +617,11 @@ MonoBehaviour:
   rewardItem: {fileID: 1630939979561768358, guid: 055c0671384de6c40969a6d1716ce9da,
     type: 3}
   amountRewardItem: 1
-  rewardSFX: {fileID: 0}
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  dotTicLength: 1
+  electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
+    type: 3}
+  electricSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!1 &3405041908141219295
 GameObject:
   m_ObjectHideFlags: 0
