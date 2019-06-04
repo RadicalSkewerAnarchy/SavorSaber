@@ -31,6 +31,10 @@ public class DroneSpawner : MonoBehaviour
     private bool overlapped = false;
 
     public bool active = true;
+    private bool timerReset = false;
+    private int timerValue = 10;
+
+    private bool recentlyReset = false;
 
     //If this is not null, all spawned drones will be added to a list of minions
     //that can all be destroyed with a single event (e.g. boss minions)
@@ -48,7 +52,7 @@ public class DroneSpawner : MonoBehaviour
         teleportRings = GetComponent<ParticleSystem>();
         light = GetComponentInChildren<Light>();
 
-        StartCoroutine(SpawnLoop());
+        SpawnDrones();
 
 
     }
@@ -75,6 +79,26 @@ public class DroneSpawner : MonoBehaviour
                 light.color = Color.green;
                 teleportRings.Play();
                 blocked = false;
+            }
+
+            //check to see if all drones have been destroyed
+            //if so, reset the timer
+            
+            for(int i = 0; i < droneArray.Length; i++)
+            {
+                if(droneArray[i] != null)
+                {
+                    timerReset = false;
+                    break;
+                }
+                timerReset = true;
+            }
+            if (!recentlyReset && timerReset)
+            {
+                //Debug.Log("All drones dead - resetting timer");
+                timerValue = 10;
+                recentlyReset = true;
+
             }
         }
 
@@ -140,6 +164,7 @@ public class DroneSpawner : MonoBehaviour
                 spawnAudio.Play();
                 StopCoroutine(SpawnLoop());
                 StartCoroutine(SpawnLoop());
+                recentlyReset = false;
                 return;
             }
         }
@@ -151,9 +176,14 @@ public class DroneSpawner : MonoBehaviour
 
     private IEnumerator SpawnLoop()
     {
-        yield return intervalDelay;
+        timerValue = spawnInterval;
+        while(timerValue > 0)
+        {
+            yield return new WaitForSeconds(1);
+            //  Debug.Log(timerValue);
+            timerValue--;
+        }
         SpawnDrones();
-        yield return null;
     }
 
 }

@@ -180,13 +180,13 @@ public class AttackMelee : AttackBase
         {
             audioSource.clip = attackSound;
             audioSource.Play();
-            Debug.Log("Playing override sound");
+            //Debug.Log("Playing override sound");
         }
         else if(attackSound == null && audioSource != null)
         {
             audioSource.clip = defaultAttackSound;
             audioSource.Play();
-            Debug.Log("Playing default sound");
+            //Debug.Log("Playing default sound");
         }
         animator.Play(attackName);
 

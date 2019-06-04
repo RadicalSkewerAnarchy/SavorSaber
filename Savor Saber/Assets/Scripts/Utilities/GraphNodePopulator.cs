@@ -58,9 +58,11 @@ public class GraphNodePopulator : MonoBehaviour
                 Vector3 current = activeTiles.CellToWorld(local);
                 //inactiveTiles.CellToWorld(localInactive);
                 var parent = activeTiles.transform.GetChild(0);
-                if(activeTiles.HasTile(local)/* || inactiveTiles.HasTile(local)*/)
-                {
-                    walkable = false;
+                foreach(var collisionTiles in inactiveTileMaps){
+                    if(collisionTiles.HasTile(local)/* || inactiveTiles.HasTile(local)*/)
+                    {
+                        walkable = false;
+                    }
                 }
                 if((y % clusterLimit == 0) && (x % clusterLimit == 0) && walkable && localGrass.HasTile(local))
                 {
@@ -81,10 +83,12 @@ public class GraphNodePopulator : MonoBehaviour
             i++;
         }
 
-        for (int x = 0; x < tilesArr.GetLength(0) - clusterLimit; x++)
+        for (int x = clusterLimit; x < tilesArr.GetLength(0) - clusterLimit; x++)
         {
-            if(tilesArr.GetLength(x) <= clusterLimit ) continue;
-            for (int y = 0; y < tilesArr.GetLength(x) - clusterLimit; y++)
+             //Debug.Log(x);
+            //Debug.Log(tilesArr.GetLength(1));        
+            if(tilesArr.GetLength(1) <= clusterLimit ) continue;
+            for (int y = clusterLimit; y < tilesArr.GetLength(1) - clusterLimit; y++)
             {
                 if(tilesArr[x,y] == null) continue;
 
@@ -100,9 +104,11 @@ public class GraphNodePopulator : MonoBehaviour
 						if(m == 0 && n == 0) continue;
                         try
                         {
-
+                            
 							//if(tiles[x+m][y+n].active)	node.neighbors.Add(tiles[x+m][y+n]);
-                            if(tilesArr[x+m,y+n].active) node.neighbors.Add(tilesArr[x+m, y+n]);
+                            if(tilesArr[x+m, y+n] != null) {
+                                if(tilesArr[x+m,y+n].active) node.neighbors.Add(tilesArr[x+m, y+n]);
+                            }
 
                         //node.neighbors.Add(tiles[x + m][y + n]);
 						//if((tiles[x+m][y+n].x != 0  ) && ( tiles[x+m][y+n].y != 0)){

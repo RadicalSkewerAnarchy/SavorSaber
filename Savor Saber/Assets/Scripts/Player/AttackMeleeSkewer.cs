@@ -40,7 +40,7 @@ public class AttackMeleeSkewer : AttackMelee
         {
             audioSource.clip = attackSound;
             audioSource.Play();
-            Debug.Log("Playing override sound");
+            //Debug.Log("Playing override sound");
         }
         else if (attackSound == null && audioSource != null)
         {

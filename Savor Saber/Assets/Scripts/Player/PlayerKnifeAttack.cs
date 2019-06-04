@@ -44,9 +44,9 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         else if (t == "SkewerableObject")
         {
             var objComp = collision.gameObject.GetComponent<SkewerableObject>();
-            if (objComp.attached)
+            if (objComp.Attached)
             {
-                objComp.attached = false;
+                objComp.Attached = false;
             }
             else
                 DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), dropBunceForce);
@@ -64,6 +64,12 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             {
                 body.directionVector *= -1;
                 Physics2D.IgnoreCollision(body.GetComponent<Collider2D>(), body.attacker.GetComponent<Collider2D>(), false);
+                if(!body.hurtDrones)
+                    body.hurtDrones = true;
+                if (body.attacker != null)
+                    body.attacker = this.gameObject;
+
+                body.projectileSpeed += 3;
             }              
         }
     }

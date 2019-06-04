@@ -35,15 +35,20 @@ public class EventGraph : MonoBehaviour
 
     private void Awake()
     {
-        player = PlayerController.instance.gameObject;
         dialog = GetComponent<DialogPlayer>();
+        currNode = Graph.getStartNode();
+    }
+
+    private IEnumerator Start()
+    {
+        yield return new WaitWhile(() => PlayerController.instance == null);
+        player = PlayerController.instance.gameObject;
         if(_actors.ContainsKey("Soma"))
         {
             _actors["Soma"] = player.GetComponent<DialogData>();
         }
         else
-            _actors.Add("Soma", player.GetComponent<DialogData>());
-        currNode = Graph.getStartNode();
+            _actors.Add("Soma", player.GetComponent<DialogData>());       
     }
 
     #region Branching and graph traversal

@@ -7,6 +7,8 @@ public class QuestManager : MonoBehaviour
     public static QuestManager instance;
     [SerializeField] private TextMeshProUGUI text;
 
+    public AudioSource updateSFXPlayer;
+
     private void Awake()
     {
         if(instance == null)
@@ -17,11 +19,18 @@ public class QuestManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+
     }
 
     public void SetText(string text)
     {
         this.text.text = TextMacros.instance.Parse(text);
+        if (!updateSFXPlayer.isPlaying)
+        {
+            updateSFXPlayer.Play();
+        }
+        
     }
 
     public string GetText()

@@ -175,25 +175,40 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary> Shake the Camera. Intensity should probably be 2 or lower </summary>
-    public void Shake(float time, float intensity)
+    public void Shake(float shakeTime, float fadeTime, float intensity)
     {
         if (shaking)
             return;
         shaking = true;
-        StartCoroutine(ShakeCr(time, intensity));
+        StartCoroutine(ShakeCr(shakeTime, fadeTime, intensity));
     }
 
-    private IEnumerator ShakeCr(float time, float intensity)
+    private IEnumerator ShakeCr(float shakeTime, float fadeTime, float intensity)
     {
         bool wasDetatched = Detatched;
         Vector3 originalPos = camera.position;
         int count = 0;
         float currTime = 0;
-        while (currTime < time)
+        while (currTime < shakeTime)
         {
             Vector2 newPos = Random.insideUnitCircle * intensity;
             camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
             if(wasDetatched && Detatched && ++count >= 5)
+            {
+                camera.position = originalPos;
+                count = 0;
+            }
+            yield return new WaitForEndOfFrame();
+            currTime += Time.deltaTime;
+        }
+        currTime = 0;
+        float origIntensity = intensity;
+        while (currTime < fadeTime)
+        {
+            Vector2 newPos = Random.insideUnitCircle * intensity;
+            camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
+            intensity -= origIntensity / fadeTime * Time.deltaTime;
+            if (wasDetatched && Detatched && ++count >= 5)
             {
                 camera.position = originalPos;
                 count = 0;

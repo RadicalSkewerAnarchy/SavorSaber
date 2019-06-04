@@ -73,6 +73,7 @@ public class PlayerController : EntityController
     public int maxDashes = 3;
     public float CurrDashes { get; private set; }
     private bool dashing = false;
+    public bool riding = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
     public float doubleTapTime;
@@ -281,10 +282,11 @@ public class PlayerController : EntityController
         rigidBody.collisionDetectionMode = CollisionDetectionMode2D.Discrete;
     }
 
-    private Vector2 GetMovementVector()
+    public Vector2 GetMovementVector()
     {
         var moveHorizontal = InputManager.GetAxis(InputAxis.Horizontal);
         var moveVertical = InputManager.GetAxis(InputAxis.Vertical);
+        //Debug.Log("getting movement " + new Vector2(moveHorizontal, moveVertical));
         return new Vector2(moveHorizontal, moveVertical);
     }
 
@@ -298,7 +300,7 @@ public class PlayerController : EntityController
         }
         else if (dashing)
             Dash();
-        else
+        else if (!riding)
         {
             var movementVector = GetMovementVector();
             var modSpeed = (running ? currRunSpeed : speed) * speedMod;
@@ -343,15 +345,28 @@ public class PlayerController : EntityController
 
     void AnimateAgent()
     {
-        if(dialogData.inConversation)
+        if (dialogData.inConversation)
         {
             animatorBody.SetBool("Moving", false);
             animatorBody.SetBool("Running", false);
             return;
         }
+
+        if (riding)
+        {
+            animatorBody.SetBool("Riding", true);
+            animatorBody.Play("Riding");
+            return;
+        }
+        else
+        {
+            animatorBody.SetBool("Riding", false);
+        }
+
         var movementVector = GetMovementVector();
         float clampedMagnitude = Mathf.Clamp01(movementVector.sqrMagnitude);
-        if(movementVector != Vector2.zero)
+
+        if (movementVector != Vector2.zero)
         {
             animatorBody.SetBool("Moving", true);
             animatorBody.SetBool("Running", running);
