@@ -180,7 +180,7 @@ public class DroneSpawner : MonoBehaviour
         while(timerValue > 0)
         {
             yield return new WaitForSeconds(1);
-            Debug.Log(timerValue);
+            //  Debug.Log(timerValue);
             timerValue--;
         }
         SpawnDrones();

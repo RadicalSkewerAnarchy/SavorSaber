@@ -214,43 +214,14 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Runaway()
     {
         NavRunaway();
-        /*
-        if(Behaviour.ActionTimer < 0)
-        {
-            NavRunaway();
-            Behaviour.ResetActionTimer();
-        }
-        else
-        {
-            Behaviour.ActionTimer -= Time.deltaTime;
-        }
-        /*
-        #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
-        //GameObject near = Checks.ClosestCreature();
-        //Vector2 pos = (near == null ? this.transform.position : near.transform.position);
-        Vector2 pos = Checks.AverageGroupPosition();
-        #endregion
-        if (Behaviour.MoveFrom(pos, AiData.Speed, 15f))
-        {
-            // Idle spawns a calm effect --> recovers from fear
-            if (Behaviour.Idle())
-            {
-                Wander(2f, 2f);
-            }
-        }*/
     }
     public void NavRunaway()
     {
         //Debug.Log("navrunningaway");
         float maxDist = 0;
         //Debug.Log("Navigating runaway");
-        Checks.SetCurrentTile();/*
-        if (Checks.currentTile == null)
-        {
-            Checks.SetCurrentTile();
-            //Debug.Log("Setting Current Tile");
-        }*/
+        Checks.SetCurrentTile();
+        
         if (Checks.currentTile != null)
         {
 
@@ -272,9 +243,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 //Debug.Log("Targettile is not null, tile id: " +targetTile.name);
                 if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
                 {
-                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 0.1f);
-                    //Debug.Log("coroutine started");
-                    //StartCoroutine(MoveCreatureToTarget(targetTile));
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1f);
                 }
             }
         }

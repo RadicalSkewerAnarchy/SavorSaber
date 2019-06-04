@@ -528,32 +528,6 @@ public class MonsterChecks : MonoBehaviour
     // if it's not, don't navigate there
     public TileNode GetNearestNode(Vector2 pos)
     {
-        /*
-        TileNode targetTile = null;
-        float minDist = Mathf.Infinity;
-        if(GetComponent<Pathfinder>() != null)
-        {
-            if (GetComponent<Pathfinder>().allNodes != null)
-            {
-                for (int i = 0; i < GetComponent<Pathfinder>().allNodes.transform.childCount - 1; i++)
-                {
-                    var node = GetComponent<Pathfinder>().allNodes.transform.GetChild(i);
-                    var dist = Vector2.Distance(node.transform.position, pos);
-                    //if (dist < AiData.EngageHostileThreshold)
-                    //{
-                    if (dist < minDist)
-                    {
-                        minDist = dist;
-                        targetTile = node.GetComponent<TileNode>();
-                    }
-                    //}
-                }
-            }
-        }*/
-
-
-        //Debug.Log("Closest tile found is : " + targetTile.gameObject.name);
-        /// WORKS ONLY WITH PHYSICS AND TILENODES HAVING A COLLIDER
         int maxTries = 5;
         float sizeCheck = .5f;
         TileNode targetTile = null;
@@ -586,16 +560,7 @@ public class MonsterChecks : MonoBehaviour
         return targetTile;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<TileNode>() != null)
-        {
-            if (collision.gameObject.GetComponent<TileNode>().walkable)
-            {
-                currentTile = collision.gameObject.GetComponent<TileNode>();
-            }
-        }
-    }
+
     #region POSITION RANDOMIZATION
     /// <summary>
     /// Given some distribution, return a vector2 of:

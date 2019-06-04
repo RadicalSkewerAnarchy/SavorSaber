@@ -24,6 +24,8 @@ public class TileNode : MonoBehaviour
         if (!walkable)
         {
             Destroy(gameObject.GetComponent<BoxCollider2D>());
+            gameObject.SetActive(false);
         }
     }
+
 }

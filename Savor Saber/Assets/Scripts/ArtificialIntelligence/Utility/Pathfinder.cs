@@ -6,11 +6,14 @@ public class Pathfinder : MonoBehaviour
 {
     Dictionary<TileNode, float> gScore;
     Dictionary<TileNode, float> fScore;
-    public GameObject allNodes; 
+    public GameObject allNodes;
+    public GraphSingleton graph;
+    
 
     public void Start()
     {
         InitGraph();
+        graph = GraphSingleton.Instance;
         //allNodes = GameObject.Find("Grid 16px");
         //allNodes = allNodes.transform.Find("Collision").Find("Walkable").gameObject;
     }
