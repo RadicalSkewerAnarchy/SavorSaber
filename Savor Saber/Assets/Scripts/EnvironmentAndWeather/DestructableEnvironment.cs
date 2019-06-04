@@ -30,6 +30,7 @@ public class DestructableEnvironment : MonoBehaviour
     private SpriteRenderer spr;
     private AudioSource src;
     private Animator anim;
+    public bool animateWhileAlive = true;
 
     private void Start()
     {
@@ -39,6 +40,8 @@ public class DestructableEnvironment : MonoBehaviour
         healthReset = health;
         origin = this.transform.position;
         anim = GetComponent<Animator>();
+        if (anim != null)
+            anim.enabled = (animateWhileAlive ? true : false);
     }
 
     public void Destroy()
@@ -57,7 +60,7 @@ public class DestructableEnvironment : MonoBehaviour
             return;
         destroyed = true;
         if (anim != null)
-            anim.enabled = false;
+            anim.enabled = (animateWhileAlive ? true : false);
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
         if (dropOnDestroy != null && Random.value <= thresh)
@@ -76,7 +79,7 @@ public class DestructableEnvironment : MonoBehaviour
         this.GetComponent<Collider2D>().enabled = true;
         spr.sprite = normalSprite;
         if(anim != null)
-            anim.enabled = true;
+            anim.enabled = (animateWhileAlive ? true : false);
         health = healthReset;
         destroyed = false;
     }
