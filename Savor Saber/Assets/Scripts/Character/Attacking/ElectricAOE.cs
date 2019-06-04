@@ -16,11 +16,14 @@ public class ElectricAOE : MonoBehaviour
     public bool hurtDrones = false;
 
     public int damagePerTic = 1;
-    public float damageRate = 1f;
+    public float damageRate = 1.5f;
+
     /// <summary>
     /// The number of seconds that the field can be disabled for
     /// </summary>
     public int disruptiontime = 5;
+
+    public GameObject sparkTemplate;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +56,7 @@ public class ElectricAOE : MonoBehaviour
             inAOE = true;
             StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
+            Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
         }
         else if(active && hurtDrones && collision.gameObject.tag == "Predator")
         {
@@ -62,6 +66,7 @@ public class ElectricAOE : MonoBehaviour
             inAOE = true;
             StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
+            Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
         }
     }
 
@@ -91,6 +96,7 @@ public class ElectricAOE : MonoBehaviour
                 killingBlow = true;
 
             characterData.DoDamage(damagePerTic);
+            
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
