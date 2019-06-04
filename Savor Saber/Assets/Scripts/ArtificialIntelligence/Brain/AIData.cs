@@ -125,7 +125,7 @@ public class AIData : CharacterData
     /// </summary>
     private void Update()
     {
-        if (updateAI)
+        if (updateAI && !EventTrigger.InCutscene)
         {
             UpdateProtocol();
         }
@@ -190,14 +190,22 @@ public class AIData : CharacterData
             // DECIDE
             // CALCULATE AND ACQUIRE NEW STATE:
             if (decideState)
-                currentProtocol = Curves.DecideState();
+            {
+                if (Checks.AwareHowManyEnemies() == 0)
+                    currentProtocol = Curves.DecideState();
+                else
+                {
+                    currentProtocol = Protocols.Runaway;
+                    //Debug.Log(this.name + " should be running away");
+                }
+            }
 
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
 
             // UPDATE HUNGER??
             UpdateHunger();
-            
+
             // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
         }
@@ -304,7 +312,7 @@ public class AIData : CharacterData
             }
 
         }*/
-      
+
     }
 
     // InstantiateSignal()

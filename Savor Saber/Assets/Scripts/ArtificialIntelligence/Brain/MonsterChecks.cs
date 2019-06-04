@@ -69,6 +69,21 @@ public class MonsterChecks : MonoBehaviour
     {
         return AllCreatures.Count;
     }
+    public int AwareHowManyEnemies()
+    {
+        if (this.tag == "Predator")
+            return 0;
+
+        List<GameObject> enemies = new List<GameObject>();
+        foreach (GameObject g in AllCreatures)
+        {
+            if (g != null && g.tag == "Predator")
+            {
+                enemies.Add(g);
+            }
+        }
+        return enemies.Count;
+    }
 
     /// <summary>
     /// for every creature in the nearbycreatures list, inserts them into a dictionary with (Collider2D : character data)
