@@ -186,25 +186,25 @@ public class AIData : CharacterData
             {
                 decideState = false;
             }
+            else if (Checks.AwareHowManyEnemies() > 0)
+            {
+                decideState = false;
+                currentProtocol = Protocols.Runaway;
+            }
+
+
+            // UPDATE AWARENESS: creatures, player, and drops
+            Checks.AwareNearby();
+
+            // UPDATE HUNGER
+            UpdateHunger();
 
             // DECIDE
             // CALCULATE AND ACQUIRE NEW STATE:
             if (decideState)
             {
-                if (Checks.AwareHowManyEnemies() == 0)
-                    currentProtocol = Curves.DecideState();
-                else
-                {
-                    currentProtocol = Protocols.Runaway;
-                    //Debug.Log(this.name + " should be running away");
-                }
+                currentProtocol = Curves.DecideState();
             }
-
-            // UPDATE AWARENESS: creatures, player, and drops
-            Checks.AwareNearby();
-
-            // UPDATE HUNGER??
-            UpdateHunger();
 
             // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
