@@ -7,6 +7,7 @@ public class PoisonCloud : MonoBehaviour
     CharacterData characterData;
     public int dotTicLength;
     bool playerInCloud;
+    public int damagePerTic = 2;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -37,7 +38,7 @@ public class PoisonCloud : MonoBehaviour
             if (characterData.health - 1 <= 0)
                 killingBlow = true;
 
-            characterData.DoDamage(1);
+            characterData.DoDamage(damagePerTic);
             Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
