@@ -5,7 +5,8 @@ using UnityEngine;
 public class ElectricAOE : MonoBehaviour
 {
 
-    private CharacterData characterData;
+    //private CharacterData characterData;
+    private List<CharacterData> characterList;
     private bool inAOE = false;
     private bool active = true;
     private SpriteRenderer sr;
@@ -26,6 +27,7 @@ public class ElectricAOE : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
+        characterList = new List<CharacterData>();
     }
 
     // Update is called once per frame
@@ -42,19 +44,23 @@ public class ElectricAOE : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object in waterfall");
+        //Debug.Log("Object in waterfall");
         if (active && hurtPlayer && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
         {
             //Debug.Log("Damaging player-friendly target with electric field");
-            characterData = collision.gameObject.GetComponent<CharacterData>();
+            //characterData = collision.gameObject.GetComponent<CharacterData>();
+            characterList.Add(collision.gameObject.GetComponent<CharacterData>());
             inAOE = true;
+            StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
         }
         else if(active && hurtDrones && collision.gameObject.tag == "Predator")
         {
             //Debug.Log("Damaging valid target with electric field");
-            characterData = collision.gameObject.GetComponent<CharacterData>();
+            //characterData = collision.gameObject.GetComponent<CharacterData>();
+            characterList.Add(collision.gameObject.GetComponent<CharacterData>());
             inAOE = true;
+            StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
         }
     }
@@ -64,15 +70,21 @@ public class ElectricAOE : MonoBehaviour
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
             StopCoroutine(ExecuteAfterSeconds());
-            characterData = null;
+            characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
             inAOE = false;           
+        }
+        else if(collision.gameObject.tag == "Predator")
+        {
+            StopCoroutine(ExecuteAfterSeconds());
+            characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
+            inAOE = false;
         }
     }
 
     public void DamageOverTime()
     {
         bool killingBlow = false;
-        if (inAOE)
+        foreach(CharacterData characterData in characterList)
         {
             //test to see if this tic will inflict a killing blow
             if (characterData.health - damagePerTic <= 0)
@@ -85,10 +97,6 @@ public class ElectricAOE : MonoBehaviour
                 return;
 
             StartCoroutine(ExecuteAfterSeconds());
-        }
-        else
-        {
-            return;
         }
 
     }
