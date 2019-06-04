@@ -27,6 +27,7 @@ public class PlayerData : CharacterData
     public override bool DoDamage(int damage)
     {
         bool dead = false;
+        CameraController.instance.Shake(0.05f, 0.3f, 0.1f);
         if (damage > 0)
         {
             if (Invincible)
@@ -44,6 +45,33 @@ public class PlayerData : CharacterData
 
                 Invincible = true;
                 StartCoroutine(IFrames(damage * timeConst));
+            }
+            else if (!res.Respawning)
+            {
+                dead = true;
+                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                altSFXPlayer.Play(deathSFX);
+                res.Respawn();
+            }
+        }
+        return dead;
+    }
+
+    public bool DoDamageIgnoreIFrames(int damage)
+    {
+        bool dead = false;
+        if (damage > 0)
+        {
+            health -= damage;
+            //only play damage SFX if it was not a killing blow so sounds don't overlap
+            if (health > 0)
+            {
+                var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                altSFXPlayer.Play(damageSFX);
+
+                //play low hp warning if you're at low health
+                if (health == lowHealthThreshhold)
+                    altSFXPlayer.Play(lowHealthSFX);
             }
             else if (!res.Respawning)
             {

@@ -42,8 +42,10 @@ public class AttackRangedThrowSkewer : AttackRanged
             StopAllCoroutines();
             r.color = Color.white;
             currLevel = 0;
-            Attacking = false;
+            inv.CanSwap = true;
             chargedAttack = false;
+            Attacking = false;
+            CanBeCanceled = false;
             return;
         }
         //conditions to throw: Must either have ingredients OR a cooked recipe

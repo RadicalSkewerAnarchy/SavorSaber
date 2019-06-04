@@ -22,11 +22,17 @@ public class DayNightController : MonoBehaviour, IPausable
     public const int hoursPerDay = 24;
     private static readonly int numPhases = EnumUtils.Count<TimeOfDay>();
 
+    public System.Action OnNight;
+    public System.Action OnDay;
+
     public bool IsDayTime
     {
         get
         {
-            return CurrTimeOfDay == TimeOfDay.Morning || CurrTimeOfDay == TimeOfDay.Day || CurrTimeOfDay == TimeOfDay.Evening;
+            return CurrTimeOfDay == TimeOfDay.Morning 
+                || CurrTimeOfDay == TimeOfDay.Day 
+                || CurrTimeOfDay == TimeOfDay.Evening 
+                || CurrTimeOfDay == TimeOfDay.Sunrise;
         }
     }
 
@@ -34,7 +40,10 @@ public class DayNightController : MonoBehaviour, IPausable
     {
         get
         {
-            return CurrTimeOfDay == TimeOfDay.Dusk || CurrTimeOfDay == TimeOfDay.Night || CurrTimeOfDay == TimeOfDay.Dawn;
+            return CurrTimeOfDay == TimeOfDay.Dusk 
+                || CurrTimeOfDay == TimeOfDay.Night 
+                || CurrTimeOfDay == TimeOfDay.Dawn 
+                || CurrTimeOfDay == TimeOfDay.Sunset;
         }
     }
 
@@ -144,7 +153,14 @@ public class DayNightController : MonoBehaviour, IPausable
             var percentage = currTime / goalTime;
             RenderSettings.ambientLight = Color.Lerp(startColor, endColor, percentage);
             if (percentage > 0.5f)
+            {
                 CurrTimeOfDay = t;
+                if (t == TimeOfDay.Dusk)
+                    OnNight?.Invoke();
+                else if (t == TimeOfDay.Morning)
+                    OnDay?.Invoke();
+            }
+                
         }
         StartCoroutine(AdvanceTime());
     }
@@ -157,6 +173,10 @@ public class DayNightController : MonoBehaviour, IPausable
             RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
              currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
             CurrTimeOfDay = t;
+            if (IsNightTime)
+                OnNight?.Invoke();
+            else
+                OnDay?.Invoke();
             StartCoroutine(AdvanceTime(true));
         }
         else
@@ -168,7 +188,10 @@ public class DayNightController : MonoBehaviour, IPausable
         CurrTimeOfDay = t;
         RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
             currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
-        CurrTimeOfDay = t;
+        if (IsNightTime)
+            OnNight?.Invoke();
+        else
+            OnDay?.Invoke();
         StartCoroutine(AdvanceTime(true));
     }
 

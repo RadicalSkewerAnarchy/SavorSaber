@@ -118,7 +118,7 @@ public class AttackRanged : AttackBase
             audioSource.clip = defaultAttackSound;
             audioSource.Play();
         }
-        animator.Play(attackName);
+        animator.Play(attackName,0,0);
 
         Direction direction = controller.Direction;
         float projectileRotation = GetRotation(direction);

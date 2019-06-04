@@ -84,7 +84,7 @@ public class EventTrigger : MonoBehaviour
         {
             var AI = partyMember.GetComponent<AIData>();
             if (AI != null)
-                AI.enabled = !start;
+                AI.updateAI = !start;
         }
         DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
         InCutscene = start;

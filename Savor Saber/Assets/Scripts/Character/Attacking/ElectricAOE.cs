@@ -11,6 +11,9 @@ public class ElectricAOE : MonoBehaviour
     private SpriteRenderer sr;
     private WaitForSeconds fieldDelay;
 
+    public bool hurtPlayer = true;
+    public bool hurtDrones = false;
+
     public int damagePerTic = 1;
     public float damageRate = 1f;
     /// <summary>
@@ -40,9 +43,16 @@ public class ElectricAOE : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Object in waterfall");
-        if (active && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
+        if (active && hurtPlayer && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
         {
-            Debug.Log("Damaging valid target with electric field");
+            //Debug.Log("Damaging player-friendly target with electric field");
+            characterData = collision.gameObject.GetComponent<CharacterData>();
+            inAOE = true;
+            DamageOverTime();
+        }
+        else if(active && hurtDrones && collision.gameObject.tag == "Predator")
+        {
+            //Debug.Log("Damaging valid target with electric field");
             characterData = collision.gameObject.GetComponent<CharacterData>();
             inAOE = true;
             DamageOverTime();

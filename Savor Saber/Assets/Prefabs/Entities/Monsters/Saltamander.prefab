@@ -461,8 +461,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chance: 100
   drops:
-  - {fileID: 1557260248, guid: c6b14add04dbb7848910db7603d06469, type: 3}
-  - {fileID: 1557260248, guid: c6b14add04dbb7848910db7603d06469, type: 3}
+  - {fileID: 1557260248, guid: 91a0162ed40becd46ba71d8343953031, type: 3}
+  - {fileID: 1557260248, guid: 91a0162ed40becd46ba71d8343953031, type: 3}
   signalDrops:
   - {fileID: 1581911220963856493, guid: 59988a433b2afd741b80148f98d3c063, type: 3}
 --- !u!114 &7608149330300095937
@@ -677,6 +677,8 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   FoodPreference: 
+  enabled: 0
+  rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &4519386229173123504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,6 +743,7 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   isAttacking: 0
+  meleeSFX: {fileID: 0}
 --- !u!114 &2002523758784079709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,10 +799,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dotTicLength: 1
   favoriteIngredients:
-  - Kiwi
+  - GreenOnion
   favoriteFlavors: 16
   charmThreshhold: 1
-  rewardItem: {fileID: 1557260248, guid: c6b14add04dbb7848910db7603d06469, type: 3}
+  rewardItem: {fileID: 1557260248, guid: 91a0162ed40becd46ba71d8343953031, type: 3}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
 --- !u!70 &6096918569131589029
@@ -6067,11 +6070,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6227106181097477213}
     m_Modifications:
-    - target: {fileID: 7334068112926748696, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: m_Name
-      value: FedFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6127,15 +6125,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4849947779492003327, guid: a031989af5dbfb142be6ba118c5ce474,
+    - target: {fileID: 7334068112926748696, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
-      propertyPath: m_SortingLayerID
-      value: -828437997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4849947779492003327, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
+      propertyPath: m_Name
+      value: FedFruitantEmitter
       objectReference: {fileID: 0}
     - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
@@ -6152,6 +6145,16 @@ PrefabInstance:
       propertyPath: ShapeModule.donutRadius
       value: 0.15192598
       objectReference: {fileID: 0}
+    - target: {fileID: 4849947779492003327, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -828437997
+      objectReference: {fileID: 0}
+    - target: {fileID: 4849947779492003327, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a031989af5dbfb142be6ba118c5ce474, type: 3}
 --- !u!4 &1054806683282747262 stripped
@@ -6167,11 +6170,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6227106181097477213}
     m_Modifications:
-    - target: {fileID: 3982082007988838920, guid: 0583b091df470bd4c958b4e83716f488,
-        type: 3}
-      propertyPath: m_Name
-      value: FearSwirlFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6227,6 +6225,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3982082007988838920, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: m_Name
+      value: FearSwirlFruitantEmitter
+      objectReference: {fileID: 0}
     - target: {fileID: 626760171828635250, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
       propertyPath: ShapeModule.radiusThickness
@@ -6262,11 +6265,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6227106181097477213}
     m_Modifications:
-    - target: {fileID: 6490759784845256633, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: m_Name
-      value: HungryFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256517, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6322,15 +6320,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256519, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+    - target: {fileID: 6490759784845256633, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
-      propertyPath: m_SortingLayerID
-      value: -828437997
-      objectReference: {fileID: 0}
-    - target: {fileID: 6490759784845256519, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
+      propertyPath: m_Name
+      value: HungryFruitantEmitter
       objectReference: {fileID: 0}
     - target: {fileID: 6490759784845256516, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
         type: 3}
@@ -6347,6 +6340,16 @@ PrefabInstance:
       propertyPath: ShapeModule.donutRadius
       value: 0.17301321
       objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256519, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -828437997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6490759784845256519, guid: 7f522648c4c9b9846bfc7aa7d05698e3,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f522648c4c9b9846bfc7aa7d05698e3, type: 3}
 --- !u!4 &5591015341761893051 stripped
@@ -6362,11 +6365,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6227106181097477213}
     m_Modifications:
-    - target: {fileID: 8362748139089023926, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: m_Name
-      value: HappyFruitantEmitter
-      objectReference: {fileID: 0}
     - target: {fileID: 7186105341299150554, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6422,15 +6420,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
+    - target: {fileID: 8362748139089023926, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
-      propertyPath: m_SortingLayerID
-      value: -828437997
-      objectReference: {fileID: 0}
-    - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: m_SortingLayer
-      value: 6
+      propertyPath: m_Name
+      value: HappyFruitantEmitter
       objectReference: {fileID: 0}
     - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
@@ -6441,6 +6434,16 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.donutRadius
       value: 1.1620936
+      objectReference: {fileID: 0}
+    - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -828437997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33c909520f360e4c83220a347dc693c, type: 3}
@@ -6457,11 +6460,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8326585619105167003}
     m_Modifications:
-    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
-        type: 3}
-      propertyPath: m_Name
-      value: Shadow
-      objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6531,6 +6529,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.470267
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609cf543f670ded479a520ca2f15dcbe, type: 3}

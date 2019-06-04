@@ -7,6 +7,7 @@ public class BGMManager : MonoBehaviour
 {
     public static BGMManager instance;
 
+    public AreaChange initialData;
     public AudioClip AreaBgmDay { get; set; }
     public AudioClip AreaBgmNight { get; set; }
     public AudioClip AreaBgsDay { get; set; }
@@ -36,13 +37,40 @@ public class BGMManager : MonoBehaviour
 
     private void Start()
     {
+        AreaBgmDay = initialData.dayMusic;
+        AreaBgmNight = initialData.nightMusic;
+        AreaBgsDay = initialData.dayBgs;
+        AreaBgsNight = initialData.nightBgs;
         bgmSrc = bgmContainer.GetComponents<AudioSource>();
         bgsSrc = bgsContainer.GetComponents<AudioSource>();
+        DayNightController.instance.OnDay += GoToDayMusic;
+        DayNightController.instance.OnNight += GoToNightMusic;
+    }
+
+    public void GoToNightMusic()
+    {
+        if(CurrBgmSource.clip == AreaBgmDay)
+        {
+            FadeToAreaSounds();
+        }
+    }
+
+    public void GoToDayMusic()
+    {
+        if (CurrBgmSource.clip == AreaBgmNight)
+        {
+            FadeToAreaSounds();
+        }
     }
 
     public void SetBGM(AudioClip song)
     {
         CurrBgmSource.clip = song;
+    }
+
+    public void FadeBGMToSilence(float fadeTime = 3)
+    {
+        CrossFadeBgm(null, fadeTime);
     }
 
     public void FadeToAreaSounds()

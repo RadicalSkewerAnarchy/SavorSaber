@@ -464,7 +464,7 @@ public partial class MonsterProtocols : MonoBehaviour
             {
                 GameObject near = Checks.FollowTheLeader();
                 Vector2 pos = near.transform.position;
-                Behaviour.MoveTo(pos, AiData.Speed * 2, 2f);
+                Behaviour.MoveTo(pos, 4f, 2f);
             }
             else
             {

@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 1526011709116615456}
   - component: {fileID: 7223982420583207564}
   - component: {fileID: 4853353301255729737}
-  - component: {fileID: 3178581117812069632}
   - component: {fileID: 390392277}
   m_Layer: 0
   m_Name: Strawbeery
@@ -135,7 +134,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: 
+  m_WarningMessage:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -245,8 +244,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 186552ccc6a24f443bdf8dca60461bf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   chance: 100
   drops:
   - {fileID: 1630939979561768358, guid: 055c0671384de6c40969a6d1716ce9da, type: 3}
@@ -264,8 +263,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   displayName: PaddlePear
   deathSfx: {fileID: 8300000, guid: 5be48d6f6f1fac0469ce2e84990f801f, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
@@ -280,8 +279,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09c7a8ad0ed6a2843b78463200380cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   curve:
     serializedVersion: 2
     m_Curve:
@@ -425,8 +424,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Speed: 1.2
   Perception: 8
   MeleeAttackThreshold: 1
@@ -465,7 +464,9 @@ MonoBehaviour:
   Awareness: {fileID: 0}
   Friends: []
   Enemies: []
-  FoodPreference: 
+  FoodPreference:
+  enabled: 0
+  rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &2516883946231080080
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,8 +477,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &1536994129395122393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -488,8 +489,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 855506bed9018d046a30cc6d87bf0b60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   AiData: {fileID: 0}
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -514,8 +515,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   pathfinder: {fileID: 0}
   ActionTimer: 0
   ActionTimerReset: 5
@@ -530,6 +531,7 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   isAttacking: 0
+  meleeSFX: {fileID: 0}
 --- !u!114 &1526011709116615456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,8 +542,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84078e1ff25819c469ecf0e294516541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _direction: 0
   invert: 1
 --- !u!114 &7223982420583207564
@@ -554,8 +556,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   allNodes: {fileID: 0}
 --- !u!70 &4853353301255729737
 CapsuleCollider2D:
@@ -573,26 +575,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.62}
   m_Size: {x: 0.71, y: 0.97}
   m_Direction: 0
---- !u!114 &3178581117812069632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3330165596561426964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
-  favoriteIngredients:
-  - Clover
-  favoriteFlavors: 1
-  charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
-  rewardSFX: {fileID: 0}
 --- !u!114 &390392277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -603,17 +585,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dotTicLength: 1
+  m_Name:
+  m_EditorClassIdentifier:
   favoriteIngredients:
-  - Wheat
+  - Clover
   favoriteFlavors: 1
   charmThreshhold: 1
   rewardItem: {fileID: 1630939979561768358, guid: 055c0671384de6c40969a6d1716ce9da,
     type: 3}
   amountRewardItem: 1
-  rewardSFX: {fileID: 0}
+  rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  dotTicLength: 1
+  electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
+    type: 3}
+  electricSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!1 &3405041908141219295
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,7 +701,7 @@ PrefabInstance:
     - target: {fileID: 397395681929018882, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: fruitant
-      value: 
+      value:
       objectReference: {fileID: 3330165596561426964}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c114ed1ceb1fd6647bbe5d2dd2541c45, type: 3}
@@ -1137,8 +1122,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1001 &7301070485146948396
 PrefabInstance:
   m_ObjectHideFlags: 0
