@@ -37,7 +37,10 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
-        if(Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
+        if (((PlayerController)controller).riding)
+            return;
+
+        if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
         {
             StopAllCoroutines();
             r.color = Color.white;

@@ -21,7 +21,7 @@ public class FuitantMount : MonoBehaviour
     private MonsterController fruitantController;
     private SpriteRenderer playerRenderer;
     private PlayerData playerData;
-    private bool mounted = false;
+    public bool mounted = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
 
@@ -39,6 +39,17 @@ public class FuitantMount : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        if (mounted)
+        {
+            if (fruitantData.health <= 0)
+            {
+                Demount();
+            }
+        }
+    }
+
     void LateUpdate()
     {
         if (mountable)
@@ -96,7 +107,7 @@ public class FuitantMount : MonoBehaviour
         mounted = true;
     }
 
-    void Demount()
+    public void Demount()
     {
         Debug.Log("Demounting");
 
@@ -128,6 +139,8 @@ public class FuitantMount : MonoBehaviour
         if (collision.tag == "Player")
         {
             mountable = false;
+            if (mounted)
+                Demount();
         }
     }
 }

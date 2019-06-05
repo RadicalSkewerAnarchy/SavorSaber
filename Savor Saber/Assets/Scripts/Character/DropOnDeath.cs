@@ -16,6 +16,13 @@ public class DropOnDeath : MonoBehaviour
     /// <summary> Instantiates all prefabs in drops[] </summary>
     public void Drop()
     {
+        FuitantMount mount = GetComponentInChildren<FuitantMount>();
+        if (mount != null)
+        {
+            if (mount.mounted)
+                mount.Demount();
+        }
+
         float thresh = (float)chance / 100;
         foreach (var obj in drops)
         {

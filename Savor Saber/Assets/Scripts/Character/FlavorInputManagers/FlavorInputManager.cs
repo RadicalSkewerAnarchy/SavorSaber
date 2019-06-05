@@ -15,6 +15,9 @@ public class FlavorInputManager : MonoBehaviour
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
+
+    // timers
+    public float charmTime = 0;
     #endregion
 
     #region Components
@@ -89,7 +92,7 @@ public class FlavorInputManager : MonoBehaviour
             // mod hunger
             if (characterData != null)
             {
-                characterData.InstantiateSignal(0.5f, "Hunger", -0.3f, false, true);
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.5f, false, true);
             }
                 
 
@@ -188,12 +191,9 @@ public class FlavorInputManager : MonoBehaviour
         //handle sour
         if (flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
         {
-            if (favoriteFlavors != RecipeData.Flavors.Savory)
+            if (fedByPlayer && !isElectric)
             {
-                if (fedByPlayer && !isElectric)
-                {
-                    StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour]));
-                }
+                StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
             }
         }
         // reset flavor dicts
@@ -205,8 +205,10 @@ public class FlavorInputManager : MonoBehaviour
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CHARMED");
-        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 60f : 30f);
-        StartCharm(time);
+        StopCoroutine("ExecuteCharm");
+        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 40f : 20f);
+        charmTime += time;
+        StartCharm(charmTime);
         //characterData.DoDamage(-3);
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
@@ -261,8 +263,8 @@ public class FlavorInputManager : MonoBehaviour
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
         var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
-        int shots =   spice + spice*(favorite ? 3 : 2) + (spice == 3 ? 3 : 0);
-        int pellets = spice + (favorite ? 2 : 1) + (spice == 3 ? 1 : 0);
+        int shots = 3 + spice + (favorite ? 3 : 0);
+        int pellets = spice + (favorite ? 2 : 1);
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
@@ -299,8 +301,6 @@ public class FlavorInputManager : MonoBehaviour
                 projectileData.directionVector = dir;
                 projectileData.penetrateTargets = true;
                 projectileData.attacker = this.gameObject;
-                projectileData.projectileSpeed = 3f;
-                projectileData.range = 4f;
             }
             s--;
         }
