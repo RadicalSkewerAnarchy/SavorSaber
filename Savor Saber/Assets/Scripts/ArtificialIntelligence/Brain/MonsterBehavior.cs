@@ -294,10 +294,10 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Socialize()
     {
-        AnimatorBody.Play("Socialize");
         AiData.currentBehavior = AIData.Behave.Socialize;
         if (ActionTimer < 0)
         {
+            AnimatorBody.Play("Socialize");
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
