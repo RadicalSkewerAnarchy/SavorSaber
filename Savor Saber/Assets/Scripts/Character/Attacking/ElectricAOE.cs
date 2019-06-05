@@ -10,6 +10,7 @@ public class ElectricAOE : MonoBehaviour
     private bool inAOE = false;
     private bool active = true;
     private SpriteRenderer sr;
+    private Light teslaLight;
     private WaitForSeconds fieldDelay;
 
     public bool hurtPlayer = true;
@@ -31,6 +32,7 @@ public class ElectricAOE : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
         characterList = new List<CharacterData>();
+        teslaLight = GetComponentInChildren<Light>();
     }
 
     // Update is called once per frame
@@ -123,11 +125,16 @@ public class ElectricAOE : MonoBehaviour
     {
         active = false;
         sr.enabled = false;
+        sr.color = new Color(0, 0, 0, 0);
+        teslaLight.color = Color.red;
+        characterList.Clear();
 
         yield return fieldDelay;
 
         active = true;
         sr.enabled = true;
+        sr.color = new Color(1, 1, 1, 1);
+        teslaLight.color = new Color(0, 1, 0.869112f);
 
     }
 }
