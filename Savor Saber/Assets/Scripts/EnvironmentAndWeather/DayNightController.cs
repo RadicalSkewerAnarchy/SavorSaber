@@ -195,6 +195,11 @@ public class DayNightController : MonoBehaviour, IPausable
         StartCoroutine(AdvanceTime(true));
     }
 
+    public void GoToDay()
+    {
+        SetTimeOfDayImmediate(TimeOfDay.Day);
+    }
+
     public void GoToNight()
     {
         SetTimeOfDayImmediate(TimeOfDay.Night);

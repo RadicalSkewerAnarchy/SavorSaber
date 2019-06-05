@@ -16,14 +16,11 @@ public class FuitantMount : MonoBehaviour
 
     // player refs
     private GameObject player;
-    [SerializeField]
     private PlayerController controller;
-    [SerializeField]
     private SpriteRenderer fruitantRenderer;
-    [SerializeField]
     private MonsterController fruitantController;
-    [SerializeField]
     private SpriteRenderer playerRenderer;
+    private PlayerData playerData;
     private bool mounted = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
@@ -35,6 +32,7 @@ public class FuitantMount : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         controller = player.GetComponent<PlayerController>();
         playerRenderer = player.GetComponent<SpriteRenderer>();
+        playerData = player.GetComponent<PlayerData>();
         fruitantData = thisFruitant.GetComponent<AIData>();
         fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
@@ -47,6 +45,13 @@ public class FuitantMount : MonoBehaviour
         {
             if (mounted)
             {
+                // if player dies, demount
+                if (playerData.health <= 0)
+                {
+                    Demount();
+                    return;
+                }
+
                 // demount
                 if (InputManager.GetButtonDown(Control.Dash))
                 {
@@ -64,20 +69,12 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (InputManager.GetButtonDown(Control.Dash))
+                if (InputManager.GetButtonDown(Control.Dash) && playerData.health > 0)
                 {
                     Mount();
                     return;
                 }
             }
-        }
-        else
-        {
-            // ensure demount
-            //if (!fruitantEnabled)
-            //{
-            //    Demount();
-            //}
         }
     }
 
