@@ -59,8 +59,10 @@ public class DestructableEnvironment : MonoBehaviour
         if (health > 0)
             return;
         destroyed = true;
+
         if (anim != null)
-            anim.enabled = (animateWhileAlive ? true : false);
+            anim.enabled = (animateWhileAlive ? false : true);
+
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
         if (dropOnDestroy != null && Random.value <= thresh)
