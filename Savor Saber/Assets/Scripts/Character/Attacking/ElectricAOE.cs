@@ -5,27 +5,34 @@ using UnityEngine;
 public class ElectricAOE : MonoBehaviour
 {
 
-    private CharacterData characterData;
+    //private CharacterData characterData;
+    private List<CharacterData> characterList;
     private bool inAOE = false;
     private bool active = true;
     private SpriteRenderer sr;
+    private Light teslaLight;
     private WaitForSeconds fieldDelay;
 
     public bool hurtPlayer = true;
     public bool hurtDrones = false;
 
     public int damagePerTic = 1;
-    public float damageRate = 1f;
+    public float damageRate = 1.5f;
+
     /// <summary>
     /// The number of seconds that the field can be disabled for
     /// </summary>
     public int disruptiontime = 5;
+
+    public GameObject sparkTemplate;
 
     // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
+        characterList = new List<CharacterData>();
+        teslaLight = GetComponentInChildren<Light>();
     }
 
     // Update is called once per frame
@@ -42,20 +49,26 @@ public class ElectricAOE : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object in waterfall");
+        //Debug.Log("Object in waterfall");
         if (active && hurtPlayer && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
         {
             //Debug.Log("Damaging player-friendly target with electric field");
-            characterData = collision.gameObject.GetComponent<CharacterData>();
+            //characterData = collision.gameObject.GetComponent<CharacterData>();
+            characterList.Add(collision.gameObject.GetComponent<CharacterData>());
             inAOE = true;
+            StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
+            Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
         }
         else if(active && hurtDrones && collision.gameObject.tag == "Predator")
         {
             //Debug.Log("Damaging valid target with electric field");
-            characterData = collision.gameObject.GetComponent<CharacterData>();
+            //characterData = collision.gameObject.GetComponent<CharacterData>();
+            characterList.Add(collision.gameObject.GetComponent<CharacterData>());
             inAOE = true;
+            StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
+            Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
         }
     }
 
@@ -64,31 +77,34 @@ public class ElectricAOE : MonoBehaviour
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey")
         {
             StopCoroutine(ExecuteAfterSeconds());
-            characterData = null;
+            characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
             inAOE = false;           
+        }
+        else if(collision.gameObject.tag == "Predator")
+        {
+            StopCoroutine(ExecuteAfterSeconds());
+            characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
+            inAOE = false;
         }
     }
 
     public void DamageOverTime()
     {
         bool killingBlow = false;
-        if (inAOE)
+        foreach(CharacterData characterData in characterList)
         {
             //test to see if this tic will inflict a killing blow
             if (characterData.health - damagePerTic <= 0)
                 killingBlow = true;
 
             characterData.DoDamage(damagePerTic);
+            
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
                 return;
 
             StartCoroutine(ExecuteAfterSeconds());
-        }
-        else
-        {
-            return;
         }
 
     }
@@ -109,11 +125,16 @@ public class ElectricAOE : MonoBehaviour
     {
         active = false;
         sr.enabled = false;
+        sr.color = new Color(0, 0, 0, 0);
+        teslaLight.color = Color.red;
+        characterList.Clear();
 
         yield return fieldDelay;
 
         active = true;
         sr.enabled = true;
+        sr.color = new Color(1, 1, 1, 1);
+        teslaLight.color = new Color(0, 1, 0.869112f);
 
     }
 }

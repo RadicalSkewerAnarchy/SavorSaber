@@ -87,6 +87,7 @@ public class EventTrigger : MonoBehaviour
                 AI.updateAI = !start;
         }
         DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
+        DayNightController.instance.Paused = start;
         InCutscene = start;
     }
 }
