@@ -9847,7 +9847,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 5
-  m_LinearDrag: 1
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -10058,7 +10058,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: PaddlePear
+  displayName: PatriarchPear
   deathSfx: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
@@ -10173,7 +10173,7 @@ MonoBehaviour:
   Perception: 10
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 2
+  EngageHostileThreshold: 8
   maxHealth: 100
   health: 100
   PartySize: 3
@@ -10186,7 +10186,7 @@ MonoBehaviour:
   initialHostility: 0
   initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
-  healSFX: {fileID: 0}
+  healSFX: {fileID: 8300000, guid: d920bcd5c6699884596bbfdbbaeed284, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
   sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
@@ -10207,7 +10207,7 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   FoodPreference: 
-  enabled: 0
+  updateAI: 0
   rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &8475188656050417345
 MonoBehaviour:
@@ -10724,6 +10724,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 626760171828635250, guid: 0583b091df470bd4c958b4e83716f488,
+        type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 0.2790088
+      objectReference: {fileID: 0}
     - target: {fileID: 2678439751799743547, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -10733,11 +10738,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 626760171828635250, guid: 0583b091df470bd4c958b4e83716f488,
-        type: 3}
-      propertyPath: ShapeModule.donutRadius
-      value: 0.2790088
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0583b091df470bd4c958b4e83716f488, type: 3}
@@ -11159,11 +11159,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -11173,6 +11168,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33c909520f360e4c83220a347dc693c, type: 3}

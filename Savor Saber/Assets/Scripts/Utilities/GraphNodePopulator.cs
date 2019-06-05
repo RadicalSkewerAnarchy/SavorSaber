@@ -26,6 +26,7 @@ public class GraphNodePopulator : MonoBehaviour
         /// List of all tilemaps
         activeTileMaps = GetComponentsInChildren<Tilemap>();
         List<Tilemap> inactiveTileMaps = new List<Tilemap>();
+        List<Tilemap> groundTileMaps = new List<Tilemap>();
         var graph = GraphSingleton.Instance;
         var localGrass = new Tilemap();
         foreach(var active in activeTileMaps)
@@ -34,7 +35,8 @@ public class GraphNodePopulator : MonoBehaviour
             {
                 inactiveTileMaps.Add(active);
             }
-            if(active.name == "Grass" || active.name == "Ground") localGrass = active;
+            if(active.name == "Grass" || active.name == "Ground" || active.tag == "Walkable") groundTileMaps.Add(active);  //localGrass = active;
+
         }   
         var activeTiles = inactiveTileMaps[0];
         //var inactiveTiles = inactiveTileMaps[1];
@@ -51,6 +53,7 @@ public class GraphNodePopulator : MonoBehaviour
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 walkable = true;
+                bool ground = false;
                 /// sets local position hard casted as int based on current x,y iteration
                 Vector3Int local = new Vector3Int(x, y, (int)activeTiles.transform.position.z);
                 //Vector3Int localInactive = new Vector3Int(x, y, (int)inactiveTiles.transform.position.z);
@@ -64,8 +67,15 @@ public class GraphNodePopulator : MonoBehaviour
                         walkable = false;
                     }
                 }
-                if((y % clusterLimit == 0) && (x % clusterLimit == 0) && walkable && localGrass.HasTile(local))
+                foreach(var groundTiles in groundTileMaps){
+                    if(groundTiles.HasTile(local)){
+                        ground = true;
+                        //Debug.Log("Found ground");
+                    }
+                }
+                if((y % clusterLimit == 0) && (x % clusterLimit == 0) && walkable && ground)// && localGrass.HasTile(local))
                 {
+                    Debug.Log("TileInstantiated");
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f,.25f), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();

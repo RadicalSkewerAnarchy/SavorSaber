@@ -9,16 +9,17 @@ public class TimeOfDayLight : MonoBehaviour
     public float dayTimeIntensity;
     private Light l;
     private float initialIntensity;
-    private bool dayMode = false;
+    private bool transitioning = false;
+    private LightFlicker lightFlicker;
     // Start is called before the first frame update
     void Start()
     {
         l = GetComponent<Light>();
+        lightFlicker = GetComponent<LightFlicker>();
         initialIntensity = l.intensity;
         if(DayNightController.instance.IsDayTime)
         {
             l.intensity = dayTimeIntensity;
-            dayMode = true;
         }
     }
 
@@ -27,25 +28,24 @@ public class TimeOfDayLight : MonoBehaviour
     {
         if(DayNightController.instance.IsDayTime)
         {
-            if(!dayMode)
+            if(!transitioning && l.intensity > (lightFlicker == null ? dayTimeIntensity : dayTimeIntensity + lightFlicker.intensityGainMax))
             {
-                dayMode = true;
+                transitioning = true;
                 StartCoroutine(GoToDayMode());
             }
         }
         else if (DayNightController.instance.IsNightTime)
         {
-            if (dayMode)
+            if (!transitioning && (l.intensity < initialIntensity))
             {
-                dayMode = false;
+                transitioning = true;
                 StartCoroutine(GoToNightMode());
             }
         }
     }
 
     IEnumerator GoToDayMode()
-    {
-        var lightFlicker = GetComponent<LightFlicker>();      
+    { 
         while(l.intensity > dayTimeIntensity)
         {
             yield return new WaitForEndOfFrame();
@@ -56,11 +56,11 @@ public class TimeOfDayLight : MonoBehaviour
         l.intensity = dayTimeIntensity;
         if (lightFlicker != null)
             lightFlicker.initialIntensity = l.intensity;
+        transitioning = false;
     }
 
     IEnumerator GoToNightMode()
     {
-        var lightFlicker = GetComponent<LightFlicker>();
         while (l.intensity < initialIntensity)
         {
             yield return new WaitForEndOfFrame();
@@ -71,5 +71,6 @@ public class TimeOfDayLight : MonoBehaviour
         l.intensity = initialIntensity;
         if (lightFlicker != null)
             lightFlicker.initialIntensity = l.intensity;
+        transitioning = false;
     }
 }
