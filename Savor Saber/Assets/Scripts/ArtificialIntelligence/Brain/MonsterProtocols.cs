@@ -244,7 +244,7 @@ public partial class MonsterProtocols : MonoBehaviour
                 //if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
                 if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.Perception)
                 {
-                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1f);
+                    Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1.5f);
                 }
             }
         }
@@ -575,14 +575,14 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         for(int i = AiData.path.Count-1; i > 0; i--)
         {
-            if (Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 1f))
+            if (Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 0.1f))
             {
                 Checks.currentTile = AiData.path[i];
                 AiData.path.Remove(AiData.path[i]);
             }
             else
             {
-                Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 1f);
+                Behaviour.MoveTo(AiData.path[i].transform.position, AiData.Speed, 0.1f);
             }
         }
 
