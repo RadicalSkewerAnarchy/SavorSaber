@@ -12,7 +12,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
     public AudioClip closeSFX;
     public AudioClip openSFX;
-    private AudioSource sfxPlayer;
+    private AudioSource sfxPlayerPl;
     private Animator marshAnimator;
 
     // Start is called before the first frame update
@@ -23,7 +23,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponentInChildren<CapsuleCollider2D>();
-        sfxPlayer = GetComponent<AudioSource>();
+        sfxPlayerPl = GetComponent<AudioSource>();
         marshAnimator = GetComponent<Animator>();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
@@ -49,8 +49,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     {
         //spriteRenderer.sprite = closedSprite;
         marshAnimator.Play("Close");
-        sfxPlayer.clip = closeSFX;
-        sfxPlayer.Play();
+        sfxPlayerPl.clip = closeSFX;
+        sfxPlayerPl.Play();
         if (!isFed)
         {
             boxCollider.enabled = true;
@@ -62,8 +62,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     {
         //spriteRenderer.sprite = openSprite;
         marshAnimator.Play("Open");
-        sfxPlayer.clip = openSFX;
-        sfxPlayer.Play();
+        sfxPlayerPl.clip = openSFX;
+        sfxPlayerPl.Play();
         if (isFed)
         {
             boxCollider.enabled = false;

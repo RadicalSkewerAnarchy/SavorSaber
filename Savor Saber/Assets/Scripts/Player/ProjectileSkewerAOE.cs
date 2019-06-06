@@ -35,13 +35,13 @@ public class ProjectileSkewerAOE : MonoBehaviour
             }
         }
 
-        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && collision.tag != "Player")
+        if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0 && collision.tag != "Player")
         {
             Rigidbody2D rb = collision.GetComponent<Rigidbody2D>();
             aiData = collision.GetComponent<AIData>();
             if(rb != null)
             {
-                Vector2 forceVector = (collision.transform.position - transform.position).normalized * flavorCountDictionary[RecipeData.Flavors.Savory] * 1.5f;
+                Vector2 forceVector = (collision.transform.position - transform.position).normalized * flavorCountDictionary[RecipeData.Flavors.Umami] * 1.5f;
                 rb.AddForce(forceVector, ForceMode2D.Impulse);
                 if(aiData != null){
                     aiData.updateBehavior = false;

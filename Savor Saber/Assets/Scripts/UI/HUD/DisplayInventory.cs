@@ -49,7 +49,7 @@ public class DisplayInventory : MonoBehaviour
         iconDictionary.Add(RecipeData.Flavors.Bitter, flavorTextures[2]);
         iconDictionary.Add(RecipeData.Flavors.Sour, flavorTextures[3]);
         iconDictionary.Add(RecipeData.Flavors.Salty, flavorTextures[4]);
-        iconDictionary.Add(RecipeData.Flavors.Savory, flavorTextures[5]);
+        iconDictionary.Add(RecipeData.Flavors.Umami, flavorTextures[5]);
         iconDictionary.Add(RecipeData.Flavors.Acquired, flavorTextures[6]);
         iconDictionary.Add(RecipeData.Flavors.None, noFlavorSprite);
 
