@@ -196,6 +196,15 @@ public class FlavorInputManager : MonoBehaviour
                 StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
             }
         }
+        //handle salty
+        if (flavorCountDictionary[RecipeData.Flavors.Salty] > 0)
+        {
+            if (fedByPlayer)
+            {
+                SaltyShield(favoriteFlavors == RecipeData.Flavors.Salty);
+            }
+        }
+
         // reset flavor dicts
         ResetDictionary();
     }
@@ -329,6 +338,33 @@ public class FlavorInputManager : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    #region SALT
+    protected void SaltyShield(bool favorite)
+    {
+        float time = (favorite ? 1 : 0);
+        StartCoroutine(StartShield(time));
+    }
+
+
+    protected IEnumerator StartShield(float time)
+    {
+        Debug.Log("Shielded");
+        // set up and start shield
+        // get ready to stop it
+        StartCoroutine(StopShield(time));
+        yield return null;
+    }
+
+    protected IEnumerator StopShield(float time)
+    {
+        yield return new WaitForSeconds(time);
+        // stop shield
+        Debug.Log("no longer Shielded");
+        yield return null;
+    }
+    #endregion
+
 
     public void DamageOverTime(int numTics, float ticLength)
     {

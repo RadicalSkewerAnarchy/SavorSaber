@@ -64,7 +64,7 @@ public class FuitantMount : MonoBehaviour
                 }
 
                 // demount
-                if (InputManager.GetButtonDown(Control.Dash))
+                if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Demount();
                     return;
@@ -80,7 +80,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (InputManager.GetButtonDown(Control.Dash) && playerData.health > 0)
+                if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash) && playerData.health > 0)
                 {
                     Mount();
                     return;
@@ -121,6 +121,9 @@ public class FuitantMount : MonoBehaviour
         // change player layering
         playerRenderer.sortingLayerName = "Objects";
         playerRenderer.flipX = false;
+
+        // set player position
+        player.transform.position = thisFruitant.transform.position;
 
         // mounted
         mounted = false;
