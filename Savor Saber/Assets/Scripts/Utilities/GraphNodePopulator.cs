@@ -75,7 +75,6 @@ public class GraphNodePopulator : MonoBehaviour
                 }
                 if((y % clusterLimit == 0) && (x % clusterLimit == 0) && walkable && ground)// && localGrass.HasTile(local))
                 {
-                    Debug.Log("TileInstantiated");
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f,.25f), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();

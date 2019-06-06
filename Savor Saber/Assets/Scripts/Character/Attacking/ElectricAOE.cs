@@ -12,6 +12,7 @@ public class ElectricAOE : MonoBehaviour
     private SpriteRenderer sr;
     private Light teslaLight;
     private WaitForSeconds fieldDelay;
+    private Animator teslaAnimator;
 
     public bool hurtPlayer = true;
     public bool hurtDrones = false;
@@ -32,6 +33,7 @@ public class ElectricAOE : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
         characterList = new List<CharacterData>();
+        teslaAnimator = GetComponent<Animator>();
         teslaLight = GetComponentInChildren<Light>();
     }
 
@@ -124,16 +126,18 @@ public class ElectricAOE : MonoBehaviour
     protected IEnumerator FieldTimer()
     {
         active = false;
-        sr.enabled = false;
-        sr.color = new Color(0, 0, 0, 0);
+        //sr.enabled = false;
+        //sr.color = new Color(0, 0, 0, 0);
+        teslaAnimator.Play("TeslaShutoff");
         teslaLight.color = Color.red;
         characterList.Clear();
 
         yield return fieldDelay;
 
         active = true;
-        sr.enabled = true;
-        sr.color = new Color(1, 1, 1, 1);
+        //sr.enabled = true;
+        //sr.color = new Color(1, 1, 1, 1);
+        teslaAnimator.Play("Tesla");
         teslaLight.color = new Color(0, 1, 0.869112f);
 
     }

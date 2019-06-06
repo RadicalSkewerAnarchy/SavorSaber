@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PoisonCloud : MonoBehaviour
 {
-    CharacterData characterData;
+    PlayerData characterData;
     public int dotTicLength;
     bool playerInCloud;
-    public int damagePerTic = 2;
+    public int damagePerTic = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            characterData = collision.gameObject.GetComponent<CharacterData>();
+            characterData = collision.gameObject.GetComponent<PlayerData>();
             playerInCloud = true;
             DamageOverTime();
         }
@@ -38,7 +38,7 @@ public class PoisonCloud : MonoBehaviour
             if (characterData.health - 1 <= 0)
                 killingBlow = true;
 
-            characterData.DoDamage(damagePerTic);
+            characterData.DoDamageIgnoreIFrames(damagePerTic);
             Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
