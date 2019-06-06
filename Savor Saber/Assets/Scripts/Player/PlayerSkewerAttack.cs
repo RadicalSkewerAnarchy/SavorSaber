@@ -45,6 +45,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
                 sfxPlayer.Play(pickUpSFX);
 
                 inventory.AddToSkewer(targetObject.data);
+                MGSTextSpawner.instance?.SpawnText(targetObject.data, transform.position);
                 Destroy(collision.gameObject);
             }
             else
