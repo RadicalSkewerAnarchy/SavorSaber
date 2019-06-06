@@ -89,6 +89,11 @@ public class ProjectileSkewer : BaseProjectile
                     SpawnDropsOnMiss();
                 }
             }
+            if(collision.gameObject.tag == "Predator")
+            {
+                CharacterData cd = collision.gameObject.GetComponent<CharacterData>();
+                cd.DoDamage(1);
+            }
             if (!penetrateTargets)
                 Destroy(this.gameObject);
         }
