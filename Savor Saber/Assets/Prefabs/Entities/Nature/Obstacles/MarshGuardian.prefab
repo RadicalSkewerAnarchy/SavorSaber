@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7962710262201023958}
   - component: {fileID: 7962710262201023954}
   - component: {fileID: 3603517269760195314}
+  - component: {fileID: 312513975400222449}
   m_Layer: 14
   m_Name: MarshGuardian
   m_TagString: LargePlant
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -133389985
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bb845e9291c79de4684f0ad9968031fd, type: 3}
+  m_Sprite: {fileID: 21300010, guid: 5f4314c6bd035de4693c7c913e46f93f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,15 +133,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f591df149cfd00a4bab1e7701c8a1965, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  dotTicLength: 1
+  m_Name: 
+  m_EditorClassIdentifier: 
   favoriteIngredients: []
   favoriteFlavors: 2
   charmThreshhold: 0
   rewardItem: {fileID: 0}
   amountRewardItem: 0
   rewardSFX: {fileID: 0}
+  dotTicLength: 1
+  electricFieldTemplate: {fileID: 0}
+  electricSFX: {fileID: 0}
   openSprite: {fileID: 21300000, guid: bb845e9291c79de4684f0ad9968031fd, type: 3}
   closedSprite: {fileID: 21300000, guid: a8543d15c6dd33644a46898228b2a896, type: 3}
   closeSFX: {fileID: 8300000, guid: f13efe24c57a8a646b381b95c4d8b24b, type: 3}
@@ -241,6 +244,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &312513975400222449
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7962710262201023957}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d3c67fe16ff77749bec36d914cf8ede, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7962710262321491439
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,8 +321,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0ac23e8f3f11d24895907c11060340d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7962710263343363444
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7962710263343363445}
-  - component: {fileID: 7962710263343363446}
+  - component: {fileID: 5096805298126880516}
   m_Layer: 12
   m_Name: Blocker
   m_TagString: Untagged
@@ -332,8 +354,8 @@ Transform:
   m_Father: {fileID: 7962710262201023953}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7962710263343363446
-BoxCollider2D:
+--- !u!70 &5096805298126880516
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -345,16 +367,6 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.028692245}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3, y: 3.69281}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.2}
+  m_Size: {x: 1.9, y: 1.73}
+  m_Direction: 1

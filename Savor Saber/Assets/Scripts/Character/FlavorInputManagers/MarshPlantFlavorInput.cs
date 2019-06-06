@@ -6,13 +6,14 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class MarshPlantFlavorInput : PlantFlavorInput
 {
-    BoxCollider2D boxCollider;
+    CapsuleCollider2D boxCollider;
     public Sprite openSprite;
     public Sprite closedSprite;
 
     public AudioClip closeSFX;
     public AudioClip openSFX;
     private AudioSource sfxPlayer;
+    private Animator marshAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,9 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        boxCollider = GetComponentInChildren<BoxCollider2D>();
+        boxCollider = GetComponentInChildren<CapsuleCollider2D>();
         sfxPlayer = GetComponent<AudioSource>();
+        marshAnimator = GetComponent<Animator>();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
@@ -31,8 +33,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
-            //isFed = true;
-            //OpenPlant();
+            isFed = true;
+            OpenPlant();
         }
     }
 
@@ -45,7 +47,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     // prevent player
     public override void ClosePlant()
     {
-        spriteRenderer.sprite = closedSprite;
+        //spriteRenderer.sprite = closedSprite;
+        marshAnimator.Play("Close");
         sfxPlayer.clip = closeSFX;
         sfxPlayer.Play();
         if (!isFed)
@@ -57,7 +60,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     // allow player through
     public override void OpenPlant()
     {
-        spriteRenderer.sprite = openSprite;
+        //spriteRenderer.sprite = openSprite;
+        marshAnimator.Play("Open");
         sfxPlayer.clip = openSFX;
         sfxPlayer.Play();
         if (isFed)
