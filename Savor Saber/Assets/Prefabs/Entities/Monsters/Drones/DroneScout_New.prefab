@@ -384,6 +384,9 @@ MonoBehaviour:
   Friends: []
   Enemies: []
   FoodPreference: 
+  updateAI: 0
+  updateBehavior: 1
+  rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &8402021785476282134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -417,6 +420,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   congaPosition: -1
@@ -477,13 +481,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotTicLength: 1
   favoriteIngredients: []
   favoriteFlavors: 0
   charmThreshhold: 1
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  dotTicLength: 1
+  electricFieldTemplate: {fileID: 0}
+  electricSFX: {fileID: 0}
   hasElectricField: 0
 --- !u!114 &7867367932957486398
 MonoBehaviour:
@@ -519,6 +525,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5347553831802167767}
     m_Modifications:
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -624,10 +635,15 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
-      propertyPath: m_Name
-      value: HealthBar
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
@@ -640,16 +656,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
