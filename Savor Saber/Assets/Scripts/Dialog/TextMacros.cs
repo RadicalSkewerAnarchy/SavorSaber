@@ -56,6 +56,7 @@ public class TextMacros : MonoBehaviour
             {"goalItem", GoalItemMacro },
             {"goalFruitant", GoalFruitantMacro },
             {"devourer", DevourerMacro },
+            {"weather", (args) => FlagManager.GetFlag("goal") == "desert" ? "snowfall" : "rainfall" },
             #region Character Name Shortcuts
             {"soma", (args) => ColorMacro("color","soma", "Soma") },
             {"mana", (args) => ColorMacro("color","mana", "Mana") },
@@ -127,7 +128,7 @@ public class TextMacros : MonoBehaviour
 
     public string DevourerMacro(params string[] args)
     {
-        return (FlagManager.GetFlag("goal") == "desert") ? "Chinchilla" : "Raindeer";
+        return (FlagManager.GetFlag("goal") == "desert") ? "ChinCHILLa" : "RAINdeer";
     }
 
     private Dictionary<KeyCode, string> controlMap = new Dictionary<KeyCode, string>()
