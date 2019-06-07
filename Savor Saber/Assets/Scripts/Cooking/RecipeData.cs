@@ -18,7 +18,7 @@ public class RecipeData : ScriptableObject
         Bitter = 4,
         Sour = 8,
         Salty = 16,
-        Savory = 32,
+        Umami = 32,
         Acquired = 64
     }
 

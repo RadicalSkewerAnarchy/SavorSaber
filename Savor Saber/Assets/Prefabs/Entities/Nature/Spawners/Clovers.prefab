@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7963531439961577820}
   - component: {fileID: 2601993576916334210}
   - component: {fileID: 330033052000891128}
+  - component: {fileID: 1222778677292646582}
   m_Layer: 13
   m_Name: Clovers
   m_TagString: ThrowThrough
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -133389985
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 459f726f0ac79cd468e9d4c41f3461a9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 726ca2b6c706f7d469d1586e1baae0c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,10 +97,10 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009276152, y: -0.13}
+  m_Offset: {x: 0.009276152, y: 0.25}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.5, y: 0.03125}
     oldSize: {x: 1, y: 1}
     newSize: {x: 6, y: 6}
     adaptiveTilingThreshold: 0.5
@@ -134,6 +135,8 @@ MonoBehaviour:
   wiggleTime: 2
   wiggleSpeed: 0.2
   wiggleAmplitude: 0.05
+  skewerable: 0
+  animateWhileAlive: 1
 --- !u!82 &330033052000891128
 AudioSource:
   m_ObjectHideFlags: 0
@@ -230,6 +233,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1222778677292646582
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8093637592404780649}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d26eba562679b3e449b0b83369d6a68b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &7497333318842313726
 PrefabInstance:
   m_ObjectHideFlags: 0

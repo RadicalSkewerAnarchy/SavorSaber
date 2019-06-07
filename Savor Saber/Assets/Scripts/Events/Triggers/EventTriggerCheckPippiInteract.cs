@@ -6,7 +6,8 @@ using System.Linq;
 [RequireComponent(typeof(Collider2D))]
 public class EventTriggerCheckPippiInteract : EventTrigger
 {
-    public string fruitantName;
+    public GameObject PippiPear;
+    public float threshold;
     public string successflagName;
     private bool playerInRange;
 
@@ -41,7 +42,6 @@ public class EventTriggerCheckPippiInteract : EventTrigger
     }
     public bool CheckParty()
     {
-        var data = player.GetComponent<PlayerData>();
-        return data.party.Any((g) => g.GetComponent<Monster>() != null && g.GetComponent<Monster>().displayName == fruitantName);
+        return Vector2.Distance(PippiPear.transform.position, player.transform.position) <= threshold;
     }
 }

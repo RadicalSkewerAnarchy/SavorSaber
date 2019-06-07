@@ -27,7 +27,7 @@ public class Skewer : IEnumerable<IngredientData>
         flavorCountDictionary.Add(RecipeData.Flavors.Sour, 0);
         flavorCountDictionary.Add(RecipeData.Flavors.Spicy, 0);
         flavorCountDictionary.Add(RecipeData.Flavors.Salty, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Savory, 0);
+        flavorCountDictionary.Add(RecipeData.Flavors.Umami, 0);
         flavorCountDictionary.Add(RecipeData.Flavors.Bitter, 0);
         flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
     }
@@ -41,7 +41,7 @@ public class Skewer : IEnumerable<IngredientData>
         flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
         flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
         flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Savory] = 0;
+        flavorCountDictionary[RecipeData.Flavors.Umami] = 0;
         flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
         flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
     }

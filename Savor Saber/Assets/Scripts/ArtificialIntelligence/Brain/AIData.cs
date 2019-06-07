@@ -87,6 +87,7 @@ public class AIData : CharacterData
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
     public bool updateAI = false;
+    public bool updateBehavior = true;
     public Vector3 rideVector;
     #endregion
     private void Start()
