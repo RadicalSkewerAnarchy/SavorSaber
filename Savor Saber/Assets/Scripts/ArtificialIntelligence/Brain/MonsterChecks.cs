@@ -24,7 +24,7 @@ public class MonsterChecks : MonoBehaviour
     /// Closest Friend and Closest Enemy for quick access
     /// </summary>
     GameObject ClosestFriendly;
-    GameObject ClosestEnemy;
+    public GameObject closestEnemy = null;
     float closestDistance;
 
     /// <summary>
@@ -71,7 +71,7 @@ public class MonsterChecks : MonoBehaviour
     }
     public int AwareHowManyEnemies()
     {
-        if (this.tag == "Predator")
+        if (this.tag == "Predator" || this.tag == "Player")
             return 0;
 
         List<GameObject> enemies = new List<GameObject>();
@@ -128,6 +128,7 @@ public class MonsterChecks : MonoBehaviour
                 close = dist;
                 closestCreature = Creature;
             }
+            if(closestCreature.tag == "Player" || closestCreature.tag == "Predator") closestEnemy = closestCreature;
         }
         //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
         return closestCreature;
