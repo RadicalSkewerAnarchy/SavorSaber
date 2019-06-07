@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class InfoDisplay : MonoBehaviour
 {
     public bool isMap = true;
-    public Canvas UICanvas;
+    private Canvas UICanvas;
 
     /// <summary>
     /// A UI Image showing whatever info you want to appear on-screen
@@ -27,7 +27,9 @@ public class InfoDisplay : MonoBehaviour
 
     void Start()
     {
-        audio = GetComponent<AudioSource>(); 
+        audio = GetComponent<AudioSource>();
+        //UICanvas = GetComponentInChildren<Canvas>();
+        UICanvas = GameObject.Find("DialogCanvas").GetComponent<Canvas>();
     }
 
 
@@ -47,7 +49,7 @@ public class InfoDisplay : MonoBehaviour
             infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
             infoBox.transform.SetParent(UICanvas.transform);
             infoBox.transform.localPosition = new Vector3(0, 0, 0);
-            infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            infoBox.transform.localScale = new Vector3(1f, 1f, 1f);
         }
         else if (showingInfo && infoToDisplay.Length > 1 && InputManager.GetButtonDown(Control.Left))
         {
@@ -59,7 +61,7 @@ public class InfoDisplay : MonoBehaviour
             infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
             infoBox.transform.SetParent(UICanvas.transform);
             infoBox.transform.localPosition = new Vector3(0, 0, 0);
-            infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            infoBox.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
     }
@@ -74,7 +76,7 @@ public class InfoDisplay : MonoBehaviour
             infoBox = Instantiate(infoToDisplay[infoIndex], new Vector3(0, 0, 0), Quaternion.identity);
             infoBox.transform.SetParent(UICanvas.transform);
             infoBox.transform.localPosition = new Vector3(0, 0, 0);
-            infoBox.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+            infoBox.transform.localScale = new Vector3(1f, 1f, 1f);
 
             //only use navigation arrows if this is displaying a map
             if (isMap)

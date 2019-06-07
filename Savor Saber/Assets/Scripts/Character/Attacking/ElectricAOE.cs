@@ -20,6 +20,9 @@ public class ElectricAOE : MonoBehaviour
     public int damagePerTic = 1;
     public float damageRate = 1.5f;
 
+    public AudioClip shockSFX;
+    private PlaySFX shockSFXPlayer;
+
     /// <summary>
     /// The number of seconds that the field can be disabled for
     /// </summary>
@@ -35,6 +38,7 @@ public class ElectricAOE : MonoBehaviour
         characterList = new List<CharacterData>();
         teslaAnimator = GetComponent<Animator>();
         teslaLight = GetComponentInChildren<Light>();
+        shockSFXPlayer = GetComponent<PlaySFX>();
     }
 
     // Update is called once per frame
@@ -61,6 +65,7 @@ public class ElectricAOE : MonoBehaviour
             StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
             Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
+            shockSFXPlayer.Play(shockSFX);
         }
         else if(active && hurtDrones && collision.gameObject.tag == "Predator")
         {
@@ -71,6 +76,7 @@ public class ElectricAOE : MonoBehaviour
             StopCoroutine(ExecuteAfterSeconds());
             DamageOverTime();
             Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
+            shockSFXPlayer.Play(shockSFX);
         }
     }
 
