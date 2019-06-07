@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-[RequireComponent(typeof(Text))]
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class DialogBoxAdaptivePrompt : MonoBehaviour
 {
 
-    private Text prompt;
+    private TextMeshProUGUI prompt;
     private bool controllerMode;
     // Start is called before the first frame update
     void Start()
     {
-        prompt = GetComponent<Text>();
+        prompt = GetComponent<TextMeshProUGUI>();
         controllerMode = InputManager.ControllerMode;
         SetPrompt(controllerMode);
     }
@@ -42,12 +43,12 @@ public class DialogBoxAdaptivePrompt : MonoBehaviour
     {
         if(controllerMode)
         {
-            prompt.text = "(A) ->";
+            prompt.text = TextMacros.instance.Parse("{control,interact}") + " ->";
             Debug.Log("Dialog box detects xbox controller");
         }
         else
         {
-            prompt.text = "(Space) ->";
+            prompt.text = TextMacros.instance.Parse("{control,interact}") + " ->";
             Debug.Log("Dialog box detects keyboard");
         }
     }

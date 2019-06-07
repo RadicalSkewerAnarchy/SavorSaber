@@ -175,7 +175,11 @@ public class TextMacros : MonoBehaviour
                     imgKey = controlMap[keySkewer];
                 break;
             case "throw":
-                imgKey = controlMap[keyBinds[Control.Throw]];
+                var keyThrow = keyBinds[Control.Throw];
+                if (keyThrow == KeyCode.None)
+                    imgKey = "JoyRT";
+                else
+                    imgKey = controlMap[keyThrow];
                 break;
             case "interact":
                 imgKey = controlMap[keyBinds[Control.Interact]];
