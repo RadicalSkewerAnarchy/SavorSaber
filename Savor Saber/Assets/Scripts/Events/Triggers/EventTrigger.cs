@@ -28,7 +28,7 @@ public class EventTrigger : MonoBehaviour
     {
         scene = GetComponent<EventGraph>();      
         plCon = PlayerController.instance;
-        player = plCon.gameObject;
+        player = plCon?.gameObject;
     }
     private void Start()
     {
@@ -38,6 +38,7 @@ public class EventTrigger : MonoBehaviour
     {
         if (IsActive)
             return;
+        InitializeBase();
         Debug.Log("Trigger Cutscene: " + name);
         BeforeEvent();
         StartCoroutine(PlayEvent());

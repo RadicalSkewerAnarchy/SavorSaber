@@ -44,12 +44,12 @@ public class DialogBoxAdaptivePrompt : MonoBehaviour
         if(controllerMode)
         {
             prompt.text = TextMacros.instance.Parse("{control,interact}") + " ->";
-            Debug.Log("Dialog box detects xbox controller");
+            //Debug.Log("Dialog box detects xbox controller");
         }
         else
         {
             prompt.text = TextMacros.instance.Parse("{control,interact}") + " ->";
-            Debug.Log("Dialog box detects keyboard");
+            //Debug.Log("Dialog box detects keyboard");
         }
     }
 }

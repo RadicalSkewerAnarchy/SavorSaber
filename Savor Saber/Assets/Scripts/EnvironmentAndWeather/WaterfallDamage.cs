@@ -21,7 +21,7 @@ public class WaterfallDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Object in waterfall");
+        //Debug.Log("Object in waterfall");
         if (collision.gameObject.tag == "Predator")
         {
             characterData = collision.gameObject.GetComponent<CharacterData>();

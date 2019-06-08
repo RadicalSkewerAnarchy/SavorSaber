@@ -51,7 +51,7 @@ public class FlagManager : MonoBehaviour
             return GlobalFlags[flag];
         else if(instance.flags.ContainsKey(flag))
             return instance.flags[flag];
-        Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"" + undefined + "\"");
+        //Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"" + undefined + "\"");
         return undefined;
     }
 }

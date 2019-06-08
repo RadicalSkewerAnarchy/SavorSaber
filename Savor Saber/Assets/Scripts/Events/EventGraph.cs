@@ -39,16 +39,15 @@ public class EventGraph : MonoBehaviour
         currNode = Graph.getStartNode();
     }
 
-    private IEnumerator Start()
+    private void Initialize()
     {
-        yield return new WaitWhile(() => PlayerController.instance == null);
         player = PlayerController.instance.gameObject;
-        if(_actors.ContainsKey("Soma"))
+        if (_actors.ContainsKey("Soma"))
         {
             _actors["Soma"] = player.GetComponent<DialogData>();
         }
         else
-            _actors.Add("Soma", player.GetComponent<DialogData>());       
+            _actors.Add("Soma", player.GetComponent<DialogData>());
     }
 
     #region Branching and graph traversal
@@ -101,6 +100,7 @@ public class EventGraph : MonoBehaviour
     /// <summary> Go through the graph, iterating through sequential events but returning events that should be waited for</summary>
     public IEnumerator Play()
     {
+        Initialize();
         lastNode = currNode;
         currNode = Next();
         while (currNode != null)
