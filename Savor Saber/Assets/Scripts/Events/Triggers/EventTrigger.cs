@@ -74,21 +74,14 @@ public class EventTrigger : MonoBehaviour
     }
 
     protected void DoCutscenePrep(bool start)
-    {
-        player.GetComponent<CameraController>().Detatched = start;
+    {       
         player.GetComponent<Rigidbody2D>().isKinematic = start;
         var attacks = player.GetComponents<AttackBase>();
         foreach (var attack in attacks)
             attack.enabled = !start;
-        var party = player.GetComponent<PlayerData>().party;
-        foreach (var partyMember in party)
-        {
-            var AI = partyMember.GetComponent<AIData>();
-            if (AI != null)
-                AI.updateAI = !start;
-        }
-        DisplayInventory.instance?.disableDuringCutscene.SetActive(!start);
+        DisplayInventory.instance?.disableDuringCutscene?.SetActive(!start);
         DayNightController.instance.Paused = start;
+        player.GetComponent<CameraController>().Detatched = start;
         InCutscene = start;
     }
 }

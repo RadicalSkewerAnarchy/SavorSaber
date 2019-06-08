@@ -11,7 +11,6 @@ public static class CutsceneNodeEvents
         var pNode = node as PanCameraNode;
         var target = actors.ContainsKey(pNode.target) ? actors[pNode.target].gameObject : dependencies[pNode.target];
         var cam = player.GetComponent<CameraController>();
-        cam.Detatched = true;
         switch (pNode.movementType)
         {
             case PanCameraNode.MoveType.Smoothed:

@@ -228,13 +228,13 @@ public class PlayerController : EntityController
             StopDash();
     }
 
-    private void StopDash()
+    private void StopDash(bool startRun = true)
     {
         freezeDirection = false;
         dashCurrTime = 0;
         dashing = false;
         animatorBody.SetBool("Dashing", false);
-        if(run == null)
+        if(run == null && startRun)
             run = StartCoroutine(runCR());
         if(rechargeDashes == null)
             rechargeDashes = StartCoroutine(rechargeDashesCR());

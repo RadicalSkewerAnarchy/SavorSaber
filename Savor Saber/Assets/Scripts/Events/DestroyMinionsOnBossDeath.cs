@@ -25,7 +25,7 @@ public class DestroyMinionsOnBossDeath : MonoBehaviour
             if(minion != null)
             {
                 minionData = minion.GetComponent<CharacterData>();
-                minionData.DoDamage(9999);
+                minionData?.DoDamage(9999);
             }
 
         }

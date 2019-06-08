@@ -94,7 +94,7 @@ public class CameraController : MonoBehaviour
     public IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
     {
         Vector2 currVelocity = Vector2.zero;
-        while (Vector2.Distance(camera.position, point) > 0.01f)
+        while (Vector2.Distance(camera.position, point) > 0.02f)
         {
             yield return new WaitForFixedUpdate();
             var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
