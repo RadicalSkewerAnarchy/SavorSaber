@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CreditClicker : MonoBehaviour
 {
     public List<GameObject> credits;
     public GameObject currentCredit;
     public int creditSequence = 0;
+    public string sceneName;
 
     public Transform stumpPosition;
     public float spacing = 0;
@@ -74,6 +76,11 @@ public class CreditClicker : MonoBehaviour
     void SetCredit()
     {
         Wiggle(currentCredit, false);
+        if(creditSequence >= credits.Count)
+        {
+            SceneManager.LoadScene(sceneName);
+            return;
+        }            
         currentCredit = credits[creditSequence];
         Wiggle(currentCredit, true);
     }
