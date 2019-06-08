@@ -36,6 +36,8 @@ public class FuitantMount : MonoBehaviour
         fruitantData = thisFruitant.GetComponent<AIData>();
         fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
+
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -58,6 +60,13 @@ public class FuitantMount : MonoBehaviour
             {
                 // if player dies, demount
                 if (playerData.health <= 0)
+                {
+                    Demount();
+                    return;
+                }
+
+                // if in cutscene, dmeount
+                if (EventTrigger.InCutscene)
                 {
                     Demount();
                     return;
@@ -92,6 +101,9 @@ public class FuitantMount : MonoBehaviour
     void Mount()
     {
         Debug.Log("Mounting");
+        audioSource.clip = mountSound;
+        audioSource.Play();
+
         // set fruitant data
         fruitantData.rideVector = new Vector2(0, 0);
         fruitantData.currentProtocol = AIData.Protocols.Ride;
@@ -110,6 +122,8 @@ public class FuitantMount : MonoBehaviour
     public void Demount()
     {
         Debug.Log("Demounting");
+        audioSource.clip = demountSound;
+        audioSource.Play();
 
         // set fruitant data
         fruitantData.currentProtocol = AIData.Protocols.Lazy;
