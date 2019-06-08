@@ -474,6 +474,7 @@ public partial class MonsterProtocols : MonoBehaviour
             }
             else
             {
+                Behaviour.MoveTo(drone.transform.position, 3f, 1f);
                 Melee(drone);
             }
         }

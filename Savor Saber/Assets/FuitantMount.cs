@@ -21,7 +21,7 @@ public class FuitantMount : MonoBehaviour
     private MonsterController fruitantController;
     private SpriteRenderer playerRenderer;
     private PlayerData playerData;
-    private bool mounted = false;
+    public bool mounted = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
 
@@ -36,9 +36,22 @@ public class FuitantMount : MonoBehaviour
         fruitantData = thisFruitant.GetComponent<AIData>();
         fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
+
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
+    private void Update()
+    {
+        if (mounted)
+        {
+            if (fruitantData.health <= 0)
+            {
+                Demount();
+            }
+        }
+    }
+
     void LateUpdate()
     {
         if (mountable)
@@ -52,8 +65,15 @@ public class FuitantMount : MonoBehaviour
                     return;
                 }
 
+                // if in cutscene, dmeount
+                if (EventTrigger.InCutscene)
+                {
+                    Demount();
+                    return;
+                }
+
                 // demount
-                if (InputManager.GetButtonDown(Control.Dash))
+                if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Demount();
                     return;
@@ -69,7 +89,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (InputManager.GetButtonDown(Control.Dash) && playerData.health > 0)
+                if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash) && playerData.health > 0)
                 {
                     Mount();
                     return;
@@ -81,6 +101,9 @@ public class FuitantMount : MonoBehaviour
     void Mount()
     {
         Debug.Log("Mounting");
+        audioSource.clip = mountSound;
+        audioSource.Play();
+
         // set fruitant data
         fruitantData.rideVector = new Vector2(0, 0);
         fruitantData.currentProtocol = AIData.Protocols.Ride;
@@ -96,9 +119,11 @@ public class FuitantMount : MonoBehaviour
         mounted = true;
     }
 
-    void Demount()
+    public void Demount()
     {
         Debug.Log("Demounting");
+        audioSource.clip = demountSound;
+        audioSource.Play();
 
         // set fruitant data
         fruitantData.currentProtocol = AIData.Protocols.Lazy;
@@ -110,6 +135,9 @@ public class FuitantMount : MonoBehaviour
         // change player layering
         playerRenderer.sortingLayerName = "Objects";
         playerRenderer.flipX = false;
+
+        // set player position
+        player.transform.position = thisFruitant.transform.position;
 
         // mounted
         mounted = false;
@@ -128,6 +156,8 @@ public class FuitantMount : MonoBehaviour
         if (collision.tag == "Player")
         {
             mountable = false;
+            if (mounted)
+                Demount();
         }
     }
 }

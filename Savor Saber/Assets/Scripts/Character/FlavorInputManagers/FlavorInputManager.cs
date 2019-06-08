@@ -15,6 +15,9 @@ public class FlavorInputManager : MonoBehaviour
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
+
+    // timers
+    public float charmTime = 0;
     #endregion
 
     #region Components
@@ -28,6 +31,7 @@ public class FlavorInputManager : MonoBehaviour
     public float dotTicLength = 1;
     private int electricBaseTime = 10;
     public GameObject electricFieldTemplate;
+    public GameObject saltShieldTemplate;
     public AudioClip electricSFX;
     private bool isElectric = false;
     #endregion
@@ -89,7 +93,7 @@ public class FlavorInputManager : MonoBehaviour
             // mod hunger
             if (characterData != null)
             {
-                characterData.InstantiateSignal(0.5f, "Hunger", -0.3f, false, true);
+                characterData.InstantiateSignal(0.5f, "Hunger", -0.5f, false, true);
             }
                 
 
@@ -188,14 +192,20 @@ public class FlavorInputManager : MonoBehaviour
         //handle sour
         if (flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
         {
-            if (favoriteFlavors != RecipeData.Flavors.Umami)
+            if (fedByPlayer)
             {
-                if (fedByPlayer && !isElectric)
-                {
-                    StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour]));
-                }
+                StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
             }
         }
+        //handle salty
+        if (flavorCountDictionary[RecipeData.Flavors.Salty] > 0)
+        {
+            if (fedByPlayer)
+            {
+                SaltyShield(favoriteFlavors == RecipeData.Flavors.Salty);
+            }
+        }
+
         // reset flavor dicts
         ResetDictionary();
     }
@@ -205,8 +215,10 @@ public class FlavorInputManager : MonoBehaviour
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CHARMED");
-        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 60f : 30f);
-        StartCharm(time);
+        StopCoroutine("ExecuteCharm");
+        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 40f : 20f);
+        charmTime += time;
+        StartCharm(charmTime);
         //characterData.DoDamage(-3);
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
@@ -261,8 +273,8 @@ public class FlavorInputManager : MonoBehaviour
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
         var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
-        int shots =   spice + spice*(favorite ? 3 : 2) + (spice == 3 ? 3 : 0);
-        int pellets = spice + (favorite ? 2 : 1) + (spice == 3 ? 1 : 0);
+        int shots = 3 + spice + (favorite ? 3 : 0);
+        int pellets = 1 + spice + (favorite ? 2 : 1);
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
@@ -299,8 +311,6 @@ public class FlavorInputManager : MonoBehaviour
                 projectileData.directionVector = dir;
                 projectileData.penetrateTargets = true;
                 projectileData.attacker = this.gameObject;
-                projectileData.projectileSpeed = 3f;
-                projectileData.range = 4f;
             }
             s--;
         }
@@ -329,6 +339,21 @@ public class FlavorInputManager : MonoBehaviour
         yield return null;
     }
     #endregion
+
+    #region SALT
+    protected void SaltyShield(bool favorite)
+    {
+        float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f); ;
+        
+        GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
+        shield.transform.parent = gameObject.transform;
+
+        SaltShield ss = shield.GetComponent<SaltShield>();
+        ss.fruit = this.gameObject;
+        ss.lifetime = time;
+    }
+    #endregion
+
 
     public void DamageOverTime(int numTics, float ticLength)
     {

@@ -23,7 +23,7 @@ public class AttackMeleeSkewer : AttackMelee
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        controller = GetComponent<EntityController>();
+        controller = GetComponent<PlayerController>();
     }
     
     private void Awake()
@@ -35,6 +35,9 @@ public class AttackMeleeSkewer : AttackMelee
 
     public override void Attack()
     {
+        if (controller.riding)
+            return;
+
         //animation stuff
         if (attackSound != null && audioSource != null)
         {

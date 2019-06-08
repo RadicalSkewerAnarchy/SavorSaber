@@ -15,7 +15,7 @@ public class AttackMelee : AttackBase
     /// <summary>
     /// Controllers to get direction state from
     /// </summary>
-    protected EntityController controller;
+    protected PlayerController controller;
     protected SpriteRenderer spriteRenderer;
     protected Animator animator;
 
@@ -73,7 +73,7 @@ public class AttackMelee : AttackBase
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        controller = GetComponent<EntityController>();
+        controller = GetComponent<PlayerController>();
     }
 
 
@@ -85,7 +85,7 @@ public class AttackMelee : AttackBase
 
     // Update is called once per frame
     void LateUpdate()
-    {     
+    {
         if (InputManager.GetButtonDown(control, axis))
         {
             //Get the first attack from dependecies that is attacking, else null
@@ -174,6 +174,9 @@ public class AttackMelee : AttackBase
 
     public override void Attack()
     {
+        if (controller.riding)
+            return;
+
         CanBeCanceled = true;
         //animation stuff
         if(attackSound != null && audioSource != null)
