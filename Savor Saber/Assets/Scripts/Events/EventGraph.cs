@@ -133,6 +133,15 @@ public class EventGraph : MonoBehaviour
                     routine = StartCoroutine(CutsceneNodeEvents.PanCamera(currNode as PanCameraNode, player, Actors, Dependencies));
                 else if (currNode is PlayUnityEventNode)
                     Events[(currNode as PlayUnityEventNode).eventName].Invoke();
+                else if (currNode is GoToSilenceNode)
+                    BGMManager.instance?.FadeBGMToSilence((currNode as GoToSilenceNode).fadeTime);
+                else if (currNode is SetBgmNode)
+                {
+                    var node = currNode as SetBgmNode;
+                    BGMManager.instance?.CrossFadeBgm(node.bgm, node.fadeTime);
+                }
+                else if (currNode is GoToAreaMusicNode)
+                    BGMManager.instance?.FadeToAreaSounds((currNode as GoToAreaMusicNode).fadeTime);
                 if ((currNode as CutsceneEventNode).waitUntilFinished)
                     yield return routine;
             }

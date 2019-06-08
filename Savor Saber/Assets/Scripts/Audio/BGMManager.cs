@@ -73,24 +73,28 @@ public class BGMManager : MonoBehaviour
         CrossFadeBgm(null, fadeTime);
     }
 
-    public void FadeToAreaSounds()
+    public void FadeToAreaSounds(float fadeTime = 3)
     {
         if(DayNightController.instance.IsDayTime)
         {
-            CrossFadeBgm(AreaBgmDay, 3);
-            CrossFadeBgs(AreaBgsDay, 3);
+            CrossFadeBgm(AreaBgmDay, fadeTime);
+            CrossFadeBgs(AreaBgsDay, fadeTime);
         }
         else
         {
-            CrossFadeBgm(AreaBgmNight, 3);
-            CrossFadeBgs(AreaBgsNight, 3);
+            CrossFadeBgm(AreaBgmNight, fadeTime);
+            CrossFadeBgs(AreaBgsNight, fadeTime);
         }
     }
 
     public void CrossFadeBgm(AudioClip song, float fadeTime = 3)
     {
         if (CurrBgmSource.volume < 1)
+        {
             bgmBuffer = song;
+            return;
+        }
+            
         FadeBgmSource.clip = song;
         FadeBgmSource.Play();
         StartCoroutine(CrossFadeBgmWithBuffer(CurrBgmSource, FadeBgmSource, fadeTime));
@@ -100,7 +104,11 @@ public class BGMManager : MonoBehaviour
     public void CrossFadeBgs(AudioClip song, float fadeTime = 3)
     {
         if (CurrBgsSource.volume < 1)
+        {
             bgmBuffer = song;
+            return;
+        }
+            
         FadeBgsSource.clip = song;
         FadeBgsSource.Play();
         StartCoroutine(CrossFadeBgsWithBuffer(CurrBgsSource, FadeBgsSource, fadeTime));

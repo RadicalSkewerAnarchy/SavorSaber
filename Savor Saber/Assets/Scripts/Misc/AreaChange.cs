@@ -24,6 +24,7 @@ public class AreaChange : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // Temp: disable area change during party
         if (CurrArea == area)
             return;
         BGMManager.instance.AreaBgmDay = dayMusic;
@@ -31,8 +32,11 @@ public class AreaChange : MonoBehaviour
         BGMManager.instance.AreaBgsDay = dayBgs;
         BGMManager.instance.AreaBgsNight = nightBgs;
 
-        BGMManager.instance.FadeToAreaSounds();
-        WeatherController.instance.Weather = weather;
+        if (FlagManager.GetFlag("party") != "true")
+        {
+            BGMManager.instance.FadeToAreaSounds();
+            WeatherController.instance.Weather = weather;
+        }
         DayNightController.instance.currWeather = lightProfile;
         CurrArea = area;
     }
