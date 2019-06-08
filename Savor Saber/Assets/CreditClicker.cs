@@ -40,7 +40,11 @@ public class CreditClicker : MonoBehaviour
             select = Mathf.Sign(select);
 
             creditSequence = (int)(creditSequence + select);
-            if (creditSequence >= credits.Count) creditSequence = 0;
+            if (creditSequence >= credits.Count)
+            {
+                SceneManager.LoadScene(sceneName);
+                return;
+            }
             else if (creditSequence < 0) creditSequence = credits.Count - 1;
 
             SetCredit();

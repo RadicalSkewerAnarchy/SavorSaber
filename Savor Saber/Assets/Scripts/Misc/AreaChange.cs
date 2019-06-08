@@ -31,11 +31,11 @@ public class AreaChange : MonoBehaviour
         BGMManager.instance.AreaBgmNight = nightMusic;
         BGMManager.instance.AreaBgsDay = dayBgs;
         BGMManager.instance.AreaBgsNight = nightBgs;
-
+        WeatherController.instance.Weather = weather;
         if (FlagManager.GetFlag("party") != "true")
         {
             BGMManager.instance.FadeToAreaSounds();
-            WeatherController.instance.Weather = weather;
+            
         }
         DayNightController.instance.currWeather = lightProfile;
         CurrArea = area;
