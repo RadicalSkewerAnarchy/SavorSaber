@@ -156,6 +156,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
+            if(!AiData.updateBehavior) return false;
             RigidBody.velocity = Vector2.ClampMagnitude(RigidBody.velocity + target, speed);       
             #endregion
             return false;
@@ -178,6 +179,7 @@ public class MonsterBehavior : MonoBehaviour
             target = (current - target);
             target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
+            if(!AiData.updateBehavior) return false;
             RigidBody.velocity = target;
             #endregion
             return false;

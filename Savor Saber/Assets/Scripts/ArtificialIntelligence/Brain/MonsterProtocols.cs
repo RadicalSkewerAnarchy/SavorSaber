@@ -228,10 +228,14 @@ public partial class MonsterProtocols : MonoBehaviour
             //Debug.Log(Checks.currentTile.name);
             if (Checks.NearestEnemyPosition() == Vector2.zero) return;
             //Debug.Log("Nearestenemy exists");
+            if(!creatureMoving){
+                Checks.closestEnemy = Checks.ClosestCreature();
+                StartCoroutine(CreatureFearDegrading());
+            }
             foreach (var neighbor in Checks.currentTile.neighbors)
             {
                 //Debug.Log("Tiles have neighbors");
-                var distance = Vector2.Distance(Checks.ClosestCreature().transform.position, neighbor.transform.position);
+                var distance = Vector2.Distance(Checks.closestEnemy.transform.position, neighbor.transform.position);
                 if(distance > maxDist)
                 {
                     maxDist = distance;
@@ -242,11 +246,12 @@ public partial class MonsterProtocols : MonoBehaviour
             {
                 //Debug.Log("Targettile is not null, tile id: " +targetTile.name);
                 //if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.EngageHostileThreshold)
-                if (Vector2.Distance(transform.position, Checks.NearestEnemyPosition()) <= AiData.Perception)
+                if (Vector2.Distance(transform.position, Checks.closestEnemy.transform.position) <= AiData.Perception)
                 {
                     Behaviour.MoveTo(targetTile.transform.position, AiData.Speed, 1.5f);
                 }
             }
+            //StartCoroutine(CreatureFearDegrading());
         }
 
         #endregion

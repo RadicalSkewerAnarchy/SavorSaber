@@ -56,7 +56,7 @@ public class RecipeDatabase : MonoBehaviour
         flavorToString.Add(RecipeData.Flavors.Sour, "Sour");
         flavorToString.Add(RecipeData.Flavors.Spicy, "Spicy");
         flavorToString.Add(RecipeData.Flavors.Salty, "Salty");
-        flavorToString.Add(RecipeData.Flavors.Savory, "Savory");
+        flavorToString.Add(RecipeData.Flavors.Umami, "Savory");
         flavorToString.Add(RecipeData.Flavors.Bitter, "Bitter");
         flavorToString.Add(RecipeData.Flavors.Acquired, "Acquired");
         flavorToString.Add(RecipeData.Flavors.None, "None");

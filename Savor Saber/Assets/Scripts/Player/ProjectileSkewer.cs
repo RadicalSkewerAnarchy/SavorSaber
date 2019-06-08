@@ -56,7 +56,7 @@ public class ProjectileSkewer : BaseProjectile
                 if (flavorInput != null)
                 {
                     Debug.Log("Flavor input of " + collision.gameObject + " not null");
-                    if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0 && !detonating)
+                    if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0 && !detonating)
                     {
                         detonating = true;
                         SetAOE();
@@ -88,6 +88,11 @@ public class ProjectileSkewer : BaseProjectile
                 {
                     SpawnDropsOnMiss();
                 }
+            }
+            if(collision.gameObject.tag == "Predator")
+            {
+                CharacterData cd = collision.gameObject.GetComponent<CharacterData>();
+                cd.DoDamage(1);
             }
             if (!penetrateTargets)
                 Destroy(this.gameObject);
@@ -129,7 +134,7 @@ public class ProjectileSkewer : BaseProjectile
         if (boomSFX != null)
             boomSFX.Play();
 
-        if (flavorCountDictionary[RecipeData.Flavors.Savory] > 0)
+        if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0)
         {
             ExplodeEffects();
         }
@@ -145,7 +150,7 @@ public class ProjectileSkewer : BaseProjectile
         }
 
         AOECircle.enabled = true;
-        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Savory] + 0.5f;
+        AOECircle.radius = flavorCountDictionary[RecipeData.Flavors.Umami] + 0.5f;
 
         transform.GetChild(1).transform.parent = transform.GetChild(0).transform;
         transform.GetChild(0).transform.parent = null;
@@ -156,13 +161,13 @@ public class ProjectileSkewer : BaseProjectile
     {
         Animator AOEAnimator = GetComponentInChildren<Animator>();
         ParticleSystem AOEParticles = GetComponentInChildren<ParticleSystem>();
-        if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Sweet)
+        if (GetMajorityFlavor(RecipeData.Flavors.Umami) == RecipeData.Flavors.Sweet)
             AOEAnimator.SetBool("ExplodeSweet", true);
-        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Spicy)
+        else if (GetMajorityFlavor(RecipeData.Flavors.Umami) == RecipeData.Flavors.Spicy)
             AOEAnimator.SetBool("ExplodeSpicy", true);
-        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Sour)
+        else if (GetMajorityFlavor(RecipeData.Flavors.Umami) == RecipeData.Flavors.Sour)
             AOEAnimator.SetBool("ExplodeSour", true);
-        else if (GetMajorityFlavor(RecipeData.Flavors.Savory) == RecipeData.Flavors.Salty)
+        else if (GetMajorityFlavor(RecipeData.Flavors.Umami) == RecipeData.Flavors.Salty)
             AOEAnimator.SetBool("ExplodeSalty", true);
         else
             AOEAnimator.SetBool("ExplodeSavory", true);

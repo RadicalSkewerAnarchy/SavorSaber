@@ -52,4 +52,11 @@ public partial class MonsterProtocols : MonoBehaviour
         runningCoRoutine = false;
     }
 
+    protected IEnumerator CreatureFearDegrading()
+    {
+        creatureMoving = true;
+        yield return new WaitForSeconds(3f);
+        creatureMoving = false;
+    }
+
 }

@@ -139,7 +139,8 @@ public class CameraController : MonoBehaviour
     /// <summary> Follows the player exactly </summary>
     private void FollowPlayer()
     {
-        camera.position = new Vector3(transform.position.x, transform.position.y, camera.position.z);
+        if(!shaking)
+            camera.position = new Vector3(transform.position.x, transform.position.y, camera.position.z);
     }
     /// <summary> Follows the player with a configurable deadzone </summary>
     private void FollowPlayerWithDeadZone()
@@ -193,9 +194,9 @@ public class CameraController : MonoBehaviour
         {
             Vector2 newPos = Random.insideUnitCircle * intensity;
             camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
-            if(wasDetatched && Detatched && ++count >= 5)
+            if(wasDetatched && Detatched && ++count >= 3)
             {
-                camera.position = originalPos;
+                camera.position = originalPos + new Vector3(newPos.x, newPos.y, 0);
                 count = 0;
             }
             yield return new WaitForEndOfFrame();
@@ -208,9 +209,9 @@ public class CameraController : MonoBehaviour
             Vector2 newPos = Random.insideUnitCircle * intensity;
             camera.position = camera.position + new Vector3(newPos.x, newPos.y, 0);
             intensity -= origIntensity / fadeTime * Time.deltaTime;
-            if (wasDetatched && Detatched && ++count >= 5)
+            if (wasDetatched && Detatched && ++count >= 3)
             {
-                camera.position = originalPos;
+                camera.position = originalPos + new Vector3(newPos.x, newPos.y, 0); ;
                 count = 0;
             }
             yield return new WaitForEndOfFrame();

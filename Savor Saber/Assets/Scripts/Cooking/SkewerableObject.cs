@@ -50,7 +50,7 @@ public class SkewerableObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Attached)
+        if (!Attached && decay)
         {
             //transform.position = Vector3.MoveTowards(transform.position, target, driftSpeed * Time.deltaTime);
             if (!flickering)

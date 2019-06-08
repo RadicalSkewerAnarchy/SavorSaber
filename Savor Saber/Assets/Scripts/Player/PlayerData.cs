@@ -27,7 +27,7 @@ public class PlayerData : CharacterData
     public override bool DoDamage(int damage)
     {
         bool dead = false;
-        CameraController.instance.Shake(0.05f, 0.3f, 0.1f);
+        CameraController.instance.Shake(0.01f, 0.02f, 0.1f);
         if (damage > 0)
         {
             if (Invincible)
