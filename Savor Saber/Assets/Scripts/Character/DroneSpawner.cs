@@ -59,6 +59,17 @@ public class DroneSpawner : MonoBehaviour
 
     private void Update()
     {
+        //when the devourer is fed, shut down all teleporters and destroy all their drones
+        if(FlagManager.GetFlag("party") == "true")
+        {
+            ShutOff();
+            CharacterData cd;
+            foreach(GameObject drone in droneArray)
+            {
+                cd = drone.GetComponent<CharacterData>();
+                cd.DoDamage(999999);
+            }
+        }
         //create an overlap test box that only checks default
         if (active)
         {
