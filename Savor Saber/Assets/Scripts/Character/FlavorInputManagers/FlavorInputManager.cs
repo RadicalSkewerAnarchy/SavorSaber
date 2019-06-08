@@ -31,6 +31,7 @@ public class FlavorInputManager : MonoBehaviour
     public float dotTicLength = 1;
     private int electricBaseTime = 10;
     public GameObject electricFieldTemplate;
+    public GameObject saltShieldTemplate;
     public AudioClip electricSFX;
     private bool isElectric = false;
     #endregion
@@ -273,7 +274,7 @@ public class FlavorInputManager : MonoBehaviour
         Debug.Log("CURRIED");
         var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
         int shots = 3 + spice + (favorite ? 3 : 0);
-        int pellets = spice + (favorite ? 2 : 1);
+        int pellets = 1 + spice + (favorite ? 2 : 1);
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
@@ -342,26 +343,14 @@ public class FlavorInputManager : MonoBehaviour
     #region SALT
     protected void SaltyShield(bool favorite)
     {
-        float time = (favorite ? 1 : 0);
-        StartCoroutine(StartShield(time));
-    }
+        float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f); ;
+        
+        GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
+        shield.transform.parent = gameObject.transform;
 
-
-    protected IEnumerator StartShield(float time)
-    {
-        Debug.Log("Shielded");
-        // set up and start shield
-        // get ready to stop it
-        StartCoroutine(StopShield(time));
-        yield return null;
-    }
-
-    protected IEnumerator StopShield(float time)
-    {
-        yield return new WaitForSeconds(time);
-        // stop shield
-        Debug.Log("no longer Shielded");
-        yield return null;
+        SaltShield ss = shield.GetComponent<SaltShield>();
+        ss.fruit = this.gameObject;
+        ss.lifetime = time;
     }
     #endregion
 
