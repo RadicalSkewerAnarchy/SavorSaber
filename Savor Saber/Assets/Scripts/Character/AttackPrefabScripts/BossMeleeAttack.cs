@@ -31,7 +31,7 @@ public class BossMeleeAttack : BaseMeleeAttack
         //monsterChecks.Enemies.Clear();
         GameObject g = collision.gameObject;
         string t = g.tag;
-        if (t == "Player" || t == "Prey")
+        if (t == "Prey")
         {            
             if(damageSFX != null)
                 sfxPlayer.PlayRandPitch(damageSFX);
@@ -41,8 +41,31 @@ public class BossMeleeAttack : BaseMeleeAttack
             {
                 if(myCharData != null)
                     myCharData.damageDealt += (int)meleeDamage;
-                if (charData.DoDamage((int)meleeDamage))
+                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
                     myCharData.entitiesKilled += 1;
+            }
+            Instantiate(knockbackTemplate, transform.position, Quaternion.identity);
+        }
+        else if(t == "Player")
+        {
+            if (damageSFX != null)
+                sfxPlayer.PlayRandPitch(damageSFX);
+            PlayerData charData = collision.gameObject.GetComponent<PlayerData>();
+            //Debug.Log("THERE IS CHARACTER COLLISION");
+            if (charData != null)
+            {
+                if (myCharData != null)
+                    myCharData.damageDealt += (int)meleeDamage;
+                if (ignoreIFrames)
+                {
+                    if (charData.DoDamageIgnoreIFrames((int)meleeDamage) && myCharData != null)
+                        myCharData.entitiesKilled += 1;
+                }
+                else
+                {
+                    if (charData.DoDamage((int)meleeDamage) && myCharData != null)
+                        myCharData.entitiesKilled += 1;
+                }              
             }
             Instantiate(knockbackTemplate, transform.position, Quaternion.identity);
         }

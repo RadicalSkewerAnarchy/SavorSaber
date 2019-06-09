@@ -69,6 +69,7 @@ public class MonsterBehavior : MonoBehaviour
     public float attackDuration = .5f;
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
+    public Vector2 meleeAttackDimensions = new Vector2(2,2);
     public bool isAttacking = false;
     public AudioClip meleeSFX;
     #endregion
@@ -250,7 +251,7 @@ public class MonsterBehavior : MonoBehaviour
             return true;
         }
 
-        AnimatorBody.Play("Idle");
+        //AnimatorBody.Play("Idle");
         return false;        
     }
     private IEnumerator MeleeDelay(Vector2 target, float speed)
@@ -262,7 +263,7 @@ public class MonsterBehavior : MonoBehaviour
         //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
         //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
         newAttack.transform.Rotate(target -(Vector2)this.transform.position);
-        newAttackCollider.size = new Vector2(1f, 3f);
+        newAttackCollider.size = meleeAttackDimensions;
         newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
     }
