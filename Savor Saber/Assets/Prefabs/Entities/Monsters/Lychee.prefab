@@ -265,7 +265,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Lychii
   deathSfx: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
-  deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  deathSfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
 --- !u!114 &5044536402581910261
 MonoBehaviour:
@@ -428,7 +428,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 1
   maxHealth: 4
   health: 4
   PartySize: 3
@@ -436,15 +436,15 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
+  initialFear: 1
   initialHunger: 0
   initialHostility: 0
-  initialFriendliness: 1
+  initialFriendliness: 0.5
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
-  healSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
+  healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
   damageParticleBurst: {fileID: 6492643962348078484}
   eatingParticleBurst: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
   ActionTimer: 0
-  ActionTimerReset: 10
+  ActionTimerReset: 2
   ActionTimerVariance: 2
   ResetTimer: 0
   ResetTimerReset: 0
@@ -528,10 +528,11 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
-  meleeAttackDuration: 0.5
-  meleeAttackDelay: 0.25
+  meleeAttackDuration: 3
+  meleeAttackDelay: 0
+  meleeAttackDimensions: {x: 1.5, y: 1.5}
   isAttacking: 0
-  meleeSFX: {fileID: 0}
+  meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!70 &935719807485298945
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -546,7 +547,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.019735396, y: 0}
-  m_Size: {x: 0.5, y: 0.5}
+  m_Size: {x: 0.66, y: 0.5}
   m_Direction: 0
 --- !u!114 &1706652330640328000
 MonoBehaviour:
@@ -589,12 +590,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   favoriteIngredients:
   - Mint
-  favoriteFlavors: 4
+  favoriteFlavors: 1
   charmThreshhold: 1
   rewardItem: {fileID: 1557260248, guid: 57039c589a6e7c844b2e4037253eb3d9, type: 3}
   amountRewardItem: 1
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   charmTime: 0
+  shieldSize: 1
   dotTicLength: 1
   electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}

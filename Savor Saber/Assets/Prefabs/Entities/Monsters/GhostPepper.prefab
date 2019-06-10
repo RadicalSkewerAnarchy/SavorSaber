@@ -31,8 +31,9 @@ Transform:
   - {fileID: 7810768935126910313}
   - {fileID: 6277408745481794814}
   - {fileID: 736666207974310381}
+  - {fileID: 765724673023321194}
   m_Father: {fileID: 5560342085740728572}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7662058140339396009
 GameObject:
@@ -77,7 +78,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 720595337567682984}
-  - {fileID: 765724673023321194}
   - {fileID: 6093369128323189037}
   - {fileID: 6340654556066151170}
   - {fileID: 4122594844222224467}
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: GhostPepper
   deathSfx: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
-  deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  deathSfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
 --- !u!114 &8300862948705326468
 MonoBehaviour:
@@ -337,7 +337,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 020000000800000006000000
+    _keys: 020000000700000006000000
     _values:
     - _keys:
       - Fear
@@ -390,15 +390,15 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     - _keys:
-      - Fear
+      - Friendliness
       _values:
       - serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 2
-          outSlope: 2
+          inSlope: 0
+          outSlope: 0
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -459,9 +459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   Perception: 8
-  MeleeAttackThreshold: 1
+  MeleeAttackThreshold: 0.5
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 1
   maxHealth: 15
   health: 15
   PartySize: 3
@@ -470,14 +470,14 @@ MonoBehaviour:
   damageDealt: 0
   entitiesKilled: 0
   initialFear: 0
-  initialHunger: 0
+  initialHunger: 0.25
   initialHostility: 0
-  initialFriendliness: 0
+  initialFriendliness: 0.25
   damageSFX: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
   damageParticleBurst: {fileID: 3991198677337551505}
   eatingParticleBurst: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
@@ -552,7 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
   ActionTimer: 0
-  ActionTimerReset: 10
+  ActionTimerReset: 5
   ActionTimerVariance: 2
   ResetTimer: 0
   ResetTimerReset: 0
@@ -561,10 +561,11 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
-  meleeAttackDuration: 0.5
-  meleeAttackDelay: 0.25
+  meleeAttackDuration: 1.5
+  meleeAttackDelay: 0
+  meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
-  meleeSFX: {fileID: 0}
+  meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!58 &2146767120013908669
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -580,7 +581,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.36}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.41
 --- !u!114 &7652353787555290133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,6 +630,7 @@ MonoBehaviour:
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   charmTime: 0
+  shieldSize: 1.5
   dotTicLength: 0.25
   electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
@@ -837,7 +839,7 @@ PrefabInstance:
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
@@ -962,7 +964,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5560342085740728572}
+    m_TransformParent: {fileID: 6340654556066151170}
     m_Modifications:
     - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
@@ -972,32 +974,32 @@ PrefabInstance:
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.24677896
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.98026145
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.03484609
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
@@ -1007,7 +1009,7 @@ PrefabInstance:
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
@@ -1268,7 +1270,7 @@ PrefabInstance:
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
@@ -1313,7 +1315,7 @@ PrefabInstance:
     - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.476
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 9064666117528399216, guid: 0583b091df470bd4c958b4e83716f488,
         type: 3}

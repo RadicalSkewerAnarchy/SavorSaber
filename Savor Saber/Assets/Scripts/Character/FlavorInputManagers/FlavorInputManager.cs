@@ -18,6 +18,7 @@ public class FlavorInputManager : MonoBehaviour
 
     // timers
     public float charmTime = 0;
+    public float shieldSize = 1;
     #endregion
 
     #region Components
@@ -343,10 +344,11 @@ public class FlavorInputManager : MonoBehaviour
     #region SALT
     protected void SaltyShield(bool favorite)
     {
-        float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f); ;
+        float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f);
         
         GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
         shield.transform.parent = gameObject.transform;
+        shield.transform.localScale = new Vector3(shieldSize, shieldSize);
 
         SaltShield ss = shield.GetComponent<SaltShield>();
         ss.fruit = this.gameObject;

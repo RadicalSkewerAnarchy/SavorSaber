@@ -376,8 +376,8 @@ MonoBehaviour:
   currentProtocol: 2
   path: []
   DecisionTimer: 0
-  DecisionTimerReset: 5
-  DecisionTimerVariance: 2
+  DecisionTimerReset: 1
+  DecisionTimerVariance: 0.2
   Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
@@ -451,6 +451,7 @@ MonoBehaviour:
   attackDuration: 3
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
+  meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!58 &1933951996701256598
@@ -487,8 +488,11 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  charmTime: 0
+  shieldSize: 1
   dotTicLength: 1
   electricFieldTemplate: {fileID: 0}
+  saltShieldTemplate: {fileID: 0}
   electricSFX: {fileID: 0}
   hasElectricField: 0
 --- !u!114 &7867367932957486398
@@ -635,16 +639,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -656,6 +650,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

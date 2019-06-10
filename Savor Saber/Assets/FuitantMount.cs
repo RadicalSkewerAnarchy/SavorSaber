@@ -73,6 +73,7 @@ public class FuitantMount : MonoBehaviour
                 }
 
                 // demount
+                //if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Demount();
@@ -89,7 +90,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash) && playerData.health > 0)
+                if (playerData.health > 0 && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Mount();
                     return;

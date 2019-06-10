@@ -300,7 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: PaddlePear
   deathSfx: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
-  deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  deathSfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
 --- !u!114 &5129380485292126785
 MonoBehaviour:
@@ -463,7 +463,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 2
   maxHealth: 12
   health: 12
   PartySize: 3
@@ -472,17 +472,17 @@ MonoBehaviour:
   damageDealt: 0
   entitiesKilled: 0
   initialFear: 0
-  initialHunger: 0
+  initialHunger: 1
   initialHostility: 0
-  initialFriendliness: 0.5
+  initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
-  damageParticleBurst: {fileID: 0}
-  eatingParticleBurst: {fileID: 0}
+  damageParticleBurst: {fileID: 9104267052077239286}
+  eatingParticleBurst: {fileID: 3001255141509056222}
   healthBar: {fileID: 2628503269000358483}
   currentBehavior: 0
   previousBehavior: 0
@@ -562,10 +562,11 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
-  meleeAttackDuration: 0.5
-  meleeAttackDelay: 0.25
+  meleeAttackDuration: 2
+  meleeAttackDelay: 0
+  meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
-  meleeSFX: {fileID: 0}
+  meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!70 &2766135195253760641
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -630,6 +631,7 @@ MonoBehaviour:
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   charmTime: 0
+  shieldSize: 1
   dotTicLength: 0.3
   electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
@@ -788,6 +790,12 @@ PrefabInstance:
 --- !u!4 &4871533744204504333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
+    type: 3}
+  m_PrefabInstance: {fileID: 949843241222598460}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &9104267052077239286 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8319942642036876490, guid: 8810df0ddde908745878a508b9576c92,
     type: 3}
   m_PrefabInstance: {fileID: 949843241222598460}
   m_PrefabAsset: {fileID: 0}
@@ -1135,6 +1143,12 @@ PrefabInstance:
 --- !u!4 &3466282883975368378 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
+    type: 3}
+  m_PrefabInstance: {fileID: 3945136498283337805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3001255141509056222 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
     type: 3}
   m_PrefabInstance: {fileID: 3945136498283337805}
   m_PrefabAsset: {fileID: 0}

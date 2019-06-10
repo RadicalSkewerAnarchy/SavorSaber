@@ -56,7 +56,8 @@ public class AIData : CharacterData
         Conga,
         Chase,
         Wander,
-        Ride
+        Ride,
+        Scare
     }
     #endregion
     public Protocols currentProtocol = Protocols.Lazy;
@@ -276,8 +277,11 @@ public class AIData : CharacterData
                 break;
             // ride
             case Protocols.Ride:
-                Debug.Log(rideVector);
                 Protocol.Chase(rideVector);
+                break;
+            // scare
+            case Protocols.Scare:
+                Protocol.Scare();
                 break;
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");

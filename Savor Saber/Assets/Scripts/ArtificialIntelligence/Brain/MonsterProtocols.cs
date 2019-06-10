@@ -228,7 +228,8 @@ public partial class MonsterProtocols : MonoBehaviour
             //Debug.Log(Checks.currentTile.name);
             if (Checks.NearestEnemyPosition() == Vector2.zero) return;
             //Debug.Log("Nearestenemy exists");
-            if(!creatureMoving){
+            if(!creatureMoving)
+            {
                 Checks.closestEnemy = Checks.ClosestCreature();
                 StartCoroutine(CreatureFearDegrading());
             }
@@ -292,7 +293,7 @@ public partial class MonsterProtocols : MonoBehaviour
     // used for ride protocol
     public void Chase(Vector3 go)
     {
-        Behaviour.MoveTo(this.transform.position + go, AiData.Speed * 4, 0.5f);
+        Behaviour.MoveTo(this.transform.position + go*10, 4 + AiData.Speed * AiData.Speed, 0.1f);
     }
 
     public void NavChase()
@@ -388,7 +389,7 @@ public partial class MonsterProtocols : MonoBehaviour
         if (cDrop != null)
         {
             // go to the nearest drop
-            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
+            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 0.5f))
             {
                 Behaviour.Feed(cDrop);
             }
@@ -410,7 +411,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (cHittable != null)
                 Melee(cHittable);
             else
-                Wander(10f, 10f);
+                Wander(5f, 5f);
         }
     }
     public void NavFeast()
@@ -422,7 +423,7 @@ public partial class MonsterProtocols : MonoBehaviour
         if (cDrop != null)
         {
             // go to the nearest drop
-            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
+            if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 0.5f))
             {
                 Behaviour.Feed(cDrop);
             }
@@ -444,7 +445,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (cHittable != null)
                 Melee(cHittable);
             else
-                Wander(10f, 10f);
+                Wander(5f, 5f);
         }
     }
 
@@ -507,6 +508,19 @@ public partial class MonsterProtocols : MonoBehaviour
         if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
         {
             if (Behaviour.Console())
+            {
+                Wander(2f, 2f);
+            }
+        }
+    }
+    public void Scare()
+    {
+        #region Get Nearest + Null Checks
+        Vector2 pos = Checks.AverageGroupPosition();
+        #endregion
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        {
+            if (Behaviour.Scare())
             {
                 Wander(2f, 2f);
             }

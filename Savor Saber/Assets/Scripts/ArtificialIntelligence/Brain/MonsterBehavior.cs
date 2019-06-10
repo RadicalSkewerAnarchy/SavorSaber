@@ -121,7 +121,7 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Idle()
     {
-        AnimatorBody.Play("Idle");
+        //AnimatorBody.Play("Idle");
         AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
@@ -245,7 +245,7 @@ public class MonsterBehavior : MonoBehaviour
             AiData.currentBehavior = AIData.Behave.Attack;
             AnimatorBody.Play("Melee");
             if (meleeSFX != null)
-                sfxPlayer.Play(meleeSFX);
+                Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(meleeSFX);
             StartCoroutine(MeleeDelay(target, speed));
             #endregion
             return true;
@@ -262,9 +262,9 @@ public class MonsterBehavior : MonoBehaviour
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
         //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
         //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
-        newAttack.transform.Rotate(target -(Vector2)this.transform.position);
         newAttackCollider.size = meleeAttackDimensions;
-        newAttackCollider.transform.position += new Vector3(0, this.GetComponent<Collider2D>().offset.y, 0);
+        newAttackCollider.transform.position += new Vector3(this.GetComponent<Collider2D>().offset.x, this.GetComponent<Collider2D>().offset.y, 0);
+        newAttack.transform.Rotate(target - (Vector2)this.transform.position);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
     }
 
@@ -329,6 +329,29 @@ public class MonsterBehavior : MonoBehaviour
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
             AiData.InstantiateSignal(2f, "Fear", -0.25f, true, true);
+            ResetActionTimer();
+            return true;
+        }
+        else
+        {
+            ActionTimer -= Time.deltaTime;
+            return false;
+        }
+    }
+    /// <summary>
+    /// Spawns one friend signal per action
+    /// </summary>
+    public bool Scare()
+    {
+        AnimatorBody.Play("Socialize");
+        AiData.currentBehavior = AIData.Behave.Console;
+        if (ActionTimer < 0)
+        {
+            // create signal 
+            // change signal radius
+            // change signal values (--fear)
+            //Debug.Log("Instantiating Calming Signal");
+            AiData.InstantiateSignal(3f, "Fear", 0.25f, true, false);
             ResetActionTimer();
             return true;
         }

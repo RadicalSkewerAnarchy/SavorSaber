@@ -94,12 +94,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4998334802170643234}
   - component: {fileID: 4998334802170643235}
-  - component: {fileID: 4998334802170643232}
   - component: {fileID: 4998334802170643233}
   - component: {fileID: 6835986143875154485}
   - component: {fileID: 1530869601793549384}
   - component: {fileID: 5667048519666571936}
   - component: {fileID: 6028689652857706469}
+  - component: {fileID: 179689731025207165}
   m_Layer: 11
   m_Name: TeslaRingFruitant
   m_TagString: Untagged
@@ -170,22 +170,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &4998334802170643232
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4998334802170643246}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.8, y: 2.47}
-  m_Direction: 1
 --- !u!114 &4998334802170643233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,9 +185,9 @@ MonoBehaviour:
   hurtPlayer: 0
   hurtDrones: 1
   damagePerTic: 1
-  damageRate: 0.25
+  damageRate: 0.15
   shockSFX: {fileID: 8300000, guid: 85288a9423ec05b42a9a6ff635f9d162, type: 3}
-  disruptiontime: 5
+  disruptiontime: 2
   sparkTemplate: {fileID: 4415573733315086686, guid: 63ddcb3db00acb54c85dbc3ae885ac0d,
     type: 3}
 --- !u!114 &6835986143875154485
@@ -348,3 +332,19 @@ MonoBehaviour:
   sfx: {fileID: 0}
   sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
+--- !u!58 &179689731025207165
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998334802170643246}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5

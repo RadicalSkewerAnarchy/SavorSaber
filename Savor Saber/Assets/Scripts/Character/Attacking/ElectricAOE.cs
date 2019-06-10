@@ -101,6 +101,9 @@ public class ElectricAOE : MonoBehaviour
         bool killingBlow = false;
         foreach(CharacterData characterData in characterList)
         {
+            if (characterData == null)
+                continue;
+
             //test to see if this tic will inflict a killing blow
             if (characterData.health - damagePerTic <= 0)
                 killingBlow = true;
