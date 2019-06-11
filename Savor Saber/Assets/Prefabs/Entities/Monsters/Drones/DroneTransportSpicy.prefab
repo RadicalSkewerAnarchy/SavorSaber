@@ -5738,6 +5738,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
   congaPosition: -1
@@ -5768,6 +5769,7 @@ MonoBehaviour:
   attackDuration: 1
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
+  meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!114 &3569204672405749644
@@ -5788,8 +5790,11 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  charmTime: 0
+  shieldSize: 1
   dotTicLength: 1
   electricFieldTemplate: {fileID: 0}
+  saltShieldTemplate: {fileID: 0}
   electricSFX: {fileID: 0}
   hasElectricField: 0
 --- !u!114 &2847023796671905669
@@ -5836,7 +5841,7 @@ MonoBehaviour:
   - {fileID: 4084962922675323153, guid: 6f1df305f5f9049458a06a9f59f94b82, type: 3}
   - {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5, type: 3}
   randomSelection: 1
-  randomItemCount: 4
+  randomItemCount: 2
 --- !u!61 &2842906242606849659
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5870,11 +5875,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6273001655825436511}
     m_Modifications:
-    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
-        type: 3}
-      propertyPath: m_Name
-      value: Shadow
-      objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5944,6 +5944,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.543036
+      objectReference: {fileID: 0}
+    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609cf543f670ded479a520ca2f15dcbe, type: 3}
