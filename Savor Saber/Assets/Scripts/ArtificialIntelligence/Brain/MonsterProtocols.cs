@@ -151,6 +151,38 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         else Behaviour.RangedAttack(pos, AiData.Speed);
     }
+    public void Ranged(GameObject target)
+    {
+        #region Get Nearest + Null Check
+        Vector2 pos;
+        if (target != null)
+        {
+            pos = target.transform.position;
+        }
+        else
+        {
+            return;
+        }
+        #endregion
+        var rat = AiData.RangeAttackThreshold;
+        var eht = AiData.EngageHostileThreshold;
+        var engage = CheckRangedThreshold(pos, rat, eht);
+        if (engage < 0)
+        {
+            if (Behaviour.MoveFrom(pos, AiData.Speed, rat - eht))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+        else if (engage > 0)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, rat + eht))
+            {
+                Behaviour.RangedAttack(pos, AiData.Speed);
+            }
+        }
+        else Behaviour.RangedAttack(pos, AiData.Speed);
+    }
     public void NavRanged()
     {
         #region Get Nearest + Null Check
@@ -270,10 +302,10 @@ public partial class MonsterProtocols : MonoBehaviour
         else
             pos = transform.position;
         #endregion
-        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
-        {
-            Wander(2f, 2f);
-        }
+        Behaviour.MoveTo(pos, AiData.Speed, 0.5f);
+        //{
+        //    Wander(2f, 2f);
+        //}
     }
     public void Chase(GameObject ch)
     {
@@ -380,13 +412,13 @@ public partial class MonsterProtocols : MonoBehaviour
     /// <summary>
     /// Checks surroundings, if there is a drop move to it and eat it, if there aren't any drops attack nearest prey
     /// </summary>
-    public void Feast()
+    public void Feast(bool melee)
     {
         #region Surroundings
         GameObject cDrop = Checks.ClosestDrop();
         GameObject cHittable;
         #endregion
-        if (cDrop != null)
+        if (cDrop != null && this.tag != "Predator")
         {
             // go to the nearest drop
             if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 0.5f))
@@ -404,16 +436,24 @@ public partial class MonsterProtocols : MonoBehaviour
             }
             else
             {
-                cHittable = Checks.ClosestCreature();
+                cHittable = Checks.ClosestPrey();
+                if (cHittable == null)
+                    cHittable = Checks.ClosestPlant();
             }
 
             // go to the nearest drop
             if (cHittable != null)
-                Melee(cHittable);
+            {
+                if (melee)
+                    Melee(cHittable);
+                else
+                    Ranged(cHittable);
+            }
             else
                 Wander(5f, 5f);
         }
     }
+
     public void NavFeast()
     {
         #region Surroundings

@@ -133,6 +133,32 @@ public class MonsterChecks : MonoBehaviour
         //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
         return closestCreature;
     }
+    public GameObject ClosestPrey()
+    {
+        #region Initialize closest vars
+        float close = closestDistance;
+        GameObject closestCreature = null;
+        #endregion
+        foreach (GameObject Creature in AllCreatures)
+        {
+            // Debug.Log("Checking creatures");
+            #region Check if Creature Deleted
+            if (Creature == null || Creature.tag == "Predator")
+            {
+                continue;
+            }
+            #endregion
+            float dist = Vector2.Distance(transform.position, Creature.transform.position);
+            if (dist < close)
+            {
+                //Debug.Log("Closest is found");
+                close = dist;
+                closestCreature = Creature;
+            }
+        }
+        //if (closestCreature != null) { Debug.Log("Closest Creature Name: " + closestCreature.name); }
+        return closestCreature;
+    }
 
 
     /// <summary>
