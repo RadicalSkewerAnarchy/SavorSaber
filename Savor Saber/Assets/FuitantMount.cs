@@ -22,8 +22,15 @@ public class FuitantMount : MonoBehaviour
     private SpriteRenderer playerRenderer;
     private PlayerData playerData;
     public bool mounted = false;
+    public bool demounting = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
+
+    // lerping
+    private Vector3 mountStart;
+    private Vector3 mountEnd;
+    private float leapLerp = 0;
+
 
 
     // Start is called before the first frame update
@@ -50,6 +57,55 @@ public class FuitantMount : MonoBehaviour
                 Demount();
             }
         }
+    }
+
+    void Mount()
+    {
+        Debug.Log("Mounting");
+        audioSource.clip = mountSound;
+        audioSource.Play();
+
+        // set fruitant data
+        fruitantData.rideVector = new Vector2(0, 0);
+        fruitantData.currentProtocol = AIData.Protocols.Ride;
+
+        // enable riding
+        controller.riding = true;
+        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
+
+        // change player layering
+        playerRenderer.sortingLayerName = "AboveObjects";
+
+        // set lerps
+        leapLerp = 0;
+        mountStart = player.transform.position;
+        mountEnd = this.transform.position;
+
+        // mounted
+        mounted = true;
+        demounting = false;
+    }
+
+    public void Demount()
+    {
+        Debug.Log("Demounting");
+        audioSource.clip = demountSound;
+        audioSource.Play();
+
+        // set fruitant data
+        fruitantData.currentProtocol = AIData.Protocols.Lazy;
+        
+        // change player layering
+        playerRenderer.flipX = false;
+
+        // set lerps
+        leapLerp = 0;
+        mountEnd = this.transform.position - new Vector3(0, 0.5f);
+        mountStart = player.transform.position;
+
+        // mounted
+        mounted = false;
+        demounting = true;
     }
 
     void LateUpdate()
@@ -84,64 +140,44 @@ public class FuitantMount : MonoBehaviour
                 fruitantData.rideVector = controller.GetMovementVector();
 
                 // move player to here
-                player.transform.position = this.transform.position;
+                mountEnd = this.transform.position;
+                if (leapLerp >= 1.0)
+                {
+                    player.transform.position = mountEnd;
+                }
+                else
+                {
+                    leapLerp += Time.deltaTime * 4;
+                    player.transform.position = Vector3.Lerp(mountStart, mountEnd, leapLerp);
+                }
+
+                // flip player
                 playerRenderer.flipX = (fruitantController.invert ? fruitantRenderer.flipX : !fruitantRenderer.flipX);
 
             }
             else
             {
-                if (playerData.health > 0 && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
+                if (playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))//InputManager.GetAxis(InputAxis.Dash) > 0.9)
                 {
                     Mount();
                     return;
                 }
             }
         }
-    }
 
-    void Mount()
-    {
-        Debug.Log("Mounting");
-        audioSource.clip = mountSound;
-        audioSource.Play();
-
-        // set fruitant data
-        fruitantData.rideVector = new Vector2(0, 0);
-        fruitantData.currentProtocol = AIData.Protocols.Ride;
-
-        // enable riding
-        controller.riding = true;
-        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
-
-        // change player layering
-        playerRenderer.sortingLayerName = "AboveObjects";
-
-        // mounted
-        mounted = true;
-    }
-
-    public void Demount()
-    {
-        Debug.Log("Demounting");
-        audioSource.clip = demountSound;
-        audioSource.Play();
-
-        // set fruitant data
-        fruitantData.currentProtocol = AIData.Protocols.Lazy;
-
-        // disable riding
-        controller.riding = false;
-        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
-
-        // change player layering
-        playerRenderer.sortingLayerName = "Objects";
-        playerRenderer.flipX = false;
-
-        // set player position
-        player.transform.position = thisFruitant.transform.position;
-
-        // mounted
-        mounted = false;
+        // when the player hops off
+        if (demounting && leapLerp < 2f)
+        {
+            leapLerp += Time.deltaTime * 4;
+            player.transform.position = Vector3.Lerp(mountStart, mountEnd, leapLerp);
+            if (leapLerp >= 1)
+            {
+                demounting = false;
+                controller.riding = false;
+                playerRenderer.sortingLayerName = "Objects";
+                Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
