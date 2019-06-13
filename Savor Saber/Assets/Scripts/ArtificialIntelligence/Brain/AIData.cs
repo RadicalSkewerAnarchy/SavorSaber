@@ -89,6 +89,7 @@ public class AIData : CharacterData
     #endregion
     public bool updateAI = false;
     public bool updateBehavior = true;
+    public bool meleeHunter = true;
     public Vector3 rideVector;
     #endregion
     private void Start()
@@ -253,7 +254,7 @@ public class AIData : CharacterData
                 break;
             // feast
             case Protocols.Feast:
-                Protocol.Feast();
+                Protocol.Feast(meleeHunter);
                 break;
             // console
             case Protocols.Console:
