@@ -15,12 +15,12 @@ public class FuitantMount : MonoBehaviour
     private AudioSource audioSource;
 
     // player refs
-    private GameObject player;
-    private PlayerController controller;
-    private SpriteRenderer fruitantRenderer;
-    private MonsterController fruitantController;
-    private SpriteRenderer playerRenderer;
-    private PlayerData playerData;
+    public GameObject player;
+    public PlayerController controller;
+    public SpriteRenderer fruitantRenderer;
+    public MonsterController fruitantController;
+    public SpriteRenderer playerRenderer;
+    public PlayerData playerData;
     public bool mounted = false;
     public bool demounting = false;
     private bool mountable = false;
@@ -50,13 +50,6 @@ public class FuitantMount : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (mounted)
-        {
-            if (fruitantData.health <= 0)
-            {
-                Demount();
-            }
-        }
     }
 
     void Mount()
@@ -129,7 +122,6 @@ public class FuitantMount : MonoBehaviour
                 }
 
                 // demount
-                //if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Demount();
