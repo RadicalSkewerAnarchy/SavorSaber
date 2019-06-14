@@ -21,6 +21,7 @@ public class FuitantMount : MonoBehaviour
     public MonsterController fruitantController;
     public SpriteRenderer playerRenderer;
     public PlayerData playerData;
+    public ParticleSystem dust;
     public bool mounted = false;
     public bool demounting = false;
     private bool mountable = false;
@@ -43,6 +44,8 @@ public class FuitantMount : MonoBehaviour
         fruitantData = thisFruitant.GetComponent<AIData>();
         fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
+
+        dust = player.GetComponentInChildren<ParticleSystem>();
 
         audioSource = this.GetComponent<AudioSource>();
     }
@@ -77,6 +80,9 @@ public class FuitantMount : MonoBehaviour
         // mounted
         mounted = true;
         demounting = false;
+
+        // dust
+        dust.Play();
     }
 
     public void Demount()
@@ -90,10 +96,11 @@ public class FuitantMount : MonoBehaviour
         
         // change player layering
         playerRenderer.flipX = false;
+        controller.riding = false;
 
         // set lerps
         leapLerp = 0;
-        mountEnd = this.transform.position - new Vector3(0, 0.5f);
+        mountEnd = this.transform.position - new Vector3(0, 1);
         mountStart = player.transform.position;
 
         // mounted
@@ -165,9 +172,11 @@ public class FuitantMount : MonoBehaviour
             if (leapLerp >= 1)
             {
                 demounting = false;
-                controller.riding = false;
                 playerRenderer.sortingLayerName = "Objects";
                 Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
+
+                // dust
+                dust.Play();
             }
         }
     }
