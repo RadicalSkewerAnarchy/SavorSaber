@@ -50,11 +50,6 @@ public class FuitantMount : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-
     void Mount()
     {
         Debug.Log("Mounting");
@@ -108,7 +103,7 @@ public class FuitantMount : MonoBehaviour
         demounting = true;
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (mountable)
         {
@@ -156,7 +151,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))//InputManager.GetAxis(InputAxis.Dash) > 0.9)
+                if (playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash)) //InputManager.GetAxis(InputAxis.Dash) > 0.9)
                 {
                     Mount();
                     return;
