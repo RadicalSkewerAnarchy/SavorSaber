@@ -54,7 +54,6 @@ GameObject:
   - component: {fileID: 7041192750509561543}
   - component: {fileID: 6200914736954225294}
   - component: {fileID: 2987118065909645386}
-  - component: {fileID: 801385354610976386}
   - component: {fileID: 6230704303760914807}
   - component: {fileID: 2817615788990947547}
   - component: {fileID: 4359577745095520159}
@@ -465,7 +464,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 2
   maxHealth: 20
   health: 20
   PartySize: 3
@@ -566,25 +565,11 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
-  meleeAttackDuration: 0.5
-  meleeAttackDelay: 0.25
-  meleeAttackDimensions: {x: 2, y: 2}
+  meleeAttackDuration: 1
+  meleeAttackDelay: 0
+  meleeAttackDimensions: {x: 3, y: 3}
   isAttacking: 0
-  meleeSFX: {fileID: 0}
---- !u!114 &801385354610976386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885113460597749827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84078e1ff25819c469ecf0e294516541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _direction: 0
-  invert: 1
+  meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!114 &6230704303760914807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,14 +611,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   favoriteIngredients:
   - Wheat
-  favoriteFlavors: 1
+  favoriteFlavors: 16
   charmThreshhold: 1
   rewardItem: {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5,
     type: 3}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   charmTime: 0
-  shieldSize: 1
+  shieldSize: 2
   dotTicLength: 0.3
   electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
@@ -886,37 +871,32 @@ PrefabInstance:
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5721304028588265373, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02960aaddb3d56c4a8cfba7bca8052d0, type: 3}
@@ -1125,6 +1105,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3226808929409767639}
     m_Modifications:
+    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1184,11 +1169,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 1.4025921
-      objectReference: {fileID: 0}
-    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
-        type: 3}
-      propertyPath: m_Name
-      value: Shadow (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609cf543f670ded479a520ca2f15dcbe, type: 3}

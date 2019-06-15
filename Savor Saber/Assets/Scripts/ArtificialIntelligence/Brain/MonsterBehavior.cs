@@ -148,6 +148,9 @@ public class MonsterBehavior : MonoBehaviour
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
             AnimatorBody.Play("Idle");
+
+            //AiData.path.Clear();
+
             return true;
         }
         else
@@ -236,7 +239,7 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// If you're not attacking, make attack collider and attack
     /// </summary>
-    public bool MeleeAttack(Vector2 target, float speed)
+    public bool MeleeAttack(Vector2 target)
     {
         if (!isAttacking)
         {
@@ -246,7 +249,7 @@ public class MonsterBehavior : MonoBehaviour
             AnimatorBody.Play("Melee");
             if (meleeSFX != null)
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(meleeSFX);
-            StartCoroutine(MeleeDelay(target, speed));
+            StartCoroutine(MeleeDelay(target));
             #endregion
             return true;
         }
@@ -254,7 +257,7 @@ public class MonsterBehavior : MonoBehaviour
         //AnimatorBody.Play("Idle");
         return false;        
     }
-    private IEnumerator MeleeDelay(Vector2 target, float speed)
+    private IEnumerator MeleeDelay(Vector2 target)
     {
         yield return new WaitForSeconds(meleeAttackDelay);
 

@@ -76,7 +76,7 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
-        Debug.Log("Skewer of size " + ingredientArray.Length);
+        //Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
@@ -233,6 +233,9 @@ public class FlavorInputManager : MonoBehaviour
         MonsterChecks check = characterData.getChecks();
         // initiate conga
         characterData.currentProtocol = AIData.Protocols.Conga;
+
+        if (characterData.path != null)
+            characterData.path.Clear();
         // set leader to Soma
         check.specialLeader = PlayerController.instance.gameObject;
         // add self to player's party

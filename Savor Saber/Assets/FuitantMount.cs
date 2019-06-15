@@ -12,7 +12,7 @@ public class FuitantMount : MonoBehaviour
     public AudioClip mountSound;
     public AudioClip demountSound;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     // player refs
     public GameObject player;
@@ -28,8 +28,8 @@ public class FuitantMount : MonoBehaviour
     private bool fruitantEnabled = false;
 
     // lerping
-    private Vector3 mountStart;
-    private Vector3 mountEnd;
+    public Vector3 mountStart;
+    public Vector3 mountEnd;
     private float leapLerp = 0;
 
 
@@ -95,7 +95,7 @@ public class FuitantMount : MonoBehaviour
 
         // set lerps
         leapLerp = 0;
-        mountEnd = this.transform.position - new Vector3(0, 1);
+        mountEnd = this.transform.position - new Vector3(0, 1.25f);
         mountStart = player.transform.position;
 
         // mounted

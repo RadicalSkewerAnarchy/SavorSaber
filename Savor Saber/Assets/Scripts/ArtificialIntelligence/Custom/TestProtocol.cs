@@ -49,7 +49,7 @@ public class TestProtocol : CustomProtocol
                 _behave.Feed(target);
                 break;
             case Behavior.Attack:
-                _behave.MeleeAttack(targetPos, speed);
+                _behave.MeleeAttack(targetPos);
                 break;
             case Behavior.Ranged:
                 _behave.RangedAttack(targetPos, speed);
