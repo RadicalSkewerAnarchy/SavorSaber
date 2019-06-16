@@ -74,6 +74,9 @@ public class Pathfinder : MonoBehaviour
     /// <param name="target"></param>
     public List<TileNode> AStar(TileNode target)
     {
+        if (allNodes == null)
+            return null;
+
         TileNode start = null;
         float minDist = Mathf.Infinity;
         for (int i = 0; i < allNodes.transform.childCount; i++)

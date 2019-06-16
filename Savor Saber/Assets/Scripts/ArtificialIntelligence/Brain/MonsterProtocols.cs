@@ -331,7 +331,7 @@ public partial class MonsterProtocols : MonoBehaviour
         {
             pos = creature.transform.position;
             TileNode tile = Checks.GetNearestNode(pos);
-            Debug.Log(this.name + " naving to: " + tile.name);
+            //Debug.Log(this.name + " naving to: " + tile.name);
             return NavTo(tile, AiData.Speed);
         }
         return false;
@@ -588,18 +588,18 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if(Checks.currentTile == target)
         {
-            Debug.Log("AT TARGET");
+            //Debug.Log("AT TARGET");
             return true;
         }
         else if(Checks.currentTile == null || target == null)
         {
-            Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
+            //Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
             return false;
         }
         else if(AiData.path == null || AiData.path.Count == 0)
         {
             Checks.SetCurrentTile();
-            Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
+            //Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
             AiData.path = Behaviour.pathfinder.AStar(target);
             return false;
         }
