@@ -263,8 +263,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c788d652b04edef4791f893586b13be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: Drone Scout
-  deathSfx: {fileID: 0}
+  displayName: Drone Boss
+  deathSfx: {fileID: 8300000, guid: a6d96ef3b004f9842922aa7881293695, type: 3}
   deathSfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
 --- !u!114 &5415160479759518060
@@ -304,7 +304,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   aiStates:
-    _keys: 01000000000000000a000000
+    _keys: 01000000000000000a00000006000000
     _values:
     - _keys:
       - PlayerDistance
@@ -396,6 +396,7 @@ MonoBehaviour:
         m_RotationOrder: 4
     - _keys:
       - PlayerDistance
+      - Health
       _values:
       - serializedVersion: 2
         m_Curve:
@@ -438,6 +439,55 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.76220703
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 0.10526276
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    - _keys:
+      - Hostility
+      _values:
+      - serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0.6213074
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0.6213074
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
   macroValues:
     _keys: []
     _values: []
@@ -456,7 +506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 2
   Perception: 10
-  MeleeAttackThreshold: 1.5
+  MeleeAttackThreshold: 1.25
   RangeAttackThreshold: 5
   EngageHostileThreshold: 2
   maxHealth: 45
@@ -484,8 +534,8 @@ MonoBehaviour:
   currentProtocol: 2
   path: []
   DecisionTimer: 0
-  DecisionTimerReset: 5
-  DecisionTimerVariance: 2
+  DecisionTimerReset: 0.5
+  DecisionTimerVariance: 0.25
   Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
@@ -494,6 +544,7 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
+  meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &5445398522374347477
 MonoBehaviour:
@@ -557,8 +608,9 @@ MonoBehaviour:
   projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
     type: 3}
   attackDuration: 1.5
-  meleeAttackDuration: 0.75
-  meleeAttackDelay: 0.5
+  meleeAttackDuration: 1
+  meleeAttackDelay: 0.25
+  meleeAttackDimensions: {x: 2.5, y: 2.5}
   isAttacking: 0
   meleeSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!114 &5927032140592398662
@@ -579,8 +631,11 @@ MonoBehaviour:
   rewardItem: {fileID: 0}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  charmTime: 0
+  shieldSize: 1
   dotTicLength: 1
   electricFieldTemplate: {fileID: 0}
+  saltShieldTemplate: {fileID: 0}
   electricSFX: {fileID: 0}
   hasElectricField: 0
 --- !u!114 &5919570652110356733
@@ -666,7 +721,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayName: DroneBoss
-  textBlipSound: {fileID: 0}
+  textBlipSound: {fileID: 8300000, guid: a90d1840322c447459cf39fb1d543c87, type: 3}
   portraitDictionary:
     _keys: 0100000000000000
     _values:

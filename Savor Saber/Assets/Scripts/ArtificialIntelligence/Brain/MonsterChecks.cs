@@ -585,7 +585,7 @@ public class MonsterChecks : MonoBehaviour
             if (validNodes.Count > 0)
             {
                 // RETURN VALID TILE
-                // Debug.Log("choosing from " + validNodes.Count + " possible nodes");
+                //Debug.Log("choosing from " + validNodes.Count + " possible nodes");
                 targetTile = validNodes[(int)Random.Range(0, validNodes.Count)].GetComponent<TileNode>();
                 return targetTile;
             }

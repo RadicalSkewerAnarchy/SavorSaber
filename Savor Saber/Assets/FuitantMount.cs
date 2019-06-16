@@ -61,6 +61,8 @@ public class FuitantMount : MonoBehaviour
         fruitantData.currentProtocol = AIData.Protocols.Ride;
 
         // enable riding
+        if (controller != null)
+            controller = player.GetComponent<PlayerController>();
         controller.riding = true;
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
 
@@ -91,6 +93,8 @@ public class FuitantMount : MonoBehaviour
         
         // change player layering
         playerRenderer.flipX = false;
+        if (controller != null)
+            controller = player.GetComponent<PlayerController>();
         controller.riding = false;
 
         // set lerps
@@ -120,6 +124,9 @@ public class FuitantMount : MonoBehaviour
                 if (EventTrigger.InCutscene)
                 {
                     Demount();
+                    demounting = false;
+                    playerRenderer.sortingLayerName = "Objects";
+                    Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
                     return;
                 }
 

@@ -14,7 +14,8 @@ public class GraphSingleton
     
     public static GraphSingleton Instance
     {
-        get {
+        get
+        {
             if (instance == null)
             {
                 instance = new GraphSingleton();

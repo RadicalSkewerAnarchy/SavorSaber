@@ -14,10 +14,19 @@ public class GraphNodePopulator : MonoBehaviour
     BoundsInt bounds;
     bool walkable;
     int clusterLimit = 3;
+    public GraphSingleton graph;
+
+    public int birthPlace = 0; 
+
     private void Awake()
     {
         tiles = new List<List<TileNode>>();
         tiles.Add(new List<TileNode>());
+
+
+        string gridCheck = this.gameObject.scene.name;
+        birthPlace = (gridCheck == "Plains" ? 1 : ((gridCheck == "Marsh" ? 2 : (gridCheck == "Desert" ? 3 : 0))));
+
         //tilesArr = new TileNode[,][];
         Populate();
     }
@@ -27,7 +36,9 @@ public class GraphNodePopulator : MonoBehaviour
         activeTileMaps = GetComponentsInChildren<Tilemap>();
         List<Tilemap> inactiveTileMaps = new List<Tilemap>();
         List<Tilemap> groundTileMaps = new List<Tilemap>();
-        var graph = GraphSingleton.Instance;
+
+        graph = GraphSingleton.Instance;
+
         var localGrass = new Tilemap();
         foreach(var active in activeTileMaps)
         {
@@ -78,14 +89,14 @@ public class GraphNodePopulator : MonoBehaviour
                     GameObject tile = Instantiate(nodePrefab, current + new Vector3(.25f,.25f), new Quaternion(0, 0, 0, 1));
                     tile.transform.SetParent(parent.transform);
                     tile.name = tile.GetInstanceID().ToString();
-                    tile.GetComponent<TileNode>().x = i;
-                    tile.GetComponent<TileNode>().y = j;
-                    tile.GetComponent<TileNode>().SetWalkable(walkable);
-					tile.GetComponent<TileNode>().active = true;
-                    tiles[i].Add(tile.GetComponent<TileNode>());
-                    tilesArr[i, j] = tile.GetComponent<TileNode>();
-                    //Debug.Log("TilesArr[i][j] : " + tilesArr[i, j]);
-                    graph.tiles.Add(tile);
+                    TileNode node = tile.GetComponent<TileNode>();
+                    node.x = i;
+                    node.y = j;
+                    node.birthPlace = this.birthPlace;
+                    node.SetWalkable(walkable);
+					node.active = true;
+                    tiles[i].Add(node);
+                    tilesArr[i, j] = node;
                 }
                 j++;
             }

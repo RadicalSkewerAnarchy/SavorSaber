@@ -489,7 +489,7 @@ public partial class MonsterProtocols : MonoBehaviour
             if (drone == null)
             {
                 GameObject near = Checks.FollowTheLeader();
-                NavChase(near, congaSpeed, 0.5f);
+                NavChase(near, congaSpeed, 2f);
             }
             else
             {
@@ -601,8 +601,8 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         else if(AiData.path == null || AiData.path.Count == 0)
         {
-            Debug.Log("Path being drawn from target to destination");
             Checks.SetCurrentTile();
+            Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
             AiData.path = Behaviour.pathfinder.AStar(target);
             return false;
         }

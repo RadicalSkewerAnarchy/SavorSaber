@@ -15,6 +15,7 @@ public class ProjectileSkewer : BaseProjectile
     public AudioClip spicySFX;
     public bool fed = false;
     public GameObject dropTemplate;
+    private bool dropping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -84,7 +85,7 @@ public class ProjectileSkewer : BaseProjectile
 
                 }
                 //if you hit something (and aren't penetrating) but can't feed it
-                else if (!penetrateTargets)
+                else if (!dropping && !penetrateTargets)
                 {
                     SpawnDropsOnMiss();
                 }
@@ -117,6 +118,7 @@ public class ProjectileSkewer : BaseProjectile
             }
 
         }
+        dropping = true;
     }
 
     //save space in earlier checks
