@@ -24,6 +24,8 @@ public class DestructableEnvironment : MonoBehaviour
     public float wiggleAmplitude = 0.05f;
 
     public bool skewerable = false;
+    public bool rooted = true;
+    public bool staySolid = false;
 
     private Vector2 origin;
 
@@ -61,7 +63,7 @@ public class DestructableEnvironment : MonoBehaviour
         destroyed = true;
 
         if (anim != null)
-            anim.enabled = (animateWhileAlive ? false : true);
+            anim.enabled = !animateWhileAlive;
 
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
@@ -73,15 +75,15 @@ public class DestructableEnvironment : MonoBehaviour
             StartCoroutine(Regrow());
         }
 
-        this.GetComponent<Collider2D>().enabled = false;
+        this.GetComponent<Collider2D>().enabled = staySolid;
     }
     private IEnumerator Regrow()
     {
         yield return new WaitForSeconds(respawnTime);
-        this.GetComponent<Collider2D>().enabled = true;
+        this.GetComponent<Collider2D>().enabled = !staySolid;
         spr.sprite = normalSprite;
         if(anim != null)
-            anim.enabled = (animateWhileAlive ? true : false);
+            anim.enabled = animateWhileAlive;
         health = healthReset;
         destroyed = false;
     }
@@ -94,12 +96,16 @@ public class DestructableEnvironment : MonoBehaviour
             //Debug.Log("wiggling");
             yield return new WaitForSeconds(Time.deltaTime);
 
-            this.transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);
+            if (rooted)
+                this.transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);
+            else
+                this.transform.position = this.transform.position + new Vector3(amplitude * Mathf.Sin(speedCount), 0);
+
             speedCount += 15000 * Time.deltaTime;
             tick -= speed;
         }
-
-        this.transform.position = origin;
+        if (rooted)
+            this.transform.position = origin;
         yield return null;
     }
 }

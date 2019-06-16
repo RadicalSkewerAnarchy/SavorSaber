@@ -67,16 +67,13 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         #endregion
 
-        if (!CheckThreshold(pos, AiData.EngageHostileThreshold))
+        
+        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
         {
-            if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+            if (CheckThreshold(pos, AiData.MeleeAttackThreshold))
             {
                 Behaviour.MeleeAttack(pos);
             }
-        }
-        else
-        {
-            Behaviour.MeleeAttack(pos);
         }
     }
 
