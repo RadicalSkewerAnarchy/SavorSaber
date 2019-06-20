@@ -158,7 +158,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash)) //InputManager.GetAxis(InputAxis.Dash) > 0.9)
+                if (!EventTrigger.InCutscene && playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash)) //InputManager.GetAxis(InputAxis.Dash) > 0.9)
                 {
                     Mount();
                     return;
