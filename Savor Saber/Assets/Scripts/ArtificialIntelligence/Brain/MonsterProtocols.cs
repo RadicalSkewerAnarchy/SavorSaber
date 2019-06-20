@@ -315,10 +315,32 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
     // used for ride protocol
+    public void Ride(Vector3 go)
+    {
+        float chargeSpeed = 5;
+        if (InputManager.GetButton(Control.Knife))
+        {
+            GameObject drone = Checks.ClosestDrone();
+            if (drone != null)
+            {
+                NavMelee(drone, chargeSpeed);
+            }
+            else
+                Chase(go);
+        }
+        else if (InputManager.GetButton(Control.Skewer))
+        {
+            Feast(true);
+        }
+        else
+            Chase(go);
+    }
     public void Chase(Vector3 go)
     {
-        Behaviour.MoveTo(this.transform.position + go*10, 4 + AiData.Speed * AiData.Speed, 0.1f);
+        Behaviour.MoveTo(this.transform.position + go * 10, 4 + AiData.Speed * AiData.Speed, 0.1f);
     }
+
+
 
     public bool NavChase()
     {
@@ -433,7 +455,9 @@ public partial class MonsterProtocols : MonoBehaviour
             // go to the nearest drop
             if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
             {
-                Behaviour.Feed(cDrop);
+                FuitantMount flavorResponse = this.GetComponentInChildren<FuitantMount>();
+                bool response = (flavorResponse == null ? false : flavorResponse.mounted);
+                Behaviour.Feed(cDrop, response);
             }
         }
         else
@@ -442,7 +466,6 @@ public partial class MonsterProtocols : MonoBehaviour
             if (this.tag == "Prey")
             {
                 cHittable = Checks.ClosestPlant();
-                //Debug.Log("closest plant is " + cHittable.name);
             }
             else
             {

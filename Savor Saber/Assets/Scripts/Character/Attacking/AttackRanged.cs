@@ -121,6 +121,9 @@ public class AttackRanged : AttackBase
         animator.Play(attackName,0,0);
 
         Direction direction = controller.Direction;
+        if (controller is PlayerController)
+            if ((controller as PlayerController).riding)
+                direction = Direction.South;
         float projectileRotation = GetRotation(direction);
         Vector2 directionVector = GetDirectionVector(direction);
 
