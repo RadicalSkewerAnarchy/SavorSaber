@@ -10,8 +10,10 @@ public class MonsterChecks : MonoBehaviour
     /// <summary>
     /// brings AIData for easy reference;
     /// </summary>
+    [HideInInspector] 
     public AIData AiData;
     public GameObject signalPrefab;
+    [HideInInspector]
     public BoxCollider2D boxCollider;
 
     public List<GameObject> Friends;
@@ -32,6 +34,7 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public GameObject specialTarget = null;
     public GameObject specialLeader = null;
+    [HideInInspector]
     public int congaPosition = -1;
     public Vector2 specialPosition;
     bool amLeader = false;

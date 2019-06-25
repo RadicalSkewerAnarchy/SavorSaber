@@ -39,6 +39,7 @@ public class AIData : CharacterData
     }
     #endregion
     public Behave currentBehavior = Behave.Idle;
+    [HideInInspector]
     public Behave previousBehavior = Behave.Idle;
     #region Protocols
     /// <summary> my current state </summary>
@@ -74,22 +75,32 @@ public class AIData : CharacterData
     public float DecisionTimerVariance = 2f;
     #endregion
     #region Components
+    [HideInInspector]
     public MonsterBehavior Behavior;
     private MonsterProtocols Protocol;
+    [HideInInspector]
     public MonsterChecks Checks;
     private UtilityCurves Curves;
 
     #endregion
     #region Unfinished
+    [HideInInspector]
     public SignalApplication Awareness = null;
+    [HideInInspector]
     public List<GameObject> Friends;
+    [HideInInspector]
     public List<GameObject> Enemies;
+    [HideInInspector]
     public List<RecipeData.Flavors> FoodPreference;
+    [HideInInspector]
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
     #endregion
+    [HideInInspector]
     public bool updateAI = false;
+    [HideInInspector]
     public bool updateBehavior = true;
     public bool meleeHunter = true;
+    [HideInInspector]
     public Vector3 rideVector;
     #endregion
     private void Start()
