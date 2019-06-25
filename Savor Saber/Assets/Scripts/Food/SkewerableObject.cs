@@ -7,6 +7,7 @@ using UnityEngine;
 /// A collision component of some kind is also required
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer))]
+[ExecuteInEditMode]
 public class SkewerableObject : MonoBehaviour
 {
     /// <summary> Ingredient Data SO. This is what will actually be added to the player's skewer </summary>
@@ -32,10 +33,10 @@ public class SkewerableObject : MonoBehaviour
     void Start()
     {
         origin = transform.position;
-
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
+        sp.sprite = data.image;
 
         if (!Attached)
         {
