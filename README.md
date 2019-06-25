@@ -3,5 +3,5 @@ SAVOR SABER is a food-themed action adventure game. Play as the caretaker robot 
 
 A single-player game for Windows/Max/Linux produced for the UC Santa Cruz 170 series course.
 
-For more information, visit our website: https://savorsaber.com/
-To download our latest release, visit our itch page: https://shuttlefrog.itch.io/savor-saber
+- For more information, visit our website: https://savorsaber.com/
+- To download our latest release, visit our itch page: https://shuttlefrog.itch.io/savor-saber
