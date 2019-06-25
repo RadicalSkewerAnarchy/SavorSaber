@@ -19,8 +19,21 @@ public class DropOnDeath : MonoBehaviour
         FuitantMount mount = GetComponentInChildren<FuitantMount>();
         if (mount != null)
         {
-            if (mount.mounted)
+            Debug.Log("Found mount ...");
+            if (mount.mounted || mount.demounting)
+            {
+                Debug.Log("... and dismounting");
+
                 mount.Demount();
+
+                mount.demounting = false;
+                mount.controller.riding = false;
+
+                mount.playerRenderer.sortingLayerName = "Objects";
+
+                mount.player.transform.position = mount.mountEnd;
+                mount.dust.Play();
+            }
         }
 
         float thresh = (float)chance / 100;

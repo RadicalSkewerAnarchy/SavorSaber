@@ -8,15 +8,35 @@ public class Pathfinder : MonoBehaviour
     Dictionary<TileNode, float> fScore;
     public GameObject allNodes;
     public GraphSingleton graph;
-    
+    public GameObject[] possibleGraphs;
 
+
+    public int bornOnto = 0;
+    
     public void Start()
     {
-        InitGraph();
-        graph = GraphSingleton.Instance;
-        //allNodes = GameObject.Find("Grid 16px");
-        //allNodes = allNodes.transform.Find("Collision").Find("Walkable").gameObject;
+        // waiting for other maps to load
+        StartCoroutine(SetNodeGraphs(Random.Range(8f, 12f)));
     }
+
+    IEnumerator SetNodeGraphs(float time)
+    {
+        yield return new WaitForSeconds(time);
+        // comment this out if too much is happening
+        //=========================================================================
+        string gridCheck = this.gameObject.scene.name;
+        bornOnto = (gridCheck == "Plains" ? 1 : ((gridCheck == "Marsh" ? 2 : (gridCheck == "Desert" ? 3 : 0))));
+        possibleGraphs = GameObject.FindGameObjectsWithTag("NodeGraph");
+        foreach (GameObject n in possibleGraphs)
+        {
+            if (bornOnto == n.GetComponent<GraphNodePopulator>().birthPlace)
+                allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
+        }
+        //==========================================================================
+        InitGraph();
+        yield return null;
+    }
+
     private void InitGraph()
     {
         gScore = new Dictionary<TileNode, float>();
@@ -54,6 +74,9 @@ public class Pathfinder : MonoBehaviour
     /// <param name="target"></param>
     public List<TileNode> AStar(TileNode target)
     {
+        if (allNodes == null)
+            return null;
+
         TileNode start = null;
         float minDist = Mathf.Infinity;
         for (int i = 0; i < allNodes.transform.childCount; i++)
@@ -65,11 +88,27 @@ public class Pathfinder : MonoBehaviour
                 start = allNodes.transform.GetChild(i).GetComponent<TileNode>();
             }
         }
+
         if (start == null || target == null)
         {
             Debug.Log("Current agent or target is not on tilemap");
+
+             return null;
+        }
+
+        // reset all nodes
+        if (this.bornOnto != target.birthPlace)
+        {
+            Debug.Log("MOVING TO NEW TILEMAP");
+            foreach (GameObject n in possibleGraphs)
+            {
+                if (target.birthPlace == n.GetComponent<GraphNodePopulator>().birthPlace)
+                    allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
+            }
+            bornOnto = target.birthPlace;
             return null;
         }
+
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();
         // set of discovered but unevaluated nodes

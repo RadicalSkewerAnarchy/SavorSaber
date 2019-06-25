@@ -270,7 +270,7 @@ public class AIData : CharacterData
                 break;
             // Chase
             case Protocols.Chase:
-                Protocol.Chase();
+                Protocol.NavChase();
                 break;
             // Wander
             case Protocols.Wander:

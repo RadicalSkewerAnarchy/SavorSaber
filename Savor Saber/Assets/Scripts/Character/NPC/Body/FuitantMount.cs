@@ -12,23 +12,24 @@ public class FuitantMount : MonoBehaviour
     public AudioClip mountSound;
     public AudioClip demountSound;
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     // player refs
-    private GameObject player;
-    private PlayerController controller;
-    private SpriteRenderer fruitantRenderer;
-    private MonsterController fruitantController;
-    private SpriteRenderer playerRenderer;
-    private PlayerData playerData;
+    public GameObject player;
+    public PlayerController controller;
+    public SpriteRenderer fruitantRenderer;
+    public MonsterController fruitantController;
+    public SpriteRenderer playerRenderer;
+    public PlayerData playerData;
+    public ParticleSystem dust;
     public bool mounted = false;
     public bool demounting = false;
     private bool mountable = false;
     private bool fruitantEnabled = false;
 
     // lerping
-    private Vector3 mountStart;
-    private Vector3 mountEnd;
+    public Vector3 mountStart;
+    public Vector3 mountEnd;
     private float leapLerp = 0;
 
 
@@ -44,19 +45,9 @@ public class FuitantMount : MonoBehaviour
         fruitantController = thisFruitant.GetComponent<MonsterController>();
         fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
 
-        audioSource = this.GetComponent<AudioSource>();
-    }
+        dust = player.GetComponentInChildren<ParticleSystem>();
 
-    // Update is called once per frame
-    private void Update()
-    {
-        if (mounted)
-        {
-            if (fruitantData.health <= 0)
-            {
-                Demount();
-            }
-        }
+        audioSource = this.GetComponent<AudioSource>();
     }
 
     void Mount()
@@ -70,6 +61,8 @@ public class FuitantMount : MonoBehaviour
         fruitantData.currentProtocol = AIData.Protocols.Ride;
 
         // enable riding
+        if (controller != null)
+            controller = player.GetComponent<PlayerController>();
         controller.riding = true;
         Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
 
@@ -84,6 +77,9 @@ public class FuitantMount : MonoBehaviour
         // mounted
         mounted = true;
         demounting = false;
+
+        // dust
+        dust.Play();
     }
 
     public void Demount()
@@ -97,10 +93,13 @@ public class FuitantMount : MonoBehaviour
         
         // change player layering
         playerRenderer.flipX = false;
+        if (controller != null)
+            controller = player.GetComponent<PlayerController>();
+        controller.riding = false;
 
         // set lerps
         leapLerp = 0;
-        mountEnd = this.transform.position - new Vector3(0, 0.5f);
+        mountEnd = this.transform.position - new Vector3(0, 1.25f);
         mountStart = player.transform.position;
 
         // mounted
@@ -108,7 +107,7 @@ public class FuitantMount : MonoBehaviour
         demounting = true;
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (mountable)
         {
@@ -125,11 +124,13 @@ public class FuitantMount : MonoBehaviour
                 if (EventTrigger.InCutscene)
                 {
                     Demount();
+                    demounting = false;
+                    playerRenderer.sortingLayerName = "Objects";
+                    Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
                     return;
                 }
 
                 // demount
-                //if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
                 {
                     Demount();
@@ -157,7 +158,7 @@ public class FuitantMount : MonoBehaviour
             }
             else
             {
-                if (playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))//InputManager.GetAxis(InputAxis.Dash) > 0.9)
+                if (!EventTrigger.InCutscene && playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash)) //InputManager.GetAxis(InputAxis.Dash) > 0.9)
                 {
                     Mount();
                     return;
@@ -173,9 +174,11 @@ public class FuitantMount : MonoBehaviour
             if (leapLerp >= 1)
             {
                 demounting = false;
-                controller.riding = false;
                 playerRenderer.sortingLayerName = "Objects";
                 Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
+
+                // dust
+                dust.Play();
             }
         }
     }

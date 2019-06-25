@@ -76,7 +76,7 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
-        Debug.Log("Skewer of size " + ingredientArray.Length);
+        //Debug.Log("Skewer of size " + ingredientArray.Length);
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
@@ -233,6 +233,9 @@ public class FlavorInputManager : MonoBehaviour
         MonsterChecks check = characterData.getChecks();
         // initiate conga
         characterData.currentProtocol = AIData.Protocols.Conga;
+
+        if (characterData.path != null)
+            characterData.path.Clear();
         // set leader to Soma
         check.specialLeader = PlayerController.instance.gameObject;
         // add self to player's party
@@ -295,10 +298,15 @@ public class FlavorInputManager : MonoBehaviour
 
         // toggle between red and more red
         SpriteRenderer sr = this.GetComponent<SpriteRenderer>();
-        sr.color = Color.red;
+        float colorLerp = 0.25f;
+        sr.color = Color.Lerp(Color.yellow, Color.red, colorLerp);
         while (s > 0)
         {
+            colorLerp += Time.deltaTime * 15;
+            sr.color = Color.Lerp(Color.yellow, Color.red, colorLerp);
+
             yield return new WaitForSeconds(time);
+            colorLerp = 0.5f;
             // spawn curry balls
             var split = 360 / pellets;
             for(int i = 0; i < pellets; i++)
@@ -345,7 +353,7 @@ public class FlavorInputManager : MonoBehaviour
     protected void SaltyShield(bool favorite)
     {
         float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f);
-        
+
         GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
         shield.transform.parent = gameObject.transform;
         shield.transform.localScale = new Vector3(shieldSize, shieldSize);

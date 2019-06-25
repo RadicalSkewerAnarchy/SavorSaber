@@ -459,9 +459,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 1
   Perception: 8
-  MeleeAttackThreshold: 0.5
+  MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 1
+  EngageHostileThreshold: 2
   maxHealth: 15
   health: 15
   PartySize: 3
@@ -488,8 +488,8 @@ MonoBehaviour:
   currentProtocol: 2
   path: []
   DecisionTimer: 0
-  DecisionTimerReset: 5
-  DecisionTimerVariance: 2
+  DecisionTimerReset: 0.5
+  DecisionTimerVariance: 0.25
   Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
@@ -498,6 +498,7 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
+  meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &8324310201449301565
 MonoBehaviour:
@@ -1107,6 +1108,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
+        type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 0.19029824
+      objectReference: {fileID: 0}
     - target: {fileID: 1289972706445664559, guid: d33c909520f360e4c83220a347dc693c,
         type: 3}
       propertyPath: m_SortingLayerID
@@ -1116,11 +1122,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 9024452909912021097, guid: d33c909520f360e4c83220a347dc693c,
-        type: 3}
-      propertyPath: ShapeModule.radiusThickness
-      value: 0.19029824
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d33c909520f360e4c83220a347dc693c, type: 3}
@@ -1141,6 +1142,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FedFruitantEmitter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
+        type: 3}
+      propertyPath: ShapeModule.donutRadius
+      value: 0.11998579
       objectReference: {fileID: 0}
     - target: {fileID: 478865165765646071, guid: a031989af5dbfb142be6ba118c5ce474,
         type: 3}
@@ -1206,11 +1212,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingLayer
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2240937843263086227, guid: a031989af5dbfb142be6ba118c5ce474,
-        type: 3}
-      propertyPath: ShapeModule.donutRadius
-      value: 0.11998579
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a031989af5dbfb142be6ba118c5ce474, type: 3}

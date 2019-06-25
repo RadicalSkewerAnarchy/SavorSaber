@@ -63,7 +63,7 @@ public class SkewerableObject : MonoBehaviour
                 sp.color = Color.Lerp(Color.white, new Color(0.75f, 0.5f, 0.25f), decayTime.PercentDone - 0.5f);
             }
         }
-        else
+        else if (decay)
         {
             transform.position = origin;
         }

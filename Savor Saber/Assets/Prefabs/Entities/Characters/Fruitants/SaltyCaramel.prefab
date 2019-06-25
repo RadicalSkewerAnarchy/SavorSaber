@@ -9931,9 +9931,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisFruitant: {fileID: 5237975044622617410}
-  mountSound: {fileID: 0}
-  demountSound: {fileID: 0}
+  mountSound: {fileID: 8300000, guid: 4f817af9356f3ce4b805d912eb89f8e8, type: 3}
+  demountSound: {fileID: 8300000, guid: 06bf145e9e276564c8b4c5c0027e86f1, type: 3}
+  audioSource: {fileID: 0}
+  player: {fileID: 0}
+  controller: {fileID: 0}
+  fruitantRenderer: {fileID: 0}
+  fruitantController: {fileID: 0}
+  playerRenderer: {fileID: 0}
+  playerData: {fileID: 0}
+  dust: {fileID: 0}
   mounted: 0
+  demounting: 0
+  mountStart: {x: 0, y: 0, z: 0}
+  mountEnd: {x: 0, y: 0, z: 0}
 --- !u!58 &3979941736540919918
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -20154,7 +20165,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 2
   maxHealth: 30
   health: 30
   PartySize: 3
@@ -20163,7 +20174,7 @@ MonoBehaviour:
   damageDealt: 0
   entitiesKilled: 0
   initialFear: 0
-  initialHunger: 1
+  initialHunger: 0
   initialHostility: 0
   initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
@@ -20181,8 +20192,8 @@ MonoBehaviour:
   currentProtocol: 2
   path: []
   DecisionTimer: 0
-  DecisionTimerReset: 0.25
-  DecisionTimerVariance: 0.3
+  DecisionTimerReset: 1
+  DecisionTimerVariance: 0.5
   Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
@@ -20191,6 +20202,7 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
+  meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &1358843765322350112
 MonoBehaviour:
@@ -20286,6 +20298,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+  possibleGraphs: []
+  bornOnto: 0
 --- !u!114 &8674874835368622650
 MonoBehaviour:
   m_ObjectHideFlags: 0

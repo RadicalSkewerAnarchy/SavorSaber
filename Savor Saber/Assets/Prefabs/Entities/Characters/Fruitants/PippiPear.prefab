@@ -5174,7 +5174,7 @@ MonoBehaviour:
   Perception: 8
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
-  EngageHostileThreshold: 8
+  EngageHostileThreshold: 2
   maxHealth: 9999
   health: 9999
   PartySize: 3
@@ -5184,8 +5184,8 @@ MonoBehaviour:
   entitiesKilled: 0
   initialFear: 0
   initialHunger: 0
-  initialHostility: 0
-  initialFriendliness: 0.5
+  initialHostility: 1
+  initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
@@ -5201,7 +5201,7 @@ MonoBehaviour:
   path: []
   DecisionTimer: 0
   DecisionTimerReset: 0.25
-  DecisionTimerVariance: 2
+  DecisionTimerVariance: 0.1
   Behavior: {fileID: 0}
   Checks: {fileID: 0}
   Awareness: {fileID: 0}
@@ -5210,6 +5210,7 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
+  meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
 --- !u!114 &6329017278131944257
 MonoBehaviour:
@@ -5273,10 +5274,11 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
-  meleeAttackDuration: 0.5
-  meleeAttackDelay: 0.25
+  meleeAttackDuration: 2
+  meleeAttackDelay: 0
+  meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
-  meleeSFX: {fileID: 0}
+  meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!70 &8535331681130685541
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -5334,7 +5336,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   favoriteIngredients:
   - Acorn
-  - Wheat
   favoriteFlavors: 1
   charmThreshhold: 1
   rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
@@ -5342,6 +5343,7 @@ MonoBehaviour:
   amountRewardItem: 1
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   charmTime: 0
+  shieldSize: 1
   dotTicLength: 0.3
   electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
