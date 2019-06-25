@@ -38,7 +38,27 @@ public class AttackRangedThrowSkewer : AttackRanged
     void Update()
     {
         if (((PlayerController)controller).riding)
+        { 
+            if (InputManager.GetButtonDown(control, axis) && !inv.ActiveSkewerEmpty())
+            {
+                // feed the mount
+                StopAllCoroutines();
+                effectRecipeData = inv.GetActiveEffect();
+                flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
+                ingredientArray = inv.GetActiveSkewer().ToArray();
+
+                r.color = Color.white;
+                currLevel = 0;
+                Attack();
+                inv.ClearActiveRecipe();
+                inv.ClearActiveSkewer();
+                inv.CanSwap = true;
+                Attacking = false;
+                chargedAttack = false;
+
+            }
             return;
+        }
 
         if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
         {

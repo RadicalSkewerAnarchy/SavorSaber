@@ -278,7 +278,7 @@ public class AIData : CharacterData
                 break;
             // ride
             case Protocols.Ride:
-                Protocol.Chase(rideVector);
+                Protocol.Ride(rideVector);
                 break;
             // scare
             case Protocols.Scare:

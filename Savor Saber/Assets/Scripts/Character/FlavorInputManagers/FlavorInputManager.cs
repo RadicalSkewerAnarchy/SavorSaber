@@ -219,7 +219,9 @@ public class FlavorInputManager : MonoBehaviour
         StopCoroutine("ExecuteCharm");
         float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 40f : 20f);
         charmTime += time;
-        StartCharm(charmTime);
+
+        if(!PlayerController.instance.riding)
+            StartCharm(charmTime);
         //characterData.DoDamage(-3);
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
@@ -236,6 +238,7 @@ public class FlavorInputManager : MonoBehaviour
 
         if (characterData.path != null)
             characterData.path.Clear();
+
         // set leader to Soma
         check.specialLeader = PlayerController.instance.gameObject;
         // add self to player's party
