@@ -85,6 +85,7 @@ public class InfoDisplay : MonoBehaviour
                 if (arrow != null)
                     arrow.localPosition = youAreHereCoordinates;
             }
+            controller.Stop();
             controller.enabled = false;        
             showingInfo = true;
         }
