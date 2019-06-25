@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(MonsterController))]
 [RequireComponent(typeof(FlavorInputManager))]
-[RequireComponent(typeof(PlaySFX))]
+//[RequireComponent(typeof(PlaySFX))]
 //[RequireComponent(typeof(Pathfinder))]
 
 public class MonsterBehavior : MonoBehaviour
