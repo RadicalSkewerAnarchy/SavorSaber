@@ -27,11 +27,15 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// behavior timers
     /// </summary>
+    [HideInInspector]
     public float ActionTimer;
     public float ActionTimerReset;
     public float ActionTimerVariance;
+    [HideInInspector]
     public float ResetTimer;
+    [HideInInspector]
     public float ResetTimerReset;
+    [HideInInspector]
     public float ResetTimerVariance;
     bool actionAvailable = true;
     bool left = false;
@@ -70,6 +74,7 @@ public class MonsterBehavior : MonoBehaviour
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
     public Vector2 meleeAttackDimensions = new Vector2(2,2);
+    [HideInInspector]
     public bool isAttacking = false;
     public AudioClip meleeSFX;
     #endregion
@@ -101,7 +106,7 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (ResetTimer < 0)
+        /*if (ResetTimer < 0)
         {
             ResetMovementBias();
             ResetTimer = ResetTimerReset + Random.Range(-ResetTimerVariance, ResetTimerVariance);
@@ -109,7 +114,7 @@ public class MonsterBehavior : MonoBehaviour
         else
         {
             ResetTimer -= Time.deltaTime;
-        }
+        }*/
     }
     /// <summary>
     /// These actions return a Boolean to verify their completion.
@@ -197,7 +202,7 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// Deactivates detected drop and destroys it
     /// </summary>  
-    public bool Feed(GameObject drop)
+    public bool Feed(GameObject drop, bool fedByPlayer=false)
     {
         //Debug.Log("Feed Reached");
         if(drop != null)
@@ -211,7 +216,7 @@ public class MonsterBehavior : MonoBehaviour
             ingredientArray[0] = ingredient;
 
             // activate flavor input manager
-            flavor.Feed(ingredientArray, false);
+            flavor.Feed(ingredientArray, fedByPlayer);
 
             // deactivate drop
             drop.SetActive(false);
@@ -226,7 +231,6 @@ public class MonsterBehavior : MonoBehaviour
             if(AiData.eatSFX != null)
             {
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(AiData.eatSFX);
-                //Debug.Log("===========================Hunger sound effect playing here");
             }
             return true;
         }

@@ -10,7 +10,7 @@ public class Pathfinder : MonoBehaviour
     public GraphSingleton graph;
     public GameObject[] possibleGraphs;
 
-
+    [HideInInspector]
     public int bornOnto = 0;
     
     public void Start()

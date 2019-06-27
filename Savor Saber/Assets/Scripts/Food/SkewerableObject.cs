@@ -32,10 +32,10 @@ public class SkewerableObject : MonoBehaviour
     void Start()
     {
         origin = transform.position;
-
-        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         sp = GetComponent<SpriteRenderer>();
+        sp.sprite = data.image;
 
         if (!Attached)
         {

@@ -21,11 +21,13 @@ public class CharacterData : MonoBehaviour
     public float EngageHostileThreshold = 5f;
     public int maxHealth = 10;
     public int health = 10;
+    [HideInInspector]
     public int PartySize = 3;
     private Vector2 Spawn;
     public GameObject signalPrefab;
-
+    [HideInInspector]
     public float damageDealt = 0;
+    [HideInInspector]
     public float entitiesKilled = 0;
     #endregion
     #region Variance
