@@ -11,7 +11,7 @@ public class FlavorInputManager : MonoBehaviour
     public string[] favoriteIngredients;
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
-    private bool fedFavoriteIngredient = false;
+    protected bool fedFavoriteIngredient = false;
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
@@ -22,19 +22,19 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region Components
-    private AudioSource sfxPlayer;
+    protected AudioSource sfxPlayer;
     protected AIData characterData;
     protected SpriteRenderer spriteRenderer;
     #endregion
 
     #region Other
-    private PointVector pv = new PointVector();
+    protected PointVector pv = new PointVector();
     public float dotTicLength = 1;
-    private int electricBaseTime = 10;
+    protected int electricBaseTime = 10;
     public GameObject electricFieldTemplate;
     public GameObject saltShieldTemplate;
     public AudioClip electricSFX;
-    private bool isElectric = false;
+    protected bool isElectric = false;
     #endregion
 
     private void Start()
@@ -115,7 +115,7 @@ public class FlavorInputManager : MonoBehaviour
     }
 
 
-    protected void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+    protected virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)
             return;
@@ -275,7 +275,7 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region CURRY
-    protected void CurryBalls (bool favorite)
+    protected virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
@@ -286,7 +286,7 @@ public class FlavorInputManager : MonoBehaviour
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
 
-    protected IEnumerator ExecuteCurry(float time, int shots, int pellets)
+    protected virtual IEnumerator ExecuteCurry(float time, int shots, int pellets)
     {
         //things to happen before delay
         GameObject newAttack;
