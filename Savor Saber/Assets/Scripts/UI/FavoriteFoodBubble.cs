@@ -57,11 +57,10 @@ public class FavoriteFoodBubble : MonoBehaviour
                 //{
                     // random ingredient
                     int len = flavors.favoriteIngredients.Length;
-                    string fav = flavors.favoriteIngredients[Random.Range(0, len - 1)];
                     // get from ingredients
-                    IngredientData d = rdb.allIngredients[fav];
-                    // display
-                    s = d.image;
+                    IngredientData d = flavors.favoriteIngredients[Random.Range(0, len - 1)];
+                // display
+                s = d.image;
                 //}
                 /*else
                 {
