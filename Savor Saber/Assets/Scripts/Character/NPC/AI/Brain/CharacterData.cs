@@ -21,6 +21,7 @@ public class CharacterData : MonoBehaviour
     public float EngageHostileThreshold = 5f;
     public int maxHealth = 10;
     public int health = 10;
+    public int overchargeHealth = 0;
     [HideInInspector]
     public int PartySize = 3;
     private Vector2 Spawn;
@@ -118,11 +119,20 @@ public class CharacterData : MonoBehaviour
 
             // create a fear signal
             float hp = (maxHealth - health) / maxHealth;
-            InstantiateSignal(4 , "Fear",  0.5f, true, true);
+            InstantiateSignal(4 , "Fear",  0.25f, true, true);
         }
-        if (damage < 0)
+        return dead;
+    }
+
+    /// <summary> A standard damage function. </summary>
+    public virtual bool DoHeal(int restore)
+    {
+        bool overcharged = false;
+        if (restore > 0)
         {
-            health = Mathf.Max(health - damage, maxHealth);
+            health += restore;
+            overcharged = (health > maxHealth);
+            health = Mathf.Min(health, maxHealth + overchargeHealth);
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {
@@ -144,9 +154,9 @@ public class CharacterData : MonoBehaviour
 
             // create a anti fear signal
             float hp = (health) / maxHealth;
-            InstantiateSignal(2, "Fear", -0.2f, true, true);
+            InstantiateSignal(2, "Fear", -0.25f, true, true);
         }
-        return dead;
+        return overcharged;
     }
     /// <summary> Show the health bar for a short amount of time </summary>
     protected IEnumerator ShowHealthBar()

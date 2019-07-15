@@ -103,6 +103,10 @@ public class AIData : CharacterData
     [HideInInspector]
     public Vector3 rideVector;
     #endregion
+
+    /// <summary>
+    /// set necessary values and components
+    /// </summary>
     private void Start()
     {
         #region Initialize Components
@@ -121,6 +125,10 @@ public class AIData : CharacterData
             {"Player", new Vector2(0f, 0f) }
         };
     }
+
+    /// <summary>
+    /// set links to mood dictionary values
+    /// </summary>
     protected void InitializeNormalValues()
     {
         _values = new Dictionary<string, GetNormalValue>()
@@ -135,17 +143,11 @@ public class AIData : CharacterData
         };
     }
     /// <summary>
-    /// Updates protocol
+    /// normalize variables
     /// </summary>
-    private void Update()
-    {
-        if (updateAI && !EventTrigger.InCutscene)
-        {
-            UpdateProtocol();
-        }
-    }
-
-
+    /// <param name="now">current value</param>
+    /// <param name="max">maximum value</param>
+    /// <returns></returns>
     public float Normalize(float now, float max)
     {
         return now / max;
@@ -154,16 +156,18 @@ public class AIData : CharacterData
     {
         return now / (float)max;
     }
-    private void OnBecameVisible()
+
+    /// <summary>
+    /// Updates protocol
+    /// </summary>
+    private void Update()
     {
-        updateAI = true;
+        if (updateAI && !EventTrigger.InCutscene)
+        {
+            Act();
+        }
     }
-    private void OnBecameInvisible()
-    {
-        var plDat = PlayerController.instance?.GetComponent<PlayerData>()?.party;
-        if (plDat == null || !plDat.Contains(gameObject))
-            updateAI = false;
-    }
+
     /// <summary>
     ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
     /// </summary>
@@ -176,6 +180,10 @@ public class AIData : CharacterData
         }
         return _values[value]();
     }
+
+    /// <summary>
+    /// Sets any decision timers to 0 to force fruitant to update state on next Update()
+    /// </summary>
     public void ManualDecision()
     {
         DecisionTimer = -1f;
@@ -184,7 +192,7 @@ public class AIData : CharacterData
     /// <summary>
     /// If its time to make a new decision, choose protocol based on curves and call switch statement
     /// </summary>
-    private void UpdateProtocol()
+    public void Act()
     {
         if (DecisionTimer < 0)
         {
@@ -210,9 +218,6 @@ public class AIData : CharacterData
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
 
-            // UPDATE HUNGER
-            UpdateHunger();
-
             // DECIDE
             // CALCULATE AND ACQUIRE NEW STATE:
             if (decideState)
@@ -232,8 +237,9 @@ public class AIData : CharacterData
     }
     /// <summary>
     /// Case switch based on current protocol
+    /// Dependant on fruitant: chain together different ifs
     /// </summary>
-    public void ProtocolSwitch()
+    public virtual void ProtocolSwitch()
     {
         switch (currentProtocol)
         {
@@ -300,46 +306,29 @@ public class AIData : CharacterData
                 break;
         }
     }
-    // UpdateHunger()
-    // damage me if im hungry
-    private void UpdateHunger()
+
+    /// <summary>
+    /// create a hunger signal... may not need because health and hunger are now the same...
+    /// </summary>
+    /// <param name="amount"> from -1 to 1</param>
+    public void UpdateHunger(float amount)
     {
-        // have random chance to be hungry
-        //float hunger = moods["Hunger"];
-        float rand = Random.Range(0f, 100f);
-        if (rand < 7)
-        {
-            // create a signal that subtracts from my hunger
-            InstantiateSignal(0.1f, "Hunger", 0.05f, false, true);
-        }
-
-        // change color
-        /*float rotColor = 0.5f+(hunger / 2);
-        bool updateColor = (this.gameObject.GetComponent<SpriteRenderer>().color.r != rotColor);
-        if (updateColor)
-        {
-            SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
-            if (hunger > 0.75f)
-            {
-                sr.color = new Color(rotColor, rotColor, 0f, sr.color.a);
-            }
-            else
-            {
-                sr.color = new Color(1.0f, 1.0f, 1.0f, sr.color.a);
-            }
-
-        }*/
-
+        // create a signal that subtracts from my hunger
+        InstantiateSignal(0.1f, "Hunger", amount, false, true);
     }
 
-    // InstantiateSignal()
-    // create a signal that subtracts
-    public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
+    /// <summary>
+    /// enable and disable fruitant thinking if on/off screen
+    /// </summary>
+    private void OnBecameVisible()
     {
-        GameObject obtainSurroundings = Instantiate(Checks.signalPrefab, transform.position, Quaternion.identity, transform) as GameObject;
-        SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
-        signalModifier.SetSignalParameters(this.gameObject, size, new Dictionary<string, float>() { { mod, modifier } }, hitall, hitself);
-        return obtainSurroundings;
+        updateAI = true;
+    }
+    private void OnBecameInvisible()
+    {
+        var plDat = PlayerController.instance?.GetComponent<PlayerData>()?.party;
+        if (plDat == null || !plDat.Contains(gameObject))
+            updateAI = false;
     }
 
     // getters for monster info

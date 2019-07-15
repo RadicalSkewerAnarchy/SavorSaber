@@ -165,6 +165,10 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void RespondToIngredients(bool fedByPlayer)
     {
+
+        // heal the fruitant
+        characterData.DoHeal(flavorCountDictionary.Count * 2);
+
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
         {
@@ -222,7 +226,7 @@ public class FlavorInputManager : MonoBehaviour
 
         if(!PlayerController.instance.riding)
             StartCharm(charmTime);
-        //characterData.DoDamage(-3);
+
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
 
