@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class DroneSpawner : MonoBehaviour
+public class DroneSpawner : PoweredObject
 {
     public GameObject droneType;
     public GameObject allNodes;
@@ -23,14 +23,14 @@ public class DroneSpawner : MonoBehaviour
     private AudioSource spawnAudio;
     private Pathfinder pf;
     private SpriteRenderer sr;
-    private Light light;
+    private Light activeLight;
     ParticleSystem teleportRings;
 
     private bool blocked = false;
     private Collider2D[] overlappingObject = null;
     private bool overlapped = false;
 
-    public bool active = true;
+    //public bool active = true;
     private bool timerReset = false;
     private int timerValue = 10;
 
@@ -50,7 +50,7 @@ public class DroneSpawner : MonoBehaviour
         spawnAudio = GetComponent<AudioSource>();
         sr = GetComponent<SpriteRenderer>();
         teleportRings = GetComponent<ParticleSystem>();
-        light = GetComponentInChildren<Light>();
+        activeLight = GetComponentInChildren<Light>();
 
         SpawnDrones();
 
@@ -79,7 +79,7 @@ public class DroneSpawner : MonoBehaviour
             {
                 //Debug.Log("OFF");
                 sr.sprite = offSprite;
-                light.color = Color.red;
+                activeLight.color = Color.red;
                 blocked = true;
                 teleportRings.Stop();
             }
@@ -87,7 +87,7 @@ public class DroneSpawner : MonoBehaviour
             {
                 //Debug.Log("ON");
                 sr.sprite = onSprite;
-                light.color = Color.green;
+                activeLight.color = Color.green;
                 teleportRings.Play();
                 blocked = false;
             }
@@ -116,10 +116,10 @@ public class DroneSpawner : MonoBehaviour
     }
 
     //deactivate the spawner entirely
-    public void ShutOff()
+    public override void ShutOff()
     {
         sr.sprite = offSprite;
-        light.color = Color.red;
+        activeLight.color = Color.red;
         blocked = true;
         teleportRings.Stop();
 
@@ -127,10 +127,10 @@ public class DroneSpawner : MonoBehaviour
     }
 
     //activate an inactive spawner
-    public void TurnOn()
+    public override void TurnOn()
     {
         sr.sprite = onSprite;
-        light.color = Color.green;
+        activeLight.color = Color.green;
         teleportRings.Play();
         blocked = false;
 
