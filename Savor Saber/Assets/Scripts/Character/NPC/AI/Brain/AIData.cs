@@ -246,7 +246,7 @@ public class AIData : CharacterData
                 Protocol.Scare();
                 break;
             default:
-                Debug.Log("YOU SHOULD NEVER BE HERE!");
+                //Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
         }
     }

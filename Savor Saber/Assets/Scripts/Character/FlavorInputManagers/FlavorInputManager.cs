@@ -15,6 +15,7 @@ public class FlavorInputManager : MonoBehaviour
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
+    public AudioClip rejectSFX;
 
     // timers
     public float charmTime = 0;
@@ -22,7 +23,7 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region Components
-    private AudioSource sfxPlayer;
+    protected AudioSource sfxPlayer;
     protected AIData characterData;
     protected SpriteRenderer spriteRenderer;
     #endregion
@@ -115,10 +116,11 @@ public class FlavorInputManager : MonoBehaviour
     }
 
 
-    protected void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+    public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)
             return;
+
         // looking only at favorite ingredients...
         bool moreFriendly = (characterData != null);
         if (moreFriendly && fedByPlayer)
@@ -167,7 +169,8 @@ public class FlavorInputManager : MonoBehaviour
     {
 
         // heal the fruitant
-        characterData.DoHeal(flavorCountDictionary.Count * 2);
+        if (fedByPlayer)
+            characterData.DoHeal(flavorCountDictionary.Count * 2);
 
         //handle spicy
         if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
