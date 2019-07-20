@@ -65,6 +65,9 @@ public class MonsterSpawner : MonoBehaviour
                 Vector2 spawnPos = new Vector2(Random.Range(bounds.min.x, bounds.max.x), Random.Range(bounds.min.y, bounds.max.y));
                 if (collider.OverlapPoint(spawnPos) && Physics2D.OverlapPoint(spawnPos, 0) == null)
                 {
+                    if (go == null)
+                        continue;
+
                     var newObj = Instantiate(go);
                     if(newObj.GetComponent<Pathfinder>() != null)
                     {

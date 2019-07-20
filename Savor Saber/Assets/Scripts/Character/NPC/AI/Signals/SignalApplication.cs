@@ -92,12 +92,10 @@ public class SignalApplication : MonoBehaviour
         foreach (var go in objects)
         {
             string sm = (signalMaker != null ? signalMaker.name : "null character");
-            //if(interactRadius < 5)
-            //if (!isForAwareness)
             //Debug.Log(sm + " has found --> " + go.name + " with signal of radius " + interactRadius);
-
             // check tags
-            if (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player")
+            bool isCreature = (go.tag == "Prey" || go.tag == "Predator" || go.tag == "Player");
+            if (isCreature)
             {
                 //Debug.Log(go.name + "is tagged properly --> " + go.tag);
 
@@ -129,20 +127,22 @@ public class SignalApplication : MonoBehaviour
         {
             ApplyToAll();
         }
+
         // inform signal maker of those here
         else if (signalMaker != null)
         {
-            {
-                signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
-                signalMaker.GetComponent<MonsterChecks>().AllPlants = plantList;
-                signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
-                signalMaker.GetComponent<AIData>().Awareness = null;
-            }
+            signalMaker.GetComponent<MonsterChecks>().AllCreatures = hitList;
+            signalMaker.GetComponent<MonsterChecks>().AllPlants = plantList;
+            signalMaker.GetComponent<MonsterChecks>().AllDrops = dropList;
+            signalMaker.GetComponent<AIData>().Awareness = null;
         }
         hasActivated = true;
         Destroy(gameObject, Time.fixedDeltaTime);
     }
 
+    /// <summary>
+    /// a delayed activation
+    /// </summary>
     private void Start()
     {
         if (!hasActivated)
@@ -217,13 +217,17 @@ public class SignalApplication : MonoBehaviour
         //change middle argument based on creatures offset
         GameObject child = null;
         SignalAnimator(mostInfluential, mood, sign, child, g);
-
-        // child.GetComponent<Animator>().Play("FearUpAnimation");
-
-        // set decision timer to 0
-        // THIS MAKES THEM THINK WAYYYYYYY TOO FAST
-        // data.ManualDecision();
     }
+
+    /// <summary>
+    /// animtions linked to the signal
+    /// </summary>
+    /// <param name="mostInfluential"></param>
+    /// <param name="mood"></param>
+    /// <param name="sign"></param>
+    /// <param name="emoter"></param>
+    /// <param name="parent"></param>
+    /// <param name="useParent"></param>
     public void SignalAnimator(float mostInfluential, string mood, int sign, GameObject emoter, GameObject parent, bool useParent = true)
     {
         ParticleSystem[] emitters = null;

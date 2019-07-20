@@ -46,17 +46,13 @@ public class MonsterChecks : MonoBehaviour
     {
         closestDistance = Mathf.Infinity;
         AiData = GetComponent<AIData>();
-        GameObject soma = GameObject.FindGameObjectWithTag("Player");
-
-        // Know who is friend and foe
-        Friends = AiData.Friends;
-        Enemies = AiData.Enemies;
-        Friends.Add(soma);
 
         // clear often
         AllCreatures = new List<GameObject>();
         AllPlants = new List<GameObject>();
         AllDrops = new List<GameObject>();
+        Friends = new List<GameObject>();
+        Enemies = new List<GameObject>();
 
         // specials
         specialPosition = transform.position;
@@ -65,6 +61,7 @@ public class MonsterChecks : MonoBehaviour
     }
 
     #region AWARENESS
+
     /// <summary>
     /// checks for all creatures, Max of 10 (Change this in AIData in Start() for NearbyCreatures[]
     /// </summary>
@@ -72,20 +69,23 @@ public class MonsterChecks : MonoBehaviour
     {
         return AllCreatures.Count;
     }
-    public int AwareHowManyEnemies()
-    {
-        if (this.tag == "Predator" || this.tag == "Player")
-            return 0;
 
-        List<GameObject> enemies = new List<GameObject>();
-        foreach (GameObject g in AllCreatures)
-        {
-            if (g != null && g.tag == "Predator")
-            {
-                enemies.Add(g);
-            }
-        }
-        return enemies.Count;
+    /// <returns> Count of Enemy and Friend Lists </returns>
+    public int NumberOfEnemies()
+    {
+        return Enemies.Count;
+    }
+    public int NumberOfFriends()
+    {
+        return Friends.Count;
+    }
+    public int NumberOfPlants()
+    {
+        return AllPlants.Count;
+    }
+    public int NumberOfDrops()
+    {
+        return AllDrops.Count;
     }
 
     /// <summary>
@@ -94,13 +94,22 @@ public class MonsterChecks : MonoBehaviour
     public void AwareNearby()
     {
         // clear all creatues
-        AllCreatures.Clear();
+        ClearAwareness();
         // update all creatures
         GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform.position, Quaternion.identity) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
         signalModifier.SetSignalParameters(this.gameObject, AiData.Perception, new Dictionary<string, float>() { }, true, false);
         AiData.Awareness = signalModifier;
         // the signal will notify the signal creator of this data once it is dead
+    }
+
+    private void ClearAwareness()
+    {
+        AllCreatures.Clear();
+        AllPlants.Clear();
+        AllDrops.Clear();
+        Friends.Clear();
+        Enemies.Clear();
     }
     #endregion
 
@@ -290,6 +299,7 @@ public class MonsterChecks : MonoBehaviour
         //Debug.Log("Closest drop is reached = " + (closestPlant == null ? "and it is null" : closestPlant.name + closestPlant.GetInstanceID()));
         return closestPlant;
     }
+
     /// <summary>
     /// Return Closest Drop
     /// </summary>
@@ -528,19 +538,6 @@ public class MonsterChecks : MonoBehaviour
     }
     #endregion
 
-    #region COUNT CHECKS
-    /// COUNT FUNCTIONS
-    /// <returns> Count of Enemy and Friend Lists </returns>
-    public int NumberOfEnemies()
-    {
-        return Enemies.Count;
-    }
-    public int NumberOfFriends()
-    {
-        return Friends.Count;
-    }
-    #endregion
-
     #region (Re)Set Specials
     // set specials
     public void SetSpecialTarget(GameObject g)
@@ -566,6 +563,7 @@ public class MonsterChecks : MonoBehaviour
     }
     #endregion
 
+    #region Pathfinding
     // given any position, determine what tile that position is on(if it is)
     // if it's not, don't navigate there
     public TileNode GetNearestNode(Vector2 pos)
@@ -602,6 +600,19 @@ public class MonsterChecks : MonoBehaviour
         return targetTile;
     }
 
+    public List<TileNode> GetLongestPath(TileNode tile)
+    {
+        List<TileNode> path = null;
+        path = AiData.Behavior.pathfinder.AStar(tile);
+        return path;
+    }
+
+    public void SetCurrentTile()
+    {
+        currentTile = GetNearestNode(transform.position);
+    }
+
+    #endregion
 
     #region POSITION RANDOMIZATION
     /// <summary>
@@ -671,18 +682,6 @@ public class MonsterChecks : MonoBehaviour
             specialPosition = (((Vector2)transform.position + new Vector2(xxx, yyy)) + pos)/2f;
             //Debug.Log("Special Position Set: x=" + specialPosition.x + ", y="+ specialPosition.y);
         }
-    }
-
-    public List<TileNode> GetLongestPath(TileNode tile)
-    {
-        List<TileNode> path = null;
-        path = AiData.Behavior.pathfinder.AStar(tile);
-        return path;
-    }
-
-    public void SetCurrentTile()
-    {
-        currentTile = GetNearestNode(transform.position);
     }
     #endregion
 }

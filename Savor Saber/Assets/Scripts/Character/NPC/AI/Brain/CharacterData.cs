@@ -13,49 +13,55 @@ public class CharacterData : MonoBehaviour
             return transform.position;
         }
     }
-    #region Values for Behaviors
-    public float Speed;
-    public float Perception;
-    public float MeleeAttackThreshold = 1f;
-    public float RangeAttackThreshold = 2f;
-    public float EngageHostileThreshold = 5f;
-    public int maxHealth = 10;
-    public int health = 10;
-    public int overchargeHealth = 0;
-    [HideInInspector]
-    public int PartySize = 3;
-    private Vector2 Spawn;
-    public GameObject signalPrefab;
-    [HideInInspector]
-    public float damageDealt = 0;
-    [HideInInspector]
-    public float entitiesKilled = 0;
-    #endregion
-    #region Variance
-    float VDown = 9 / 10;
-    float VUp = 11 / 10;
-    #endregion
-    #region Moods
-    [Range(0f, 1f)]
-    [SerializeField] protected float initialFear;
-    [Range(0f, 1f)]
-    [SerializeField] protected float initialHunger;
-    [Range(0f, 1f)]
-    [SerializeField] protected float initialHostility;
-    [Range(0f, 1f)]
-    [SerializeField] protected float initialFriendliness;
-    public Dictionary<string, float> moods = new Dictionary<string, float>();
-    #endregion
-    #region Effects
-    public AudioClip damageSFX;
-    public AudioClip healSFX;
-    public AudioClip deathSFX;
-    public AudioClip eatSFX;
-    public GameObject sfxPlayer;
-    public ParticleSystem damageParticleBurst = null;
-    public ParticleSystem eatingParticleBurst = null;
-    public Slider healthBar;
-    protected Coroutine barCr = null;
+
+    #region Main Variables
+        #region Values for Behaviors
+        public float Speed;
+        public float Perception;
+        public float MeleeAttackThreshold = 1f;
+        public float RangeAttackThreshold = 2f;
+        public float EngageHostileThreshold = 5f;
+        public int maxHealth = 10;
+        public int health = 10;
+        public int overchargeHealth = 0;
+        [HideInInspector]
+        public int PartySize = 3;
+        private Vector2 Spawn;
+        public GameObject signalPrefab;
+        [HideInInspector]
+        public float damageDealt = 0;
+        [HideInInspector]
+        public float entitiesKilled = 0;
+        #endregion
+
+        #region Variance
+        float VDown = 9 / 10;
+        float VUp = 11 / 10;
+        #endregion
+
+        #region Moods
+        [Range(0f, 1f)]
+        [SerializeField] protected float initialFear;
+        [Range(0f, 1f)]
+        [SerializeField] protected float initialHunger;
+        [Range(0f, 1f)]
+        [SerializeField] protected float initialHostility;
+        [Range(0f, 1f)]
+        [SerializeField] protected float initialFriendliness;
+        public Dictionary<string, float> moods = new Dictionary<string, float>();
+        #endregion
+
+        #region Effects
+        public AudioClip damageSFX;
+        public AudioClip healSFX;
+        public AudioClip deathSFX;
+        public AudioClip eatSFX;
+        public GameObject sfxPlayer;
+        public ParticleSystem damageParticleBurst = null;
+        public ParticleSystem eatingParticleBurst = null;
+        public Slider healthBar;
+        protected Coroutine barCr = null;
+        #endregion
     #endregion
 
     void Start()
@@ -79,6 +85,7 @@ public class CharacterData : MonoBehaviour
         Spawn = transform.position;
     }
 
+    #region Healing and Damaging
     /// <summary> A standard damage function. </summary>
     public virtual bool DoDamage(int damage)
     {
@@ -187,6 +194,9 @@ public class CharacterData : MonoBehaviour
         Destroy(gameObject);
     }
 
+    #endregion
+
+    #region Signalling
     // InstantiateSignal()
     // create a signal that subtracts
     public GameObject InstantiateSignal(float size, string mod, float modifier, bool hitall, bool hitself)
@@ -197,4 +207,5 @@ public class CharacterData : MonoBehaviour
         signalModifier.Activate();
         return obtainSurroundings;
     }
+    #endregion
 }
