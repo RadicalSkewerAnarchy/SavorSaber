@@ -6,11 +6,12 @@ public class PoweredObject : MonoBehaviour
 {
 
     public bool active = false;
+    public bool canBeSourCharged = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (active) TurnOn();
     }
 
     // Update is called once per frame
