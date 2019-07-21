@@ -19,7 +19,7 @@ public class FavoriteFoodBubble : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        flavors = fruitant.GetComponent<FlavorInputManager>();
+        flavors = GetComponentInParent<FlavorInputManager>();
         bubbleRender = GetComponent<SpriteRenderer>();
         fruitRender = fruitDisplay.GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player");
@@ -35,7 +35,7 @@ public class FavoriteFoodBubble : MonoBehaviour
         {
             if (InputManager.GetButton(Control.Interact))
             {
-                if (Vector2.Distance(player.transform.position, fruitant.transform.position) < 2.5f)
+                if (Vector2.Distance(player.transform.position, transform.position) < 2.5f)
                 {
                     show = true;
                 }
