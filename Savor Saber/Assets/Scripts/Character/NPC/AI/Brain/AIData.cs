@@ -59,15 +59,41 @@ public class AIData : CharacterData
                 Chase,
                 Wander,
                 Ride,
-                Scare
+                Scare,
+                Dead,
+                Overcharged
             }
             public Protocols currentProtocol = Protocols.Lazy;
-            public List<TileNode> path;
+            [HideInInspector]
+            public Protocols previousProtocol = Protocols.Lazy;
             #endregion
+
+            #region Life and Move States
+            public enum LifeState
+            {
+                alive,
+                overcharged,
+                dead
+            }
+            public LifeState currentLifeState = LifeState.alive;
+            [HideInInspector]
+            public LifeState previousLifeState = LifeState.alive;
+
+            public enum MoveState
+            {
+                idle,
+                move,
+                ride
+            }
+            public MoveState currentMoveState = MoveState.idle;
+            [HideInInspector]
+            public MoveState previousMoveState = MoveState.idle;
+            #endregion
+
         #endregion
 
         #region Timers
-        [SerializeField]
+    [SerializeField]
         public float DecisionTimer;
         [SerializeField]
         [Range(0.25f, 15f)]
@@ -104,7 +130,9 @@ public class AIData : CharacterData
         public bool meleeHunter = true;
         [HideInInspector]
         public Vector3 rideVector;
-        #endregion
+        [HideInInspector]
+        public List<TileNode> path;
+    #endregion
 
     #endregion
 
@@ -123,6 +151,7 @@ public class AIData : CharacterData
         InitializeCharacterData();
         InitializeNormalValues();
         #endregion
+
         path = new List<TileNode>();
 
         _vectors = new Dictionary<string, Vector2> {
@@ -145,38 +174,15 @@ public class AIData : CharacterData
     /// <summary>
     /// If its time to make a new decision, choose protocol based on curves and call switch statement
     /// </summary>
-    public virtual void Act()
+    public void Act()
     {
-        if (DecisionTimer < 0)
+        if (DecisionTimer <= 0)
         {
-            bool decideState = true;
-            // CONGA LOGIC
-            // as long as fear is not 1, stay conga
-            if (currentProtocol == Protocols.Conga)
-            {
-                if (moods["Hunger"] != 1)
-                    decideState = false;
-            }
-            else if (currentProtocol == Protocols.Ride)
-            {
-                decideState = false;
-            }
-            else if (Checks.NumberOfEnemies() > 0 && this.tag != "Prey")
-            {
-                decideState = false;
-                currentProtocol = Protocols.Runaway;
-            }
-
-
             // UPDATE AWARENESS: creatures, player, and drops
             Checks.AwareNearby();
 
-            // DECIDE
-            // CALCULATE AND ACQUIRE NEW STATE:
-            if (decideState)
-            {
-                currentProtocol = Curves.DecideState();
-            }
+            //  DECIDE STATE
+            currentProtocol = DecideState();
 
             // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
@@ -188,21 +194,144 @@ public class AIData : CharacterData
 
         ProtocolSwitch();
     }
+
+    /// <summary>
+    /// Override: apply logic specific to the fruitant or drone
+    /// to know what and how it should transition
+    /// </summary>
+    /// <returns>the new or old state based on surroundings and stats</returns>
+    public virtual Protocols DecideState()
+    {
+        Protocols myNewState = currentProtocol;
+        return myNewState;
+    }
+
     /// <summary>
     /// Case switch based on current protocol
     /// Dependant on fruitant: chain together different ifs
     /// </summary>
-    public virtual void ProtocolSwitch()
+    public void ProtocolSwitch()
+    {
+        if (currentProtocol != previousProtocol)
+        {
+            // exit old...
+            OnProtocolExit(previousProtocol);
+            /// ... enter new
+            OnProtocolEnter(currentProtocol);
+        }
+        else
+        {
+            if (currentLifeState != previousLifeState)
+            {
+                // exit old...
+                OnStateExit(previousLifeState);
+                /// ... enter new
+                OnStateEnter(currentLifeState);
+            }
+            else
+            {
+                // act upon current protocol
+                // based on current life state
+                switch (currentLifeState)
+                {
+                    case LifeState.alive:
+                        WhileAlive();
+                        break;
+                    case LifeState.dead:
+                        WhileDead();
+                        break;
+                    case LifeState.overcharged:
+                        WhileOvercharged();
+                        break;
+                    default:
+                        Debug.Log("fruitant has no current life state");
+                        break;
+                }
+            }
+        }
+    }
+
+    #region Entrance and Exit
+    /// <summary>
+    /// CALL THIS BEFORE OnStateEnter()
+    /// when enterring any state, call this to modify any
+    /// unique occurences for entering that Protocol
+    /// </summary>
+    /// <param name="p">old protocol</param>
+    public virtual void OnProtocolExit(Protocols p)
+    {
+        switch (p)
+        {
+            default:
+                // nothing at all
+                break;
+        }
+
+        // set previous to this one
+        previousProtocol = currentProtocol;
+    }
+
+    /// <summary>
+    /// CALL THIS AFTER OnStateExit()
+    /// when enterring any state, call this to modify any
+    /// unique occurences for entering that Protocol
+    /// </summary>
+    /// <param name="p">new protocol</param>
+    public virtual void OnProtocolEnter(Protocols p)
+    {
+        switch (p)
+        {
+            default:
+                // nothing at all
+                break;
+        }
+    }
+
+    /// <summary>
+    /// CALL THIS BEFORE OnStateEnter()
+    /// modifies fruitant when becoming overcharged, alive and dead
+    /// </summary>
+    /// <param name="p">old protocol</param>
+    public virtual void OnStateExit(LifeState s)
+    {
+        switch (s)
+        {
+            default:
+                // nothing at all
+                break;
+        }
+
+        // set previous to this one
+        previousLifeState = currentLifeState;
+    }
+
+    /// <summary>
+    /// CALL THIS AFTER OnStateExit()
+    /// modifies fruitant when having just been overcharged, alive, or dead
+    /// </summary>
+    /// <param name="p">new protocol</param>
+    public virtual void OnStateEnter(LifeState s)
+    {
+        switch (s)
+        {
+            default:
+                // nothing at all
+                break;
+        }
+    }
+    #endregion
+
+    #region Acting Upon Life
+    public virtual void WhileAlive()
     {
         switch (currentProtocol)
         {
             case Protocols.Melee:
-            // melee
+                // melee
                 Protocol.Melee(null);
                 break;
             // ranged
             case Protocols.Ranged:
-
                 Protocol.Ranged();
                 break;
             // lazy
@@ -246,18 +375,28 @@ public class AIData : CharacterData
                 Protocol.Scare();
                 break;
             default:
-                //Debug.Log("YOU SHOULD NEVER BE HERE!");
+                Debug.Log("YOU SHOULD NEVER BE HERE!");
                 break;
         }
     }
+    public virtual void WhileDead()
+    {
+
+    }
+    public virtual void WhileOvercharged()
+    {
+
+    }
+    #endregion
 
     /// <summary>
     /// Sets any decision timers to 0 to force fruitant to update state on next Update()
     /// </summary>
     public void ManualDecision()
     {
-        DecisionTimer = -1f;
+        DecisionTimer = 0;
     }
+
     #endregion
 
     #region Brain Enabling
@@ -292,6 +431,7 @@ public class AIData : CharacterData
     {
         return this.Checks;
     }
+
     #endregion
 
     #region Normal Values and Calculations
