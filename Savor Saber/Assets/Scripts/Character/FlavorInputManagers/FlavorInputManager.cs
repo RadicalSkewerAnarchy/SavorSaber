@@ -7,11 +7,11 @@ public class FlavorInputManager : MonoBehaviour
 {
     #region Feeding
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
-    protected Dictionary<string, int> ingredientCountDictionary = new Dictionary<string, int>();
-    public string[] favoriteIngredients;
+    protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
+    public IngredientData[] favoriteIngredients;
     public RecipeData.Flavors favoriteFlavors;
     public int charmThreshhold = 1;
-    private bool fedFavoriteIngredient = false;
+    protected bool fedFavoriteIngredient = false;
     public GameObject rewardItem;
     public int amountRewardItem = 2;
     public AudioClip rewardSFX;
@@ -29,13 +29,13 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region Other
-    private PointVector pv = new PointVector();
+    protected PointVector pv = new PointVector();
     public float dotTicLength = 1;
-    private int electricBaseTime = 10;
+    protected int electricBaseTime = 10;
     public GameObject electricFieldTemplate;
     public GameObject saltShieldTemplate;
     public AudioClip electricSFX;
-    private bool isElectric = false;
+    protected bool isElectric = false;
     #endregion
 
     private void Start()
@@ -81,14 +81,14 @@ public class FlavorInputManager : MonoBehaviour
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
-            if (ingredientCountDictionary.ContainsKey(ingredient.displayName))
+            if (ingredientCountDictionary.ContainsKey(ingredient))
             {
-                ingredientCountDictionary[ingredient.displayName] = ingredientCountDictionary[ingredient.displayName] + 1;
+                ingredientCountDictionary[ingredient] = ingredientCountDictionary[ingredient] + 1;
                 //Debug.Log("Ate one " + ingredient.displayName);
             }
             else
             {
-                ingredientCountDictionary.Add(ingredient.displayName, 1);
+                ingredientCountDictionary.Add(ingredient, 1);
                 //Debug.Log("Ate one " + ingredient.displayName);
             }
 
@@ -115,7 +115,6 @@ public class FlavorInputManager : MonoBehaviour
         SpawnReward(ingredientArray, fedByPlayer);
     }
 
-
     public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)
@@ -126,7 +125,7 @@ public class FlavorInputManager : MonoBehaviour
         if (moreFriendly && fedByPlayer)
             characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
 
-        foreach (string favoriteIngredient in favoriteIngredients)
+        foreach (var favoriteIngredient in favoriteIngredients)
         {
             // if the ingredients on the skewer are my favorites...
             if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
@@ -282,7 +281,7 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region CURRY
-    protected void CurryBalls (bool favorite)
+    protected virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
@@ -293,7 +292,7 @@ public class FlavorInputManager : MonoBehaviour
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
 
-    protected IEnumerator ExecuteCurry(float time, int shots, int pellets)
+    protected virtual IEnumerator ExecuteCurry(float time, int shots, int pellets)
     {
         //things to happen before delay
         GameObject newAttack;
