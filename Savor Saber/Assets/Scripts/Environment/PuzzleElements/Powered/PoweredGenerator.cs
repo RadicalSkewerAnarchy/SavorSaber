@@ -7,16 +7,29 @@ public class PoweredGenerator : PoweredObject
 {
     [SerializeField]
     private PoweredObject[] targetObjects;
+
+    //components
     private Animator animator;
     private Light generatorLight;
+    private PlaySFX sfxPlayer;
+    private AudioSource constantOnSound;
+
+    // sfx fields
+    public AudioClip startSound;
+    public AudioClip stopSound;
+
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        sfxPlayer = GetComponent<PlaySFX>();
+        constantOnSound = GetComponent<AudioSource>();
         generatorLight = GetComponentInChildren<Light>();
         if (active)
             TurnOn();
+        else
+            ShutOff();
     }
 
     // Update is called once per frame
@@ -27,23 +40,36 @@ public class PoweredGenerator : PoweredObject
 
     public override void TurnOn()
     {
-        base.TurnOn();
-        foreach(PoweredObject target in targetObjects)
+        if (!active)
         {
-            target.TurnOn();
+            base.TurnOn();
+            foreach (PoweredObject target in targetObjects)
+            {
+                target.TurnOn();
+            }
+            animator.Play("On");
+            generatorLight.color = Color.green;
+            sfxPlayer.Play(startSound);
+            constantOnSound.Play();
         }
-        animator.Play("On");
-        generatorLight.color = Color.green;
+
     }
 
     public override void ShutOff()
     {
-        base.ShutOff();
-        foreach (PoweredObject target in targetObjects)
+        if (active)
         {
-            target.ShutOff();
+            base.ShutOff();
+            foreach (PoweredObject target in targetObjects)
+            {
+                target.ShutOff();
+            }
+            animator.Play("Off");
+            generatorLight.color = Color.red;
+            sfxPlayer.Play(stopSound);
+            constantOnSound.Stop();
         }
-        animator.Play("Off");
-        generatorLight.color = Color.red;
+
+
     }
 }
