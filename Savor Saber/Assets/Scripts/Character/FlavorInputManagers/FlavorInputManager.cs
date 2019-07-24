@@ -73,6 +73,8 @@ public class FlavorInputManager : MonoBehaviour
         flavorCountDictionary[RecipeData.Flavors.Umami] = 0;
         flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
         flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
+
+        ingredientCountDictionary.Clear();
     }
 
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
@@ -90,15 +92,9 @@ public class FlavorInputManager : MonoBehaviour
             {
                 ingredientCountDictionary.Add(ingredient, 1);
                 //Debug.Log("Ate one " + ingredient.displayName);
-            }
+            }                
 
-            // mod hunger
-            if (characterData != null)
-            {
-                characterData.InstantiateSignal(0.5f, "Hunger", -0.5f, false, true);
-            }
-                
-
+            // favorite flavors
             for (int f = 1; f <= 64; f = f << 1)
             {
 
@@ -112,7 +108,9 @@ public class FlavorInputManager : MonoBehaviour
         }
 
         RespondToIngredients(fedByPlayer);
-        SpawnReward(ingredientArray, fedByPlayer);
+
+        // fruitants no longer spawn a reward
+        //SpawnReward(ingredientArray, fedByPlayer);
     }
 
     public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
@@ -168,55 +166,34 @@ public class FlavorInputManager : MonoBehaviour
     {
 
         // heal the fruitant
-        if (fedByPlayer)
+        if (fedByPlayer && characterData != null)
             characterData.DoHeal(flavorCountDictionary.Count * 2);
 
-        //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
+        foreach (var favoriteIngredient in favoriteIngredients)
         {
-            if (fedByPlayer)
+            // if the ingredients on the skewer are my favorites...
+            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
             {
-                CurryBalls((favoriteFlavors == RecipeData.Flavors.Spicy));
-            }
-        }
-        //handle sweet
-        if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
-        {
-            if (fedByPlayer)
-            {
-                CheckCharmEffect((favoriteFlavors == RecipeData.Flavors.Sweet));
-            }
-          
-        }
-        //handle umami
-        if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0)
-        {
-            if (favoriteFlavors != RecipeData.Flavors.Umami)
-            {
-                // nothing for now
-            }
-        }
-        //handle sour
-        if (flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
-        {
-            if (fedByPlayer)
-            {
-                StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
-            }
-        }
-        //handle salty
-        if (flavorCountDictionary[RecipeData.Flavors.Salty] > 0)
-        {
-            if (fedByPlayer)
-            {
-                SaltyShield(favoriteFlavors == RecipeData.Flavors.Salty);
-            }
-        }
+                // am i actually being fed this...
+                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
 
-        // reset flavor dicts
+                // ACTIVATE ABILITY HERE
+                (characterData as AIData).currentProtocol = AIData.Protocols.Ability;
+                // SET TIME BASED ON AMOUNTONSKEWER
+
+                if (sfxPlayer != null)
+                {
+                    sfxPlayer.clip = rewardSFX;
+                    sfxPlayer.Play();
+                }
+            }
+        }
+        
+        // reset dicts
         ResetDictionary();
     }
 
+    #region Flavor Responses
     #region CHARM
     protected void CheckCharmEffect(bool favorite)
     {
@@ -372,6 +349,7 @@ public class FlavorInputManager : MonoBehaviour
         ss.lifetime = time;
     }
     #endregion
+    #endregion
 
 
     public void DamageOverTime(int numTics, float ticLength)
@@ -479,4 +457,51 @@ public class FlavorInputManager : MonoBehaviour
         }
     }
 }*/
+
+/* OLD FLAVOR REPSONSES
+ * fruitants no have specific responses based being fed their favorites
+
+    //handle spicy
+    if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
+    {
+        if (fedByPlayer)
+        {
+            CurryBalls((favoriteFlavors == RecipeData.Flavors.Spicy));
+        }
+    }
+    //handle sweet
+    if (flavorCountDictionary[RecipeData.Flavors.Sweet] > 0)
+    {
+        if (fedByPlayer)
+        {
+            CheckCharmEffect((favoriteFlavors == RecipeData.Flavors.Sweet));
+        }
+
+    }
+    //handle umami
+    if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0)
+    {
+        if (favoriteFlavors != RecipeData.Flavors.Umami)
+        {
+            // nothing for now
+        }
+    }
+    //handle sour
+    if (flavorCountDictionary[RecipeData.Flavors.Sour] > 0)
+    {
+        if (fedByPlayer)
+        {
+            StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
+        }
+    }
+    //handle salty
+    if (flavorCountDictionary[RecipeData.Flavors.Salty] > 0)
+    {
+        if (fedByPlayer)
+        {
+            SaltyShield(favoriteFlavors == RecipeData.Flavors.Salty);
+        }
+    }
+
+    */
 #endregion

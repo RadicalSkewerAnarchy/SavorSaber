@@ -61,6 +61,7 @@ public class AIData : CharacterData
                 Ride,
                 Scare,
                 Dead,
+                Ability,
                 Overcharged
             }
             public Protocols currentProtocol = Protocols.Lazy;
