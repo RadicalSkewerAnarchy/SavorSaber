@@ -96,15 +96,6 @@ public class CharacterData : MonoBehaviour
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {
-                if (healthBar != null)
-                {
-                    healthBar.gameObject.SetActive(true);
-                    //Debug.Log("Update health bar");
-                    healthBar.value = (float)health / maxHealth;
-                    if (barCr != null)
-                        StopCoroutine(barCr);
-                    barCr = StartCoroutine(ShowHealthBar());
-                }
                 if (damageSFX != null)
                 {
                     var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
@@ -121,11 +112,26 @@ public class CharacterData : MonoBehaviour
             else // Health <= 0
             {
                 dead = true;
-                Kill();
+                // fruitant specific
+                var ai = this.GetComponent<AIData>();
+                if (ai != null)
+                {
+                    ai.currentLifeState = AIData.LifeState.dead;
+                }
+                health = 0;
+                //Kill();
+            }
+            if (healthBar != null)
+            {
+                healthBar.gameObject.SetActive(true);
+                //Debug.Log("Update health bar");
+                healthBar.value = (float)health / maxHealth;
+                if (barCr != null)
+                    StopCoroutine(barCr);
+                barCr = StartCoroutine(ShowHealthBar());
             }
 
             // create a fear signal
-            float hp = (maxHealth - health) / maxHealth;
             InstantiateSignal(4 , "Fear",  0.25f, true, true);
         }
         return dead;
@@ -156,6 +162,13 @@ public class CharacterData : MonoBehaviour
                 {
                     var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
                     deathSoundObj.GetComponent<PlayAndDestroy>().Play(healSFX);
+                }
+
+                // fruitant specific
+                var ai = this.GetComponent<AIData>();
+                if (ai != null)
+                {
+                    ai.currentLifeState = AIData.LifeState.alive;
                 }
             }
 

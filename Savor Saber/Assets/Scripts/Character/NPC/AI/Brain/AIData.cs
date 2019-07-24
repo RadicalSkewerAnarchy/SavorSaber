@@ -97,10 +97,10 @@ public class AIData : CharacterData
         public float DecisionTimer;
         [SerializeField]
         [Range(0.25f, 15f)]
-        public float DecisionTimerReset = 10f;
+        public float DecisionTimerReset = 1f;
         [SerializeField]
         [Range(0f, 4f)]
-        public float DecisionTimerVariance = 2f;
+        public float DecisionTimerVariance = 0.2f;
         #endregion
 
         #region Components
@@ -110,6 +110,7 @@ public class AIData : CharacterData
         [HideInInspector]
         public MonsterChecks Checks;
         private UtilityCurves Curves;
+        private SpriteRenderer Renderer;
 
         #endregion
 
@@ -146,6 +147,7 @@ public class AIData : CharacterData
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         Curves = GetComponent<UtilityCurves>();
+        Renderer = GetComponent<SpriteRenderer>();
         #endregion
         #region Initialize Data
         InitializeCharacterData();
@@ -182,7 +184,7 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             //  DECIDE STATE
-            currentProtocol = DecideState();
+            currentProtocol = DecideProtocol();
 
             // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
@@ -200,7 +202,7 @@ public class AIData : CharacterData
     /// to know what and how it should transition
     /// </summary>
     /// <returns>the new or old state based on surroundings and stats</returns>
-    public virtual Protocols DecideState()
+    public virtual Protocols DecideProtocol()
     {
         Protocols myNewState = currentProtocol;
         return myNewState;
@@ -296,6 +298,9 @@ public class AIData : CharacterData
     {
         switch (s)
         {
+            case LifeState.dead:
+                Renderer.color = Color.white;
+                break;
             default:
                 // nothing at all
                 break;
@@ -314,6 +319,9 @@ public class AIData : CharacterData
     {
         switch (s)
         {
+            case LifeState.dead:
+                Renderer.color = Color.grey;
+                break;
             default:
                 // nothing at all
                 break;
