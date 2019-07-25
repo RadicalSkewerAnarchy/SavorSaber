@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class AreaSpawner : MonoBehaviour
 {    
-    [SerializeField] protected GameObject[] spawnObjects = new GameObject[1];
+    public List<GameObject> spawnObjects = new List<GameObject>() { null };
     [SerializeField] protected GameObject[] spawnSignals = new GameObject[0];
     [SerializeField] protected List<GameObject> trackedObjects = new List<GameObject>();
 
