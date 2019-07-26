@@ -175,7 +175,9 @@ public class AIData : CharacterData
 
     #region Decision Making
     /// <summary>
-    /// If its time to make a new decision, choose protocol based on curves and call switch statement
+    /// If its time to make a new decision, 
+    ///     choose protocol  
+    /// call switch statement
     /// </summary>
     public void Act()
     {
@@ -188,7 +190,8 @@ public class AIData : CharacterData
             currentProtocol = DecideProtocol();
 
             // RESET DECISION TIMER
-            DecisionTimer = DecisionTimerReset + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
+            DecisionTimer = DecisionTimerReset 
+                + Random.Range(-DecisionTimerVariance, DecisionTimerVariance);
         }
         else
         {
@@ -210,25 +213,24 @@ public class AIData : CharacterData
     }
 
     /// <summary>
-    /// Case switch based on current protocol
-    /// Dependant on fruitant: chain together different ifs
+    /// Case switch based on current protocol and life
     /// </summary>
     public void ProtocolSwitch()
     {
         if (currentProtocol != previousProtocol)
         {
-            // exit old...
+            // exit old protocol...
             OnProtocolExit(previousProtocol);
-            /// ... enter new
+            /// ... enter new protocol
             OnProtocolEnter(currentProtocol);
         }
         else
         {
             if (currentLifeState != previousLifeState)
             {
-                // exit old...
+                // exit old life...
                 OnStateExit(previousLifeState);
-                /// ... enter new
+                // ... enter new life
                 OnStateEnter(currentLifeState);
             }
             else
@@ -247,7 +249,7 @@ public class AIData : CharacterData
                         WhileOvercharged();
                         break;
                     default:
-                        Debug.Log("fruitant has no current life state");
+                        Debug.Log("fruitant has no life?");
                         break;
                 }
             }
@@ -328,6 +330,14 @@ public class AIData : CharacterData
                 break;
         }
     }
+
+    public virtual IEnumerator OverchargeTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (this.currentLifeState != LifeState.dead)
+            this.currentLifeState = LifeState.alive;
+        yield return null;
+    }
     #endregion
 
     #region Acting Upon Life
@@ -390,11 +400,11 @@ public class AIData : CharacterData
     }
     public virtual void WhileDead()
     {
-
+        currentProtocol = Protocols.Dead;
     }
     public virtual void WhileOvercharged()
     {
-
+        WhileAlive();
     }
     #endregion
 
@@ -440,7 +450,11 @@ public class AIData : CharacterData
     {
         return this.Checks;
     }
-
+    public bool GetOvercharged()
+    {
+        return (currentLifeState == LifeState.overcharged);
+        //return (health > maxHealth && currentLifeState == LifeState.overcharged);
+    }
     #endregion
 
     #region Normal Values and Calculations

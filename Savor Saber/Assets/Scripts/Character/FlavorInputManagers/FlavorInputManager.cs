@@ -182,10 +182,7 @@ public class FlavorInputManager : MonoBehaviour
                 // am i actually being fed this...
                 float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
 
-                // ACTIVATE ABILITY HERE
-                (characterData as AIData).currentProtocol = AIData.Protocols.Ability;
-                // SET TIME BASED ON AMOUNTONSKEWER
-
+                // play audio
                 if (sfxPlayer != null)
                 {
                     sfxPlayer.clip = rewardSFX;

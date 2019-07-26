@@ -165,10 +165,22 @@ public class CharacterData : MonoBehaviour
                 }
 
                 // fruitant specific
+                // set alive or overcharged
                 var ai = this.GetComponent<AIData>();
                 if (ai != null)
                 {
-                    ai.currentLifeState = AIData.LifeState.alive;
+                    if (overcharged)
+                    {
+                        // set state
+                        ai.currentLifeState = AIData.LifeState.overcharged;
+                        // start timer
+                        StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                    }
+                    else
+                    {
+                        //revived or still alive
+                        ai.currentLifeState = AIData.LifeState.alive;
+                    }
                 }
             }
 
