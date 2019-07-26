@@ -30,7 +30,7 @@ public class DroneBossData : AIData
         }
         else
         {
-            GameObject c = Checks.WeakestCreature();
+            GameObject c = Checks.ClosestCreature();
             if (Vector2.Distance(c.transform.position, this.transform.position) < 5)
                 proto = Protocols.Melee;
             else
