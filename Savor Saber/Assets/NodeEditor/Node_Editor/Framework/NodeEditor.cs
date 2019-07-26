@@ -21,7 +21,7 @@ namespace NodeEditorFramework
 		public static NodeEditorState curEditorState;
 
 		// GUI callback control
-		internal static Action NEUpdate;
+		internal static Action NEUpdate = default;
 		public static void Update () { if (NEUpdate != null) NEUpdate (); }
 		public static Action ClientRepaints;
 		public static void RepaintClients () { if (ClientRepaints != null) ClientRepaints (); }

@@ -20,7 +20,7 @@ public class MonsterController : EntityController
         }
     }
     public bool invert = false;
-    private SpriteRenderer renderer;
+    new private SpriteRenderer renderer;
     private void Start()
     {
         renderer = GetComponent<SpriteRenderer>();
