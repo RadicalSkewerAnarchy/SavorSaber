@@ -24,6 +24,7 @@ public class NexusInteractor : MonoBehaviour
     {
         Parent = parent;
         spawner.spawnObjects.Add(ingredientPrefab);
+        readyToSpawn = true;
     }
 
     // Update is called once per frame

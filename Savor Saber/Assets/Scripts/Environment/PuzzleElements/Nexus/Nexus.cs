@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Attatch this to an object to make it a nexus.
@@ -45,8 +46,7 @@ public class Nexus : MonoBehaviour
     [Tooltip("The ingredient to be spawned when this nexus is hacked")]
     public GameObject ingredientPrefab;
     public List<GameObject> protectedBy = new List<GameObject>() { null };
-    [Tooltip("The Event or Cutscene to Trigger when this Nexus is activated (Optional)")]
-    public EventTrigger triggerOnActivation;
+    public UnityEvent callOnActivation = new UnityEvent();
 
     private SpriteRenderer spriteRenderer;
 
@@ -86,6 +86,6 @@ public class Nexus : MonoBehaviour
     private void Activate()
     {
         spriteRenderer.color = Color.white;
-        triggerOnActivation?.Trigger();
+        callOnActivation.Invoke();
     }
 }
