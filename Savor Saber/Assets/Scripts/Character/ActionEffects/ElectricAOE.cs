@@ -31,6 +31,7 @@ public class ElectricAOE : MonoBehaviour
     public int disruptiontime = 5;
 
     public GameObject sparkTemplate;
+    public bool overCharged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -115,7 +116,7 @@ public class ElectricAOE : MonoBehaviour
             if (characterData.health - damagePerTic * damageModifier <= 0)
                 killingBlow = true;
 
-            characterData.DoDamage(damagePerTic * damageModifier);
+            characterData.DoDamage(damagePerTic * damageModifier, overCharged);
             
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
