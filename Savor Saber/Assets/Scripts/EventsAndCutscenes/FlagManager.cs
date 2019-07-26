@@ -47,6 +47,9 @@ public class FlagManager : MonoBehaviour
     /// <summary> Get the value of a flag (global or instance)</summary>
     public static string GetFlag(string flag)
     {
+        if (instance == null)
+            return undefined;
+
         if (GlobalFlags.ContainsKey(flag))
             return GlobalFlags[flag];
         else if(instance.flags.ContainsKey(flag))
