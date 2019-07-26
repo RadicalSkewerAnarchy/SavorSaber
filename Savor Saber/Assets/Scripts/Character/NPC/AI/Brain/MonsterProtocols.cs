@@ -39,10 +39,11 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Check
         var weakest = Checks.WeakestCreature();
+        var nearestEnemy = (this.tag=="Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
         Vector2 pos;
-        if (target != null)
+        if (nearestEnemy != null)
         {
-            pos = target.transform.position;
+            pos = nearestEnemy.transform.position;
         }
         else if (weakest != null)
         {
@@ -55,7 +56,7 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
 
         
-        if (Behaviour.MoveTo(pos, AiData.Speed, 1.0f))
+        if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
             if (CheckThreshold(pos, AiData.MeleeAttackThreshold))
             {
@@ -97,7 +98,7 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Ranged()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.WeakestCreature();
+        var nearestEnemy = (this.tag=="Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
         Vector2 pos;
         if (nearestEnemy != null)
         {
@@ -227,7 +228,7 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         NavRunaway();
     }
-    public void NavRunaway()
+    public void NavRunaway(GameObject target=null)
     {
         //Debug.Log("navrunningaway");
         float maxDist = 0;
@@ -242,7 +243,7 @@ public partial class MonsterProtocols : MonoBehaviour
             //Debug.Log("Nearestenemy exists");
             if(!creatureMoving)
             {
-                Checks.closestEnemy = Checks.ClosestCreature();
+                Checks.closestEnemy = (target==null? Checks.ClosestCreature() : target);
                 StartCoroutine(CreatureFearDegrading());
             }
             foreach (var neighbor in Checks.currentTile.neighbors)
@@ -344,7 +345,7 @@ public partial class MonsterProtocols : MonoBehaviour
         return false;
         #endregion
     }
-    public bool NavChase(GameObject target, float speed, float thresh=1)
+    public bool NavChase(GameObject target, float speed=1, float thresh=1)
     {
         #region Get Nearest + Null Checks
         // For now, fun away from your first enemy (SOMA most likely)

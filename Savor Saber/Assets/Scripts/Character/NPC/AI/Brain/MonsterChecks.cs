@@ -25,7 +25,7 @@ public class MonsterChecks : MonoBehaviour
     /// <summary>
     /// Closest Friend and Closest Enemy for quick access
     /// </summary>
-    GameObject ClosestFriendly;
+    public GameObject closestFriend = null;
     public GameObject closestEnemy = null;
     float closestDistance;
 
@@ -93,8 +93,8 @@ public class MonsterChecks : MonoBehaviour
     /// </summary>
     public void AwareNearby()
     {
-        // clear all creatues
-        ClearAwareness();
+        // clear all
+        //ClearAwareness();
         // update all creatures
         GameObject obtainSurroundings = Instantiate(signalPrefab, this.transform.position, Quaternion.identity) as GameObject;
         SignalApplication signalModifier = obtainSurroundings.GetComponent<SignalApplication>();
@@ -216,6 +216,40 @@ public class MonsterChecks : MonoBehaviour
         }
 
         return weakest;
+    }
+
+    /// <summary>
+    /// Compares names of creatures to name string
+    /// </summary>
+    /// <returns> closest matching or null </returns>
+    public GameObject FriendQuery(string name)
+    {
+        #region Initialize closest vars
+        GameObject friend = null;
+        float closest = 100000;
+        Monster other;
+        #endregion
+        foreach (GameObject Creature in Friends)
+        {
+            #region Check if Creature Deleted or Matches
+            if (Creature == null)
+                continue;
+            other = Creature.GetComponent<Monster>();
+            if (other == null)
+                continue;
+            if (other.name != name)
+                continue;
+            #endregion
+            
+            float dist = Vector2.Distance(Creature.transform.position, this.transform.position);
+            if (dist < closest)
+            {
+                closest = dist;
+                friend = Creature;
+            }
+        }
+
+        return friend;
     }
 
     /// <summary>

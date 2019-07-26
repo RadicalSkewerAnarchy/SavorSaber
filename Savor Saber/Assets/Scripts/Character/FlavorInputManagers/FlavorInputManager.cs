@@ -50,9 +50,18 @@ public class FlavorInputManager : MonoBehaviour
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
 
-        if (this.gameObject.tag == "ElectricAoE")
+<<<<<<< HEAD
+        /* if (this.gameObject.tag == "ElectricAoE"){
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
+        }*/
+=======
+        if (this.gameObject.tag == "ElectricAoE")
+        {
+            electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
+            electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
+        }
+>>>>>>> philComeWithMeAndWe'llBeIn
     }
 
     public void InitializeDictionary()
@@ -97,7 +106,7 @@ public class FlavorInputManager : MonoBehaviour
             {
                 ingredientCountDictionary.Add(ingredient, 1);
                 //Debug.Log("Ate one " + ingredient.displayName);
-            }                
+            }
 
             // favorite flavors
             for (int f = 1; f <= 64; f = f << 1)
@@ -190,7 +199,7 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
         }
-        
+
         // reset dicts
         ResetDictionary();
     }
@@ -275,7 +284,7 @@ public class FlavorInputManager : MonoBehaviour
     {
         //things to happen before delay
         GameObject newAttack;
-        MonsterBehavior behave = this.GetComponent<MonsterBehavior>(); 
+        MonsterBehavior behave = this.GetComponent<MonsterBehavior>();
 
         // null check on curryball projectile
         if (behave.projectile == null)
@@ -319,8 +328,9 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region SOUR
-    protected IEnumerator ElectricTimer(float time)
+    /*protected IEnumerator ElectricTimer(float time)
     {
+
         //things to happen before delay
         isElectricSupercharged = true;
         var powerCharger = electricFieldEffect.GetComponent<PoweredObjectCharger>();
@@ -332,9 +342,9 @@ public class FlavorInputManager : MonoBehaviour
         //things to happen after delay
         powerCharger.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
         powerCharger.enabled = false;
-        isElectricSupercharged = false; 
+        isElectricSupercharged = false;
         yield return null;
-    }
+    }*/
     #endregion
 
     #region SALT
