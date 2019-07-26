@@ -10,7 +10,7 @@ public class FlagManager : MonoBehaviour
     public static Dictionary<string, string> GlobalFlags { get; } = new Dictionary<string, string>();
     private static FlagManager instance;
     public const string undefined = "undefined";
-    private Dictionary<string, string> flags = new Dictionary<string, string>();
+    private readonly Dictionary<string, string> flags = new Dictionary<string, string>();
     public List<string> keysToInit = new List<string>();
     public List<string> initValues = new List<string>();
     private void Awake()

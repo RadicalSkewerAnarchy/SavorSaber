@@ -7,10 +7,36 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class DestructableEnvironment : MonoBehaviour
 {
+    [SerializeField]
+    private int maxHealth;
+    private int health;
+    public int Health
+    {
+        get => health;
+        set
+        {
+            // Play Damage Effects if our health is being lowered
+            if (value < health)
+            {
+                if (particles != null)
+                    particles.Play();
+                if (sfx != null)
+                    sfx.Play();
+                StartCoroutine(Wiggle(wiggleTime, wiggleSpeed, wiggleAmplitude));
+            }           
+            // Destroy if health is <= 0
+            if (value <= 0)
+            {
+                health = 0;
+                Destroy();
+                return;
+            }
+            // else set health to value
+            health = value;
+        }
+    }
     [HideInInspector]
     public bool destroyed = false;
-    public int health;
-    private int maxHealth;
     public GameObject dropOnDestroy;
     [Range(0, 100)]
     public int dropChance = 100;
@@ -44,7 +70,7 @@ public class DestructableEnvironment : MonoBehaviour
         spr = GetComponent<SpriteRenderer>();
         normalSprite = spr.sprite;
         sfx = GetComponent<AudioSource>();
-        maxHealth = health;
+        health = maxHealth;
         origin = transform.position;
         anim = GetComponent<Animator>();
         if (anim != null)
@@ -52,17 +78,17 @@ public class DestructableEnvironment : MonoBehaviour
         collider = GetComponent<Collider2D>();
     }
 
-    public void Destroy()
+    public void DestroyAndRegrow(float time, bool spawn = true)
+    {
+        bool temp = allowRegrow;
+        allowRegrow = false;
+        Destroy(spawn);
+        StartCoroutine(Regrow(time));
+        allowRegrow = temp;
+    }
+    public void Destroy(bool spawn = true)
     {
         if (destroyed)
-            return;
-
-        particles?.Play();
-        sfx?.Play();
-
-        StartCoroutine(Wiggle(wiggleTime, wiggleSpeed, wiggleAmplitude));
-
-        if (health > 0)
             return;
         destroyed = true;
 
@@ -70,20 +96,24 @@ public class DestructableEnvironment : MonoBehaviour
             anim.enabled = false;
 
         spr.sprite = destroyedSprite;
-        float thresh = (float)dropChance / 100;
-        if (dropOnDestroy != null && Random.value <= thresh)
-            Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
+
+        if(spawn)
+        {
+            float thresh = (float)dropChance / 100;
+            if (dropOnDestroy != null && Random.value <= thresh)
+                Instantiate(dropOnDestroy, transform.position, Quaternion.identity);
+        }
 
         if (allowRegrow)
         {
-            StartCoroutine(Regrow());
+            StartCoroutine(Regrow(respawnTime));
         }
 
         collider.enabled = staySolid;
     }
-    private IEnumerator Regrow()
+    private IEnumerator Regrow(float time)
     {
-        yield return new WaitForSeconds(respawnTime);
+        yield return new WaitForSeconds(time);
         collider.enabled = !staySolid;
         spr.sprite = normalSprite;
         if(anim != null)

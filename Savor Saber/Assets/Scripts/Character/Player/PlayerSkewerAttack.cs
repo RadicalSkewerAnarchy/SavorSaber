@@ -28,8 +28,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
             {
                 if (environment.skewerable)
                 {
-                    environment.health -= 1;
-                    environment.Destroy();
+                    environment.Health -= 1;
                 }
             }
         }

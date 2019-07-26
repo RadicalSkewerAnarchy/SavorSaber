@@ -11,14 +11,11 @@ public class NexusInteractor : MonoBehaviour
     public float spawnCooldownTime = 2.5f;
     public float spawnXOnActivate = 8;
 
-    // Interact to spawn fields
-    private Collider2D interactArea;
     private bool playerInInteractArea;
     private bool readyToSpawn;
 
     private void Awake()
     {
-        interactArea = GetComponent<Collider2D>();
         if (Parent == null)
             Parent = GetComponentInParent<Nexus>();
     }
