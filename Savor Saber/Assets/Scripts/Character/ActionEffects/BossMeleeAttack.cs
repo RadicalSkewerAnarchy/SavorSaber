@@ -72,8 +72,7 @@ public class BossMeleeAttack : BaseMeleeAttack
         else if (g.GetComponent<DestructableEnvironment>() != null)
         {
             DestructableEnvironment de  = g.GetComponent<DestructableEnvironment>();
-            de.health -= ((int)meleeDamage);
-            de.Destroy();
+            de.Health -= ((int)meleeDamage);
         }
     }
 }

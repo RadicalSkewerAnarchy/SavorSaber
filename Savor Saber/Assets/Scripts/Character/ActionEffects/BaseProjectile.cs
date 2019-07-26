@@ -205,8 +205,7 @@ public class BaseProjectile : MonoBehaviour
             //Debug.Log("Dealing DMG");
             if (envData != null)
             {
-                envData.health -= (int)Mathf.Max(projectileDamage, 1);
-                envData.Destroy();
+                envData.Health -= (int)Mathf.Max(projectileDamage, 1);
                 if (!penetrateTargets)
                     Destroy(this.gameObject);
             }

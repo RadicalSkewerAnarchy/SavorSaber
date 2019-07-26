@@ -54,8 +54,7 @@ public class PlayerKnifeAttack : BaseMeleeAttack
         else if (g.GetComponent<DestructableEnvironment>() != null)
         {
             var environment = g.GetComponent<DestructableEnvironment>();
-            environment.health -= (int)meleeDamage;
-            environment.Destroy();
+            environment.Health -= (int)meleeDamage;
         }
         else if (t == "Reflectable")
         {
