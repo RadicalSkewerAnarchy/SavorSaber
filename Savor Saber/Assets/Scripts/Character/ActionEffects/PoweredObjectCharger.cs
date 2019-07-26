@@ -25,7 +25,7 @@ public class PoweredObjectCharger : MonoBehaviour
         if (active)
         {
             PoweredObject targetObject = collision.gameObject.GetComponent<PoweredObject>();
-            if (targetObject == null || !targetObject.canBeSourCharged)
+            if (targetObject == null || !targetObject.canBeSourCharged || !enabled)
                 return;
 
             targetObject.TurnOn();
