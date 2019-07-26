@@ -9880,11 +9880,10 @@ GameObject:
   - component: {fileID: 6405371343124089620}
   - component: {fileID: 6405371343124089621}
   - component: {fileID: 6405371343124089622}
-  - component: {fileID: 6405371343124089623}
   - component: {fileID: 6405371343124089624}
   m_Layer: 0
   m_Name: BaseFruitantPrefab
-  m_TagString: Untagged
+  m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10175,6 +10174,7 @@ MonoBehaviour:
     type: 3}
   amountRewardItem: 2
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  rejectSFX: {fileID: 0}
   charmTime: 0
   shieldSize: 1
   dotTicLength: 1
@@ -10202,6 +10202,7 @@ MonoBehaviour:
   EngageHostileThreshold: 5
   maxHealth: 10
   health: 10
+  overchargeHealth: 0
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -10223,20 +10224,25 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
-  path: []
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
   DecisionTimer: 0
   DecisionTimerReset: 5
   DecisionTimerVariance: 2
   Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
   Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
   Awareness: {fileID: 0}
-  Friends: []
-  Enemies: []
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
   meleeHunter: 0
   rideVector: {x: 0, y: 0, z: 0}
+  path: []
 --- !u!114 &6405371343124089621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10277,101 +10283,6 @@ MonoBehaviour:
   meleeAttackDimensions: {x: 2, y: 2}
   isAttacking: 0
   meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
---- !u!114 &6405371343124089623
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6405371343124089625}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09c7a8ad0ed6a2843b78463200380cbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  aiStates:
-    _keys: 0200000006000000
-    _values:
-    - _keys:
-      - Hunger
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: -0.9951711
-          outSlope: -0.9951711
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 0.9977417
-          value: 0.0070762634
-          inSlope: -0.9951711
-          outSlope: -0.9951711
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-    - _keys:
-      - Hunger
-      _values:
-      - serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 1
-          tangentMode: 34
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-  macroValues:
-    _keys: []
-    _values: []
-  data: {fileID: 0}
 --- !u!114 &6405371343124089624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10393,6 +10304,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestFriend: {fileID: 0}
   closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
@@ -25363,6 +25275,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6405371343124089641}
     m_Modifications:
+    - target: {fileID: 5511874467025121853, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
+        type: 3}
+      propertyPath: m_Name
+      value: Saddle
+      objectReference: {fileID: 0}
+    - target: {fileID: 5511874467025121853, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7462818306284146206, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25418,16 +25340,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5511874467025121853, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
-        type: 3}
-      propertyPath: m_Name
-      value: Saddle
-      objectReference: {fileID: 0}
-    - target: {fileID: 5511874467025121853, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6771232059650948445, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
         type: 3}
       propertyPath: thisFruitant
@@ -25453,6 +25365,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6405371343124089641}
     m_Modifications:
+    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -25522,11 +25439,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.6636499
-      objectReference: {fileID: 0}
-    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
-        type: 3}
-      propertyPath: m_Name
-      value: Shadow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609cf543f670ded479a520ca2f15dcbe, type: 3}

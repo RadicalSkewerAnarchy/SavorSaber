@@ -11,7 +11,6 @@ using UnityEngine.UI;
 [RequireComponent(typeof(MonsterBehavior))]
 [RequireComponent(typeof(MonsterProtocols))]
 [RequireComponent(typeof(MonsterChecks))]
-[RequireComponent(typeof(UtilityCurves))]
 [RequireComponent(typeof(SpriteRenderer))]
 
 public class AIData : CharacterData
@@ -38,7 +37,8 @@ public class AIData : CharacterData
                 Socialize,
                 Feed,
                 Console
-            }
+    }
+            [HideInInspector]
             public Behave currentBehavior = Behave.Idle;
             [HideInInspector]
             public Behave previousBehavior = Behave.Idle;
@@ -107,11 +107,12 @@ public class AIData : CharacterData
         #region Components
         [HideInInspector]
         public MonsterBehavior Behavior;
-        private MonsterProtocols Protocol;
+        [HideInInspector]
+        public MonsterProtocols Protocol;
         [HideInInspector]
         public MonsterChecks Checks;
-        private UtilityCurves Curves;
-        private SpriteRenderer Renderer;
+        [HideInInspector]
+        public SpriteRenderer sRenderer;
 
         #endregion
 
@@ -147,8 +148,7 @@ public class AIData : CharacterData
         Behavior = GetComponent<MonsterBehavior>();
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
-        Curves = GetComponent<UtilityCurves>();
-        Renderer = GetComponent<SpriteRenderer>();
+        sRenderer = GetComponent<SpriteRenderer>();
         #endregion
         #region Initialize Data
         InitializeCharacterData();
@@ -302,7 +302,7 @@ public class AIData : CharacterData
         switch (s)
         {
             case LifeState.dead:
-                Renderer.color = Color.white;
+                sRenderer.color = Color.white;
                 break;
             default:
                 // nothing at all
@@ -323,7 +323,7 @@ public class AIData : CharacterData
         switch (s)
         {
             case LifeState.dead:
-                Renderer.color = Color.grey;
+                sRenderer.color = Color.grey;
                 break;
             default:
                 // nothing at all

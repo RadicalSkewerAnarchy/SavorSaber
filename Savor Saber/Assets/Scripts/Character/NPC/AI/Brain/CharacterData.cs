@@ -117,9 +117,10 @@ public class CharacterData : MonoBehaviour
                 if (ai != null)
                 {
                     ai.currentLifeState = AIData.LifeState.dead;
+                    if (this.tag == "Predator")
+                        Kill();
                 }
                 health = 0;
-                //Kill();
             }
             if (healthBar != null)
             {
@@ -171,10 +172,13 @@ public class CharacterData : MonoBehaviour
                 {
                     if (overcharged)
                     {
-                        // set state
-                        ai.currentLifeState = AIData.LifeState.overcharged;
-                        // start timer
-                        StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                        if (this.tag == "Prey")
+                        { 
+                            // set state
+                            ai.currentLifeState = AIData.LifeState.overcharged;
+                            // start timer
+                            StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                        }
                     }
                     else
                     {
