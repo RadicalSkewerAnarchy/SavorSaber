@@ -16,7 +16,7 @@ public class EventTriggerFlavorInput : FlavorInputManager
         {
             foreach(var ing in ingredientArray)
             {
-                if(favoriteIngredients.Any((i) => i == ing.displayName))
+                if(favoriteIngredients.Any((i) => i == ing))
                 {
                     scene.Trigger();
                     return;

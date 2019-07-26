@@ -7,43 +7,49 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class DestructableEnvironment : MonoBehaviour
 {
-    public bool allowRegrow = true;
+    [HideInInspector]
+    public bool destroyed = false;
     public int health;
-    private int healthReset;
+    private int maxHealth;
+    public GameObject dropOnDestroy;
     [Range(0, 100)]
     public int dropChance = 100;
-    public GameObject dropOnDestroy;
-    public Sprite normalSprite;
     public Sprite destroyedSprite;
+    public bool allowRegrow = true;
+    // The time it takes for a destructible object to regrow (if regrowth is allowed)
     public float respawnTime;
-    public bool destroyed = false;
+    public bool skewerable = false;
+    public bool rooted = true;
+    // Does the object remain solid when destroyed?
+    public bool staySolid = false;
+    [Header("Visual Customization")]
     public ParticleSystem particles = null;
+    // Wiggle Parameters
     public float wiggleTime = 2f;
     public float wiggleSpeed = 0.2f;
     [Range(0, 0.3f)]
     public float wiggleAmplitude = 0.05f;
 
-    public bool skewerable = false;
-    public bool rooted = true;
-    public bool staySolid = false;
 
     private Vector2 origin;
-
     private SpriteRenderer spr;
-    private AudioSource src;
+    private Sprite normalSprite;
+    private AudioSource sfx;
     private Animator anim;
-    public bool animateWhileAlive = true;
+    new private Collider2D collider;
+    
 
     private void Start()
     {
         spr = GetComponent<SpriteRenderer>();
-        spr.sprite = normalSprite;
-        src = GetComponent<AudioSource>();
-        healthReset = health;
-        origin = this.transform.position;
+        normalSprite = spr.sprite;
+        sfx = GetComponent<AudioSource>();
+        maxHealth = health;
+        origin = transform.position;
         anim = GetComponent<Animator>();
         if (anim != null)
-            anim.enabled = (animateWhileAlive ? true : false);
+            anim.enabled = destroyed;
+        collider = GetComponent<Collider2D>();
     }
 
     public void Destroy()
@@ -51,10 +57,8 @@ public class DestructableEnvironment : MonoBehaviour
         if (destroyed)
             return;
 
-        if (particles != null)
-            particles.Play();
-        if (src != null)
-            src.Play();
+        particles?.Play();
+        sfx?.Play();
 
         StartCoroutine(Wiggle(wiggleTime, wiggleSpeed, wiggleAmplitude));
 
@@ -63,7 +67,7 @@ public class DestructableEnvironment : MonoBehaviour
         destroyed = true;
 
         if (anim != null)
-            anim.enabled = !animateWhileAlive;
+            anim.enabled = false;
 
         spr.sprite = destroyedSprite;
         float thresh = (float)dropChance / 100;
@@ -75,16 +79,16 @@ public class DestructableEnvironment : MonoBehaviour
             StartCoroutine(Regrow());
         }
 
-        this.GetComponent<Collider2D>().enabled = staySolid;
+        collider.enabled = staySolid;
     }
     private IEnumerator Regrow()
     {
         yield return new WaitForSeconds(respawnTime);
-        this.GetComponent<Collider2D>().enabled = !staySolid;
+        collider.enabled = !staySolid;
         spr.sprite = normalSprite;
         if(anim != null)
-            anim.enabled = animateWhileAlive;
-        health = healthReset;
+            anim.enabled = true;
+        health = maxHealth;
         destroyed = false;
     }
     private IEnumerator Wiggle(float time, float speed, float amplitude)
@@ -97,15 +101,15 @@ public class DestructableEnvironment : MonoBehaviour
             yield return new WaitForSeconds(Time.deltaTime);
 
             if (rooted)
-                this.transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);
+                transform.position = origin + new Vector2(amplitude * Mathf.Sin(speedCount), 0);
             else
-                this.transform.position = this.transform.position + new Vector3(amplitude * Mathf.Sin(speedCount), 0);
+                transform.position = transform.position + new Vector3(amplitude * Mathf.Sin(speedCount), 0);
 
             speedCount += 15000 * Time.deltaTime;
             tick -= speed;
         }
         if (rooted)
-            this.transform.position = origin;
+            transform.position = origin;
         yield return null;
     }
 }
