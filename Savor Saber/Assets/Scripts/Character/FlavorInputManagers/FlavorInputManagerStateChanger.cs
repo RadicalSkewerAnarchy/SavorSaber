@@ -53,7 +53,7 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
             {
                 characterData.InstantiateSignal(0.5f, "Hunger", -0.5f, false, true);
             }
-                
+
 
             for (int f = 1; f <= 64; f = f << 1)
             {
@@ -71,7 +71,6 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
         RespondToIngredients(fedByPlayer);
         SpawnReward(ingredientArray, fedByPlayer);
     }
-    
     public override void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)
@@ -161,7 +160,7 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
             {
                 CheckCharmEffect((favoriteFlavors == RecipeData.Flavors.Sweet));
             }
-          
+
         }
         //handle umami
         if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0)
@@ -176,7 +175,7 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
         {
             if (fedByPlayer)
             {
-                StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
+                //StartCoroutine(ElectricTimer(electricBaseTime * flavorCountDictionary[RecipeData.Flavors.Sour] * (favoriteFlavors == RecipeData.Flavors.Sour ? 2 : 1)));
             }
         }
         //handle salty

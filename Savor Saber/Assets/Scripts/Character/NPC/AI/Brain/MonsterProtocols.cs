@@ -39,10 +39,11 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Check
         var weakest = Checks.WeakestCreature();
+        var nearestEnemy = (this.tag=="Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
         Vector2 pos;
-        if (target != null)
+        if (nearestEnemy != null)
         {
-            pos = target.transform.position;
+            pos = nearestEnemy.transform.position;
         }
         else if (weakest != null)
         {
