@@ -106,21 +106,9 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        /*if (ResetTimer < 0)
-        {
-            ResetMovementBias();
-            ResetTimer = ResetTimerReset + Random.Range(-ResetTimerVariance, ResetTimerVariance);
-        }
-        else
-        {
-            ResetTimer -= Time.deltaTime;
-        }*/
     }
-    /// <summary>
-    /// These actions return a Boolean to verify their completion.
-    /// These actions may modify the agents position.
-    /// </summary>
-    
+
+    #region Movement
     /// <summary>
     /// Idle does nothing until next decision is made
     /// </summary>
@@ -199,6 +187,9 @@ public class MonsterBehavior : MonoBehaviour
             return true;
         }
     }
+    #endregion
+
+    #region Eating
     /// <summary>
     /// Deactivates detected drop and destroys it
     /// </summary>  
@@ -240,6 +231,9 @@ public class MonsterBehavior : MonoBehaviour
         }
 
     }
+    #endregion
+
+    #region Battle
     /// <summary>
     /// If you're not attacking, make attack collider and attack
     /// </summary>
@@ -265,6 +259,7 @@ public class MonsterBehavior : MonoBehaviour
     {
         yield return new WaitForSeconds(meleeAttackDelay);
 
+        #region Melee
         GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
         //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
@@ -273,6 +268,7 @@ public class MonsterBehavior : MonoBehaviour
         newAttackCollider.transform.position += new Vector3(this.GetComponent<Collider2D>().offset.x, this.GetComponent<Collider2D>().offset.y, 0);
         newAttack.transform.Rotate(target - (Vector2)this.transform.position);
         StartCoroutine(EndAttackAfterSeconds(meleeAttackDuration, newAttack, true));
+        #endregion
     }
 
     /// <summary>
@@ -299,6 +295,21 @@ public class MonsterBehavior : MonoBehaviour
         AnimatorBody.Play("Idle");
         return true;
     }
+
+    /// <summary>
+    /// Ends attack after time passes and destroys
+    /// </summary>
+    protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack, bool destroy)
+    {
+        yield return new WaitForSeconds(time);
+        isAttacking = false;
+        if (destroy) Destroy(newAttack);
+        yield return null;
+    }
+
+    #endregion
+
+    #region Friends
     /// <summary>
     /// Spawns one friend signal per action
     /// </summary>
@@ -368,27 +379,10 @@ public class MonsterBehavior : MonoBehaviour
             return false;
         }
     }
+    #endregion
 
-    /// <summary>
-    /// Returns a normalized direction
-    /// </summary>
-    static Direction CalculateDirection(Vector2 target)
-    {
-        var movementAngle = Vector2.SignedAngle(Vector2.right, target);
-        if (movementAngle < 0)
-            movementAngle += 360;
-        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 90));
-    }
-    /// <summary>
-    /// Ends attack after time passes and destroys
-    /// </summary>
-    protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack, bool destroy)
-    {
-        yield return new WaitForSeconds(time);
-        isAttacking = false;
-        if (destroy) Destroy(newAttack);
-        yield return null;
-    }
+    #region Resets
+
     /// <summary>
     /// Reset action timer
     /// </summary>
@@ -408,11 +402,27 @@ public class MonsterBehavior : MonoBehaviour
         float bL = Mathf.Pow(2f, -biasAngleMod);
         biasMovementAngle = Random.Range(-biasAngle * bL, biasAngle * bR);
     }
+    #endregion
+
+    #region POINTS AND ANGLES
+
+    /// <summary>
+    /// Returns a normalized direction
+    /// </summary>
+    static Direction CalculateDirection(Vector2 target)
+    {
+        var movementAngle = Vector2.SignedAngle(Vector2.right, target);
+        if (movementAngle < 0)
+            movementAngle += 360;
+        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 90));
+    }
+
+
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
     }
-    #region POINTS AND ANGLES
+
     /// <summary>
     /// Rotate Point: given a pivot and an angle,
     ///     return the original point having been

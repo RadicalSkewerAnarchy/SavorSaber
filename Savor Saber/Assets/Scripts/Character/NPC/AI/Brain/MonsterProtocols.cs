@@ -11,12 +11,11 @@ public partial class MonsterProtocols : MonoBehaviour
 		    AIData AiData;
 		    MonsterBehavior Behaviour;
 		    MonsterChecks Checks;
-    #endregion
-    TileNode targetTile;
-
-		    bool runningCoRoutine = false;
-            bool creatureMoving = false;
-		    #endregion
+            #endregion
+        TileNode targetTile;
+		bool runningCoRoutine = false;
+        bool creatureMoving = false;
+		#endregion
 	#endregion
 
     private void Start()
@@ -28,18 +27,6 @@ public partial class MonsterProtocols : MonoBehaviour
         #endregion
     }
 
-    /// <summary>
-    /// Each protocol is of the format:
-    ///     void X()
-    ///     {
-    ///         if (Behavior()){
-    ///             if (Behavior())
-    ///             {
-    ///                 ...
-    ///             }
-    ///         }
-    ///     }
-    /// </summary>
     #region Aggro Protocols
     /// NEEDS A LOT OF POLISH
     // Melee()
@@ -281,8 +268,6 @@ public partial class MonsterProtocols : MonoBehaviour
             }
             //StartCoroutine(CreatureFearDegrading());
         }
-
-        #endregion
     }
 
     // Chase()
@@ -411,7 +396,7 @@ public partial class MonsterProtocols : MonoBehaviour
     }
 
     // end of neutral region
-    //#endregion
+    #endregion
 
     #region Pacifist Protocols
     // checks if there are enough friends to party
@@ -566,60 +551,23 @@ public partial class MonsterProtocols : MonoBehaviour
     // end of pacifict region
     #endregion
 
-    #region Unimplemented Protocols
-    // Swarm()
-    // given enough friends
-    // and few enemies
-    // swarm a target and kill them
-    // eat their remains and feast
-    public void Swarm()
-    {
-        var numFriends = AiData.Checks.NumberOfFriends();
-        var numEnemies = AiData.Checks.NumberOfEnemies();
-        #region Get Nearest + Null Check
-        Vector2 pos = Checks.GetRandomPositionType();
-        #endregion
-        if (numFriends >= AiData.PartySize)
-        {
-            if (numFriends / numEnemies >= 2 * numEnemies)
-            {
-                if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
-                {
-                    //behavior.attack should return true if creature dies?
-                    if (Behaviour.MeleeAttack(pos))
-                    {
-                        //need to look at behavior.feed
-                        //Behaviour.Feed(closestEnemy, AiData.Speed);
-                    }
-                }
-            }
-        }
-    }
-
-
-    // checks if their are enemies, then attempts to attack
-    // if attack cannot happen, becomes lazy
-    public void Guard()
-    {
-
-    }
-
+    #region Tile Node Navigation
     // in order to work with vector2, we must take in a vector2/vector3 and determine what tile overlaps at that position(if it overlaps at all)
     // in order to work based on the tilemap, we can access the neighbor tiles and determine the one that is furthest away/closest to the target then select that tile
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
-    public bool NavTo(TileNode target, float speed, float thresh=1)
+    public bool NavTo(TileNode target, float speed, float thresh = 1)
     {
-        if(Checks.currentTile == target)
+        if (Checks.currentTile == target)
         {
             //Debug.Log("AT TARGET");
             return true;
         }
-        else if(Checks.currentTile == null || target == null)
+        else if (Checks.currentTile == null || target == null)
         {
             //Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
             return false;
         }
-        else if(AiData.path == null || AiData.path.Count == 0)
+        else if (AiData.path == null || AiData.path.Count == 0)
         {
             Checks.SetCurrentTile();
             //Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
