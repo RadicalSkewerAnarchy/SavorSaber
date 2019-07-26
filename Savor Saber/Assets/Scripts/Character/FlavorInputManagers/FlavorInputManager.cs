@@ -34,7 +34,8 @@ public class FlavorInputManager : MonoBehaviour
     public GameObject electricFieldTemplate;
     public GameObject saltShieldTemplate;
     public AudioClip electricSFX;
-    protected bool isElectric = false;
+    protected bool isElectricSupercharged = false;
+    GameObject electricFieldEffect;
     #endregion
 
     private void Start()
@@ -47,6 +48,10 @@ public class FlavorInputManager : MonoBehaviour
         characterData = GetComponent<AIData>();
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
+
+        if (this.gameObject.tag == "ElectricAoE")
+            electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
+            electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
     }
 
     public void InitializeDictionary()
@@ -337,17 +342,17 @@ public class FlavorInputManager : MonoBehaviour
     protected IEnumerator ElectricTimer(float time)
     {
         //things to happen before delay
-        isElectric = true;
-        GameObject electricField = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity);
-        electricField.transform.parent = gameObject.transform;
+        isElectricSupercharged = true;
+        var powerCharger = electricFieldEffect.GetComponent<PoweredObjectCharger>();
         sfxPlayer.clip = electricSFX;
         sfxPlayer.Play();
-
+        powerCharger.enabled = true;
         yield return new WaitForSeconds(time);
 
         //things to happen after delay
-        Destroy(electricField);
-        isElectric = false;
+        powerCharger.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
+        powerCharger.enabled = false;
+        isElectricSupercharged = false; 
         yield return null;
     }
     #endregion

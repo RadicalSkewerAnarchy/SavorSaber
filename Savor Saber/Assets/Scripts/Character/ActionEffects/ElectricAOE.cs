@@ -20,6 +20,8 @@ public class ElectricAOE : MonoBehaviour
     public int damagePerTic = 1;
     public float damageRate = 1.5f;
 
+    private int damageModifier = 1;
+
     public AudioClip shockSFX;
     private PlaySFX shockSFXPlayer;
 
@@ -44,7 +46,12 @@ public class ElectricAOE : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        var powered = gameObject.GetComponent<PoweredObjectCharger>();
+        if(powered.enabled == true){
+            damageModifier = powered.damageBoostValue*10;
+        }else{
+            damageModifier = 1;
+        }
     }
 
     public void DisableForSeconds()
@@ -105,10 +112,10 @@ public class ElectricAOE : MonoBehaviour
                 continue;
 
             //test to see if this tic will inflict a killing blow
-            if (characterData.health - damagePerTic <= 0)
+            if (characterData.health - damagePerTic * damageModifier <= 0)
                 killingBlow = true;
 
-            characterData.DoDamage(damagePerTic);
+            characterData.DoDamage(damagePerTic * damageModifier);
             
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
