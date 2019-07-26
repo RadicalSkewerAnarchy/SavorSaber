@@ -71,12 +71,6 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
         RespondToIngredients(fedByPlayer);
         SpawnReward(ingredientArray, fedByPlayer);
     }
-<<<<<<< HEAD
-
-
-=======
-    
->>>>>>> philComeWithMeAndWe'llBeIn
     public override void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)

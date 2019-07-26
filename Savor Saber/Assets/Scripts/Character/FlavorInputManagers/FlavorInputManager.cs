@@ -50,18 +50,10 @@ public class FlavorInputManager : MonoBehaviour
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
 
-<<<<<<< HEAD
         /* if (this.gameObject.tag == "ElectricAoE"){
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
         }*/
-=======
-        if (this.gameObject.tag == "ElectricAoE")
-        {
-            electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
-            electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
-        }
->>>>>>> philComeWithMeAndWe'llBeIn
     }
 
     public void InitializeDictionary()
