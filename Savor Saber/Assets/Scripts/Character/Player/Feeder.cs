@@ -74,8 +74,13 @@ public class Feeder : MonoBehaviour
         if(targetInput != null)
         {
             ingredientArray = playerInventory.GetActiveSkewer().ToArray();
-            targetInput.Feed(ingredientArray, true);
-            playerInventory.ClearActiveSkewer();
+            if(ingredientArray.Length > 0)
+            {
+                Debug.Log("Feeding" + ingredientArray + "(Array length: " + ingredientArray.Length);
+                targetInput.Feed(ingredientArray, true);
+                playerInventory.ClearActiveSkewer();
+            }
+            ingredientArray = null;
         }
     }
 
