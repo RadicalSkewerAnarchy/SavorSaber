@@ -73,7 +73,7 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
     }
 
 
-    protected override void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+    public override void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (!fedByPlayer)
             return;

@@ -13,10 +13,10 @@ public class CharacterData : MonoBehaviour
             return transform.position;
         }
     }
-
+    public bool armored = false;
     #region Main Variables
-        #region Values for Behaviors
-        public float Speed;
+    #region Values for Behaviors
+    public float Speed;
         public float Perception;
         public float MeleeAttackThreshold = 1f;
         public float RangeAttackThreshold = 2f;
@@ -61,7 +61,9 @@ public class CharacterData : MonoBehaviour
         public ParticleSystem eatingParticleBurst = null;
         public Slider healthBar;
         protected Coroutine barCr = null;
-        #endregion
+    #endregion
+
+
     #endregion
 
     void Start()
@@ -87,8 +89,13 @@ public class CharacterData : MonoBehaviour
 
     #region Healing and Damaging
     /// <summary> A standard damage function. </summary>
-    public virtual bool DoDamage(int damage)
+    public virtual bool DoDamage(int damage, bool overcharged = false)
     {
+        if(armored && !overcharged)
+        {
+            return false;
+        }
+
         bool dead = false;
         if (damage > 0)
         {

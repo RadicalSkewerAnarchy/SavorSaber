@@ -24,7 +24,7 @@ public class PlayerData : CharacterData
         altSFXPlayer = GetComponent<PlaySFX>();
     }
 
-    public override bool DoDamage(int damage)
+    public override bool DoDamage(int damage, bool overcharged = false)
     {
         bool dead = false;
         CameraController.instance.Shake(0.01f, 0.02f, 0.1f);
