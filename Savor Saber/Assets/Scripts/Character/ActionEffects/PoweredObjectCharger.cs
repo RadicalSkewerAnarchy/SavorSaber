@@ -7,29 +7,35 @@ public class PoweredObjectCharger : MonoBehaviour
 {
 
     public bool active = true;
-    private PoweredObject targetObject;
-    // Start is called before the first frame update
     public int damageBoostValue = 4;
+
+    private PoweredObject targetObject;
+    private SpriteRenderer sr;
+
+    // Start is called before the first frame update
+    
     void Start()
     {
-
+        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<SpriteRenderer>().color = new Color(0,244,255,255);
+        //GetComponent<SpriteRenderer>().color = new Color(0,244,255,255);
     }
 
     public void Activate()
     {
         active = true;
+        sr.color = new Color(0, 244, 255, 255);
         if (targetObject != null)
             targetObject.TurnOn();
     }
 
     public void Deactivate()
     {
+        sr.color = Color.white;
         active = false;
     }
 

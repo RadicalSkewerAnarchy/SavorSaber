@@ -86,7 +86,7 @@ public class PricklePear : AIData
         switch (s)
         {
             case LifeState.overcharged:
-                electricAoE.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
+                //electricAoE.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
                 electricAoE.GetComponent<PoweredObjectCharger>().Deactivate();   
                 electricAoE.GetComponent<ElectricAOE>().overCharged = false;    
                 break;
@@ -107,7 +107,7 @@ public class PricklePear : AIData
         switch (s)
         {
             case LifeState.overcharged:
-                electricAoE.GetComponent<SpriteRenderer>().color = new Color(0,244,255,255);
+                //electricAoE.GetComponent<SpriteRenderer>().color = new Color(0,244,255,255);
                 electricAoE.GetComponent<PoweredObjectCharger>().Activate();
                 electricAoE.GetComponent<ElectricAOE>().overCharged = true;
                 break;

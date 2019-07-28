@@ -36,7 +36,7 @@ public class ElectricAOE : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
         characterList = new List<CharacterData>();
         teslaAnimator = GetComponent<Animator>();
@@ -48,7 +48,7 @@ public class ElectricAOE : MonoBehaviour
     void Update()
     {
         var powered = gameObject.GetComponent<PoweredObjectCharger>();
-        if(powered.enabled == true){
+        if(powered.active == true){
             damageModifier = powered.damageBoostValue*10;
         }else{
             damageModifier = 1;
