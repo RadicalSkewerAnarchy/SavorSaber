@@ -49,6 +49,8 @@ public class ElectricAOE : MonoBehaviour
     {
         var powered = gameObject.GetComponent<PoweredObjectCharger>();
         if(powered.enabled == true){
+            // TEN TIMES DAMAGE??????????????????????????
+            // TIMES 4 from powered object???????????????
             damageModifier = powered.damageBoostValue*10;
         }else{
             damageModifier = 1;
@@ -113,10 +115,10 @@ public class ElectricAOE : MonoBehaviour
                 continue;
 
             //test to see if this tic will inflict a killing blow
-            if (characterData.health - damagePerTic * damageModifier <= 0)
-                killingBlow = true;
+            //if (characterData.health - damagePerTic * damageModifier <= 0)
+            //    killingBlow = true;
 
-            characterData.DoDamage(damagePerTic * damageModifier, overCharged);
+            killingBlow = characterData.DoDamage(damagePerTic * damageModifier, overCharged);
             
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PricklePear : AIData
+public class PricklePearData : AIData
 {
     public GameObject electricAoE;
     /// <summary>
@@ -19,30 +19,38 @@ public class PricklePear : AIData
     public override Protocols DecideProtocol()
     {
         Protocols proto = currentProtocol;
-        if (this.Checks.NumberOfEnemies() > 0)
+
+        switch (currentLifeState)
         {
-            if (health > (maxHealth / 10))
-                proto = Protocols.Melee;
-            else
-                proto = Protocols.Runaway;
-        }
-        else if (Checks.NumberOfFriends() > 0)
-        {
-            var ghost = Checks.FriendQuery(GetComponent<Monster>().name);
-            if (ghost != null)
-            {
-                Checks.closestFriend = ghost;
-                proto = Protocols.Chase;
-            }
-            else
-            {
-                Checks.closestFriend = null;
-                proto = Protocols.Runaway;
-            }
-        }
-        else
-        {
-            proto = Protocols.Wander;
+            case LifeState.overcharged:
+                break;
+            default:
+                if (this.Checks.NumberOfEnemies() > 0)
+                {
+                    if (health > (maxHealth / 2))
+                        proto = Protocols.Melee;
+                    else
+                        proto = Protocols.Runaway;
+                }
+                else if (Checks.NumberOfFriends() > 0)
+                {
+                    var ghost = Checks.FriendQuery(GetComponent<Monster>().name);
+                    if (ghost != null)
+                    {
+                        Checks.closestFriend = ghost;
+                        proto = Protocols.Chase;
+                    }
+                    else
+                    {
+                        Checks.closestFriend = null;
+                        proto = Protocols.Runaway;
+                    }
+                }
+                else
+                {
+                    proto = Protocols.Wander;
+                }
+                break;
         }
 
         return proto;
@@ -78,9 +86,11 @@ public class PricklePear : AIData
         }
     }
 
-    public override void WhileOvercharged(){
+    public override void WhileOvercharged()
+    {
         currentProtocol = Protocols.Melee;
     }
+
     public override void OnStateExit(LifeState s)
     {
         switch (s)
@@ -89,9 +99,6 @@ public class PricklePear : AIData
                 electricAoE.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
                 electricAoE.GetComponent<PoweredObjectCharger>().enabled = false;   
                 electricAoE.GetComponent<ElectricAOE>().overCharged = false;    
-                break;
-            case LifeState.dead:
-                sRenderer.color = Color.white;
                 break;
             default:
                 // nothing at all
@@ -107,9 +114,6 @@ public class PricklePear : AIData
                 electricAoE.GetComponent<SpriteRenderer>().color = new Color(0,244,255,255);
                 electricAoE.GetComponent<PoweredObjectCharger>().enabled = true;
                 electricAoE.GetComponent<ElectricAOE>().overCharged = true;
-                break;
-            case LifeState.dead:
-                sRenderer.color = Color.grey;
                 break;
             default:
                 // nothing at all

@@ -16,6 +16,8 @@ public class BaseProjectile : MonoBehaviour
     public bool hurtPlayer = true;
     public bool hurtDrones = true;
 
+    public bool overcharged = false;
+
     CharacterData myCharData;
 
     /// <summary>
@@ -193,7 +195,7 @@ public class BaseProjectile : MonoBehaviour
         {
             //myCharData.damageDealt += (int)projectileDamage;
             //Debug.Log("Dealing DMG");
-            if (characterData.DoDamage((int)projectileDamage) && myCharData != null)
+            if (characterData.DoDamage((int)projectileDamage, overcharged) && myCharData != null)
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)
                 Destroy(this.gameObject);

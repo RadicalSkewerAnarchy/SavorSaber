@@ -89,7 +89,7 @@ public class SignalApplication : MonoBehaviour
 
     public void Activate()
     {
-        bool meDrone = (this.tag == "Predator");
+        bool meDrone = (this.signalMaker!=null? signalMaker.tag=="Predator" : false );
         var objects = Physics2D.OverlapCircleAll(transform.position, interactRadius);
         foreach (var go in objects)
         {
@@ -100,8 +100,6 @@ public class SignalApplication : MonoBehaviour
             bool isCreature = (isDrone || go.tag == "Prey" || go.tag == "Player");
             if (isCreature)
             {
-                //Debug.Log(go.name + "is tagged properly --> " + go.tag);
-
                 // create boolean cases
                 bool isMe = (signalMaker != null ? this.signalMaker.name.Equals(go.name) : false);
 
