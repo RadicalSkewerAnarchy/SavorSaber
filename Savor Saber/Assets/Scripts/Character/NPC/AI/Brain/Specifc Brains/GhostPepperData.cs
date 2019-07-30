@@ -102,9 +102,6 @@ public class GhostPepperData : AIData
                 // nothing at all
                 break;
         }
-
-        // set previous to this one
-        previousLifeState = currentLifeState;
     }
 
     public override void OnStateEnter(LifeState s)
@@ -115,7 +112,7 @@ public class GhostPepperData : AIData
                 this.Behavior.projectile = overchargedProjectile;
                 break;
             case LifeState.dead:
-                sRenderer.color = Color.grey;
+                sRenderer.color = Color.yellow;
                 break;
             default:
                 // nothing at all

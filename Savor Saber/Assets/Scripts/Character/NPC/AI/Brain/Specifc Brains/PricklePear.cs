@@ -97,9 +97,6 @@ public class PricklePear : AIData
                 // nothing at all
                 break;
         }
-
-        // set previous to this one
-        previousLifeState = currentLifeState;
     }
 
     public override void OnStateEnter(LifeState s)
