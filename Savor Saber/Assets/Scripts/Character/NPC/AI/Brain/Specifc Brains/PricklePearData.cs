@@ -20,75 +20,29 @@ public class PricklePearData : AIData
     {
         Protocols proto = currentProtocol;
 
-        switch (currentLifeState)
+        if (this.Checks.NumberOfEnemies() > 0)
         {
-            case LifeState.overcharged:
-                break;
-            default:
-                if (this.Checks.NumberOfEnemies() > 0)
-                {
-                    if (health > (maxHealth / 2))
-                        proto = Protocols.Melee;
-                    else
-                        proto = Protocols.Runaway;
-                }
-                else if (Checks.NumberOfFriends() > 0)
-                {
-                    var ghost = Checks.FriendQuery(GetComponent<Monster>().name);
-                    if (ghost != null)
-                    {
-                        Checks.closestFriend = ghost;
-                        proto = Protocols.Chase;
-                    }
-                    else
-                    {
-                        Checks.closestFriend = null;
-                        proto = Protocols.Runaway;
-                    }
-                }
+            if (Checks.ClosestDrone() != null)
+            {
+                if (health > (maxHealth / 2))
+                    proto = Protocols.Melee;
                 else
-                {
-                    proto = Protocols.Wander;
-                }
-                break;
+                    proto = Protocols.Runaway;
+            }
+            else
+                proto = Protocols.Runaway;
+        }
+        else
+        {
+            proto = Protocols.Wander;
         }
 
         return proto;
     }
 
-    public override void WhileAlive()
-    {
-        switch (currentProtocol)
-        {
-            // ranged
-            case Protocols.Melee:
-                Protocol.Melee(Checks.closestEnemy);
-                break;
-            // lazy
-            case Protocols.Lazy:
-                Protocol.Lazy();
-                break;
-            // Runaway
-            case Protocols.Runaway:
-                Protocol.NavRunaway(Checks.closestFriend);
-                break;
-            // Chase
-            case Protocols.Chase:
-                Protocol.NavChase(Checks.closestFriend, Speed);
-                break;
-            // Wander
-            case Protocols.Wander:
-                Protocol.Wander(5f, 5f);
-                break;
-            default:
-                Debug.Log("YOU SHOULD NEVER BE HERE!");
-                break;
-        }
-    }
-
     public override void WhileOvercharged()
     {
-        currentProtocol = Protocols.Melee;
+        Protocol.Melee(null);
     }
 
     public override void OnStateExit(LifeState s)

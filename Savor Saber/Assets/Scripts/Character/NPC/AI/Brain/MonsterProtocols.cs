@@ -38,52 +38,57 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Melee(GameObject target)
     {
         #region Get Nearest + Null Check
-        var weakest = Checks.WeakestCreature();
-        var nearestEnemy = (this.tag=="Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
+        var nearestEnemy = target;
+        Vector2 pos;
+        if (target != null)
+        {
+            Debug.Log(this.name + "'s target is " + target.name);
+            pos = nearestEnemy.transform.position;
+        }
+        else
+        {
+            nearestEnemy = (this.tag == "Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
+            if (nearestEnemy != null)
+            { 
+                Debug.Log(this.name + "'s target is " + nearestEnemy.name);
+                pos = nearestEnemy.transform.position;
+            }
+            else
+            {
+                Debug.Log("for some reason " + this.name + "  dont see any targets");
+                return;
+            }
+        }
+        
+        #endregion
+        
+        if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
+        {
+            Behaviour.MeleeAttack(pos);
+        }
+    }
+
+    public void NavMelee(GameObject target, float speed=0)
+    {
+        #region Get Nearest + Null Check
+        var nearestEnemy = (this.tag == "Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
         Vector2 pos;
         if (nearestEnemy != null)
         {
             pos = nearestEnemy.transform.position;
         }
-        else if (weakest != null)
-        {
-            pos = Checks.WeakestCreature().transform.position;
-        }
         else
         {
-            return;
-        }
-        #endregion
-
-        
-        if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
-        {
-            if (CheckThreshold(pos, AiData.MeleeAttackThreshold))
-            {
-                Behaviour.MeleeAttack(pos);
-            }
-        }
-    }
-
-    public void NavMelee(GameObject target, float speed)
-    {
-        #region Get Nearest + Null Check
-        GameObject weakest = target;
-        Vector2 pos;
-        if (weakest != null)
-        {
-            pos = weakest.transform.position;
-        }
-        else
-        {
-            weakest = Checks.ClosestCreature(new string[] { (this.tag == "Prey" ? "Prey" : "Predator") });
-            if (weakest != null)
-                pos = weakest.transform.position;
+            nearestEnemy = Checks.ClosestCreature(new string[] { (this.tag == "Prey" ? "Prey" : "Predator") });
+            if (nearestEnemy != null)
+                pos = nearestEnemy.transform.position;
             else
                 return;
         }
         #endregion
-        if (NavChase(weakest, speed, AiData.MeleeAttackThreshold) || Vector2.Distance(weakest.transform.position, this.transform.position) <= AiData.EngageHostileThreshold)
+        if (speed == 0)
+            speed = AiData.Speed;
+        if (NavChase(nearestEnemy, speed, AiData.MeleeAttackThreshold) || Vector2.Distance(nearestEnemy.transform.position, this.transform.position) <= AiData.EngageHostileThreshold)
         {
             Behaviour.MeleeAttack(pos);
         }

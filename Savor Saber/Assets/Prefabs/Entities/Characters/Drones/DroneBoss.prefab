@@ -249,8 +249,6 @@ MonoBehaviour:
   chance: 100
   drops:
   - {fileID: 4021886872502011866, guid: c90e604e2d6da4c40a88c71570c1997b, type: 3}
-  - {fileID: 4021886872502011866, guid: c90e604e2d6da4c40a88c71570c1997b, type: 3}
-  - {fileID: 4021886872502011866, guid: c90e604e2d6da4c40a88c71570c1997b, type: 3}
   signalDrops: []
 --- !u!114 &6121165913015690902
 MonoBehaviour:
@@ -322,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathfinder: {fileID: 0}
   ActionTimer: 0
-  ActionTimerReset: 10
+  ActionTimerReset: 3
   ActionTimerVariance: 2
   ResetTimer: 0
   ResetTimerReset: 0
@@ -330,10 +328,11 @@ MonoBehaviour:
   attack: {fileID: 3113099086786420128, guid: 3ee86bf0755758c4b807ff0d453349fd, type: 3}
   projectile: {fileID: 7829316334240123674, guid: 34ba468af090e08448871d593ba8f544,
     type: 3}
-  attackDuration: 1.5
-  meleeAttackDuration: 1
-  meleeAttackDelay: 0.25
-  meleeAttackDimensions: {x: 2.5, y: 2.5}
+  attackDuration: 2
+  attackCooldown: 2
+  meleeAttackDuration: 0.5
+  meleeAttackDelay: 0.5
+  meleeAttackDimensions: {x: 3, y: 3}
   isAttacking: 0
   meleeSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!114 &5927032140592398662
@@ -467,10 +466,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   armored: 1
   Speed: 2
-  Perception: 10
-  MeleeAttackThreshold: 3
-  RangeAttackThreshold: 6
-  EngageHostileThreshold: 2
+  Perception: 12
+  MeleeAttackThreshold: 2
+  RangeAttackThreshold: 10
+  EngageHostileThreshold: 4
   maxHealth: 45
   health: 45
   overchargeHealth: 0
@@ -501,7 +500,7 @@ MonoBehaviour:
   currentMoveState: 0
   previousMoveState: 0
   DecisionTimer: 0
-  DecisionTimerReset: 1
+  DecisionTimerReset: 0.5
   DecisionTimerVariance: 0.2
   Behavior: {fileID: 0}
   Protocol: {fileID: 0}
@@ -611,11 +610,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8448287489788972052}
     m_Modifications:
-    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_Name
-      value: HealthBar
-      objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -721,6 +715,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6540308080422382999, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_Name
+      value: HealthBar
+      objectReference: {fileID: 0}
     - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -773,11 +772,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8448287489788972052}
     m_Modifications:
-    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
-        type: 3}
-      propertyPath: m_Name
-      value: MonsterHurtParticle
-      objectReference: {fileID: 0}
     - target: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -832,6 +826,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901926924661339182, guid: 8810df0ddde908745878a508b9576c92,
+        type: 3}
+      propertyPath: m_Name
+      value: MonsterHurtParticle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8810df0ddde908745878a508b9576c92, type: 3}

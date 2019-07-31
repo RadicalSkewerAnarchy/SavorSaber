@@ -204,15 +204,20 @@ public class MonsterChecks : MonoBehaviour
                 continue;
             }
             #endregion 
+
             cd = Creature.GetComponent<CharacterData>(); 
-            float hp = (cd.health/cd.maxHealth);
-            if (hp < weak)
+            float hp = ((float)cd.health/ (float)cd.maxHealth);
+
+            if (hp == 0)
+            {
+                continue;
+            }
+            else if (hp < weak)
             {
                 weak = hp;
                 weakest = Creature;
             }
         }
-
         return weakest;
     }
 
@@ -370,7 +375,7 @@ public class MonsterChecks : MonoBehaviour
     public GameObject ClosestDrone()
     {
         #region Initialize closest vars
-        float close = closestDistance;
+        float close = 10000000;
         GameObject closeDrone = null;
         bool oc = this.AiData.GetOvercharged();
         #endregion
@@ -382,9 +387,9 @@ public class MonsterChecks : MonoBehaviour
             {
                 continue;
             }
-            if (!oc && Creature.GetComponent<AIData>().armored)
+            if (Creature.GetComponent<AIData>().armored)
             {
-                continue;
+                if (!oc) continue;
             }
             #endregion
             float dist = Vector2.Distance(transform.position, Creature.transform.position);

@@ -9,20 +9,17 @@ public class BossProjectile : BaseProjectile
     public int numProj;
     public int numProjectilesConstant;
     public int numProjectilesVariable;
-    public AnimationCurve numProjectilesDistribution;
     public float spread;
     public float spreadProjectilesMin;
     public float spreadProjectilesShift;
-    public AnimationCurve spreadProjectilesDistribution;
     public float angleDiv;
-    public AnimationCurve angleDividerDistribution;
     // Start is called before the first frame update
     void Awake()
     {
         // randomly determine firing mode
         // create more projectiles based on firing mode
-        numProj = (int) (numProjectilesConstant + numProjectilesVariable * numProjectilesDistribution.Evaluate(Random.Range(0f, 1f)));
-        spread = spreadProjectilesMin + ((360 - spreadProjectilesMin + spreadProjectilesShift) * spreadProjectilesDistribution.Evaluate(Random.Range(0f, 1f)));
+        numProj = (int) (numProjectilesConstant + numProjectilesVariable);
+        spread = spreadProjectilesMin;
 
         GameObject newAttack;
         for (float i = 0; i < numProj; i++)
@@ -48,7 +45,7 @@ public class BossProjectile : BaseProjectile
             projectileData.directionVector = Vector2.ClampMagnitude(Ang2Vec(firingAngleIterate * (i) + firingAngleStart), 1f);
             //Debug.Log("Projectile angle: " + projectileData.directionVector);
 
-            projectileData.penetrateTargets = true;
+            projectileData.penetrateTargets = this.penetrateTargets;
             projectileData.attacker = this.attacker;
             projectileData.projectileSpeed = 3f;
             projectileData.range = 30f;

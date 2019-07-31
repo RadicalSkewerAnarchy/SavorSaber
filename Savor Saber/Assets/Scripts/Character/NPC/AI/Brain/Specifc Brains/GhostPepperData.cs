@@ -23,8 +23,13 @@ public class GhostPepperData : AIData
         Protocols proto = currentProtocol;
         if (this.Checks.NumberOfEnemies() > 0)
         {
-            if (health > (maxHealth / 4))
-                proto = Protocols.Ranged;
+            if (Checks.ClosestDrone() != null)
+            {
+                if (health > (maxHealth / 2))
+                    proto = Protocols.Ranged;
+                else
+                    proto = Protocols.Runaway;
+            }
             else
                 proto = Protocols.Runaway;
         }
@@ -68,7 +73,7 @@ public class GhostPepperData : AIData
                 break;
             // Runaway
             case Protocols.Runaway:
-                Protocol.NavRunaway(Checks.closestFriend);
+                Protocol.NavRunaway();
                 break;
             // Conga
             case Protocols.Conga:
@@ -95,9 +100,6 @@ public class GhostPepperData : AIData
             case LifeState.overcharged:
                 this.Behavior.projectile = normalProjectile;
                 break;
-            case LifeState.dead:
-                sRenderer.color = Color.white;
-                break;
             default:
                 // nothing at all
                 break;
@@ -110,9 +112,6 @@ public class GhostPepperData : AIData
         {
             case LifeState.overcharged:
                 this.Behavior.projectile = overchargedProjectile;
-                break;
-            case LifeState.dead:
-                sRenderer.color = Color.yellow;
                 break;
             default:
                 // nothing at all

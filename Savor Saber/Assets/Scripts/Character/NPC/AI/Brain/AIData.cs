@@ -37,8 +37,7 @@ public class AIData : CharacterData
                 Socialize,
                 Feed,
                 Console
-    }
-            [HideInInspector]
+            }
             public Behave currentBehavior = Behave.Idle;
             [HideInInspector]
             public Behave previousBehavior = Behave.Idle;
@@ -371,6 +370,7 @@ public class AIData : CharacterData
             this.currentLifeState = LifeState.alive;
         yield return null;
     }
+
     #endregion
 
     #region Acting Upon Life

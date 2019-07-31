@@ -182,11 +182,21 @@ public class CharacterData : MonoBehaviour
                     if (overcharged)
                     {
                         if (this.tag == "Prey")
-                        { 
-                            // set state
-                            ai.currentLifeState = AIData.LifeState.overcharged;
-                            // start timer
-                            StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                        {
+                            if (ai.currentLifeState == AIData.LifeState.overcharged)
+                            {
+                                // first stop
+                                StopCoroutine(ai.OverchargeTimer(0));
+                                // then start timer
+                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                            }
+                            else
+                            {
+                                // set state
+                                ai.currentLifeState = AIData.LifeState.overcharged;
+                                // then start timer
+                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                            }
                         }
                     }
                     else
