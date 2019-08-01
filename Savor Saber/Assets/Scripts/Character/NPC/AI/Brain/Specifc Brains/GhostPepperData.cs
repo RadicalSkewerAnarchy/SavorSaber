@@ -6,6 +6,7 @@ public class GhostPepperData : AIData
 {
     public GameObject normalProjectile;
     public GameObject overchargedProjectile;
+    private FlavorInputManager fim;
 
     /// <summary>
     /// if enemies around
@@ -98,7 +99,6 @@ public class GhostPepperData : AIData
         switch (s)
         {
             case LifeState.overcharged:
-                this.Behavior.projectile = normalProjectile;
                 break;
             default:
                 // nothing at all
@@ -111,7 +111,9 @@ public class GhostPepperData : AIData
         switch (s)
         {
             case LifeState.overcharged:
-                this.Behavior.projectile = overchargedProjectile;
+                if (fim == null)
+                    fim = GetComponent<FlavorInputManager>();
+                fim.CurryBalls(true);
                 break;
             default:
                 // nothing at all

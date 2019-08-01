@@ -192,7 +192,7 @@ public class FlavorInputManagerStateChanger : FlavorInputManager
     }
 
     #region CURRY
-    protected override void CurryBalls(bool favorite)
+    public override void CurryBalls(bool favorite)
     {
         // the amount of time that a fruitant is charmed
         Debug.Log("CURRIED");
