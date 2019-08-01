@@ -12,6 +12,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
     public AudioClip closeSFX;
     public AudioClip openSFX;
+    public bool isOpen;
     private AudioSource sfxPlayerPl;
     private Animator marshAnimator;
 
@@ -25,6 +26,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         boxCollider = GetComponentInChildren<CapsuleCollider2D>();
         sfxPlayerPl = GetComponent<AudioSource>();
         marshAnimator = GetComponent<Animator>();
+
+        OpenPlant();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
@@ -55,6 +58,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         {
             boxCollider.enabled = true;
         }
+        isOpen = false;
     }
 
     // allow player through
@@ -69,5 +73,6 @@ public class MarshPlantFlavorInput : PlantFlavorInput
             boxCollider.enabled = false;
             spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
         }
+        isOpen = true;
     }
 }
