@@ -34,10 +34,17 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
 
     public override void ClosePlant()
     {
-
+        isOpen = false;
+        CircleCollider2D poison = GetComponentInChildren<CircleCollider2D>();
+        poison.enabled = true;
+        ParticleSystem poisonParticles = GetComponent<ParticleSystem>();
+        poisonAnimator.Play("Gas");
+        poisonParticles.Play();
     }
+
     public override void OpenPlant()
     {
+        isOpen = true;
         CircleCollider2D poison = GetComponentInChildren<CircleCollider2D>();
         poison.enabled = false;
         ParticleSystem poisonParticles = GetComponent<ParticleSystem>();

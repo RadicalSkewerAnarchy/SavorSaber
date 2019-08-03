@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class FlowerWeatherUpdate : WeatherUpdate
 {
-    MarshPlantFlavorInput plantManager;
+    PlantFlavorInput plantManager;
+    public bool openWithWeather = true;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        plantManager = GetComponent<MarshPlantFlavorInput>();
+        plantManager = this.GetComponent<PlantFlavorInput>();
     }
 
     /// <summary>
@@ -17,8 +18,16 @@ public class FlowerWeatherUpdate : WeatherUpdate
     /// </summary>
     public override void WeatherOn()
     {
-        if (plantManager.isOpen)
-            plantManager.ClosePlant();
+        if (openWithWeather)
+        {
+            if (!plantManager.isOpen)
+                plantManager.OpenPlant();
+        }
+        else
+        {
+            if (plantManager.isOpen)
+                plantManager.ClosePlant();
+        }
     }
 
     /// <summary>
@@ -26,7 +35,15 @@ public class FlowerWeatherUpdate : WeatherUpdate
     /// </summary>
     public override void WeatherOff()
     {
-        if (!plantManager.isOpen)
-            plantManager.OpenPlant();
+        if (!openWithWeather)
+        {
+            if (!plantManager.isOpen)
+                plantManager.OpenPlant();
+        }
+        else
+        {
+            if (plantManager.isOpen)
+                plantManager.ClosePlant();
+        }
     }
 }

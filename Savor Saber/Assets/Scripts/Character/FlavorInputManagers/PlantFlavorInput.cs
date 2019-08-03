@@ -13,6 +13,8 @@ public class PlantFlavorInput : FlavorInputManager
 
     [System.NonSerialized]
     public bool active = false;
+    
+    public bool isOpen;
 
     // Start is called before the first frame update
     void Start()

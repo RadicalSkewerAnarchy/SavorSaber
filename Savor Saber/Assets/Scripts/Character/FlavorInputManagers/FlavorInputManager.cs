@@ -54,6 +54,14 @@ public class FlavorInputManager : MonoBehaviour
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
         }*/
+
+        // set favorite food speech bubble
+        if (this.tag == "Prey")
+        {
+            FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
+            ffb.fruitant = this.gameObject;
+            ffb.favoriteFood1 = favoriteIngredients[0];
+        }
     }
 
     public void InitializeDictionary()

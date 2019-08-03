@@ -9,7 +9,7 @@ public class CampfireWeatherUpdate : WeatherUpdate
     SpriteRenderer sr;
     Animator an;
 
-    private void Start()
+    private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
         an = GetComponent<Animator>();

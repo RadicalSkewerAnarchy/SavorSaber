@@ -5,13 +5,25 @@ using UnityEngine;
 public class FavoriteFoodBubble : MonoBehaviour
 {
     public GameObject fruitant;
-    public GameObject fruitDisplay;
+    public GameObject fruitDisplay1;
+    public GameObject fruitDisplay2;
+    public GameObject fruitDisplay3;
+    [HideInInspector]
     public SpriteRenderer bubbleRender;
-    public SpriteRenderer fruitRender;
+    [HideInInspector]
+    public SpriteRenderer fruitRender1;
+    [HideInInspector]
+    public SpriteRenderer fruitRender2;
+    [HideInInspector]
+    public SpriteRenderer fruitRender3;
+    [HideInInspector]
     public FlavorInputManager flavors;
     public bool show = false;
     public bool reset = true;
-    public Sprite favoriteFood;
+    public bool keep = false;
+    public IngredientData favoriteFood1;
+    public IngredientData favoriteFood2;
+    public IngredientData favoriteFood3;
     GameObject player;
     public GameObject audioPlayer;
     public AudioClip audio;
@@ -21,7 +33,10 @@ public class FavoriteFoodBubble : MonoBehaviour
     {
         flavors = GetComponentInParent<FlavorInputManager>();
         bubbleRender = GetComponent<SpriteRenderer>();
-        fruitRender = fruitDisplay.GetComponent<SpriteRenderer>();
+        fruitRender1 = fruitDisplay1.GetComponent<SpriteRenderer>();
+        fruitRender2 = fruitDisplay2.GetComponent<SpriteRenderer>();
+        fruitRender3 = fruitDisplay3.GetComponent<SpriteRenderer>();
+
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -33,10 +48,11 @@ public class FavoriteFoodBubble : MonoBehaviour
         // only do it when there is no cutscene
         if (!EventTrigger.InCutscene)
         {
-            if (InputManager.GetButton(Control.Interact))
+            if (InputManager.GetButton(Control.Knife))
             {
                 if (Vector2.Distance(player.transform.position, transform.position) < 2.5f)
                 {
+                    Debug.Log(this.name + ": Displaying favorite food");
                     show = true;
                 }
             }
@@ -50,34 +66,24 @@ public class FavoriteFoodBubble : MonoBehaviour
             if (reset)
             {
                 // get random favorite
-
                 RecipeDatabase rdb = player.GetComponentInChildren<RecipeDatabase>();
-                Sprite s;
-                //if (Random.Range(0f, 1.0f) < 0.5f)
-                //{
-                    // random ingredient
-                    int len = flavors.favoriteIngredients.Length;
-                    // get from ingredients
-                    IngredientData d = flavors.favoriteIngredients[Random.Range(0, len - 1)];
-                // display
-                s = d.image;
-                //}
-                /*else
-                {
-                    // favorite flavor
-                    Debug.Log(flavors.favoriteFlavors);
-                    string ff = rdb.flavorToString[flavors.favoriteFlavors];
-                    Debug.Log(ff);
-                    // get image from database
-                    //s = rdb.allFlavors[ff];
-                    s = rdb.allFlavors[ff];
-                }*/
+                Sprite s1 = favoriteFood1.image;
+                Sprite s2 = favoriteFood2.image;
+                Sprite s3 = favoriteFood3.image;
 
-                Debug.Log(s.name);
-                fruitRender.sprite = s;
+                if (fruitRender1 != null)
+                    if (s1 != null)
+                        fruitRender1.sprite = s1;
+                if (fruitRender2 != null)
+                    if (s2 != null)
+                        fruitRender2.sprite = s2;
+                if (fruitRender3 != null)
+                    if (s3 != null)
+                        fruitRender3.sprite = s3;
 
                 // set sprite
-                StartCoroutine(EndAfterSeconds(2));
+                if (!keep)
+                    StartCoroutine(EndAfterSeconds(2));
 
                 if (audio != null)
                 {
@@ -88,12 +94,24 @@ public class FavoriteFoodBubble : MonoBehaviour
                 reset = false;
             }
 
-            fruitRender.enabled = true;
+            if (fruitRender1 != null)
+                fruitRender1.enabled = true;
+            if (fruitRender2 != null)
+                fruitRender2.enabled = true;
+            if (fruitRender3 != null)
+                fruitRender3.enabled = true;
+
             bubbleRender.enabled = true;
         }
         else
         {
-            fruitRender.enabled = false;
+            if (fruitRender1 != null)
+                fruitRender1.enabled = false;
+            if (fruitRender2 != null)
+                fruitRender2.enabled = false;
+            if (fruitRender3 != null)
+                fruitRender3.enabled = false;
+
             bubbleRender.enabled = false;
             reset = true;
         }
