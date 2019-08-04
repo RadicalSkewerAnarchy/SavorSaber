@@ -19,7 +19,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         sfxPlayer = GetComponent<PlaySFX>();
-
+        Debug.Log("Skewered " + collision.gameObject);
         // skewer roots
         if (collision.gameObject.tag == "ThrowThrough")
         {
@@ -34,7 +34,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
         }
 
         // pickup  drops
-        if (collision.gameObject.tag == "SkewerableObject")
+        if (collision.gameObject.tag == "SkewerableObject" || collision.gameObject.tag == "Reflectable")
         {
             if (!inventory.ActiveSkewerFull() && !inventory.ActiveSkewerCooked())
             {
