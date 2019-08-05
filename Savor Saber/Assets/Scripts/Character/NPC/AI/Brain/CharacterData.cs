@@ -112,9 +112,20 @@ public class CharacterData : MonoBehaviour
                 {
                     //play generic sound from asset bundle
                 }
+
                 if (damageParticleBurst != null)
                     damageParticleBurst.Play();
                 StartCoroutine(DamageEffectCr());
+
+                if (healthBar != null)
+                {
+                    healthBar.gameObject.SetActive(true);
+                    //Debug.Log("Update health bar");
+                    healthBar.value = (float)health / maxHealth;
+                    if (barCr != null)
+                        StopCoroutine(barCr);
+                    barCr = StartCoroutine(ShowHealthBar());
+                }
             }
             else // Health <= 0
             {
@@ -129,16 +140,7 @@ public class CharacterData : MonoBehaviour
                 }
                 health = 0;
             }
-            if (healthBar != null)
-            {
-                healthBar.gameObject.SetActive(true);
-                //Debug.Log("Update health bar");
-                healthBar.value = (float)health / maxHealth;
-                if (barCr != null)
-                    StopCoroutine(barCr);
-                barCr = StartCoroutine(ShowHealthBar());
-            }
-
+            
             // create a fear signal
             InstantiateSignal(4 , "Fear",  0.25f, true, true);
         }
@@ -180,11 +182,21 @@ public class CharacterData : MonoBehaviour
                     if (overcharged)
                     {
                         if (this.tag == "Prey")
-                        { 
-                            // set state
-                            ai.currentLifeState = AIData.LifeState.overcharged;
-                            // start timer
-                            StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                        {
+                            if (ai.currentLifeState == AIData.LifeState.overcharged)
+                            {
+                                // first stop
+                                StopCoroutine(ai.OverchargeTimer(0));
+                                // then start timer
+                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                            }
+                            else
+                            {
+                                // set state
+                                ai.currentLifeState = AIData.LifeState.overcharged;
+                                // then start timer
+                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                            }
                         }
                     }
                     else

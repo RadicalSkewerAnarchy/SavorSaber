@@ -6,36 +6,31 @@ public class DroneBossData : AIData
 {
     public override Protocols DecideProtocol()
     {
-        Protocols proto = currentProtocol;
+        Protocols proto;
 
-        if (health > maxHealth/2)
+        if (health > 2*maxHealth/3)
         {
-            if (Checks.NumberOfFriends() >= Checks.NumberOfEnemies())
-                proto = Protocols.Melee;
-            else
-                proto = Protocols.Ranged;
-
-            //temp
-            proto = Protocols.Ranged;
+            // do nothing for a while
         }
-        else if (health > maxHealth/4)
+        else if (health > maxHealth/2)
         {
-            if (Checks.NumberOfFriends() > Checks.NumberOfEnemies())
-                proto = Protocols.Ranged;
-            else
-                proto = Protocols.Melee;
-
-            // temp
-            proto = Protocols.Ranged;
+            Speed = 3f;
         }
         else
         {
-            GameObject c = Checks.ClosestCreature();
-            if (Vector2.Distance(c.transform.position, this.transform.position) < 5)
-                proto = Protocols.Melee;
-            else
-                proto = Protocols.Ranged;
+            this.Behavior.attackCooldown = 0.25f;
+            this.Behavior.meleeAttackDelay = 0;
         }
+
+        var weakling = Checks.WeakestCreature();
+        var closest = Checks.ClosestCreature(new string[] { "Predator" });
+        float weakDist = ( weakling!=null ? Vector2.Distance(this.transform.position, weakling.transform.position) : 10);
+        float closeDist = ( closest!=null ? Vector2.Distance(this.transform.position, closest.transform.position) : 10);
+
+        if ((closeDist <= 5 && this.health > maxHealth/2) || closeDist <= 2)
+            proto = Protocols.Melee;
+        else
+            proto = Protocols.Ranged;
 
         return proto;
     }

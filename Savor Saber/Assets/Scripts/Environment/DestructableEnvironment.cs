@@ -74,7 +74,7 @@ public class DestructableEnvironment : MonoBehaviour
         origin = transform.position;
         anim = GetComponent<Animator>();
         if (anim != null)
-            anim.enabled = destroyed;
+            anim.enabled = true;
         collider = GetComponent<Collider2D>();
     }
 
@@ -86,6 +86,7 @@ public class DestructableEnvironment : MonoBehaviour
         StartCoroutine(Regrow(time));
         allowRegrow = temp;
     }
+
     public void Destroy(bool spawn = true)
     {
         if (destroyed)
@@ -111,6 +112,7 @@ public class DestructableEnvironment : MonoBehaviour
 
         collider.enabled = staySolid;
     }
+
     private IEnumerator Regrow(float time)
     {
         yield return new WaitForSeconds(time);
@@ -121,6 +123,7 @@ public class DestructableEnvironment : MonoBehaviour
         health = maxHealth;
         destroyed = false;
     }
+
     private IEnumerator Wiggle(float time, float speed, float amplitude)
     {
         var speedCount = 0f;

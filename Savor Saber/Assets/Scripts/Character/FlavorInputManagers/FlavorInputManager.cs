@@ -56,12 +56,19 @@ public class FlavorInputManager : MonoBehaviour
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
 
-        /* 
+        /*
         if (this.gameObject.tag == "ElectricAoE"){
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
+        }*/
+
+        // set favorite food speech bubble
+        if (this.tag == "Prey")
+        {
+            FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
+            ffb.fruitant = this.gameObject;
+            ffb.favoriteFood1 = favoriteIngredients[0];
         }
-        */
     }
 
     public void InitializeDictionary()
@@ -222,14 +229,11 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region CURRY
-    /*
-    protected virtual void CurryBalls (bool favorite)
+    public virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
-        Debug.Log("CURRIED");
-        var spice = flavorCountDictionary[RecipeData.Flavors.Spicy];
-        int shots = 3 + spice + (favorite ? 3 : 0);
-        int pellets = 1 + spice + (favorite ? 2 : 1);
+        int shots = 5;
+        int pellets = 5;
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }

@@ -192,29 +192,32 @@ public class MonsterChecks : MonoBehaviour
     public GameObject WeakestCreature()
     {
         #region Initialize closest vars
-        float weak = 10f;
+        float weak = 5;
         GameObject weakest = null;
+        CharacterData cd;
         #endregion
-        foreach (GameObject Creature in AllCreatures)
+        foreach (GameObject Creature in Enemies)
         {
             #region Check if Creature Deleted
             if (Creature == null)
             {
                 continue;
             }
-            if (Creature.tag == "Predator")
+            #endregion 
+
+            cd = Creature.GetComponent<CharacterData>(); 
+            float hp = ((float)cd.health/ (float)cd.maxHealth);
+
+            if (hp == 0)
             {
                 continue;
             }
-            #endregion
-            float dist = Creature.GetComponent<CharacterData>().health;
-            if (dist < weak)
+            else if (hp < weak)
             {
-                weak = dist;
+                weak = hp;
                 weakest = Creature;
             }
         }
-
         return weakest;
     }
 
@@ -372,10 +375,11 @@ public class MonsterChecks : MonoBehaviour
     public GameObject ClosestDrone()
     {
         #region Initialize closest vars
-        float close = closestDistance;
+        float close = 10000000;
         GameObject closeDrone = null;
+        bool oc = this.AiData.GetOvercharged();
         #endregion
-        foreach (GameObject Creature in AllCreatures)
+        foreach (GameObject Creature in Enemies)
         {
             // Debug.Log("Checking creatures");
             #region Check if Creature Deleted
@@ -383,9 +387,9 @@ public class MonsterChecks : MonoBehaviour
             {
                 continue;
             }
-            if (Creature.tag != "Predator")
+            if (Creature.GetComponent<AIData>().armored)
             {
-                continue;
+                if (!oc) continue;
             }
             #endregion
             float dist = Vector2.Distance(transform.position, Creature.transform.position);

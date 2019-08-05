@@ -86,26 +86,48 @@ public class DevFlavorInputManager : FlavorInputManager
         CycleWeather(0);
     }
 
+    /// <summary>
+    /// iterate over the children objects of each state
+    /// acquire their WeatherUpdate components and use
+    /// WeatherUpdate.WeatherActivate(bool turnOn)
+    /// </summary>
+    /// <param name="direction">up a state (+), or down a state (-)</param>
     public virtual void CycleWeather(int direction=1)
     {
         currentWeatherState += direction;
         currentWeatherState %= weatherStates.Count;
 
+        WeatherUpdate wu;
         for(int i = 0; i < weatherStates.Count; i++)
         {
             if (i==currentWeatherState)
             {
                 // activate this weather
-                weatherStates[i].SetActive(true);
+                foreach(Transform t in weatherStates[i].transform)
+                {
+                    Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
+                    wu = t.GetComponent<WeatherUpdate>();
+                    wu.WeatherActivate(true);
+                }
             }
             else
             {
-                //deactivate these weathers
-                weatherStates[i].SetActive(false);
+                // deactivate this weather
+                foreach (Transform t in weatherStates[i].transform)
+                {
+                    Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
+                    wu = t.GetComponent<WeatherUpdate>();
+                    wu.WeatherActivate(false);
+                }
             }
         }
 
         // update new food request
         currentRequestState = requestStates[currentWeatherState];
+        FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
+        ffb.favoriteFood1 = requestStates[currentWeatherState];
+        ffb.favoriteFood2 = requestStates[currentWeatherState];
+        ffb.favoriteFood3 = requestStates[currentWeatherState];
+        ffb.reset = true;
     }
 }

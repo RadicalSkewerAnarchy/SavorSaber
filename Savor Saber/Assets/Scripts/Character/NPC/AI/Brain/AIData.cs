@@ -37,8 +37,7 @@ public class AIData : CharacterData
                 Socialize,
                 Feed,
                 Console
-    }
-            [HideInInspector]
+            }
             public Behave currentBehavior = Behave.Idle;
             [HideInInspector]
             public Behave previousBehavior = Behave.Idle;
@@ -223,15 +222,21 @@ public class AIData : CharacterData
             OnProtocolExit(previousProtocol);
             /// ... enter new protocol
             OnProtocolEnter(currentProtocol);
+            // change previous
+            previousProtocol = currentProtocol;
         }
         else
         {
             if (currentLifeState != previousLifeState)
             {
                 // exit old life...
+                AlwaysOnStateExit(previousLifeState);
                 OnStateExit(previousLifeState);
                 // ... enter new life
+                AlwaysOnStateEnter(currentLifeState);
                 OnStateEnter(currentLifeState);
+                // change previous
+                previousLifeState = currentLifeState;
             }
             else
             {
@@ -257,6 +262,7 @@ public class AIData : CharacterData
     }
 
     #region Entrance and Exit
+    #region Enter/Exit Protos
     /// <summary>
     /// CALL THIS BEFORE OnStateEnter()
     /// when enterring any state, call this to modify any
@@ -271,9 +277,6 @@ public class AIData : CharacterData
                 // nothing at all
                 break;
         }
-
-        // set previous to this one
-        previousProtocol = currentProtocol;
     }
 
     /// <summary>
@@ -291,13 +294,29 @@ public class AIData : CharacterData
                 break;
         }
     }
-
+    #endregion
+    #region Enter/Exit Life
     /// <summary>
     /// CALL THIS BEFORE OnStateEnter()
     /// modifies fruitant when becoming overcharged, alive and dead
     /// </summary>
     /// <param name="p">old protocol</param>
     public virtual void OnStateExit(LifeState s)
+    {
+        switch (s)
+        {
+            default:
+                // nothing at all
+                break;
+        }
+    }
+
+    /// <summary>
+    /// CALL THIS BEFORE OnStateEnter()
+    /// modifies fruitant when becoming overcharged, alive and dead
+    /// </summary>
+    /// <param name="p">old protocol</param>
+    private void AlwaysOnStateExit(LifeState s)
     {
         switch (s)
         {
@@ -308,9 +327,6 @@ public class AIData : CharacterData
                 // nothing at all
                 break;
         }
-
-        // set previous to this one
-        previousLifeState = currentLifeState;
     }
 
     /// <summary>
@@ -322,6 +338,21 @@ public class AIData : CharacterData
     {
         switch (s)
         {
+            default:
+                // nothing at all
+                break;
+        }
+    }
+
+    /// <summary>
+    /// CALL THIS AFTER OnStateExit()
+    /// modifies fruitant when having just been overcharged, alive, or dead
+    /// </summary>
+    /// <param name="p">new protocol</param>
+    private void AlwaysOnStateEnter(LifeState s)
+    {
+        switch (s)
+        {
             case LifeState.dead:
                 sRenderer.color = Color.grey;
                 break;
@@ -330,6 +361,7 @@ public class AIData : CharacterData
                 break;
         }
     }
+    #endregion
 
     public virtual IEnumerator OverchargeTimer(float time)
     {
@@ -338,6 +370,7 @@ public class AIData : CharacterData
             this.currentLifeState = LifeState.alive;
         yield return null;
     }
+
     #endregion
 
     #region Acting Upon Life

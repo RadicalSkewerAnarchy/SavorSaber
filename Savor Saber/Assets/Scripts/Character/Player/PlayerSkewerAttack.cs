@@ -19,16 +19,16 @@ public class PlayerSkewerAttack : BaseMeleeAttack
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         sfxPlayer = GetComponent<PlaySFX>();
-        Debug.Log("Skewered " + collision.gameObject);
+
         // skewer roots
-        if (collision.gameObject.tag == "ThrowThrough")
+        if (collision.tag == "ThrowThrough")
         {
             var environment = collision.gameObject.GetComponent<DestructableEnvironment>();
             if (environment != null)
             {
                 if (environment.skewerable)
                 {
-                    environment.Health -= 1;
+                    environment.Health = 0;
                 }
             }
         }
@@ -68,4 +68,4 @@ public class PlayerSkewerAttack : BaseMeleeAttack
             body.AddForce(ForceDir.normalized * forceScale, ForceMode2D.Impulse);
         }
     }
-}   
+}

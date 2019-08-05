@@ -48,8 +48,10 @@ public class ElectricAOE : MonoBehaviour
     void Update()
     {
         var powered = gameObject.GetComponent<PoweredObjectCharger>();
-        if(powered.active == true){
-            damageModifier = powered.damageBoostValue*10;
+        if(powered.enabled == true){
+            // TEN TIMES DAMAGE??????????????????????????
+            // TIMES 4 from powered object???????????????
+            damageModifier = powered.damageBoostValue;
         }else{
             damageModifier = 1;
         }
@@ -94,7 +96,7 @@ public class ElectricAOE : MonoBehaviour
         {
             StopCoroutine(ExecuteAfterSeconds());
             characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = false;           
+            inAOE = false;
         }
         else if(collision.gameObject.tag == "Predator")
         {
@@ -113,11 +115,11 @@ public class ElectricAOE : MonoBehaviour
                 continue;
 
             //test to see if this tic will inflict a killing blow
-            if (characterData.health - damagePerTic * damageModifier <= 0)
-                killingBlow = true;
+            //if (characterData.health - damagePerTic * damageModifier <= 0)
+            //    killingBlow = true;
 
-            characterData.DoDamage(damagePerTic * damageModifier, overCharged);
-            
+            killingBlow = characterData.DoDamage(damagePerTic * damageModifier, overCharged);
+
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)

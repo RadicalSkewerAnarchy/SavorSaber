@@ -7,6 +7,7 @@ using UnityEngine;
 public class MarshPlantFlavorInput : PlantFlavorInput
 {
     CapsuleCollider2D boxCollider;
+    CircleCollider2D myCollider;
     public Sprite openSprite;
     public Sprite closedSprite;
 
@@ -22,9 +23,12 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        myCollider = GetComponent<CircleCollider2D>();
         boxCollider = GetComponentInChildren<CapsuleCollider2D>();
         sfxPlayerPl = GetComponent<AudioSource>();
         marshAnimator = GetComponent<Animator>();
+
+        OpenPlant();
         //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
@@ -51,10 +55,8 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         marshAnimator.Play("Close");
         sfxPlayerPl.clip = closeSFX;
         sfxPlayerPl.Play();
-        if (!isFed)
-        {
-            boxCollider.enabled = true;
-        }
+        boxCollider.enabled = false;
+        isOpen = false;
     }
 
     // allow player through
@@ -64,10 +66,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         marshAnimator.Play("Open");
         sfxPlayerPl.clip = openSFX;
         sfxPlayerPl.Play();
-        if (isFed)
-        {
-            boxCollider.enabled = false;
-            spriteRenderer.color = new Color(0.6f, 0.6f, 0.6f, 0.5f);
-        }
+        boxCollider.enabled = true;
+        isOpen = true;
     }
 }

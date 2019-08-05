@@ -71,6 +71,7 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     protected float attackCapsuleRotation;
     public float attackDuration = .5f;
+    public float attackCooldown = .5f;
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
     public Vector2 meleeAttackDimensions = new Vector2(2,2);
@@ -114,10 +115,9 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Idle()
     {
-        //AnimatorBody.Play("Idle");
-        AiData.currentBehavior = AIData.Behave.Idle;
         if (ActionTimer < 0)
         {
+            TransitionBehavior(AIData.Behave.Idle, "Idle");
             if (actionAvailable)
             {
                 AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
@@ -136,25 +136,20 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool MoveTo(Vector2 target, float speed, float threshold)
     {
-        AiData.currentBehavior = AIData.Behave.Chase;
         Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
-            AnimatorBody.Play("Idle");
-
-            //AiData.path.Clear();
-
+            //TransitionBehavior(AIData.Behave.Idle, "Idle");
             return true;
         }
         else
         {
             #region Move
-            AnimatorBody.Play("Move");
             target = (target - current);
             target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
-            if(!AiData.updateBehavior) return false;
-            RigidBody.velocity = Vector2.ClampMagnitude(RigidBody.velocity + target, speed);       
+            RigidBody.velocity = Vector2.ClampMagnitude(RigidBody.velocity + target, speed);
+            TransitionBehavior(AIData.Behave.Chase, "Move");
             #endregion
             return false;
         }
@@ -171,19 +166,18 @@ public class MonsterBehavior : MonoBehaviour
         if (Vector2.Distance(current, target) < threshold)
         {
             #region Move
-            AiData.currentBehavior = AIData.Behave.Flee;
-            AnimatorBody.Play("Move");
             target = (current - target);
             target = Vector2.ClampMagnitude(target, speed);
             controller.Direction = DirectionMethods.FromVec2(target);
             if(!AiData.updateBehavior) return false;
             RigidBody.velocity = target;
+            TransitionBehavior(AIData.Behave.Flee, "Move");
             #endregion
             return false;
         }
         else
         {
-            AnimatorBody.Play("Idle");
+            TransitionBehavior(AIData.Behave.Idle, "Idle");
             return true;
         }
     }
@@ -199,8 +193,6 @@ public class MonsterBehavior : MonoBehaviour
         if(drop != null)
         {
             #region Eat
-            AnimatorBody.Play("Feed");
-            AiData.currentBehavior = AIData.Behave.Feed;
             IngredientData ingredient = drop.GetComponent<SkewerableObject>().data;
             AiData.Stomach.Enqueue(ingredient);
             IngredientData[] ingredientArray = new IngredientData[1];
@@ -223,6 +215,8 @@ public class MonsterBehavior : MonoBehaviour
             {
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(AiData.eatSFX);
             }
+
+            TransitionBehavior(AIData.Behave.Feed, "Feed");
             return true;
         }
         else
@@ -242,17 +236,15 @@ public class MonsterBehavior : MonoBehaviour
         if (!isAttacking)
         {
             #region Attack
+            TransitionBehavior(AIData.Behave.Attack, "Melee");
             isAttacking = true;
-            AiData.currentBehavior = AIData.Behave.Attack;
-            AnimatorBody.Play("Melee");
             if (meleeSFX != null)
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(meleeSFX);
             StartCoroutine(MeleeDelay(target));
             #endregion
             return true;
         }
-
-        //AnimatorBody.Play("Idle");
+        TransitionBehavior(AIData.Behave.Idle, "Idle");
         return false;        
     }
     private IEnumerator MeleeDelay(Vector2 target)
@@ -262,8 +254,6 @@ public class MonsterBehavior : MonoBehaviour
         #region Melee
         GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
-        //GetComponent<MonsterMeleeAttack>().myAttacker = this.gameObject;
-        //newAttackCollider.size = new Vector2(AiData.MeleeAttackThreshold, AiData.MeleeAttackThreshold);
         newAttackCollider.size = meleeAttackDimensions;
         newAttackCollider.transform.position += new Vector3(this.GetComponent<Collider2D>().offset.x, this.GetComponent<Collider2D>().offset.y, 0);
         newAttack.transform.Rotate(target - (Vector2)this.transform.position);
@@ -280,8 +270,7 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Attack
             isAttacking = true;
-            AiData.currentBehavior = AIData.Behave.Attack;
-            AnimatorBody.Play("Ranged");
+            TransitionBehavior(AIData.Behave.Attack, "Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
             GameObject newAttack = Instantiate(projectile, transform.position + new Vector3(0,.25f,0), Quaternion.identity);
             Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -291,8 +280,7 @@ public class MonsterBehavior : MonoBehaviour
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
             #endregion
         }
-
-        AnimatorBody.Play("Idle");
+       
         return true;
     }
 
@@ -302,8 +290,18 @@ public class MonsterBehavior : MonoBehaviour
     protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack, bool destroy)
     {
         yield return new WaitForSeconds(time);
+        if (destroy)
+            Destroy(newAttack);
+        StartCoroutine(EnableAttacking(attackCooldown));
+        yield return null;
+    }
+    /// <summary>
+    /// reenables attacking
+    /// </summary>
+    protected IEnumerator EnableAttacking(float time)
+    {
+        yield return new WaitForSeconds(time);
         isAttacking = false;
-        if (destroy) Destroy(newAttack);
         yield return null;
     }
 
@@ -315,14 +313,13 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Socialize()
     {
-        AiData.currentBehavior = AIData.Behave.Socialize;
         if (ActionTimer < 0)
         {
-            AnimatorBody.Play("Socialize");
             // create signal 
             // change signal radius
             // change signal values (++friendliness)
             //Debug.Log("Instantiating Happiness Signal");
+            TransitionBehavior(AIData.Behave.Socialize, "Socialize");
             AiData.InstantiateSignal(2f, "Friendliness", 0.1f, true, false);
             ResetActionTimer();
             return true;
@@ -338,14 +335,13 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Console()
     {
-        AnimatorBody.Play("Socialize");
-        AiData.currentBehavior = AIData.Behave.Console;
         if (ActionTimer < 0)
         {
             // create signal 
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
+            TransitionBehavior(AIData.Behave.Socialize, "Socialize");
             AiData.InstantiateSignal(2f, "Fear", -0.25f, true, true);
             ResetActionTimer();
             return true;
@@ -361,14 +357,13 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool Scare()
     {
-        AnimatorBody.Play("Socialize");
-        AiData.currentBehavior = AIData.Behave.Console;
         if (ActionTimer < 0)
         {
             // create signal 
             // change signal radius
             // change signal values (--fear)
             //Debug.Log("Instantiating Calming Signal");
+            TransitionBehavior(AIData.Behave.Socialize, "Socialize");
             AiData.InstantiateSignal(3f, "Fear", 0.25f, true, false);
             ResetActionTimer();
             return true;
@@ -450,5 +445,43 @@ public class MonsterBehavior : MonoBehaviour
         // after readjusting from pivot
         return new Vector2(xnew + pivotPoint.x, ynew + pivotPoint.y) ;
     }
-    #endregion    
+    #endregion
+
+    #region Animations and Behaviors
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="b">behavior transitioning TO</param>
+    private void TransitionBehavior(AIData.Behave b, string anim)
+    {
+        if (AiData.previousBehavior != AiData.currentBehavior)
+            BehaviorIn(b, anim);
+        else if (AiData.currentBehavior != b)
+            BehaviorOut(b, anim);
+    }
+
+    private void BehaviorIn(AIData.Behave b, string anim)
+    {
+        AiData.previousBehavior = AiData.currentBehavior;
+    }
+
+    private void BehaviorOut(AIData.Behave b, string anim)
+    {
+        if (AiData.previousBehavior == AIData.Behave.Attack)
+        {
+            if (AnimatorBody.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
+            {
+                AiData.currentBehavior = b;
+                AnimatorBody.Play(anim);
+            }
+        }
+        else
+        {
+            AiData.currentBehavior = b;
+            AnimatorBody.Play(anim);
+        }
+    }
+
+    #endregion
 }
