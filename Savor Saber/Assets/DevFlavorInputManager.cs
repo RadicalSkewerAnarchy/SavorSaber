@@ -105,7 +105,7 @@ public class DevFlavorInputManager : FlavorInputManager
                 // activate this weather
                 foreach(Transform t in weatherStates[i].transform)
                 {
-                    Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
+                    //Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(true);
                 }
@@ -115,7 +115,7 @@ public class DevFlavorInputManager : FlavorInputManager
                 // deactivate this weather
                 foreach (Transform t in weatherStates[i].transform)
                 {
-                    Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
+                    //Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(false);
                 }

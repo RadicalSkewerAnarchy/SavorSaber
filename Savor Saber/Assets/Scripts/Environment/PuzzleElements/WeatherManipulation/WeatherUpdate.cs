@@ -8,12 +8,12 @@ public class WeatherUpdate : MonoBehaviour
     {
         if (turnOn)
         {
-            Debug.Log(this.name + "- Weather turning ON");
+            //Debug.Log(this.name + "- Weather turning ON");
             WeatherOn();
         }
         else
         {
-            Debug.Log(this.name + "- Weather turning OFF");
+            //Debug.Log(this.name + "- Weather turning OFF");
             WeatherOff();
         }
     }
