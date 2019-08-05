@@ -9,11 +9,9 @@ public class FlavorInputManager : MonoBehaviour
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
     public IngredientData[] favoriteIngredients;
-    public RecipeData.Flavors favoriteFlavors;
-    public int charmThreshhold = 1;
+
     protected bool fedFavoriteIngredient = false;
-    public GameObject rewardItem;
-    public int amountRewardItem = 2;
+
     public AudioClip rewardSFX;
     public AudioClip rejectSFX;
 
@@ -31,12 +29,20 @@ public class FlavorInputManager : MonoBehaviour
     #region Other
     protected PointVector pv = new PointVector();
     public float dotTicLength = 1;
-    protected int electricBaseTime = 10;
-    public GameObject electricFieldTemplate;
-    public GameObject saltShieldTemplate;
-    public AudioClip electricSFX;
-    protected bool isElectricSupercharged = false;
-    GameObject electricFieldEffect;
+
+    #endregion
+
+    #region Deprecated Fields
+    //protected int electricBaseTime = 10;
+    //public GameObject electricFieldTemplate;
+    //public GameObject saltShieldTemplate;
+    //public AudioClip electricSFX;
+    //protected bool isElectricSupercharged = false;
+    //GameObject electricFieldEffect;
+    //public GameObject rewardItem;
+    //public int amountRewardItem = 2;
+    //public RecipeData.Flavors favoriteFlavors;
+    //public int charmThreshhold = 1;
     #endregion
 
     private void Start()
@@ -50,10 +56,12 @@ public class FlavorInputManager : MonoBehaviour
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
 
-        /* if (this.gameObject.tag == "ElectricAoE"){
+        /* 
+        if (this.gameObject.tag == "ElectricAoE"){
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
-        }*/
+        }
+        */
     }
 
     public void InitializeDictionary()
@@ -67,9 +75,6 @@ public class FlavorInputManager : MonoBehaviour
         flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
     }
 
-    /// <summary>
-    /// Resets the count of each flavor to 0
-    /// </summary>
     public void ResetDictionary()
     {
         flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
@@ -100,7 +105,9 @@ public class FlavorInputManager : MonoBehaviour
                 //Debug.Log("Ate one " + ingredient.displayName);
             }
 
-            // favorite flavors
+            // ingredients don't have flavors anymore, so we no longer need to check flavors
+            //restore this if we want to check flavors again
+            /*
             for (int f = 1; f <= 64; f = f << 1)
             {
 
@@ -111,60 +118,12 @@ public class FlavorInputManager : MonoBehaviour
                     Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
                 }
             }
+            */
         }
-
         RespondToIngredients(fedByPlayer);
 
         // fruitants no longer spawn a reward
         //SpawnReward(ingredientArray, fedByPlayer);
-    }
-
-    public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
-    {
-        if (!fedByPlayer)
-            return;
-
-        // looking only at favorite ingredients...
-        bool moreFriendly = (characterData != null);
-        if (moreFriendly && fedByPlayer)
-            characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
-
-        foreach (var favoriteIngredient in favoriteIngredients)
-        {
-            // if the ingredients on the skewer are my favorites...
-            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
-            {
-                // am i actually being fed this...
-                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
-                if (amountOnSkewer > 0)
-                {
-                    //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
-                    fedFavoriteIngredient = true;
-
-                    if (rewardItem != null)
-                    {
-                        int spawned = 0;
-                        for (int j = 0; j < amountOnSkewer; j++)
-                        {
-                            for (int i = 0; i < amountRewardItem; i++)
-                            {
-                                Instantiate(rewardItem, transform.position, Quaternion.identity);
-                                spawned++;
-                            }
-                        }
-                        Debug.Log("Spawned: " + spawned);
-                    }
-                }
-
-                if (sfxPlayer != null)
-                {
-                    sfxPlayer.clip = rewardSFX;
-                    sfxPlayer.Play();
-                }
-
-                ingredientCountDictionary[favoriteIngredient] = 0;
-            }
-        }
     }
 
 
@@ -198,6 +157,7 @@ public class FlavorInputManager : MonoBehaviour
 
     #region Flavor Responses
     #region CHARM
+    /*
     protected void CheckCharmEffect(bool favorite)
     {
         // the amount of time that a fruitant is charmed
@@ -211,6 +171,7 @@ public class FlavorInputManager : MonoBehaviour
 
         //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
     }
+    */
 
     protected void StartCharm(float time)
     {
@@ -261,6 +222,7 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region CURRY
+    /*
     protected virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
@@ -271,6 +233,7 @@ public class FlavorInputManager : MonoBehaviour
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
+    */
 
     protected virtual IEnumerator ExecuteCurry(float time, int shots, int pellets)
     {
@@ -340,6 +303,7 @@ public class FlavorInputManager : MonoBehaviour
     #endregion
 
     #region SALT
+    /*
     protected void SaltyShield(bool favorite)
     {
         float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f);
@@ -352,9 +316,9 @@ public class FlavorInputManager : MonoBehaviour
         ss.fruit = this.gameObject;
         ss.lifetime = time;
     }
+    */
     #endregion
     #endregion
-
 
     public void DamageOverTime(int numTics, float ticLength)
     {
@@ -408,6 +372,57 @@ public class FlavorInputManager : MonoBehaviour
 
 
 #region Old Code
+
+/*
+public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+{
+    if (!fedByPlayer)
+        return;
+
+    // looking only at favorite ingredients...
+    bool moreFriendly = (characterData != null);
+    if (moreFriendly && fedByPlayer)
+        characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
+
+    foreach (var favoriteIngredient in favoriteIngredients)
+    {
+        // if the ingredients on the skewer are my favorites...
+        if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
+        {
+            // am i actually being fed this...
+            float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
+            if (amountOnSkewer > 0)
+            {
+                //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
+                fedFavoriteIngredient = true;
+
+                if (rewardItem != null)
+                {
+                    int spawned = 0;
+                    for (int j = 0; j < amountOnSkewer; j++)
+                    {
+                        for (int i = 0; i < amountRewardItem; i++)
+                        {
+                            Instantiate(rewardItem, transform.position, Quaternion.identity);
+                            spawned++;
+                        }
+                    }
+                    Debug.Log("Spawned: " + spawned);
+                }
+            }
+
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+
+            ingredientCountDictionary[favoriteIngredient] = 0;
+        }
+    }
+}
+*/
+
 /*foreach(string favoriteIngredient in favoriteIngredients)
         {
             if (favoriteIngredient != null &&

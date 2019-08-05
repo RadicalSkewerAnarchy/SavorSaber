@@ -25,6 +25,42 @@ public class DroneFlavorInput : FlavorInputManager
             electricField = GetComponentInChildren<ElectricAOE>();
     }
 
+    public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
+    {
+        //Debug.Log("Skewer of size " + ingredientArray.Length);
+        for (int i = 0; i < ingredientArray.Length; i++)
+        {
+            IngredientData ingredient = ingredientArray[i];
+            if (ingredientCountDictionary.ContainsKey(ingredient))
+            {
+                ingredientCountDictionary[ingredient] = ingredientCountDictionary[ingredient] + 1;
+                //Debug.Log("Ate one " + ingredient.displayName);
+            }
+            else
+            {
+                ingredientCountDictionary.Add(ingredient, 1);
+                //Debug.Log("Ate one " + ingredient.displayName);
+            }
+
+            // favorite flavors
+            for (int f = 1; f <= 64; f = f << 1)
+            {
+
+                if ((f & (int)ingredient.flavors) > 0)
+                {
+                    RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                    flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
+                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+                }
+            }
+        }
+
+        RespondToIngredients(fedByPlayer);
+
+        // fruitants no longer spawn a reward
+        //SpawnReward(ingredientArray, fedByPlayer);
+    }
+
     public override void RespondToIngredients(bool fedByPlayer)
     {
         //handle spicy - Does damage over time
