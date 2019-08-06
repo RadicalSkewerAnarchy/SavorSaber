@@ -99,6 +99,8 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
+        #region Old feeding checks
+        /*
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
@@ -110,26 +112,84 @@ public class FlavorInputManager : MonoBehaviour
             {
                 ingredientCountDictionary.Add(ingredient, 1);
             }
-
-            // ingredients don't have flavors anymore, so we no longer need to check flavors
-            //restore this if we want to check flavors again
-            /*
-            for (int f = 1; f <= 64; f = f << 1)
-            {
-
-                if ((f & (int)ingredient.flavors) > 0)
-                {
-                    RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                    flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
-                }
-            }
             */
+        // ingredients don't have flavors anymore, so we no longer need to check flavors
+        //restore this if we want to check flavors again
+        /*
+        for (int f = 1; f <= 64; f = f << 1)
+        {
+
+            if ((f & (int)ingredient.flavors) > 0)
+            {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
+                Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+            }
         }
-        RespondToIngredients(fedByPlayer);
+
+    }
+    */
+        //RespondToIngredients(fedByPlayer);
 
         // fruitants no longer spawn a reward
         //SpawnReward(ingredientArray, fedByPlayer);
+        #endregion
+
+        bool healed = false;
+        bool rejected = false;
+        foreach(IngredientData data in ingredientArray)
+        {
+            foreach(IngredientData favoriteIngredient in favoriteIngredients)
+            {
+                if(data == favoriteIngredient)
+                {
+                    characterData.DoHeal(2);
+                    healed = true;
+                }
+            }
+            foreach (IngredientData rejectedIngredient in rejectedIngredients)
+            {
+                if (data == rejectedIngredient)
+                {
+                    rejected = true;
+
+                    //spit out the rejected object
+                    GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+                    SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+                    SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+                    rejectedSR.sprite = rejectedIngredient.image;
+                    rejectedSO.data = rejectedIngredient;
+                }
+            }
+        }
+
+        //play audio based on what happened during this feeding
+        if (healed && !rejected)
+        {
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+        }
+        else if (rejected && !healed)
+        {
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rejectSFX;
+                sfxPlayer.Play();
+            }
+            Debug.Log("wtf, why would you feed me this");
+        }
+        else if(rejected && healed)
+        {
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+            Debug.Log("wtf, why would you feed me this");
+        }
     }
 
 

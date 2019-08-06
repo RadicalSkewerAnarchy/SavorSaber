@@ -70,6 +70,7 @@ public class DroneFlavorInput : FlavorInputManager
         #endregion
 
         int damageDone = 0;
+
         foreach(IngredientData data in ingredientArray)
         {
             if(data.displayName == "Bullet")
@@ -80,7 +81,8 @@ public class DroneFlavorInput : FlavorInputManager
             else
             {
                 //characterData.DoDamage(damageFromBaseSkewer, false);
-                damageDone += damageFromBaseSkewer;
+                if(!characterData.armored)
+                    damageDone += damageFromBaseSkewer;
 
                 //spit out the rejected object
                 GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
@@ -90,7 +92,7 @@ public class DroneFlavorInput : FlavorInputManager
                 rejectedSO.data = data;
             }
         }
-        characterData.DoDamage(damageDone);
+        characterData.DoDamage(damageDone, true);
 
     }
 
