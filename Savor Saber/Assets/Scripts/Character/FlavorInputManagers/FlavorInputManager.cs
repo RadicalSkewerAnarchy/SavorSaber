@@ -31,7 +31,7 @@ public class FlavorInputManager : MonoBehaviour
     protected PointVector pv = new PointVector();
     public float dotTicLength = 1;
     [SerializeField]
-    private GameObject rejectedObjectTemplate;
+    protected GameObject rejectedObjectTemplate;
     #endregion
 
     #region Deprecated Fields
@@ -136,7 +136,7 @@ public class FlavorInputManager : MonoBehaviour
     public virtual void RespondToIngredients(bool fedByPlayer)
     {
 
-        // heal the fruitant
+        // heal the fruitant (now done after checking for favorite ingredients)
         //if (fedByPlayer && characterData != null)
             //characterData.DoHeal(flavorCountDictionary.Count * 2);
 
