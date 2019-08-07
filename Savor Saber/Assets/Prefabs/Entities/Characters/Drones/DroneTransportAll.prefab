@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armored: 0
   Speed: 2
   Perception: 10
   MeleeAttackThreshold: 1
@@ -354,6 +355,7 @@ MonoBehaviour:
   EngageHostileThreshold: 0
   maxHealth: 2
   health: 2
+  overchargeHealth: 0
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -376,19 +378,25 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
-  path: []
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
   DecisionTimer: 0
   DecisionTimerReset: 5
   DecisionTimerVariance: 2
   Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
   Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
   Awareness: {fileID: 0}
-  Friends: []
-  Enemies: []
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
+  meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
+  path: []
 --- !u!114 &117430866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -422,6 +430,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestFriend: {fileID: 0}
   closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
@@ -451,6 +460,7 @@ MonoBehaviour:
   projectile: {fileID: 3494384851677285723, guid: ab9f0bb195e5bd7439541dca657e22aa,
     type: 3}
   attackDuration: 1
+  attackCooldown: 0.5
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   meleeAttackDimensions: {x: 2, y: 2}
@@ -469,18 +479,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   favoriteIngredients: []
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
+  rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  rejectSFX: {fileID: 0}
   charmTime: 0
   shieldSize: 1
   dotTicLength: 1
-  electricFieldTemplate: {fileID: 0}
-  saltShieldTemplate: {fileID: 0}
-  electricSFX: {fileID: 0}
-  hasElectricField: 0
+  rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
+    type: 3}
+  rewardItem: {fileID: 0}
+  damageFromBaseSkewer: 1
+  damageFromBulletSkewer: 2
 --- !u!114 &117430862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +517,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+  possibleGraphs: []
+  bornOnto: 0
 --- !u!114 &117430860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2161,6 +2172,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 1
     mode: 1
     timeMode: 0
@@ -2278,7 +2290,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 21300002, guid: 52a71006db9511a40afcd583319178e2, type: 3}
     flipU: 0
@@ -3089,8 +3101,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -5635,17 +5700,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 0
   m_TargetGraphic: {fileID: 421524556}
@@ -5877,6 +5945,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7063018664418778709}
     m_Modifications:
+    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
+        type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5946,11 +6019,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.4343256
-      objectReference: {fileID: 0}
-    - target: {fileID: 5847080097991971306, guid: 609cf543f670ded479a520ca2f15dcbe,
-        type: 3}
-      propertyPath: m_Name
-      value: Shadow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 609cf543f670ded479a520ca2f15dcbe, type: 3}

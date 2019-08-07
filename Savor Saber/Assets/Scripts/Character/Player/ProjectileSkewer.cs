@@ -92,8 +92,9 @@ public class ProjectileSkewer : BaseProjectile
             }
             if(collision.gameObject.tag == "Predator")
             {
-                CharacterData cd = collision.gameObject.GetComponent<CharacterData>();
-                cd.DoDamage(1);
+                //damage is now done in the drone's flavorinputmanager
+                //CharacterData cd = collision.gameObject.GetComponent<CharacterData>();
+                //cd.DoDamage(1);
             }
             if (!penetrateTargets)
                 Destroy(this.gameObject);

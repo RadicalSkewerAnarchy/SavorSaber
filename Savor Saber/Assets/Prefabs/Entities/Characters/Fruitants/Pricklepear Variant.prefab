@@ -18,8 +18,8 @@ MonoBehaviour:
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
   EngageHostileThreshold: 2
-  maxHealth: 30
-  health: 30
+  maxHealth: 10
+  health: 10
   overchargeHealth: 5
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
@@ -172,22 +172,34 @@ PrefabInstance:
       propertyPath: meleeSFX
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8438048843460588610, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      propertyPath: rejectedIngredients.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
       propertyPath: favoriteIngredients.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 2b0200a0a32b14d40a9a104464ee6a4f,
+      objectReference: {fileID: 11400000, guid: ae5403765e06d194c935880a6d5447fe,
         type: 2}
     - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
       propertyPath: rewardItem
       value: 
       objectReference: {fileID: 4084962922675323153, guid: 46abdc5ee22aa424bb0b8d905dbe352b,
+        type: 3}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rejectedIngredients.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a8b2291a8b981a748b4dd4d072026b40,
+        type: 2}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rejectedObjectTemplate
+      value: 
+      objectReference: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
         type: 3}
     - target: {fileID: 8438048843460588614, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
@@ -233,6 +245,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438048843460588610, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8438048843460588610, guid: 0fe4e845d1e71bf4ea875f52f9f18181, type: 3}
@@ -343,7 +360,7 @@ PrefabInstance:
     - target: {fileID: 6698997236361442221, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fea442ebfc5a12f4db05d6ea6ef407a0, type: 3}

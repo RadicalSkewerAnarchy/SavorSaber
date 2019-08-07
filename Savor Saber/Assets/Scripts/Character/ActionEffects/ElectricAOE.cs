@@ -36,7 +36,7 @@ public class ElectricAOE : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        //sr = GetComponent<SpriteRenderer>();
         fieldDelay = new WaitForSeconds(disruptiontime);
         characterList = new List<CharacterData>();
         teslaAnimator = GetComponent<Animator>();
@@ -96,7 +96,7 @@ public class ElectricAOE : MonoBehaviour
         {
             StopCoroutine(ExecuteAfterSeconds());
             characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = false;           
+            inAOE = false;
         }
         else if(collision.gameObject.tag == "Predator")
         {
@@ -119,7 +119,7 @@ public class ElectricAOE : MonoBehaviour
             //    killingBlow = true;
 
             killingBlow = characterData.DoDamage(damagePerTic * damageModifier, overCharged);
-            
+
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)

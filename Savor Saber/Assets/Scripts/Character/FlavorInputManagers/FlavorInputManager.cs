@@ -9,11 +9,10 @@ public class FlavorInputManager : MonoBehaviour
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
     public IngredientData[] favoriteIngredients;
-    public RecipeData.Flavors favoriteFlavors;
-    public int charmThreshhold = 1;
+    public IngredientData[] rejectedIngredients;
+
     protected bool fedFavoriteIngredient = false;
-    public GameObject rewardItem;
-    public int amountRewardItem = 2;
+
     public AudioClip rewardSFX;
     public AudioClip rejectSFX;
 
@@ -31,12 +30,21 @@ public class FlavorInputManager : MonoBehaviour
     #region Other
     protected PointVector pv = new PointVector();
     public float dotTicLength = 1;
-    protected int electricBaseTime = 10;
-    public GameObject electricFieldTemplate;
-    public GameObject saltShieldTemplate;
-    public AudioClip electricSFX;
-    protected bool isElectricSupercharged = false;
-    GameObject electricFieldEffect;
+    [SerializeField]
+    protected GameObject rejectedObjectTemplate;
+    #endregion
+
+    #region Deprecated Fields
+    //protected int electricBaseTime = 10;
+    //public GameObject electricFieldTemplate;
+    //public GameObject saltShieldTemplate;
+    //public AudioClip electricSFX;
+    //protected bool isElectricSupercharged = false;
+    //GameObject electricFieldEffect;
+    public GameObject rewardItem;
+    //public int amountRewardItem = 2;
+    //public RecipeData.Flavors favoriteFlavors;
+    //public int charmThreshhold = 1;
     #endregion
 
     private void Start()
@@ -50,7 +58,8 @@ public class FlavorInputManager : MonoBehaviour
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
 
-        /* if (this.gameObject.tag == "ElectricAoE"){
+        /*
+        if (this.gameObject.tag == "ElectricAoE"){
             electricFieldEffect = Instantiate(electricFieldTemplate, transform.position, Quaternion.identity, gameObject.transform);
             electricFieldEffect.GetComponent<PoweredObjectCharger>().enabled = false;
         }*/
@@ -75,9 +84,6 @@ public class FlavorInputManager : MonoBehaviour
         flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
     }
 
-    /// <summary>
-    /// Resets the count of each flavor to 0
-    /// </summary>
     public void ResetDictionary()
     {
         flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
@@ -93,85 +99,96 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
-        //Debug.Log("Skewer of size " + ingredientArray.Length);
+        #region Old feeding checks
+        /*
         for(int i = 0; i < ingredientArray.Length; i++)
         {
             IngredientData ingredient = ingredientArray[i];
             if (ingredientCountDictionary.ContainsKey(ingredient))
             {
                 ingredientCountDictionary[ingredient] = ingredientCountDictionary[ingredient] + 1;
-                //Debug.Log("Ate one " + ingredient.displayName);
             }
             else
             {
                 ingredientCountDictionary.Add(ingredient, 1);
-                //Debug.Log("Ate one " + ingredient.displayName);
             }
+            */
+        // ingredients don't have flavors anymore, so we no longer need to check flavors
+        //restore this if we want to check flavors again
+        /*
+        for (int f = 1; f <= 64; f = f << 1)
+        {
 
-            // favorite flavors
-            for (int f = 1; f <= 64; f = f << 1)
+            if ((f & (int)ingredient.flavors) > 0)
             {
+                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
+                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
+                Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+            }
+        }
 
-                if ((f & (int)ingredient.flavors) > 0)
+    }
+    */
+        //RespondToIngredients(fedByPlayer);
+
+        // fruitants no longer spawn a reward
+        //SpawnReward(ingredientArray, fedByPlayer);
+        #endregion
+
+        bool healed = false;
+        bool rejected = false;
+        foreach(IngredientData data in ingredientArray)
+        {
+            foreach(IngredientData favoriteIngredient in favoriteIngredients)
+            {
+                if(data == favoriteIngredient)
                 {
-                    RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                    flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                    Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
+                    characterData.DoHeal(2);
+                    healed = true;
+                }
+            }
+            foreach (IngredientData rejectedIngredient in rejectedIngredients)
+            {
+                if (data == rejectedIngredient)
+                {
+                    rejected = true;
+
+                    //spit out the rejected object
+                    GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+                    SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+                    SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+                    rejectedSR.sprite = rejectedIngredient.image;
+                    rejectedSO.data = rejectedIngredient;
                 }
             }
         }
 
-        RespondToIngredients(fedByPlayer);
-
-        // fruitants no longer spawn a reward
-        //SpawnReward(ingredientArray, fedByPlayer);
-    }
-
-    public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
-    {
-        if (!fedByPlayer)
-            return;
-
-        // looking only at favorite ingredients...
-        bool moreFriendly = (characterData != null);
-        if (moreFriendly && fedByPlayer)
-            characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
-
-        foreach (var favoriteIngredient in favoriteIngredients)
+        //play audio based on what happened during this feeding
+        if (healed && !rejected)
         {
-            // if the ingredients on the skewer are my favorites...
-            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
+            if (sfxPlayer != null)
             {
-                // am i actually being fed this...
-                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
-                if (amountOnSkewer > 0)
-                {
-                    //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
-                    fedFavoriteIngredient = true;
-
-                    if (rewardItem != null)
-                    {
-                        int spawned = 0;
-                        for (int j = 0; j < amountOnSkewer; j++)
-                        {
-                            for (int i = 0; i < amountRewardItem; i++)
-                            {
-                                SpawnSingle();
-                                spawned++;
-                            }
-                        }
-                        Debug.Log("Spawned: " + spawned);
-                    }
-                }
-
-                if (sfxPlayer != null)
-                {
-                    sfxPlayer.clip = rewardSFX;
-                    sfxPlayer.Play();
-                }
-
-                ingredientCountDictionary[favoriteIngredient] = 0;
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
             }
+        }
+        else if (rejected && !healed)
+        {
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rejectSFX;
+                sfxPlayer.Play();
+            }
+            Debug.Log("wtf, why would you feed me this");
+        }
+        else if(rejected && healed)
+        {
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+            Debug.Log("wtf, why would you feed me this");
         }
     }
 
@@ -193,19 +210,28 @@ public class FlavorInputManager : MonoBehaviour
         if (fedByPlayer && characterData != null)
             characterData.DoHeal(flavorCountDictionary.Count * 2);
 
-        foreach (var favoriteIngredient in favoriteIngredients)
+        //should I reject anything I ate?
+        foreach (var rejectedIngredient in rejectedIngredients)
         {
             // if the ingredients on the skewer are my favorites...
-            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
+            if (ingredientCountDictionary.ContainsKey(rejectedIngredient))
             {
                 // am i actually being fed this...
-                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
+                float amountOnSkewer = ingredientCountDictionary[rejectedIngredient];
 
                 // play audio
                 if (sfxPlayer != null)
                 {
-                    sfxPlayer.clip = rewardSFX;
+                    sfxPlayer.clip = rejectSFX;
                     sfxPlayer.Play();
+                    Debug.Log("wtf, why would you feed me this");
+
+                    //spit out the rejected object
+                    GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+                    SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+                    SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+                    rejectedSR.sprite = rejectedIngredient.image;
+                    rejectedSO.data = rejectedIngredient;
                 }
             }
         }
@@ -214,71 +240,8 @@ public class FlavorInputManager : MonoBehaviour
         ResetDictionary();
     }
 
-    #region Flavor Responses
-    #region CHARM
-    protected void CheckCharmEffect(bool favorite)
-    {
-        // the amount of time that a fruitant is charmed
-        Debug.Log("CHARMED");
-        StopCoroutine("ExecuteCharm");
-        float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 40f : 20f);
-        charmTime += time;
-
-        if(!PlayerController.instance.riding)
-            StartCharm(charmTime);
-
-        //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
-    }
-
-    protected void StartCharm(float time)
-    {
-        // get protocols
-
-        //Debug.Log("should be CHARMED for " + time + " seconds");
-        MonsterProtocols proto = characterData.getProtocol();
-        MonsterChecks check = characterData.getChecks();
-        // initiate conga
-        characterData.currentProtocol = AIData.Protocols.Conga;
-
-        if (characterData.path != null)
-            characterData.path.Clear();
-
-        // set leader to Soma
-        check.specialLeader = PlayerController.instance.gameObject;
-        // add self to player's party
-        PlayerController.instance.GetComponent<PlayerData>().party.Add(gameObject);
-        // get ready to stop it
-        StartCoroutine(ExecuteCharm(time));
-    }
-
-    protected void StopCharm()
-    {
-        // get protocols
-        MonsterProtocols proto = characterData.getProtocol();
-        MonsterChecks check = characterData.getChecks();
-        // no leader
-        check.ResetSpecials();
-        check.specialLeader = null;
-        check.congaPosition = -1;
-        // remove self from player's party
-        PlayerController.instance.GetComponent<PlayerData>().party.Remove(gameObject);
-        // initiate conga
-        characterData.currentProtocol = AIData.Protocols.Lazy;
-
-        Debug.Log("no longer CHARMED");
-    }
-
-    protected IEnumerator ExecuteCharm(float time)
-    {
-        //things to happen before delay
-        yield return new WaitForSeconds(time);
-        //things to happen after delay
-        StopCharm();
-        yield return null;
-    }
-    #endregion
-
     #region CURRY
+    
     public virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
@@ -287,7 +250,8 @@ public class FlavorInputManager : MonoBehaviour
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
-
+    
+    
     protected virtual IEnumerator ExecuteCurry(float time, int shots, int pellets)
     {
         //things to happen before delay
@@ -318,7 +282,7 @@ public class FlavorInputManager : MonoBehaviour
             {
                 // spawn curry ball at an angle
                 newAttack = Instantiate(behave.projectile, transform.position, Quaternion.identity);
-                Vector2 dir = Vector2.ClampMagnitude(pv.Ang2Vec((split * i) + (s * 30)), 1f);/*+ Random.Range(-split/4, split/4)*/
+                Vector2 dir = Vector2.ClampMagnitude(pv.Ang2Vec((split * i) + (s * 30)), 1f); //+ Random.Range(-split/4, split/4)
 
                 BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
 
@@ -333,42 +297,7 @@ public class FlavorInputManager : MonoBehaviour
         spriteRenderer.color = Color.white;
         yield return null;
     }
-    #endregion
-
-    #region SOUR
-    /*protected IEnumerator ElectricTimer(float time)
-    {
-
-        //things to happen before delay
-        isElectricSupercharged = true;
-        var powerCharger = electricFieldEffect.GetComponent<PoweredObjectCharger>();
-        sfxPlayer.clip = electricSFX;
-        sfxPlayer.Play();
-        powerCharger.enabled = true;
-        yield return new WaitForSeconds(time);
-
-        //things to happen after delay
-        powerCharger.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
-        powerCharger.enabled = false;
-        isElectricSupercharged = false;
-        yield return null;
-    }*/
-    #endregion
-
-    #region SALT
-    protected void SaltyShield(bool favorite)
-    {
-        float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f);
-
-        GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
-        shield.transform.parent = gameObject.transform;
-        shield.transform.localScale = new Vector3(shieldSize, shieldSize);
-
-        SaltShield ss = shield.GetComponent<SaltShield>();
-        ss.fruit = this.gameObject;
-        ss.lifetime = time;
-    }
-    #endregion
+    
     #endregion
 
 
@@ -424,6 +353,160 @@ public class FlavorInputManager : MonoBehaviour
 
 
 #region Old Code
+
+#region CHARM
+/*
+protected void CheckCharmEffect(bool favorite)
+{
+    // the amount of time that a fruitant is charmed
+    Debug.Log("CHARMED");
+    StopCoroutine("ExecuteCharm");
+    float time = flavorCountDictionary[RecipeData.Flavors.Sweet] * (favorite ? 40f : 20f);
+    charmTime += time;
+
+    if(!PlayerController.instance.riding)
+        StartCharm(charmTime);
+
+    //characterData.InstantiateSignal(1f, "Friendliness", 0.5f, true, true);
+}
+*/
+/*
+protected void StartCharm(float time)
+{
+    // get protocols
+
+    //Debug.Log("should be CHARMED for " + time + " seconds");
+    MonsterProtocols proto = characterData.getProtocol();
+    MonsterChecks check = characterData.getChecks();
+    // initiate conga
+    characterData.currentProtocol = AIData.Protocols.Conga;
+
+    if (characterData.path != null)
+        characterData.path.Clear();
+
+    // set leader to Soma
+    check.specialLeader = PlayerController.instance.gameObject;
+    // add self to player's party
+    PlayerController.instance.GetComponent<PlayerData>().party.Add(gameObject);
+    // get ready to stop it
+    StartCoroutine(ExecuteCharm(time));
+}
+
+protected void StopCharm()
+{
+    // get protocols
+    MonsterProtocols proto = characterData.getProtocol();
+    MonsterChecks check = characterData.getChecks();
+    // no leader
+    check.ResetSpecials();
+    check.specialLeader = null;
+    check.congaPosition = -1;
+    // remove self from player's party
+    PlayerController.instance.GetComponent<PlayerData>().party.Remove(gameObject);
+    // initiate conga
+    characterData.currentProtocol = AIData.Protocols.Lazy;
+
+    Debug.Log("no longer CHARMED");
+}
+
+protected IEnumerator ExecuteCharm(float time)
+{
+    //things to happen before delay
+    yield return new WaitForSeconds(time);
+    //things to happen after delay
+    StopCharm();
+    yield return null;
+}
+*/
+#endregion
+
+#region SOUR
+/*protected IEnumerator ElectricTimer(float time)
+{
+
+    //things to happen before delay
+    isElectricSupercharged = true;
+    var powerCharger = electricFieldEffect.GetComponent<PoweredObjectCharger>();
+    sfxPlayer.clip = electricSFX;
+    sfxPlayer.Play();
+    powerCharger.enabled = true;
+    yield return new WaitForSeconds(time);
+
+    //things to happen after delay
+    powerCharger.GetComponent<SpriteRenderer>().color = new Color(255,255,255,255);
+    powerCharger.enabled = false;
+    isElectricSupercharged = false;
+    yield return null;
+}*/
+#endregion
+
+#region SALT
+/*
+protected void SaltyShield(bool favorite)
+{
+    float time = flavorCountDictionary[RecipeData.Flavors.Salty] * (favorite ? 20f : 10f);
+
+    GameObject shield = Instantiate(saltShieldTemplate, transform.position, Quaternion.identity);
+    shield.transform.parent = gameObject.transform;
+    shield.transform.localScale = new Vector3(shieldSize, shieldSize);
+
+    SaltShield ss = shield.GetComponent<SaltShield>();
+    ss.fruit = this.gameObject;
+    ss.lifetime = time;
+}
+*/
+#endregion
+
+/*
+public virtual void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+{
+    if (!fedByPlayer)
+        return;
+
+    // looking only at favorite ingredients...
+    bool moreFriendly = (characterData != null);
+    if (moreFriendly && fedByPlayer)
+        characterData.InstantiateSignal(1f, "Friendliness", 0.1f * ingredientArray.Length, true, true);
+
+    foreach (var favoriteIngredient in favoriteIngredients)
+    {
+        // if the ingredients on the skewer are my favorites...
+        if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
+        {
+            // am i actually being fed this...
+            float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
+            if (amountOnSkewer > 0)
+            {
+                //Debug.Log(this.gameObject + " fed favorite ingredient! = how many? " + amountOnSkewer);
+                fedFavoriteIngredient = true;
+
+                if (rewardItem != null)
+                {
+                    int spawned = 0;
+                    for (int j = 0; j < amountOnSkewer; j++)
+                    {
+                        for (int i = 0; i < amountRewardItem; i++)
+                        {
+                            Instantiate(rewardItem, transform.position, Quaternion.identity);
+                            spawned++;
+                        }
+                    }
+                    Debug.Log("Spawned: " + spawned);
+                }
+            }
+
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+
+            ingredientCountDictionary[favoriteIngredient] = 0;
+        }
+    }
+}
+*/
+
 /*foreach(string favoriteIngredient in favoriteIngredients)
         {
             if (favoriteIngredient != null &&

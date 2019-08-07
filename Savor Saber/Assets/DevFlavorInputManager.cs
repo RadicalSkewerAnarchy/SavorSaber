@@ -77,7 +77,7 @@ public class DevFlavorInputManager : FlavorInputManager
     }
 
     // "rewards" are spawned if the food is rejected!
-    public override void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
+    public void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
     {
         if (sfxPlayer != null)
         {
