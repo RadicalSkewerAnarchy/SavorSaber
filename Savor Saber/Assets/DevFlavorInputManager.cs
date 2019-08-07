@@ -22,6 +22,14 @@ public class DevFlavorInputManager : FlavorInputManager
         StartWeather();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CycleWeather(1);
+        }
+    }
+
     // when fed compare with desired request
     // if it matches:
     //      then respond to ingredients
@@ -43,6 +51,9 @@ public class DevFlavorInputManager : FlavorInputManager
 
             i++;
         }
+
+        if (i != 3)
+            correct = false;
 
         if (correct)
         {
@@ -98,7 +109,9 @@ public class DevFlavorInputManager : FlavorInputManager
         currentWeatherState %= weatherStates.Count;
 
         WeatherUpdate wu;
-        for(int i = 0; i < weatherStates.Count; i++)
+
+        Debug.Log("!!!CYCLING THE WEATHER!!! Current State = " + currentWeatherState);
+        for (int i = 0; i < weatherStates.Count; i++)
         {
             if (i==currentWeatherState)
             {

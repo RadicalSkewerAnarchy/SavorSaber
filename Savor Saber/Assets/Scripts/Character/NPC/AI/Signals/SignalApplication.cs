@@ -123,7 +123,7 @@ public class SignalApplication : MonoBehaviour
                 // keep track of drops
                 if(go.tag == "SkewerableObject")
                     dropList.Add(go.gameObject);
-                else if(go.tag == "ThrowThrough")
+                else if(go.tag == "ThrowThrough" || go.tag == "LargePlant")
                     plantList.Add(go.gameObject);
             }
         }

@@ -33,9 +33,12 @@ public class FavoriteFoodBubble : MonoBehaviour
     {
         flavors = GetComponentInParent<FlavorInputManager>();
         bubbleRender = GetComponent<SpriteRenderer>();
-        fruitRender1 = fruitDisplay1.GetComponent<SpriteRenderer>();
-        fruitRender2 = fruitDisplay2.GetComponent<SpriteRenderer>();
-        fruitRender3 = fruitDisplay3.GetComponent<SpriteRenderer>();
+        if (fruitDisplay1 != null)
+            fruitRender1 = fruitDisplay1.GetComponent<SpriteRenderer>();
+        if (fruitDisplay2 != null)
+            fruitRender2 = fruitDisplay2.GetComponent<SpriteRenderer>();
+        if (fruitDisplay3 != null)
+            fruitRender3 = fruitDisplay3.GetComponent<SpriteRenderer>();
 
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -66,10 +69,10 @@ public class FavoriteFoodBubble : MonoBehaviour
             if (reset)
             {
                 // get random favorite
-                RecipeDatabase rdb = player.GetComponentInChildren<RecipeDatabase>();
-                Sprite s1 = favoriteFood1.image;
-                Sprite s2 = favoriteFood2.image;
-                Sprite s3 = favoriteFood3.image;
+                //RecipeDatabase rdb = player.GetComponentInChildren<RecipeDatabase>();
+                Sprite s1 = (favoriteFood1 == null ? null : favoriteFood1.image);
+                Sprite s2 = (favoriteFood2 == null ? null : favoriteFood2.image);
+                Sprite s3 = (favoriteFood3 == null ? null : favoriteFood3.image);
 
                 if (fruitRender1 != null)
                     if (s1 != null)
@@ -113,7 +116,8 @@ public class FavoriteFoodBubble : MonoBehaviour
                 fruitRender3.enabled = false;
 
             bubbleRender.enabled = false;
-            reset = true;
+            if (!keep)
+                reset = true;
         }
     }
 

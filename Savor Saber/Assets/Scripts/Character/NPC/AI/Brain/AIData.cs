@@ -61,7 +61,8 @@ public class AIData : CharacterData
                 Scare,
                 Dead,
                 Ability,
-                Overcharged
+                Overcharged,
+                Pollinate
             }
             public Protocols currentProtocol = Protocols.Lazy;
             [HideInInspector]
@@ -320,6 +321,9 @@ public class AIData : CharacterData
     {
         switch (s)
         {
+            case LifeState.overcharged:
+                sRenderer.color = Color.white;
+                break;
             case LifeState.dead:
                 sRenderer.color = Color.white;
                 break;
@@ -412,7 +416,7 @@ public class AIData : CharacterData
                 break;
             // Chase
             case Protocols.Chase:
-                Protocol.NavChase();
+                Protocol.Chase();
                 break;
             // Wander
             case Protocols.Wander:
@@ -425,6 +429,10 @@ public class AIData : CharacterData
             // scare
             case Protocols.Scare:
                 Protocol.Scare();
+                break;
+            // pollinate
+            case Protocols.Pollinate:
+                Protocol.Pollinate();
                 break;
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");

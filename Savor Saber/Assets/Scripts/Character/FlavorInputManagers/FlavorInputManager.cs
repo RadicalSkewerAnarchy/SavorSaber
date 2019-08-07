@@ -209,8 +209,20 @@ public class FlavorInputManager : MonoBehaviour
                 // am i actually being fed this...
                 float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
 
-                //heal the fruitant
-                characterData.DoHeal(1);
+                    if (rewardItem != null)
+                    {
+                        int spawned = 0;
+                        for (int j = 0; j < amountOnSkewer; j++)
+                        {
+                            for (int i = 0; i < amountRewardItem; i++)
+                            {
+                                SpawnSingle();
+                                spawned++;
+                            }
+                        }
+                        Debug.Log("Spawned: " + spawned);
+                    }
+                }
 
                 // play audio
                 if (sfxPlayer != null)
@@ -220,6 +232,25 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SpawnSingle()
+    {
+        Instantiate(rewardItem, transform.position, Quaternion.identity);
+    }
+    public void SpawnMultiple(int x)
+    {
+        for (var i = 0; i < x; i++)
+            SpawnSingle();
+    }
+
+
+    public virtual void RespondToIngredients(bool fedByPlayer)
+    {
+
+        // heal the fruitant
+        if (fedByPlayer && characterData != null)
+            characterData.DoHeal(flavorCountDictionary.Count * 2);
 
         //should I reject anything I ate?
         foreach (var rejectedIngredient in rejectedIngredients)
@@ -252,7 +283,7 @@ public class FlavorInputManager : MonoBehaviour
     }
 
     #region CURRY
-    
+
     public virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
@@ -261,8 +292,8 @@ public class FlavorInputManager : MonoBehaviour
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
     }
-    
-    
+
+
     protected virtual IEnumerator ExecuteCurry(float time, int shots, int pellets)
     {
         //things to happen before delay
@@ -308,7 +339,7 @@ public class FlavorInputManager : MonoBehaviour
         spriteRenderer.color = Color.white;
         yield return null;
     }
-    
+
     #endregion
 
 
