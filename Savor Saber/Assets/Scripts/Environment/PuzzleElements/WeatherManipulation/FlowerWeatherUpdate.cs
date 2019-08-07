@@ -35,15 +35,16 @@ public class FlowerWeatherUpdate : WeatherUpdate
     /// </summary>
     public override void WeatherOff()
     {
-        if (!openWithWeather)
-        {
-            if (!plantManager.isOpen)
-                plantManager.OpenPlant();
-        }
-        else
+        if (openWithWeather)
         {
             if (plantManager.isOpen)
                 plantManager.ClosePlant();
+
+        }
+        else
+        {
+            if (!plantManager.isOpen)
+                plantManager.OpenPlant();
         }
     }
 }

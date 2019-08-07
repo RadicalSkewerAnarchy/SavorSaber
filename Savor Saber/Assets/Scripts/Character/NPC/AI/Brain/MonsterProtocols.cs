@@ -15,6 +15,7 @@ public partial class MonsterProtocols : MonoBehaviour
         TileNode targetTile;
 		bool runningCoRoutine = false;
         bool creatureMoving = false;
+    GameObject player;
 		#endregion
 	#endregion
 
@@ -24,6 +25,7 @@ public partial class MonsterProtocols : MonoBehaviour
         AiData = GetComponent<AIData>();
         Behaviour = AiData.GetComponent<MonsterBehavior>();
         Checks = AiData.GetComponent<MonsterChecks>();
+        player = GameObject.FindGameObjectWithTag("Player");
         #endregion
     }
 
@@ -478,6 +480,38 @@ public partial class MonsterProtocols : MonoBehaviour
         }
     }
 
+    // plants currently not implemented
+    // Feast()
+    // find plants, hit plants, eat plant drops
+    /// <summary>
+    /// Checks surroundings, if there is a drop move to it and eat it, if there aren't any drops attack nearest prey
+    /// </summary>
+    public void Pollinate()
+    {
+        #region Surroundings
+        GameObject plant = Checks.ClosestLargePlant();
+        #endregion
+        if (plant != null)
+        {
+            if (Behaviour.MoveTo(plant.transform.position, AiData.Speed, 2))
+            {
+                MarshPlantFlavorInput fim = plant.GetComponent<MarshPlantFlavorInput>();
+                if (fim != null)
+                {
+                    if (fim.canSwallow)
+                    {
+                        fim.swallowed = this.gameObject;
+                        fim.StartCoroutine(fim.Pollinating(5));
+                    }
+                }
+            }
+        }
+        else
+        {
+            Chase(player);
+        }
+        
+    }
 
     // Conga()
     // become the leader if no leader

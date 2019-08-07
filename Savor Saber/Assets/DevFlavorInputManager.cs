@@ -22,6 +22,14 @@ public class DevFlavorInputManager : FlavorInputManager
         StartWeather();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CycleWeather(1);
+        }
+    }
+
     // when fed compare with desired request
     // if it matches:
     //      then respond to ingredients
@@ -43,6 +51,9 @@ public class DevFlavorInputManager : FlavorInputManager
 
             i++;
         }
+
+        if (i != 3)
+            correct = false;
 
         if (correct)
         {
@@ -98,14 +109,16 @@ public class DevFlavorInputManager : FlavorInputManager
         currentWeatherState %= weatherStates.Count;
 
         WeatherUpdate wu;
-        for(int i = 0; i < weatherStates.Count; i++)
+
+        Debug.Log("!!!CYCLING THE WEATHER!!! Current State = " + currentWeatherState);
+        for (int i = 0; i < weatherStates.Count; i++)
         {
             if (i==currentWeatherState)
             {
                 // activate this weather
                 foreach(Transform t in weatherStates[i].transform)
                 {
-                    //Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
+                    Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(true);
                 }
@@ -115,7 +128,7 @@ public class DevFlavorInputManager : FlavorInputManager
                 // deactivate this weather
                 foreach (Transform t in weatherStates[i].transform)
                 {
-                    //Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
+                    Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(false);
                 }

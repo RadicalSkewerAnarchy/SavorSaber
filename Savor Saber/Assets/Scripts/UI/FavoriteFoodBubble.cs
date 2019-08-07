@@ -33,9 +33,12 @@ public class FavoriteFoodBubble : MonoBehaviour
     {
         flavors = GetComponentInParent<FlavorInputManager>();
         bubbleRender = GetComponent<SpriteRenderer>();
-        fruitRender1 = fruitDisplay1.GetComponent<SpriteRenderer>();
-        fruitRender2 = fruitDisplay2.GetComponent<SpriteRenderer>();
-        fruitRender3 = fruitDisplay3.GetComponent<SpriteRenderer>();
+        if (fruitDisplay1 != null)
+            fruitRender1 = fruitDisplay1.GetComponent<SpriteRenderer>();
+        if (fruitDisplay2 != null)
+            fruitRender2 = fruitDisplay2.GetComponent<SpriteRenderer>();
+        if (fruitDisplay3 != null)
+            fruitRender3 = fruitDisplay3.GetComponent<SpriteRenderer>();
 
         player = GameObject.FindGameObjectWithTag("Player");
     }

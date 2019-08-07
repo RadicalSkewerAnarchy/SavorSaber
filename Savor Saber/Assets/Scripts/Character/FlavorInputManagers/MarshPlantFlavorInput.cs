@@ -11,6 +11,9 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     public Sprite openSprite;
     public Sprite closedSprite;
 
+    public GameObject swallowed;
+    public bool canSwallow = true;
+
     public AudioClip closeSFX;
     public AudioClip openSFX;
     private AudioSource sfxPlayerPl;
@@ -44,8 +47,6 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
     private void Update()
     {
-        //ClosePlant();
-        //OpenPlant();
     }
 
     // prevent player
@@ -53,6 +54,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     {
         //spriteRenderer.sprite = closedSprite;
         marshAnimator.Play("Close");
+        marshAnimator.Update(0);
         sfxPlayerPl.clip = closeSFX;
         sfxPlayerPl.Play();
         boxCollider.enabled = false;
@@ -64,9 +66,44 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     {
         //spriteRenderer.sprite = openSprite;
         marshAnimator.Play("Open");
+        marshAnimator.Update(0);
         sfxPlayerPl.clip = openSFX;
         sfxPlayerPl.Play();
         boxCollider.enabled = true;
         isOpen = true;
+    }
+
+    public IEnumerator Pollinating(float time)
+    {
+        ClosePlant();
+        canSwallow = false;
+        swallowed.SetActive(false);
+
+        yield return new WaitForSeconds(time);
+
+        Debug.Log(this.name + " Spitting Out --> " + swallowed.name);
+
+        swallowed.SetActive(true);
+        FlavorInputManager fim = swallowed.GetComponent<FlavorInputManager>();
+        fim.SpawnSingle();
+        swallowed = null;
+        OpenPlant();
+
+        StartCoroutine(ReSwallow(3));
+
+        yield return null;
+    }
+
+    public IEnumerator ReSwallow(float time)
+    {
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        sr.color = Color.red;
+
+        yield return new WaitForSeconds(time);
+        
+        sr.color = Color.white;
+        canSwallow = true;
+
+        yield return null;
     }
 }

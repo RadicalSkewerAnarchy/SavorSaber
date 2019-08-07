@@ -341,6 +341,38 @@ public class MonsterChecks : MonoBehaviour
     /// Return Closest Drop
     /// </summary>
     /// <returns></returns>
+    public GameObject ClosestLargePlant()
+    {
+        #region Initialize Friend and Enemy
+        float close = closestDistance;
+        GameObject closestPlant = null;
+        #endregion
+        foreach (GameObject Plant in AllPlants)
+        {
+            #region Check if Creature Deleted
+            if (Plant == null)
+                continue;
+            PlantFlavorInput fim = Plant.GetComponent<PlantFlavorInput>();
+            if (fim == null)
+                continue;
+            if (!fim.isOpen)
+                continue;
+            #endregion
+            float dist = Vector2.Distance(transform.position, Plant.transform.position);
+            if (dist < close)
+            {
+                close = dist;
+                closestPlant = Plant;
+            }
+
+        }
+        return closestPlant;
+    }
+
+    /// <summary>
+    /// Return Closest Drop
+    /// </summary>
+    /// <returns></returns>
     public GameObject ClosestDrop()
     {
         #region Initialize Friend and Enemy

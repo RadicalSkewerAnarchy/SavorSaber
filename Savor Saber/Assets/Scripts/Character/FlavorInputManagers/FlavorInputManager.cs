@@ -156,7 +156,7 @@ public class FlavorInputManager : MonoBehaviour
                         {
                             for (int i = 0; i < amountRewardItem; i++)
                             {
-                                Instantiate(rewardItem, transform.position, Quaternion.identity);
+                                SpawnSingle();
                                 spawned++;
                             }
                         }
@@ -173,6 +173,16 @@ public class FlavorInputManager : MonoBehaviour
                 ingredientCountDictionary[favoriteIngredient] = 0;
             }
         }
+    }
+
+    public void SpawnSingle()
+    {
+        Instantiate(rewardItem, transform.position, Quaternion.identity);
+    }
+    public void SpawnMultiple(int x)
+    {
+        for (var i = 0; i < x; i++)
+            SpawnSingle();
     }
 
 

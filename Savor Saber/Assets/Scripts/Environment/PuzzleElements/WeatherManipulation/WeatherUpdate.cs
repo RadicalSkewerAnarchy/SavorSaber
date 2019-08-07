@@ -4,17 +4,25 @@ using UnityEngine;
 
 public class WeatherUpdate : MonoBehaviour
 {
+    public bool flipflop = true;
+
     public void WeatherActivate(bool turnOn)
     {
         if (turnOn)
         {
-            //Debug.Log(this.name + "- Weather turning ON");
-            WeatherOn();
+            Debug.Log(this.name + "- Weather turning " + (flipflop ? "ON" : "OFF"));
+            if (flipflop)
+                WeatherOn();
+            else
+                WeatherOff();
         }
         else
         {
-            //Debug.Log(this.name + "- Weather turning OFF");
-            WeatherOff();
+            Debug.Log(this.name + "- Weather turning " + (flipflop?"OFF":"ON"));
+            if (flipflop)
+                WeatherOff();
+            else
+                WeatherOn();
         }
     }
 
