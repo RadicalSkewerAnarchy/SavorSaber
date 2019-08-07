@@ -42,7 +42,7 @@ public class FlavorInputManager : MonoBehaviour
     //protected bool isElectricSupercharged = false;
     //GameObject electricFieldEffect;
     public GameObject rewardItem;
-    //public int amountRewardItem = 2;
+    private int amountRewardItem = 2;
     //public RecipeData.Flavors favoriteFlavors;
     //public int charmThreshhold = 1;
     #endregion
@@ -209,27 +209,26 @@ public class FlavorInputManager : MonoBehaviour
                 // am i actually being fed this...
                 float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
 
-                    if (rewardItem != null)
-                    {
-                        int spawned = 0;
-                        for (int j = 0; j < amountOnSkewer; j++)
-                        {
-                            for (int i = 0; i < amountRewardItem; i++)
-                            {
-                                SpawnSingle();
-                                spawned++;
-                            }
-                        }
-                        Debug.Log("Spawned: " + spawned);
-                    }
-                }
-
-                // play audio
-                if (sfxPlayer != null)
+                if (rewardItem != null)
                 {
-                    sfxPlayer.clip = rewardSFX;
-                    sfxPlayer.Play();
+                    int spawned = 0;
+                    for (int j = 0; j < amountOnSkewer; j++)
+                    {
+                        for (int i = 0; i < amountRewardItem; i++)
+                        {
+                            SpawnSingle();
+                            spawned++;
+                        }
+                    }
+                    Debug.Log("Spawned: " + spawned);
                 }
+            }
+
+             // play audio
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
             }
         }
     }
@@ -244,7 +243,7 @@ public class FlavorInputManager : MonoBehaviour
             SpawnSingle();
     }
 
-
+    /*
     public virtual void RespondToIngredients(bool fedByPlayer)
     {
 
@@ -281,6 +280,7 @@ public class FlavorInputManager : MonoBehaviour
         // reset dicts
         ResetDictionary();
     }
+    */
 
     #region CURRY
 
