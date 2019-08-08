@@ -202,7 +202,7 @@ public class FlavorInputManager : MonoBehaviour
             SpawnSingle();
     }
 
-    /*
+    
     public virtual void RespondToIngredients(bool fedByPlayer)
     {
 
@@ -239,7 +239,7 @@ public class FlavorInputManager : MonoBehaviour
         // reset dicts
         ResetDictionary();
     }
-    */
+    
 
     #region CURRY
 
