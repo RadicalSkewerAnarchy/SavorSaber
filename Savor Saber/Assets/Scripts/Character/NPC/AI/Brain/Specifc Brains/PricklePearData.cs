@@ -20,6 +20,7 @@ public class PricklePearData : AIData
     {
         Protocols proto = currentProtocol;
 
+        
         if (this.Checks.NumberOfEnemies() > 0)
         {
             if (Checks.ClosestDrone() != null)
@@ -32,17 +33,16 @@ public class PricklePearData : AIData
             else
                 proto = Protocols.Runaway;
         }
+        else if (GetOvercharged())
+        {
+            proto = Protocols.Conga;
+        }
         else
         {
             proto = Protocols.Wander;
         }
 
         return proto;
-    }
-
-    public override void WhileOvercharged()
-    {
-        Protocol.Melee(null);
     }
 
     public override void OnStateExit(LifeState s)

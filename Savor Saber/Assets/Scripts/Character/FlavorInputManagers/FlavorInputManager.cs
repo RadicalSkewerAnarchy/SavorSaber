@@ -192,47 +192,6 @@ public class FlavorInputManager : MonoBehaviour
         }
     }
 
-
-    public virtual void RespondToIngredients(bool fedByPlayer)
-    {
-
-        // heal the fruitant (now done after checking for favorite ingredients)
-        //if (fedByPlayer && characterData != null)
-            //characterData.DoHeal(flavorCountDictionary.Count * 2);
-
-        //was anything that I ate my favorite?
-        foreach (var favoriteIngredient in favoriteIngredients)
-        {
-            // if the ingredients on the skewer are my favorites...
-            if (ingredientCountDictionary.ContainsKey(favoriteIngredient))
-            {
-                // am i actually being fed this...
-                float amountOnSkewer = ingredientCountDictionary[favoriteIngredient];
-
-                if (rewardItem != null)
-                {
-                    int spawned = 0;
-                    for (int j = 0; j < amountOnSkewer; j++)
-                    {
-                        for (int i = 0; i < amountRewardItem; i++)
-                        {
-                            SpawnSingle();
-                            spawned++;
-                        }
-                    }
-                    Debug.Log("Spawned: " + spawned);
-                }
-            }
-
-             // play audio
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rewardSFX;
-                sfxPlayer.Play();
-            }
-        }
-    }
-
     public void SpawnSingle()
     {
         Instantiate(rewardItem, transform.position, Quaternion.identity);
