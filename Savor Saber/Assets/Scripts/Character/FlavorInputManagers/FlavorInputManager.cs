@@ -143,7 +143,7 @@ public class FlavorInputManager : MonoBehaviour
             {
                 if(data == favoriteIngredient)
                 {
-                    characterData.DoHeal(2);
+                    characterData.DoHeal(3);
                     healed = true;
                 }
             }
