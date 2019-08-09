@@ -99,17 +99,6 @@ public class NexusInteractor : MonoBehaviour
             time += Time.fixedDeltaTime;
             progressbar.fillAmount = time / hackTime;
         }
-        time = 0;
-        const float timeInc = 0.075f;
-        Color flickerColor = new Color(0.75f, 0.75f, 0.75f, 0.75f);
-        while(time < timeInc * 8)
-        {
-            progressbar.color = flickerColor;
-            yield return new WaitForSeconds(timeInc);
-            progressbar.color = Color.white;
-            yield return new WaitForSeconds(timeInc);
-            time += timeInc * 2;
-        }
         Hack();
         progressbar.fillAmount = 0;
         progressbar.gameObject.SetActive(false);
