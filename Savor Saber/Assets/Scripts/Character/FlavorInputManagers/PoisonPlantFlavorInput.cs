@@ -7,9 +7,8 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
     private Animator poisonAnimator;
     private AudioSource deathAudioPlayer;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         poisonAnimator = GetComponent<Animator>();
         deathAudioPlayer = GetComponent<AudioSource>();

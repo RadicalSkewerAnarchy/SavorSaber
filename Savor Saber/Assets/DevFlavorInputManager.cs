@@ -8,6 +8,8 @@ public class DevFlavorInputManager : FlavorInputManager
     public List<GameObject> weatherStates;
     public int currentWeatherState = 0;
 
+    public FavoriteFoodBubble speechBubble;
+
     // the way to transition to the next weather
     public List<IngredientData> requestStates;
     public IngredientData currentRequestState;
@@ -118,7 +120,7 @@ public class DevFlavorInputManager : FlavorInputManager
                 // activate this weather
                 foreach(Transform t in weatherStates[i].transform)
                 {
-                    Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
+                    //Debug.Log("State = " + i + ":: About to ACTIVATE some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(true);
                 }
@@ -128,7 +130,7 @@ public class DevFlavorInputManager : FlavorInputManager
                 // deactivate this weather
                 foreach (Transform t in weatherStates[i].transform)
                 {
-                    Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
+                    //Debug.Log("State = " + i + ":: About to DEactivate some Weather effects...");
                     wu = t.GetComponent<WeatherUpdate>();
                     wu.WeatherActivate(false);
                 }
@@ -137,10 +139,9 @@ public class DevFlavorInputManager : FlavorInputManager
 
         // update new food request
         currentRequestState = requestStates[currentWeatherState];
-        FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
-        ffb.favoriteFood1 = requestStates[currentWeatherState];
-        ffb.favoriteFood2 = requestStates[currentWeatherState];
-        ffb.favoriteFood3 = requestStates[currentWeatherState];
-        ffb.reset = true;
+        speechBubble.favoriteFood1 = requestStates[currentWeatherState];
+        speechBubble.favoriteFood2 = requestStates[currentWeatherState];
+        speechBubble.favoriteFood3 = requestStates[currentWeatherState];
+        speechBubble.reset = true;
     }
 }

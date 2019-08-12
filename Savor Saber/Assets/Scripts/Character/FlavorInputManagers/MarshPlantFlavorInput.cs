@@ -20,9 +20,9 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     private Animator marshAnimator;
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        InitializeDictionary();
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,6 +30,11 @@ public class MarshPlantFlavorInput : PlantFlavorInput
         boxCollider = GetComponentInChildren<CapsuleCollider2D>();
         sfxPlayerPl = GetComponent<AudioSource>();
         marshAnimator = GetComponent<Animator>();
+    }
+
+    void Start()
+    {
+        InitializeDictionary();
 
         OpenPlant();
         //recieverCollider = GetComponent<CircleCollider2D>();
