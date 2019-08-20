@@ -9881,6 +9881,7 @@ GameObject:
   - component: {fileID: 6405371343124089621}
   - component: {fileID: 6405371343124089622}
   - component: {fileID: 6405371343124089624}
+  - component: {fileID: 581449534637551431}
   m_Layer: 0
   m_Name: BaseFruitantPrefab
   m_TagString: Prey
@@ -10168,21 +10169,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   favoriteIngredients: []
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df,
-    type: 3}
-  amountRewardItem: 2
+  rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
   charmTime: 0
   shieldSize: 1
   dotTicLength: 1
-  electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
+  rejectedObjectTemplate: {fileID: 0}
+  rewardItem: {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df,
     type: 3}
-  saltShieldTemplate: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
-    type: 3}
-  electricSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!114 &6405371343124089620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10230,6 +10225,7 @@ MonoBehaviour:
   previousLifeState: 0
   currentMoveState: 0
   previousMoveState: 0
+  CommandCompleted: 1
   DecisionTimer: 0
   DecisionTimerReset: 5
   DecisionTimerVariance: 2
@@ -10313,6 +10309,21 @@ MonoBehaviour:
   congaPosition: -1
   specialPosition: {x: 0, y: 0}
   currentTile: {fileID: 0}
+--- !u!114 &581449534637551431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6405371343124089625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07dffe59986c0d542a2de8347ee62e7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allNodes: {fileID: 0}
+  possibleGraphs: []
+  bornOnto: 0
 --- !u!1 &6405371343231879208
 GameObject:
   m_ObjectHideFlags: 0
@@ -20284,6 +20295,7 @@ MonoBehaviour:
   flavors: {fileID: 0}
   show: 0
   reset: 1
+  keep: 0
   favoriteFood1: {fileID: 0}
   favoriteFood2: {fileID: 0}
   favoriteFood3: {fileID: 0}
@@ -25348,15 +25360,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6771232059650948445, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
-        type: 3}
-      propertyPath: thisFruitant
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7620230709965144325, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
         type: 3}
       propertyPath: m_Radius
       value: 1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6771232059650948445, guid: 49d3e21214cfeba48b21cc6a7e9f84cb,
+        type: 3}
+      propertyPath: thisFruitant
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d3e21214cfeba48b21cc6a7e9f84cb, type: 3}

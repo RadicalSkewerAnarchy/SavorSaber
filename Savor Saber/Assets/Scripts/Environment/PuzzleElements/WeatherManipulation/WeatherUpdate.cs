@@ -10,7 +10,7 @@ public class WeatherUpdate : MonoBehaviour
     {
         if (turnOn)
         {
-            Debug.Log(this.name + "- Weather turning " + (flipflop ? "ON" : "OFF"));
+            //Debug.Log(this.name + "- Weather turning " + (flipflop ? "ON" : "OFF"));
             if (flipflop)
                 WeatherOn();
             else
@@ -18,7 +18,7 @@ public class WeatherUpdate : MonoBehaviour
         }
         else
         {
-            Debug.Log(this.name + "- Weather turning " + (flipflop?"OFF":"ON"));
+            //Debug.Log(this.name + "- Weather turning " + (flipflop?"OFF":"ON"));
             if (flipflop)
                 WeatherOff();
             else

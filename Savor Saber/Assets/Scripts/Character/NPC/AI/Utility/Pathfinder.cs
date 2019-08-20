@@ -13,26 +13,17 @@ public class Pathfinder : MonoBehaviour
     [HideInInspector]
     public int bornOnto = 0;
     
-    public void Start()
+    public void Awake()
     {
         // waiting for other maps to load
-        StartCoroutine(SetNodeGraphs(Random.Range(8f, 12f)));
+        //StartCoroutine(SetNodeGraphs(Random.Range(5f, 10f)));
+
+        InitGraph();
     }
 
     IEnumerator SetNodeGraphs(float time)
     {
         yield return new WaitForSeconds(time);
-        // comment this out if too much is happening
-        //=========================================================================
-        string gridCheck = this.gameObject.scene.name;
-        bornOnto = (gridCheck == "Plains" ? 1 : ((gridCheck == "Marsh" ? 2 : (gridCheck == "Desert" ? 3 : 0))));
-        possibleGraphs = GameObject.FindGameObjectsWithTag("NodeGraph");
-        foreach (GameObject n in possibleGraphs)
-        {
-            if (bornOnto == n.GetComponent<GraphNodePopulator>().birthPlace)
-                allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
-        }
-        //==========================================================================
         InitGraph();
         yield return null;
     }
@@ -42,7 +33,17 @@ public class Pathfinder : MonoBehaviour
         gScore = new Dictionary<TileNode, float>();
         fScore = new Dictionary<TileNode, float>();
         //var nodeList = GameObject.Find("Walkable");
-        if(allNodes != null)
+
+        string gridCheck = this.gameObject.scene.name;
+        bornOnto = (gridCheck == "Plains" ? 1 : ((gridCheck == "Marsh" ? 2 : (gridCheck == "Desert" ? 3 : 0))));
+        possibleGraphs = GameObject.FindGameObjectsWithTag("NodeGraph");
+        foreach (GameObject n in possibleGraphs)
+        {
+            if (bornOnto == n.GetComponent<GraphNodePopulator>().birthPlace)
+                allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
+        }
+
+        if (allNodes != null)
         {
             for (int i = 0; i < allNodes.transform.childCount; i++)
             {
@@ -93,11 +94,12 @@ public class Pathfinder : MonoBehaviour
         {
             Debug.Log("Current agent or target is not on tilemap");
 
-             return null;
+            return null;
         }
 
         // reset all nodes
-        if (this.bornOnto != target.birthPlace)
+        // moving to new tile map
+        /*if (this.bornOnto != target.birthPlace)
         {
             Debug.Log("MOVING TO NEW TILEMAP");
             foreach (GameObject n in possibleGraphs)
@@ -107,7 +109,7 @@ public class Pathfinder : MonoBehaviour
             }
             bornOnto = target.birthPlace;
             return null;
-        }
+        }*/
 
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();

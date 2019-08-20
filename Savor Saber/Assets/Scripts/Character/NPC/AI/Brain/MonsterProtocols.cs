@@ -284,7 +284,7 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Checks
         Vector2 pos;
-        GameObject creature = Checks.ClosestCreature();
+        GameObject creature = Checks.specialTarget;
         if (creature != null)
             pos = creature.transform.position;
         else
@@ -307,6 +307,7 @@ public partial class MonsterProtocols : MonoBehaviour
             Wander(2f, 2f);
         }
     }
+
     // used for ride protocol
     public void Ride(Vector3 go)
     {
@@ -328,6 +329,7 @@ public partial class MonsterProtocols : MonoBehaviour
         else
             Chase(go);
     }
+
     public void Chase(Vector3 go)
     {
         Behaviour.MoveTo(this.transform.position + go * 10, 4 + AiData.Speed * AiData.Speed, 0.1f);
@@ -341,17 +343,18 @@ public partial class MonsterProtocols : MonoBehaviour
         // For now, fun away from your first enemy (SOMA most likely)
         Checks.SetCurrentTile();
         Vector2 pos;
-        GameObject creature = Checks.ClosestCreature();
+        GameObject creature = Checks.specialTarget;
         if (creature != null)
         {
             pos = creature.transform.position;
             TileNode tile = Checks.GetNearestNode(pos);
-            //Debug.Log(this.name + " naving to: " + tile.name);
+            Debug.Log(this.name + " naving to: " + tile.name);
             return NavTo(tile, AiData.Speed);
         }
         return false;
         #endregion
     }
+
     public bool NavChase(GameObject target, float speed=1, float thresh=1)
     {
         #region Get Nearest + Null Checks
@@ -386,6 +389,7 @@ public partial class MonsterProtocols : MonoBehaviour
             Behaviour.ResetActionTimer();
         }
     }
+
     public void NavWander(float rx, float ry)
     {
         // pick a location near me
@@ -599,19 +603,20 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         if (Checks.currentTile == target)
         {
-            //Debug.Log("AT TARGET");
+            Debug.Log("AT TARGET");
             return true;
         }
         else if (Checks.currentTile == null || target == null)
         {
-            //Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
+            Debug.Log("EITHER AGENT OR TARGET IS NOT ON TILEMAP");
             return false;
         }
         else if (AiData.path == null || AiData.path.Count == 0)
         {
             Checks.SetCurrentTile();
-            //Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
+            Debug.Log(this.name + " pathing from: " + Checks.currentTile.name + " to: " + target.name);
             AiData.path = Behaviour.pathfinder.AStar(target);
+            Debug.Log(AiData.path);
             return false;
         }
 

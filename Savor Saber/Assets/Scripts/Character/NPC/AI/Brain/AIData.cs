@@ -89,6 +89,8 @@ public class AIData : CharacterData
             public MoveState currentMoveState = MoveState.idle;
             [HideInInspector]
             public MoveState previousMoveState = MoveState.idle;
+
+            public bool CommandCompleted = true;
             #endregion
 
         #endregion
@@ -187,7 +189,8 @@ public class AIData : CharacterData
             Checks.AwareNearby();
 
             //  DECIDE STATE
-            currentProtocol = DecideProtocol();
+            if (CommandCompleted)
+                currentProtocol = DecideProtocol();
 
             // RESET DECISION TIMER
             DecisionTimer = DecisionTimerReset 

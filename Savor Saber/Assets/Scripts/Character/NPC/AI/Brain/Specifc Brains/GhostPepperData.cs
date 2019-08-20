@@ -82,7 +82,7 @@ public class GhostPepperData : AIData
                 break;
             // Chase
             case Protocols.Chase:
-                Protocol.NavChase(Checks.closestFriend, Speed);
+                Protocol.NavChase();
                 break;
             // Wander
             case Protocols.Wander:

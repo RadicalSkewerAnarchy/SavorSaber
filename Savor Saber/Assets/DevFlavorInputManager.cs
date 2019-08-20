@@ -112,7 +112,7 @@ public class DevFlavorInputManager : FlavorInputManager
 
         WeatherUpdate wu;
 
-        Debug.Log("!!!CYCLING THE WEATHER!!! Current State = " + currentWeatherState);
+        //Debug.Log("!!!CYCLING THE WEATHER!!! Current State = " + currentWeatherState);
         for (int i = 0; i < weatherStates.Count; i++)
         {
             if (i==currentWeatherState)
