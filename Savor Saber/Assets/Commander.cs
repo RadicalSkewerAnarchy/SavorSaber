@@ -44,10 +44,84 @@ public class Commander : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // CYCLE SETTINGS OF COMMANDS
+        if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-            FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
+            CycleTargetFamily(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            CycleTargetFamily(-1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            CycleTargetVerb();
+        }
+
+        // PRESS ENTER TO ISSUE COMMAND
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            if (Verb == AIData.Protocols.Chase)
+            {
+                ObjectCriteria = Criteria.None;
+                Object = GameObject.FindGameObjectWithTag("Player");
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
+            }
+            else if (Verb == AIData.Protocols.Lazy)
+            {
+                ObjectCriteria = Criteria.None;
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
+            }
+            else if (Verb == AIData.Protocols.Attack)
+            {
+                ObjectCriteria = Criteria.NearestEnemy;
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
+            }
+            else
+            {
+                ObjectCriteria = Criteria.NearestFriend;
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
+            }
+        }
+    }
+
+    private void CycleTargetFamily(int dir=1)
+    {
+        List<string> keys = new List<string>(Families.Keys);
+        int newIndex = keys.IndexOf(FamilyChoice) + dir;
+        if (newIndex < 0)
+        {
+            newIndex = Families.Count - 1;
+        }
+        else if (newIndex > Families.Count - 1)
+        {
+            newIndex = 0;
+        }
+
+        FamilyChoice = keys[newIndex];
+    }
+    private void CycleTargetVerb()
+    {
+        if (Verb == AIData.Protocols.Chase)
+        {
+            Verb = AIData.Protocols.Lazy;
+        }
+        else if (Verb == AIData.Protocols.Lazy)
+        {
+            Verb = AIData.Protocols.Attack;
+        }
+        else if (Verb == AIData.Protocols.Attack)
+        {
+            Verb = AIData.Protocols.Wander;
+        }
+        else
+        {
+            Verb = AIData.Protocols.Chase;
         }
     }
 

@@ -62,7 +62,8 @@ public class AIData : CharacterData
                 Dead,
                 Ability,
                 Overcharged,
-                Pollinate
+                Pollinate,
+                Attack
             }
             public Protocols currentProtocol = Protocols.Lazy;
             [HideInInspector]
@@ -419,11 +420,11 @@ public class AIData : CharacterData
                 break;
             // Chase
             case Protocols.Chase:
-                Protocol.Chase();
+                Protocol.NavChase();
                 break;
             // Wander
             case Protocols.Wander:
-                Protocol.Wander(5f, 5f);
+                Protocol.NavWander(5f, 5f);
                 break;
             // ride
             case Protocols.Ride:
@@ -436,6 +437,13 @@ public class AIData : CharacterData
             // pollinate
             case Protocols.Pollinate:
                 Protocol.Pollinate();
+                break;
+            // attack
+            case Protocols.Attack:
+                if (meleeHunter)
+                    Protocol.Melee(null);
+                else
+                    Protocol.Ranged();
                 break;
             default:
                 Debug.Log("YOU SHOULD NEVER BE HERE!");
