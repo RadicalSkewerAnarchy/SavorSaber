@@ -27,6 +27,8 @@ public class Commander : MonoBehaviour
 
     // AI specific knowledge
     AIData Brain;
+    // player ref
+    private GameObject player;
 
 
     // Start is called before the first frame update
@@ -39,57 +41,51 @@ public class Commander : MonoBehaviour
         {
             Families.Add(fam.name, fam);
         }
+
+        CycleTargetFamily(0);
+
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
     void Update()
     {
         // CYCLE SETTINGS OF COMMANDS
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        if (Input.GetKeyDown(KeyCode.O))
         {
-            CycleTargetFamily(1);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            CycleTargetFamily(-1);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            CycleTargetVerb();
+            CycleTargetFamily();
         }
 
         // PRESS ENTER TO ISSUE COMMAND
-        if (Input.GetKeyDown(KeyCode.Alpha0))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            if (Verb == AIData.Protocols.Chase)
-            {
-                ObjectCriteria = Criteria.None;
-                Object = GameObject.FindGameObjectWithTag("Player");
-                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
-            }
-            else if (Verb == AIData.Protocols.Lazy)
-            {
-                ObjectCriteria = Criteria.None;
-                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
-            }
-            else if (Verb == AIData.Protocols.Attack)
-            {
-                ObjectCriteria = Criteria.NearestEnemy;
-                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
-            }
-            else
-            {
-                ObjectCriteria = Criteria.NearestFriend;
-                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                FamilyCommand(FamilyChoice, Verb, ObjectCriteria, Object, Location);
-            }
+            Verb = AIData.Protocols.Chase;
+            ObjectCriteria = Criteria.None;
+            Object = GameObject.FindGameObjectWithTag("Player");
+            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+        }
+        else if (Input.GetKeyDown(KeyCode.I))
+        {
+            Verb = AIData.Protocols.Lazy;
+            ObjectCriteria = Criteria.None;
+            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+        }
+        else if (Input.GetKeyDown(KeyCode.U))
+        {
+            Verb = AIData.Protocols.Attack;
+            ObjectCriteria = Criteria.NearestEnemy;
+            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
         }
     }
 
+    /// <summary>
+    /// Change the current family of agents by dir
+    /// AND update Soma's party
+    /// </summary>
+    /// <param name="dir">number of indexes to move</param>
     private void CycleTargetFamily(int dir=1)
     {
         List<string> keys = new List<string>(Families.Keys);
@@ -100,11 +96,103 @@ public class Commander : MonoBehaviour
         }
         else if (newIndex > Families.Count - 1)
         {
-            newIndex = 0;
+            newIndex %= Families.Count;
         }
 
         FamilyChoice = keys[newIndex];
+
+        Debug.Log("Current Family = " + FamilyChoice + " => Soma's Party");
+
+        // JOIN THE PARTY, BROS
+        FamilyReunion();
     }
+
+    /// <summary>
+    /// Make the current family Soma's party
+    /// </summary>
+    private void FamilyReunion()
+    {
+        // clear the party
+        ClearParty();
+
+        // add the family to the party
+        foreach (Transform t in Families[FamilyChoice].transform)
+        {
+            GameObject member = t.gameObject;
+            JoinTeam(member);
+        }
+    }
+
+    public void JoinTeam(GameObject member)
+    {
+        // if subject still exists
+        if (member != null)
+        {
+            Brain = member.GetComponent<AIData>();
+            if (Brain != null)
+            {
+                // set player party
+                if (player != null)
+                {
+                    PlayerData pd = player.GetComponent<PlayerData>();
+                    pd.party.Add(member);
+                }
+                else player = GameObject.FindGameObjectWithTag("Player");
+                // set mind set
+                Brain.CommandCompleted = false;
+                Brain.path = null;
+            }
+        }
+    }
+
+    public void LeaveTeam(GameObject member)
+    {
+        // if subject still exists
+        if (member != null)
+        {
+            Brain = member.GetComponent<AIData>();
+            if (Brain != null)
+            {
+                // set player party
+                if (player != null)
+                {
+                    PlayerData pd = player.GetComponent<PlayerData>();
+                    pd.party.Remove(member);
+                }
+                else player = GameObject.FindGameObjectWithTag("Player");
+                // set mind set
+                Brain.CommandCompleted = true;
+                Brain.path = null;
+            }
+        }
+    }
+
+    private void ClearParty()
+    {
+        // set player party
+        if (player != null)
+        {
+            PlayerData pd = player.GetComponent<PlayerData>();
+            foreach (GameObject member in pd.party)
+            {
+                Brain = member.GetComponent<AIData>();
+                if (Brain != null)
+                {
+                    // set mind set
+                    Brain.CommandCompleted = true;
+                    Brain.path = null;
+                }
+            }
+
+            pd.party.Clear();
+        }
+        else player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    /// <summary>
+    /// Changes the current command verb
+    /// Currently --> Chase > Lazy > Attack > Wander >>
+    /// </summary>
     private void CycleTargetVerb()
     {
         if (Verb == AIData.Protocols.Chase)
@@ -201,8 +289,6 @@ public class Commander : MonoBehaviour
                     Brain.Checks.specialTarget = Object;
                     Brain.Checks.specialPosition = Location;
                 }
-
-                Brain.CommandCompleted = false;
                 Brain.path = null;
             }
         }
@@ -233,8 +319,7 @@ public class Commander : MonoBehaviour
                 // set inside brain
                 Brain.Checks.specialTarget = this.Object;
                 Brain.Checks.specialPosition = this.Location;
-
-                Brain.CommandCompleted = false;
+                
                 Brain.path = null;
             }
         }

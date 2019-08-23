@@ -7,8 +7,7 @@ public class MonsterMeleeAttack : BaseMeleeAttack
     public AudioClip damageSFX;
     private PlaySFXRandPitch sfxPlayer;
     public MonsterChecks monsterChecks;
-    public CharacterData myCharData;
-    public GameObject myAttacker;
+    public AIData myCharData;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +18,8 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         {
             Debug.Log("MonsterChecks is null");
         }
-        var circleCollider = GetComponent<CircleCollider2D>();
-        myCharData = GetComponent<CharacterData>();
+        //var circleCollider = GetComponent<CircleCollider2D>();
+        myCharData = myAttacker.GetComponent<AIData>();
         //Physics2D.IgnoreCollision(circleCollider, GetComponent<CapsuleCollider2D>());
     }
 
@@ -35,14 +34,18 @@ public class MonsterMeleeAttack : BaseMeleeAttack
         {
             if (damageSFX != null)
                 sfxPlayer.PlayRandPitch(damageSFX);
-            CharacterData charData = collision.gameObject.GetComponent<CharacterData>();
+            CharacterData charData = g.GetComponent<CharacterData>();
             //Debug.Log("THERE IS CHARACTER COLLISION");
             if (charData != null)
             {
                 if (myCharData != null)
-                    myCharData.damageDealt += (int)meleeDamage;
-                if (charData.DoDamage((int)meleeDamage) && myCharData != null)
-                    myCharData.entitiesKilled += 1;
+                {
+                    charData.DoDamage((int)meleeDamage, myCharData.GetOvercharged());
+                }
+                else
+                {
+                    Debug.Log("No attacker");
+                }
             }
         }
         

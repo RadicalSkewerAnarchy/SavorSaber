@@ -8,6 +8,7 @@ public class BaseMeleeAttack : MonoBehaviour
 
     public float meleeDamage;
     public bool ignoreIFrames = false;
+    public GameObject myAttacker;
 
     // Start is called before the first frame update
     void Start()

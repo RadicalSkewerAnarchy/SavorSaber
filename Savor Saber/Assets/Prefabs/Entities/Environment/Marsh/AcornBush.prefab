@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3903165654677226159}
   - component: {fileID: 9065788031861207498}
-  - component: {fileID: 5835155209216318965}
+  - component: {fileID: 8961964915190018777}
   m_Layer: 2
   m_Name: Spawn1
   m_TagString: Untagged
@@ -45,10 +45,10 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.45, y: 0.28}
   serializedVersion: 2
-  m_Radius: 0.01
---- !u!114 &5835155209216318965
+  m_Radius: 0.64
+--- !u!114 &8961964915190018777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,20 +57,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 390226487203878472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e05735ce0222340bbbfcadf539a90c, type: 3}
+  m_Script: {fileID: 11500000, guid: f71089cc879fd3c4187f368982c5267d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group: {fileID: 0}
-  loop: 1
-  spawnOnStart: 1
-  loopTime: 3
   spawnObjects:
-  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
+  - {fileID: 7078625886373637647, guid: 171fb9d649aeda9419257459deb911e3, type: 3}
   spawnSignals: []
   trackedObjects: []
-  maxSpawnedEntites: 1
-  maxTries: 100
+  maxSpawnedEntites: 2
+  maxTries: 5
   spawnAttatched: 1
+  spawnOnStart: 1
+  loop: 1
+  loopTime: 10
 --- !u!1 &5490907156333433927
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,7 +100,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3903165654677226159}
-  - {fileID: 9140094090105077117}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,74 +177,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21821642, y: 0.17598751}
   m_EdgeRadius: 0
---- !u!1 &5946562811721320869
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9140094090105077117}
-  - component: {fileID: 8016793778554772635}
-  - component: {fileID: 4588990605139848185}
-  m_Layer: 2
-  m_Name: Spawn2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9140094090105077117
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5946562811721320869}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4, y: 0.258, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5490907156333433923}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &8016793778554772635
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5946562811721320869}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.01
---- !u!114 &4588990605139848185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5946562811721320869}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e05735ce0222340bbbfcadf539a90c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  group: {fileID: 0}
-  loop: 1
-  spawnOnStart: 1
-  loopTime: 3
-  spawnObjects:
-  - {fileID: 4084962922675323153, guid: cf9d3af9c9fb8214884bf95603b324df, type: 3}
-  spawnSignals: []
-  trackedObjects: []
-  maxSpawnedEntites: 1
-  maxTries: 100
-  spawnAttatched: 1

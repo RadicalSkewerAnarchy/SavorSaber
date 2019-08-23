@@ -52,12 +52,12 @@ public partial class MonsterProtocols : MonoBehaviour
             nearestEnemy = (this.tag == "Prey" ? Checks.ClosestDrone() : Checks.WeakestCreature());
             if (nearestEnemy != null)
             { 
-                Debug.Log(this.name + "'s target is " + nearestEnemy.name);
+                //Debug.Log(this.name + "'s target is " + nearestEnemy.name);
                 pos = nearestEnemy.transform.position;
             }
             else
             {
-                Debug.Log("for some reason " + this.name + "  dont see any targets");
+                //Debug.Log("for some reason " + this.name + "  dont see any targets");
                 return;
             }
         }
@@ -421,17 +421,14 @@ public partial class MonsterProtocols : MonoBehaviour
     {
         #region Get Nearest + Null Check
         Vector2 pos = Checks.AverageGroupPosition();
+        pos += new Vector2(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
         #endregion
 
         // move to
         if (Behaviour.MoveTo(pos, AiData.Speed, AiData.MeleeAttackThreshold))
         {
             // socialize
-            if (Behaviour.Socialize())
-            {
-                // reset action timer
-                Wander(10f, 10f);
-            }
+            Behaviour.Socialize();
         }
     }
 

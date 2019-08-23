@@ -73,7 +73,7 @@ public class Pathfinder : MonoBehaviour
     /// </summary>
     /// <param name="start"></param>
     /// <param name="target"></param>
-    public List<TileNode> AStar(TileNode target)
+    public List<TileNode> AStar(TileNode target, int longest=40)
     {
         if (allNodes == null)
             return null;
@@ -134,7 +134,7 @@ public class Pathfinder : MonoBehaviour
                     current = node;
                 }
             }
-            if(current.gameObject.GetInstanceID() == target.gameObject.GetInstanceID())
+            if(current.gameObject.GetInstanceID() == target.gameObject.GetInstanceID() || open.Count > longest)
             {
                 //GOAL IS REACHED, RETURN PATH
                 return GetShortestPath(cameFrom, current);
@@ -159,11 +159,13 @@ public class Pathfinder : MonoBehaviour
                 if (cameFrom.ContainsKey(neighbor))
                 {
                     cameFrom[neighbor] = current;
-                } else {
+                }
+                else
+                {
                     cameFrom.Add(neighbor, current);
                 }
                 gScore[neighbor] = tempScore;
-                fScore[neighbor] = gScore[neighbor]; //+ Vector3.Distance(neighbor.transform.position, target.transform.position); // + heuristic cost estimate
+                fScore[neighbor] = gScore[neighbor] + Vector3.Distance(neighbor.transform.position, target.transform.position); // + heuristic cost estimate
 
             }
         }

@@ -56,49 +56,12 @@ public class GhostPepperData : AIData
         return proto;
     }
 
-    public override void WhileAlive()
-    {
-        switch (currentProtocol)
-        {
-            // ranged
-            case Protocols.Ranged:
-                Protocol.Ranged();
-                break;
-            // lazy
-            case Protocols.Lazy:
-                Protocol.Lazy();
-                break;
-            // feast
-            case Protocols.Feast:
-                Protocol.Feast(meleeHunter);
-                break;
-            // Runaway
-            case Protocols.Runaway:
-                Protocol.NavRunaway();
-                break;
-            // Conga
-            case Protocols.Conga:
-                Protocol.Conga();
-                break;
-            // Chase
-            case Protocols.Chase:
-                Protocol.NavChase();
-                break;
-            // Wander
-            case Protocols.Wander:
-                Protocol.Wander(5f, 5f);
-                break;
-            default:
-                Debug.Log("YOU SHOULD NEVER BE HERE!");
-                break;
-        }
-    }
-
     public override void OnStateExit(LifeState s)
     {
         switch (s)
         {
             case LifeState.overcharged:
+                this.Behavior.projectile = normalProjectile;
                 break;
             default:
                 // nothing at all
@@ -111,6 +74,7 @@ public class GhostPepperData : AIData
         switch (s)
         {
             case LifeState.overcharged:
+                this.Behavior.projectile = overchargedProjectile;
                 if (fim == null)
                     fim = GetComponent<FlavorInputManager>();
                 fim.CurryBalls(true);

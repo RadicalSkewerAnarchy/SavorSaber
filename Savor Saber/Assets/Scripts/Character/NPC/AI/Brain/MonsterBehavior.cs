@@ -254,6 +254,7 @@ public class MonsterBehavior : MonoBehaviour
         #region Melee
         GameObject newAttack = Instantiate(attack, transform.position, Quaternion.identity, transform);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+        newAttack.GetComponent<BaseMeleeAttack>().myAttacker = this.gameObject;
         newAttackCollider.size = meleeAttackDimensions;
         newAttackCollider.transform.position += new Vector3(this.GetComponent<Collider2D>().offset.x, this.GetComponent<Collider2D>().offset.y, 0);
         newAttack.transform.Rotate(target - (Vector2)this.transform.position);
@@ -320,7 +321,7 @@ public class MonsterBehavior : MonoBehaviour
             // change signal values (++friendliness)
             //Debug.Log("Instantiating Happiness Signal");
             TransitionBehavior(AIData.Behave.Socialize, "Socialize");
-            AiData.InstantiateSignal(2f, "Friendliness", 0.1f, true, false);
+            AiData.InstantiateSignal(2f, "Friendliness", 0.1f, true, true);
             ResetActionTimer();
             return true;
         }

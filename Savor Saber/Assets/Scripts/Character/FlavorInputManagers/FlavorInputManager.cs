@@ -239,7 +239,20 @@ public class FlavorInputManager : MonoBehaviour
         // reset dicts
         ResetDictionary();
     }
-    
+
+    public IEnumerator SugarRush(float time)
+    {
+        //things to happen before delay
+        float baseSpeed = characterData.Speed;
+        float baseAttackSpeed = characterData.Behavior.attackCooldown;
+        characterData.Speed = baseSpeed * 2;
+        characterData.Behavior.attackCooldown = baseAttackSpeed / 2;
+        yield return new WaitForSeconds(time);
+        //things to happen after delay
+        characterData.Speed = baseSpeed;
+        characterData.Behavior.attackCooldown = baseAttackSpeed;
+        yield return null;
+    }
 
     #region CURRY
 

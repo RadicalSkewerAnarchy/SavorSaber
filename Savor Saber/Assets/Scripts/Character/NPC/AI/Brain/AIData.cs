@@ -170,7 +170,7 @@ public class AIData : CharacterData
     /// </summary>
     private void Update()
     {
-        if (updateAI && !EventTrigger.InCutscene)
+        if ((updateAI || !CommandCompleted) && !EventTrigger.InCutscene)
         {
             Act();
         }
@@ -330,6 +330,7 @@ public class AIData : CharacterData
                 break;
             case LifeState.dead:
                 sRenderer.color = Color.white;
+                this.GetComponent<Animator>().StopPlayback();
                 break;
             default:
                 // nothing at all
@@ -363,6 +364,7 @@ public class AIData : CharacterData
         {
             case LifeState.dead:
                 sRenderer.color = Color.grey;
+                this.GetComponent<Animator>().StartPlayback();
                 break;
             default:
                 // nothing at all
