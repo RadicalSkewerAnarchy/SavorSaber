@@ -13,7 +13,7 @@ public class GraphNodePopulator : MonoBehaviour
     Tilemap[] activeTileMaps;
     BoundsInt bounds;
     bool walkable;
-    int clusterLimit = 3;
+    public int clusterLimit = 3;
     public GraphSingleton graph;
 
     public int birthPlace = 0; 

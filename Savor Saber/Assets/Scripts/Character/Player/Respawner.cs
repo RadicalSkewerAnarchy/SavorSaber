@@ -47,7 +47,14 @@ public class Respawner : MonoBehaviour
         Respawning = false;
         controller.enabled = true;
         foreach (var component in attacks)
-            component.enabled = true;
+        {
+            // TEMPORARY FIX, 
+            // MAKE PREFAB WITH REMOVED COMPONENT: Attack Melee
+            if (component is AttackMelee && !(component is AttackMeleeSkewer) )
+                component.enabled = false;
+            else
+                component.enabled = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

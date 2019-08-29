@@ -68,6 +68,8 @@ public class AIData : CharacterData
             public Protocols currentProtocol = Protocols.Lazy;
             [HideInInspector]
             public Protocols previousProtocol = Protocols.Lazy;
+
+            private Queue<Command> ActionQueue;
             #endregion
 
             #region Life and Move States
@@ -92,6 +94,7 @@ public class AIData : CharacterData
             public MoveState previousMoveState = MoveState.idle;
 
             public bool CommandCompleted = true;
+            public bool CommandInProgress = false;
             #endregion
 
         #endregion
@@ -158,6 +161,7 @@ public class AIData : CharacterData
         InitializeNormalValues();
         #endregion
 
+        ActionQueue = new Queue<Command>();
         path = new List<TileNode>();
 
         _vectors = new Dictionary<string, Vector2> {
@@ -432,23 +436,22 @@ public class AIData : CharacterData
             case Protocols.Ride:
                 Protocol.Ride(rideVector);
                 break;
-            // scare
-            case Protocols.Scare:
-                Protocol.Scare();
-                break;
-            // pollinate
-            case Protocols.Pollinate:
-                Protocol.Pollinate();
-                break;
             // attack
             case Protocols.Attack:
-                if (meleeHunter)
-                    Protocol.Melee(null);
+                if (Checks.NumberOfEnemies() > 0)
+                {
+                    if (meleeHunter)
+                        Protocol.Melee(null);
+                    else
+                        Protocol.Ranged();
+                }
                 else
-                    Protocol.Ranged();
+                {
+                    Protocol.Feast(meleeHunter);
+                }
                 break;
             default:
-                Debug.Log("YOU SHOULD NEVER BE HERE!");
+                Debug.Log(this.name + "is not behaving correctly: NO VALID PROTOCOL");
                 break;
         }
     }
@@ -490,7 +493,7 @@ public class AIData : CharacterData
     }
     #endregion
 
-    #region Monster Info Getters
+    #region Monster Info Getters and Setters
     // getters for monster info
     public MonsterBehavior getBehavior()
     {
@@ -508,6 +511,15 @@ public class AIData : CharacterData
     {
         return (currentLifeState == LifeState.overcharged);
         //return (health > maxHealth && currentLifeState == LifeState.overcharged);
+    }
+
+    public void EnqueueAction(Command c)
+    {
+        this.ActionQueue.Enqueue(c);
+    }
+    public void ClearActionQueue()
+    {
+        this.ActionQueue.Clear();
     }
     #endregion
 

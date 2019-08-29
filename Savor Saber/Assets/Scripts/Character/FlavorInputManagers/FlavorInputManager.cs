@@ -240,17 +240,42 @@ public class FlavorInputManager : MonoBehaviour
         ResetDictionary();
     }
 
+    [HideInInspector]
+    public int sugarCount = 0;
+    [HideInInspector]
+    public bool rushed = false;
+    public void SugarStack(int amount)
+    {
+        if (rushed)
+        {
+            sugarCount += amount;
+        }
+        else
+        {
+            rushed = true;
+            sugarCount += amount;
+            StartCoroutine(SugarRush(3));
+        }
+    }
     public IEnumerator SugarRush(float time)
     {
         //things to happen before delay
         float baseSpeed = characterData.Speed;
-        float baseAttackSpeed = characterData.Behavior.attackCooldown;
+        float baseAttackDuration = characterData.Behavior.attackDuration;
+        float baseCoolDown = characterData.Behavior.attackCooldown;
         characterData.Speed = baseSpeed * 2;
-        characterData.Behavior.attackCooldown = baseAttackSpeed / 2;
-        yield return new WaitForSeconds(time);
+        characterData.Behavior.attackCooldown = baseCoolDown / 2;
+        characterData.Behavior.attackDuration = baseAttackDuration / 2;
+        while (sugarCount > 0)
+        {
+            yield return new WaitForSeconds(time);
+            sugarCount--;
+        }
         //things to happen after delay
         characterData.Speed = baseSpeed;
-        characterData.Behavior.attackCooldown = baseAttackSpeed;
+        characterData.Behavior.attackCooldown = baseCoolDown;
+        characterData.Behavior.attackDuration = baseAttackDuration;
+        rushed = false;
         yield return null;
     }
 

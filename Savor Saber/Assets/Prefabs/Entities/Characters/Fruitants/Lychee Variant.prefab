@@ -48,6 +48,7 @@ MonoBehaviour:
   currentMoveState: 0
   previousMoveState: 0
   CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 1
   DecisionTimerVariance: 0.2
@@ -256,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: meleeAttackDuration
-      value: 3
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -272,6 +273,74 @@ PrefabInstance:
         type: 3}
       propertyPath: meleeAttackDimensions.y
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.019735396
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: drops.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: drops.Array.data[0]
+      value: 
+      objectReference: {fileID: 1557260248, guid: 57039c589a6e7c844b2e4037253eb3d9,
+        type: 3}
+    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 85b2a12b27666ee4d8766e0aea0c9fb4,
+        type: 2}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bb92972f441fa2f4c9e25d59db0df93d,
+        type: 3}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -353,69 +422,6 @@ PrefabInstance:
         type: 3}
       propertyPath: overchargeHealth
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: 0.019735396
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.66
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LinearDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.data[0]
-      value: 
-      objectReference: {fileID: 1557260248, guid: 57039c589a6e7c844b2e4037253eb3d9,
-        type: 3}
-    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 85b2a12b27666ee4d8766e0aea0c9fb4,
-        type: 2}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_StitchLightmapSeams
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: bb92972f441fa2f4c9e25d59db0df93d,
-        type: 3}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089623, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}

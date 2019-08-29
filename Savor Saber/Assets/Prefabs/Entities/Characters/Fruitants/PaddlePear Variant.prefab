@@ -15,7 +15,7 @@ MonoBehaviour:
   armored: 0
   Speed: 1.5
   Perception: 8
-  MeleeAttackThreshold: 1
+  MeleeAttackThreshold: 1.5
   RangeAttackThreshold: 5
   EngageHostileThreshold: 2
   maxHealth: 12
@@ -48,6 +48,7 @@ MonoBehaviour:
   currentMoveState: 0
   previousMoveState: 0
   CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 1
   DecisionTimerVariance: 0.2
@@ -244,12 +245,75 @@ PrefabInstance:
     - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: meleeAttackDuration
-      value: 2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: meleeAttackDelay
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: attackCooldown
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5658221
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: drops.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: drops.Array.data[0]
+      value: 
+      objectReference: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
+        type: 3}
+    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 5c74d51eb02693f48846649e57399f46,
+        type: 2}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a8a7fad4701cc544985749ee65c88985,
+        type: 3}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -319,64 +383,6 @@ PrefabInstance:
     - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: meleeHunter
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.45
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.5658221
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LinearDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.data[0]
-      value: 
-      objectReference: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
-        type: 3}
-    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 5c74d51eb02693f48846649e57399f46,
-        type: 2}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_StitchLightmapSeams
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a8a7fad4701cc544985749ee65c88985,
-        type: 3}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089623, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,

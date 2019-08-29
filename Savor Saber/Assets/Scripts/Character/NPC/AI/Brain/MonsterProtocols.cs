@@ -449,9 +449,9 @@ public partial class MonsterProtocols : MonoBehaviour
             // go to the nearest drop
             if (Behaviour.MoveTo(cDrop.transform.position, AiData.Speed, 1f))
             {
-                FuitantMount flavorResponse = this.GetComponentInChildren<FuitantMount>();
-                bool response = (flavorResponse == null ? false : flavorResponse.mounted);
-                Behaviour.Feed(cDrop, response);
+                //FuitantMount flavorResponse = this.GetComponentInChildren<FuitantMount>();
+                //bool response = (flavorResponse == null ? false : flavorResponse.mounted);
+                Behaviour.Feed(cDrop, true);
             }
         }
         else

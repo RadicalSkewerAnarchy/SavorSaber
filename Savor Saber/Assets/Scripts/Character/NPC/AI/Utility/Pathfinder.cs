@@ -73,7 +73,7 @@ public class Pathfinder : MonoBehaviour
     /// </summary>
     /// <param name="start"></param>
     /// <param name="target"></param>
-    public List<TileNode> AStar(TileNode target, int longest=40)
+    public List<TileNode> AStar(TileNode target, int longest=30)
     {
         if (allNodes == null)
             return null;
