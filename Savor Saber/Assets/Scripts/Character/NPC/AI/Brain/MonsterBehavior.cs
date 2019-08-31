@@ -327,7 +327,8 @@ public class MonsterBehavior : MonoBehaviour
         }
         else
         {
-            ActionTimer -= Time.deltaTime;
+            //ActionTimer -= Time.deltaTime;
+            ActionTimer = 0;
             return false;
         }
     } 

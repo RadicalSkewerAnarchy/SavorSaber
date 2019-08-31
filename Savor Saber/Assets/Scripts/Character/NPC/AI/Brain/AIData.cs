@@ -129,6 +129,7 @@ public class AIData : CharacterData
         public List<RecipeData.Flavors> FoodPreference;
         [HideInInspector]
         public Queue<IngredientData> Stomach = new Queue<IngredientData>();
+        private Squeezer squeeze;
         #endregion
 
         #region Misc Info
@@ -163,6 +164,18 @@ public class AIData : CharacterData
 
         ActionQueue = new Queue<Command>();
         path = new List<TileNode>();
+        squeeze = GetComponent<Squeezer>();
+        if (squeeze != null)
+        {
+            squeeze.horiRange = Random.Range(-0.2f, 0.2f);
+            squeeze.horiSpeed = Random.Range(2f, 4f);
+            squeeze.horiBase = Random.Range(0f, 0.5f);
+            squeeze.vertRange = Random.Range(-0.2f, 0.2f);
+            squeeze.vertSpeed = Random.Range(2f, 4f);
+            squeeze.vertBase = Random.Range(0f, 0.5f);
+            squeeze.SetGoals();
+            squeeze.activate = false;
+        }
 
         _vectors = new Dictionary<string, Vector2> {
             {"Player", new Vector2(0f, 0f) }
@@ -520,6 +533,33 @@ public class AIData : CharacterData
     public void ClearActionQueue()
     {
         this.ActionQueue.Clear();
+    }
+
+    public void Wiggle(int dmg=1)
+    {
+        if (squeeze != null)
+        {
+            if (squeeze.activate)
+            {
+                StopCoroutine(Wiggling());
+                squeeze.horiSpeed = dmg*2;
+                squeeze.vertSpeed = dmg*2;
+                StartCoroutine(Wiggling(dmg*2));
+            }
+            else
+            {
+                squeeze.activate = true;
+                squeeze.horiSpeed = dmg;
+                squeeze.vertSpeed = dmg;
+                StartCoroutine(Wiggling(dmg));
+            }
+        }
+    }
+
+    private IEnumerator Wiggling(float time=3)
+    {
+        yield return new WaitForSeconds(time);
+        squeeze.activate = false;
     }
     #endregion
 

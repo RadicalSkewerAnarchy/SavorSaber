@@ -126,6 +126,13 @@ public class CharacterData : MonoBehaviour
                         StopCoroutine(barCr);
                     barCr = StartCoroutine(ShowHealthBar());
                 }
+
+                /*var ai = this.GetComponent<AIData>();
+                if (ai != null)
+                {
+                    // squeeze!
+                    ai.Wiggle(damage);
+                }*/
             }
             else // Health <= 0
             {
