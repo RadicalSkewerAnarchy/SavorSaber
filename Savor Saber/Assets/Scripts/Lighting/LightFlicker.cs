@@ -14,6 +14,7 @@ public class LightFlicker : MonoBehaviour, IPausable {
     private float initialRange;
 
     public bool Paused { get; set; }
+    private bool stopped = false;
 
     // Use this for initialization
     void Start () {
@@ -48,5 +49,20 @@ public class LightFlicker : MonoBehaviour, IPausable {
         l.intensity = initialIntensity;
         l.range = initialRange;
         StartCoroutine(flickerCr(initialIntensity + Random.Range(intensityGainMin, intensityGainMax)));
+    }
+
+    public void Restart()
+    {
+        if(stopped)
+        {
+            StartCoroutine(flickerCr(initialIntensity + Random.Range(intensityGainMin, intensityGainMax)));
+            stopped = false;
+        }
+        
+    }
+    public void Stop()
+    {
+        StopAllCoroutines();
+        stopped = true;
     }
 }

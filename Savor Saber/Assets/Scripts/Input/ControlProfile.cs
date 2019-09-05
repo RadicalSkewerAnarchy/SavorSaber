@@ -15,32 +15,8 @@ public class ControlProfile : ScriptableObject
     public string displayName;
     public InputSource inputSource;
     public KeySpriteDict sprites = new KeySpriteDict();
-    public AxisDict axes = new AxisDict()
-    {
-        {InputAxis.Horizontal, default},
-        {InputAxis.Vertical, default},
-        {InputAxis.Dash, default},
-        {InputAxis.Skewer, default},
-        {InputAxis.Slash, default},
-    };
-    public KeyCodeDict keyBinds = new KeyCodeDict()
-    {
-        {Control.Camp, default},
-        {Control.Cancel, default},
-        {Control.Confirm, default},
-        {Control.Cook, default},
-        {Control.Dash, default},
-        {Control.Eat, default},
-        {Control.Interact, default},
-        {Control.Knife, default},
-        {Control.Pause, default},
-        {Control.Skewer, default},
-        {Control.Throw, default},
-        {Control.Up, KeyCode.W},
-        {Control.Down, KeyCode.S},
-        {Control.Left, KeyCode.A},
-        {Control.Right, KeyCode.D},
-    };
+    public AxisDict axes = new AxisDict();
+    public KeyCodeDict keyBinds = new KeyCodeDict();
     public AxisDict secondaryAxes = new AxisDict() { };
     public KeyCodeDict secondaryKeyBinds = new KeyCodeDict() { };
     public KeyCode this[Control c]
