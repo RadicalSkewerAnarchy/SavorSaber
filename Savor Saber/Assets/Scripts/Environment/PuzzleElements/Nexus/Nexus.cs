@@ -34,9 +34,15 @@ public class Nexus : MonoBehaviour
             currState = value;
             FlagManager.SetFlag(nexusID, value.ToString());
             if (value == State.Protected)
-                spriteRenderer.color = Color.red;
+            {
+                SetColor(protectedColor);
+                SetFlicker(protectedFlickerTime);           
+            }
             else if (value == State.Unprotected)
-                spriteRenderer.color = Color.green;
+            {
+                SetColor(unprotectedColor);
+                SetFlicker(unprotectedFlickerTime);
+            }
             if (value == State.Activated)
                 Activate();
         }
@@ -47,8 +53,20 @@ public class Nexus : MonoBehaviour
     public GameObject ingredientPrefab;
     public List<GameObject> protectedBy = new List<GameObject>() { null };
     public UnityEvent callOnActivation = new UnityEvent();
-
-    private SpriteRenderer spriteRenderer;
+    [Header("Light Properties")]
+    new public Light light;
+    public float protectedFlickerTime;
+    public float unprotectedFlickerTime;
+    public float flickerIntensityGain;
+    private LightFlicker flicker;
+    [Header("Colors")]
+    public Color protectedColor;
+    public Color unprotectedColor;
+    public Color activatedColor;
+    [Header("Sprite References")]
+    public SpriteRenderer ingredientSprite;
+    public SpriteRenderer lightSprite;
+    public SpriteRenderer screenSprite;
 
     private void Awake()
     {
@@ -56,7 +74,9 @@ public class Nexus : MonoBehaviour
         var interactionTrigger = gameObject.GetComponentInChildren<NexusInteractor>();
         Debug.Assert(interactionTrigger != null, "Nexus Interaction Trigger not found in children. ID: " + nexusID + " GO: " + name);
         interactionTrigger.Initialize(this, ingredientPrefab);
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        // Set ingredient sprite
+        ingredientSprite.sprite = ingredientPrefab.GetComponent<SpriteRenderer>().sprite;
+        flicker = light.GetComponent<LightFlicker>();
     }
 
     private void Start()
@@ -85,7 +105,25 @@ public class Nexus : MonoBehaviour
 
     private void Activate()
     {
-        spriteRenderer.color = Color.white;
+        SetColor(activatedColor);
+        SetFlicker(1, false);
         callOnActivation.Invoke();
+    }
+
+    private void SetColor(Color color)
+    {
+        lightSprite.color = color;
+        screenSprite.color = color;
+        light.color = color;
+    }
+
+    private void SetFlicker(float time, bool on = true)
+    {
+        flicker.flickerTimeMin = time;
+        flicker.flickerTimeMax = time;
+        if(on)
+            flicker.Restart();
+        else
+            flicker.Stop();
     }
 }

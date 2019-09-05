@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// Remove: Cook, Eat, Camp, Knife
+// Add: Command1, Command2, Command3, Command4, ConfirmTarget, CancelTarget
 public enum Control
 {
     Dash,
