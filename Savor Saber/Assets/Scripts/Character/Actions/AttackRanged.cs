@@ -180,7 +180,8 @@ public class AttackRanged : AttackBase
         animator.Play(attackName);
 
         Direction direction = controller.Direction;
-        float projectileRotation = GetRotation(direction);
+        //float projectileRotation = GetRotation(direction);
+        float projectileRotation = GetRotation(targetVector);
         Vector2 directionVector = GetTargetVector(targetVector);
 
         //spawn the attack at the spawn point and give it its data
@@ -265,6 +266,15 @@ public class AttackRanged : AttackBase
         }
 
         return projectileRotation;
+    }
+
+    protected float GetRotation(Vector2 target)
+    {
+        Vector2 distance =new Vector2(target.x - transform.position.x, target.y - transform.position.y);
+        float arctan = Mathf.Atan(distance.y / distance.x);
+        float angle = (float)(arctan * (180 / Math.PI));
+        Debug.Log("Projectile rotation: " + angle);
+        return angle;
     }
 
     /// <summary>

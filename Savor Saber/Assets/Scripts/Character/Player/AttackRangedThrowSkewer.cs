@@ -37,6 +37,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Update is called once per frame
     void Update()
     {
+        // if the player is riding, attacking just feeds the mount
         if (((PlayerController)controller).riding)
         { 
             if (InputManager.GetButtonDown(control, axis) && !inv.ActiveSkewerEmpty())
@@ -60,6 +61,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             return;
         }
 
+        //animation cancel
         if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
         {
             StopAllCoroutines();
@@ -71,8 +73,9 @@ public class AttackRangedThrowSkewer : AttackRanged
             CanBeCanceled = false;
             return;
         }
-        //conditions to throw: Must either have ingredients OR a cooked recipe
-        if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty() || inv.ActiveSkewerCooked()))
+        
+        //conditions to throw: Must have ingredients
+        if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()))
         {
             chargedAttack = true;
             center = r.bounds.center;
@@ -96,7 +99,7 @@ public class AttackRangedThrowSkewer : AttackRanged
 
             r.color = Color.white;
             currLevel = 0;
-            Attack();
+            Attack(GetMouseTarget());
             inv.ClearActiveRecipe();
             inv.ClearActiveSkewer();
             inv.CanSwap = true;
@@ -131,5 +134,11 @@ public class AttackRangedThrowSkewer : AttackRanged
             yield return new WaitForEndOfFrame();
             r.color = new Color(r.color.r, r.color.g + colorInc >= 1 ? 0 : r.color.g + colorInc, r.color.b + colorInc >= 1 ? 0 : r.color.b + colorInc);
         }
+    }
+
+    private Vector2 GetMouseTarget()
+    {
+        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        return target;
     }
 }

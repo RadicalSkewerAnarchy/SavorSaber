@@ -136,7 +136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4055231404074166003}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!199 &676961670
 ParticleSystemRenderer:
@@ -4948,7 +4948,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4055231404074166003}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8676957695452294836
 MonoBehaviour:
@@ -5084,7 +5084,6 @@ GameObject:
   - component: {fileID: 8292672821480766594}
   - component: {fileID: 4055231404074166007}
   - component: {fileID: 4055231404074166006}
-  - component: {fileID: 4055231404074165996}
   - component: {fileID: 4055231404074165997}
   - component: {fileID: 5232973463692504911}
   - component: {fileID: 1026942967}
@@ -5114,7 +5113,6 @@ Transform:
   m_Children:
   - {fileID: 4055231403101592439}
   - {fileID: 650104031}
-  - {fileID: 1250351446340869716}
   - {fileID: 543131416764180777}
   - {fileID: 3418268731290322044}
   - {fileID: 6313506086045572248}
@@ -5317,27 +5315,6 @@ MonoBehaviour:
   cookSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   cantCookSFX: {fileID: 8300000, guid: 5db5aba6f15df1a418a777ee4cca8d03, type: 3}
   fullSFX: {fileID: 8300000, guid: 9a3b8bd6c4ed0334ebc4c79c94b5f1dc, type: 3}
---- !u!114 &4055231404074165996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4055231404074166004}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b32cb18bfb09a44c8064f982c4c63c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackSound: {fileID: 8300000, guid: 45050fe34614e0c4a82019a8b587625d, type: 3}
-  CancelPriority: 1
-  attack: {fileID: 4969273504346886127, guid: 9d6c099eb2a543b4caa67b13f1879e66, type: 3}
-  attackName: Knife
-  meleeRange: 1
-  meleeWidth: 1
-  attackDuration: 0.25
-  control: 5
-  axis: 4
 --- !u!114 &4055231404074165997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5608,102 +5585,6 @@ MonoBehaviour:
   party: []
   lowHealthThreshhold: 2
   lowHealthSFX: {fileID: 8300000, guid: 784df687af9a6b640a64e90df347f033, type: 3}
---- !u!1 &5581519159601472181
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1250351446340869716}
-  - component: {fileID: 7660447479105189651}
-  - component: {fileID: 8945149968231519982}
-  m_Layer: 8
-  m_Name: LaserTargeting
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1250351446340869716
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581519159601472181}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.028, y: 0.395, z: 0}
-  m_LocalScale: {x: 2, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4055231404074166003}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7660447479105189651
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581519159601472181}
-  m_Enabled: 0
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -828437997
-  m_SortingLayer: 6
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6ef00197821177144a3881814d92c181, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1.28, y: 0.09}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!114 &8945149968231519982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581519159601472181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b35511bf81b6822488a475fcaf7faf96, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toggleActivate: 0
-  holdActivate: 0
-  activateOnSkewer: 0
-  chargeActivate: 1
 --- !u!1001 &6245533341760895228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5754,7 +5635,7 @@ PrefabInstance:
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
@@ -5844,7 +5725,7 @@ PrefabInstance:
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
@@ -5919,7 +5800,7 @@ PrefabInstance:
     - target: {fileID: 4308793867368551377, guid: 2f1ccad7656a3cd4789354602275cb37,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4308793867368551377, guid: 2f1ccad7656a3cd4789354602275cb37,
         type: 3}
@@ -5999,7 +5880,7 @@ PrefabInstance:
     - target: {fileID: 6734058613265079728, guid: 9c831e4f8b832cc4599d93418f254610,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6734058613265079728, guid: 9c831e4f8b832cc4599d93418f254610,
         type: 3}
