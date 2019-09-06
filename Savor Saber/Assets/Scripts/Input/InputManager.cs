@@ -63,6 +63,12 @@ public enum AxisName
     DirectionalPadXNegative,
     DirectionalPadYPositive,
     DirectionalPadYNegative,
+    HorizontalGamepadRightPS4,
+    VerticalGamepadRightPS4,
+    DirectionalPadXPositivePS4,
+    DirectionalPadXNegativePS4,
+    DirectionalPadYPositivePS4,
+    DirectionalPadYNegativePS4,
 }
 
 public class InputManager : MonoBehaviour
