@@ -15,6 +15,7 @@ public class AttackMeleeSkewer : AttackMelee
     /// </summary>
     [System.NonSerialized]
     public Inventory inventory;
+    public CrosshairController crosshair;
 
     public bool use360Targeting = true;
 
@@ -27,6 +28,9 @@ public class AttackMeleeSkewer : AttackMelee
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<PlayerController>();
+
+        if (crosshair == null)
+            crosshair = GameObject.Find("Crosshair").GetComponent<CrosshairController>();
     }
     
     private void Awake()
@@ -148,7 +152,7 @@ public class AttackMeleeSkewer : AttackMelee
         //get center offset (due to pivot changes) 
         Vector2 center = spriteRenderer.bounds.center;
 
-        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 target = GetCursorTarget();
         Vector2 difference = new Vector2(target.x - center.x, target.y - center.y).normalized;
         attackSpawnPoint = (Vector2)center + (difference * meleeRange);
         attackCapsuleRotation = GetRotation(attackSpawnPoint);
@@ -217,6 +221,9 @@ public class AttackMeleeSkewer : AttackMelee
         }
     }
 
+    /// <summary>
+    /// Sets the animation direction based on what direction the player attacked in
+    /// </summary>
     private void OverrideDirection(float rotation)
     {
         Debug.Log("Overriding direction towards " + rotation + " degrees");
@@ -260,5 +267,23 @@ public class AttackMeleeSkewer : AttackMelee
         {
             controller.Direction = Direction.SouthEast;
         }
+    }
+
+    /// <summary>
+    /// Returns the position in world space of the targeting cursor
+    /// </summary>
+    private Vector2 GetCursorTarget()
+    {
+        if (InputManager.ControllerMode)
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(crosshair.gameObject.transform.position);
+            return target;
+        }
+        else
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return target;
+        }
+
     }
 }

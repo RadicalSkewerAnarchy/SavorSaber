@@ -14,6 +14,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     private float normalInterval;
     private Inventory inv;
     private PlaySFX sfxPlayer;
+    public CrosshairController crosshair;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,9 @@ public class AttackRangedThrowSkewer : AttackRanged
         inv = GetComponent<Inventory>();
         r = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<PlaySFX>();
+
+        if (crosshair == null)
+            crosshair = GameObject.Find("Crosshair").GetComponent<CrosshairController>();
     }
 
     private void Awake()
@@ -99,7 +103,7 @@ public class AttackRangedThrowSkewer : AttackRanged
 
             r.color = Color.white;
             currLevel = 0;
-            Attack(GetMouseTarget());
+            Attack(GetCursorTarget());
             inv.ClearActiveRecipe();
             inv.ClearActiveSkewer();
             inv.CanSwap = true;
@@ -136,9 +140,21 @@ public class AttackRangedThrowSkewer : AttackRanged
         }
     }
 
-    private Vector2 GetMouseTarget()
+    /// <summary>
+    /// Returns the position in world space of the targeting cursor
+    /// </summary>
+    private Vector2 GetCursorTarget()
     {
-        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return target;
+        if (InputManager.ControllerMode)
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(crosshair.gameObject.transform.position);
+            return target;
+        }
+        else
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return target;
+        }
+
     }
 }

@@ -38,7 +38,7 @@ public enum InputAxis
     Slash,
     Throw,
     HorizontalAim,
-    VericalAim,
+    VerticalAim,
     Command1,
     Command2,
     Command3,

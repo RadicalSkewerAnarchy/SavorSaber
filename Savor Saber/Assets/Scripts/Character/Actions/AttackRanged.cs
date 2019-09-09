@@ -345,6 +345,9 @@ public class AttackRanged : AttackBase
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
     }
 
+    /// <summary>
+    /// Sets the animation direction based on what direction the player attacked in
+    /// </summary>
     private void OverrideDirection(float rotation)
     {
         Debug.Log("Overriding direction towards " + rotation + " degrees");
