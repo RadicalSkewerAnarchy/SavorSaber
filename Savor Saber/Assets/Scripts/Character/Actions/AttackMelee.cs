@@ -112,8 +112,6 @@ public class AttackMelee : AttackBase
     {
         
         //get center offset (due to pivot changes) 
-        //float spriteHeight = spriteRenderer.bounds.size.y / 32f; //characters will always be 32ppu
-        //Debug.Log(spriteHeight);
         Vector2 center = spriteRenderer.bounds.center;
 
         Direction direction;
