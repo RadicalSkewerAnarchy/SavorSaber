@@ -165,7 +165,7 @@ public class AttackRanged : AttackBase
             center = r.bounds.center;
         }
 
-        //animation stuff
+        //sound stuff
         if (attackSound != null && audioSource != null)
         {
             audioSource.clip = attackSound;
@@ -177,12 +177,15 @@ public class AttackRanged : AttackBase
             audioSource.clip = defaultAttackSound;
             audioSource.Play();
         }
-        animator.Play(attackName);
 
+        
+        //get directional/rotational information
         Direction direction = controller.Direction;
         //float projectileRotation = GetRotation(direction);
         float projectileRotation = GetRotation(targetVector);
         Vector2 directionVector = GetTargetVector(targetVector);
+
+
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
@@ -205,6 +208,10 @@ public class AttackRanged : AttackBase
         {
             projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
         }
+
+        //play animations
+        OverrideDirection(projectileRotation);
+        animator.Play(attackName);
 
         Attacking = true;
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
@@ -273,7 +280,14 @@ public class AttackRanged : AttackBase
         Vector2 distance =new Vector2(target.x - transform.position.x, target.y - transform.position.y);
         float arctan = Mathf.Atan(distance.y / distance.x);
         float angle = (float)(arctan * (180 / Math.PI));
-        Debug.Log("Projectile rotation: " + angle);
+
+        //account for Unity trig stuff
+        //probably not the best way to do this but it works :V
+        if (target.x < center.x)
+            angle += 180;
+        else if (target.x > center.x && target.y < center.y)
+            angle += 360;
+
         return angle;
     }
 
@@ -329,5 +343,50 @@ public class AttackRanged : AttackBase
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
+    }
+
+    private void OverrideDirection(float rotation)
+    {
+        Debug.Log("Overriding direction towards " + rotation + " degrees");
+        //case 1: facing East
+        if (rotation < 22.5f || rotation >= 337.5f)
+        {
+            controller.Direction = Direction.East;
+        }
+        //case 2: facing NorthEast
+        else if (rotation >= 22.5f && rotation < 67.5f)
+        {
+            controller.Direction = Direction.NorthEast;
+        }
+        //case 3: facing North
+        else if (rotation >= 67.5f && rotation < 112.5f)
+        {
+            controller.Direction = Direction.North;
+        }
+        //case 4: facing NorthWest
+        else if (rotation >= 112.5f && rotation < 157.5f)
+        {
+            controller.Direction = Direction.NorthWest;
+        }
+        //case 5: facing West
+        else if (rotation >= 157.5f && rotation < 202.5f)
+        {
+            controller.Direction = Direction.West;
+        }
+        //case 6: facing SouthWest
+        else if (rotation >= 202.5f && rotation < 247.5f)
+        {
+            controller.Direction = Direction.SouthWest;
+        }
+        //case 2: facing South
+        else if (rotation >= 247.5f && rotation < 292.5f)
+        {
+            controller.Direction = Direction.South;
+        }
+        //case 2: facing SouthEast
+        else if (rotation >= 292.5f && rotation < 337.5f)
+        {
+            controller.Direction = Direction.SouthEast;
+        }
     }
 }
