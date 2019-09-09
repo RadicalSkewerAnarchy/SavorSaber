@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 /// <summary>
 /// A specialized version of the attack melee script that passes an inventory reference to its child
@@ -87,9 +88,17 @@ public class AttackMeleeSkewer : AttackMelee
         CanBeCanceled = true;
         GameObject newAttack = Instantiate(attack, attackSpawnPoint, Quaternion.identity);
         CapsuleCollider2D newAttackCollider = newAttack.GetComponent<CapsuleCollider2D>();
+        if (!use360Targeting)
+        {
+            newAttackCollider.direction = attackCapsuleDirection;
+            newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
+        }
+        else
+        {
+            newAttackCollider.direction = CapsuleDirection2D.Horizontal;
+            newAttack.transform.Rotate(new Vector3(0, 0, GetRotation(attackSpawnPoint)));
+        }
 
-        newAttackCollider.direction = attackCapsuleDirection;
-        newAttack.transform.Rotate(new Vector3(0, 0, attackCapsuleRotation));
 
         //send inventory reference
         PlayerSkewerAttack skewerAttack = newAttack.GetComponent<PlayerSkewerAttack>();
@@ -109,21 +118,36 @@ public class AttackMeleeSkewer : AttackMelee
     }
 
     /// <summary>
-    /// alternate function to recalculate the position of the attack spawner based on mouse position
+    /// Gets the rotation of the projectile for the target direction
+    /// </summary>
+    protected float GetRotation(Vector2 target)
+    {
+        //get center offset (due to pivot changes) 
+        Vector2 center = spriteRenderer.bounds.center;
+
+        Vector2 distance = new Vector2(target.x - center.x, target.y - center.y);
+        float arctan = Mathf.Atan(distance.y / distance.x);
+        float angle = (float)(arctan * (180 / Math.PI));
+        return angle;
+    }
+
+    /// <summary>
+    /// functions to calculate the spawn position of the attack
     /// </summary>
     protected override void RecalculatePosition()
     {
+        //get center offset (due to pivot changes) 
+        Vector2 center = spriteRenderer.bounds.center;
+
         Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 difference = new Vector2(target.x - transform.position.x, target.y - transform.position.y).normalized;
-        attackSpawnPoint = (Vector2)transform.position + (difference * meleeRange);
+        Vector2 difference = new Vector2(target.x - center.x, target.y - center.y).normalized;
+        attackSpawnPoint = (Vector2)center + (difference * meleeRange);
     }
 
     protected virtual void RecalculatePositionOld()
     {
 
         //get center offset (due to pivot changes) 
-        //float spriteHeight = spriteRenderer.bounds.size.y / 32f; //characters will always be 32ppu
-        //Debug.Log(spriteHeight);
         Vector2 center = spriteRenderer.bounds.center;
 
         Direction direction;
