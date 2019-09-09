@@ -155,7 +155,7 @@ public class AttackRanged : AttackBase
     }
 
     /// <summary>
-    /// Overloaded version of Attack() that takes in a target bector and uses that to get its rotation.
+    /// Overloaded version of Attack() that takes in a target vector and uses that to get its rotation.
     /// </summary>
     public void Attack(Vector2 targetVector)
     {

@@ -15,6 +15,8 @@ public class AttackMeleeSkewer : AttackMelee
     [System.NonSerialized]
     public Inventory inventory;
 
+    public bool use360Targeting = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +33,33 @@ public class AttackMeleeSkewer : AttackMelee
         LoadAssetBundles();
         //defaultAttackSound = sfx_bundle.LoadAsset<AudioClip>("sfx_damage");
 
+    }
+
+    void LateUpdate()
+    {
+        if (InputManager.GetButtonDown(control, axis))
+        {
+            //Get the first attack from dependecies that is attacking, else null
+            AttackBase activeAttack = GetActiveAttack();
+            if (activeAttack == null)
+            {
+                if (use360Targeting)
+                    RecalculatePosition();
+                else
+                    RecalculatePositionOld();
+                Attack();
+            }
+            else if (activeAttack.CanBeCanceled && activeAttack.CancelPriority <= CancelPriority)
+            {
+                //Debug.Log("Cancelling into" + this.ToString());
+                activeAttack.Cancel();
+                if (use360Targeting)
+                    RecalculatePosition();
+                else
+                    RecalculatePositionOld();
+                Attack();
+            }
+        }
     }
 
     public override void Attack()
@@ -77,5 +106,80 @@ public class AttackMeleeSkewer : AttackMelee
         }
 
         StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack));
+    }
+
+    /// <summary>
+    /// alternate function to recalculate the position of the attack spawner based on mouse position
+    /// </summary>
+    protected override void RecalculatePosition()
+    {
+        Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 difference = new Vector2(target.x - transform.position.x, target.y - transform.position.y).normalized;
+        attackSpawnPoint = (Vector2)transform.position + (difference * meleeRange);
+    }
+
+    protected virtual void RecalculatePositionOld()
+    {
+
+        //get center offset (due to pivot changes) 
+        //float spriteHeight = spriteRenderer.bounds.size.y / 32f; //characters will always be 32ppu
+        //Debug.Log(spriteHeight);
+        Vector2 center = spriteRenderer.bounds.center;
+
+        Direction direction;
+
+        //get direction from whichever controller component this entity has
+        direction = controller.Direction;
+
+        // move spawn point into position
+        if (direction == Direction.East)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y);
+        }
+        else if (direction == Direction.West)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y);
+        }
+        else if (direction == Direction.North)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x, center.y + (meleeRange / 2f));
+        }
+        else if (direction == Direction.South)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Vertical;
+            attackCapsuleRotation = 0;
+            attackSpawnPoint = new Vector2(transform.position.x, center.y - (meleeRange / 2f));
+        }
+        //intermediate directions
+        else if (direction == Direction.NorthWest)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = -45f;
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y + (meleeRange / 2f));
+        }
+        else if (direction == Direction.NorthEast)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 45f;
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y + (meleeRange / 2f));
+        }
+        else if (direction == Direction.SouthWest)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = 45f;
+            attackSpawnPoint = new Vector2(transform.position.x - (meleeRange / 2f), center.y - (meleeRange / 2f));
+        }
+        else if (direction == Direction.SouthEast)
+        {
+            attackCapsuleDirection = CapsuleDirection2D.Horizontal;
+            attackCapsuleRotation = -45f;
+            attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y - (meleeRange / 2f));
+        }
     }
 }
