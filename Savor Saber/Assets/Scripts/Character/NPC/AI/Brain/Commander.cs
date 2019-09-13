@@ -59,7 +59,7 @@ public class Commander : MonoBehaviour
         }
 
         // PRESS ENTER TO ISSUE COMMAND
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             Verb = AIData.Protocols.Chase;
             ObjectCriteria = Criteria.None;
@@ -67,14 +67,14 @@ public class Commander : MonoBehaviour
             Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
             GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.I))
         {
             Verb = AIData.Protocols.Lazy;
             ObjectCriteria = Criteria.None;
             Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
             GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.U))
         {
             Verb = AIData.Protocols.Attack;
             ObjectCriteria = Criteria.NearestEnemy;

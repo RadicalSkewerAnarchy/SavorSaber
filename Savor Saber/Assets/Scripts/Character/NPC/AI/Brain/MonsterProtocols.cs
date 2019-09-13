@@ -482,7 +482,11 @@ public partial class MonsterProtocols : MonoBehaviour
     }
 
     // plants currently not implemented
-    // Pollinate()
+    // Feast()
+    // find plants, hit plants, eat plant drops
+    /// <summary>
+    /// Checks surroundings, if there is a drop move to it and eat it, if there aren't any drops attack nearest prey
+    /// </summary>
     public void Pollinate()
     {
         #region Surroundings
