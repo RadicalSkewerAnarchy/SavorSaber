@@ -137,9 +137,9 @@ public class Commander : MonoBehaviour
     /// Add any fruitant to the player's party.
     /// </summary>
     /// <param name="member">the fruitant</param>
-    /// <param name="partyoverride">remove fruitants in order to fit</param>
     /// <param name="partysize">size to fit to</param>
-    public void JoinTeam(GameObject member, bool partyoverride=false, int partysize=3)
+    /// <param name="partyoverride">remove fruitants in order to fit</param>
+    public void JoinTeam(GameObject member, int partysize = 3, bool partyoverride=false)
     {
         // if subject still exists
         if (member != null)
@@ -151,15 +151,23 @@ public class Commander : MonoBehaviour
                 if (player != null)
                 {
                     PlayerData pd = player.GetComponent<PlayerData>();
-                    pd.party.Add(member);
 
-                    // remove if over size
-                    if (partyoverride)
+                    if (pd.party.Count >= partysize)
                     {
-                        while (pd.party.Count > partysize)
+                        // remove if over size
+                        if (partyoverride)
                         {
-                            LeaveTeam(pd.party[0]);
+                            pd.party.Add(member);
+                            while (pd.party.Count > partysize)
+                            {
+                                LeaveTeam(pd.party[0]);
+                            }
                         }
+                        // else add no one
+                    }
+                    else
+                    {
+                        pd.party.Add(member);
                     }
                 }
                 else player = GameObject.FindGameObjectWithTag("Player");
@@ -167,7 +175,9 @@ public class Commander : MonoBehaviour
                 Brain.CommandCompleted = false;
                 Brain.path = null;
             }
+            else Debug.Log(member.name + " : has no brain! cannot add to party");
         }
+        else Debug.Log(this.name + " : is trying to add a null member to the party");
     }
 
     public void LeaveTeam(GameObject member)
