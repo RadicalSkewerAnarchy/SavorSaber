@@ -133,7 +133,13 @@ public class Commander : MonoBehaviour
         }
     }
 
-    public void JoinTeam(GameObject member)
+    /// <summary>
+    /// Add any fruitant to the player's party.
+    /// </summary>
+    /// <param name="member">the fruitant</param>
+    /// <param name="partyoverride">remove fruitants in order to fit</param>
+    /// <param name="partysize">size to fit to</param>
+    public void JoinTeam(GameObject member, bool partyoverride=false, int partysize=3)
     {
         // if subject still exists
         if (member != null)
@@ -146,6 +152,15 @@ public class Commander : MonoBehaviour
                 {
                     PlayerData pd = player.GetComponent<PlayerData>();
                     pd.party.Add(member);
+
+                    // remove if over size
+                    if (partyoverride)
+                    {
+                        while (pd.party.Count > partysize)
+                        {
+                            LeaveTeam(pd.party[0]);
+                        }
+                    }
                 }
                 else player = GameObject.FindGameObjectWithTag("Player");
                 // set mind set
