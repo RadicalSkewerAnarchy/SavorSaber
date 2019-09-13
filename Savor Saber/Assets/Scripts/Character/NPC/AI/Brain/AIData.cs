@@ -460,7 +460,8 @@ public class AIData : CharacterData
                 }
                 else
                 {
-                    Protocol.Feast(meleeHunter);
+                    if (health <= maxHealth)
+                        Protocol.Feast(meleeHunter);
                 }
                 break;
             default:
