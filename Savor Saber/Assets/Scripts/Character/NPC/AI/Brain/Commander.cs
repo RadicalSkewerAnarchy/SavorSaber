@@ -34,8 +34,10 @@ public class Commander : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // DO THIS IN THE INSPECTOR:
         // give the Commander knowledge of the groups
         // of agents that can be commanded all at once
+        //--------------------------
         Families = new Dictionary<string, GameObject>();
         foreach(GameObject fam in FamilyTrees)
         {
@@ -81,6 +83,11 @@ public class Commander : MonoBehaviour
         }
     }
 
+    //
+    // All Regions
+    //
+
+    #region Specific Family Functions
     /// <summary>
     /// Change the current family of agents by dir
     /// AND update Soma's party
@@ -133,6 +140,9 @@ public class Commander : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Party Manipulation
     /// <summary>
     /// Add any fruitant to the player's party.
     /// </summary>
@@ -144,6 +154,7 @@ public class Commander : MonoBehaviour
         // if subject still exists
         if (member != null)
         {
+            // get brain
             Brain = member.GetComponent<AIData>();
             if (Brain != null)
             {
@@ -224,30 +235,9 @@ public class Commander : MonoBehaviour
         else player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    /// <summary>
-    /// Changes the current command verb
-    /// Currently --> Chase > Lazy > Attack > Wander >>
-    /// </summary>
-    private void CycleTargetVerb()
-    {
-        if (Verb == AIData.Protocols.Chase)
-        {
-            Verb = AIData.Protocols.Lazy;
-        }
-        else if (Verb == AIData.Protocols.Lazy)
-        {
-            Verb = AIData.Protocols.Attack;
-        }
-        else if (Verb == AIData.Protocols.Attack)
-        {
-            Verb = AIData.Protocols.Wander;
-        }
-        else
-        {
-            Verb = AIData.Protocols.Chase;
-        }
-    }
+    #endregion
 
+    #region Giving Commands
     /// <summary>
     /// Apply commands to multiple agents
     /// </summary>
@@ -331,7 +321,7 @@ public class Commander : MonoBehaviour
 
     /// <summary>
     /// Set the protocol of an agent with criteria
-    /// Pass obj as null to make the location take effect
+    /// If obj == null, loc = obj.position, else default to loc
     /// </summary>
     /// <param name="sub">the agent</param>
     /// <param name="verb">the protocol</param>
@@ -362,13 +352,9 @@ public class Commander : MonoBehaviour
 
 
     /// <summary>
-    /// Set the protocol of an agent with criteria
-    /// Pass obj as null to make the location take effect
+    /// Using the Command object
     /// </summary>
-    /// <param name="sub">the agent</param>
-    /// <param name="verb">the protocol</param>
-    /// <param name="obj">specific object</param>
-    /// <param name="loc">specific location</param>
+    /// <param name="c">the command</param>
     public void Command(Command c)
     {
         // if subject still exists
@@ -392,6 +378,33 @@ public class Commander : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Misc Helpers
+    /// <summary>
+    /// Changes the current command verb
+    /// Currently --> Chase > Lazy > Attack > Wander >>
+    /// </summary>
+    private void CycleTargetVerb()
+    {
+        if (Verb == AIData.Protocols.Chase)
+        {
+            Verb = AIData.Protocols.Lazy;
+        }
+        else if (Verb == AIData.Protocols.Lazy)
+        {
+            Verb = AIData.Protocols.Attack;
+        }
+        else if (Verb == AIData.Protocols.Attack)
+        {
+            Verb = AIData.Protocols.Wander;
+        }
+        else
+        {
+            Verb = AIData.Protocols.Chase;
+        }
+    }
+
     /// <summary>
     /// Based on criteria, find the appropriate agent
     /// </summary>
@@ -407,4 +420,5 @@ public class Commander : MonoBehaviour
         else
             return null;
     }
+    #endregion
 }
