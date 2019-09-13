@@ -108,11 +108,10 @@ public class AttackMelee : AttackBase
     /// <summary>
     /// Adjusts the position of the attack spawner based on current direction state
     /// </summary>
-    private void RecalculatePosition()
+    protected virtual void RecalculatePosition()
     {
+        
         //get center offset (due to pivot changes) 
-        //float spriteHeight = spriteRenderer.bounds.size.y / 32f; //characters will always be 32ppu
-        //Debug.Log(spriteHeight);
         Vector2 center = spriteRenderer.bounds.center;
 
         Direction direction;
@@ -219,6 +218,7 @@ public class AttackMelee : AttackBase
         base.Cancel();
         Destroy(currAttackObject);
     }
+
     /// <summary>
     /// Disables the attacking state after the attack duration has elapsed.
     /// Despawning the attack will be handled by the attack itself
@@ -234,4 +234,5 @@ public class AttackMelee : AttackBase
 
         yield return null;
     }
+
 }

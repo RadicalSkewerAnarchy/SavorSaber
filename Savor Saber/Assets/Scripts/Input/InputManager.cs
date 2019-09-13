@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+// Remove: Cook, Eat, Camp, Knife
+// Add: Command1, Command2, Command3, Command4, ConfirmTarget, CancelTarget
 public enum Control
 {
     Dash,
-    Cook,
-    Eat,
-    Interact,
-    Camp,
-    Knife,
+    Interact = 3,
+    Knife = 5,
     Skewer,
     Throw,
     Pause,
@@ -22,6 +21,12 @@ public enum Control
     Down,
     Left,
     Right,
+    Command1,
+    Command2,
+    Command3,
+    Command4,
+    ConfirmTarget,
+    CancelTarget,
 }
 
 public enum InputAxis
@@ -32,6 +37,12 @@ public enum InputAxis
     Skewer,
     Slash,
     Throw,
+    HorizontalAim,
+    VerticalAim,
+    Command1,
+    Command2,
+    Command3,
+    Command4,
 }
 
 public enum AxisName
@@ -39,13 +50,25 @@ public enum AxisName
     None,
     HorizontalWASD,
     HorizontalArrows,
-    HorizontalGamepad,
+    HorizontalGamepadLeft,
+    HorizontalGamepadRight,
     VerticalWASD,
     VerticalArrows,
-    VerticalGamepad,
+    VerticalGamepadLeft,
+    VerticalGamepadRight,
     RightTrigger,
     LeftTrigger,
     BothTriggers,
+    DirectionalPadXPositive,
+    DirectionalPadXNegative,
+    DirectionalPadYPositive,
+    DirectionalPadYNegative,
+    HorizontalGamepadRightPS4,
+    VerticalGamepadRightPS4,
+    DirectionalPadXPositivePS4,
+    DirectionalPadXNegativePS4,
+    DirectionalPadYPositivePS4,
+    DirectionalPadYNegativePS4,
 }
 
 public class InputManager : MonoBehaviour
@@ -61,9 +84,13 @@ public class InputManager : MonoBehaviour
     public ControlDict controlProfiles = new ControlDict();
     private Dictionary<AxisName, AxisButton> axisButtons = new Dictionary<AxisName, AxisButton>()
     {
-        { AxisName.LeftTrigger, new AxisButton(AxisName.LeftTrigger) },
-        { AxisName.RightTrigger, new AxisButton(AxisName.RightTrigger) },
-        { AxisName.BothTriggers, new AxisButton(AxisName.BothTriggers) },
+        { AxisName.LeftTrigger, new AxisButton(AxisName.LeftTrigger, AxisButton.Mode.Both) },
+        { AxisName.RightTrigger, new AxisButton(AxisName.RightTrigger, AxisButton.Mode.Both) },
+        { AxisName.BothTriggers, new AxisButton(AxisName.BothTriggers, AxisButton.Mode.Both) },
+        { AxisName.DirectionalPadXNegative, new AxisButton(AxisName.DirectionalPadXNegative, AxisButton.Mode.Negative) },
+        { AxisName.DirectionalPadXPositive, new AxisButton(AxisName.DirectionalPadXPositive, AxisButton.Mode.Positive) },
+        { AxisName.DirectionalPadYNegative, new AxisButton(AxisName.DirectionalPadYNegative, AxisButton.Mode.Negative) },
+        { AxisName.DirectionalPadYPositive, new AxisButton(AxisName.DirectionalPadYPositive, AxisButton.Mode.Positive) },
     };
     private float checkTime = 0;
     private void Awake()
@@ -84,94 +111,143 @@ public class InputManager : MonoBehaviour
         checkTime += Time.deltaTime;
         if (checkTime > 1)
         {
-            controllerMode = Input.GetJoystickNames().Any((s) => !string.IsNullOrEmpty(s));
+            if(!controllerMode)
+                controllerMode = Input.GetJoystickNames().Any((s) => !string.IsNullOrEmpty(s));
             checkTime = 0;
         }
     }
 
+    public static Vector2 GetAxesAsVector2(InputAxis xAxis, InputAxis yAxis)
+    {
+        return new Vector2(GetAxis(xAxis), GetAxis(yAxis));
+    }
+
     public static float GetAxis(InputAxis a)
     {
-        float c = Input.GetAxis(main.gamepadControls[a].ToString());
-        if(c != 0)
+        float axisVal = 0;
+        if(main.gamepadControls.axes.ContainsKey(a))
         {
-            main.controllerMode = true;
-            return c;
+            axisVal = Input.GetAxis(main.gamepadControls[a].ToString());
+            if (axisVal != 0)
+            {
+                main.controllerMode = true;
+                return axisVal;
+            }
         }
-        c = Input.GetAxis(main.keyboardControls[a].ToString());
-        if(c == 0 && main.keyboardControls.secondaryAxes.ContainsKey(a))
-            c = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
-        if(c != 0)
-            main.controllerMode = false;
-        return c;
+        if(main.keyboardControls.axes.ContainsKey(a))
+        {
+            axisVal = Input.GetAxis(main.keyboardControls[a].ToString());
+            if (axisVal == 0 && main.keyboardControls.secondaryAxes.ContainsKey(a))
+                axisVal = Input.GetAxis(main.keyboardControls.secondaryAxes[a].ToString());
+            if (axisVal != 0)
+                main.controllerMode = false;
+        }
+        return axisVal;
     }
     public static bool GetButton(Control c)
     {
-        bool b = Input.GetKey(main.gamepadControls[c]);
-        if(b)
+        bool buttonVal = false;
+        if (main.gamepadControls.keyBinds.ContainsKey(c))
         {
-            main.controllerMode = true;
-            return b;
+            buttonVal = Input.GetKey(main.gamepadControls[c]);
+            if (buttonVal)
+            {
+                main.controllerMode = true;
+                return buttonVal;
+            }
         }
-        b = Input.GetKey(main.keyboardControls[c]) || Input.GetKey(main.keyboardControls.secondaryKeyBinds[c]);
-        if (b)
-            main.controllerMode = false;
-        return b;
+        if (main.keyboardControls.keyBinds.ContainsKey(c))
+        {
+            buttonVal = Input.GetKey(main.keyboardControls[c]);
+            if (!buttonVal && main.keyboardControls.secondaryKeyBinds.ContainsKey(c))
+                buttonVal = Input.GetKey(main.keyboardControls.secondaryKeyBinds[c]);
+            if (buttonVal)
+                main.controllerMode = false;
+        }
+        return buttonVal;
     }
     public static bool GetButton(Control c, InputAxis a)
     {
-        bool b = GetButton(c);
-        if (b)
-            return b;
-        b = main.axisButtons[main.gamepadControls[a]].GetButton();
-        if(b)
-            main.controllerMode = true;
-        return b;
+        bool buttonVal = GetButton(c);
+        if (buttonVal)
+            return buttonVal;
+        if(main.gamepadControls.axes.ContainsKey(a) && main.axisButtons.ContainsKey(main.gamepadControls[a]))
+        {
+            buttonVal = main.axisButtons[main.gamepadControls[a]].GetButton();
+            if (buttonVal)
+                main.controllerMode = true;
+        }
+        return buttonVal;
     }
     public static bool GetButtonDown(Control c)
     {
-        bool b = Input.GetKeyDown(main.gamepadControls[c]);
-        if (b)
+        bool buttonVal = false;
+        if (main.gamepadControls.keyBinds.ContainsKey(c))
         {
-            main.controllerMode = true;
-            return b;
+            buttonVal = Input.GetKeyDown(main.gamepadControls[c]);
+            if (buttonVal)
+            {
+                main.controllerMode = true;
+                return buttonVal;
+            }
         }
-        b = Input.GetKeyDown(main.keyboardControls[c]) || Input.GetKeyDown(main.keyboardControls.secondaryKeyBinds[c]);
-        if (b)
-            main.controllerMode = false;
-        return b;
+        if (main.keyboardControls.keyBinds.ContainsKey(c))
+        {
+            buttonVal = Input.GetKeyDown(main.keyboardControls[c]);
+            if (!buttonVal && main.keyboardControls.secondaryKeyBinds.ContainsKey(c))
+                buttonVal = Input.GetKeyDown(main.keyboardControls.secondaryKeyBinds[c]);
+            if (buttonVal)
+                main.controllerMode = false;
+        }
+        return buttonVal;
     }
     public static bool GetButtonDown(Control c, InputAxis a)
     {
-        bool b = GetButtonDown(c);
-        if (b)
-            return b;
-        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonDown() : false;
-        if (b)
-            main.controllerMode = true;
-        return b;
+        bool buttonVal = GetButtonDown(c);
+        if (buttonVal)
+            return buttonVal;
+        if (main.gamepadControls.axes.ContainsKey(a) && main.axisButtons.ContainsKey(main.gamepadControls[a]))
+        {
+            buttonVal = main.axisButtons[main.gamepadControls[a]].GetButtonDown();
+            if (buttonVal)
+                main.controllerMode = true;
+        }
+        return buttonVal;
     }
     public static bool GetButtonUp(Control c)
     {
-        bool b = Input.GetKeyUp(main.gamepadControls[c]);
-        if (b)
+        bool buttonVal = false;
+        if(main.gamepadControls.keyBinds.ContainsKey(c))
         {
-            main.controllerMode = true;
-            return b;
+            buttonVal = Input.GetKeyUp(main.gamepadControls[c]);
+            if (buttonVal)
+            {
+                main.controllerMode = true;
+                return buttonVal;
+            }
         }
-        b = Input.GetKeyUp(main.keyboardControls[c]) || Input.GetKeyUp(main.keyboardControls.secondaryKeyBinds[c]);
-        if (b)
-            main.controllerMode = false;
-        return b;
+        if(main.keyboardControls.keyBinds.ContainsKey(c))
+        {
+            buttonVal = Input.GetKeyUp(main.keyboardControls[c]);
+            if (!buttonVal && main.keyboardControls.secondaryKeyBinds.ContainsKey(c))
+                buttonVal = Input.GetKeyUp(main.keyboardControls.secondaryKeyBinds[c]);
+            if (buttonVal)
+                main.controllerMode = false;
+        }
+        return buttonVal;
     }
     public static bool GetButtonUp(Control c, InputAxis a)
     {
-        bool b = GetButtonUp(c);
-        if (b)
-            return b;
-        b = main.axisButtons.ContainsKey(main.gamepadControls[a]) ? main.axisButtons[main.gamepadControls[a]].GetButtonUp() : false;
-        if (b)
-            main.controllerMode = true;
-        return b;
+        bool buttonVal = GetButtonUp(c);
+        if (buttonVal)
+            return buttonVal;
+        if (main.gamepadControls.axes.ContainsKey(a) && main.axisButtons.ContainsKey(main.gamepadControls[a]))
+        {
+            buttonVal = main.axisButtons[main.gamepadControls[a]].GetButtonUp();
+            if (buttonVal)
+                main.controllerMode = true;
+        }
+        return buttonVal;
     }
 
     public void SetKeyboardProfile(ControlProfile c)
@@ -186,15 +262,36 @@ public class InputManager : MonoBehaviour
     [System.Serializable] public class ControlDict : SerializableCollections.SDictionary<string, ControlProfile> { }
     public class AxisButton
     {
+        public enum Mode
+        {
+            Positive,
+            Negative,
+            Both,
+        }
+        public Mode mode;
         public AxisName axis;
         private string axisName;
-        private bool InputDown { get { return Input.GetAxisRaw(axisName) != 0; } }
+        private bool InputDown
+        {
+            get
+            {
+                var axisVal = Input.GetAxisRaw(axisName);
+                if (mode == Mode.Both)
+                    return axisVal != 0;
+                if (mode == Mode.Positive)
+                    return axisVal > 0;
+                if (mode == Mode.Negative)
+                    return axisVal < 0;
+                return false;
+            }
+        }
         private bool lastValue = false;
 
-        public AxisButton(AxisName axis)
+        public AxisButton(AxisName axis, Mode mode)
         {
             this.axis = axis;
-            axisName = axis.ToString();
+            this.mode = mode;
+            axisName = axis.ToString().Replace("Positive", string.Empty).Replace("Negative", string.Empty);
         }
 
         public bool GetButton()
