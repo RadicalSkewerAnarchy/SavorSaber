@@ -3,31 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum Direction : int
-{
-    East,
-    NorthEast,
-    North,
-    NorthWest,
-    West,
-    SouthWest,
-    South,
-    SouthEast,
-}
-
-static class DirectionMethods
-{
-    public static bool IsCardinal(this Direction d) => (int)d % 2 == 0;
-    public static Direction FromVec2(Vector2 vec)
-    {
-        var movementAngle = Vector2.SignedAngle(Vector2.right, vec);
-        if (movementAngle < 0)
-            movementAngle += 360;
-        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 45));
-    }
-}
-
-
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : EntityController

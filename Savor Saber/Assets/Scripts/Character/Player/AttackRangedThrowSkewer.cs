@@ -19,8 +19,8 @@ public class AttackRangedThrowSkewer : AttackRanged
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        dependecies = GetComponents<AttackBase>();
+        Initialize();
+        animator = GetComponent<Animator>();       
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
         normalInterval = (1 / (float)chargeLevels) - 0.001f;
@@ -84,8 +84,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             chargedAttack = true;
             center = r.bounds.center;
 
-            //Get the first attack from dependecies that is attacking, else null
-            AttackBase activeAttack = dependecies.FirstOrDefault((at) => at.Attacking);
+            AttackBase activeAttack = GetActiveAttack();
             if (activeAttack == null)
                 StartCoroutine(Charge());            
             else if (activeAttack.CanBeCanceled)
@@ -103,7 +102,7 @@ public class AttackRangedThrowSkewer : AttackRanged
 
             r.color = Color.white;
             currLevel = 0;
-            Attack(GetCursorTarget());
+            Attack(crosshair.GetTarget());
             inv.ClearActiveRecipe();
             inv.ClearActiveSkewer();
             inv.CanSwap = true;
@@ -114,6 +113,8 @@ public class AttackRangedThrowSkewer : AttackRanged
 
     private IEnumerator Charge()
     {
+        PlayerController pc = controller as PlayerController;
+        pc.freezeDirection = true;
         Attacking = true;
         CanBeCanceled = false;
         inv.CanSwap = false;
@@ -125,6 +126,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             float time = 0;
             while (time < chargeTime)
             {
+                controller.Direction = DirectionMethods.FromVec2(GetTargetVector(crosshair.GetTarget()));
                 yield return new WaitForEndOfFrame();
                 time += Time.deltaTime;
             }
@@ -135,26 +137,10 @@ public class AttackRangedThrowSkewer : AttackRanged
         float colorInc = 0.05f;
         while (Attacking)
         {
+            controller.Direction = DirectionMethods.FromVec2(GetTargetVector(crosshair.GetTarget()));
             yield return new WaitForEndOfFrame();
             r.color = new Color(r.color.r, r.color.g + colorInc >= 1 ? 0 : r.color.g + colorInc, r.color.b + colorInc >= 1 ? 0 : r.color.b + colorInc);
         }
-    }
-
-    /// <summary>
-    /// Returns the position in world space of the targeting cursor
-    /// </summary>
-    private Vector2 GetCursorTarget()
-    {
-        if (InputManager.ControllerMode)
-        {
-            Vector2 target = Camera.main.ScreenToWorldPoint(crosshair.gameObject.transform.position);
-            return target;
-        }
-        else
-        {
-            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            return target;
-        }
-
+        pc.freezeDirection = false;
     }
 }

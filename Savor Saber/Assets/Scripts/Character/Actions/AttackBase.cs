@@ -19,10 +19,13 @@ public abstract class AttackBase : MonoBehaviour
     /// <summary> Attacks can only cancel attacks with equal or lower priority </summary>
     public int CancelPriority = 0;
     /// <summary> The attacks this attack shouldn't overlap (will always include self)
-    /// Set in the start of any derived class using GetComponents<AttackBase>() </summary>
-    protected AttackBase[] dependecies;
+    /// Set in Initialize </summary>
+    private AttackBase[] dependecies;
 
-
+    protected void Initialize()
+    {
+        dependecies = GetComponents<AttackBase>();
+    }
     protected AttackBase GetActiveAttack()
     {
         return dependecies.FirstOrDefault((at) => at.Attacking);

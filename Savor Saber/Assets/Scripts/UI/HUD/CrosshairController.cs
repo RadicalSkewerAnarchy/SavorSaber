@@ -83,4 +83,18 @@ public class CrosshairController : MonoBehaviour
         Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         return target;
     }
+
+    public Vector2 GetTarget()
+    {
+        if (InputManager.ControllerMode)
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(gameObject.transform.position);
+            return target;
+        }
+        else
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return target;
+        }
+    }
 }

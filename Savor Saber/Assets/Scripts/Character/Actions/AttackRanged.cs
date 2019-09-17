@@ -64,8 +64,8 @@ public class AttackRanged : AttackBase
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        dependecies = GetComponents<AttackBase>();
+        Initialize();
+        animator = GetComponent<Animator>();      
         r = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
@@ -124,8 +124,8 @@ public class AttackRanged : AttackBase
         if (controller is PlayerController)
             if ((controller as PlayerController).riding)
                 direction = Direction.South;
-        float projectileRotation = GetRotation(direction);
-        Vector2 directionVector = GetDirectionVector(direction);
+        float projectileRotation = direction.ToAngleDeg();
+        Vector2 directionVector = direction.ToVector2();
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
@@ -180,12 +180,10 @@ public class AttackRanged : AttackBase
 
         
         //get directional/rotational information
-        Direction direction = controller.Direction;
         //float projectileRotation = GetRotation(direction);
         float projectileRotation = GetRotation(targetVector);
         Vector2 directionVector = GetTargetVector(targetVector);
-
-
+        Direction direction = DirectionMethods.FromVec2(directionVector);
 
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
@@ -209,8 +207,10 @@ public class AttackRanged : AttackBase
             projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
         }
 
+
         //play animations
-        OverrideDirection(projectileRotation);
+        //OverrideDirection(projectileRotation);
+        controller.Direction = direction;
         animator.Play(attackName);
 
         Attacking = true;
@@ -226,53 +226,7 @@ public class AttackRanged : AttackBase
         yield return new WaitForSeconds(time);
         Attacking = false;
         CanBeCanceled = false;
-        yield return null;
-    }
-
-    /// <summary>
-    /// Get the rotation associated with the current facing
-    /// </summary>
-    protected float GetRotation(Direction direction)
-    {
-        float projectileRotation = 0f; 
-
-        // set projectile velocity vector
-        if (direction == Direction.East)
-        {
-            projectileRotation = 0f;
-        }
-        else if (direction == Direction.West)
-        {
-            projectileRotation = 180f;
-        }
-        else if (direction == Direction.North)
-        {
-
-            projectileRotation = 90f;
-        }
-        else if (direction == Direction.South)
-        {
-
-            projectileRotation = -90;
-        }
-        else if (direction == Direction.NorthWest)
-        {
-            projectileRotation = 135;
-        }
-        else if (direction == Direction.NorthEast)
-        {
-            projectileRotation = 45;
-        }
-        else if (direction == Direction.SouthWest)
-        {
-            projectileRotation = 225;
-        }
-        else if (direction == Direction.SouthEast)
-        {
-            projectileRotation = 315;
-        }
-
-        return projectileRotation;
+        yield break;
     }
 
     protected float GetRotation(Vector2 target)
@@ -292,104 +246,10 @@ public class AttackRanged : AttackBase
     }
 
     /// <summary>
-    /// Get the vector associated with the current facing
-    /// </summary>
-    protected Vector2 GetDirectionVector(Direction direction)
-    {
-        Vector2 directionVector;
-        if (direction == Direction.East)
-        {
-            directionVector = new Vector2(1, 0);       
-        }
-        else if (direction == Direction.West)
-        {
-            directionVector = new Vector2(-1, 0);    
-        }
-        else if (direction == Direction.North)
-        {
-            directionVector = new Vector2(0, 1);
-        }
-        else if (direction == Direction.South)
-        {
-            directionVector = new Vector2(0, -1);
-        }
-        else if (direction == Direction.NorthWest)
-        {
-            directionVector = new Vector2(-1, 1).normalized;
-        }
-        else if (direction == Direction.NorthEast)
-        {
-            directionVector = new Vector2(1, 1).normalized;
-        }
-        else if (direction == Direction.SouthWest)
-        {
-            directionVector = new Vector2(-1, -1).normalized;
-        }
-        else if (direction == Direction.SouthEast)
-        {
-            directionVector = new Vector2(1, -1).normalized;
-        }
-        else
-        {
-            directionVector = new Vector2(0, 0);
-        }
-
-        return directionVector;
-    }
-
-    /// <summary>
     /// Get the vector pointing at a target's position
     /// </summary>
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
-    }
-
-    /// <summary>
-    /// Sets the animation direction based on what direction the player attacked in
-    /// </summary>
-    private void OverrideDirection(float rotation)
-    {
-        Debug.Log("Overriding direction towards " + rotation + " degrees");
-        //case 1: facing East
-        if (rotation < 22.5f || rotation >= 337.5f)
-        {
-            controller.Direction = Direction.East;
-        }
-        //case 2: facing NorthEast
-        else if (rotation >= 22.5f && rotation < 67.5f)
-        {
-            controller.Direction = Direction.NorthEast;
-        }
-        //case 3: facing North
-        else if (rotation >= 67.5f && rotation < 112.5f)
-        {
-            controller.Direction = Direction.North;
-        }
-        //case 4: facing NorthWest
-        else if (rotation >= 112.5f && rotation < 157.5f)
-        {
-            controller.Direction = Direction.NorthWest;
-        }
-        //case 5: facing West
-        else if (rotation >= 157.5f && rotation < 202.5f)
-        {
-            controller.Direction = Direction.West;
-        }
-        //case 6: facing SouthWest
-        else if (rotation >= 202.5f && rotation < 247.5f)
-        {
-            controller.Direction = Direction.SouthWest;
-        }
-        //case 2: facing South
-        else if (rotation >= 247.5f && rotation < 292.5f)
-        {
-            controller.Direction = Direction.South;
-        }
-        //case 2: facing SouthEast
-        else if (rotation >= 292.5f && rotation < 337.5f)
-        {
-            controller.Direction = Direction.SouthEast;
-        }
     }
 }
