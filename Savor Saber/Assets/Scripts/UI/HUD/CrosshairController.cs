@@ -5,7 +5,20 @@ using UnityEngine.UI;
 
 public class CrosshairController : MonoBehaviour
 {
+    public enum ControllerMode
+    {
+        Free,
+        Radial,
+    }
+
+
+    [Header("Free Mode Settings")]
     public float crosshairSpeed = 10;
+    [Header("Radial Mode Settings")]
+    public float radius = 1;
+    public float yOffset = 40;
+
+    private ControllerMode mode = ControllerMode.Radial;
     private Vector2 controllerInput;
     private RectTransform rt;
     private Image image;
@@ -25,8 +38,19 @@ public class CrosshairController : MonoBehaviour
         if (InputManager.ControllerMode)
         {
             controllerInput = InputManager.GetAxesAsVector2(InputAxis.HorizontalAim, InputAxis.VerticalAim);
-            controllerInput *= (crosshairSpeed * Time.deltaTime);
-            rt.localPosition += (Vector3)controllerInput;
+            if(mode == ControllerMode.Free)
+            {
+                controllerInput *= (crosshairSpeed * Time.deltaTime);
+                rt.localPosition += (Vector3)controllerInput;
+            }
+            else // Mode == Radial
+            {
+                if (controllerInput.sqrMagnitude >= 0.9f)
+                {
+                    rt.localPosition = (controllerInput * radius) + new Vector2(0, yOffset);
+                }
+                    
+            }
             image.color = Color.white; 
         }
         else
@@ -49,9 +73,9 @@ public class CrosshairController : MonoBehaviour
         //viewPos.x = Mathf.Clamp(viewPos.x, 0, Screen.width);
         //viewPos.y = Mathf.Clamp(viewPos.y, 0, Screen.height);
         //transform.localPosition = viewPos;
-        Debug.Log("screen width: " + Screen.width);
-        Debug.Log("screen height: " + Screen.height);
-        Debug.Log("rect absolute: " + rt.position);
+        //Debug.Log("screen width: " + Screen.width);
+        //Debug.Log("screen height: " + Screen.height);
+        //Debug.Log("rect absolute: " + rt.position);
     }
 
     private Vector2 GetMouseTarget()
