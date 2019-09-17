@@ -10,6 +10,8 @@ public class CrosshairController : MonoBehaviour
     private RectTransform rt;
     private Image image;
 
+    private Vector2 screenBounds;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,13 +27,31 @@ public class CrosshairController : MonoBehaviour
             controllerInput = InputManager.GetAxesAsVector2(InputAxis.HorizontalAim, InputAxis.VerticalAim);
             controllerInput *= (crosshairSpeed * Time.deltaTime);
             rt.localPosition += (Vector3)controllerInput;
-            image.color = Color.white;
+            image.color = Color.white; 
         }
         else
         {
             transform.position = GetMouseTarget();
             image.color = new Color(0, 0, 0, 0);
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (InputManager.ControllerMode)
+        {
+            Vector3 viewPos = rt.position;
+            viewPos.x = Mathf.Clamp(viewPos.x, 0, Screen.width);
+            viewPos.y = Mathf.Clamp(viewPos.y, 0, Screen.height);
+            rt.position = viewPos;
+        }
+        //Vector3 viewPos = transform.localPosition;
+        //viewPos.x = Mathf.Clamp(viewPos.x, 0, Screen.width);
+        //viewPos.y = Mathf.Clamp(viewPos.y, 0, Screen.height);
+        //transform.localPosition = viewPos;
+        Debug.Log("screen width: " + Screen.width);
+        Debug.Log("screen height: " + Screen.height);
+        Debug.Log("rect absolute: " + rt.position);
     }
 
     private Vector2 GetMouseTarget()
