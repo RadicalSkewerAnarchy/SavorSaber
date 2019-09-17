@@ -81,7 +81,6 @@ public class InputManager : MonoBehaviour
     public ControlProfile keyboardControls = null;
     public ControlProfile gamepadControls = null;
 
-    public ControlDict controlProfiles = new ControlDict();
     private Dictionary<AxisName, AxisButton> axisButtons = new Dictionary<AxisName, AxisButton>()
     {
         { AxisName.LeftTrigger, new AxisButton(AxisName.LeftTrigger, AxisButton.Mode.Both) },
