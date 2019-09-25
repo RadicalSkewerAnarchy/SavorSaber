@@ -195,6 +195,14 @@ public class BaseProjectile : MonoBehaviour
         {
             //myCharData.damageDealt += (int)projectileDamage;
             //Debug.Log("Dealing DMG");
+
+            // Make projectiles go through a player who is currently in I-frames
+            if(go.tag == "Player")
+            {
+                var playerData = characterData as PlayerData;
+                if (playerData != null && playerData.Invincible)
+                    return;
+            }
             if (characterData.DoDamage((int)projectileDamage, overcharged) && myCharData != null)
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)
