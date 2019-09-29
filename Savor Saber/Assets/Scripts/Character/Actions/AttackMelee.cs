@@ -69,7 +69,7 @@ public class AttackMelee : AttackBase
     // Start is called before the first frame update
     void Start()
     {
-        dependecies = GetComponents<AttackBase>();
+        Initialize();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
@@ -190,6 +190,8 @@ public class AttackMelee : AttackBase
             audioSource.Play();
             //Debug.Log("Playing default sound");
         }
+        controller.Direction = DirectionMethods.FromAngleDeg(attackCapsuleRotation);
+        controller.freezeDirection = true;
         animator.Play(attackName,0,0);
         //animator.Play(attackName);
 
@@ -226,13 +228,15 @@ public class AttackMelee : AttackBase
     protected IEnumerator EndAttackAfterSeconds(float time, GameObject newAttack)
     {
         currAttackObject = newAttack;
+        controller.freezeDirection = true;
         yield return new WaitForSeconds(time);
         Attacking = false;
         CanBeCanceled = false;
         currAttackObject = null;
+        controller.freezeDirection = false;
         Destroy(newAttack);
 
-        yield return null;
+        yield break;
     }
 
 }

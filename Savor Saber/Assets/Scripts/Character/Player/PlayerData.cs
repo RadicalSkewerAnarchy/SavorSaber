@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Respawner))]
 public class PlayerData : CharacterData
 {
-    public bool Invincible { get; private set; }
+    public bool Invincible { get; set; }
     private const float flickerTime = 0.075f;
     private const float timeConst = 1.25f;
     private SpriteRenderer sp;

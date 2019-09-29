@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// A component used to control the camera.
 /// Attach to the object you would like to use as the player NOT the camera
-/// Make sure the camera is tagger "MainCamera"
+/// Make sure the camera is tagged "MainCamera"
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
 public class CameraController : MonoBehaviour
@@ -25,6 +25,12 @@ public class CameraController : MonoBehaviour
     public float returnTime = 0.5f;
     public float maxReturnSpeed = 1000f;
     public Vector2 deadzone = new Vector2(1.5f, 1.25f);
+    [Header("Cursor Following Settings")]
+    public bool followCursor;
+    public Transform cursor;
+    public float cursorRadius = 1;
+    public float cursorReturnTime = 0.5f;
+    public float cursorMaxReturnSpeed = 1000f;
 
     new private Transform camera;
     
@@ -52,6 +58,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         FindCamera();
+        ReleaseTarget();
     }
 
     void FindCamera()
@@ -77,8 +84,18 @@ public class CameraController : MonoBehaviour
     /// <summary> Release the camera from it's current point of interest </summary>
     public void ReleaseTarget()
     {
-        returning = true;
-        target = null;
+        if(followCursor)
+        {
+            target = cursor;
+            maxSpeed = cursorMaxReturnSpeed;
+            snapTime = cursorReturnTime;
+            radius = cursorRadius;
+        }
+        else
+        {
+            returning = true;
+            target = null;
+        }
     }
 
     public IEnumerator MoveToPointLinearCr(Vector2 point, float speed)
@@ -117,7 +134,7 @@ public class CameraController : MonoBehaviour
         if (zoomer.assetsPPU > targetZoom)
         {
             currZoom -= 1f;
-            zoomer.assetsPPU = Mathf.FloorToInt(currZoom); ;
+            zoomer.assetsPPU = Mathf.FloorToInt(currZoom);
         }
         //what the fuck are you doing so far away
         if (Vector3.Distance(camera.position, transform.position) > 50f)

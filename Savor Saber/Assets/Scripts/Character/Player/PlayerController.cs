@@ -3,31 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum Direction : int
-{
-    East,
-    NorthEast,
-    North,
-    NorthWest,
-    West,
-    SouthWest,
-    South,
-    SouthEast,
-}
-
-static class DirectionMethods
-{
-    public static bool IsCardinal(this Direction d) => (int)d % 2 == 0;
-    public static Direction FromVec2(Vector2 vec)
-    {
-        var movementAngle = Vector2.SignedAngle(Vector2.right, vec);
-        if (movementAngle < 0)
-            movementAngle += 360;
-        return Direction.East.Offset(Mathf.RoundToInt(movementAngle / 45));
-    }
-}
-
-
+[RequireComponent(typeof(PlayerData))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 public class PlayerController : EntityController
@@ -62,15 +38,18 @@ public class PlayerController : EntityController
     Rigidbody2D rigidBody;
     Animator animatorBody;
     DialogData dialogData;
+    private PlayerData playerData;
     /// <summary> The Squared magnitude of the movement vector from last frame
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
 
+    [Header("Dashing Fields")]
     #region Dashing Fields
     public float dashTime;
     public AnimationCurve dashSpeed;
     public float dashScale;
     public int maxDashes = 3;
+    public bool dashIFrames = true;
     public float CurrDashes { get; private set; }
     private bool dashing = false;
     public bool riding = false;
@@ -83,17 +62,21 @@ public class PlayerController : EntityController
     public bool RechargingFromEmpty { get; private set; } = false;
     private Coroutine rechargeDashes;
     #endregion
+    
+    
 
     #region Running Fields
-    private bool running = false;
-    private Coroutine run;
-    private float currRunSpeed;
+    [Header("Running Fields")]
     public float runTimeBuffer;
     public float accelerationTime;
     public float maxSpeed;
     public float accelrationAmount;
+    private bool running = false;
+    private Coroutine run;
+    private float currRunSpeed;
     #endregion
 
+    [Header("SFX")]
     public AudioClip dashSFX;
     public AudioClip cantDashSfx;
     public AudioClip dashRechargeSfx;
@@ -116,6 +99,7 @@ public class PlayerController : EntityController
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animatorBody = GetComponent<Animator>();
+        playerData = GetComponent<PlayerData>();
         Direction = _direction;
         doubleTapTrackers = new Dictionary<Control, float>()
             {
@@ -203,6 +187,8 @@ public class PlayerController : EntityController
             CurrDashes = Mathf.Max(0, CurrDashes - 1);
         if (CurrDashes <= 0.15f)
             RechargingFromEmpty = true;
+        if (dashIFrames)
+            playerData.Invincible = true;
         dashing = true;
         dashCurrTime = 0;
         freezeDirection = true;
@@ -230,6 +216,8 @@ public class PlayerController : EntityController
 
     private void StopDash(bool startRun = true)
     {
+        if (dashIFrames)
+            playerData.Invincible = false;
         freezeDirection = false;
         dashCurrTime = 0;
         dashing = false;

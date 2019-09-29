@@ -5,16 +5,25 @@ using UnityEngine.UI;
 
 public class CrosshairController : MonoBehaviour
 {
+    public enum ControllerMode
+    {
+        Free,
+        Radial,
+    }
+
+    public ControllerMode mode = ControllerMode.Radial;
+    [Header("Free Mode Settings")]
     public float crosshairSpeed = 10;
-    private Vector2 controllerInput;
-    private RectTransform rt;
-    private Image image;
+    [Header("Radial Mode Settings")]
+    public float radius = 1;
+    public Vector2 offset;
+
+    private SpriteRenderer spr;
 
     // Start is called before the first frame update
     void Start()
     {
-        rt = GetComponent<RectTransform>();
-        image = GetComponent<Image>();
+        spr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -22,15 +31,37 @@ public class CrosshairController : MonoBehaviour
     {
         if (InputManager.ControllerMode)
         {
-            controllerInput = InputManager.GetAxesAsVector2(InputAxis.HorizontalAim, InputAxis.VerticalAim);
-            controllerInput *= (crosshairSpeed * Time.deltaTime);
-            rt.localPosition += (Vector3)controllerInput;
-            image.color = Color.white;
+            var controllerInput = InputManager.GetAxesAsVector2(InputAxis.HorizontalAim, InputAxis.VerticalAim);
+            if(mode == ControllerMode.Free)
+            {
+                controllerInput *= (crosshairSpeed * Time.deltaTime);
+                transform.position += (Vector3)controllerInput;
+            }
+            else // Mode == Radial
+            {
+                if (controllerInput.sqrMagnitude >= 0.9f)
+                {
+                    var posOffset = (controllerInput.normalized * radius) + offset;
+                    transform.position = transform.parent.position + (Vector3)posOffset;
+                }                
+            }
+            spr.color = Color.white; 
         }
         else
         {
             transform.position = GetMouseTarget();
-            image.color = new Color(0, 0, 0, 0);
+            spr.color = new Color(0, 0, 0, 0);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (InputManager.ControllerMode)
+        {
+            Vector3 viewPos = Camera.main.WorldToScreenPoint(transform.position);
+            viewPos.x = Mathf.Clamp(viewPos.x, 0, Screen.width);
+            viewPos.y = Mathf.Clamp(viewPos.y, 0, Screen.height);
+            transform.position = Camera.main.ScreenToWorldPoint(viewPos);
         }
     }
 
@@ -38,5 +69,19 @@ public class CrosshairController : MonoBehaviour
     {
         Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         return target;
+    }
+
+    public Vector2 GetTarget()
+    {
+        if (InputManager.ControllerMode)
+        {
+            Vector2 target = gameObject.transform.position;
+            return target;
+        }
+        else
+        {
+            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            return target;
+        }
     }
 }

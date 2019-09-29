@@ -22,8 +22,8 @@ public class AttackMeleeSkewer : AttackMelee
     // Start is called before the first frame update
     void Start()
     {
+        Initialize();
         inventory = GetComponent<Inventory>();
-        dependecies = GetComponents<AttackBase>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
@@ -32,7 +32,7 @@ public class AttackMeleeSkewer : AttackMelee
         if (crosshair == null)
             crosshair = GameObject.Find("Crosshair").GetComponent<CrosshairController>();
     }
-    
+
     private void Awake()
     {
         LoadAssetBundles();
@@ -84,8 +84,9 @@ public class AttackMeleeSkewer : AttackMelee
             audioSource.Play();
             Debug.Log("Playing default sound");
         }
-        OverrideDirection(attackCapsuleRotation);
-        animator.Play(attackName,0,0);
+        controller.Direction = DirectionMethods.FromAngleDeg(attackCapsuleRotation);
+        controller.freezeDirection = true;
+        animator.Play(attackName, 0, 0);
 
         //spawn the attack at the spawn point and give it its dimensions
         Attacking = true;
@@ -152,7 +153,7 @@ public class AttackMeleeSkewer : AttackMelee
         //get center offset (due to pivot changes) 
         Vector2 center = spriteRenderer.bounds.center;
 
-        Vector2 target = GetCursorTarget();
+        Vector2 target = crosshair.GetTarget();
         Vector2 difference = new Vector2(target.x - center.x, target.y - center.y).normalized;
         attackSpawnPoint = (Vector2)center + (difference * meleeRange);
         attackCapsuleRotation = GetRotation(attackSpawnPoint);
@@ -219,71 +220,5 @@ public class AttackMeleeSkewer : AttackMelee
             attackCapsuleRotation = -45f;
             attackSpawnPoint = new Vector2(transform.position.x + (meleeRange / 2f), center.y - (meleeRange / 2f));
         }
-    }
-
-    /// <summary>
-    /// Sets the animation direction based on what direction the player attacked in
-    /// </summary>
-    private void OverrideDirection(float rotation)
-    {
-        Debug.Log("Overriding direction towards " + rotation + " degrees");
-        //case 1: facing East
-        if(rotation < 22.5f || rotation >= 337.5f)
-        {
-            controller.Direction = Direction.East;
-        }
-        //case 2: facing NorthEast
-        else if(rotation >= 22.5f && rotation < 67.5f)
-        {
-            controller.Direction = Direction.NorthEast;
-        }
-        //case 3: facing North
-        else if (rotation >= 67.5f && rotation < 112.5f)
-        {
-            controller.Direction = Direction.North;
-        }
-        //case 4: facing NorthWest
-        else if (rotation >= 112.5f && rotation < 157.5f)
-        {
-            controller.Direction = Direction.NorthWest;
-        }
-        //case 5: facing West
-        else if (rotation >= 157.5f && rotation < 202.5f)
-        {
-            controller.Direction = Direction.West;
-        }
-        //case 6: facing SouthWest
-        else if (rotation >= 202.5f && rotation < 247.5f)
-        {
-            controller.Direction = Direction.SouthWest;
-        }
-        //case 2: facing South
-        else if (rotation >= 247.5f && rotation < 292.5f)
-        {
-            controller.Direction = Direction.South;
-        }
-        //case 2: facing SouthEast
-        else if (rotation >= 292.5f && rotation < 337.5f)
-        {
-            controller.Direction = Direction.SouthEast;
-        }
-    }
-
-    /// <summary>
-    /// Returns the position in world space of the targeting cursor
-    /// </summary>
-    private Vector2 GetCursorTarget()
-    {
-        if (InputManager.ControllerMode)
-        {
-            Vector2 target = Camera.main.ScreenToWorldPoint(crosshair.gameObject.transform.position);
-            return target;
-        }
-        else
-        {
-            Vector2 target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            return target;
-        }
-
     }
 }
