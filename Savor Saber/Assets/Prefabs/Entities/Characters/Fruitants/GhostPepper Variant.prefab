@@ -7,7 +7,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6861592380684736750}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   currentMoveState: 0
   previousMoveState: 0
   CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 1
   DecisionTimerVariance: 0.2
@@ -219,6 +220,31 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 1.438
       objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: ActionTimerReset
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: ActionTimerVariance
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: attackDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: meleeAttackDuration
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: meleeAttackDelay
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089618, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: favoriteIngredients.Array.size
@@ -251,11 +277,6 @@ PrefabInstance:
       propertyPath: dotTicLength
       value: 0.25
       objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089617, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: invert
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089616, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: displayName
@@ -266,30 +287,98 @@ PrefabInstance:
       propertyPath: deathSfx
       value: 
       objectReference: {fileID: 8300000, guid: e98d16a7fa7153d419ba8e73e0a121d0, type: 3}
-    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    - target: {fileID: 6405371343124089617, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
-      propertyPath: ActionTimerReset
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: ActionTimerVariance
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: attackDuration
+      propertyPath: invert
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
-      propertyPath: meleeAttackDuration
-      value: 1.5
+      propertyPath: drops.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
-      propertyPath: meleeAttackDelay
+      propertyPath: signalDrops.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: drops.Array.data[0]
+      value: 
+      objectReference: {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945,
+        type: 3}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 262ca0160dde9524db93950638d35404,
+        type: 3}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 924a28bae10f7124ba392f2a5538d8c7,
+        type: 2}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343824876784, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: fruitDisplay
+      value: 
+      objectReference: {fileID: 6861592380656638943}
+    - target: {fileID: 6405371343824876784, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: fruitant
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -371,74 +460,6 @@ PrefabInstance:
         type: 3}
       propertyPath: meleeHunter
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Mass
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LinearDrag
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089642, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: signalDrops.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089647, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: drops.Array.data[0]
-      value: 
-      objectReference: {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945,
-        type: 3}
-    - target: {fileID: 6405371343124089645, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 924a28bae10f7124ba392f2a5538d8c7,
-        type: 2}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_StitchLightmapSeams
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 262ca0160dde9524db93950638d35404,
-        type: 3}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343824876784, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: fruitDisplay
-      value: 
-      objectReference: {fileID: 6861592380656638943}
-    - target: {fileID: 6405371343824876784, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: fruitant
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089623, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -662,7 +683,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b, type: 3}
-    - {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f44ac84a8c8fa143bc0f795dc0c688b, type: 3}
 --- !u!1 &6861592380684736750 stripped
 GameObject:
