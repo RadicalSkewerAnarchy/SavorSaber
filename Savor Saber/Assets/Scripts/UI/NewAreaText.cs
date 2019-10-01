@@ -28,7 +28,7 @@ public class NewAreaText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("text playing? " + textPlaying);
+        //Debug.Log("text playing? " + textPlaying);
         if (targetCanvas == null)
             targetCanvas = GameObject.Find("DialogCanvas");
     }
