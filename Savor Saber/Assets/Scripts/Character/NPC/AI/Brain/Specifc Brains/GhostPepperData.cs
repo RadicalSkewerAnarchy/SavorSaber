@@ -62,6 +62,7 @@ public class GhostPepperData : AIData
         {
             case LifeState.overcharged:
                 this.Behavior.projectile = normalProjectile;
+                this.RangeAttackThreshold = 5;
                 break;
             default:
                 // nothing at all
@@ -78,6 +79,7 @@ public class GhostPepperData : AIData
                 if (fim == null)
                     fim = GetComponent<FlavorInputManager>();
                 fim.CurryBalls(true);
+                this.RangeAttackThreshold = 1;
                 break;
             default:
                 // nothing at all
