@@ -226,8 +226,11 @@ public class BaseProjectile : MonoBehaviour
                     Destroy(this.gameObject);
             }
         }
+        //if what you hit is terrain
         else if(go.tag == "Terrain")
         {
+            //this should solve projectiles passing through terrain. 
+            //unfortunately, requires all
             Destroy(this.gameObject);
             return;
         }
