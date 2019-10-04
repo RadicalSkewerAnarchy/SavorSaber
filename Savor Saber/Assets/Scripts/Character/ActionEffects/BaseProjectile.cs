@@ -178,24 +178,29 @@ public class BaseProjectile : MonoBehaviour
             Physics2D.IgnoreCollision(collision, gameObject.GetComponent<CapsuleCollider2D>());
         }
         GameObject go = collision.gameObject;
-        // Debug.Log("Projectile trigger entered");
+
+        #region Special cases to ignore
+        //ignore skewerableobjects
         if (go.tag == "SkewerableObject")
             return;
+        //ignore what launched me
         if (go == attacker)
             return;
+        //ignore specified target classes
         if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
             return;
         if (go.tag == "Predator" && !hurtDrones)
             return;
+        #endregion
+
+        //if you have a drop item, drop it now
         if (dropItem != null)
             Instantiate(dropItem, transform.position, Quaternion.identity);
 
+        //if what you hit is a character
         CharacterData characterData = go.GetComponent<CharacterData>();
         if (characterData != null)
         {
-            //myCharData.damageDealt += (int)projectileDamage;
-            //Debug.Log("Dealing DMG");
-
             // Make projectiles go through a player who is currently in I-frames
             if(go.tag == "Player")
             {
@@ -208,6 +213,7 @@ public class BaseProjectile : MonoBehaviour
             if (!penetrateTargets)
                 Destroy(this.gameObject);
         }
+        //if what you hit is destructible environment
         else if (go.tag == "ThrowThrough")
         {
             DestructableEnvironment envData = go.GetComponent<DestructableEnvironment>();
@@ -219,6 +225,11 @@ public class BaseProjectile : MonoBehaviour
                 if (!penetrateTargets)
                     Destroy(this.gameObject);
             }
+        }
+        else if(go.tag == "Terrain")
+        {
+            Destroy(this.gameObject);
+            return;
         }
     }
 }
