@@ -62,7 +62,7 @@ public class GhostPepperData : AIData
         {
             case LifeState.overcharged:
                 this.Behavior.projectile = normalProjectile;
-                this.RangeAttackThreshold = 5;
+                this.RangeAttackThreshold = 3.5f;
                 break;
             default:
                 // nothing at all
