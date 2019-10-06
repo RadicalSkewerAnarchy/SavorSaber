@@ -53,10 +53,11 @@ public class Commander : MonoBehaviour
     void Update()
     {
         // CYCLE SETTINGS OF COMMANDS
+        /*
         if (Input.GetKeyDown(KeyCode.O))
         {
             CycleTargetFamily();
-        }
+        }*/
 
         // PRESS ENTER TO ISSUE COMMAND
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -101,7 +102,7 @@ public class Commander : MonoBehaviour
         foreach (Transform t in Families[FamilyChoice].transform)
         {
             GameObject member = t.gameObject;
-            member.GetComponent<AIData>().ClearActionQueue();
+            //member.GetComponent<AIData>().ClearActionQueue();
         }
 
         // Cycle

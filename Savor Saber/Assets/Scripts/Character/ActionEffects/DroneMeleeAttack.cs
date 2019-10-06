@@ -8,7 +8,6 @@ public class DroneMeleeAttack : BaseMeleeAttack
     private PlaySFXRandPitch sfxPlayer;
     public MonsterChecks monsterChecks;
     public CharacterData myCharData;
-    public GameObject myAttacker;
 
     // Start is called before the first frame update
     void Start()

@@ -44,7 +44,7 @@ public partial class MonsterProtocols : MonoBehaviour
         Vector2 pos;
         if (target != null)
         {
-            Debug.Log(this.name + "'s target is " + target.name);
+            //Debug.Log(this.name + "'s target is " + target.name);
             pos = nearestEnemy.transform.position;
         }
         else
