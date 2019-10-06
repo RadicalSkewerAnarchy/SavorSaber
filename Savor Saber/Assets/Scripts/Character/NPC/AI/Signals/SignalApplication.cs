@@ -89,7 +89,7 @@ public class SignalApplication : MonoBehaviour
 
     public void Activate()
     {
-        bool meDrone = (this.signalMaker!=null? signalMaker.tag=="Predator" : false );
+        bool meDrone = (this.signalMaker!=null? (signalMaker.tag=="Predator"?true:false) : false );
         var objects = Physics2D.OverlapCircleAll(transform.position, interactRadius);
         foreach (var go in objects)
         {
