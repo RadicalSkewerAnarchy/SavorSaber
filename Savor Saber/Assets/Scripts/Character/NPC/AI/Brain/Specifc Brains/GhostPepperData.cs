@@ -26,7 +26,7 @@ public class GhostPepperData : AIData
         {
             if (Checks.ClosestDrone() != null)
             {
-                if (health > (maxHealth / 2))
+                if (health > (maxHealth / 4))
                     proto = Protocols.Ranged;
                 else
                     proto = Protocols.Runaway;
@@ -45,7 +45,7 @@ public class GhostPepperData : AIData
             else
             {
                 Checks.closestFriend = null;
-                proto = Protocols.Runaway;
+                proto = Protocols.Wander;
             }
         }
         else

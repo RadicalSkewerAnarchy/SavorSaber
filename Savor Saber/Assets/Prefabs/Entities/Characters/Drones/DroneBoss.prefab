@@ -357,6 +357,8 @@ MonoBehaviour:
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
   rewardItem: {fileID: 0}
+  sugarCount: 0
+  rushed: 0
   damageFromBaseSkewer: 0
   damageFromBulletSkewer: 1
 --- !u!114 &5919570652110356733
@@ -466,8 +468,8 @@ MonoBehaviour:
   Speed: 2
   Perception: 12
   MeleeAttackThreshold: 2
-  RangeAttackThreshold: 10
-  EngageHostileThreshold: 4
+  RangeAttackThreshold: 5
+  EngageHostileThreshold: 2
   maxHealth: 45
   health: 45
   overchargeHealth: 0
@@ -497,6 +499,8 @@ MonoBehaviour:
   previousLifeState: 0
   currentMoveState: 0
   previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 0.5
   DecisionTimerVariance: 0.2
@@ -718,16 +722,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -739,6 +733,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

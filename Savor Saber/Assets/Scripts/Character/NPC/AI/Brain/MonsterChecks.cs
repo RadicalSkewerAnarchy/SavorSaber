@@ -73,7 +73,19 @@ public class MonsterChecks : MonoBehaviour
     /// <returns> Count of Enemy and Friend Lists </returns>
     public int NumberOfEnemies()
     {
-        return Enemies.Count;
+        int count = Enemies.Count;
+        foreach (var enemy in Enemies)
+        {
+            if (enemy != null)
+            {
+                if (enemy.GetComponent<CharacterData>().health <= 0)
+                {
+                    count--;
+                }
+            }
+            else count--;
+        }
+        return count;
     }
     public int NumberOfFriends()
     {
