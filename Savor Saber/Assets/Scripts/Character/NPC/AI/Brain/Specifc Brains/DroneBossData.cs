@@ -8,11 +8,7 @@ public class DroneBossData : AIData
     {
         Protocols proto;
 
-        if (health > 7* (float)maxHealth /8)
-        {
-            meleeHunter = true;
-        }
-        else if (health > 3* (float)maxHealth /4)
+        if (health > 3* (float)maxHealth /4)
         {
             meleeHunter = false;
         }
