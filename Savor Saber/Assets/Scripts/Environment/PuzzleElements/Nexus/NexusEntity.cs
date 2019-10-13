@@ -12,8 +12,8 @@ public class NexusEntity : MonoBehaviour
     [HideInInspector]
     public bool activated;
 
-    private SpriteRenderer spriteRenderer;
-    new private Collider2D collider;
+    protected SpriteRenderer spriteRenderer;
+    new protected Collider2D collider;
 
     private void Awake()
     {
@@ -36,7 +36,7 @@ public class NexusEntity : MonoBehaviour
             Activate(true);
     }
 
-    public void Activate(bool b)
+    public virtual void Activate(bool b)
     {
         activated = b;
         spriteRenderer.color = b ? Color.white : new Color(1,1,1,0.25f);
