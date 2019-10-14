@@ -117,16 +117,6 @@ public class CharacterData : MonoBehaviour
                     damageParticleBurst.Play();
                 StartCoroutine(DamageEffectCr());
 
-                if (healthBar != null)
-                {
-                    healthBar.gameObject.SetActive(true);
-                    //Debug.Log("Update health bar");
-                    healthBar.value = (float)health / maxHealth;
-                    if (barCr != null)
-                        StopCoroutine(barCr);
-                    barCr = StartCoroutine(ShowHealthBar());
-                }
-
                 /*var ai = this.GetComponent<AIData>();
                 if (ai != null)
                 {
@@ -147,7 +137,16 @@ public class CharacterData : MonoBehaviour
                 }
                 health = 0;
             }
-            
+            if (healthBar != null)
+            {
+                healthBar.gameObject.SetActive(true);
+                //Debug.Log("Update health bar");
+                healthBar.value = (float)health / maxHealth;
+                if (barCr != null)
+                    StopCoroutine(barCr);
+                barCr = StartCoroutine(ShowHealthBar());
+            }
+
             // create a fear signal
             InstantiateSignal(4 , "Fear",  0.25f, true, true);
         }

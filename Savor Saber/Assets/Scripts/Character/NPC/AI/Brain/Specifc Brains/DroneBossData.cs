@@ -8,20 +8,25 @@ public class DroneBossData : AIData
     {
         Protocols proto;
 
-        if (health > 2*maxHealth/3)
+        if (health > 3* (float)maxHealth /4)
         {
-            // do nothing for a while
+            meleeHunter = false;
         }
-        else if (health > maxHealth/2)
+        else if (health > (float)maxHealth /2)
         {
-            Speed = 3f;
+            meleeHunter = true;
+        }
+        else if (health > (float)maxHealth /3)
+        {
+            meleeHunter = false;
         }
         else
         {
+            meleeHunter = true;
             this.Behavior.attackCooldown = 0.25f;
             this.Behavior.meleeAttackDelay = 0;
         }
-
+        /*
         var weakling = Checks.WeakestCreature();
         var closest = Checks.ClosestCreature(new string[] { "Predator" });
         float weakDist = ( weakling!=null ? Vector2.Distance(this.transform.position, weakling.transform.position) : 10);
@@ -30,8 +35,12 @@ public class DroneBossData : AIData
         if ((closeDist <= 5 && this.health > maxHealth/2) || closeDist <= 2)
             proto = Protocols.Melee;
         else
-            proto = Protocols.Ranged;
+            proto = Protocols.Ranged;*/
 
+        if (Checks.NumberOfEnemies() > 0)
+            proto = Protocols.Attack;
+        else
+            proto = Protocols.Wander;
         return proto;
     }
 }

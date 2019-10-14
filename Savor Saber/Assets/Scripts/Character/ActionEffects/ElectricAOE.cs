@@ -48,12 +48,16 @@ public class ElectricAOE : MonoBehaviour
     void Update()
     {
         var powered = gameObject.GetComponent<PoweredObjectCharger>();
-        if(powered.enabled == true){
-            // TEN TIMES DAMAGE??????????????????????????
-            // TIMES 4 from powered object???????????????
-            damageModifier = powered.damageBoostValue;
-        }else{
-            damageModifier = 1;
+        if (powered != null)
+        {
+            if (powered.enabled == true)
+            {
+                damageModifier = powered.damageBoostValue;
+            }
+            else
+            {
+                damageModifier = 1;
+            }
         }
     }
 
