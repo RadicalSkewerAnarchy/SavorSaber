@@ -19,6 +19,7 @@ public class CrosshairController : MonoBehaviour
     public Vector2 offset;
 
     private SpriteRenderer spr;
+    public Texture2D cursorTexture;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class CrosshairController : MonoBehaviour
         }
         else
         {
+            //Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             transform.position = GetMouseTarget();
             spr.color = new Color(0, 0, 0, 0);
         }
