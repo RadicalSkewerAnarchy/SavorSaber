@@ -1,0 +1,36 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class TutorialPearFeedManager : MonoBehaviour
+{
+    private int food;
+    [SerializeField]
+    private int maxFood;
+
+    public EventTrigger scene;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    public void Feed(int numFood)
+    {
+        food += numFood;
+        if(food >= maxFood)
+        {
+            Debug.Log("Fed max food, triggering scene");
+            scene.Trigger();
+            FlagManager.SetFlag("PearCheck", "true");
+        }
+    }
+
+
+}
