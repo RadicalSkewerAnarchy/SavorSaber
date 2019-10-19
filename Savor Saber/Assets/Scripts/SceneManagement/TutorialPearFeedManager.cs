@@ -9,6 +9,7 @@ public class TutorialPearFeedManager : MonoBehaviour
     private int maxFood;
 
     public EventTrigger scene;
+    public ExtendingBridge bridge;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +30,7 @@ public class TutorialPearFeedManager : MonoBehaviour
             Debug.Log("Fed max food, triggering scene");
             scene.Trigger();
             FlagManager.SetFlag("PearCheck", "true");
+            bridge.TurnOn();
         }
     }
 
