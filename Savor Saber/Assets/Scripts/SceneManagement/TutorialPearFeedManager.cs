@@ -10,6 +10,9 @@ public class TutorialPearFeedManager : MonoBehaviour
 
     public EventTrigger scene;
     public ExtendingBridge bridge;
+    [Header("Party management references")]
+    public Commander partyCommander;
+    public GameObject[] fruitantsToAdd;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,10 @@ public class TutorialPearFeedManager : MonoBehaviour
             scene.Trigger();
             FlagManager.SetFlag("PearCheck", "true");
             bridge.TurnOn();
+            foreach(GameObject fruitant in fruitantsToAdd)
+            {
+                partyCommander.JoinTeam(fruitant); 
+            }
         }
     }
 
