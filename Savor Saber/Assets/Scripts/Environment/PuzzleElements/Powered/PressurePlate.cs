@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 public class PressurePlate : PoweredObject
 {
@@ -96,7 +95,7 @@ public class PressurePlate : PoweredObject
     /// <returns></returns>
     private bool CheckValidCollisions()
     {
-        overlappingObject = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, 0.35f), new Vector2(1.5f, 0.75f), 0f);
+        overlappingObject = Physics2D.OverlapBoxAll(transform.position, new Vector2(1,1), 0f);
 
         if (overlappingObject.Length == 0)
             return false;
