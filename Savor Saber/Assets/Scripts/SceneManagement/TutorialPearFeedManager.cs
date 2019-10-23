@@ -34,10 +34,12 @@ public class TutorialPearFeedManager : MonoBehaviour
             scene.Trigger();
             FlagManager.SetFlag("PearCheck", "true");
             bridge.TurnOn();
+            
             foreach(GameObject fruitant in fruitantsToAdd)
             {
                 partyCommander.JoinTeam(fruitant); 
             }
+            //partyCommander.FamilyReunion();
         }
     }
 

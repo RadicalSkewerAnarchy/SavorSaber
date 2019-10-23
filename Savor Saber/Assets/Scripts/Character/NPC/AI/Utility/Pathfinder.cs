@@ -13,13 +13,14 @@ public class Pathfinder : MonoBehaviour
     [HideInInspector]
     public int bornOnto = 0;
     
-    public void Awake()
+    public void Start()
     {
         // waiting for other maps to load
-        //StartCoroutine(SetNodeGraphs(Random.Range(5f, 10f)));
+        //StartCoroutine(SetNodeGraphs(Random.Range(1f, 2f)));
 
         InitGraph();
     }
+    
 
     IEnumerator SetNodeGraphs(float time)
     {

@@ -44,7 +44,7 @@ public class Commander : MonoBehaviour
             Families.Add(fam.name, fam);
         }
 
-        CycleTargetFamily(0);
+        //CycleTargetFamily(0);
 
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -59,7 +59,7 @@ public class Commander : MonoBehaviour
             CycleTargetFamily();
         }*/
 
-        // PRESS ENTER TO ISSUE COMMAND
+        // PRESS numbers TO ISSUE COMMAND
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Verb = AIData.Protocols.Chase;
@@ -128,7 +128,7 @@ public class Commander : MonoBehaviour
     /// <summary>
     /// Make the current family Soma's party
     /// </summary>
-    private void FamilyReunion()
+    public void FamilyReunion()
     {
         // clear the party
         ClearParty();
@@ -159,30 +159,36 @@ public class Commander : MonoBehaviour
             Brain = member.GetComponent<AIData>();
             if (Brain != null)
             {
+                if (player == null) player = GameObject.FindGameObjectWithTag("Player");
+                else Debug.Log("Player not null, so should add to party");
                 // set player party
                 if (player != null)
                 {
                     PlayerData pd = player.GetComponent<PlayerData>();
-
-                    if (pd.party.Count >= partysize)
+                    if (pd == null) Debug.Log("Player Data is null!!!!");
+                    if (pd.party.Contains(member))
+                    {
+                        // do nothing
+                    }
+                    else if (partyoverride)
+                    {
+                        AddMember(member, Brain);
+                    }
+                    else if (pd.party.Count >= partysize)
                     {
                         // remove if over size
-                        if (partyoverride)
+                        AddMember(member, Brain);
+                        while (pd.party.Count > partysize)
                         {
-                            pd.party.Add(member);
-                            while (pd.party.Count > partysize)
-                            {
-                                LeaveTeam(pd.party[0]);
-                            }
+                            LeaveTeam(pd.party[0]);
                         }
-                        // else add no one
                     }
-                    else
+                    else if (pd.party.Count < partysize)
                     {
-                        pd.party.Add(member);
+                        AddMember(member, Brain);
                     }
+
                 }
-                else player = GameObject.FindGameObjectWithTag("Player");
                 // set mind set
                 Brain.CommandCompleted = false;
                 Brain.path = null;
@@ -190,6 +196,15 @@ public class Commander : MonoBehaviour
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }
         else Debug.Log(this.name + " : is trying to add a null member to the party");
+    }
+
+    private void AddMember(GameObject member, AIData brain)
+    {
+        PlayerData pd = player.GetComponent<PlayerData>();
+        pd.party.Add(member);
+        brain.CommandCompleted = false;
+        brain.path = null;
+        Debug.Log(member.name + " : has joined the party");
     }
 
     public void LeaveTeam(GameObject member)
@@ -205,6 +220,7 @@ public class Commander : MonoBehaviour
                 {
                     PlayerData pd = player.GetComponent<PlayerData>();
                     pd.party.Remove(member);
+                    Debug.Log(member.name + " : has left the party");
                 }
                 else player = GameObject.FindGameObjectWithTag("Player");
                 // set mind set
@@ -232,6 +248,8 @@ public class Commander : MonoBehaviour
             }
 
             pd.party.Clear();
+
+            Debug.Log("Party has been cleared!");
         }
         else player = GameObject.FindGameObjectWithTag("Player");
     }
