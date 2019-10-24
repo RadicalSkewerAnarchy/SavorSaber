@@ -40,8 +40,9 @@ public class TutorialPearFeedManager : MonoBehaviour
         if(food >= maxFood)
         {
             //Debug.Log("Fed max food, triggering scene");
-            scene.Trigger();
             FlagManager.SetFlag("PearCheck", "true");
+            scene.Trigger();
+
             bridge.TurnOn();
             
             foreach(GameObject fruitant in fruitantsToAdd)

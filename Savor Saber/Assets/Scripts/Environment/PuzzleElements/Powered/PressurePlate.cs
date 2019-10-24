@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(AudioSource))]
 public class PressurePlate : PoweredObject
 {
     private SpriteRenderer sr;
+    private AudioSource audioSource;
     private Collider2D[] overlappingObject = null;
     public PoweredObject[] targetObjects;
 
@@ -19,6 +21,7 @@ public class PressurePlate : PoweredObject
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,8 @@ public class PressurePlate : PoweredObject
                     targetObject.TurnOn();
             }
             sr.sprite = onSprite;
+            audioSource.pitch = 1.5f;
+            audioSource.Play();
             //Debug.Log("TURN ON");
         }
         else if (active && !pressed && hasChangedStates)
@@ -45,6 +50,8 @@ public class PressurePlate : PoweredObject
                     targetObject.ShutOff();
             }
             sr.sprite = offSprite;
+            audioSource.pitch = 0.75f;
+            audioSource.Play();
             //Debug.Log("TURN OFF");
         }
     }
