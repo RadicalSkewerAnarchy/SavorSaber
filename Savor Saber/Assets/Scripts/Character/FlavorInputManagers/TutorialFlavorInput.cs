@@ -13,6 +13,8 @@ public class TutorialFlavorInput : FlavorInputManager
     public TutorialPearFeedManager feedManager;
     public int limitPerFruitant = 1;
     private int amountFed = 0;
+    private bool countingActive = false;
+
     private void Start()
     {
         InitializeDictionary();
@@ -89,7 +91,7 @@ public class TutorialFlavorInput : FlavorInputManager
                     healed = true;
 
                     //FOR TUTORIAL: count how much this feeding adds to the total
-                    if(amountFed < limitPerFruitant)
+                    if(countingActive && (amountFed < limitPerFruitant))
                     {
                         feedManager.Feed(1);
                         amountFed++;
@@ -177,5 +179,10 @@ public class TutorialFlavorInput : FlavorInputManager
 
         // reset dicts
         ResetDictionary();
+    }
+
+    public void EnableCounting()
+    {
+        countingActive = true;
     }
 }

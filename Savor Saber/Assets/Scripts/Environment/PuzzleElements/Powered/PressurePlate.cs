@@ -27,7 +27,10 @@ public class PressurePlate : PoweredObject
     // Update is called once per frame
     void Update()
     {
-        bool pressed = IsPressed();
+        bool pressed = false;
+        if(active)
+            pressed = IsPressed();
+
         if (active && pressed && hasChangedStates)
         {
             //iterate over all target objects and turn them on if they aren't already
