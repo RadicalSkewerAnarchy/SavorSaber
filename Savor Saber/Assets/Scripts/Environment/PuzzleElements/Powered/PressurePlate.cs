@@ -36,7 +36,7 @@ public class PressurePlate : PoweredObject
             //iterate over all target objects and turn them on if they aren't already
             foreach (PoweredObject targetObject in targetObjects)
             {
-                if (!targetObject.active)
+                if (targetObject != null && !targetObject.active)
                     targetObject.TurnOn();
             }
             sr.sprite = onSprite;
@@ -49,7 +49,7 @@ public class PressurePlate : PoweredObject
             //iterate over all target objects and turn them off if they aren't already
             foreach (PoweredObject targetObject in targetObjects)
             {
-                if (targetObject.active)
+                if (targetObject != null && targetObject.active)
                     targetObject.ShutOff();
             }
             sr.sprite = offSprite;
