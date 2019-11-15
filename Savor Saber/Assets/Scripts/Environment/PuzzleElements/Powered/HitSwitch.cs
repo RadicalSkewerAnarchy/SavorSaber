@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class HitSwitch : FlavorInputManager
 {
 
     public PoweredObject[] TargetObjects;
     private bool active = false;
-
+    private AudioSource burnSFXPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        
+        burnSFXPlayer = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -29,7 +30,7 @@ public class HitSwitch : FlavorInputManager
             {
                 foreach (PoweredObject target in TargetObjects)
                 {
-                    target.ShutOff();
+                    //target.ShutOff();
                 }
                 active = false;
             }
@@ -40,6 +41,7 @@ public class HitSwitch : FlavorInputManager
                     target.TurnOn();
                 }
                 active = true;
+                burnSFXPlayer.Play();
             }
 
         }
