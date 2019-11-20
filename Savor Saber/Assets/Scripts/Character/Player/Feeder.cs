@@ -11,6 +11,9 @@ public class Feeder : MonoBehaviour
 
     private IngredientData[] ingredientArray;
 
+    public bool feedingRecruits = true;
+    public Commander partyCommander;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,11 @@ public class Feeder : MonoBehaviour
 
         FeedingTimeDelay = new WaitForSeconds(0.25f);
         hitbox.enabled = false;
+
+        if(partyCommander == null)
+        {
+            partyCommander = GameObject.Find("Gaia").GetComponent<Commander>();
+        }
     }
 
     // Update is called once per frame
@@ -81,6 +89,11 @@ public class Feeder : MonoBehaviour
                 playerInventory.ClearActiveSkewer();
             }
             ingredientArray = null;
+        }
+
+        if (feedingRecruits && collision.gameObject.tag == "Prey")
+        {
+            partyCommander.JoinTeam(collision.gameObject, 3, true);
         }
     }
 
