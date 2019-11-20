@@ -83,12 +83,15 @@ public class TutorialFlavorInput : FlavorInputManager
         bool rejected = false;
         foreach (IngredientData data in ingredientArray)
         {
+            bool isFavorite = false;
+            bool isReject = false;
             foreach (IngredientData favoriteIngredient in favoriteIngredients)
             {
                 if (data == favoriteIngredient)
                 {
-                    characterData.DoHeal(3);
+                    characterData.DoHeal(99);
                     healed = true;
+                    isFavorite = true;
 
                     //FOR TUTORIAL: count how much this feeding adds to the total
                     if(countingActive && (amountFed < limitPerFruitant))
@@ -103,6 +106,7 @@ public class TutorialFlavorInput : FlavorInputManager
                 if (data == rejectedIngredient)
                 {
                     rejected = true;
+                    isReject = true;
 
                     //spit out the rejected object
                     GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
@@ -111,6 +115,12 @@ public class TutorialFlavorInput : FlavorInputManager
                     rejectedSR.sprite = rejectedIngredient.image;
                     rejectedSO.data = rejectedIngredient;
                 }
+            }
+            //heal mildly if neither favorite nor reject
+            if (!isFavorite && !isReject)
+            {
+                characterData.DoHeal(3);
+                healed = true;
             }
         }
 
