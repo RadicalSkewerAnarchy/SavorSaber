@@ -53,11 +53,11 @@ public class Commander : MonoBehaviour
     void Update()
     {
         // CYCLE SETTINGS OF COMMANDS
-        /*
+        
         if (Input.GetKeyDown(KeyCode.O))
         {
             CycleTargetFamily();
-        }*/
+        }
 
         // PRESS numbers TO ISSUE COMMAND
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -160,12 +160,12 @@ public class Commander : MonoBehaviour
             if (Brain != null)
             {
                 if (player == null) player = GameObject.FindGameObjectWithTag("Player");
-                else Debug.Log("Player not null, so should add to party");
+                //else Debug.Log("Player not null, so should add to party");
                 // set player party
                 if (player != null)
                 {
                     PlayerData pd = player.GetComponent<PlayerData>();
-                    if (pd == null) Debug.Log("Player Data is null!!!!");
+                    //if (pd == null) Debug.Log("Player Data is null!!!!");
                     if (pd.party.Contains(member))
                     {
                         // do nothing

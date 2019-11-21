@@ -40,8 +40,8 @@ public class Pathfinder : MonoBehaviour
         possibleGraphs = GameObject.FindGameObjectsWithTag("NodeGraph");
         foreach (GameObject n in possibleGraphs)
         {
-            if (bornOnto == n.GetComponent<GraphNodePopulator>().birthPlace)
-                allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
+            //allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
+            allNodes = FindObjectOfType<AllNodesContainer>().gameObject;
         }
 
         if (allNodes != null)

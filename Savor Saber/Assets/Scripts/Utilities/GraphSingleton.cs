@@ -9,7 +9,6 @@ public class GraphSingleton
     GraphSingleton()
     {
         tiles = new List<GameObject>();
-        //Debug.Log("Singleton is created");
     }
     
     public static GraphSingleton Instance
@@ -19,7 +18,7 @@ public class GraphSingleton
             if (instance == null)
             {
                 instance = new GraphSingleton();
-
+                Debug.Log("GraphSingleton is created = refrence to 'AllNodes'");
             }
             return instance;
         }
