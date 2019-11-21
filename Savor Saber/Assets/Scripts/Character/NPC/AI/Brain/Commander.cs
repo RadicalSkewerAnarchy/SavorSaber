@@ -23,6 +23,7 @@ public class Commander : MonoBehaviour
     };
     public Criteria ObjectCriteria = Criteria.None;
     public GameObject Object;
+    public GameObject Cursor;
     public Vector2 Location;
 
     // AI specific knowledge
@@ -43,8 +44,6 @@ public class Commander : MonoBehaviour
         {
             Families.Add(fam.name, fam);
         }
-
-        //CycleTargetFamily(0);
 
         player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -70,10 +69,21 @@ public class Commander : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Verb = AIData.Protocols.Lazy;
-            ObjectCriteria = Criteria.None;
-            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+            // on first Lazy call: follow cursor
+            // on second: stay in place
+            if (Verb != AIData.Protocols.Lazy)
+            {
+                Verb = AIData.Protocols.Lazy;
+                ObjectCriteria = Criteria.None;
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Cursor, Location);
+            }
+            else
+            {
+                ObjectCriteria = Criteria.None;
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, null, Location);
+            }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
