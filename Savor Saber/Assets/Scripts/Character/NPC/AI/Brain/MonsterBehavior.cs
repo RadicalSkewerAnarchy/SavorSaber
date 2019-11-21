@@ -118,11 +118,11 @@ public class MonsterBehavior : MonoBehaviour
         if (ActionTimer < 0)
         {
             TransitionBehavior(AIData.Behave.Idle, "Idle");
-            if (actionAvailable)
+            /*if (actionAvailable)
             {
                 AiData.InstantiateSignal(1f, "Fear", -0.2f, false, true);
                 actionAvailable = false;
-            }
+            }*/
             return true;
         }
         else
@@ -139,7 +139,7 @@ public class MonsterBehavior : MonoBehaviour
         Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
-            //TransitionBehavior(AIData.Behave.Idle, "Idle");
+            TransitionBehavior(AIData.Behave.Idle, "Idle");
             return true;
         }
         else

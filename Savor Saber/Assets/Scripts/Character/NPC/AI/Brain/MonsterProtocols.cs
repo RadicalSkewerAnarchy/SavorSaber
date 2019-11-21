@@ -208,25 +208,26 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
-        #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
-        // Vector2 pos = new Vector2(-9.5f, -3.5f);
-        /*GameObject creature = Checks.ClosestCreature();
-        Vector2 pos;
-        if (creature != null)
-            pos = creature.gameObject.transform.position;
-        else
-            return;
-         */
-        //pos = new Vector2(-2.5f, -2.5f);
-        /*TileNode realPos = Checks.GetNearestNode(pos);
-        Debug.Log("The Tile Node " + realPos.name + " -- found: " + realPos.transform + " (" + realPos.x + ", " + realPos.y + ")");
-        NavTo(realPos);*/
-        #endregion
-        if (Behaviour.Idle())
+        GameObject targ = Checks.specialTarget;
+        Vector2 pos = Checks.specialPosition;
+        if (targ != null)
         {
-            //Wander(2f, 2f);
+            pos = targ.transform.position;
+            if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
+            {
+                Behaviour.Idle();
+            }
         }
+        else if (pos != Vector2.zero)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
+            {
+                Behaviour.Idle();
+                pos = Vector2.zero;
+            }
+        }
+        else
+            Behaviour.Idle();
     }
 
     // Runaway()

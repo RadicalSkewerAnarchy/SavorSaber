@@ -8,13 +8,13 @@ public class Squeezer : MonoBehaviour
 
     // number ranges
     // horizontal
-    public float horiLerp = 0;
+    private float horiLerp = 0;
     public float horiRange = 0;
     public float horiSpeed = 1;
     public float horiBase = 0;
 
     // vertical
-    public float vertLerp = 0;
+    private float vertLerp = 0;
     public float vertRange = 0;
     public float vertSpeed = 1;
     public float vertBase = 0;
@@ -81,5 +81,31 @@ public class Squeezer : MonoBehaviour
     public void ResetScale()
     {
         this.transform.localScale = origin;
+    }
+
+    public void Wiggle(float time, float vspeed, float hspeed, float vrange, float hrange)
+    {
+        horiRange = hrange;
+        horiSpeed = hspeed;
+        vertRange = vrange;
+        vertSpeed = vspeed;
+        SetGoals();
+
+        if (activate)
+        {
+            StopCoroutine(TimedWiggle(time));
+            StartCoroutine(TimedWiggle(time));
+        }
+        else
+        {
+            activate = true;
+            StartCoroutine(TimedWiggle(time));
+        }
+    }
+
+    private IEnumerator TimedWiggle(float time)
+    {
+        yield return new WaitForSeconds(time);
+        activate = false;
     }
 }

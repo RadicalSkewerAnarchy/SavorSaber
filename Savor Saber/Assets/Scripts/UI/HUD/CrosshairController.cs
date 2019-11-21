@@ -19,12 +19,15 @@ public class CrosshairController : MonoBehaviour
     public Vector2 offset;
 
     private SpriteRenderer spr;
+    private CrosshairClicker click;
+    public List<GameObject> lastClickedOn;
     public Texture2D cursorTexture;
 
     // Start is called before the first frame update
     void Start()
     {
         spr = GetComponent<SpriteRenderer>();
+        click = GetComponent<CrosshairClicker>();
     }
 
     // Update is called once per frame
@@ -52,7 +55,12 @@ public class CrosshairController : MonoBehaviour
         {
             //Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto);
             transform.position = GetMouseTarget();
-            spr.color = new Color(0, 0, 0, 0);
+
+            if (InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer))
+                lastClickedOn = click.ClickArea();
+            if (InputManager.GetButton(Control.Skewer, InputAxis.Skewer))
+                spr.color = new Color(1, 1, 1, 1);
+            else spr.color = new Color(0, 0, 0, 1);
         }
     }
 
