@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Feeder : MonoBehaviour
 {
@@ -8,11 +9,15 @@ public class Feeder : MonoBehaviour
     private Collider2D hitbox;
     private WaitForSeconds FeedingTimeDelay;
     private EntityController controller;
+    private PlayerData somaData;
 
     private IngredientData[] ingredientArray;
 
     public bool feedingRecruits = true;
     public Commander partyCommander;
+    public int maxPartySize = 3;
+    public GameObject partySelectTemplate;
+    public Canvas partySelectCanvas;
 
     // Start is called before the first frame update
     void Start()
@@ -20,14 +25,11 @@ public class Feeder : MonoBehaviour
         hitbox = GetComponent<Collider2D>();
         playerInventory = GetComponentInParent<Inventory>();
         controller = GetComponentInParent<EntityController>();
+        somaData = GetComponentInParent<PlayerData>();
 
         FeedingTimeDelay = new WaitForSeconds(0.25f);
         hitbox.enabled = false;
 
-        if(partyCommander == null)
-        {
-            partyCommander = GameObject.Find("Gaia").GetComponent<Commander>();
-        }
     }
 
     // Update is called once per frame
@@ -93,7 +95,23 @@ public class Feeder : MonoBehaviour
 
         if (feedingRecruits && collision.gameObject.tag == "Prey")
         {
-            partyCommander.JoinTeam(collision.gameObject, 3, true);
+            //If we're at max size, spawn the recruitment window
+            if(somaData.party.Count >= maxPartySize)
+            {
+                GameObject partySelectObject = Instantiate(partySelectTemplate, Vector3.zero, Quaternion.identity,partySelectCanvas.transform);
+                PartySelector partySelector = partySelectObject.GetComponent<PartySelector>();
+                partySelectObject.transform.localPosition = Vector3.zero;
+
+                //give the recruitment window its data
+                partySelector.SetParty(somaData.party, partyCommander);
+                partySelector.newFruitant = collision.gameObject;
+                
+            }
+            else
+            {
+                partyCommander.JoinTeam(collision.gameObject, maxPartySize, true);
+            }
+            
         }
     }
 
@@ -104,4 +122,6 @@ public class Feeder : MonoBehaviour
         hitbox.enabled = false;
         yield return null;
     }
+
+
 }
