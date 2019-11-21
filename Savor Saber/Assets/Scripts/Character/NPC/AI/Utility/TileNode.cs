@@ -27,7 +27,7 @@ public class TileNode : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         TileNode tn = collision.GetComponent<TileNode>();
-        Debug.Log(this.name + " collided with " + tn.name);
+        //Debug.Log(this.name + " collided with " + tn.name);
         if (tn != null)
         {
             if (!this.neighbors.Contains(tn))

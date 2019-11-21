@@ -116,7 +116,8 @@ public class PressurePlate : PoweredObject
                 if (collider.gameObject.layer == 0 || collider.gameObject.layer == 8)
                 {
                     //Debug.Log("Pressure plate collision with " + collider.gameObject);
-                    return true;
+                    if (collider.tag != "Cursor")
+                        return true;
                 }
             }
             return false;

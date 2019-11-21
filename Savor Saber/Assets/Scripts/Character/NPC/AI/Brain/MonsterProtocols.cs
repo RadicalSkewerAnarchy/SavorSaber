@@ -209,15 +209,25 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Lazy()
     {
         GameObject targ = Checks.specialTarget;
+        Vector2 pos = Checks.specialPosition;
         if (targ != null)
         {
-            Vector2 pos = targ.transform.position;
+            pos = targ.transform.position;
             if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
             {
                 Behaviour.Idle();
             }
         }
-        else Behaviour.Idle();
+        else if (pos != Vector2.zero)
+        {
+            if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
+            {
+                Behaviour.Idle();
+                pos = Vector2.zero;
+            }
+        }
+        else
+            Behaviour.Idle();
     }
 
     // Runaway()

@@ -9,6 +9,7 @@ public class Commander : MonoBehaviour
     public List<GameObject> Subjects;
     public List<GameObject> FamilyTrees;
     private Dictionary<string, GameObject> Families;
+    private CrosshairController cross;
     public string FamilyChoice;
 
     // the protocol to follow
@@ -25,6 +26,11 @@ public class Commander : MonoBehaviour
     public GameObject Object;
     public GameObject Cursor;
     public Vector2 Location;
+    private GameObject lastSelected;
+    private GameObject nearestFruitant;
+    private GameObject nearestDrone;
+    private GameObject nearestTileNode;
+    private GameObject nearestFood;
 
     // AI specific knowledge
     AIData Brain;
@@ -46,6 +52,8 @@ public class Commander : MonoBehaviour
         }
 
         player = GameObject.FindGameObjectWithTag("Player");
+        cross = GameObject.FindObjectOfType<CrosshairController>();
+        //Debug.Log(this.name + " found crosshair:" + cross.name);
     }
 
     // Update is called once per frame
@@ -56,6 +64,22 @@ public class Commander : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             CycleTargetFamily();
+        }
+
+        // click
+        if (InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer))
+        {
+            SetMostRelevant();
+            if (lastSelected == null)
+            {
+                if (player.GetComponent<PlayerData>().party.Contains(nearestFruitant))
+                {
+                    lastSelected = nearestFruitant;
+                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                }
+            }
+            else
+                SpecificCommand();
         }
 
         // PRESS numbers TO ISSUE COMMAND
@@ -71,15 +95,17 @@ public class Commander : MonoBehaviour
         {
             // on first Lazy call: follow cursor
             // on second: stay in place
-            if (Verb != AIData.Protocols.Lazy)
+            /*if (Verb != AIData.Protocols.Lazy)
             {
                 Verb = AIData.Protocols.Lazy;
                 ObjectCriteria = Criteria.None;
+                Location = Cursor.transform.position;
                 Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
                 GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Cursor, Location);
-            }
-            else
+            }*/
+            //else
             {
+                Verb = AIData.Protocols.Lazy;
                 ObjectCriteria = Criteria.None;
                 Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
                 GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, null, Location);
@@ -267,6 +293,89 @@ public class Commander : MonoBehaviour
     #endregion
 
     #region Giving Commands
+    
+    public void SetMostRelevant()
+    {
+        // null reset
+        nearestFruitant = null;
+        nearestDrone = null;
+        nearestTileNode = null;
+        nearestFood = null;
+
+        float minToFruit = Mathf.Infinity;
+        float minToDrone = Mathf.Infinity;
+        float minToNode = Mathf.Infinity;
+        float minToFood = Mathf.Infinity;
+
+        // navigate the last clicked on:
+        float dist;
+        foreach (GameObject member in cross.GetComponent<CrosshairController>().lastClickedOn)
+        {
+            dist = Vector2.Distance(this.transform.position, member.transform.position);
+            // check each and set when needed
+            if (member.GetComponent<AIData>() != null)
+            {
+                if (member.tag == "Prey")
+                {
+                    // fruitant
+                    if (dist < minToFruit)
+                    {
+                        minToFruit = dist;
+                        nearestFruitant = member;
+                    }
+                }
+                else
+                {
+                    // drone
+                    if (dist < minToDrone)
+                    {
+                        minToDrone = dist;
+                        nearestDrone = member;
+                    }
+                }
+            }
+            else if (member.GetComponent<TileNode>() != null)
+            {
+                // tile node
+                if (dist < minToNode)
+                {
+                    minToNode = dist;
+                    nearestTileNode = member;
+                }
+            }
+            else if (member.GetComponent<SkewerableObject>() != null)
+            {
+                // tile node
+                if (dist < minToFood)
+                {
+                    minToFood = dist;
+                    nearestFood = member;
+                }
+            }
+        }
+
+        Debug.Log("Set Most Relevant Objects: "
+                + "=== Fruitant: " + (nearestFruitant != null ? nearestFruitant.name : "null")
+                + "=== Drone: " + (nearestDrone != null ? nearestDrone.name : "null")
+                + "=== TileNode: " + (nearestTileNode != null ? nearestTileNode.name : "null")
+                + "=== Food: " + (nearestFood != null ? nearestFood.name : "null"));
+    }
+
+    public void SpecificCommand()
+    {
+        // act upon the selected
+        if (lastSelected != null)
+        {
+            Verb = AIData.Protocols.Lazy;
+            Object = nearestTileNode;
+            Location = Cursor.transform.position;
+            ObjectCriteria = Criteria.None;
+            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+            Command(lastSelected, Verb, Object, Location);
+            lastSelected = null;
+        }
+    }
+
     /// <summary>
     /// Apply commands to multiple agents
     /// </summary>
@@ -369,7 +478,7 @@ public class Commander : MonoBehaviour
                 // set specials
                 //set internals
                 this.Object = obj;
-                this.Location = (obj==null ? loc : obj.transform.position);
+                this.Location = (loc!=Vector3.zero ? loc : obj.transform.position);
                 // set inside brain
                 Brain.Checks.specialTarget = this.Object;
                 Brain.Checks.specialPosition = this.Location;
@@ -406,6 +515,7 @@ public class Commander : MonoBehaviour
             }
         }
     }
+    
 
     #endregion
 
