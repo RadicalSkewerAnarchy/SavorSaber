@@ -15,9 +15,9 @@ public class PaddlePearData : AIData
         else
         {
             int friends = Checks.NumberOfFriends();
-            if (friends >= 0 && friends < 3)
+            if (friends >= 0 && friends < 9)
                 p = Protocols.Wander;
-            else if (friends < 5)
+            else if (friends < 12)
                 p = Protocols.Party;
             else
                 p = Protocols.Runaway;
