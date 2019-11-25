@@ -19,8 +19,8 @@ public class TutorialPearFeedManager : MonoBehaviour
     private Commander.Criteria ObjectCriteria = Commander.Criteria.None;
     private GameObject Object;
     private AIData.Protocols Verb;
-    private Vector2 Location = Vector2.zero
-        ;
+    private Vector2 Location = Vector2.zero;
+    private Rigidbody2D fruitantRB;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +47,10 @@ public class TutorialPearFeedManager : MonoBehaviour
             
             foreach(GameObject fruitant in fruitantsToAdd)
             {
-                partyCommander.JoinTeam(fruitant); 
+                partyCommander.JoinTeam(fruitant);
+                fruitantRB = fruitant.GetComponent<Rigidbody2D>();
+                fruitantRB.constraints = RigidbodyConstraints2D.None;
+                fruitantRB.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
             //partyCommander.FamilyReunion();
         }
