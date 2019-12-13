@@ -39,4 +39,20 @@ public class PaddlePearData : AIData
                 break;
         }
     }
+
+    public override void OnStateExit(LifeState s)
+    {
+        base.OnStateExit(s);
+
+        switch (s)
+        {
+            case LifeState.overcharged:
+                this.GetComponent<SpriteRenderer>().color = Color.white;
+                FlavorInputManager fim = GetComponent<FlavorInputManager>();
+                fim.sugarCount = 0;
+                break;
+            default:
+                break;
+        }
+    }
 }
