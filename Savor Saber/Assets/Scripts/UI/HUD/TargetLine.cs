@@ -8,11 +8,16 @@ public class TargetLine : MonoBehaviour
     public Transform controllerTarget;
     private Vector2 mouseTarget;
     private SpriteRenderer parentSR;
+    private SpriteRenderer mySR;
+    [Header("Band-aid bugfix field:")]
+    public SpriteRenderer childSR;
 
     // Start is called before the first frame update
     void Start()
     {
-        parentSR = GetComponentInParent<SpriteRenderer>();
+        mySR = GetComponent<SpriteRenderer>();
+        //for whatever ungodly reason, this does not find the child spriterenderer
+        //childSR = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -37,5 +42,11 @@ public class TargetLine : MonoBehaviour
 
 
         }
+    }
+
+    public void SetActive(bool isActive)
+    {
+        mySR.enabled = isActive;
+        childSR.enabled = isActive;
     }
 }

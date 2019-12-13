@@ -82,6 +82,8 @@ public class EventTrigger : MonoBehaviour
         DisplayInventory.instance?.disableDuringCutscene?.SetActive(!start);
         DayNightController.instance.Paused = start;
         player.GetComponent<CameraController>().Detatched = start;
+        player.GetComponentInChildren<TargetLine>().SetActive(!start);
+        player.GetComponentInChildren<CrosshairController>().SetVisible(!start);
         InCutscene = start;
     }
 }
