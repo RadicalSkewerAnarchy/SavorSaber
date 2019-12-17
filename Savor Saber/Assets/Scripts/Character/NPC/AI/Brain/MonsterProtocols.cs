@@ -141,7 +141,7 @@ public partial class MonsterProtocols : MonoBehaviour
 
     public void Ranged(GameObject target)
     {
-        #region Get Nearest + Null Check
+        #region Null Check
         Vector2 pos;
         if (target != null)
         {
@@ -174,27 +174,28 @@ public partial class MonsterProtocols : MonoBehaviour
     public void NavRanged()
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = AiData.Checks.ClosestCreature();
-        Vector2 pos;
-        if (nearestEnemy != null)
+        //var nearestEnemy = AiData.Checks.ClosestCreature(new string[] { "Predator" }, false);
+        Vector2 pos = Checks.specialPosition;
+        GameObject targ = Checks.specialTarget;
+        if (targ != null)
         {
-            pos = nearestEnemy.gameObject.transform.position;
+            pos = targ.transform.position;
         }
-        else
+        /*else if (nearestEnemy != null)
         {
-            pos = transform.position;
-        }
+            pos = nearestEnemy.transform.position;
+        }*/
         #endregion
-        var targetPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-        var newPos = Vector3.ClampMagnitude(pos - targetPos, AiData.RangeAttackThreshold);
         TileNode tile = Checks.GetNearestNode(pos);
         if (CheckThreshold(pos, AiData.EngageHostileThreshold))
         {
             if (NavTo(tile, AiData.Speed))
             {
-                Behaviour.RangedAttack(pos, AiData.Speed);
+                //Behaviour.RangedAttack(pos, AiData.Speed);
+                Ranged(targ!=null ? targ : null);
             }
         }
+        else NavRunaway();
     }
 
     //end of aggro region
@@ -213,17 +214,17 @@ public partial class MonsterProtocols : MonoBehaviour
         if (targ != null)
         {
             pos = targ.transform.position;
-            if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
+            if (NavChase(targ, AiData.Speed, 0.5f))
             {
                 Behaviour.Idle();
             }
         }
         else if (pos != Vector2.zero)
         {
-            if (Behaviour.MoveTo(pos, AiData.Speed, 0.5f))
+            if (NavChase())
             {
                 Behaviour.Idle();
-                pos = Vector2.zero;
+                Checks.specialPosition = Vector2.zero;
             }
         }
         else
@@ -341,18 +342,21 @@ public partial class MonsterProtocols : MonoBehaviour
     public bool NavChase()
     {
         #region Get Nearest + Null Checks
-        // For now, fun away from your first enemy (SOMA most likely)
         Checks.SetCurrentTile();
-        Vector2 pos;
-        GameObject creature = Checks.specialTarget;
-        if (creature != null)
+        Vector2 pos = Checks.specialPosition;
+        GameObject targ = Checks.specialTarget;
+        if (targ != null)
         {
-            pos = creature.transform.position;
+            pos = targ.transform.position;
             TileNode tile = Checks.GetNearestNode(pos);
-            //Debug.Log(this.name + " naving to: " + tile.name);
+            return (NavTo(tile, AiData.Speed, 3));
+        }
+        else if (pos != Vector2.zero)
+        {
+            TileNode tile = Checks.GetNearestNode(pos);
             return NavTo(tile, AiData.Speed, 3);
         }
-        return false;
+        return true;
         #endregion
     }
 

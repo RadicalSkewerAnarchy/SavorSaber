@@ -26,11 +26,18 @@ public class Commander : MonoBehaviour
     public GameObject Object;
     public GameObject Cursor;
     public Vector2 Location;
-    private GameObject lastSelected;
+
+    #region Object Trackers
+    private Queue<GameObject> lastSelected = new Queue<GameObject>();
+    private GameObject[] selectedFruit = { null, null };
+    private GameObject[] selectedDrone = { null, null };
+    private GameObject[] selectedNode = { null, null };
+    private GameObject[] selectedFood = { null, null };
     private GameObject nearestFruitant;
     private GameObject nearestDrone;
     private GameObject nearestTileNode;
     private GameObject nearestFood;
+    #endregion
 
     // AI specific knowledge
     AIData Brain;
@@ -53,71 +60,179 @@ public class Commander : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         cross = GameObject.FindObjectOfType<CrosshairController>();
-        //Debug.Log(this.name + " found crosshair:" + cross.name);
+        if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //=========
+        // CLICK
+        //=========
+        if (InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer))
+        {
+            // SET ALL THE NEARESTS
+            SetMostRelevant();
+
+            // SELECT AGENT AND TARGET
+            // if we dont have anything selected...
+            // lastSelected can be a FRUIT or a DRONE
+            if (lastSelected.Count == 0)
+            {
+                // check if there is a closest party member
+                if (player.GetComponent<PlayerData>().party.Contains(nearestFruitant))
+                {
+                    SelectFruitant(nearestFruitant);
+                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
+                }
+                /*else if (nearestDrone != null)
+                {
+                    SelectDrone(nearestDrone);
+                    nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
+                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
+                }*/
+            }
+            else if (lastSelected.Count == 1)
+            {
+                // check if there is a closest party member
+                if (nearestDrone != null)
+                {
+                    SelectDrone(nearestDrone);
+                    nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
+                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(3);
+                }
+                else if (player.GetComponent<PlayerData>().party.Contains(nearestFruitant))
+                {
+                    // remove current selected fruitant
+                    //lastSelected.Dequeue();
+                    SelectFruitant(nearestFruitant);
+                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
+                }
+                else if (nearestTileNode != null)
+                {
+                    SelectNode(nearestTileNode);
+                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
+                }
+                
+                else Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(0);
+            }
+
+            // ISSUE COMMAND
+            // now we have a specific agent to give a command to...
+            // a specific command
+            if (lastSelected.Count > 1)
+            {
+                // could be FRUIT or DRONE or TILE or FOOD
+                GameObject applyCommandTo = lastSelected.Dequeue();
+                GameObject target = lastSelected.Dequeue(); ;
+                // if FRUIT
+                if (applyCommandTo.CompareTag("Prey"))
+                {
+                    if (target.CompareTag("Prey"))
+                    {
+                        Command(applyCommandTo, AIData.Protocols.Chase, target, target.transform.position);
+                    }
+                    else if (target.CompareTag("Predator"))
+                    {
+                        Command(applyCommandTo, AIData.Protocols.Attack, target, target.transform.position);
+                    }
+                    else // is tilenode
+                    {
+                        Command(applyCommandTo, AIData.Protocols.Lazy, target, Cursor.transform.position);
+                    }
+                }
+                // can "technically" command drones, but that's for later
+                else if (applyCommandTo.CompareTag("Predator"))
+                {
+
+                }
+                // clear selection after 2?
+                lastSelected.Clear();
+            }
+        }
+
+        #region keyboard input
         // CYCLE SETTINGS OF COMMANDS
-        
+
         if (Input.GetKeyDown(KeyCode.O))
         {
             CycleTargetFamily();
         }
 
-        // click
-        if (InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer))
+        // PRESS numbers TO ISSUE COMMAND
+        // or replace with general command enum?
+        bool in1 = Input.GetKeyDown(KeyCode.Alpha1);
+        bool in2 = Input.GetKeyDown(KeyCode.Alpha2);
+        bool in3 = Input.GetKeyDown(KeyCode.Alpha3);
+        if (in1 || in2 || in3)
         {
-            SetMostRelevant();
-            if (lastSelected == null)
+            // CHASE
+            if (in2)
             {
-                if (player.GetComponent<PlayerData>().party.Contains(nearestFruitant))
+                Verb = AIData.Protocols.Chase;
+                ObjectCriteria = Criteria.None;
+                Object = GameObject.FindGameObjectWithTag("Player");
+                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+            }
+            // IDLE
+            else if (in1)
+            {
+                // on first Lazy call: continue where you were going
+                // on second: stop and wait in place
+                if (Verb != AIData.Protocols.Lazy)
                 {
-                    lastSelected = nearestFruitant;
-                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                    Verb = AIData.Protocols.Lazy;
+                    ObjectCriteria = Criteria.None;
+                    Location = Vector2.zero;
+                    Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+                    GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, null, Location);
                 }
             }
-            else
-                SpecificCommand();
-        }
-
-        // PRESS numbers TO ISSUE COMMAND
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Verb = AIData.Protocols.Chase;
-            ObjectCriteria = Criteria.None;
-            Object = GameObject.FindGameObjectWithTag("Player");
-            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            // on first Lazy call: follow cursor
-            // on second: stay in place
-            /*if (Verb != AIData.Protocols.Lazy)
+            // ATTACK
+            else if (in3)
             {
-                Verb = AIData.Protocols.Lazy;
-                ObjectCriteria = Criteria.None;
-                Location = Cursor.transform.position;
+                Verb = AIData.Protocols.Attack;
+                ObjectCriteria = Criteria.NearestEnemy;
                 Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Cursor, Location);
-            }*/
-            //else
-            {
-                Verb = AIData.Protocols.Lazy;
-                ObjectCriteria = Criteria.None;
-                Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, null, Location);
+                GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Verb = AIData.Protocols.Attack;
-            ObjectCriteria = Criteria.NearestEnemy;
-            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-            GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
-        }
+        #endregion
+    }
+
+    private void SelectFruitant(GameObject go)
+    {
+        selectedFruit[1] = selectedFruit[0];
+        selectedFruit[0] = go;
+        lastSelected.Enqueue(go);
+    }
+    private void SelectDrone(GameObject go)
+    {
+        selectedDrone[1] = selectedDrone[0];
+        selectedDrone[0] = go;
+        lastSelected.Enqueue(go);
+    }
+    private void SelectNode(GameObject go)
+    {
+        selectedNode[1] = selectedNode[0];
+        selectedNode[0] = go;
+        lastSelected.Enqueue(go);
+    }
+    private void SelectFood(GameObject go)
+    {
+        selectedFood[1] = selectedFood[0];
+        selectedFood[0] = go;
+        lastSelected.Enqueue(go);
+    }
+
+    private bool isCloserThan(GameObject a, GameObject b)
+    {
+        return (Vector3.Distance(player.transform.position, a.transform.position) 
+              < Vector3.Distance(player.transform.position, b.transform.position));
     }
 
     //
@@ -125,6 +240,7 @@ public class Commander : MonoBehaviour
     //
 
     #region Specific Family Functions
+
     /// <summary>
     /// Change the current family of agents by dir
     /// AND update Soma's party
@@ -292,8 +408,8 @@ public class Commander : MonoBehaviour
 
     #endregion
 
-    #region Giving Commands
-    
+
+    #region Set Most Relevenat using Click
     public void SetMostRelevant()
     {
         // null reset
@@ -361,6 +477,9 @@ public class Commander : MonoBehaviour
                 + "=== Food: " + (nearestFood != null ? nearestFood.name : "null"));
     }
 
+    #endregion
+
+    #region Giving Commands
     public void SpecificCommand()
     {
         // act upon the selected
@@ -370,10 +489,12 @@ public class Commander : MonoBehaviour
             Object = nearestTileNode;
             Location = Cursor.transform.position;
             ObjectCriteria = Criteria.None;
-            Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
-            Command(lastSelected, Verb, Object, Location);
+            Debug.Log("Issuing Command: " + null + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
+            Command(null, Verb, Object, Location);
+
             lastSelected = null;
         }
+        else Debug.Log(this.name + " is giving a SPECIFIC COMMAND to a null agent!");
     }
 
     /// <summary>
@@ -482,7 +603,7 @@ public class Commander : MonoBehaviour
                 // set inside brain
                 Brain.Checks.specialTarget = this.Object;
                 Brain.Checks.specialPosition = this.Location;
-                
+                // reset pathfinder
                 Brain.path = null;
             }
         }

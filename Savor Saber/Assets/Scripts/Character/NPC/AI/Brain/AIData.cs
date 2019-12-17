@@ -407,11 +407,11 @@ public class AIData : CharacterData
         {
             case Protocols.Melee:
                 // melee
-                Protocol.Melee(null);
+                Protocol.NavMelee(null);
                 break;
             // ranged
             case Protocols.Ranged:
-                Protocol.Ranged();
+                Protocol.NavRanged();
                 break;
             // lazy
             case Protocols.Lazy:
@@ -431,7 +431,7 @@ public class AIData : CharacterData
                 break;
             // Runaway
             case Protocols.Runaway:
-                Protocol.Runaway();
+                Protocol.NavRunaway();
                 break;
             // Conga
             case Protocols.Conga:

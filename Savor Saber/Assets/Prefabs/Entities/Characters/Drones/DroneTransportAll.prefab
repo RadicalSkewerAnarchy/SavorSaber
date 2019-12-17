@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 117430861}
   - component: {fileID: 117430860}
   - component: {fileID: 117430859}
+  - component: {fileID: -3494510592986574560}
   m_Layer: 0
   m_Name: DroneTransportAll
   m_TagString: Predator
@@ -383,6 +384,8 @@ MonoBehaviour:
   previousLifeState: 0
   currentMoveState: 0
   previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 5
   DecisionTimerVariance: 2
@@ -488,6 +491,8 @@ MonoBehaviour:
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
   rewardItem: {fileID: 0}
+  sugarCount: 0
+  rushed: 0
   damageFromBaseSkewer: 1
   damageFromBulletSkewer: 2
 --- !u!114 &117430862
@@ -565,6 +570,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.23, y: 1.12}
   m_EdgeRadius: 0
+--- !u!114 &-3494510592986574560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117430858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22d5d46d74bd3534082b6101a852a887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activate: 0
+  horiRange: 0
+  horiSpeed: 1
+  horiBase: 0
+  vertRange: 0
+  vertSpeed: 1
+  vertBase: 0
 --- !u!1 &311356157
 GameObject:
   m_ObjectHideFlags: 0

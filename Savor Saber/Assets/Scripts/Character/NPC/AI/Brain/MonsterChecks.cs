@@ -141,9 +141,7 @@ public class MonsterChecks : MonoBehaviour
            // Debug.Log("Checking creatures");
             #region Check if Creature Deleted
             if (Creature == null)
-            {
                 continue;
-            }
             #endregion
             float dist = Vector2.Distance(transform.position, Creature.transform.position);
             if (dist < close)
@@ -158,7 +156,7 @@ public class MonsterChecks : MonoBehaviour
         return closestCreature;
     }
 
-    public GameObject ClosestCreature(string[] excludeTags)
+    public GameObject ClosestCreature(string[] excludeTags, bool exclude=true)
     {
         #region Initialize closest vars
         float close = closestDistance;
@@ -177,7 +175,7 @@ public class MonsterChecks : MonoBehaviour
             {
                 if (Creature.CompareTag(t))
                 {
-                    skip = true;
+                    skip = exclude;
                     break;
                 }
             }
