@@ -93,7 +93,7 @@ public class Feeder : MonoBehaviour
             ingredientArray = null;
         }
 
-        if (feedingRecruits && collision.gameObject.tag == "Prey")
+        if (feedingRecruits && collision.gameObject.tag == "Prey" && !somaData.party.Contains(collision.gameObject))
         {
             //If we're at max size, spawn the recruitment window
             if(somaData.party.Count >= maxPartySize)
