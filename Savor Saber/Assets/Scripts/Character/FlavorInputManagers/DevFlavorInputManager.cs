@@ -14,6 +14,9 @@ public class DevFlavorInputManager : FlavorInputManager
     public List<IngredientData> requestStates;
     public IngredientData currentRequestState;
 
+    public EventTrigger optionalScene;
+    private bool sceneTriggered = false;
+
     private void Start()
     {
         InitializeDictionary();
@@ -76,6 +79,13 @@ public class DevFlavorInputManager : FlavorInputManager
             sfxPlayer.Play();
         }
         CycleWeather();
+
+        if (!sceneTriggered && optionalScene != null)
+        {
+            optionalScene.Trigger();
+            sceneTriggered = true;
+        }
+
     }
 
     // "rewards" are spawned if the food is rejected!

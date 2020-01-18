@@ -11,7 +11,7 @@ public class EventTriggerCollision : EventTrigger
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Triggering Event: " + name);
+        Debug.Log("Triggering Event: " + name + "from collision with " + collision.gameObject);
         var colliders = GetComponents<Collider2D>();
         foreach (var c in colliders)
             c.enabled = false;
