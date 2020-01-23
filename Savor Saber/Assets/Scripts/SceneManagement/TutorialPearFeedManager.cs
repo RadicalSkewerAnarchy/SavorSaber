@@ -18,6 +18,7 @@ public class TutorialPearFeedManager : MonoBehaviour
 
     private Commander.Criteria ObjectCriteria = Commander.Criteria.None;
     private GameObject Object;
+
     private AIData.Protocols Verb;
     private Vector2 Location = Vector2.zero;
     private Rigidbody2D fruitantRB;
