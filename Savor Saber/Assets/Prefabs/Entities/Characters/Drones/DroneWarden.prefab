@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3438807810697713683}
   - component: {fileID: 3438807810697713710}
   - component: {fileID: 3489486309564790740}
-  - component: {fileID: 6848759088823161670}
   - component: {fileID: 3520222362336306285}
   - component: {fileID: 1988266223871799956}
   - component: {fileID: 6986105253283787910}
@@ -25,6 +24,7 @@ GameObject:
   - component: {fileID: 2985091234829434437}
   - component: {fileID: 7002823403103114771}
   - component: {fileID: 7992926086530777187}
+  - component: {fileID: 8845888299012000442}
   m_Layer: 0
   m_Name: DroneWarden
   m_TagString: Predator
@@ -335,70 +335,6 @@ MonoBehaviour:
     _keys: []
     _values: []
   data: {fileID: 0}
---- !u!114 &6848759088823161670
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2957363953361698809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armored: 0
-  Speed: 2
-  Perception: 7
-  MeleeAttackThreshold: 1
-  RangeAttackThreshold: 5
-  EngageHostileThreshold: 0
-  maxHealth: 4
-  health: 4
-  overchargeHealth: 0
-  PartySize: 3
-  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
-    type: 3}
-  damageDealt: 0
-  entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 1
-  initialFriendliness: 0
-  damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
-  healSFX: {fileID: 0}
-  deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
-  eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
-    type: 3}
-  damageParticleBurst: {fileID: 8375610762140078273}
-  eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
-    type: 3}
-  healthBar: {fileID: 5518554705024333698}
-  currentBehavior: 0
-  previousBehavior: 0
-  currentProtocol: 2
-  previousProtocol: 2
-  currentLifeState: 0
-  previousLifeState: 0
-  currentMoveState: 0
-  previousMoveState: 0
-  CommandCompleted: 1
-  CommandInProgress: 0
-  DecisionTimer: 0
-  DecisionTimerReset: 5
-  DecisionTimerVariance: 2
-  Behavior: {fileID: 0}
-  Protocol: {fileID: 0}
-  Checks: {fileID: 0}
-  sRenderer: {fileID: 0}
-  Awareness: {fileID: 0}
-  FoodPreference: 
-  updateAI: 0
-  updateBehavior: 1
-  meleeHunter: 1
-  rideVector: {x: 0, y: 0, z: 0}
-  path: []
 --- !u!114 &3520222362336306285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,6 +494,69 @@ MonoBehaviour:
   vertRange: 0
   vertSpeed: 1
   vertBase: 0
+--- !u!114 &8845888299012000442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2957363953361698809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a81051f8d2f55a46af621fe644198de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armored: 0
+  Speed: 2
+  Perception: 7
+  MeleeAttackThreshold: 1
+  RangeAttackThreshold: 5
+  EngageHostileThreshold: 0
+  maxHealth: 4
+  health: 4
+  overchargeHealth: 0
+  PartySize: 3
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
+  damageDealt: 0
+  entitiesKilled: 0
+  initialFear: 0
+  initialHunger: 0
+  initialHostility: 1
+  initialFriendliness: 0
+  damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
+  healSFX: {fileID: 0}
+  deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
+  eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
+  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
+  damageParticleBurst: {fileID: 8375610762140078273}
+  eatingParticleBurst: {fileID: 0}
+  healthBar: {fileID: 5518554705024333698}
+  currentBehavior: 0
+  previousBehavior: 0
+  currentProtocol: 2
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
+  DecisionTimer: 0
+  DecisionTimerReset: 1
+  DecisionTimerVariance: 0.2
+  Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
+  Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
+  Awareness: {fileID: 0}
+  FoodPreference: 
+  updateAI: 0
+  updateBehavior: 1
+  meleeHunter: 1
+  rideVector: {x: 0, y: 0, z: 0}
+  path: []
 --- !u!1001 &525366843112158219
 PrefabInstance:
   m_ObjectHideFlags: 0

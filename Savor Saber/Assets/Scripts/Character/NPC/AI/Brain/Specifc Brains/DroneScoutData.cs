@@ -6,6 +6,6 @@ public class DroneScoutData : AIData
 {
     public override Protocols DecideProtocol()
     {
-        return Protocols.Ranged;
+        return Protocols.Attack;
     }
 }
