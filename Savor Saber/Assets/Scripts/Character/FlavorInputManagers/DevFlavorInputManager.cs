@@ -16,6 +16,7 @@ public class DevFlavorInputManager : FlavorInputManager
 
     public EventTrigger optionalScene;
     private bool sceneTriggered = false;
+    private bool sceneReady = false;
 
     private void Start()
     {
@@ -78,13 +79,15 @@ public class DevFlavorInputManager : FlavorInputManager
             sfxPlayer.clip = rewardSFX;
             sfxPlayer.Play();
         }
-        CycleWeather();
-
-        if (!sceneTriggered && optionalScene != null)
+        if (!sceneTriggered && optionalScene != null && sceneReady)
         {
             optionalScene.Trigger();
             sceneTriggered = true;
         }
+
+        CycleWeather();
+
+
 
     }
 
@@ -153,5 +156,10 @@ public class DevFlavorInputManager : FlavorInputManager
         speechBubble.favoriteFood2 = requestStates[currentWeatherState];
         speechBubble.favoriteFood3 = requestStates[currentWeatherState];
         speechBubble.reset = true;
+    }
+
+    public void SetSceneReady(bool isReady)
+    {
+        sceneReady = isReady;
     }
 }
