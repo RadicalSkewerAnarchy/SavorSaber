@@ -59,7 +59,8 @@ public class PartyTeleportBeacon : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        numHits++;
+        if (collision.gameObject.tag != "Prey")
+            numHits++;
     }
 
     private void Teleport()
