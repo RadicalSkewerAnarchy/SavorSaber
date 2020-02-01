@@ -13,10 +13,10 @@ public class DevFlavorInputManager : FlavorInputManager
     // the way to transition to the next weather
     public List<IngredientData> requestStates;
     public IngredientData currentRequestState;
-
+    [Header("Cutscene fields")]
     public EventTrigger optionalScene;
     private bool sceneTriggered = false;
-    private bool sceneReady = false;
+    public bool sceneReady = false;
 
     private void Start()
     {
