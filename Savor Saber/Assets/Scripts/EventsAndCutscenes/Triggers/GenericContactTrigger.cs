@@ -5,7 +5,8 @@ using UnityEngine.Events;
 public class GenericContactTrigger : PoweredObject
 {
     public UnityEvent callOnActivation = new UnityEvent();
-
+    public bool repeatable = false;
+    private bool triggered = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,12 @@ public class GenericContactTrigger : PoweredObject
     {
         if (active && collision.gameObject.tag == "Player")
         {
-            callOnActivation.Invoke();
+            if(repeatable || !triggered)
+            {
+                triggered = true;
+                callOnActivation.Invoke();
+            }
+            
         }
     }
 }

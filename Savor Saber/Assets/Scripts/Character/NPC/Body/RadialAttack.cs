@@ -45,7 +45,12 @@ public class RadialAttack : MonoBehaviour
 
     public void Activate()
     {
-        StartCoroutine(FireLoop());
+        if (!active)
+        {
+            active = true;
+            StartCoroutine(FireLoop());
+        }
+        
     }
 
     public void Deactivate()
