@@ -30,10 +30,12 @@ public class DevFlavorInputManager : FlavorInputManager
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CycleWeather(1);
         }
+        */
     }
 
     // when fed compare with desired request
@@ -43,6 +45,8 @@ public class DevFlavorInputManager : FlavorInputManager
     //      spawn the same items back
     public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
+        Debug.Log("DEVOURER HAS BEEN FED. GOD HAVE MERCY ON OUR SOULS.");
+        Debug.Log("Fed by player: " + fedByPlayer);
         IngredientData check = requestStates[currentWeatherState];
 
         bool correct = true;
@@ -63,6 +67,7 @@ public class DevFlavorInputManager : FlavorInputManager
 
         if (correct)
         {
+            Debug.Log("Detected correct ingredients for request state");
             RespondToIngredients(fedByPlayer);
         }
         else
@@ -86,9 +91,6 @@ public class DevFlavorInputManager : FlavorInputManager
         }
 
         CycleWeather();
-
-
-
     }
 
     // "rewards" are spawned if the food is rejected!
@@ -120,6 +122,7 @@ public class DevFlavorInputManager : FlavorInputManager
     /// <param name="direction">up a state (+), or down a state (-)</param>
     public virtual void CycleWeather(int direction=1)
     {
+        Debug.Log("Beginning weather cycle");
         currentWeatherState += direction;
         currentWeatherState %= weatherStates.Count;
 
