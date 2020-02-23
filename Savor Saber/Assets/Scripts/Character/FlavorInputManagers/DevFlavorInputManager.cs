@@ -47,7 +47,7 @@ public class DevFlavorInputManager : FlavorInputManager
     {
         Debug.Log("DEVOURER HAS BEEN FED. GOD HAVE MERCY ON OUR SOULS.");
         Debug.Log("Fed by player: " + fedByPlayer);
-        IngredientData check = requestStates[currentWeatherState];
+        IngredientData check = requestStates[Mathf.Clamp(currentWeatherState, 0, requestStates.Count-1)];
 
         bool correct = true;
         int i = 0;
@@ -62,6 +62,7 @@ public class DevFlavorInputManager : FlavorInputManager
             i++;
         }
 
+        // check that there are 3 ingredients
         if (i != 3)
             correct = false;
 
@@ -79,6 +80,8 @@ public class DevFlavorInputManager : FlavorInputManager
     // cycle the weather
     public override void RespondToIngredients(bool fedByPlayer)
     {
+        CycleWeather();
+
         if (sfxPlayer != null)
         {
             sfxPlayer.clip = rewardSFX;
@@ -89,8 +92,6 @@ public class DevFlavorInputManager : FlavorInputManager
             optionalScene.Trigger();
             sceneTriggered = true;
         }
-
-        CycleWeather();
     }
 
     // "rewards" are spawned if the food is rejected!
@@ -154,10 +155,11 @@ public class DevFlavorInputManager : FlavorInputManager
         }
 
         // update new food request
-        currentRequestState = requestStates[currentWeatherState];
-        speechBubble.favoriteFood1 = requestStates[currentWeatherState];
-        speechBubble.favoriteFood2 = requestStates[currentWeatherState];
-        speechBubble.favoriteFood3 = requestStates[currentWeatherState];
+        var state = Mathf.Clamp(currentWeatherState, 0, requestStates.Count-1);
+        currentRequestState = requestStates[state];
+        speechBubble.favoriteFood1 = requestStates[state];
+        speechBubble.favoriteFood2 = requestStates[state];
+        speechBubble.favoriteFood3 = requestStates[state];
         speechBubble.reset = true;
     }
 

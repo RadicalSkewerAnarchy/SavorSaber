@@ -113,6 +113,7 @@ public class Commander : MonoBehaviour
                 }
                 else if (nearestTileNode != null)
                 {
+                    // go to tile node
                     SelectNode(nearestTileNode);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
@@ -127,7 +128,8 @@ public class Commander : MonoBehaviour
             {
                 // could be FRUIT or DRONE or TILE or FOOD
                 GameObject applyCommandTo = lastSelected.Dequeue();
-                GameObject target = lastSelected.Dequeue(); ;
+                GameObject target = lastSelected.Dequeue();
+                Debug.Log($"Click Command: Member {applyCommandTo.name}, Target {target.name}");
                 // if FRUIT
                 if (applyCommandTo.CompareTag("Prey"))
                 {
@@ -197,6 +199,7 @@ public class Commander : MonoBehaviour
             {
                 Verb = AIData.Protocols.Attack;
                 ObjectCriteria = Criteria.NearestEnemy;
+                Object = null;
                 Debug.Log("Issuing Command: " + FamilyChoice + " " + Verb + ": crit-- " + ObjectCriteria + ", obj-- " + Object + ", loc-- " + Location);
                 GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
             }
@@ -425,7 +428,8 @@ public class Commander : MonoBehaviour
 
         // navigate the last clicked on:
         float dist;
-        foreach (GameObject member in cross.GetComponent<CrosshairController>().lastClickedOn)
+        var collection = cross.GetComponent<CrosshairController>().lastClickedOn;
+        foreach (GameObject member in collection)
         {
             dist = Vector2.Distance(this.transform.position, member.transform.position);
             // check each and set when needed
@@ -470,7 +474,7 @@ public class Commander : MonoBehaviour
             }
         }
 
-        Debug.Log("Set Most Relevant Objects: "
+        Debug.Log("Set Most Relevant Objects for Command: "
                 + "=== Fruitant: " + (nearestFruitant != null ? nearestFruitant.name : "null")
                 + "=== Drone: " + (nearestDrone != null ? nearestDrone.name : "null")
                 + "=== TileNode: " + (nearestTileNode != null ? nearestTileNode.name : "null")
@@ -564,6 +568,7 @@ public class Commander : MonoBehaviour
                 Brain.currentProtocol = verb;
                 // set specials
                 GameObject go = ParseObjectCriteria(sub, obj);
+                Debug.Log($"{sub.name} --> Parsed target: {(go != null ? go.name : "null")}");
                 if (go != null)
                 {
                     //set internals
@@ -572,6 +577,11 @@ public class Commander : MonoBehaviour
                     // set inside brain
                     Brain.Checks.specialTarget = Object;
                     Brain.Checks.specialPosition = Location;
+                }
+                else
+                {
+                    Brain.Checks.specialTarget = null;
+                    Brain.Checks.specialPosition = Vector2.zero;
                 }
                 Brain.path = null;
             }
@@ -596,10 +606,16 @@ public class Commander : MonoBehaviour
             {
                 // set protocol
                 Brain.currentProtocol = verb;
+
                 // set specials
-                //set internals
                 this.Object = obj;
-                this.Location = (loc!=Vector3.zero ? loc : obj.transform.position);
+
+                if (loc != Vector3.zero)
+                    this.Location = loc;
+                else if (obj != null)
+                    this.Location = obj.transform.position;
+                else
+                    this.Location = Vector2.zero;
                 // set inside brain
                 Brain.Checks.specialTarget = this.Object;
                 Brain.Checks.specialPosition = this.Location;
@@ -674,7 +690,12 @@ public class Commander : MonoBehaviour
     GameObject ParseObjectCriteria(GameObject sub, Criteria crit)
     {
         if (crit == Criteria.NearestEnemy)
-            return Brain.Checks.ClosestCreature(new string[] { (sub.tag == "Prey" ? "Prey" : "Predator") });
+        {
+            if (sub.CompareTag("Prey"))
+                return Brain.Checks.ClosestCreature(new string[] { "Prey", "Player" });
+            else
+                return Brain.Checks.ClosestCreature(new string[] { "Predator" });
+        }
         else if (crit == Criteria.NearestFriend)
             return Brain.Checks.ClosestCreature(new string[] { (sub.tag == "Prey" ? "Predator" : "Prey") });
         else

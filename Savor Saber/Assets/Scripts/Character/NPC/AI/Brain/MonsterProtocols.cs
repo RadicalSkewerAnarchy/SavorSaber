@@ -40,7 +40,7 @@ public partial class MonsterProtocols : MonoBehaviour
     public void Melee(GameObject target)
     {
         #region Get Nearest + Null Check
-        var nearestEnemy = target;
+        var nearestEnemy = (target);
         Vector2 pos;
         if (target != null)
         {

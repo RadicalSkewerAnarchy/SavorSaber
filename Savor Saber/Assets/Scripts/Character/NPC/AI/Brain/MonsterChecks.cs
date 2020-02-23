@@ -202,7 +202,7 @@ public class MonsterChecks : MonoBehaviour
     public GameObject WeakestCreature()
     {
         #region Initialize closest vars
-        float weak = 5;
+        float weak = 100;
         GameObject weakest = null;
         CharacterData cd;
         #endregion
