@@ -97,6 +97,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1278d4d79ffd154b898771e3df1e405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  active: 0
+  canBeSourCharged: 0
   droneType: {fileID: 7874833132442233986, guid: 7a072c03e44e906419ba50688b48ad6e,
     type: 3}
   allNodes: {fileID: 0}
@@ -105,6 +107,7 @@ MonoBehaviour:
   onSprite: {fileID: 21300000, guid: 39f8ed995bd8b6349b1cfc2d50d2c9a2, type: 3}
   offSprite: {fileID: 21300000, guid: 0d7375e508a18234d8804b698f6cea38, type: 3}
   deadSprite: {fileID: 21300000, guid: 088dcc365ac1aad46852f5b484fc25e8, type: 3}
+  minionList: {fileID: 0}
 --- !u!82 &5098209837898382595
 AudioSource:
   m_ObjectHideFlags: 0
@@ -114,7 +117,8 @@ AudioSource:
   m_GameObject: {fileID: 5098209837898382593}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4312521538007714194, guid: 3cd0780092f302a469a7ccb994bc74cc,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 8f2fce5e9693e3c48a6ca5be96e4aeb3, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1607,6 +1611,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 0
     mode: 0
     timeMode: 0
@@ -1724,7 +1729,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 0}
     flipU: 0
@@ -2535,8 +2540,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -4895,14 +4953,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae11695d2d75954d96805c620f25535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowRegrow: 0
-  health: 10
-  dropChance: 100
-  dropOnDestroy: {fileID: 0}
-  normalSprite: {fileID: 21300000, guid: 39f8ed995bd8b6349b1cfc2d50d2c9a2, type: 3}
-  destroyedSprite: {fileID: 0}
-  respawnTime: 0
+  maxHealth: 0
   destroyed: 0
+  dropOnDestroy: {fileID: 0}
+  dropChance: 100
+  destroyedSprite: {fileID: 0}
+  allowRegrow: 0
+  respawnTime: 0
+  skewerable: 0
+  rooted: 1
+  staySolid: 0
   particles: {fileID: 0}
   wiggleTime: 4
   wiggleSpeed: 0.3

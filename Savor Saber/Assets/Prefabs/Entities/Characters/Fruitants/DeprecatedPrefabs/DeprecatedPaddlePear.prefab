@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 307149032777373619}
   - component: {fileID: 1411470462990942303}
   m_Layer: 0
-  m_Name: PaddlePear
+  m_Name: DeprecatedPaddlePear
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,7 +182,8 @@ AudioSource:
   m_GameObject: {fileID: 6411723353759096250}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -4312521538007714194, guid: 3cd0780092f302a469a7ccb994bc74cc,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -459,6 +460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armored: 0
   Speed: 1
   Perception: 8
   MeleeAttackThreshold: 1
@@ -466,6 +468,7 @@ MonoBehaviour:
   EngageHostileThreshold: 2
   maxHealth: 12
   health: 12
+  overchargeHealth: 0
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
@@ -487,20 +490,27 @@ MonoBehaviour:
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
-  path: []
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 0.5
   DecisionTimerVariance: 0.25
   Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
   Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
   Awareness: {fileID: 0}
-  Friends: []
-  Enemies: []
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
+  path: []
 --- !u!114 &5158955316715184632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,6 +544,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestFriend: {fileID: 0}
   closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
@@ -563,6 +574,7 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
+  attackCooldown: 0.5
   meleeAttackDuration: 2
   meleeAttackDelay: 0
   meleeAttackDimensions: {x: 2, y: 2}
@@ -611,6 +623,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allNodes: {fileID: 0}
+  possibleGraphs: []
+  bornOnto: 0
 --- !u!114 &1411470462990942303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,21 +638,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   favoriteIngredients:
-  - Acorn
-  favoriteFlavors: 1
-  charmThreshhold: 1
-  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
-    type: 3}
-  amountRewardItem: 2
+  - {fileID: 0}
+  rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
+  rejectSFX: {fileID: 0}
   charmTime: 0
   shieldSize: 1
   dotTicLength: 0.3
-  electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
+  rejectedObjectTemplate: {fileID: 0}
+  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
     type: 3}
-  saltShieldTemplate: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
-    type: 3}
-  electricSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
+  sugarCount: 0
+  rushed: 0
 --- !u!1001 &433932540774903821
 PrefabInstance:
   m_ObjectHideFlags: 0
