@@ -7,7 +7,7 @@ public class TutorialFlavorInput : FlavorInputManager
 {
 
     #region Deprecated Fields
-    private int amountRewardItem = 2;
+    //private int amountRewardItem = 2;
     #endregion
     [Header("Tutorial cutscene settings")]
     public TutorialPearFeedManager feedManager;

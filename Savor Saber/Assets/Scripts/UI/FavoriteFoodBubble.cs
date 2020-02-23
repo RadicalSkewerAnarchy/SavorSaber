@@ -26,7 +26,7 @@ public class FavoriteFoodBubble : MonoBehaviour
     public IngredientData favoriteFood3;
     GameObject player;
     public GameObject audioPlayer;
-    public AudioClip audio;
+    public AudioClip audioFX;
 
     // Start is called before the first frame update
     void Start()
@@ -88,10 +88,10 @@ public class FavoriteFoodBubble : MonoBehaviour
                 if (!keep)
                     StartCoroutine(EndAfterSeconds(2));
 
-                if (audio != null)
+                if (audioFX != null)
                 {
                     GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                    sfx.GetComponent<PlayAndDestroy>().Play(audio);
+                    sfx.GetComponent<PlayAndDestroy>().Play(audioFX);
                     sfx.GetComponent<AudioSource>().volume /= 2;
                 }
                 reset = false;
