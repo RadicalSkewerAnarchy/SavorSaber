@@ -42,11 +42,13 @@ public class PartyTeleportBeacon : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(Scan());
         }
+        radar.transform.position = transform.parent.position;
     }
 
     private IEnumerator Scan()
     {
         radar.SetActive(true);
+        radar.transform.position = transform.parent.position;
         teleporting = true;
         scanner.enabled = true;
         numHits = 0;
