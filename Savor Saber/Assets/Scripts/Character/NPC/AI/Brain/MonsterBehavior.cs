@@ -267,8 +267,10 @@ public class MonsterBehavior : MonoBehaviour
     /// </summary>
     public bool RangedAttack(Vector2 target, float speed)
     {
+        //Debug.Log("Entering RangedAttack Behavior");
         if (!isAttacking)
         {
+            //Debug.Log("Not currently executing attack");
             #region Attack
             isAttacking = true;
             TransitionBehavior(AIData.Behave.Attack, "Ranged");
