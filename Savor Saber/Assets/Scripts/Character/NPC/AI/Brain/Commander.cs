@@ -61,11 +61,13 @@ public class Commander : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         cross = GameObject.FindObjectOfType<CrosshairController>();
         if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
+
+        Debug.Log($"Commander {this.name} has been awoken");
         
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         //=========
         // CLICK
@@ -83,23 +85,17 @@ public class Commander : MonoBehaviour
                 // check if there is a closest party member
                 if (player.GetComponent<PlayerData>().party.Contains(nearestFruitant))
                 {
-                    SelectFruitant(nearestFruitant);
+                    SelectEnqueue(nearestFruitant);
                     nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
-                /*else if (nearestDrone != null)
-                {
-                    SelectDrone(nearestDrone);
-                    nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
-                    Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
-                }*/
             }
             else if (lastSelected.Count == 1)
             {
                 // check if there is a closest party member
                 if (nearestDrone != null)
                 {
-                    SelectDrone(nearestDrone);
+                    SelectEnqueue(nearestDrone);
                     nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(3);
                 }
@@ -107,14 +103,14 @@ public class Commander : MonoBehaviour
                 {
                     // remove current selected fruitant
                     //lastSelected.Dequeue();
-                    SelectFruitant(nearestFruitant);
+                    SelectEnqueue(nearestFruitant);
                     nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
                 else if (nearestTileNode != null)
                 {
                     // go to tile node
-                    SelectNode(nearestTileNode);
+                    SelectEnqueue(nearestTileNode);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
                 
@@ -207,28 +203,8 @@ public class Commander : MonoBehaviour
         #endregion
     }
 
-    private void SelectFruitant(GameObject go)
+    void SelectEnqueue(GameObject go)
     {
-        selectedFruit[1] = selectedFruit[0];
-        selectedFruit[0] = go;
-        lastSelected.Enqueue(go);
-    }
-    private void SelectDrone(GameObject go)
-    {
-        selectedDrone[1] = selectedDrone[0];
-        selectedDrone[0] = go;
-        lastSelected.Enqueue(go);
-    }
-    private void SelectNode(GameObject go)
-    {
-        selectedNode[1] = selectedNode[0];
-        selectedNode[0] = go;
-        lastSelected.Enqueue(go);
-    }
-    private void SelectFood(GameObject go)
-    {
-        selectedFood[1] = selectedFood[0];
-        selectedFood[0] = go;
         lastSelected.Enqueue(go);
     }
 

@@ -43,11 +43,11 @@ public class CrosshairClicker : MonoBehaviour
         foreach (Collider2D member in collected)
         {
             GameObject go = member.gameObject;
-            Debug.Log(" has been clicked on..." + go.name + " has been clicked on...");
+            //Debug.Log(" has been clicked on..." + go.name + " has been clicked on...");
             all.Add(go);
         }
 
-        Debug.Log(this.name + " returning Clicked On area.");
+        Debug.Log(this.name + " returning Clicked On area: " + all.ToString());
         return all;
     }
 
