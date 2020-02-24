@@ -97,6 +97,7 @@ public class CrosshairController : MonoBehaviour
 
     public void SetVisible(bool isVisible)
     {
-        spr.enabled = isVisible;
+        //if(spr != null)
+            //spr.enabled = isVisible;
     }
 }
