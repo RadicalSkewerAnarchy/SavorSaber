@@ -36,6 +36,8 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
         isOpen = false;
         CircleCollider2D poison = GetComponentInChildren<CircleCollider2D>();
         poison.enabled = true;
+        CapsuleCollider2D baseCollider = GetComponentInChildren<CapsuleCollider2D>();
+        baseCollider.enabled = true;
         ParticleSystem poisonParticles = GetComponent<ParticleSystem>();
         poisonAnimator.Play("Gas");
         poisonParticles.Play();
@@ -46,6 +48,8 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
         isOpen = true;
         CircleCollider2D poison = GetComponentInChildren<CircleCollider2D>();
         poison.enabled = false;
+        CapsuleCollider2D baseCollider = GetComponentInChildren<CapsuleCollider2D>();
+        baseCollider.enabled = false;
         ParticleSystem poisonParticles = GetComponent<ParticleSystem>();
         poisonAnimator.Play("Dead");
         poisonParticles.Stop();
