@@ -172,14 +172,14 @@ public class TextMacros : MonoBehaviour
                 if (keySkewer == KeyCode.None)
                     imgKey = "JoyLT";
                 else
-                    imgKey = controlMap[keySkewer];
+                    imgKey = "LMB"; //controlMap[keySkewer];
                 break;
             case "throw":
                 var keyThrow = keyBinds[Control.Throw];
                 if (keyThrow == KeyCode.None)
                     imgKey = "JoyRT";
                 else
-                    imgKey = controlMap[keyThrow];
+                    imgKey = "RMB";//controlMap[keyThrow];
                 break;
             case "interact":
                 imgKey = controlMap[keyBinds[Control.Interact]];
