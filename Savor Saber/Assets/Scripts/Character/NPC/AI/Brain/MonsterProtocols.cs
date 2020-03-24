@@ -39,8 +39,9 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Melee(GameObject target)
     {
+        //Debug.Log("Entering Melee Protocol. Target Null: " + (target == null));
         #region Get Nearest + Null Check
-        var nearestEnemy = target;
+        var nearestEnemy = (target);
         Vector2 pos;
         if (target != null)
         {
@@ -141,15 +142,21 @@ public partial class MonsterProtocols : MonoBehaviour
 
     public void Ranged(GameObject target)
     {
+        //Debug.Log("Entering Ranged Protocol");
         #region Null Check
         Vector2 pos;
+        var nearestEnemy = (target);
         if (target != null)
         {
             pos = target.transform.position;
         }
         else
         {
-            return;
+            nearestEnemy = Checks.ClosestCreature(new string[] { (this.tag == "Prey" ? "Prey" : "Predator") });
+            if (nearestEnemy != null)
+                pos = nearestEnemy.transform.position;
+            else
+                return;
         }
         #endregion
         var rat = AiData.RangeAttackThreshold;
@@ -157,6 +164,7 @@ public partial class MonsterProtocols : MonoBehaviour
         var engage = CheckRangedThreshold(pos, rat, eht);
         if (engage < 0)
         {
+            //Debug.Log("Engage < 0");
             if (Behaviour.MoveFrom(pos, AiData.Speed, rat - eht))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
@@ -164,12 +172,17 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         else if (engage > 0)
         {
+            //Debug.Log("Engage > 0");
             if (Behaviour.MoveTo(pos, AiData.Speed, rat + eht))
             {
                 Behaviour.RangedAttack(pos, AiData.Speed);
             }
         }
-        else Behaviour.RangedAttack(pos, AiData.Speed);
+        else
+        {
+            //Debug.Log("Engage == 0");
+            Behaviour.RangedAttack(pos, AiData.Speed);
+        }
     }
     public void NavRanged()
     {

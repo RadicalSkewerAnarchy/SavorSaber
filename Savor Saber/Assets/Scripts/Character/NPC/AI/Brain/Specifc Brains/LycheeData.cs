@@ -10,7 +10,7 @@ public class LycheeData : AIData
        
         if(Checks.NumberOfEnemies() > 0)
         {
-            p = Protocols.Runaway;
+            p = Protocols.Attack;
         }
         else
         {

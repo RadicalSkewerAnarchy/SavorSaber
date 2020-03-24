@@ -9,13 +9,13 @@ public class PoweredDoor : PoweredObject
 
     private SpriteRenderer sr;
     private Animator gateAnimator;
-    private Collider2D collider;
+    private Collider2D blocker;
     // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         gateAnimator = GetComponent<Animator>();
-        collider = GetComponent<Collider2D>();
+        blocker = GetComponent<Collider2D>();
     }
 
     // Update is called once per frame
@@ -28,7 +28,7 @@ public class PoweredDoor : PoweredObject
     {
         base.TurnOn();
         //sr.color = new Color(0, 0, 0, 0);
-        collider.enabled = false;
+        blocker.enabled = false;
         gateAnimator.Play("Open");
     }
 
@@ -37,7 +37,7 @@ public class PoweredDoor : PoweredObject
         base.ShutOff();
 
         //sr.color = Color.white;
-        collider.enabled = true;
+        blocker.enabled = true;
         gateAnimator.Play("Close");
     }
 }

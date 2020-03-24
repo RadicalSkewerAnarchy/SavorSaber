@@ -6,7 +6,7 @@ public class TutorialPearFeedManager : MonoBehaviour
 {
     private int food;
     [SerializeField]
-    private int maxFood;
+    private int maxFood = 2;
 
     public EventTrigger scene;
     public ExtendingBridge bridge;

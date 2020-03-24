@@ -451,18 +451,15 @@ public class AIData : CharacterData
                 break;
             // attack
             case Protocols.Attack:
-                if (Checks.NumberOfEnemies() > 0)
-                {
-                    if (meleeHunter)
-                        Protocol.Melee(null);
-                    else
-                        Protocol.Ranged();
-                }
+                if (meleeHunter)
+                    Protocol.Melee(Checks.specialTarget);
                 else
+                    Protocol.Ranged(Checks.specialTarget);
+                /*else
                 {
                     if (health <= maxHealth)
                         Protocol.Feast(meleeHunter);
-                }
+                }*/
                 break;
             default:
                 Debug.Log(this.name + "is not behaving correctly: NO VALID PROTOCOL");

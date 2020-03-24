@@ -9,6 +9,7 @@ public class PartyTeleportBeacon : MonoBehaviour
     public Commander partyCommander;
 
     private PlayerData somaData;
+    private AudioSource teleSFX;
     private Animator spinner;
     private bool teleporting = false;
     private WaitForSeconds OneSecondWait = new WaitForSeconds(1);
@@ -26,6 +27,7 @@ public class PartyTeleportBeacon : MonoBehaviour
     {
         scanner = GetComponent<Collider2D>();
         spinner = GetComponent<Animator>();
+        teleSFX = GetComponent<AudioSource>();
         somaData = GetComponentInParent<PlayerData>();
         scanner.enabled = false;
         player = transform.parent.gameObject;
@@ -40,11 +42,13 @@ public class PartyTeleportBeacon : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(Scan());
         }
+        radar.transform.position = transform.parent.position;
     }
 
     private IEnumerator Scan()
     {
         radar.SetActive(true);
+        radar.transform.position = transform.parent.position;
         teleporting = true;
         scanner.enabled = true;
         numHits = 0;
@@ -72,6 +76,10 @@ public class PartyTeleportBeacon : MonoBehaviour
         else
         {
             Debug.Log("Area clear, commencing teleport");
+
+            if(somaData.party.Count > 0)
+                teleSFX.Play();
+
             Vector2 targetPosition;
             int positionIndex = 0;
             foreach(GameObject partyMember in somaData.party)
