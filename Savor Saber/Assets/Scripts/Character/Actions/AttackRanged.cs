@@ -35,6 +35,7 @@ public class AttackRanged : AttackBase
     /// <summary>
     /// The data for what effects this attack should have, if any.
     /// </summary>
+    [HideInInspector]
     public RecipeData effectRecipeData = null;
 
     /// <summary>
@@ -132,6 +133,7 @@ public class AttackRanged : AttackBase
         Physics2D.IgnoreCollision(newAttack.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
         projectileData.direction = direction;
+        projectileData.myCharData = GetComponent<CharacterData>();
         projectileData.directionVector = directionVector;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
@@ -157,7 +159,7 @@ public class AttackRanged : AttackBase
     /// <summary>
     /// Overloaded version of Attack() that takes in a target vector and uses that to get its rotation.
     /// </summary>
-    public void Attack(Vector2 targetVector)
+    public virtual void Attack(Vector2 targetVector)
     {
         if (!chargedAttack)
         {

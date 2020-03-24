@@ -21,29 +21,24 @@ public class HitSwitch : FlavorInputManager
     {
         
     }
-
-    public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer)
     {
-        if (ingredientArray.Length >= 0)
+        if (active)
         {
-            if (active)
+            foreach (PoweredObject target in TargetObjects)
             {
-                foreach (PoweredObject target in TargetObjects)
-                {
-                    //target.ShutOff();
-                }
-                active = false;
+                //target.ShutOff();
             }
-            else
+            active = false;
+        }
+        else
+        {
+            foreach (PoweredObject target in TargetObjects)
             {
-                foreach (PoweredObject target in TargetObjects)
-                {
-                    target.TurnOn();
-                }
-                active = true;
-                burnSFXPlayer.Play();
+                target.TurnOn();
             }
-
+            active = true;
+            burnSFXPlayer.Play();
         }
     }
 

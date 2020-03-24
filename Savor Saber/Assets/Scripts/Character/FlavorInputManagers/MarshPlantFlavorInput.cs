@@ -35,26 +35,9 @@ public class MarshPlantFlavorInput : PlantFlavorInput
     void Start()
     {
         InitializeDictionary();
-
         OpenPlant();
-        //recieverCollider = GetComponent<CircleCollider2D>();
     }
 
-    public override void RespondToIngredients(bool fedByPlayer)
-    {
-        //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
-        {
-            isFed = true;
-            OpenPlant();
-        }
-    }
-
-    private void Update()
-    {
-    }
-
-    // prevent player
     public override void ClosePlant()
     {
         //spriteRenderer.sprite = closedSprite;
@@ -90,7 +73,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
         swallowed.SetActive(true);
         FlavorInputManager fim = swallowed.GetComponent<FlavorInputManager>();
-        fim.SpawnSingle();
+        //fim.SpawnSingle();
         swallowed = null;
         OpenPlant();
 

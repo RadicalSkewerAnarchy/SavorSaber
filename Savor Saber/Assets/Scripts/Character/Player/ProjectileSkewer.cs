@@ -8,14 +8,15 @@ public class ProjectileSkewer : BaseProjectile
 
     //SignalApplication signalApplication;
     //GameObject signal;
-    Dictionary<string, float> moodMod = new Dictionary<string, float>();
-    bool detonating = false;
+    //Dictionary<string, float> moodMod = new Dictionary<string, float>();
+    //bool detonating = false;
     public GameObject audioPlayer;
-    public AudioClip sweetSFX;
-    public AudioClip spicySFX;
+    [HideInInspector]
     public bool fed = false;
     public GameObject dropTemplate;
     private bool dropping = false;
+    [HideInInspector]
+    public bool playerReference;
 
     // Start is called before the first frame update
     void Start()
@@ -33,13 +34,7 @@ public class ProjectileSkewer : BaseProjectile
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
-
-        if (Vector2.Distance(transform.position, spawnPosition) >= range && range > 0)
-        {
-            SpawnDropsOnMiss();
-            Destroy(this.gameObject);
-        }
+        MoveProjectile();
     }
 
     protected override void OnTriggerEnter2D(Collider2D collision)
@@ -49,40 +44,17 @@ public class ProjectileSkewer : BaseProjectile
             if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
                 return;
             Debug.Log("Skewer collided with " + collision.gameObject);
-            //attack radius is set by the amount of Savory/Umami on the skewer
 
             if (ingredientArray != null)
             {
+                //check to see if the thing we hit has a FlavorInputManager
                 FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
                 if (flavorInput != null)
                 {
                     Debug.Log("Flavor input of " + collision.gameObject + " not null");
-                    if (flavorCountDictionary[RecipeData.Flavors.Umami] > 0 && !detonating)
-                    {
-                        detonating = true;
-                        SetAOE();
-                    }
-                    else
-                    {
-                        // FEEEED MEEEE
-                        flavorInput.Feed(ingredientArray, true);
-                        fed = true;
-                        Destroy(this.gameObject);
-                        //=================================
-                        bool fedFavorite = flavorInput.FedFavorite();
-                        if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Sweet)
-                        {
-                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                            sfx.GetComponent<PlayAndDestroy>().Play(sweetSFX);
-                        }
-                        else if (!fedFavorite && GetMajorityFlavor() == RecipeData.Flavors.Spicy)
-                        {
-                            GameObject sfx = Instantiate(audioPlayer, transform.position, Quaternion.identity);
-                            sfx.GetComponent<AudioSource>().volume = 0.5f;
-                            sfx.GetComponent<PlayAndDestroy>().Play(spicySFX);
-                        }
-                    }
-
+                    flavorInput.Feed(ingredientArray[0], true);
+                    fed = true;
+                    Destroy(this.gameObject);
                 }
                 //if you hit something (and aren't penetrating) but can't feed it
                 else if (!dropping && !penetrateTargets)
@@ -90,13 +62,7 @@ public class ProjectileSkewer : BaseProjectile
                     SpawnDropsOnMiss();
                 }
             }
-            if(collision.gameObject.tag == "Predator")
-            {
-                //damage is now done in the drone's flavorinputmanager
-                //CharacterData cd = collision.gameObject.GetComponent<CharacterData>();
-                //cd.DoDamage(1);
-            }
-            if (!penetrateTargets)
+            else if (!penetrateTargets)
                 Destroy(this.gameObject);
         }
     }
@@ -121,14 +87,15 @@ public class ProjectileSkewer : BaseProjectile
         }
         dropping = true;
     }
-
+    // Code from when it mattered what flavor things were
+    /*
     //save space in earlier checks
     private bool IsCollisionMonster(Collider2D collision)
     {
         return collision.gameObject.tag == "Prey" || collision.gameObject.tag == "Predator";
     }
 
-    private void SetAOE()
+    protected void SetAOE()
     {
         CircleCollider2D AOECircle = GetComponentInChildren<CircleCollider2D>();
         ProjectileSkewerAOE AOEData = GetComponentInChildren<ProjectileSkewerAOE>();
@@ -160,7 +127,7 @@ public class ProjectileSkewer : BaseProjectile
 
     }
 
-    private void ExplodeEffects()
+    protected void ExplodeEffects()
     {
         Animator AOEAnimator = GetComponentInChildren<Animator>();
         ParticleSystem AOEParticles = GetComponentInChildren<ParticleSystem>();
@@ -177,7 +144,7 @@ public class ProjectileSkewer : BaseProjectile
         AOEParticles.Play();
     }
 
-    private RecipeData.Flavors GetMajorityFlavor(RecipeData.Flavors ignore)
+    protected RecipeData.Flavors GetMajorityFlavor(RecipeData.Flavors ignore)
     {
         int highest = 0;
         int lastCount = 0;
@@ -202,7 +169,7 @@ public class ProjectileSkewer : BaseProjectile
             return (RecipeData.Flavors)majorityFlavor;
     }
 
-    private RecipeData.Flavors GetMajorityFlavor()
+    protected RecipeData.Flavors GetMajorityFlavor()
     {
         int highest = 0;
         int lastCount = 0;
@@ -226,4 +193,5 @@ public class ProjectileSkewer : BaseProjectile
         else
             return (RecipeData.Flavors)majorityFlavor;
     }
+    */
 }

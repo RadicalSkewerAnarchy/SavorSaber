@@ -4,18 +4,23 @@ using UnityEngine;
 
 public class DevFlavorInputManager : FlavorInputManager
 {
+    public GameObject rejectedItemTemplate;
     // the weather that needs to be turned on or off
     public List<GameObject> weatherStates;
     public int currentWeatherState = 0;
 
+    //reference to the speech bubble displaying requested food
     public FavoriteFoodBubble speechBubble;
 
     // the way to transition to the next weather
     public List<IngredientData> requestStates;
     public IngredientData currentRequestState;
+
+    //cutscenes to trigger
     [Header("Cutscene fields")]
     public EventTrigger optionalScene;
     private bool sceneTriggered = false;
+    //will the scene be triggered upon next feeding?
     public bool sceneReady = false;
 
     private void Start()
@@ -28,69 +33,38 @@ public class DevFlavorInputManager : FlavorInputManager
         StartWeather();
     }
 
-    private void Update()
-    {
-        /*
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CycleWeather(1);
-        }
-        */
-    }
-
     // when fed compare with desired request
     // if it matches:
     //      then respond to ingredients
     // else:
     //      spawn the same items back
-    public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer)
     {
         Debug.Log("DEVOURER HAS BEEN FED. GOD HAVE MERCY ON OUR SOULS.");
         Debug.Log("Fed by player: " + fedByPlayer);
-        IngredientData check = requestStates[Mathf.Clamp(currentWeatherState, 0, requestStates.Count-1)];
+        IngredientData check = requestStates[Mathf.Clamp(currentWeatherState, 0, requestStates.Count - 1)];
 
-        bool correct = true;
-        int i = 0;
-        foreach(var id in ingredientArray)
-        {
-            if (id != check)
-            {
-                correct = false;
-                break;
-            }
 
-            i++;
-        }
-
-        // check that there are 3 ingredients
-        if (i != 3)
-            correct = false;
-
-        if (correct)
+        if (ingredient == check)
         {
             Debug.Log("Detected correct ingredients for request state");
-            RespondToIngredients(fedByPlayer);
+            CycleWeather();
+
+            if (sfxPlayer != null)
+            {
+                sfxPlayer.clip = rewardSFX;
+                sfxPlayer.Play();
+            }
+            if (!sceneTriggered && optionalScene != null && sceneReady)
+            {
+                optionalScene.Trigger();
+                sceneTriggered = true;
+            }
         }
         else
         {
+            IngredientData[] ingredientArray = { ingredient };
             SpawnReward(ingredientArray, fedByPlayer);
-        }
-    }
-
-    // cycle the weather
-    public override void RespondToIngredients(bool fedByPlayer)
-    {
-        CycleWeather();
-
-        if (sfxPlayer != null)
-        {
-            sfxPlayer.clip = rewardSFX;
-            sfxPlayer.Play();
-        }
-        if (!sceneTriggered && optionalScene != null && sceneReady)
-        {
-            optionalScene.Trigger();
-            sceneTriggered = true;
         }
     }
 
@@ -105,7 +79,7 @@ public class DevFlavorInputManager : FlavorInputManager
         foreach (var food in ingredientArray)
         {
             // spawn food
-            var spawn = Instantiate(rewardItem, transform.position, Quaternion.identity);
+            var spawn = Instantiate(rejectedItemTemplate, transform.position, Quaternion.identity);
             spawn.GetComponent<SkewerableObject>().data = food;
         }
     }
