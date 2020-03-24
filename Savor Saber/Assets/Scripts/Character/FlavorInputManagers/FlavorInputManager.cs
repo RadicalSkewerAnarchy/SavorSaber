@@ -105,7 +105,7 @@ public class FlavorInputManager : MonoBehaviour
                 sfxPlayer.Play();
             }
 
-            if (canTransformWhenFed)
+            if (canTransformWhenFed && ingredient.monster != null)
             {
                 GameObject newMorph = Instantiate(ingredient.monster, transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
