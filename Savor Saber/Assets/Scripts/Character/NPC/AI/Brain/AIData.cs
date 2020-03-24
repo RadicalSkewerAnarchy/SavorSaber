@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UI;
 
 /// <summary>
 /// ONLY REQUIRE FOR DEBUGGING OR HARDCODED ABSTRACT BehaviorS
@@ -455,11 +453,6 @@ public class AIData : CharacterData
                     Protocol.Melee(Checks.specialTarget);
                 else
                     Protocol.Ranged(Checks.specialTarget);
-                /*else
-                {
-                    if (health <= maxHealth)
-                        Protocol.Feast(meleeHunter);
-                }*/
                 break;
             default:
                 Debug.Log(this.name + "is not behaving correctly: NO VALID PROTOCOL");

@@ -109,7 +109,8 @@ public class Feeder : MonoBehaviour
             }
             else
             {
-                partyCommander.JoinTeam(collision.gameObject, maxPartySize, true);
+                PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
+                pd.JoinTeam(collision.gameObject, maxPartySize, true);
             }
             
         }

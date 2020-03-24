@@ -98,4 +98,102 @@ public class PlayerData : CharacterData
         sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, 1);
         Invincible = false;
     }
+
+
+    #region Party Manipulation
+    /// <summary>
+    /// Add any fruitant to the player's party.
+    /// </summary>
+    /// <param name="member">the fruitant</param>
+    /// <param name="partysize">size to fit to</param>
+    /// <param name="partyoverride">remove fruitants in order to fit</param>
+    public void JoinTeam(GameObject member, int partysize = 3, bool partyoverride = false)
+    {
+        AIData Brain;
+        // if subject still exists
+        if (member != null)
+        {
+            // get brain
+            Brain = member.GetComponent<AIData>();
+            if (Brain != null)
+            {
+                //if (pd == null) Debug.Log("Player Data is null!!!!");
+                if (party.Contains(member))
+                {
+                    // do nothing
+                    return;
+                }
+                else if (partyoverride)
+                {
+                    AddMember(member, Brain);
+                }
+                else if (party.Count >= partysize)
+                {
+                    // remove if over size
+                    AddMember(member, Brain);
+                    while (party.Count > partysize)
+                    {
+                        LeaveTeam(party[0]);
+                    }
+                }
+                else if (party.Count < partysize)
+                {
+                    AddMember(member, Brain);
+                }
+
+                // set mind set
+                Brain.CommandCompleted = false;
+                Brain.path = null;
+            }
+            else Debug.Log(member.name + " : has no brain! cannot add to party");
+        }
+        else Debug.Log(this.name + " : is trying to add a null member to the party");
+    }
+
+    private void AddMember(GameObject member, AIData brain)
+    {
+        party.Add(member);
+        brain.CommandCompleted = false;
+        brain.path = null;
+        Debug.Log(member.name + " : has joined the party");
+    }
+
+    public void LeaveTeam(GameObject member)
+    {
+        // if subject still exists
+        if (member != null)
+        {
+            AIData Brain = member.GetComponent<AIData>();
+            if (Brain != null)
+            {
+                // set player party
+                party.Remove(member);
+                Debug.Log(member.name + " : has left the party");
+                // set mind set
+                Brain.CommandCompleted = true;
+                Brain.path = null;
+            }
+        }
+    }
+
+    public void ClearParty()
+    {
+        foreach (GameObject member in party)
+        {
+            AIData Brain = member.GetComponent<AIData>();
+            if (Brain != null)
+            {
+                // set mind set
+                Brain.CommandCompleted = true;
+                Brain.path = null;
+            }
+        }
+
+        party.Clear();
+
+        Debug.Log("Party has been cleared!");
+    }
+
+    #endregion
+
 }

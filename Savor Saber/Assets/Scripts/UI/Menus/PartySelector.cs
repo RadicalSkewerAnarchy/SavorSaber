@@ -44,7 +44,8 @@ public class PartySelector : MonoBehaviour
 
     public void AddFruitant()
     {
-        partyCommander.JoinTeam(newFruitant);
+        PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
+        pd.JoinTeam(newFruitant);
         CancelSelection();
     }
 

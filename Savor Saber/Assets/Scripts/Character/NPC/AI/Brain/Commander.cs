@@ -155,10 +155,10 @@ public class Commander : MonoBehaviour
         #region keyboard input
         // CYCLE SETTINGS OF COMMANDS
 
-        if (Input.GetKeyDown(KeyCode.O))
+        /*if (Input.GetKeyDown(KeyCode.O))
         {
             CycleTargetFamily();
-        }
+        }*/
 
         // PRESS numbers TO ISSUE COMMAND
         // or replace with general command enum?
@@ -262,127 +262,15 @@ public class Commander : MonoBehaviour
     public void FamilyReunion()
     {
         // clear the party
-        ClearParty();
+        PlayerData pd = player.GetComponent<PlayerData>();
+        pd.ClearParty();
 
         // add the family to the party
         foreach (Transform t in Families[FamilyChoice].transform)
         {
             GameObject member = t.gameObject;
-            JoinTeam(member);
+            pd.JoinTeam(member);
         }
-    }
-
-    #endregion
-
-    #region Party Manipulation
-    /// <summary>
-    /// Add any fruitant to the player's party.
-    /// </summary>
-    /// <param name="member">the fruitant</param>
-    /// <param name="partysize">size to fit to</param>
-    /// <param name="partyoverride">remove fruitants in order to fit</param>
-    public void JoinTeam(GameObject member, int partysize = 3, bool partyoverride=false)
-    {
-        // if subject still exists
-        if (member != null)
-        {
-            // get brain
-            Brain = member.GetComponent<AIData>();
-            if (Brain != null)
-            {
-                if (player == null) player = GameObject.FindGameObjectWithTag("Player");
-                //else Debug.Log("Player not null, so should add to party");
-                // set player party
-                if (player != null)
-                {
-                    PlayerData pd = player.GetComponent<PlayerData>();
-                    //if (pd == null) Debug.Log("Player Data is null!!!!");
-                    if (pd.party.Contains(member))
-                    {
-                        // do nothing
-                    }
-                    else if (partyoverride)
-                    {
-                        AddMember(member, Brain);
-                    }
-                    else if (pd.party.Count >= partysize)
-                    {
-                        // remove if over size
-                        AddMember(member, Brain);
-                        while (pd.party.Count > partysize)
-                        {
-                            LeaveTeam(pd.party[0]);
-                        }
-                    }
-                    else if (pd.party.Count < partysize)
-                    {
-                        AddMember(member, Brain);
-                    }
-
-                }
-                // set mind set
-                Brain.CommandCompleted = false;
-                Brain.path = null;
-            }
-            else Debug.Log(member.name + " : has no brain! cannot add to party");
-        }
-        else Debug.Log(this.name + " : is trying to add a null member to the party");
-    }
-
-    private void AddMember(GameObject member, AIData brain)
-    {
-        PlayerData pd = player.GetComponent<PlayerData>();
-        pd.party.Add(member);
-        brain.CommandCompleted = false;
-        brain.path = null;
-        Debug.Log(member.name + " : has joined the party");
-    }
-
-    public void LeaveTeam(GameObject member)
-    {
-        // if subject still exists
-        if (member != null)
-        {
-            Brain = member.GetComponent<AIData>();
-            if (Brain != null)
-            {
-                // set player party
-                if (player != null)
-                {
-                    PlayerData pd = player.GetComponent<PlayerData>();
-                    pd.party.Remove(member);
-                    Debug.Log(member.name + " : has left the party");
-                }
-                else player = GameObject.FindGameObjectWithTag("Player");
-                // set mind set
-                Brain.CommandCompleted = true;
-                Brain.path = null;
-            }
-        }
-    }
-
-    private void ClearParty()
-    {
-        // set player party
-        if (player != null)
-        {
-            PlayerData pd = player.GetComponent<PlayerData>();
-            foreach (GameObject member in pd.party)
-            {
-                Brain = member.GetComponent<AIData>();
-                if (Brain != null)
-                {
-                    // set mind set
-                    Brain.CommandCompleted = true;
-                    Brain.path = null;
-                }
-            }
-
-            pd.party.Clear();
-
-            Debug.Log("Party has been cleared!");
-        }
-        else player = GameObject.FindGameObjectWithTag("Player");
     }
 
     #endregion
