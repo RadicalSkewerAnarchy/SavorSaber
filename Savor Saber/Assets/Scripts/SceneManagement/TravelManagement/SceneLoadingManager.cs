@@ -66,6 +66,8 @@ public class SceneLoadingManager : MonoBehaviour
         CurrentlyLoadedScenes = new List<SceneReference>();
         CurrentlyLoadedScenes = NewScenes;
 
+        SceneManager.SetActiveScene(SceneManager.GetSceneByPath(NewScenes[0]));
+
         yield return new WaitForSecondsRealtime(0.25f);
 
         if (OnEnd != null) OnEnd();
