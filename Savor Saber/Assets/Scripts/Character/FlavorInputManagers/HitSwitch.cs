@@ -21,7 +21,7 @@ public class HitSwitch : FlavorInputManager
     {
         
     }
-    public override void Feed(IngredientData ingredient, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
         if (active)
         {

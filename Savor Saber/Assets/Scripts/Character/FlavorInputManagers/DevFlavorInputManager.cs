@@ -38,7 +38,7 @@ public class DevFlavorInputManager : FlavorInputManager
     //      then respond to ingredients
     // else:
     //      spawn the same items back
-    public override void Feed(IngredientData ingredient, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
         Debug.Log("DEVOURER HAS BEEN FED. GOD HAVE MERCY ON OUR SOULS.");
         Debug.Log("Fed by player: " + fedByPlayer);

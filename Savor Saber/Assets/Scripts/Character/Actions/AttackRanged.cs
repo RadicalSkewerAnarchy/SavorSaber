@@ -190,6 +190,7 @@ public class AttackRanged : AttackBase
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();
+        projectileData.myCharData = GetComponent<CharacterData>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));

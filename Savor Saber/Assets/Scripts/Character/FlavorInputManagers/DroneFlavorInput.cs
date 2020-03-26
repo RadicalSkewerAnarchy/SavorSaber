@@ -27,7 +27,7 @@ public class DroneFlavorInput : FlavorInputManager
             //electricField = GetComponentInChildren<ElectricAOE>();
     }
 
-    public override void Feed(IngredientData ingredient, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
         int damageDone = 0;
         if (ingredient.displayName == "Bullet")

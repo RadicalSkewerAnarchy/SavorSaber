@@ -42,7 +42,7 @@ public class TutorialFlavorInput : FlavorInputManager
     }
 
     //just a temporary conversion from the old feeding to the new feeding, so the tutorial still works
-    public override void Feed(IngredientData ingredient, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
         IngredientData[] ingredientArray = { ingredient };
         Feed(ingredientArray, fedByPlayer);

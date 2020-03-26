@@ -15,8 +15,6 @@ public class ProjectileSkewer : BaseProjectile
     public bool fed = false;
     public GameObject dropTemplate;
     private bool dropping = false;
-    [HideInInspector]
-    public bool playerReference;
 
     // Start is called before the first frame update
     void Start()
@@ -27,8 +25,6 @@ public class ProjectileSkewer : BaseProjectile
         // set projectile velocity vector
         SetGeometry();
         spawnPosition = transform.position;
-
-        //penetrateTargets = false;
     }
 
     // Update is called once per frame
@@ -52,7 +48,7 @@ public class ProjectileSkewer : BaseProjectile
                 if (flavorInput != null)
                 {
                     Debug.Log("Flavor input of " + collision.gameObject + " not null");
-                    flavorInput.Feed(ingredientArray[0], true);
+                    flavorInput.Feed(ingredientArray[0], true, myCharData);
                     fed = true;
                     Destroy(this.gameObject);
                 }

@@ -23,11 +23,10 @@ public class PlantFlavorInput : FlavorInputManager
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public override void Feed(IngredientData ingredient, bool fedByPlayer)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
         if((ingredient.flavors & RecipeData.Flavors.Spicy) > 0)
         {
-            base.Feed(ingredient, fedByPlayer);
             isFed = true;
             OpenPlant();
         }

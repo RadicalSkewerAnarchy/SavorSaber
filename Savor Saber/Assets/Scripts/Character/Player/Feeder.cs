@@ -87,7 +87,7 @@ public class Feeder : MonoBehaviour
             if(ingredientArray.Length > 0)
             {
                 Debug.Log("Feeding" + ingredientArray + "(Array length: " + ingredientArray.Length);
-                targetInput.Feed(ingredientArray[0], true);
+                targetInput.Feed(ingredientArray[0], true, somaData);
                 playerInventory.ClearActiveSkewer();
             }
             ingredientArray = null;
