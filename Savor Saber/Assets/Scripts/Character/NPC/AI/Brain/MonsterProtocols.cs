@@ -152,7 +152,12 @@ public partial class MonsterProtocols : MonoBehaviour
         }
         else
         {
-            nearestEnemy = Checks.ClosestCreature(new string[] { (this.tag == "Prey" ? "Prey" : "Predator") });
+            if (this.CompareTag("Prey"))
+                nearestEnemy = Checks.ClosestCreature(new string[] {"Prey", "Player"});
+            else
+                nearestEnemy = Checks.ClosestCreature(new string[] {"Predator"});
+
+
             if (nearestEnemy != null)
                 pos = nearestEnemy.transform.position;
             else

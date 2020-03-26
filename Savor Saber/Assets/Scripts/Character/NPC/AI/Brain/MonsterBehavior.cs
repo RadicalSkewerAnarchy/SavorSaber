@@ -102,12 +102,6 @@ public class MonsterBehavior : MonoBehaviour
         ResetMovementBias();
         #endregion
     }
-    /// <summary>
-    /// Resets timer if it reaches 0, decrements if it's above 0
-    /// </summary>
-    private void Update()
-    {
-    }
 
     #region Movement
     /// <summary>
@@ -456,33 +450,33 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="b">behavior transitioning TO</param>
-    private void TransitionBehavior(AIData.Behave b, string anim)
+    /// <param name="behave">behavior transitioning TO</param>
+    private void TransitionBehavior(AIData.Behave behave, string anim)
     {
         if (AiData.previousBehavior != AiData.currentBehavior)
-            BehaviorIn(b, anim);
-        else if (AiData.currentBehavior != b)
-            BehaviorOut(b, anim);
+            BehaviorIn(behave, anim);
+        else if (AiData.currentBehavior != behave)
+            BehaviorOut(behave, anim);
     }
 
-    private void BehaviorIn(AIData.Behave b, string anim)
+    private void BehaviorIn(AIData.Behave behave, string anim)
     {
         AiData.previousBehavior = AiData.currentBehavior;
     }
 
-    private void BehaviorOut(AIData.Behave b, string anim)
+    private void BehaviorOut(AIData.Behave behave, string anim)
     {
         if (AiData.previousBehavior == AIData.Behave.Attack)
         {
             if (AnimatorBody.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
-                AiData.currentBehavior = b;
+                AiData.currentBehavior = behave;
                 AnimatorBody.Play(anim);
             }
         }
         else
         {
-            AiData.currentBehavior = b;
+            AiData.currentBehavior = behave;
             AnimatorBody.Play(anim);
         }
     }
