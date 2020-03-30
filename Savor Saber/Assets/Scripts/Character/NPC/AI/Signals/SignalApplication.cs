@@ -212,9 +212,9 @@ public class SignalApplication : MonoBehaviour
                     }
                     //Debug.Log("Signal Animator(mostInfluential, mood, sign) : (" + mostInfluential + ", " + mood + ", " + sign + ")");
 
-                    float value = data.moods[key];
-                    value = Mathf.Clamp((value + mod), 0f, 1f);
-                    data.moods[key] = value;
+                    //float value = data.moods[key];
+                    //value = Mathf.Clamp((value + mod), 0f, 1f);
+                    //data.moods[key] = value;
                     //Debug.Log("--->" + g.name + "'s " + key + " value should be " + value);
                 }
             }

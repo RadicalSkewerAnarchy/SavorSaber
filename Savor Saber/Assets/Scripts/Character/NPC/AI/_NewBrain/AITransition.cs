@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AITransition
+
+public class AITransition : MonoBehaviour
 {
     /// <summary>
     /// transition to this state
@@ -24,6 +26,7 @@ public class AITransition
     /// <summary>
     /// all the decisions to evaluate
     /// </summary>
+    [SerializeField]
     List<AIDecision> Decisions;
 
     /// <summary>
@@ -64,5 +67,63 @@ public class AITransition
         }
 
         return complete;
+    }
+
+
+    /// <summary>
+    /// send any targets needed for the transition
+    /// </summary>
+    /// <returns>targets</returns>
+    public List<GameObject> CollectReturnableObjects()
+    {
+        var objs = new List<GameObject>();
+
+        foreach (AIDecision decision in Decisions)
+        {
+            objs.AddRange(decision.ReturnableObjects());
+        }
+
+        return objs;
+    }
+
+    /// <summary>
+    /// send any tags needed for the transition
+    /// </summary>
+    /// <returns>target tags</returns>
+    public List<string> CollectReturnableTags()
+    {
+        var strs = new List<string>();
+
+        foreach (AIDecision decision in Decisions)
+        {
+            strs.AddRange(decision.ReturnableTags());
+        }
+
+        return strs;
+    }
+
+    /// <summary>
+    /// ensure decisions start initialized
+    /// </summary>
+    public void InitializeDecisions()
+    {
+        foreach (var decide in Decisions)
+        {
+            decide.Initialize();
+        }
+    }
+
+
+    /// <summary>
+    /// allow transition to access brain's knowledge
+    /// </summary>
+    private AIBrain myBrain;
+    public void SetBrain(AIBrain brain)
+    {
+        myBrain = brain;
+        foreach (var decide in Decisions)
+        {
+            decide.SetBrain(brain);
+        }
     }
 }

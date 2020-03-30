@@ -1,14 +1,23 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AIDecision
+
+public class AIDecision : MonoBehaviour
 {
     /// <summary>
     /// used to check if state should transition
     /// </summary>
     /// <returns>evaluation complete</returns>
-    abstract public bool Evaluate();
+    virtual public bool Evaluate()
+    {
+        return true;
+    }
+    virtual public void Initialize()
+    {
+        // do nothing
+    }
 
     /// <summary>
     /// send any targets needed for the transition
@@ -27,4 +36,11 @@ public abstract class AIDecision
     {
         return new List<string>();
     }
+
+
+    /// <summary>
+    /// allow decision to access brain's knowledge
+    /// </summary>
+    protected AIBrain myBrain;
+    public void SetBrain(AIBrain brain) => myBrain = brain;
 }

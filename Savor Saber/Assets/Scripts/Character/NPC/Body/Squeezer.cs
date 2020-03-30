@@ -34,6 +34,18 @@ public class Squeezer : MonoBehaviour
 
     }
 
+    public void RandomInitialize()
+    {
+        this.horiRange = Random.Range(-0.2f, 0.2f);
+        this.horiSpeed = Random.Range(2f, 4f);
+        this.horiBase = Random.Range(0f, 0.5f);
+        this.vertRange = Random.Range(-0.2f, 0.2f);
+        this.vertSpeed = Random.Range(2f, 4f);
+        this.vertBase = Random.Range(0f, 0.5f);
+        this.SetGoals();
+        this.activate = false;
+    }
+
     public void SetGoals()
     {
         startX = origin.x - horiRange + horiBase;
