@@ -31,6 +31,8 @@ public class FlavorInputManager : MonoBehaviour
     public float dotTicLength = 1;
     [SerializeField]
     protected GameObject rejectedObjectTemplate;
+    [SerializeField]
+    protected ParticleSystem spawnParticles;
     #endregion
 
     private void Start()
@@ -38,7 +40,6 @@ public class FlavorInputManager : MonoBehaviour
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
-
         // differentiate between ai and char data
         characterData = GetComponent<AIData>();
         if (characterData == null)
@@ -113,14 +114,22 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     PlayerData somaData = (PlayerData)feederData;
                     somaData.JoinTeam(newMorph, 1, true);
-                    newMorph.GetComponent<FlavorInputManager>().isCompanion = true;
+                    FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
+                    newFIM.isCompanion = true;
+                    newFIM.PlaySpawnParticles();
+
                 }
                 Destroy(this.gameObject);
             }
         }
+    }
 
-
-
+    public virtual void PlaySpawnParticles()
+    {
+        if (spawnParticles != null)
+            spawnParticles.Play();
+        else
+            Debug.Log("FlavorInputManager Error: No particle system");
     }
 
     //OLD FEEDING CODE - OUTDATED, KEPT FOR LEGACY PURPOSES
