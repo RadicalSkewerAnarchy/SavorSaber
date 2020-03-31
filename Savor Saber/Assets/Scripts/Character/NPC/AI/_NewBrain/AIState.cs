@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class AIState: MonoBehaviour
 {
     /// <summary>
     /// all the possible transitions in this one state
     /// </summary>
     [SerializeField]
-    private List<AITransition> Transitions;
+    //public AITransition[] Transitions;
+    //public List<AITransition> GetTransitions => new List<AITransition>(Transitions);
+    public List<AITransition> Transitions;
     public List<AITransition> GetTransitions => Transitions;
 
     /// <summary>
@@ -30,10 +33,14 @@ public class AIState: MonoBehaviour
     }
 
     // targettables
-    [HideInInspector]
-    public List<GameObject> TargetObjects;
-    [HideInInspector]
-    public List<string> TargetTags;
+    private List<GameObject> TargetObjects;
+    private List<string> TargetTags;
+
+    public void SetTargets(List<GameObject> objs, List<string> strs)
+    {
+        TargetObjects = objs;
+        TargetTags = strs;
+    }
 
     /// <summary>
     /// called when the state is entered

@@ -4,6 +4,7 @@ using UnityEngine;
 using SerializableCollections;
 
 [RequireComponent(typeof(AICharacterData))]
+[Serializable]
 public class AIBrain : MonoBehaviour
 {
     /// <summary>
@@ -77,8 +78,7 @@ public class AIBrain : MonoBehaviour
                     CurrentState.OnExit();
                     nextState.OnEnter();
 
-                    nextState.TargetObjects = transition.CollectReturnableObjects();
-                    nextState.TargetTags = transition.CollectReturnableTags();
+                    nextState.SetTargets(transition.CollectReturnableObjects(), transition.CollectReturnableTags());
                     transition.InitializeDecisions();
 
                     CurrentState = nextState;

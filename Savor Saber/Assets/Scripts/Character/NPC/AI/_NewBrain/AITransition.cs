@@ -1,11 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public class AITransition : MonoBehaviour
+[Serializable]
+public class AITransition: ScriptableObject
 {
+    public AIDecision[] Decisions;
+    public List<AIDecision> DecisionsList => new List<AIDecision>(Decisions);
+
+    public AITransition()
+    {
+        Decisions = new AIDecision[0];
+    }
+
     /// <summary>
     /// transition to this state
     /// </summary>
@@ -24,12 +32,6 @@ public class AITransition : MonoBehaviour
     public int Priority = 0;
 
     /// <summary>
-    /// all the decisions to evaluate
-    /// </summary>
-    [SerializeField]
-    List<AIDecision> Decisions;
-
-    /// <summary>
     /// check all decisions, decide if next state is ready
     /// </summary>
     /// <returns></returns>
@@ -41,7 +43,7 @@ public class AITransition : MonoBehaviour
         {
             // ALL must be TRUE
             complete = true;
-            foreach (AIDecision decide in Decisions)
+            foreach (AIDecision decide in DecisionsList)
             {
                 bool eval = decide.Evaluate();
                 if (!eval)
@@ -55,7 +57,7 @@ public class AITransition : MonoBehaviour
         {
             // ANY may be true
             complete = false;
-            foreach (AIDecision decide in Decisions)
+            foreach (AIDecision decide in DecisionsList)
             {
                 bool eval = decide.Evaluate();
                 if (eval)
@@ -78,7 +80,7 @@ public class AITransition : MonoBehaviour
     {
         var objs = new List<GameObject>();
 
-        foreach (AIDecision decision in Decisions)
+        foreach (AIDecision decision in DecisionsList)
         {
             objs.AddRange(decision.ReturnableObjects());
         }
@@ -94,7 +96,7 @@ public class AITransition : MonoBehaviour
     {
         var strs = new List<string>();
 
-        foreach (AIDecision decision in Decisions)
+        foreach (AIDecision decision in DecisionsList)
         {
             strs.AddRange(decision.ReturnableTags());
         }
@@ -107,7 +109,7 @@ public class AITransition : MonoBehaviour
     /// </summary>
     public void InitializeDecisions()
     {
-        foreach (var decide in Decisions)
+        foreach (var decide in DecisionsList)
         {
             decide.Initialize();
         }
@@ -121,7 +123,7 @@ public class AITransition : MonoBehaviour
     public void SetBrain(AIBrain brain)
     {
         myBrain = brain;
-        foreach (var decide in Decisions)
+        foreach (var decide in DecisionsList)
         {
             decide.SetBrain(brain);
         }
