@@ -100,11 +100,6 @@ public class FlavorInputManager : MonoBehaviour
         if (!rejected)
         {
             characterData.DoHeal(99);
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rewardSFX;
-                sfxPlayer.Play();
-            }
 
             if (canTransformWhenFed && ingredient.monster != null)
             {
