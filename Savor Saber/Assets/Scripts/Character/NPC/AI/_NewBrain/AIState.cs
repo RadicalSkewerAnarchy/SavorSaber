@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +9,7 @@ public class AIState: MonoBehaviour
     /// all the possible transitions in this one state
     /// </summary>
     [SerializeField]
-    //public AITransition[] Transitions;
-    //public List<AITransition> GetTransitions => new List<AITransition>(Transitions);
     public List<AITransition> Transitions;
-    public List<AITransition> GetTransitions => Transitions;
 
     /// <summary>
     /// Called by the brain to do actions upon targets

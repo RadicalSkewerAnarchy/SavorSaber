@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using SerializableCollections;
 
 [RequireComponent(typeof(AICharacterData))]
 [Serializable]
@@ -42,7 +41,7 @@ public class AIBrain : MonoBehaviour
         float highestPriority = Mathf.NegativeInfinity;
         AIState nextState = CurrentState;
         AITransition transition = null;
-        foreach (AITransition trans in CurrentState.GetTransitions)
+        foreach (AITransition trans in CurrentState.Transitions)
         {
             bool complete = trans.IsComplete();
             if (complete)

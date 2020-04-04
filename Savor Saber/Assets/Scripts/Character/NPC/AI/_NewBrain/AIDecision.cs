@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 [Serializable]
-public class AIDecision : MonoBehaviour
+public class AIDecision: MonoBehaviour
 {
     /// <summary>
     /// used to check if state should transition

@@ -6,12 +6,12 @@ using UnityEngine;
 [Serializable]
 public class AITransition: ScriptableObject
 {
-    public AIDecision[] Decisions;
-    public List<AIDecision> DecisionsList => new List<AIDecision>(Decisions);
+    [SerializeField]
+    public List<AIDecision> Decisions;
 
     public AITransition()
     {
-        Decisions = new AIDecision[0];
+        Decisions = new List<AIDecision>();
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public class AITransition: ScriptableObject
         {
             // ALL must be TRUE
             complete = true;
-            foreach (AIDecision decide in DecisionsList)
+            foreach (AIDecision decide in Decisions)
             {
                 bool eval = decide.Evaluate();
                 if (!eval)
@@ -57,7 +57,7 @@ public class AITransition: ScriptableObject
         {
             // ANY may be true
             complete = false;
-            foreach (AIDecision decide in DecisionsList)
+            foreach (AIDecision decide in Decisions)
             {
                 bool eval = decide.Evaluate();
                 if (eval)
@@ -80,7 +80,7 @@ public class AITransition: ScriptableObject
     {
         var objs = new List<GameObject>();
 
-        foreach (AIDecision decision in DecisionsList)
+        foreach (AIDecision decision in Decisions)
         {
             objs.AddRange(decision.ReturnableObjects());
         }
@@ -96,7 +96,7 @@ public class AITransition: ScriptableObject
     {
         var strs = new List<string>();
 
-        foreach (AIDecision decision in DecisionsList)
+        foreach (AIDecision decision in Decisions)
         {
             strs.AddRange(decision.ReturnableTags());
         }
@@ -109,7 +109,7 @@ public class AITransition: ScriptableObject
     /// </summary>
     public void InitializeDecisions()
     {
-        foreach (var decide in DecisionsList)
+        foreach (var decide in Decisions)
         {
             decide.Initialize();
         }
@@ -123,7 +123,7 @@ public class AITransition: ScriptableObject
     public void SetBrain(AIBrain brain)
     {
         myBrain = brain;
-        foreach (var decide in DecisionsList)
+        foreach (var decide in Decisions)
         {
             decide.SetBrain(brain);
         }

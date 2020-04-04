@@ -50,7 +50,7 @@ public class CustomListEditor : Editor
             // collect element properties
             SerializedProperty MyListRef = ListOfStates.GetArrayElementAtIndex(i);
 
-            SerializedProperty State = MyListRef.FindPropertyRelative("AnGO");
+            SerializedProperty State = MyListRef.FindPropertyRelative("myState");
             SerializedProperty TransitionList = MyListRef.FindPropertyRelative("AnTranArray");
 
 
@@ -79,7 +79,7 @@ public class CustomListEditor : Editor
                 SerializedObject Transition = TransitionList.GetArrayElementAtIndex(a).serializedObject;
                 EditorGUILayout.ObjectField(TransitionList.GetArrayElementAtIndex(a));
 
-                SerializedProperty DecisionList = Transition.FindProperty("Decisions");
+                /*SerializedProperty DecisionList = Transition.FindProperty("Decisions");
 
                 // adding decisions
                 if (DecisionList != null)
@@ -103,7 +103,7 @@ public class CustomListEditor : Editor
                         }
                         GUILayout.EndHorizontal();
                     }
-                }
+                }*/
 
                 // remove transition
                 GUILayout.BeginHorizontal();

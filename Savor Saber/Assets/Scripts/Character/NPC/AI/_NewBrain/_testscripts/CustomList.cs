@@ -11,10 +11,7 @@ public class CustomList : MonoBehaviour
     [System.Serializable]
     public class MyClass
     {
-        public AIState AnGO;
-        public int AnInt;
-        public float AnFloat;
-        public Vector3 AnVector3;
+        public AIState myState;
         public AITransition[] AnTranArray = new AITransition[0];
     }
 
