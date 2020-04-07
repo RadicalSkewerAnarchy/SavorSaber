@@ -57,4 +57,13 @@ public class FlagManager : MonoBehaviour
         //Debug.LogWarning("Flag: " + flag + " does not exist!. returning \"" + undefined + "\"");
         return undefined;
     }
+
+    /// <summary> Get the dictionary of this instance's flags</summary>
+    public Dictionary<string, string> GetInstanceFlagDictionary()
+    {
+        if (instance == null)
+            return null;
+
+        return instance.flags;
+    }
 }
