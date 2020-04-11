@@ -26,6 +26,10 @@ public class TrustMeter : MonoBehaviour
     private float baseSpeed;
     private int baseMaxHealth;
 
+    public GameObject shieldTemplate;
+    public GameObject teslaTemplate;
+    private GameObject currentObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -111,10 +115,13 @@ public class TrustMeter : MonoBehaviour
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
                 Debug.Log("Setting trust effect for salty");
+                currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity, transform);
+                currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
                 break;
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
                 Debug.Log("Setting trust effect for sour");
+                currentObject = Instantiate(teslaTemplate, transform);
                 break;
         }
     }
@@ -126,5 +133,8 @@ public class TrustMeter : MonoBehaviour
         somaData.maxHealth = baseMaxHealth;
         if (somaData.health > baseMaxHealth)
             somaData.health = baseMaxHealth;
+
+        //clear any instantiated support objects
+        Destroy(currentObject);
     }
 }

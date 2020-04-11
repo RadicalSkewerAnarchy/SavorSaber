@@ -15,6 +15,7 @@ public class PlayerData : CharacterData
     private Respawner res;
     public List<GameObject> party = new List<GameObject>();
     public int lowHealthThreshhold = 2;
+    private TrustMeter trust;
 
     public PartyUIManager partyUI;
     private void Awake()
@@ -23,6 +24,7 @@ public class PlayerData : CharacterData
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
         altSFXPlayer = GetComponent<PlaySFX>();
+        trust = GetComponent<TrustMeter>();
     }
 
     public override bool DoDamage(int damage, bool overcharged = false)
@@ -147,6 +149,7 @@ public class PlayerData : CharacterData
                 Brain.path = null;
 
                 partyUI.ChangeCompanion(member);
+                trust.SetTrustEffect(RecipeData.Flavors.Sour);
             }
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }

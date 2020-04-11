@@ -20,7 +20,7 @@ public class ShadowTint : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
-        if(sr != null && collision.gameObject != transform.parent.gameObject && collision.tag != "Reflectable")
+        if(sr != null && collision.gameObject != transform.parent.gameObject && collision.tag != "Reflectable" && collision.tag != "ThrowThrough")
         {
             sr.color = new Color(0.75f, 0.75f, 0.75f);
 
