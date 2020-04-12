@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+[DisallowMultipleComponent]
 public class AIState: MonoBehaviour
 {
     /// <summary>
@@ -51,6 +52,17 @@ public class AIState: MonoBehaviour
     virtual public void OnExit()
     {
         // do nothing
+    }
+
+    private void Awake()
+    {
+        var transitions = GetComponentsInChildren<AITransition>();
+        Transitions = new List<AITransition>(transitions);
+
+        if (Transitions.Count == 0)
+        {
+            Debug.Log($"{this.name} has no transitions to leave this AIState");
+        }
     }
 
     /// <summary>

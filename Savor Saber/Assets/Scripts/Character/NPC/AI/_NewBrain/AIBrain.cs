@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AICharacterData))]
 [Serializable]
 public class AIBrain : MonoBehaviour
 {
@@ -57,6 +56,24 @@ public class AIBrain : MonoBehaviour
         return new Tuple<AIState, AITransition>(nextState , transition);
     }
 
+
+    /// <summary>
+    /// INITIALIZE THE BRAIN
+    /// </summary>
+    private void Awake()
+    {
+        // get character data
+        CharacterData = GetComponentInParent<AICharacterData>();
+        // initialize brain cascade
+        foreach (var state in States)
+        {
+            state.SetBrain(this);
+        }
+        ObjectsInPerception = new List<GameObject>();
+        CurrentState = States[0];
+    }
+
+
     /// <summary>
     /// 1. decide whether or not to change state
     /// 2. check perception
@@ -94,6 +111,19 @@ public class AIBrain : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// perform current state
+    /// </summary>
+    private void Update()
+    {
+        // perform if able
+        if (ShouldUpdateAI)
+        {
+            CurrentState.Perform();
+        }
+    }
+
+
     public bool IsAwareOf(GameObject find)
     {
         return ObjectsInPerception.Contains(find);
@@ -111,33 +141,6 @@ public class AIBrain : MonoBehaviour
         }
         return tagged;
     }
-
-    private void Update()
-    {
-        // perform is able
-        if (ShouldUpdateAI)
-        {
-            CurrentState.Perform();
-        }
-    }
-
-    /// <summary>
-    /// INITIALIZE THE BRAIN
-    /// </summary>
-    private void Awake()
-    {
-        // get character data
-        CharacterData = GetComponent<AICharacterData>();
-        // initialize brain cascade
-        foreach (var state in States)
-        {
-            state.SetBrain(this);
-        }
-        ObjectsInPerception = new List<GameObject>();
-        CurrentState = States[0];
-    }
-
-
 
     /// <summary>
     /// enable and disable fruitant thinking if on/off screen

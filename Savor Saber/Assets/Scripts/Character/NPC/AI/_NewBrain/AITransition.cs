@@ -2,18 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [Serializable]
-public class AITransition: ScriptableObject
+[DisallowMultipleComponent]
+[RequireComponent(typeof(AIDecision))]
+public class AITransition: MonoBehaviour
 {
-    [SerializeField]
-    public List<AIDecision> Decisions;
-
-    public AITransition()
-    {
-        Decisions = new List<AIDecision>();
-    }
-
     /// <summary>
     /// transition to this state
     /// </summary>
@@ -30,6 +23,12 @@ public class AITransition: ScriptableObject
     /// if transitions are equal, choose lowest index
     /// </summary>
     public int Priority = 0;
+
+    /// <summary>
+    /// The decsions that are tested if a transition is needed
+    /// </summary>
+    public List<AIDecision> Decisions;
+
 
     /// <summary>
     /// check all decisions, decide if next state is ready
@@ -102,6 +101,22 @@ public class AITransition: ScriptableObject
         }
 
         return strs;
+    }
+
+    private void Awake()
+    {
+        var decisions = GetComponents<AIDecision>();
+        Decisions = new List<AIDecision>(decisions);
+
+
+        if (Decisions.Count == 0)
+        {
+            Debug.Log($"{this.name} has no decisions to evaluate");
+        }
+        else
+        {
+            InitializeDecisions();
+        }
     }
 
     /// <summary>
