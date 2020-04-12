@@ -8,7 +8,6 @@ using UnityEngine;
 public class AICharacterData : CharacterData
 {
 
-    private Queue<Command> ActionQueue;
     
     public enum LifeState
     {
@@ -35,11 +34,6 @@ public class AICharacterData : CharacterData
 
     public bool meleeHunter = true;
 
-    [HideInInspector]
-    public Vector3 rideVector;
-
-    [HideInInspector]
-    public List<TileNode> path;
 
     /// <summary>
     /// set necessary values and components
@@ -48,9 +42,6 @@ public class AICharacterData : CharacterData
     {
         sRenderer = GetComponent<SpriteRenderer>();
         InitializeCharacterData();
-
-        ActionQueue = new Queue<Command>();
-        path = new List<TileNode>();
 
         squeeze = GetComponent<Squeezer>();
         squeeze?.RandomInitialize();
@@ -126,16 +117,6 @@ public class AICharacterData : CharacterData
                 // nothing at all
                 break;
         }
-    }
-
-
-    public void EnqueueAction(Command c)
-    {
-        this.ActionQueue.Enqueue(c);
-    }
-    public void ClearActionQueue()
-    {
-        this.ActionQueue.Clear();
     }
 
 

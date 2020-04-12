@@ -30,6 +30,14 @@ public class AIBrain : MonoBehaviour
     [HideInInspector]
     public AICharacterData CharacterData;
 
+    [HideInInspector]
+    public Vector3 rideVector;
+
+    [HideInInspector]
+    public List<TileNode> path;
+
+    private Queue<Command> ActionQueue;
+
     /// <summary>
     /// evaluates the transitions of the current state
     /// and chooses whether to transition or stay
@@ -71,6 +79,9 @@ public class AIBrain : MonoBehaviour
         }
         ObjectsInPerception = new List<GameObject>();
         CurrentState = States[0];
+
+        ActionQueue = new Queue<Command>();
+        path = new List<TileNode>();
     }
 
 
@@ -156,6 +167,16 @@ public class AIBrain : MonoBehaviour
         var plDat = PlayerController.instance?.GetComponent<PlayerData>()?.party;
         if (plDat == null || !plDat.Contains(gameObject))
             UpdateAI = false;
+    }
+
+
+    public void EnqueueAction(Command c)
+    {
+        this.ActionQueue.Enqueue(c);
+    }
+    public void ClearActionQueue()
+    {
+        this.ActionQueue.Clear();
     }
 
 }
