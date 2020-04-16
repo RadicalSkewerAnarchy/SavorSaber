@@ -97,21 +97,7 @@ public class Pathfinder : MonoBehaviour
 
             return null;
         }
-
-        // reset all nodes
-        // moving to new tile map
-        /*if (this.bornOnto != target.birthPlace)
-        {
-            Debug.Log("MOVING TO NEW TILEMAP");
-            foreach (GameObject n in possibleGraphs)
-            {
-                if (target.birthPlace == n.GetComponent<GraphNodePopulator>().birthPlace)
-                    allNodes = n.transform.Find("Collision").Find("Walkable").gameObject;
-            }
-            bornOnto = target.birthPlace;
-            return null;
-        }*/
-
+        
         // set of evaluated nodes
         List<TileNode> closed = new List<TileNode>();
         // set of discovered but unevaluated nodes
