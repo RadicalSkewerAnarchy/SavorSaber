@@ -5,6 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class AICharacterData : CharacterData
 {
 
@@ -26,6 +27,8 @@ public class AICharacterData : CharacterData
     [HideInInspector]
     public SpriteRenderer sRenderer;
     [HideInInspector]
+    public Animator animator;
+    [HideInInspector]
     public List<RecipeData.Flavors> FoodPreference;
     [HideInInspector]
     public Queue<IngredientData> Stomach = new Queue<IngredientData>();
@@ -41,6 +44,7 @@ public class AICharacterData : CharacterData
     private void Awake()
     {
         sRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         InitializeCharacterData();
 
         squeeze = GetComponent<Squeezer>();

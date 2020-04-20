@@ -18,11 +18,11 @@ public class AIDecisionProximity : AIDecision
         {
             if (Within)
             {
-                return Vector2.Distance(myBrain.transform.position, Target.transform.position) < Distance;
+                return Vector2.Distance(myBrain.CharacterData.transform.position, Target.transform.position) < Distance;
             }
             else
             {
-                return Vector2.Distance(myBrain.transform.position, Target.transform.position) > Distance;
+                return Vector2.Distance(myBrain.CharacterData.transform.position, Target.transform.position) > Distance;
             }
         }
         else

@@ -72,6 +72,11 @@ public class AIBrain : MonoBehaviour
     {
         // get character data
         CharacterData = GetComponentInParent<AICharacterData>();
+
+        // collect states
+        var states = GetComponentsInChildren<AIState>();
+        States = new List<AIState>(states);
+
         // initialize brain cascade
         foreach (var state in States)
         {
@@ -81,7 +86,6 @@ public class AIBrain : MonoBehaviour
         CurrentState = States[0];
 
         ActionQueue = new Queue<Command>();
-        path = new List<TileNode>();
     }
 
 
@@ -118,7 +122,7 @@ public class AIBrain : MonoBehaviour
 
             // perception update
             ObjectsInPerception.Clear();
-            ObjectsInPerception.AddRange(Awareness.Perceive(this.gameObject, this.Perception));
+            ObjectsInPerception.AddRange(Awareness.Perceive(this.CharacterData.gameObject, this.Perception));
         }
     }
 

@@ -24,11 +24,8 @@ public class AIPathfinder
         }
     }
 
-
-    public void Start()
+    public AIPathfinder()
     {
-        // waiting for other maps to load
-        //StartCoroutine(SetNodeGraphs(Random.Range(1f, 2f)));
         InitGraph();
     }
 
@@ -103,7 +100,6 @@ public class AIPathfinder
         if (start == null || target == null)
         {
             Debug.Log("Current agent or target is not on tilemap");
-
             return null;
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AIStateMoveTo : AIState
 {
-    private GameObject Target;
+    protected GameObject Target;
 
     public override void Perform()
     {
@@ -14,16 +14,17 @@ public class AIStateMoveTo : AIState
 
     public void MoveTo(Transform target, float speed, float threshold)
     {
-        Transform current = myBrain.gameObject.transform;
+        GameObject body = myBrain.CharacterData.gameObject;
+        Transform current = body.transform;
 
         if (Vector2.Distance(current.position, target.position) > threshold)
         {
-            Rigidbody2D body = myBrain.gameObject.GetComponent<Rigidbody2D>();
+            Rigidbody2D rigidBody = body.GetComponent<Rigidbody2D>();
 
             Vector2 move = (target.position - current.position);
             move = Vector2.ClampMagnitude(move, speed);
 
-            body.velocity = Vector2.ClampMagnitude(body.velocity + move, speed);
+            rigidBody.velocity = Vector2.ClampMagnitude(rigidBody.velocity + move, speed);
         }
     }
 
