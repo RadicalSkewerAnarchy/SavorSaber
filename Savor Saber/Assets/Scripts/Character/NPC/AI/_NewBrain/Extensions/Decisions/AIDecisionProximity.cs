@@ -41,6 +41,9 @@ public class AIDecisionProximity : AIDecision
     protected void FindTarget()
     {
         Target = null;
+
+        if (myBrain == null) return;
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (myBrain.IsAwareOf(player))
         {
