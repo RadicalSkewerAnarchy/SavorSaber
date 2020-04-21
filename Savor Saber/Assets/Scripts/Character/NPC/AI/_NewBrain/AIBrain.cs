@@ -122,6 +122,7 @@ public class AIBrain : MonoBehaviour
             // perception update
             ObjectsInPerception.Clear();
             ObjectsInPerception.AddRange(Awareness.Perceive(this.CharacterData.gameObject, this.Perception));
+            if (ObjectsInPerception.Contains(this.gameObject)) ObjectsInPerception.Remove(this.gameObject);
         }
     }
 

@@ -15,26 +15,16 @@ public class AIStateNavTo : AIStateMoveTo
             {
                 MoveTo(Tile.transform, myBrain.CharacterData.Speed, 1f);
             }
+            else
+            {
+                ChooseTarget();
+            }
         }
         else
         {
             ChooseTarget();
+            Tile = null;
         }
-    }
-
-    public override void ChooseTarget()
-    {
-        // testing
-        Target = GameObject.FindGameObjectWithTag("Player");
-        if (!myBrain.IsAwareOf(Target))
-        {
-            Target = null;
-        }
-    }
-
-    public override void OnEnter()
-    {
-        ChooseTarget();
     }
 
     public void CheckPath()

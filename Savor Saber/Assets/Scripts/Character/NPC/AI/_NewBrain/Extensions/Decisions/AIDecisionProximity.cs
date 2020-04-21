@@ -27,7 +27,7 @@ public class AIDecisionProximity : AIDecision
         else
         {
             FindTarget();
-            return false;
+            return Target == null;
         }
     }
 
