@@ -83,15 +83,15 @@ public class UtilityCurves : MonoBehaviour
             c = curvePair.Value;
             key = curvePair.Key;
             // Use the Macro value if one exists, else get the value from the AI data
-            a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
-            float val = EvaluateAttribute(c, a);
+            //a = macroValues.ContainsKey(key) ? GetMacroValue(key) : data.getNormalizedValue(key);
+            //float val = EvaluateAttribute(c, a);
             //Debug.Log(">>>>>>" + curvePair.Key + " value: " + a + " weight: " + val);
             // If the value is less than 0, do not factor it in to the utility
-            if (val >= 0)
-            {
-                sum += val;
-                ++count;
-            }            
+            //if (val >= 0)
+            //{
+            //    sum += val;
+            //    ++count;
+            //}            
         }
 
         // return the average

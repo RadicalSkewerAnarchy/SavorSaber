@@ -39,17 +39,6 @@ public class CharacterData : MonoBehaviour
         float VUp = 11 / 10;
         #endregion
 
-        #region Moods
-        [Range(0f, 1f)]
-        [SerializeField] protected float initialFear;
-        [Range(0f, 1f)]
-        [SerializeField] protected float initialHunger;
-        [Range(0f, 1f)]
-        [SerializeField] protected float initialHostility;
-        [Range(0f, 1f)]
-        [SerializeField] protected float initialFriendliness;
-        public Dictionary<string, float> moods = new Dictionary<string, float>();
-        #endregion
 
         #region Effects
         public AudioClip damageSFX;
@@ -74,16 +63,6 @@ public class CharacterData : MonoBehaviour
     protected void InitializeCharacterData()
     {
         // set mood values into dictionary
-        #region Mood Value Setup
-        if (!moods.ContainsKey("Fear"))
-            moods.Add("Fear", initialFear);
-        if (!moods.ContainsKey("Hunger"))
-            moods.Add("Hunger", initialHunger);
-        if (!moods.ContainsKey("Hostility"))
-            moods.Add("Hostility", initialHostility);
-        if (!moods.ContainsKey("Friendliness"))
-            moods.Add("Friendliness", initialFriendliness);
-        #endregion
         Spawn = transform.position;
     }
 

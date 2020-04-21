@@ -157,7 +157,6 @@ public class AIData : CharacterData
         #endregion
         #region Initialize Data
         InitializeCharacterData();
-        InitializeNormalValues();
         #endregion
 
         ActionQueue = new Queue<Command>();
@@ -554,50 +553,5 @@ public class AIData : CharacterData
     }
     #endregion
 
-    #region Normal Values and Calculations
-    /// <summary>
-    /// set links to mood dictionary values
-    /// </summary>
-    protected void InitializeNormalValues()
-    {
-        _values = new Dictionary<string, GetNormalValue>()
-        {
-            {"Fear", () => moods["Fear"] },
-            {"Hunger", () => moods["Hunger"] },
-            {"Hostility", () => moods["Hostility"] },
-            {"Friendliness", () => moods["Friendliness"] },
-            {"EnemyDistance", () => Normalize(Vector2.Distance(transform.position, Checks.Enemies[0].transform.position), Perception) },
-            {"Health", () => NormalizeInt(health, maxHealth) },
-            {"PlayerDistance", () => Normalize(Vector2.Distance(transform.position, GameObject.FindGameObjectWithTag("Player").transform.position), Perception) }
-        };
-    }
-    /// <summary>
-    /// normalize variables
-    /// </summary>
-    /// <param name="now">current value</param>
-    /// <param name="max">maximum value</param>
-    /// <returns></returns>
-    public float Normalize(float now, float max)
-    {
-        return now / max;
-    }
-    public float NormalizeInt(int now, int max)
-    {
-        return now / (float)max;
-    }
-
-    /// <summary>
-    ///  Get a normalized value from the value dictionary. if the value is not present, returns -1
-    /// </summary>
-    public float getNormalizedValue(string value)
-    {
-        if (!_values.ContainsKey(value))
-        {
-            Debug.LogError(value + " is not a valid AI value, returning -1");
-            return -1f;
-        }
-        return _values[value]();
-    }
-    #endregion
 
 }

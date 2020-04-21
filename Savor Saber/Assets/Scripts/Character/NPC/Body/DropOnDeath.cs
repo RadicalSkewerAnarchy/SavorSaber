@@ -16,7 +16,7 @@ public class DropOnDeath : MonoBehaviour
     /// <summary> Instantiates all prefabs in drops[] </summary>
     public void Drop()
     {
-        FuitantMount mount = GetComponentInChildren<FuitantMount>();
+        FruitantMount mount = GetComponentInChildren<FruitantMount>();
         if (mount != null)
         {
             Debug.Log("Found mount ...");
