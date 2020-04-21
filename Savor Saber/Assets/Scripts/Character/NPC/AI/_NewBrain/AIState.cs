@@ -19,26 +19,7 @@ public class AIState: MonoBehaviour
     {
         // do nothing
     }
-
-    /// <summary>
-    /// If no target is given, how does it obtain one?
-    /// Does the action need one?
-    /// </summary>
-    virtual public void ChooseTarget()
-    {
-        // do nothing
-    }
-
-    // targettables
-    private List<GameObject> TargetObjects;
-    private List<string> TargetTags;
-
-    public void SetTargets(List<GameObject> objs, List<string> strs)
-    {
-        TargetObjects = objs;
-        TargetTags = strs;
-    }
-
+    
     /// <summary>
     /// called when the state is entered
     /// </summary>

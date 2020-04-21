@@ -109,7 +109,6 @@ public class AIBrain : MonoBehaviour
                     CurrentState.OnExit();
                     nextState.OnEnter();
 
-                    nextState.SetTargets(transition.CollectReturnableObjects(), transition.CollectReturnableTags());
                     transition.InitializeDecisions();
 
                     CurrentState = nextState;

@@ -107,15 +107,16 @@ public class CharacterData : MonoBehaviour
             {
                 dead = true;
                 // fruitant specific
-                var ai = this.GetComponent<AIData>();
+                var ai = this.GetComponent<AICharacterData>();
                 if (ai != null)
                 {
-                    ai.currentLifeState = AIData.LifeState.dead;
+                    ai.currentLifeState = AICharacterData.LifeState.dead;
                     if (this.tag == "Predator")
                         Kill();
                 }
                 health = 0;
             }
+
             if (healthBar != null)
             {
                 healthBar.gameObject.SetActive(true);
@@ -125,9 +126,6 @@ public class CharacterData : MonoBehaviour
                     StopCoroutine(barCr);
                 barCr = StartCoroutine(ShowHealthBar());
             }
-
-            // create a fear signal
-            InstantiateSignal(4 , "Fear",  0.25f, true, true);
         }
         return dead;
     }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class AIDecisionProximity : AIDecision
 {
     [SerializeField]
     private GameObject Target;
+    public List<string> TargetTags;
     [SerializeField]
     private bool Within = true;
     [SerializeField]
@@ -38,17 +37,37 @@ public class AIDecisionProximity : AIDecision
         FindTarget();
     }
 
-    protected void FindTarget()
+    protected virtual void FindTarget()
     {
-        Target = null;
-
+        List<GameObject> objs = new List<GameObject>();
         if (myBrain == null) return;
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (myBrain.IsAwareOf(player))
+        foreach (var target in myBrain.ObjectsInPerception)
         {
-            Target = player;
+            if (TargetTags.Contains(target.tag))
+            {
+                objs.Add(target);
+            }
         }
 
+        if (Target == null || !objs.Contains(Target))
+        {
+            SetRandomTarget(objs);
+        }
+        else
+        {
+            Target = null;
+        }
+    }
+
+    protected void SetRandomTarget(List<GameObject> objs)
+    {
+        if (objs.Count > 0)
+        {
+            Target = objs[Random.Range(0, objs.Count)];
+        }
+        else
+        {
+            Target = null;
+        }
     }
 }

@@ -8,8 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AICharacterData : CharacterData
 {
+    public RecipeData.Flavors BuffFlavor = default;
 
-    
     public enum LifeState
     {
         alive,
