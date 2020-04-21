@@ -149,7 +149,7 @@ public class PlayerData : CharacterData
                 Brain.path = null;
 
                 partyUI.ChangeCompanion(member);
-                trust.SetTrustEffect(RecipeData.Flavors.Sour);
+                //trust.SetTrustEffect(RecipeData.Flavors.Sour);
             }
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }
