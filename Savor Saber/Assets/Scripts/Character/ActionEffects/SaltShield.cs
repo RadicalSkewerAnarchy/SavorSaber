@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SaltShield : MonoBehaviour
 {
-    public GameObject fruit;
+    public GameObject owner;
     private int immortalHp;
-    private AIData data;
+    private CharacterData data;
     private AudioSource audioSource;
 
     public float lifetime;
@@ -14,7 +14,6 @@ public class SaltShield : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        data = fruit.GetComponent<AIData>();
         immortalHp = data.health;
         audioSource = GetComponent<AudioSource>();
     }
@@ -22,13 +21,9 @@ public class SaltShield : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        data.health = immortalHp;
+        //data.health = immortalHp;
 
-        lifetime -= Time.deltaTime;
-        if (lifetime < 0)
-        {
-            Destroy(this.gameObject);
-        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -46,5 +41,11 @@ public class SaltShield : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetOwner(GameObject newOwner)
+    {
+        owner = newOwner;
+        data = owner.GetComponent<CharacterData>();
     }
 }

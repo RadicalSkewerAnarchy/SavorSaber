@@ -5,23 +5,26 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Respawner))]
 public class PlayerData : CharacterData
 {
+    [Header("Player-specific fields")]
+    public AudioClip lowHealthSFX;
+    private PlaySFX altSFXPlayer;
     public bool Invincible { get; set; }
     private const float flickerTime = 0.075f;
     private const float timeConst = 1.25f;
     private SpriteRenderer sp;
     private Respawner res;
     public List<GameObject> party = new List<GameObject>();
-
     public int lowHealthThreshhold = 2;
-    public AudioClip lowHealthSFX;
-    private PlaySFX altSFXPlayer;
+    private TrustMeter trust;
 
+    public PartyUIManager partyUI;
     private void Awake()
     {
         InitializeCharacterData();
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
         altSFXPlayer = GetComponent<PlaySFX>();
+        trust = GetComponent<TrustMeter>();
     }
 
     public override bool DoDamage(int damage, bool overcharged = false)
@@ -144,6 +147,9 @@ public class PlayerData : CharacterData
                 // set mind set
                 Brain.CommandCompleted = false;
                 Brain.path = null;
+
+                partyUI.ChangeCompanion(member);
+                trust.SetTrustEffect(RecipeData.Flavors.Sour);
             }
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }

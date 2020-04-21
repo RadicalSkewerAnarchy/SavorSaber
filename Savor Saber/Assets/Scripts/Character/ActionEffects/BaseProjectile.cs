@@ -17,8 +17,8 @@ public class BaseProjectile : MonoBehaviour
     public bool hurtDrones = true;
 
     public bool overcharged = false;
-
-    CharacterData myCharData;
+    [HideInInspector]
+    public CharacterData myCharData;
 
     /// <summary>
     /// A prefab to be instantiated when the projectile is terminated
@@ -87,6 +87,7 @@ public class BaseProjectile : MonoBehaviour
     /// </summary>
     public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
     public Dictionary<string, int> ingredientCountDictionary;
+    [HideInInspector]
     public IngredientData[] ingredientArray;
 
     /// <summary>
@@ -118,7 +119,7 @@ public class BaseProjectile : MonoBehaviour
         //Debug.Log("Spawn = " + spawnPosition);
         //Debug.Log("Spawn position: " + spawnPosition);
         //Debug.Log(directionVector);
-        myCharData = GetComponent<CharacterData>();
+        //myCharData = GetComponent<CharacterData>();
 
         //Debug.Log("Projectile spawned with direction vector " + directionVector);
 
@@ -126,6 +127,11 @@ public class BaseProjectile : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        MoveProjectile();
+    }
+
+    protected void MoveProjectile()
     {
         transform.Translate(directionVector * projectileSpeed * Time.deltaTime, Space.World);
 

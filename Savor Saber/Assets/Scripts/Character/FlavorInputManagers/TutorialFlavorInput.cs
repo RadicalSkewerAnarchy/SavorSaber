@@ -41,44 +41,15 @@ public class TutorialFlavorInput : FlavorInputManager
         }
     }
 
+    //just a temporary conversion from the old feeding to the new feeding, so the tutorial still works
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
+    {
+        IngredientData[] ingredientArray = { ingredient };
+        Feed(ingredientArray, fedByPlayer);
+    }
+
     public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
-        #region Old feeding checks
-        /*
-        for(int i = 0; i < ingredientArray.Length; i++)
-        {
-            IngredientData ingredient = ingredientArray[i];
-            if (ingredientCountDictionary.ContainsKey(ingredient))
-            {
-                ingredientCountDictionary[ingredient] = ingredientCountDictionary[ingredient] + 1;
-            }
-            else
-            {
-                ingredientCountDictionary.Add(ingredient, 1);
-            }
-            */
-        // ingredients don't have flavors anymore, so we no longer need to check flavors
-        //restore this if we want to check flavors again
-        /*
-        for (int f = 1; f <= 64; f = f << 1)
-        {
-
-            if ((f & (int)ingredient.flavors) > 0)
-            {
-                RecipeData.Flavors foundFlavor = (RecipeData.Flavors)f;
-                flavorCountDictionary[foundFlavor] = flavorCountDictionary[foundFlavor] + 1;
-                Debug.Log(ingredient.displayName + " has flavor " + foundFlavor);
-            }
-        }
-
-    }
-    */
-        //RespondToIngredients(fedByPlayer);
-
-        // fruitants no longer spawn a reward
-        //SpawnReward(ingredientArray, fedByPlayer);
-        #endregion
-
         bool healed = false;
         bool rejected = false;
         foreach (IngredientData data in ingredientArray)
@@ -151,44 +122,6 @@ public class TutorialFlavorInput : FlavorInputManager
             }
             Debug.Log("wtf, why would you feed me this");
         }
-    }
-
-
-    public override void RespondToIngredients(bool fedByPlayer)
-    {
-
-        // heal the fruitant
-        if (fedByPlayer && characterData != null)
-            characterData.DoHeal(flavorCountDictionary.Count * 2);
-
-        //should I reject anything I ate?
-        foreach (var rejectedIngredient in rejectedIngredients)
-        {
-            // if the ingredients on the skewer are my favorites...
-            if (ingredientCountDictionary.ContainsKey(rejectedIngredient))
-            {
-                // am i actually being fed this...
-                float amountOnSkewer = ingredientCountDictionary[rejectedIngredient];
-
-                // play audio
-                if (sfxPlayer != null)
-                {
-                    sfxPlayer.clip = rejectSFX;
-                    sfxPlayer.Play();
-                    Debug.Log("wtf, why would you feed me this");
-
-                    //spit out the rejected object
-                    GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
-                    SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
-                    SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
-                    rejectedSR.sprite = rejectedIngredient.image;
-                    rejectedSO.data = rejectedIngredient;
-                }
-            }
-        }
-
-        // reset dicts
-        ResetDictionary();
     }
 
     public void EnableCounting()

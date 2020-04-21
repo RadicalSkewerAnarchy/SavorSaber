@@ -374,5 +374,14 @@ public class PlayerController : EntityController
         if (DebugBool) { Debug.Log("AnimateAgent finished."); }
         //////
     }
+
+    public float GetSpeed()
+    {
+        return speed;
+    }
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 }
 // used for basic movement implementaion, https://unity3d.com/learn/tutorials/projects/2d-ufo-tutorial/controlling-player

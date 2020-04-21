@@ -14,22 +14,6 @@ public class PoisonPlantFlavorInput : PlantFlavorInput
         deathAudioPlayer = GetComponent<AudioSource>();
     }
 
-    public override void RespondToIngredients(bool fedByPlayer)
-    {
-        //handle spicy
-        if (flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
-        {
-            isFed = true;
-            OpenPlant();
-        }
-        // reset so you have to feed it both flavors at once
-        // nevermind
-        ResetDictionary();
-    }
-
-    private void Update()
-    {
-    }
 
     public override void ClosePlant()
     {
