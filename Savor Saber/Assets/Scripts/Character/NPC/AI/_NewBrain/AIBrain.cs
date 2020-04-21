@@ -68,7 +68,7 @@ public class AIBrain : MonoBehaviour
     /// <summary>
     /// INITIALIZE THE BRAIN
     /// </summary>
-    private void Awake()
+    private void Start()
     {
         // get character data
         CharacterData = GetComponentInParent<AICharacterData>();

@@ -10,17 +10,14 @@ public class AIStateNavTo : AIStateMoveTo
     {
         if (Target != null)
         {
-            Debug.Log($"Checking Path...");
             CheckPath();
             if (Tile != null)
             {
-                Debug.Log($"Found Tile {Tile.name}");
                 MoveTo(Tile.transform, myBrain.CharacterData.Speed, 1f);
             }
         }
         else
         {
-            Debug.Log("Need a Target");
             ChooseTarget();
         }
     }
@@ -44,14 +41,12 @@ public class AIStateNavTo : AIStateMoveTo
     {
         if (myBrain.path == null)
         {
-            Debug.Log("...need a path");
             myBrain.path = AIPathfinder.Instance.AStar(myBrain.CharacterData.gameObject, GetNearestNode(Target.transform.position));
         }
         else
         {
             if (Tile != null)
             {
-                Debug.Log("...need a tile");
                 float distance = Vector2.Distance(Tile.transform.position, myBrain.CharacterData.transform.position);
                 if (distance < 1)
                 {
@@ -61,7 +56,6 @@ public class AIStateNavTo : AIStateMoveTo
 
             if (myBrain.path.Count > 0)
             {
-                Debug.Log("...need a whole new tile");
                 int i = myBrain.path.Count - 1;
                 Tile = myBrain.path[i];
             }
