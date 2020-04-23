@@ -17,4 +17,6 @@ public class IngredientData : ScriptableObject
     public RecipeData.Flavors flavors;
     /// <summary>The categories of ingredient this ingredient fits into (flags)</summary>
     public GameObject monster;
+    /// <summary>Any extra damage to be dealt by this ingredient when used as a projectile</summary>
+    public int extraDamage;
 }

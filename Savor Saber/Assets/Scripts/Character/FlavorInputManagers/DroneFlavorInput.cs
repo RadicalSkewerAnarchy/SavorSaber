@@ -50,5 +50,11 @@ public class DroneFlavorInput : FlavorInputManager
         }
         characterData.DoDamage(damageDone, true);
     }
+
+    public void DoExtraDamage(int damage)
+    {
+        Debug.Log("Entering DoExtraDamage");
+        characterData.DoDamage(damage, true);
+    }
     
 }

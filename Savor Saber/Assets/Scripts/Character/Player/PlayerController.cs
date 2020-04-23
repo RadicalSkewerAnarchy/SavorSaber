@@ -34,6 +34,8 @@ public class PlayerController : EntityController
     [SerializeField]
     [Range(0f, 500f)]
     float runSpeed = 100f;
+    [System.NonSerialized]
+    public float dashRechargeMultiplier = 1;
 
     Rigidbody2D rigidBody;
     Animator animatorBody;
@@ -237,7 +239,7 @@ public class PlayerController : EntityController
         while(CurrDashes < maxDashes)
         {
             yield return new WaitForFixedUpdate();
-            CurrDashes += Time.fixedDeltaTime;
+            CurrDashes += (Time.fixedDeltaTime * dashRechargeMultiplier);
         }
         RechargingFromEmpty = false;
         rechargeDashes = null;

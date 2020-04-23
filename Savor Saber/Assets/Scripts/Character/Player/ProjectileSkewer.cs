@@ -50,6 +50,17 @@ public class ProjectileSkewer : BaseProjectile
                     Debug.Log("Flavor input of " + collision.gameObject + " not null");
                     flavorInput.Feed(ingredientArray[0], true, myCharData);
                     fed = true;
+
+                    //if this is an enemy, check if we should be doing extra damage from party buffs
+                    if(collision.gameObject.tag == "Predator")
+                    {
+                        DroneFlavorInput dFlavorInput = collision.gameObject.GetComponent<DroneFlavorInput>();
+                        if(dFlavorInput != null)
+                        {
+                            dFlavorInput.DoExtraDamage((int)projectileDamage);
+                        }
+                    }
+
                     Destroy(this.gameObject);
                 }
                 //if you hit something (and aren't penetrating) but can't feed it

@@ -60,6 +60,12 @@ public class AttackRanged : AttackBase
     public Control control;
     public InputAxis axis;
 
+    /// <summary>
+    /// Any damage buffs to be applied to the projectile
+    /// </summary>
+    [HideInInspector]
+    public int extraDamage = 0;
+
     #endregion
 
     // Start is called before the first frame update
@@ -135,6 +141,7 @@ public class AttackRanged : AttackBase
         projectileData.direction = direction;
         projectileData.myCharData = GetComponent<CharacterData>();
         projectileData.directionVector = directionVector;
+        projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
         //give the spawned projectile its effect data, if applicable
@@ -193,6 +200,7 @@ public class AttackRanged : AttackBase
         projectileData.myCharData = GetComponent<CharacterData>();
         projectileData.direction = direction;
         projectileData.directionVector = directionVector;
+        projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
         //give the spawned projectile its effect data, if applicable

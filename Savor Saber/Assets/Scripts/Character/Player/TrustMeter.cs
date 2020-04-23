@@ -23,6 +23,7 @@ public class TrustMeter : MonoBehaviour
     //component fields
     private PlayerData somaData;
     private PlayerController somaController;
+    private AttackRangedThrowSkewer somaSkewer;
     private float baseSpeed;
     private int baseMaxHealth;
 
@@ -35,6 +36,7 @@ public class TrustMeter : MonoBehaviour
     {
         somaData = GetComponent<PlayerData>();
         somaController = GetComponent<PlayerController>();
+        somaSkewer = GetComponent<AttackRangedThrowSkewer>();
         baseSpeed = somaController.GetSpeed();
         baseMaxHealth = somaData.maxHealth;
 
@@ -105,12 +107,12 @@ public class TrustMeter : MonoBehaviour
             //sweet companions buff health and speed
             case RecipeData.Flavors.Sweet:
                 Debug.Log("Setting trust effect for sweet");
-                somaData.maxHealth = baseMaxHealth + (int)stage;
-                somaController.SetSpeed(baseSpeed + (30 * (int)stage));
+                somaController.dashRechargeMultiplier = (int)stage + 2; 
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
                 Debug.Log("Setting trust effect for spicy");
+                somaSkewer.extraDamage = (int)stage + 1;
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
@@ -130,6 +132,8 @@ public class TrustMeter : MonoBehaviour
     private void ResetPlayerParameters()
     {
         somaController.SetSpeed(baseSpeed);
+        somaController.dashRechargeMultiplier = 1;
+        somaSkewer.extraDamage = 0;
         somaData.maxHealth = baseMaxHealth;
         if (somaData.health > baseMaxHealth)
             somaData.health = baseMaxHealth;
