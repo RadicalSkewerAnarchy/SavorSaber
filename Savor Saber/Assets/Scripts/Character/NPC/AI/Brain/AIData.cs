@@ -140,6 +140,8 @@ public class AIData : CharacterData
         public Vector3 rideVector;
         [HideInInspector]
         public List<TileNode> path;
+
+        public RecipeData.Flavors flavor;
     #endregion
 
     #endregion

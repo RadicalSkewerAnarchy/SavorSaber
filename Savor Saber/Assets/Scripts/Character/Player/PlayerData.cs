@@ -149,8 +149,8 @@ public class PlayerData : CharacterData
                 Brain.path = null;
 
                 partyUI.ChangeCompanion(member);
-                //HARDCODING EFFECT AS A PLACEHOLDER
-                trust.SetTrustEffect(RecipeData.Flavors.Spicy);
+                
+                trust.SetTrustEffect(Brain.flavor);
             }
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }

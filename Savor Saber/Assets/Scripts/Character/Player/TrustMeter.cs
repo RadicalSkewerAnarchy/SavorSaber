@@ -107,7 +107,8 @@ public class TrustMeter : MonoBehaviour
             //sweet companions buff health and speed
             case RecipeData.Flavors.Sweet:
                 Debug.Log("Setting trust effect for sweet");
-                somaController.dashRechargeMultiplier = (int)stage + 2; 
+                somaController.dashRechargeMultiplier = (int)stage + 2;
+                somaController.maxDashes = 3 + (int)stage;
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
@@ -132,6 +133,7 @@ public class TrustMeter : MonoBehaviour
     private void ResetPlayerParameters()
     {
         somaController.SetSpeed(baseSpeed);
+        somaController.maxDashes = 3;
         somaController.dashRechargeMultiplier = 1;
         somaSkewer.extraDamage = 0;
         somaData.maxHealth = baseMaxHealth;
