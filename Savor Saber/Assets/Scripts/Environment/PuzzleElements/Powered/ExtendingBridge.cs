@@ -14,16 +14,33 @@ public class ExtendingBridge : PoweredObject
     {
         animator = GetComponent<Animator>();
         blocker = GetComponent<BoxCollider2D>();
-        if (active)
+        if (FlagManager.GetFlag(activeStateFlag) == "True")
         {
             animator.Play("StartExtended");
             blocker.enabled = false;
+            active = true;
         }
-        else
+        else if (FlagManager.GetFlag(activeStateFlag) == "True")
         {
             animator.Play("StartRetracted");
             blocker.enabled = true;
+            active = false;
         }
+        else
+        {
+            //if no existing flag state, default to inspector settings
+            if (active)
+            {
+                animator.Play("StartExtended");
+                blocker.enabled = false;
+            }
+            else
+            {
+                animator.Play("StartRetracted");
+                blocker.enabled = true;
+            }
+        }
+
     }
 
     // Update is called once per frame

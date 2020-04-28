@@ -44,7 +44,8 @@ public class TutorialPearFeedManager : MonoBehaviour
             FlagManager.SetFlag("PearCheck", "true");
             scene.Trigger();
 
-            bridge.TurnOn();
+            if(bridge != null)
+                bridge.TurnOn();
             
             foreach(GameObject fruitant in fruitantsToAdd)
             {

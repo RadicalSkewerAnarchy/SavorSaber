@@ -42,10 +42,52 @@ public class TutorialFlavorInput : FlavorInputManager
     }
 
     //just a temporary conversion from the old feeding to the new feeding, so the tutorial still works
-    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
     {
-        IngredientData[] ingredientArray = { ingredient };
-        Feed(ingredientArray, fedByPlayer);
+        bool rejected = false;
+        //check to see if we should reject this
+        foreach (IngredientData rejectedIngredient in rejectedIngredients)
+        {
+            if (ingredient == rejectedIngredient)
+            {
+                rejected = true;
+                //spit out the rejected object
+                GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+                SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+                SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+                rejectedSR.sprite = rejectedIngredient.image;
+                rejectedSO.data = rejectedIngredient;
+                sfxPlayer.clip = rejectSFX;
+                sfxPlayer.Play();
+            }
+        }
+        //if we didn't reject it, heal and check if we should morph
+        if (!rejected)
+        {
+            characterData.DoHeal(99);
+            //FOR TUTORIAL: count how much this feeding adds to the total
+            if (countingActive && (amountFed < limitPerFruitant))
+            {
+                feedManager.Feed(1);
+                amountFed++;
+            }
+
+            if (canTransformWhenFed && ingredient.monster != null)
+            {
+                GameObject newMorph = Instantiate(ingredient.monster, transform.position, Quaternion.identity);
+                //if this is the companion, keep it in the party
+                if (isCompanion)
+                {
+                    PlayerData somaData = (PlayerData)feederData;
+                    somaData.JoinTeam(newMorph, 1, true);
+                    FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
+                    newFIM.isCompanion = true;
+                    newFIM.PlaySpawnParticles();
+
+                }
+                Destroy(this.gameObject);
+            }
+        }
     }
 
     public override void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
