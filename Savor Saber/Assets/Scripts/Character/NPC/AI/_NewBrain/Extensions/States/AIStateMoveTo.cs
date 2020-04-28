@@ -26,39 +26,6 @@ public class AIStateMoveTo : AIStateTargettable
         }
     }
 
-    public override void ChooseTarget()
-    {
-        List<GameObject> objs = new List<GameObject>();
-        // find tags
-        foreach (var target in myBrain.ObjectsInPerception)
-        {
-            if (TargetTags.Contains(target.tag))
-            {
-                objs.Add(target);
-            }
-        }
-
-        if (Target == null || !objs.Contains(Target))
-        {
-            SetRandomTarget(objs);
-        }
-        else
-        {
-            Target = null;
-        }
-    }
-
-    protected void SetRandomTarget(List<GameObject> objs)
-    {
-        if (objs.Count > 0)
-        {
-            Target = objs[Random.Range(0, objs.Count)];
-        }
-        else
-        {
-            Target = null;
-        }
-    }
 
     public override void OnEnter()
     {

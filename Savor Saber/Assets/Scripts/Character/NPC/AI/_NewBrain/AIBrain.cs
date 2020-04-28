@@ -115,7 +115,7 @@ public class AIBrain : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log($"{this.name} DOES NOT HAVE THIS STATE AVAILABLE: {nextState}");
+                    Debug.Log($"{this.CharacterData.gameObject.name} DOES NOT HAVE THIS STATE AVAILABLE: {nextState}");
                 }
             }
 

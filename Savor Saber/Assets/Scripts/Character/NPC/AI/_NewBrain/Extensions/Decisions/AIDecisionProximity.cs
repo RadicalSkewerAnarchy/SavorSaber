@@ -11,6 +11,7 @@ public class AIDecisionProximity : AIDecision
     [SerializeField]
     private float Distance = 3;
 
+
     public override bool Evaluate()
     {
         if (Target != null)
@@ -27,7 +28,7 @@ public class AIDecisionProximity : AIDecision
         else
         {
             FindTarget();
-            return Target == null;
+            return false;
         }
     }
 
@@ -43,6 +44,10 @@ public class AIDecisionProximity : AIDecision
         if (myBrain == null) return;
         foreach (var target in myBrain.ObjectsInPerception)
         {
+            if (target == null)
+            {
+                continue;
+            }
             if (TargetTags.Contains(target.tag))
             {
                 objs.Add(target);
