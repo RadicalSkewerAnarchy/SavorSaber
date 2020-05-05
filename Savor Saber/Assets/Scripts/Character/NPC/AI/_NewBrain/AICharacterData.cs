@@ -20,7 +20,7 @@ public class AICharacterData : CharacterData
     [HideInInspector]
     public LifeState previousLifeState = LifeState.alive;
 
-
+    public AIBrain Brain;
     public bool CommandCompleted = true;
     public bool CommandInProgress = false;
 
@@ -43,6 +43,7 @@ public class AICharacterData : CharacterData
     /// </summary>
     private void Awake()
     {
+        Brain = GetComponentInChildren<AIBrain>();
         sRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         InitializeCharacterData();

@@ -39,8 +39,6 @@ public class AIStateTargettable : AIState
         }
     }
 
-
-
     protected void SetRandomTarget(List<GameObject> objs)
     {
         if (objs.Count > 0)
@@ -51,5 +49,10 @@ public class AIStateTargettable : AIState
         {
             Target = null;
         }
+    }
+
+    public void SetTarget(GameObject obj)
+    {
+        Target = obj;
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class AIStateCommandable : AIState
+public class AIStateCommandable : AIStateTargettable
 {
     [SerializeField]
     private List<AIData.Protocols> Verbs;
@@ -10,6 +10,14 @@ public class AIStateCommandable : AIState
 
     private int commandOfChoice = -1;
 
+    private void Start()
+    {
+        if (Verbs.Count != Performances.Count)
+        {
+            Debug.Log($"NUMBER OF COMMANDS != NUMBER OF STATES IN {this.myBrain.name}");
+            Destroy(this.gameObject);
+        }
+    }
 
     public override void Perform()
     {
