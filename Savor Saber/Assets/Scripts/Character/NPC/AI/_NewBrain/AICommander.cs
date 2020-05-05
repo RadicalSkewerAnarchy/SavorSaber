@@ -57,7 +57,7 @@ public class AICommander : MonoBehaviour
                 if (Subjects.Contains(nearestFruitant))
                 {
                     SelectEnqueue(nearestFruitant);
-                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                    //nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
             }
@@ -67,7 +67,7 @@ public class AICommander : MonoBehaviour
                 if (nearestDrone != null)
                 {
                     SelectEnqueue(nearestDrone);
-                    nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
+                    //nearestDrone.GetComponent<Squeezer>().Wiggle(1, 10, 10, 0.05f, 0.05f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(3);
                 }
                 else if (Subjects.Contains(nearestFruitant))
@@ -75,7 +75,7 @@ public class AICommander : MonoBehaviour
                     // remove current selected fruitant
                     //lastSelected.Dequeue();
                     SelectEnqueue(nearestFruitant);
-                    nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
+                    //nearestFruitant.GetComponent<Squeezer>().Wiggle(1, 5, 5, 0.1f, 0.1f);
                     Cursor.GetComponent<CrosshairClicker>().PlaySelectionSounds(lastSelected.Count);
                 }
                 else if (nearestTileNode != null)
@@ -110,7 +110,7 @@ public class AICommander : MonoBehaviour
                     }
                     else // is tilenode
                     {
-                        Command(applyCommandTo, AIData.Protocols.Lazy, target);//, Cursor.transform.position);
+                        Command(applyCommandTo, AIData.Protocols.Runaway, target);//, Cursor.transform.position);
                     }
                 }
                 // can "technically" command drones, but that's for later
@@ -189,7 +189,7 @@ public class AICommander : MonoBehaviour
         {
             dist = Vector2.Distance(this.transform.position, member.transform.position);
             // check each and set when needed
-            if (member.GetComponent<AIData>() != null)
+            if (member.GetComponent<AICharacterData>() != null)
             {
                 if (member.tag == "Prey")
                 {

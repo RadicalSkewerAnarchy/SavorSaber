@@ -47,7 +47,7 @@ public class CrosshairClicker : MonoBehaviour
             all.Add(go);
         }
 
-        Debug.Log(this.name + " returning Clicked On area: " + all.ToString());
+        //Debug.Log(this.name + " returning Clicked On area: " + all.ToString());
         return all;
     }
 

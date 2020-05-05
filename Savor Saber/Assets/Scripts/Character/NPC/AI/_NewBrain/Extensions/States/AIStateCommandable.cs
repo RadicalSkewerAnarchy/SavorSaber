@@ -26,7 +26,12 @@ public class AIStateCommandable : AIStateTargettable
             AIState state = Performances[commandOfChoice];
             if (state != null)
             {
+                Debug.Log($"commandable member is performing {state}");
                 state.Perform();
+                if (state is AIStateTargettable)
+                {
+                    (state as AIStateTargettable).SetTarget(Target);
+                }
             }
         }
     }
