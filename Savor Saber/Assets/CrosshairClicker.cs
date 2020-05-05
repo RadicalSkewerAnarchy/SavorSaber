@@ -53,6 +53,13 @@ public class CrosshairClicker : MonoBehaviour
 
     public void PlaySelectionSounds(int i)
     {
+        sfxPlayer = GetComponent<PlaySFX>();
+        if (sfxPlayer == null)
+        {
+            Debug.Log("ERROR: NULL SFX PLAYER REFERENCE IN CROSSHAIRCLICKER");
+            return;
+        }
+        
         if (i == 0)
         {
             sfxPlayer.Play(failSelectionSound);

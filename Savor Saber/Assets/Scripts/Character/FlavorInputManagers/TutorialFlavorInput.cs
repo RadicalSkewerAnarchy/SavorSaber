@@ -14,6 +14,8 @@ public class TutorialFlavorInput : FlavorInputManager
     public int limitPerFruitant = 1;
     private int amountFed = 0;
     private bool countingActive = false;
+    private bool morphingActive = false;
+    public string flagToSetOnMorph;
 
     private void Start()
     {
@@ -41,7 +43,6 @@ public class TutorialFlavorInput : FlavorInputManager
         }
     }
 
-    //just a temporary conversion from the old feeding to the new feeding, so the tutorial still works
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
     {
         bool rejected = false;
@@ -72,9 +73,11 @@ public class TutorialFlavorInput : FlavorInputManager
                 amountFed++;
             }
 
-            if (canTransformWhenFed && ingredient.monster != null)
+            //FOR TUTORIAL ONLY: Only allow morphing once the tutorial reaches that step
+            if (canTransformWhenFed && ingredient.monster != null && morphingActive)
             {
                 GameObject newMorph = Instantiate(ingredient.monster, transform.position, Quaternion.identity);
+                FlagManager.SetFlag(flagToSetOnMorph, "True");
                 //if this is the companion, keep it in the party
                 if (isCompanion)
                 {
@@ -169,5 +172,10 @@ public class TutorialFlavorInput : FlavorInputManager
     public void EnableCounting()
     {
         countingActive = true;
+    }
+
+    public void EnableMorphing()
+    {
+        morphingActive = true;
     }
 }

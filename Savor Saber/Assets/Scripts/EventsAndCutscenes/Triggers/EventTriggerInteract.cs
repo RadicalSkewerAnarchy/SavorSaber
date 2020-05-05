@@ -6,7 +6,6 @@ using UnityEngine;
 public class EventTriggerInteract : EventTrigger
 {
     private bool playerInRange;
-
     private void Update()
     {
         if (!playerInRange)

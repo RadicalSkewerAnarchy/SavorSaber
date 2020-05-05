@@ -17,6 +17,8 @@ public class NexusInteractor : MonoBehaviour
     private bool playerInInteractArea;
     private bool hacking;
 
+    public bool canHackAfterActivation = false;
+
     private void Awake()
     {
         if (Parent == null)
@@ -33,7 +35,7 @@ public class NexusInteractor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!playerInInteractArea || Parent.CurrState == Nexus.State.Activated)
+        if (!playerInInteractArea || (Parent.CurrState == Nexus.State.Activated && !canHackAfterActivation))
             return;
         if (!hacking)
         {  
@@ -51,7 +53,7 @@ public class NexusInteractor : MonoBehaviour
 
     public void Hack()
     {
-        if (State == Nexus.State.Protected)
+        if (State == Nexus.State.Protected || State == Nexus.State.Activated)
         {
             spawner.Spawn();
         }
@@ -60,7 +62,8 @@ public class NexusInteractor : MonoBehaviour
             Parent.CurrState = Nexus.State.Activated;
             for (int i = 0; i < spawnXOnActivate; ++i)
                 spawner.Spawn();
-            promptObj.SetActive(false);
+            if(!canHackAfterActivation)
+                promptObj.SetActive(false);
         }
     }
 
@@ -73,7 +76,7 @@ public class NexusInteractor : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(Parent.CurrState != Nexus.State.Activated)
+        if(Parent.CurrState != Nexus.State.Activated || canHackAfterActivation)
         {
             playerInInteractArea = true;
             promptObj.SetActive(true);

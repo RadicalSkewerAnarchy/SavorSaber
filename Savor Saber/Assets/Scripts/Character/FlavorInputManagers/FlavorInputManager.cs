@@ -109,15 +109,18 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     PlayerData somaData = (PlayerData)feederData;
                     somaData.JoinTeam(newMorph, 1, true);
+                    somaData.SetCurrentFormIngreident(ingredient);
                     FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
                     newFIM.isCompanion = true;
                     newFIM.PlaySpawnParticles();
-
+                    DontDestroyOnLoad loader = newMorph.GetComponent<DontDestroyOnLoad>();
+                    loader.DisableDestroyOnLoad();
                 }
                 Destroy(this.gameObject);
             }
         }
     }
+
 
     public virtual void PlaySpawnParticles()
     {

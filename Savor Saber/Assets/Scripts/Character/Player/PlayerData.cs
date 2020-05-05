@@ -16,6 +16,7 @@ public class PlayerData : CharacterData
     public List<GameObject> party = new List<GameObject>();
     public int lowHealthThreshhold = 2;
     private TrustMeter trust;
+    private IngredientData currentFormIngredient;
 
     public PartyUIManager partyUI;
     private void Awake()
@@ -199,6 +200,14 @@ public class PlayerData : CharacterData
         party.Clear();
 
         Debug.Log("Party has been cleared!");
+    }
+    /// <summary>
+    /// Used to keep track of what form the companion is currently in.
+    /// Called by FlavorInputManagers when feeding.
+    /// </summary>
+    public void SetCurrentFormIngreident(IngredientData ingredient)
+    {
+        currentFormIngredient = ingredient;
     }
 
     #endregion
