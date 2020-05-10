@@ -18,7 +18,7 @@ public class AIBrain : MonoBehaviour
     /// </summary>
     public bool UpdateAI { get; private set; } = true;
     public bool CommandCompleted { get; private set; } = true;
-    private bool ShouldUpdateAI => !EventTrigger.InCutscene && (UpdateAI || !CommandCompleted);
+    private bool ShouldUpdateAI => !EventTrigger.InCutscene && (UpdateAI || !CommandCompleted) && CharacterData.currentLifeState != AICharacterData.LifeState.dead;
 
     /// <summary>
     /// what the agent can see
