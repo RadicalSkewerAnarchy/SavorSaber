@@ -22,9 +22,10 @@ public class DroneFlavorInput : FlavorInputManager
         InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
+        aiCharacterData = GetComponent<AICharacterData>();
 
         //if (hasElectricField)
-            //electricField = GetComponentInChildren<ElectricAOE>();
+        //electricField = GetComponentInChildren<ElectricAOE>();
     }
 
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
@@ -48,7 +49,8 @@ public class DroneFlavorInput : FlavorInputManager
             rejectedSR.sprite = ingredient.image;
             rejectedSO.data = ingredient;
         }
-        characterData.DoDamage(damageDone, true);
+        characterData?.DoDamage(damageDone, true);
+        aiCharacterData?.DoDamage(damageDone, true);
     }
     
 }

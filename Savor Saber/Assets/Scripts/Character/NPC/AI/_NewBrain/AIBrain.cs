@@ -106,12 +106,8 @@ public class AIBrain : MonoBehaviour
 
                 if (this.States.Contains(nextState))
                 {
-                    CurrentState.OnExit();
-                    nextState.OnEnter();
-
+                    SetCurrentState(nextState);
                     transition.InitializeDecisions();
-
-                    CurrentState = nextState;
                 }
                 else
                 {
@@ -138,6 +134,13 @@ public class AIBrain : MonoBehaviour
         }
     }
 
+    public void SetCurrentState(AIState state)
+    {
+        CurrentState.OnExit();
+        state.OnEnter();
+
+        CurrentState = state;
+    }
 
     public bool IsAwareOf(GameObject find)
     {

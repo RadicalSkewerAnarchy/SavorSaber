@@ -13,9 +13,10 @@ public class PlayerData : CharacterData
     private const float timeConst = 1.25f;
     private SpriteRenderer sp;
     private Respawner res;
-    public List<GameObject> party = new List<GameObject>();
     public int lowHealthThreshhold = 2;
     private TrustMeter trust;
+    private AICommander commander;
+    public List<GameObject> party => commander.Subjects;
 
     public PartyUIManager partyUI;
     private void Awake()
@@ -25,6 +26,7 @@ public class PlayerData : CharacterData
         res = GetComponent<Respawner>();
         altSFXPlayer = GetComponent<PlaySFX>();
         trust = GetComponent<TrustMeter>();
+        commander = GetComponent<AICommander>();
     }
 
     public override bool DoDamage(int damage, bool overcharged = false)
@@ -112,12 +114,12 @@ public class PlayerData : CharacterData
     /// <param name="partyoverride">remove fruitants in order to fit</param>
     public void JoinTeam(GameObject member, int partysize = 3, bool partyoverride = false)
     {
-        AIData Brain;
+        AICharacterData Brain;
         // if subject still exists
         if (member != null)
         {
             // get brain
-            Brain = member.GetComponent<AIData>();
+            Brain = member.GetComponent<AICharacterData>();
             if (Brain != null)
             {
                 //if (pd == null) Debug.Log("Player Data is null!!!!");
@@ -146,7 +148,7 @@ public class PlayerData : CharacterData
 
                 // set mind set
                 Brain.CommandCompleted = false;
-                Brain.path = null;
+                Brain.Brain.path = null;
 
                 partyUI.ChangeCompanion(member);
                 trust.SetTrustEffect(RecipeData.Flavors.Sour);
@@ -156,11 +158,27 @@ public class PlayerData : CharacterData
         else Debug.Log(this.name + " : is trying to add a null member to the party");
     }
 
-    private void AddMember(GameObject member, AIData brain)
+    private void AddMember(GameObject member, AICharacterData brain)
     {
         party.Add(member);
         brain.CommandCompleted = false;
-        brain.path = null;
+        brain.Brain.path = null;
+
+        bool commandable = false;
+        foreach (var state in brain.Brain.States)
+        {
+            if (GetComponent<AIStateCommandable>()!= null)
+            {
+                commandable = true;
+                break;
+            }
+        }
+        if (!commandable)
+        {
+            GameObject commandState = Instantiate(commander.CommandableState, brain.Brain.transform);
+            brain.Brain.States.Add(commandState.GetComponent<AIStateCommandable>());
+        }
+
         Debug.Log(member.name + " : has joined the party");
     }
 
@@ -186,12 +204,12 @@ public class PlayerData : CharacterData
     {
         foreach (GameObject member in party)
         {
-            AIData Brain = member.GetComponent<AIData>();
+            AICharacterData Brain = member.GetComponent<AICharacterData>();
             if (Brain != null)
             {
                 // set mind set
                 Brain.CommandCompleted = true;
-                Brain.path = null;
+                Brain.Brain.path = null;
             }
         }
 

@@ -25,6 +25,7 @@ public class MarshPlantFlavorInput : PlantFlavorInput
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
+        aiCharacterData = GetComponent<AICharacterData>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         myCollider = GetComponent<CircleCollider2D>();
         boxCollider = GetComponentInChildren<CapsuleCollider2D>();

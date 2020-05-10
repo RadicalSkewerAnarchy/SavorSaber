@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AICommander : MonoBehaviour
 {
+    public GameObject CommandableState;
     // default commands
     // subjects being commanded
     public List<GameObject> Subjects;
@@ -30,6 +31,9 @@ public class AICommander : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (CommandableState.GetComponent<AIStateCommandable>() == null)
+            Debug.Log(this.name + " needs a commandable state to pass");
+
         cross = GameObject.FindObjectOfType<CrosshairController>();
         if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
 
@@ -189,7 +193,7 @@ public class AICommander : MonoBehaviour
         {
             dist = Vector2.Distance(this.transform.position, member.transform.position);
             // check each and set when needed
-            if (member.GetComponent<AICharacterData>() != null)
+            if (member.GetComponent<AICharacterData>() != null || member.GetComponent<AIData>() != null)
             {
                 if (member.tag == "Prey")
                 {

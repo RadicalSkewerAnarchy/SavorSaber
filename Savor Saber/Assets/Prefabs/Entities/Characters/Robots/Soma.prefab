@@ -5094,6 +5094,7 @@ GameObject:
   - component: {fileID: 1026942968}
   - component: {fileID: 5591276385788421115}
   - component: {fileID: 7453417409486403263}
+  - component: {fileID: 5972262686410264255}
   m_Layer: 8
   m_Name: Soma
   m_TagString: Player
@@ -5374,10 +5375,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 0
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: 775f7a60b54649e4f8ee6e590621ebf4, type: 3}
   healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: 0042ab731928d9c489cdc22c4640ae27, type: 3}
@@ -5388,7 +5385,6 @@ MonoBehaviour:
   eatingParticleBurst: {fileID: 0}
   healthBar: {fileID: 0}
   lowHealthSFX: {fileID: 8300000, guid: 784df687af9a6b640a64e90df347f033, type: 3}
-  party: []
   lowHealthThreshhold: 2
   partyUI: {fileID: 0}
 --- !u!114 &527947531
@@ -5619,6 +5615,26 @@ MonoBehaviour:
     type: 3}
   teslaTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
+--- !u!114 &5972262686410264255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8984ea9165b984747bc448162c6cdd46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CommandableState: {fileID: 3070267562217669765, guid: 98eff990033444b498583de6334af47b,
+    type: 3}
+  Subjects:
+  - {fileID: 0}
+  Verb: 0
+  Object: {fileID: 0}
+  Cursor: {fileID: 5073205312293032129}
+  Location: {x: 0, y: 0}
 --- !u!1 &7059255978142214458
 GameObject:
   m_ObjectHideFlags: 0
@@ -5957,15 +5973,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47b973cf26499e849bfd536bd1cc9ff8, type: 3}
---- !u!1 &4708779065190903909 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7973466991473370938, guid: 47b973cf26499e849bfd536bd1cc9ff8,
-    type: 3}
-  m_PrefabInstance: {fileID: 3458624220147046239}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4708779065190903912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7973466991473370935, guid: 47b973cf26499e849bfd536bd1cc9ff8,
+    type: 3}
+  m_PrefabInstance: {fileID: 3458624220147046239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4708779065190903909 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7973466991473370938, guid: 47b973cf26499e849bfd536bd1cc9ff8,
     type: 3}
   m_PrefabInstance: {fileID: 3458624220147046239}
   m_PrefabAsset: {fileID: 0}
@@ -6148,24 +6164,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add9efeacc855164f9d24551c04a4781, type: 3}
---- !u!114 &8158704198816880316 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3407782102215021184, guid: add9efeacc855164f9d24551c04a4781,
-    type: 3}
-  m_PrefabInstance: {fileID: 6805877992900920380}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a5d0b47316a7b8499d34309087431a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8918975149141480270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2717294953454589810, guid: add9efeacc855164f9d24551c04a4781,
     type: 3}
   m_PrefabInstance: {fileID: 6805877992900920380}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5073205312293032129 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1735276341602538749, guid: add9efeacc855164f9d24551c04a4781,
+    type: 3}
+  m_PrefabInstance: {fileID: 6805877992900920380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8158704198816880316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3407782102215021184, guid: add9efeacc855164f9d24551c04a4781,
+    type: 3}
+  m_PrefabInstance: {fileID: 6805877992900920380}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073205312293032129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5d0b47316a7b8499d34309087431a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6945837299476461396
 PrefabInstance:
   m_ObjectHideFlags: 0

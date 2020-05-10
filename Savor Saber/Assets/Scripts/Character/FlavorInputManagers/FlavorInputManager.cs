@@ -23,6 +23,7 @@ public class FlavorInputManager : MonoBehaviour
     #region Components
     protected AudioSource sfxPlayer;
     protected AIData characterData;
+    protected AICharacterData aiCharacterData;
     protected SpriteRenderer spriteRenderer;
     #endregion
 
@@ -42,14 +43,14 @@ public class FlavorInputManager : MonoBehaviour
         sfxPlayer = GetComponent<AudioSource>();
         // differentiate between ai and char data
         characterData = GetComponent<AIData>();
-        if (characterData == null)
-            characterData = (AIData)GetComponent<CharacterData>();
+        aiCharacterData = GetComponent<AICharacterData>();
 
         if (this.tag == "Prey")
         {
             FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
             ffb.fruitant = this.gameObject;
-            ffb.favoriteFood1 = favoriteIngredients[0];
+            if (favoriteIngredients.Length > 0)
+                ffb.favoriteFood1 = favoriteIngredients[0];
         }
     }
 
@@ -100,6 +101,7 @@ public class FlavorInputManager : MonoBehaviour
         if (!rejected)
         {
             characterData.DoHeal(99);
+            aiCharacterData.DoHeal(99);
 
             if (canTransformWhenFed && ingredient.monster != null)
             {
@@ -143,6 +145,7 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     //healing with a favorite ingredient is very effective
                     characterData.DoHeal(99);
+                    aiCharacterData.DoHeal(99);
                     healed = true;
                     isFavorite = true;
                 }
@@ -166,6 +169,7 @@ public class FlavorInputManager : MonoBehaviour
             if(!isFavorite && !isReject)
             {
                 characterData.DoHeal(3);
+                aiCharacterData.DoHeal(3);
                 healed = true;
             }
         }

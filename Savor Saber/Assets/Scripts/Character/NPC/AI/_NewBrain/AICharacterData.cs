@@ -52,6 +52,23 @@ public class AICharacterData : CharacterData
         squeeze?.RandomInitialize();
     }
 
+    private void FixedUpdate()
+    {
+        if (!EventTrigger.InCutscene)
+            TransitionState();
+    }
+
+    public void TransitionState()
+    {
+        if (currentLifeState != previousLifeState)
+        {
+            AlwaysOnStateEnter(currentLifeState);
+            OnStateEnter(currentLifeState);
+            AlwaysOnStateExit(previousLifeState);
+            OnStateExit(previousLifeState);
+            previousLifeState = currentLifeState;
+        }
+    }
 
     /// <summary>
     /// CALL THIS BEFORE OnStateEnter()

@@ -25,6 +25,7 @@ public class TutorialFlavorInput : FlavorInputManager
         characterData = GetComponent<AIData>();
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
+        aiCharacterData = GetComponent<AICharacterData>();
 
         /*
         if (this.gameObject.tag == "ElectricAoE"){
@@ -61,6 +62,7 @@ public class TutorialFlavorInput : FlavorInputManager
                 if (data == favoriteIngredient)
                 {
                     characterData.DoHeal(99);
+                    aiCharacterData.DoHeal(99);
                     healed = true;
                     isFavorite = true;
 
@@ -91,6 +93,7 @@ public class TutorialFlavorInput : FlavorInputManager
             if (!isFavorite && !isReject)
             {
                 characterData.DoHeal(3);
+                aiCharacterData.DoHeal(3);
                 healed = true;
             }
         }

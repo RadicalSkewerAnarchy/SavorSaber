@@ -96,12 +96,12 @@ public class CharacterData : MonoBehaviour
                     damageParticleBurst.Play();
                 StartCoroutine(DamageEffectCr());
 
-                /*var ai = this.GetComponent<AIData>();
+                var ai = this.GetComponent<AICharacterData>();
                 if (ai != null)
                 {
                     // squeeze!
                     ai.Wiggle(damage);
-                }*/
+                }
             }
             else // Health <= 0
             {
@@ -115,6 +115,11 @@ public class CharacterData : MonoBehaviour
                         Kill();
                 }
                 health = 0;
+                if (deathSFX != null)
+                {
+                    var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
+                    deathSoundObj.GetComponent<PlayAndDestroy>().Play(deathSFX);
+                }
             }
 
             if (healthBar != null)
@@ -159,33 +164,33 @@ public class CharacterData : MonoBehaviour
 
                 // fruitant specific
                 // set alive or overcharged
-                var ai = this.GetComponent<AIData>();
+                var ai = this.GetComponent<AICharacterData>();
                 if (ai != null)
                 {
                     if (overcharged)
                     {
                         if (this.tag == "Prey")
                         {
-                            if (ai.currentLifeState == AIData.LifeState.overcharged)
+                            if (ai.currentLifeState == AICharacterData.LifeState.overcharged)
                             {
                                 // first stop
-                                StopCoroutine(ai.OverchargeTimer(0));
+                                //StopCoroutine(ai.OverchargeTimer(0));
                                 // then start timer
-                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                                //StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
                             }
                             else
                             {
                                 // set state
-                                ai.currentLifeState = AIData.LifeState.overcharged;
+                                //ai.currentLifeState = AIData.LifeState.overcharged;
                                 // then start timer
-                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                                //StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
                             }
                         }
                     }
                     else
                     {
                         //revived or still alive
-                        ai.currentLifeState = AIData.LifeState.alive;
+                        ai.currentLifeState = AICharacterData.LifeState.alive;
                     }
                 }
             }
