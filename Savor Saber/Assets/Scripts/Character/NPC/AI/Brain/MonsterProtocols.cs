@@ -19,7 +19,7 @@ public partial class MonsterProtocols : MonoBehaviour
 		#endregion
 	#endregion
 
-    private void Start()
+    private void Awake()
     {
         #region Component Initialization
         AiData = GetComponent<AIData>();
@@ -227,6 +227,11 @@ public partial class MonsterProtocols : MonoBehaviour
     /// </summary>
     public void Lazy()
     {
+        if(Checks == null)
+        {
+            Debug.Log("Error: MonsterProtocols has no reference to Checks");
+            return;
+        }
         GameObject targ = Checks.specialTarget;
         Vector2 pos = Checks.specialPosition;
         if (targ != null)

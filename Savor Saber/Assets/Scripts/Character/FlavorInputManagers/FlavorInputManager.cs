@@ -107,14 +107,15 @@ public class FlavorInputManager : MonoBehaviour
                 //if this is the companion, keep it in the party
                 if (isCompanion)
                 {
+                    Debug.Log("Entering 'is companion' field of Feed()");
                     PlayerData somaData = (PlayerData)feederData;
                     somaData.JoinTeam(newMorph, 1, true);
                     somaData.SetCurrentFormIngreident(ingredient);
                     FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
                     newFIM.isCompanion = true;
                     newFIM.PlaySpawnParticles();
-                    DontDestroyOnLoad loader = newMorph.GetComponent<DontDestroyOnLoad>();
-                    loader.DisableDestroyOnLoad();
+
+                    newMorph.transform.parent = transform.parent;
                 }
                 Destroy(this.gameObject);
             }

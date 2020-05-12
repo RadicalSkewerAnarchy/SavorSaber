@@ -210,6 +210,11 @@ public class PlayerData : CharacterData
         currentFormIngredient = ingredient;
     }
 
+    public IngredientData GetCurrentFormIngredient()
+    {
+        return currentFormIngredient;
+    }
+
     #endregion
 
 }
