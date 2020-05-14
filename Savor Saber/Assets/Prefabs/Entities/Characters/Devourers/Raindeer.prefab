@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 5320517186413406855}
   - component: {fileID: 5881181205838537999}
   - component: {fileID: 1119778447}
+  - component: {fileID: 1279323242511606846}
   m_Layer: 9
   m_Name: PointOfInterest
   m_TagString: Untagged
@@ -109,6 +110,22 @@ PolygonCollider2D:
       - {x: -3.0778196, y: -6.0016613}
       - {x: 3.5751123, y: -6.090105}
       - {x: 6.3493476, y: 0.25161362}
+--- !u!70 &1279323242511606846
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744686710646363205}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.87, y: -0.67}
+  m_Size: {x: 9.72, y: 11.42}
+  m_Direction: 0
 --- !u!1 &8065848674096245872
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,20 +375,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d28fe5f92f505194d886a900fe21d8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients:
   - {fileID: 0}
-  favoriteFlavors: 0
-  charmThreshhold: 1
-  rewardItem: {fileID: 0}
-  amountRewardItem: 2
+  rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
-  electricFieldTemplate: {fileID: 0}
-  saltShieldTemplate: {fileID: 0}
-  electricSFX: {fileID: 0}
+  rejectedObjectTemplate: {fileID: 0}
+  spawnParticles: {fileID: 0}
+  sugarCount: 0
+  rushed: 0
   scene: {fileID: 0}
 --- !u!114 &2853933994651374154
 MonoBehaviour:
