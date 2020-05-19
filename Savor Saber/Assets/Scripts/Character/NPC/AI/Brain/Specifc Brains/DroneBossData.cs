@@ -14,7 +14,7 @@ public class DroneBossData : AIData
         }
         else if (health > (float)maxHealth /2)
         {
-            meleeHunter = true;
+            meleeHunter = false;
         }
         else if (health > (float)maxHealth /3)
         {
@@ -22,7 +22,7 @@ public class DroneBossData : AIData
         }
         else
         {
-            meleeHunter = true;
+            meleeHunter = false;
             this.Behavior.attackCooldown = 0.25f;
             this.Behavior.meleeAttackDelay = 0;
         }
