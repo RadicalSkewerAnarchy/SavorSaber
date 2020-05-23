@@ -6,12 +6,14 @@ using UnityEngine;
 public class EventTriggerInteractFlag : EventTrigger
 {
     private bool playerInRange;
+    public string flag;
+    public string value;
 
     private void Update()
     {
         if (!playerInRange)
             return;
-        if (InputManager.GetButtonDown(Control.Interact))
+        if (InputManager.GetButtonDown(Control.Interact) && FlagManager.GetFlag(flag) == value)
             Trigger();
     }
     private void OnTriggerExit2D(Collider2D collision)
