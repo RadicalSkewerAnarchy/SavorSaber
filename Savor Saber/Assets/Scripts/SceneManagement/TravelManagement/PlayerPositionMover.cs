@@ -10,6 +10,7 @@ public class PlayerPositionMover : MonoBehaviour
     public SceneReference[] scenesToLoad;
     private SceneLoadingManager sceneLoader;
     private Collider2D playerObject;
+    private GameObject player;
 
     public delegate void EventDelegate();
     public EventDelegate m_onStart;
@@ -35,6 +36,7 @@ public class PlayerPositionMover : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             playerObject = other;
+            player = other.gameObject;
             m_onStart = MoveToNewPosition;
             sceneLoader.LoadScenes(scenesToLoad, MoveToNewPosition, null);
 
@@ -43,6 +45,24 @@ public class PlayerPositionMover : MonoBehaviour
 
     void MoveToNewPosition()
     {
-        playerObject.gameObject.transform.position = new Vector3(newPosition.transform.position.x, newPosition.transform.position.y, playerObject.gameObject.transform.position.z);
+        player.transform.position = new Vector3(newPosition.transform.position.x, newPosition.transform.position.y, playerObject.gameObject.transform.position.z);
+
+        player.GetComponent<SpriteRenderer>().color = Color.white;
+        //temporarily dismount if riding a fruitant
+        PlayerController somaController = player.GetComponent<PlayerController>();
+        somaController.Stop();
+        if (somaController.riding)
+        {
+            PlayerData somaData = player.GetComponent<PlayerData>();
+            GameObject companion = somaData.party[0];
+            if(companion != null)
+            {
+                FruitantMount saddle = companion.GetComponentInChildren<FruitantMount>();
+                saddle.DemountOnLoad();
+            }
+
+            //preserve the fact that we *were* riding before the transition
+            somaController.loadRiding = true;
+        }
     }
 }

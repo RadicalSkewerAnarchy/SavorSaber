@@ -338,11 +338,11 @@ public class Commander : MonoBehaviour
             }
         }
 
-        Debug.Log("Set Most Relevant Objects for Command: "
+        /*Debug.Log("Set Most Relevant Objects for Command: "
                 + "=== Fruitant: " + (nearestFruitant != null ? nearestFruitant.name : "null")
                 + "=== Drone: " + (nearestDrone != null ? nearestDrone.name : "null")
                 + "=== TileNode: " + (nearestTileNode != null ? nearestTileNode.name : "null")
-                + "=== Food: " + (nearestFood != null ? nearestFood.name : "null"));
+                + "=== Food: " + (nearestFood != null ? nearestFood.name : "null"));*/
     }
 
     #endregion

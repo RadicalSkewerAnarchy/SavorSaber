@@ -160,6 +160,11 @@ public class PlayerData : CharacterData
 
     private void AddMember(GameObject member, AIData brain)
     {
+        //Right now it clears the party before adding a new member
+        //this is okay because no new party members will be added under the curent design
+        //only times they're "added" is when they get replaced as part of a morph or scene load
+        //this ensures that the companion is always accessible at party[0] index
+        party.Clear();
         party.Add(member);
         brain.CommandCompleted = false;
         brain.path = null;

@@ -367,20 +367,20 @@ public partial class MonsterProtocols : MonoBehaviour
         #region Get Nearest + Null Checks
         Checks.SetCurrentTile();
         Vector2 pos = Checks.specialPosition;
-        Debug.Log("NavChase Position: " + pos);
+        //Debug.Log("NavChase Position: " + pos);
         GameObject targ = Checks.specialTarget;
         if (targ != null)
         {
-            Debug.Log("Special target: " + targ);
+            //Debug.Log("Special target: " + targ);
             pos = targ.transform.position;
             TileNode tile = Checks.GetNearestNode(pos);
-            Debug.Log("Special Target - Nearest tile node null: " + (tile == null));
+            //Debug.Log("Special Target - Nearest tile node null: " + (tile == null));
             return (NavTo(tile, AiData.Speed, 3));
         }
         else if (pos != Vector2.zero)
         {
             TileNode tile = Checks.GetNearestNode(pos);
-            Debug.Log("Non Target - Nearest tile node null: " + (tile == null));
+            //Debug.Log("Non Target - Nearest tile node null: " + (tile == null));
             return NavTo(tile, AiData.Speed, 3);
         }
         return true;

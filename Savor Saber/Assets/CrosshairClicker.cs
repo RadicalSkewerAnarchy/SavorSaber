@@ -34,7 +34,7 @@ public class CrosshairClicker : MonoBehaviour
     public List<GameObject> ClickArea()
     {
         List <GameObject> all = new List<GameObject>();
-        Debug.Log(this.name + " start ClickArea():");
+        //Debug.Log(this.name + " start ClickArea():");
 
         // find them
         Collider2D[] collected = Physics2D.OverlapBoxAll(this.transform.position, area, 0);
@@ -47,7 +47,7 @@ public class CrosshairClicker : MonoBehaviour
             all.Add(go);
         }
 
-        Debug.Log(this.name + " returning Clicked On area: " + all.ToString());
+        //Debug.Log(this.name + " returning Clicked On area: " + all.ToString());
         return all;
     }
 

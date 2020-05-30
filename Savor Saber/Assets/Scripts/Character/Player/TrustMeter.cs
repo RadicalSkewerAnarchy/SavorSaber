@@ -108,27 +108,27 @@ public class TrustMeter : MonoBehaviour
         {
             //sweet companions buff health and speed
             case RecipeData.Flavors.Sweet:
-                Debug.Log("Setting trust effect for sweet");
+                //Debug.Log("Setting trust effect for sweet");
                 somaController.dashRechargeMultiplier = (int)stage + 1;
                 somaController.maxDashes = 3 + (int)stage;
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " dash");
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
-                Debug.Log("Setting trust effect for spicy");
+                //Debug.Log("Setting trust effect for spicy");
                 somaSkewer.extraDamage = (int)stage;
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " skewer damage");
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
-                Debug.Log("Setting trust effect for salty");
+                //Debug.Log("Setting trust effect for salty");
                 currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity, transform);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
                 trustText.UpdateDisplayText("Trust effect: Shield");
                 break;
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
-                Debug.Log("Setting trust effect for sour");
+                //Debug.Log("Setting trust effect for sour");
                 currentObject = Instantiate(teslaTemplate, transform);
                 trustText.UpdateDisplayText("Trust effect: Tesla");
                 break;

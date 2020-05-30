@@ -107,7 +107,7 @@ public class FlavorInputManager : MonoBehaviour
                 //if this is the companion, keep it in the party
                 if (isCompanion)
                 {
-                    Debug.Log("Entering 'is companion' field of Feed()");
+                    //Debug.Log("Entering 'is companion' field of Feed()");
                     PlayerData somaData = (PlayerData)feederData;
                     somaData.JoinTeam(newMorph, 1, true);
                     somaData.SetCurrentFormIngreident(ingredient);
