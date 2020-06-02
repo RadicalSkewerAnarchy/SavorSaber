@@ -20,7 +20,7 @@ public class ExtendingBridge : PoweredObject
             blocker.enabled = false;
             active = true;
         }
-        else if (FlagManager.GetFlag(activeStateFlag) == "True")
+        else if (FlagManager.GetFlag(activeStateFlag) != "True" && activeStateFlag != null)
         {
             animator.Play("StartRetracted");
             blocker.enabled = true;
@@ -51,6 +51,7 @@ public class ExtendingBridge : PoweredObject
 
     public override void TurnOn()
     {
+        base.TurnOn();
         animator.Play("Extend");
         blocker.enabled = false;
         active = true;
@@ -58,6 +59,7 @@ public class ExtendingBridge : PoweredObject
 
     public override void ShutOff()
     {
+        base.ShutOff();
         animator.Play("Retract");
         blocker.enabled = true;
         active = false;
