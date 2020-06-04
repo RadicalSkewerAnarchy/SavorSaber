@@ -60,6 +60,7 @@ public class Commander : MonoBehaviour
 
         player = GameObject.FindGameObjectWithTag("Player");
         cross = GameObject.FindObjectOfType<CrosshairController>();
+        Cursor = cross.gameObject;
         if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
 
         Debug.Log($"Commander {this.name} has been awoken");

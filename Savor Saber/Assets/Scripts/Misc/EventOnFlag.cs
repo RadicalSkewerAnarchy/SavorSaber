@@ -13,7 +13,13 @@ public class EventOnFlag : MonoBehaviour
     void Start()
     {
         if (flag == value)
+        {
+            Debug.Log("EventOnFlag: Flag is correct value");
             eventToCall.Invoke();
+        }
+        else
+            Debug.Log("EventOnFlag: Flag is not correct value");
+ 
     }
 
     // Update is called once per frame
