@@ -53,6 +53,7 @@ public class NexusInteractor : MonoBehaviour
 
     public void Hack()
     {
+        GetComponent<AudioSource>().Play();
         if (State == Nexus.State.Protected || State == Nexus.State.Activated)
         {
             spawner.Spawn();

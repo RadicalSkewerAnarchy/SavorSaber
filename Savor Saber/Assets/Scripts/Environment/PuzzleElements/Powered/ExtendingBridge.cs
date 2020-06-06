@@ -31,13 +31,11 @@ public class ExtendingBridge : PoweredObject
             //if no existing flag state, default to inspector settings
             if (active)
             {
-                animator.Play("StartExtended");
-                blocker.enabled = false;
+                TurnOn();
             }
             else
             {
-                animator.Play("StartRetracted");
-                blocker.enabled = true;
+                ShutOff();
             }
         }
 

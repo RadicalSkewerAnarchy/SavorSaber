@@ -177,8 +177,8 @@ public class FruitantMount : MonoBehaviour
 
     void Update()
     {
-        Debug.Log("Mounted: " + mounted);
-        Debug.Log("Mountable: " + mountable);
+        //Debug.Log("Mounted: " + mounted);
+        //Debug.Log("Mountable: " + mountable);
         if (mounted)
         {
             // if player dies, demount
