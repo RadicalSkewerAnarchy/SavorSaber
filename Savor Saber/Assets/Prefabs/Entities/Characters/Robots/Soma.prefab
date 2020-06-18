@@ -5374,10 +5374,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 0
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: 775f7a60b54649e4f8ee6e590621ebf4, type: 3}
   healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: 0042ab731928d9c489cdc22c4640ae27, type: 3}
@@ -5479,6 +5475,7 @@ MonoBehaviour:
   maxDashes: 3
   dashIFrames: 1
   riding: 0
+  loadRiding: 0
   doubleTapTime: 0.2
   runTimeBuffer: 2
   accelerationTime: 3
@@ -5550,6 +5547,7 @@ MonoBehaviour:
   attackDuration: 0.5
   control: 7
   axis: 5
+  extraDamage: 0
   chargeLevels: 3
   chargeTime: 0.75
   chargeSounds:
@@ -5805,6 +5803,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PartyTeleportBeacon
       objectReference: {fileID: 0}
+    - target: {fileID: 8475941208052389328, guid: 809144c2098961b43bf14e54e1bf3c96,
+        type: 3}
+      propertyPath: radar
+      value: 
+      objectReference: {fileID: 4708779065190903909}
     - target: {fileID: 8031853950543585063, guid: 809144c2098961b43bf14e54e1bf3c96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5860,11 +5863,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8475941208052389328, guid: 809144c2098961b43bf14e54e1bf3c96,
-        type: 3}
-      propertyPath: radar
-      value: 
-      objectReference: {fileID: 4708779065190903909}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 809144c2098961b43bf14e54e1bf3c96, type: 3}
 --- !u!4 &7660045081796999883 stripped
@@ -6071,6 +6069,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: TargetCursor
       objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2717294953454589810, guid: add9efeacc855164f9d24551c04a4781,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6131,21 +6144,6 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add9efeacc855164f9d24551c04a4781, type: 3}
 --- !u!114 &8158704198816880316 stripped
@@ -6177,6 +6175,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Feeder
+      objectReference: {fileID: 0}
+    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
+        type: 3}
+      propertyPath: recruitWindowTemplate
+      value: 
+      objectReference: {fileID: 7552703712896063681, guid: 9d1714e33d58cbd448bc7ffd2d5749c2,
+        type: 3}
+    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
+        type: 3}
+      propertyPath: feedingRecruits
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
@@ -6231,17 +6240,6 @@ PrefabInstance:
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
-        type: 3}
-      propertyPath: recruitWindowTemplate
-      value: 
-      objectReference: {fileID: 7552703712896063681, guid: 9d1714e33d58cbd448bc7ffd2d5749c2,
-        type: 3}
-    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
-        type: 3}
-      propertyPath: feedingRecruits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

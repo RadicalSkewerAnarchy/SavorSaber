@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class EventTriggerAuto : EventTrigger
 {
+    public string flagToDisable;
+    public string valueToDisable;
     private void Start()
     {
-        Trigger();
+        if (FlagManager.GetFlag(flagToDisable) == valueToDisable)
+            return;
+        else
+            Trigger();
     }
     protected override IEnumerator PlayEvent()
     {

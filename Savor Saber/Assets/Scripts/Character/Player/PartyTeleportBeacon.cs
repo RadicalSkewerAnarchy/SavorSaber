@@ -6,6 +6,7 @@ public class PartyTeleportBeacon : MonoBehaviour
 {
     public GameObject teleportEffectPrefab;
     public GameObject radar;
+    public AudioSource failedAudioPlayer;
     public Commander partyCommander;
 
     private PlayerData somaData;
@@ -72,6 +73,7 @@ public class PartyTeleportBeacon : MonoBehaviour
         if (numHits > 0)
         {
             Debug.Log("Not enough space to teleport");
+            failedAudioPlayer.Play();
         }
         else
         {
