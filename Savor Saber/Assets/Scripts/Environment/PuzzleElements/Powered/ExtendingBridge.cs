@@ -14,13 +14,16 @@ public class ExtendingBridge : PoweredObject
     {
         animator = GetComponent<Animator>();
         blocker = GetComponent<BoxCollider2D>();
+
+        InitialFlagSet();
+
         if (FlagManager.GetFlag(activeStateFlag) == "True")
         {
             animator.Play("StartExtended");
             blocker.enabled = false;
             active = true;
         }
-        else if (FlagManager.GetFlag(activeStateFlag) != "True" && activeStateFlag != null)
+        else if (FlagManager.GetFlag(activeStateFlag) == "False")
         {
             animator.Play("StartRetracted");
             blocker.enabled = true;
@@ -57,6 +60,7 @@ public class ExtendingBridge : PoweredObject
 
     public override void ShutOff()
     {
+        Debug.Log("Extending Bridge: ShutOff");
         base.ShutOff();
         animator.Play("Retract");
         blocker.enabled = true;

@@ -40,9 +40,9 @@ public class Respawner : MonoBehaviour
         controller.enabled = false;
         foreach (var component in attacks)
             component.enabled = false;
-        BGMManager.instance.FadeBGMToSilence(1);
+        //BGMManager.instance.FadeBGMToSilence(1);
         yield return new WaitForSeconds(1);
-        BGMManager.instance.FadeToAreaSounds();
+        //BGMManager.instance.FadeToAreaSounds();
         currSpawn.Respawn(gameObject);
         Respawning = false;
         controller.enabled = true;

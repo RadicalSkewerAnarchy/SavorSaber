@@ -16,6 +16,11 @@ public class PlayerPositionMover : MonoBehaviour
     public EventDelegate m_onStart;
     public EventDelegate m_onEnd;
 
+    [Header("Alternate Scene conditions")]
+    public bool hasAlternateScenes = false;
+    public SceneReference[] alternateScenes;
+    public string flag;
+    public string value;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +43,10 @@ public class PlayerPositionMover : MonoBehaviour
             playerObject = other;
             player = other.gameObject;
             m_onStart = MoveToNewPosition;
-            sceneLoader.LoadScenes(scenesToLoad, MoveToNewPosition, null);
+            if(hasAlternateScenes && FlagManager.GetFlag(flag) == value)
+                sceneLoader.LoadScenes(alternateScenes, MoveToNewPosition, null);
+            else
+                sceneLoader.LoadScenes(scenesToLoad, MoveToNewPosition, null);
 
         }
     }

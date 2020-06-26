@@ -29,6 +29,16 @@ public class PoweredObject : MonoBehaviour
         
     }
 
+    protected virtual void InitialFlagSet()
+    {
+        //if it has not yet been set to true or false (i.e. player has not interacted with this object yet), set it to "Null" so the
+        //object knows to default to inspector settings
+        if(FlagManager.GetFlag(activeStateFlag) != "True" && FlagManager.GetFlag(activeStateFlag) != "True")
+        {
+            FlagManager.SetFlag(activeStateFlag, "Null");
+        }
+    }
+
     public virtual void TurnOn()
     {
         active = true;

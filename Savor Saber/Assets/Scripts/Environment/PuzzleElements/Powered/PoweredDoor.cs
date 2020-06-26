@@ -17,11 +17,14 @@ public class PoweredDoor : PoweredObject
         sr = GetComponent<SpriteRenderer>();
         gateAnimator = GetComponent<Animator>();
         blocker = GetComponent<Collider2D>();
-        if(FlagManager.GetFlag(activeStateFlag) == "True")
+
+        InitialFlagSet();
+
+        if (FlagManager.GetFlag(activeStateFlag) == "True")
         {
             TurnOn();
         }
-        else if(FlagManager.GetFlag(activeStateFlag) == "True")
+        else if(FlagManager.GetFlag(activeStateFlag) == "False")
         {
             ShutOff();
         }
