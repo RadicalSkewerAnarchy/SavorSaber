@@ -14,7 +14,7 @@ public class SaltShield : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        immortalHp = data.health;
+        //immortalHp = data.health;
         audioSource = GetComponent<AudioSource>();
     }
 

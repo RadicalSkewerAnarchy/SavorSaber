@@ -6,10 +6,11 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class HitSwitch : FlavorInputManager
 {
-
+    public bool isToggle = true;
     public PoweredObject[] TargetObjects;
     private bool active = false;
     private AudioSource burnSFXPlayer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +28,11 @@ public class HitSwitch : FlavorInputManager
         {
             foreach (PoweredObject target in TargetObjects)
             {
-                //target.ShutOff();
+                target.ShutOff();
             }
-            active = false;
+
+            if(isToggle)
+                active = false;
         }
         else
         {
@@ -37,7 +40,10 @@ public class HitSwitch : FlavorInputManager
             {
                 target.TurnOn();
             }
-            active = true;
+
+            if(isToggle)
+                active = true;
+
             burnSFXPlayer.Play();
         }
     }
