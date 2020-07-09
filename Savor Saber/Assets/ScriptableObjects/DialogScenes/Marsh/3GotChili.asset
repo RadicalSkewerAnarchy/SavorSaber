@@ -1,6 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8901723276498321505
+--- !u!114 &-8774939198930301306
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -1940428709381074028}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -7114510185338283968}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-8596935195160148831
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -1113636151250755770}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -6325468719206457759}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-8438279875360145515
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15,8 +57,8 @@ MonoBehaviour:
   position: {x: -710, y: -350}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3638351050683765539}
-  fromPreviousIN: {fileID: 5717300116200872129}
+  toNextOUT: {fileID: 1745458624738811291}
+  fromPreviousIN: {fileID: 990796261890717322}
   waitUntilFinished: 1
   character: Soma
   destination: TalkToManaWaypointTalkToManaWaypoint
@@ -28,28 +70,7 @@ MonoBehaviour:
     max: 0.1
   speed: 2
   endFacing: 2
---- !u!114 &-8738020907413283454
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 920828817596736362}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -2885507061159859277}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-8695202574921655832
+--- !u!114 &-7114510185338283968
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,16 +82,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 920828817596736362}
+  body: {fileID: 453716723303098812}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 7614426071489143196}
+  - {fileID: -8774939198930301306}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-8470848305499950197
+--- !u!114 &-6453155837580547082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 9222667569142922857}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -4041285099240676991}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6325468719206457759
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 453716723303098812}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -8596935195160148831}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-5967723591345907236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -52, y: -297.6}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 7841769527951673137}
+  fromPreviousIN: {fileID: -5634199359376577894}
+  characterName: Character Name
+  text: 'Ghost Peppers can even clear out debris for you, if you find your path blocked. '
+  actor: Mana
+  emotion: 0
+--- !u!114 &-5784502457295088001
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,35 +169,14 @@ MonoBehaviour:
   position: {x: 240, y: -480}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7784760671567948464}
-  fromPreviousIN: {fileID: 6030547485215045835}
+  toNextOUT: {fileID: 1026977870544953031}
+  fromPreviousIN: {fileID: 5622201916466574202}
   characterName: Character Name
   text: If your companion is in its Ghost Pepper form, it'll be excellent at long
     range.
   actor: Mana
   emotion: 0
---- !u!114 &-8422359659998319779
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 3950242869573887252}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -2961377872605094926}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-8350434366781253161
+--- !u!114 &-5757660605029406896
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,60 +188,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -2102133570389115079}
+  body: {fileID: 5495699791545478028}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 4779182918838567135}
+  - {fileID: -2993230036109191088}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-6416620521341574811
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
-  m_Name: Pan Camera
-  m_EditorClassIdentifier: 
-  position: {x: -710, y: -480}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 5098008406590371022}
-  fromPreviousIN: {fileID: 4779182918838567135}
-  waitUntilFinished: 1
-  movementType: 0
-  target: ManaCameraTarget
-  maxPullSpeed: 100
-  snapTime: 0.75
---- !u!114 &-5197539145138851649
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -50, y: -480}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -244456450401414168}
-  fromPreviousIN: {fileID: 2318087060604786025}
-  characterName: Character Name
-  text: Great timing! The Lychees to the northwest have requested assistance, and
-    the Peppers will be useful.
-  actor: Mana
-  emotion: 11
---- !u!114 &-4727196113196663468
+--- !u!114 &-5634199359376577894
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -190,58 +209,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 5467074256280535639}
+  body: {fileID: -5967723591345907236}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 7784760671567948464}
+  - {fileID: -4688024627189385079}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-4086746533449636132
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -2284874469289549100}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3638351050683765539}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-3934824141599688983
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 5467074256280535639}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 4286266722126528121}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-3808109198292884504
+--- !u!114 &-5420826377248371722
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,10 +232,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
   parentEditor: {fileID: 0}
-  selectedNode: {fileID: -6416620521341574811}
-  panOffset: {x: 309.60007, y: 254.99998}
-  zoom: 0.8
---- !u!114 &-3638351050683765539
+  selectedNode: {fileID: -1113636151250755770}
+  panOffset: {x: -663.6, y: 296.59998}
+  zoom: 1
+--- !u!114 &-4688024627189385079
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -270,16 +247,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -8901723276498321505}
+  body: {fileID: 3709450357726546392}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -4086746533449636132}
+  - {fileID: -5634199359376577894}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-2961377872605094926
+--- !u!114 &-4634317445493418302
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,16 +268,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 8512395593722045246}
+  body: {fileID: 8017679043632381250}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -8422359659998319779}
+  - {fileID: 5622201916466574202}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-2885507061159859277
+--- !u!114 &-4041285099240676991
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 6341411539866638665}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -6453155837580547082}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-3657880194099982410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -1113636151250755770}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 89814346074013640}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-2993230036109191088
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,16 +331,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 5232421526892284175}
+  body: {fileID: 8017679043632381250}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -8738020907413283454}
+  - {fileID: -5757660605029406896}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-2284874469289549100
+--- !u!114 &-1940428709381074028
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,63 +352,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: Speech Bubble Dialog
   m_EditorClassIdentifier: 
-  position: {x: -338, y: -480}
+  position: {x: 240, y: -300}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 6017997894020233109}
-  fromPreviousIN: {fileID: -4086746533449636132}
+  toNextOUT: {fileID: -8774939198930301306}
+  fromPreviousIN: {fileID: 8734896685127580200}
   characterName: Character Name
-  text: Mana, I gave the Ghost Peppers the help they needed. They're free to join
-    us now.
-  actor: Soma
-  emotion: 5
---- !u!114 &-2102133570389115079
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
-  m_Name: Dialog Start
-  m_EditorClassIdentifier: 
-  position: {x: -1020, y: -480}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -8350434366781253161}
-  dependencies:
-  - DevCameraTarget
-  - TalkToDevWaypoint
-  - TalkToManaWaypoint
-  - ManaCameraTarget
-  actors:
-  - Raindeer
-  - Mana
-  unityEvents: []
---- !u!114 &-567791321274430251
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 8512395593722045246}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 2156218654782334076}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-244456450401414168
+  text: Take your companion to help out the Lychees and we'll be one step closer to
+    liberating the Swamp.
+  actor: Mana
+  emotion: 0
+--- !u!114 &-1681534717776306532
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -401,47 +374,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -5197539145138851649}
+  body: {fileID: 9222667569142922857}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 6030547485215045835}
+  - {fileID: 990796261890717322}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ae504df65aae7f4a9124a6a77c1ad12, type: 3}
-  m_Name: 3GotChili
-  m_EditorClassIdentifier: 
-  editorStates:
-  - {fileID: -3808109198292884504}
-  saveName: Assets\ScriptableObjects\DialogScenes\Marsh\3GotChili
-  savePath: Assets\ScriptableObjects\DialogScenes\Marsh\3GotChili.asset
-  livesInScene: 0
-  nodes:
-  - {fileID: -8901723276498321505}
-  - {fileID: -2102133570389115079}
-  - {fileID: -2284874469289549100}
-  - {fileID: -5197539145138851649}
-  - {fileID: -8470848305499950197}
-  - {fileID: 6842755608698547721}
-  - {fileID: 5232421526892284175}
-  - {fileID: 920828817596736362}
-  - {fileID: 3950242869573887252}
-  - {fileID: 5467074256280535639}
-  - {fileID: 8512395593722045246}
-  - {fileID: -6416620521341574811}
-  groups: []
---- !u!114 &920828817596736362
+--- !u!114 &-1113636151250755770
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -456,31 +398,41 @@ MonoBehaviour:
   position: {x: 830, y: -300}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -8738020907413283454}
-  fromPreviousIN: {fileID: -8695202574921655832}
-  text: Hack the Lychee Nexus
---- !u!114 &2156218654782334076
+  toNextOUT: {fileID: -3657880194099982410}
+  fromPreviousIN: {fileID: -8596935195160148831}
+  text: Hack northern Nexuses
+--- !u!114 &11400000
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
+  m_Script: {fileID: 11500000, guid: 5ae504df65aae7f4a9124a6a77c1ad12, type: 3}
+  m_Name: 3GotChili
   m_EditorClassIdentifier: 
-  body: {fileID: 6842755608698547721}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -567791321274430251}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &2318087060604786025
+  editorStates:
+  - {fileID: -5420826377248371722}
+  saveName: Assets\ScriptableObjects\DialogScenes\Marsh\3GotChili
+  savePath: Assets\ScriptableObjects\DialogScenes\Marsh\3GotChili.asset
+  livesInScene: 0
+  nodes:
+  - {fileID: -8438279875360145515}
+  - {fileID: 6341411539866638665}
+  - {fileID: 5495699791545478028}
+  - {fileID: -5784502457295088001}
+  - {fileID: -5967723591345907236}
+  - {fileID: 8939831756617203570}
+  - {fileID: 453716723303098812}
+  - {fileID: 3709450357726546392}
+  - {fileID: 9222667569142922857}
+  - {fileID: 8017679043632381250}
+  - {fileID: -1940428709381074028}
+  - {fileID: -1113636151250755770}
+  groups: []
+--- !u!114 &89814346074013640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -492,16 +444,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -5197539145138851649}
+  body: {fileID: 8939831756617203570}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 6017997894020233109}
+  - {fileID: -3657880194099982410}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &3950242869573887252
+--- !u!114 &453716723303098812
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -516,13 +468,13 @@ MonoBehaviour:
   position: {x: 530, y: -300}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7614426071489143196}
-  fromPreviousIN: {fileID: -8422359659998319779}
+  toNextOUT: {fileID: -6325468719206457759}
+  fromPreviousIN: {fileID: -7114510185338283968}
   characterName: Character Name
   text: '...if you can really call it "liberation."'
   actor: Mana
   emotion: 8
---- !u!114 &4286266722126528121
+--- !u!114 &990796261890717322
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -534,37 +486,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 6842755608698547721}
+  body: {fileID: -8438279875360145515}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -3934824141599688983}
+  - {fileID: -1681534717776306532}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4779182918838567135
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -6416620521341574811}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -8350434366781253161}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &5098008406590371022
+--- !u!114 &1026977870544953031
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -576,16 +507,232 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -6416620521341574811}
+  body: {fileID: -5784502457295088001}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 5717300116200872129}
+  - {fileID: 3118481403217274596}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5232421526892284175
+--- !u!114 &1745458624738811291
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -8438279875360145515}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 8181448063247980002}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &3118481403217274596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 3709450357726546392}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1026977870544953031}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &3709450357726546392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -340, y: -300}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -4688024627189385079}
+  fromPreviousIN: {fileID: 3118481403217274596}
+  characterName: Character Name
+  text: It'll also heat up your Skewers for extra damage, just like the Horseradishes.
+  actor: Mana
+  emotion: 0
+--- !u!114 &5495699791545478028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -338, y: -480}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -5757660605029406896}
+  fromPreviousIN: {fileID: 8181448063247980002}
+  characterName: Character Name
+  text: Mana, I gave the Ghost Peppers the help they needed. They're free to join
+    us now.
+  actor: Soma
+  emotion: 5
+--- !u!114 &5622201916466574202
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -5784502457295088001}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -4634317445493418302}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6341411539866638665
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
+  m_Name: Dialog Start
+  m_EditorClassIdentifier: 
+  position: {x: -1020, y: -480}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -4041285099240676991}
+  dependencies:
+  - DevCameraTarget
+  - TalkToDevWaypoint
+  - TalkToManaWaypoint
+  - ManaCameraTarget
+  actors:
+  - Raindeer
+  - Mana
+  unityEvents: []
+--- !u!114 &7841769527951673137
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -5967723591345907236}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 8734896685127580200}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &8017679043632381250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -50, y: -480}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -4634317445493418302}
+  fromPreviousIN: {fileID: -2993230036109191088}
+  characterName: Character Name
+  text: Great timing! The Lychees to the north have requested assistance, and the
+    Peppers will be useful.
+  actor: Mana
+  emotion: 11
+--- !u!114 &8181448063247980002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 5495699791545478028}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1745458624738811291}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &8734896685127580200
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -1940428709381074028}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 7841769527951673137}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &8939831756617203570
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -601,8 +748,8 @@ MonoBehaviour:
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   playCompletionEvents: 1
-  fromPreviousIN: {fileID: -2885507061159859277}
---- !u!114 &5467074256280535639
+  fromPreviousIN: {fileID: 89814346074013640}
+--- !u!114 &9222667569142922857
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -611,163 +758,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
+  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
+  m_Name: Pan Camera
   m_EditorClassIdentifier: 
-  position: {x: -340, y: -300}
+  position: {x: -710, y: -480}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3934824141599688983}
-  fromPreviousIN: {fileID: -4727196113196663468}
-  characterName: Character Name
-  text: It'll also heat up your Skewers for extra damage, just like the Horseradishes.
-  actor: Mana
-  emotion: 0
---- !u!114 &5717300116200872129
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8901723276498321505}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5098008406590371022}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &6017997894020233109
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -2284874469289549100}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 2318087060604786025}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &6030547485215045835
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8470848305499950197}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -244456450401414168}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &6842755608698547721
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -52, y: -297.6}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 2156218654782334076}
-  fromPreviousIN: {fileID: 4286266722126528121}
-  characterName: Character Name
-  text: 'Ghost Peppers can even clear out debris for you, if you find your path blocked. '
-  actor: Mana
-  emotion: 0
---- !u!114 &7614426071489143196
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 3950242869573887252}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -8695202574921655832}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &7784760671567948464
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -8470848305499950197}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -4727196113196663468}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8512395593722045246
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 240, y: -300}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -2961377872605094926}
-  fromPreviousIN: {fileID: -567791321274430251}
-  characterName: Character Name
-  text: Take your companion to help out the Lychees and we'll be one step closer to
-    liberating the Swamp.
-  actor: Mana
-  emotion: 0
+  toNextOUT: {fileID: -1681534717776306532}
+  fromPreviousIN: {fileID: -6453155837580547082}
+  waitUntilFinished: 1
+  movementType: 0
+  target: ManaCameraTarget
+  maxPullSpeed: 100
+  snapTime: 0.75

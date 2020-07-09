@@ -23,4 +23,18 @@ public class EventTriggerFlavorInput : FlavorInputManager
             }
         }        
     }
+
+    public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
+    {
+
+        foreach(IngredientData favorite in favoriteIngredients)
+        {
+            if (ingredient == favorite && !scene.IsActive)
+            {
+                scene.Trigger();
+                return;
+            }
+        }
+
+    }
 }
