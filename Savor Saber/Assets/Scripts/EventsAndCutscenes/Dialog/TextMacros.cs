@@ -24,6 +24,7 @@ public class TextMacros : MonoBehaviour
         {"noFlavor", "#cccccc" },
         // Characters
         {"soma","#159DB2"},
+        {"narrator","#ABE5FF"},
         {"mana", "#DB5A78" },
         {"amrita", "#FEF4D1" },
         {"nec", "#D0FF78" },
