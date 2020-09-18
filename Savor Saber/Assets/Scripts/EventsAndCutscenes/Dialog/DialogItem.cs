@@ -34,6 +34,8 @@ public enum Emotion
     AmritaSurprised,
     AmritaSerious,
     AmritaGrim,
+    PippiSad,
+    PippiHappy,
 }
 
 [System.Serializable]

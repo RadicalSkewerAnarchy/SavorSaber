@@ -4849,6 +4849,7 @@ GameObject:
   - component: {fileID: 4587579876964876005}
   - component: {fileID: 8869406452128888998}
   - component: {fileID: 9090708969620760850}
+  - component: {fileID: 8084723326909069348}
   m_Layer: 0
   m_Name: PippiPear Variant
   m_TagString: Prey
@@ -5239,10 +5240,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 1
-  initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
@@ -5276,6 +5273,7 @@ MonoBehaviour:
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
   path: []
+  flavor: 0
 --- !u!114 &6329017278131944257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5402,19 +5400,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients:
   - {fileID: 0}
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 0.3
   rejectedObjectTemplate: {fileID: 0}
-  rewardItem: {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5,
-    type: 3}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
+--- !u!114 &8084723326909069348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510829813708924444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f0513f71a3cea45b9cd169b968a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: Pippi Pear
+  textBlipSound: {fileID: 0}
+  portraitDictionary:
+    _keys: 000000001e0000001f000000
+    _values:
+    - {fileID: 21300000, guid: 78de7c5d76236674f898957e0ea58bf1, type: 3}
+    - {fileID: 21300000, guid: c72590bb207026b4997c86d86d9d4e41, type: 3}
+    - {fileID: 21300000, guid: 4052588f3859627458432ba9eab49a4d, type: 3}
 --- !u!1 &1530798867378590737
 GameObject:
   m_ObjectHideFlags: 0
@@ -15175,7 +15192,7 @@ MonoBehaviour:
   favoriteFood3: {fileID: 0}
   audioPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
     type: 3}
-  audio: {fileID: 8300000, guid: 28e1dac9a866c464fa89eb26296174f4, type: 3}
+  audioFX: {fileID: 0}
 --- !u!1 &2261899579686467198
 GameObject:
   m_ObjectHideFlags: 0
@@ -30053,7 +30070,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1993959343
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: e04a16745f4317d4bbc2c71c39f09600, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.7058824}
