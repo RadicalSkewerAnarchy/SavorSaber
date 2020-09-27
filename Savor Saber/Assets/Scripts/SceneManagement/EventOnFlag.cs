@@ -12,7 +12,7 @@ public class EventOnFlag : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (flag == value)
+        if (FlagManager.GetFlag(flag) == value)
         {
             Debug.Log("EventOnFlag: Flag is correct value");
             eventToCall.Invoke();
