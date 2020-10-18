@@ -15,6 +15,8 @@ public partial class MonsterProtocols : MonoBehaviour
         TileNode targetTile;
 		bool runningCoRoutine = false;
         bool creatureMoving = false;
+    public Color pathfinderColor;
+    public bool showPathfindingColor;
     GameObject player;
 		#endregion
 	#endregion
@@ -626,6 +628,8 @@ public partial class MonsterProtocols : MonoBehaviour
     // in order to work based on gameobjects, all gameobjects must track their currenttile or be able to calculate their current tile based on collision
     public bool NavTo(TileNode target, float speed, float thresh = 1)
     {
+        //Debug.Log(this.gameObject + "IS ENTERING NAVTO");
+
         if (Checks.currentTile == target)
         {
             //Debug.Log("AT TARGET");
@@ -643,6 +647,16 @@ public partial class MonsterProtocols : MonoBehaviour
             AiData.path = Behaviour.pathfinder.AStar(target);
             //Debug.Log(AiData.path);
             return false;
+        }
+
+        //set tile debug color
+        if (AiData.path != null && showPathfindingColor)
+        {
+            Debug.Log("setting color...");
+            foreach (TileNode tile in AiData.path)
+            {
+                tile.GetComponent<SpriteRenderer>().color = pathfinderColor;
+            }
         }
 
         // move there
