@@ -130,6 +130,10 @@ public class Pathfinder : MonoBehaviour
             closed.Add(current);
             foreach(var neighbor in current.neighbors)
             {
+                if (!neighbor.valid)
+                {
+                    continue;
+                }
                 if (closed.Contains(neighbor))
                 {
                     continue;

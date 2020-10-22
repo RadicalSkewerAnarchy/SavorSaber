@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5736253672480021815}
   m_Layer: 0
   m_Name: Deadtreepart3
-  m_TagString: ThrowThrough
+  m_TagString: Scenery
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,20 +126,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae11695d2d75954d96805c620f25535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowRegrow: 0
-  health: 8
-  dropChance: 100
-  dropOnDestroy: {fileID: 0}
-  normalSprite: {fileID: 21300000, guid: 27da522615175c546b6ac05cb7274ce0, type: 3}
-  destroyedSprite: {fileID: 0}
-  respawnTime: 0
+  maxHealth: 0
   destroyed: 0
+  dropOnDestroy: {fileID: 0}
+  dropChance: 100
+  destroyedSprite: {fileID: 0}
+  allowRegrow: 0
+  respawnTime: 0
+  skewerable: 0
+  rooted: 1
+  staySolid: 0
   particles: {fileID: 1768953185951736172}
   wiggleTime: 2
   wiggleSpeed: 0.2
   wiggleAmplitude: 0.075
-  skewerable: 0
-  animateWhileAlive: 1
 --- !u!82 &5736253672480021815
 AudioSource:
   m_ObjectHideFlags: 0
@@ -243,6 +243,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1541938224}
     m_Modifications:
+    - target: {fileID: 1768953185704048910, guid: 6776be7876a23b54eb8a2f7244b9a2b1,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.40997115
+      objectReference: {fileID: 0}
     - target: {fileID: 682096081275534981, guid: 6776be7876a23b54eb8a2f7244b9a2b1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -292,11 +297,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1768953185704048910, guid: 6776be7876a23b54eb8a2f7244b9a2b1,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.40997115
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6776be7876a23b54eb8a2f7244b9a2b1, type: 3}

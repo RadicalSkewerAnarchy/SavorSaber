@@ -8,10 +8,16 @@ public class TileNode : MonoBehaviour
     public bool walkable = true;
 	public bool active = false;
     public List<TileNode> neighbors;
+    private Collider2D[] overlappingTile = null;
+
+    [HideInInspector]
+    public bool valid = true;
 
     private void Awake()
     {
         SetWalkable(true);
+        CheckOverlap();
+        CleanNeighbors();
     }
 
     public void SetWalkable(bool on)
@@ -34,6 +40,43 @@ public class TileNode : MonoBehaviour
             {
                 tn.neighbors.Add(this);
                 this.neighbors.Add(tn);
+            }
+        }
+    }
+
+    private void CheckOverlap()
+    {
+        overlappingTile = Physics2D.OverlapBoxAll(transform.position, new Vector2(1, 1), 0f);
+
+        if (overlappingTile.Length == 0)
+            return;
+        else
+        {
+            foreach (Collider2D collider in overlappingTile)
+            {
+                if (collider.gameObject.tag == "Scenery" || collider.gameObject.tag == "LargePlant")
+                {
+
+                    foreach(TileNode neighbor in neighbors)
+                    {
+                        neighbor.neighbors.Remove(this);
+                    }
+                    //Destroy(this.gameObject);
+                    valid = false;
+                }
+            }
+            return;
+        }
+    }
+
+    private void CleanNeighbors()
+    {
+        foreach(TileNode tile in neighbors)
+        {
+            if (tile.Equals(null))
+            {
+                Debug.Log("Pruning null tile...");
+                neighbors.Remove(tile);
             }
         }
     }
