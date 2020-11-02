@@ -128,12 +128,16 @@ public class MonsterBehavior : MonoBehaviour
     /// <summary>
     /// Moves the agent to threshhold distance from target at speed
     /// </summary>
-    public bool MoveTo(Vector2 target, float speed, float threshold)
+    public bool MoveTo(Vector2 target, float speed, float threshold, bool attacking = false)
     {
         Vector2 current = transform.position;
         if (Vector2.Distance(current, target) <= threshold || current == target)
         {
-            TransitionBehavior(AIData.Behave.Idle, "Idle");
+            if (!attacking)
+                TransitionBehavior(AIData.Behave.Idle, "Idle");
+            else
+                TransitionBehavior(AIData.Behave.Attack, "Melee");
+            
             return true;
         }
         else
@@ -231,6 +235,7 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Attack
             TransitionBehavior(AIData.Behave.Attack, "Melee");
+            AnimatorBody.Play("Melee");
             isAttacking = true;
             if (meleeSFX != null)
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(meleeSFX);
@@ -462,6 +467,7 @@ public class MonsterBehavior : MonoBehaviour
     private void BehaviorIn(AIData.Behave behave, string anim)
     {
         AiData.previousBehavior = AiData.currentBehavior;
+        AnimatorBody.Play(anim);
     }
 
     private void BehaviorOut(AIData.Behave behave, string anim)

@@ -25,8 +25,8 @@ GameObject:
   - component: {fileID: 6620815273218764335}
   - component: {fileID: 5345413155261556198}
   - component: {fileID: 644629339}
-  - component: {fileID: 1838194614004728664}
   - component: {fileID: 8047192182108636182}
+  - component: {fileID: 7107795733156953725}
   m_Layer: 17
   m_Name: DroneMiniBoss
   m_TagString: Predator
@@ -279,6 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &6979483296022875180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,16 +350,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients: []
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
-  rewardItem: {fileID: 0}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
   damageFromBaseSkewer: 0
@@ -453,7 +455,7 @@ MonoBehaviour:
     _values:
     - {fileID: 21300000, guid: a1e8c99bae1d4984db484d93eb9aa1db, type: 3}
     - {fileID: 21300000, guid: a1e8c99bae1d4984db484d93eb9aa1db, type: 3}
---- !u!114 &1838194614004728664
+--- !u!114 &8047192182108636182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,14 +464,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 5927032140592398657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a88b5e253e63664d92313483fbeca61, type: 3}
+  m_Script: {fileID: 11500000, guid: 22d5d46d74bd3534082b6101a852a887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activate: 0
+  horiRange: 0
+  horiSpeed: 1
+  horiBase: 0
+  vertRange: 0
+  vertSpeed: 1
+  vertBase: 0
+--- !u!114 &7107795733156953725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927032140592398657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7bf0c573eb27484582ec9499ec69faf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
   Speed: 2
-  Perception: 8
+  Perception: 9
   MeleeAttackThreshold: 2
-  RangeAttackThreshold: 4
+  RangeAttackThreshold: 10
   EngageHostileThreshold: 1
   maxHealth: 20
   health: 20
@@ -479,10 +500,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 1
-  initialHostility: 1
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
@@ -516,25 +533,7 @@ MonoBehaviour:
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
   path: []
---- !u!114 &8047192182108636182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5927032140592398657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22d5d46d74bd3534082b6101a852a887, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activate: 0
-  horiRange: 0
-  horiSpeed: 1
-  horiBase: 0
-  vertRange: 0
-  vertSpeed: 1
-  vertBase: 0
+  flavor: 0
 --- !u!1001 &2142579261
 PrefabInstance:
   m_ObjectHideFlags: 0
