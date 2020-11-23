@@ -13,8 +13,13 @@ public class ProjectileSkewer : BaseProjectile
     public GameObject audioPlayer;
     [HideInInspector]
     public bool fed = false;
-    public GameObject dropTemplate;
-    private bool dropping = false;
+    public GameObject dropTemplate; //template for dropping food item if the skewer misses
+    public GameObject bonusEffectTemplate; //for any additional effects to be spawned, e.g. from Trust Buffs
+    public int bonusEffectMagnitude = 1;
+    private bool dropping = false; //prevents duplicate drops
+
+    public bool isSpicyCharged = false;
+    public bool isSourCharged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,14 +56,12 @@ public class ProjectileSkewer : BaseProjectile
                     flavorInput.Feed(ingredientArray[0], true, myCharData);
                     fed = true;
 
-                    //if this is an enemy, check if we should be doing extra damage from party buffs
-                    if(collision.gameObject.tag == "Predator")
+                    //if this is an enemy, check if we should be spawning a bonus effect
+                    if(collision.gameObject.tag == "Predator" && !dropping)
                     {
-                        DroneFlavorInput dFlavorInput = collision.gameObject.GetComponent<DroneFlavorInput>();
-                        if(dFlavorInput != null)
-                        {
-                            dFlavorInput.DoExtraDamage((int)projectileDamage);
-                        }
+                        GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);
+                        bonus.GetComponent<SkewerBonusEffect>().SetTarget(collision.gameObject, bonusEffectMagnitude);
+                        dropping = true;
                     }
 
                     Destroy(this.gameObject);
