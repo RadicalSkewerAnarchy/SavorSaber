@@ -68,6 +68,15 @@ public class AttackRanged : AttackBase
 
     #endregion
 
+    #region Bonus effect fields
+    //Trust bonus effects
+    [Header("Trust bonus effects")]
+    public GameObject spicyTemplate;
+    public GameObject sourTemplate;
+    protected RecipeData.Flavors flavor = RecipeData.Flavors.None;
+    protected int flavorMagnitude = 1;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -203,16 +212,27 @@ public class AttackRanged : AttackBase
         projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
-        //give the spawned projectile its effect data, if applicable
+        //give the spawned projectile its effect data, if applicable (DEPRECATED)
         if (effectRecipeData != null)
         {
             projectileData.effectRecipeData = effectRecipeData;
         }
+
+        //set any bonus effects to be spawned
+        if (flavor == RecipeData.Flavors.Spicy && spicyTemplate != null)
+            projectileData.SetBonusEffect(spicyTemplate, flavorMagnitude);
+        else if (flavor == RecipeData.Flavors.Sour && sourTemplate != null)
+            projectileData.SetBonusEffect(sourTemplate, flavorMagnitude);
+        else
+            projectileData.SetBonusEffect(null, flavorMagnitude);
+
+        //set ingredient data if applicable
         if (ingredientArray != null)
         {
             projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
             Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
         }
+        //DEPRECATED
         if(flavorCountDictionary != null)
         {
             projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
@@ -262,5 +282,12 @@ public class AttackRanged : AttackBase
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
+    }
+
+    //function for the Trust Meter to assign the correct
+    public void SetFlavor(RecipeData.Flavors flav, int mag = 1)
+    {
+        flavor = flav;
+        flavorMagnitude = mag;
     }
 }

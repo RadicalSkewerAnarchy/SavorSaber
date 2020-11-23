@@ -141,6 +141,7 @@ public class AIData : CharacterData
         [HideInInspector]
         public List<TileNode> path;
 
+        //what flavor an AI is changes the trust buff it grants as a party member (only useful for fruitants, Drones are None
         public RecipeData.Flavors flavor;
     #endregion
 

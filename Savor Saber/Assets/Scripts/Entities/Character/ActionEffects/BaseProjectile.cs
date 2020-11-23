@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider2D))]
 public class BaseProjectile : MonoBehaviour
 {
+
+    #region fields
     /// <summary>
     /// Should this projectile hurt certain factions?
     /// </summary>
@@ -101,6 +103,15 @@ public class BaseProjectile : MonoBehaviour
     public CapsuleCollider2D projectileCollider;
 
     protected Vector2 spawnPosition;
+#endregion
+
+    #region Bonus Effect Fields
+
+    public GameObject dropTemplate; //template for dropping food item if the skewer misses
+    protected GameObject bonusEffectTemplate = null; //for any additional effects to be spawned, e.g. from Trust Buffs
+    protected int bonusEffectMagnitude = 1;
+    protected bool dropping = false; //prevents duplicate drops
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -177,6 +188,12 @@ public class BaseProjectile : MonoBehaviour
         }
     }
 
+    public void SetBonusEffect(GameObject bonus, int mag)
+    {
+        bonusEffectTemplate = bonus;
+        bonusEffectMagnitude = mag;
+    }
+
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.GetType() == typeof(BoxCollider2D))
@@ -214,6 +231,14 @@ public class BaseProjectile : MonoBehaviour
                 if (playerData != null && playerData.Invincible)
                     return;
             }
+            if(bonusEffectTemplate != null && !dropping)
+            {
+                GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);
+                SkewerBonusEffect effect = bonus.GetComponent<SkewerBonusEffect>();
+                if(effect != null)
+                    effect.SetTarget(collision.gameObject, bonusEffectMagnitude);
+                dropping = true;
+            }
             if (characterData.DoDamage((int)projectileDamage, overcharged) && myCharData != null)
                 myCharData.entitiesKilled += 1;
             if (!penetrateTargets)
@@ -233,7 +258,7 @@ public class BaseProjectile : MonoBehaviour
             }
         }
         //if what you hit is terrain
-        else if(go.tag == "Terrain")
+        else if(go.tag == "Terrain" || go.tag == "Scenery")
         {
             //this should solve projectiles passing through terrain. 
             //unfortunately, requires all

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectricAOE : MonoBehaviour
+public class ElectricAOE : SkewerBonusEffect
 {
 
     //private CharacterData characterData;
@@ -17,8 +17,8 @@ public class ElectricAOE : MonoBehaviour
     public bool hurtPlayer = true;
     public bool hurtDrones = false;
 
-    public int damagePerTic = 1;
     public float damageRate = 1.5f;
+    public int lifespan = -1; //negative values are infinite
 
     private int damageModifier = 1;
 
@@ -119,10 +119,10 @@ public class ElectricAOE : MonoBehaviour
                 continue;
 
             //test to see if this tic will inflict a killing blow
-            //if (characterData.health - damagePerTic * damageModifier <= 0)
+            //if (characterData.health - magnitude * damageModifier <= 0)
             //    killingBlow = true;
 
-            killingBlow = characterData.DoDamage(damagePerTic * damageModifier, overCharged);
+            killingBlow = characterData.DoDamage(magnitude * damageModifier, overCharged);
 
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
@@ -163,5 +163,14 @@ public class ElectricAOE : MonoBehaviour
         teslaAnimator.Play("Tesla");
         teslaLight.color = new Color(0, 1, 0.869112f);
 
+    }
+
+    private IEnumerator SelfTerminateTimer()
+    {
+        if (lifespan < 0) yield return null;
+
+        yield return new WaitForSeconds(lifespan);
+
+        Destroy(this.gameObject);       
     }
 }

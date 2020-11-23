@@ -116,8 +116,8 @@ public class TrustMeter : MonoBehaviour
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
                 //Debug.Log("Setting trust effect for spicy");
-                somaSkewer.extraDamage = (int)stage;
-                trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " skewer damage");
+                somaSkewer.SetFlavor(RecipeData.Flavors.Spicy, (int)stage);
+                trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " DoT");
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
@@ -129,8 +129,8 @@ public class TrustMeter : MonoBehaviour
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
                 //Debug.Log("Setting trust effect for sour");
-                currentObject = Instantiate(teslaTemplate, transform);
-                trustText.UpdateDisplayText("Trust effect: Tesla");
+                somaSkewer.SetFlavor(RecipeData.Flavors.Sour, (int)stage);
+                trustText.UpdateDisplayText("Trust effect: Tesla Skewers");
                 break;
         }
     }

@@ -16,7 +16,6 @@ public class AttackRangedThrowSkewer : AttackRanged
     private PlaySFX sfxPlayer;
     public CrosshairController crosshair;
 
-
     // Start is called before the first frame update
     void Start()
     {

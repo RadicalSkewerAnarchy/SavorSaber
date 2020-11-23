@@ -6,12 +6,13 @@ public class DoTApplicator : SkewerBonusEffect
 {
 
     private WaitForSeconds Tic;
+    private int numTics = 1;
 
     // Start is called before the first frame update
     void Start()
     {
         Tic = new WaitForSeconds(1);
-        StartCoroutine(DamageLoop());
+        DamageOverTime();
     }
 
     // Update is called once per frame
@@ -20,14 +21,34 @@ public class DoTApplicator : SkewerBonusEffect
         
     }
 
-    private IEnumerator DamageLoop()
+    private void DamageOverTime()
     {
-        if (target != null && targetData.health > 0)
+        bool killingBlow = false;
+        if (targetData == null)
+            StartCoroutine(ExecuteAfterSeconds());
+
+        //test to see if this tic will inflict a killing blow
+        killingBlow = targetData.DoDamage(magnitude, true);
+        //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
+
+        //termination conditions
+        if (killingBlow)
+            Destroy(this.gameObject);
+        numTics++;
+        if (numTics > (magnitude * 5))
         {
-            yield return Tic;
-            targetData.DoDamage(magnitude, true);
+            StopAllCoroutines();
+            Destroy(this.gameObject);
         }
-        else yield return null;
+        StartCoroutine(ExecuteAfterSeconds());
+
+
+    }
+
+    private IEnumerator ExecuteAfterSeconds()
+    {
+        yield return Tic;
+        DamageOverTime();
     }
 
 
