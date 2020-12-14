@@ -49,13 +49,16 @@ public class MonsterBehavior : MonoBehaviour
     private float biasMovementAngle;
     #endregion
     #region Attacking
+
     /// <summary>
     /// where the attack collider will be spawned
     /// </summary>
+    
     protected Vector2 attackSpawnPoint;
     /// <summary>
     /// field for the attack prefab to be spawned when attacking
     /// </summary>
+    [Header("Attack properties")]
     public GameObject attack;
     /// <summary>
     /// field for the attack prefab to be spawned when attacking
@@ -75,6 +78,15 @@ public class MonsterBehavior : MonoBehaviour
     public float meleeAttackDuration = 0.5f;
     public float meleeAttackDelay = 0.25f;
     public Vector2 meleeAttackDimensions = new Vector2(2,2);
+    /// <summary>
+    /// Whether the projectile should have an explosion animation when launched
+    /// </summary>
+    [SerializeField]
+    private bool explodeEffects = false;
+    [SerializeField]
+    private GameObject explodeTemplate;
+    [SerializeField]
+    private Transform explodePosition;
     [HideInInspector]
     public bool isAttacking = false;
     public AudioClip meleeSFX;
@@ -270,7 +282,6 @@ public class MonsterBehavior : MonoBehaviour
         if (!isAttacking)
         {
             //Debug.Log("Not currently executing attack");
-            #region Attack
             isAttacking = true;
             TransitionBehavior(AIData.Behave.Attack, "Ranged");
             Vector2 normalizedVec = GetTargetVector(target);
@@ -280,7 +291,15 @@ public class MonsterBehavior : MonoBehaviour
             projectileData.directionVector = normalizedVec;            
             projectileData.attacker = this.gameObject;            
             StartCoroutine(EndAttackAfterSeconds(attackDuration, newAttack, false));
-            #endregion
+
+            //explosion effects if necessary
+            if (explodeEffects)
+            {
+                Transform t;
+                if (explodePosition != null) t = explodePosition;
+                else t = transform;
+                Instantiate(explodeTemplate, t.position, Quaternion.identity);
+            }
         }
        
         return true;
