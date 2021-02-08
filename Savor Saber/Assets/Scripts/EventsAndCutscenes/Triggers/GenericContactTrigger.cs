@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 public class GenericContactTrigger : PoweredObject
 {
-    public UnityEvent callOnActivation = new UnityEvent();
+    public string tagToCheck;
     public bool repeatable = false;
     private bool triggered = false;
+    public UnityEvent callOnActivation = new UnityEvent();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +24,7 @@ public class GenericContactTrigger : PoweredObject
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (active && collision.gameObject.tag == "Player")
+        if (active && collision.gameObject.tag == tagToCheck)
         {
             if(repeatable || !triggered)
             {
