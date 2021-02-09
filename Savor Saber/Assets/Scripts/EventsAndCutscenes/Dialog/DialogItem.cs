@@ -36,6 +36,12 @@ public enum Emotion
     AmritaGrim,
     PippiSad,
     PippiHappy,
+    GenericHappy,
+    GenericSad,
+    GenericTired,
+    GenericSurprised,
+    GenericScared,
+    GenericThink
 }
 
 [System.Serializable]

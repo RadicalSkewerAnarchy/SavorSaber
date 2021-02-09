@@ -91,4 +91,13 @@ public class LogicMulti : MonoBehaviour
             Debug.Log("Logic gate error: " + type + " is not a supported operation type.");
         }
     }
+    public void SetInput0(bool value)
+    {
+        SetInputValue(0, value);
+    }
+
+    public void SetInput1(bool value)
+    {
+        SetInputValue(1, value);
+    }
 }
