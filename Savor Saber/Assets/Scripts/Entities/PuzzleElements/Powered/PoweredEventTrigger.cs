@@ -18,4 +18,10 @@ public class PoweredEventTrigger : PoweredObject
     {
         
     }
+
+    public override void TurnOn()
+    {
+        base.TurnOn();
+        eventToCall.Invoke();
+    }
 }

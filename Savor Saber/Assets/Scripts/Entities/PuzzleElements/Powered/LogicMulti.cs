@@ -34,6 +34,7 @@ public class LogicMulti : MonoBehaviour
     {
         inputs[input] = value;
 
+        Debug.Log("Logic AND: Input " + input + " set to " + value);
         //Logic AND
         if(type == LogicType.AND)
         {

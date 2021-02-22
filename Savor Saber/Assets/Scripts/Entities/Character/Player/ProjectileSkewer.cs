@@ -66,6 +66,7 @@ public class ProjectileSkewer : BaseProjectile
                 else if (!dropping && !penetrateTargets)
                 {
                     SpawnDropsOnMiss();
+                    Destroy(this.gameObject);
                 }
             }
             else if (!penetrateTargets)

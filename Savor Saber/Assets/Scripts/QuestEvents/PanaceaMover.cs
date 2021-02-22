@@ -60,13 +60,13 @@ public class PanaceaMover : PoweredObject
         }
     }
 
-    private void StartMotion()
+    public void StartMotion()
     {
         Debug.Log("Escort quest: Starting motion");
         AICommander.Command(escortTarget, AIData.Protocols.Chase, waypoint, waypoint.transform.position);
-        escortData.Speed = 1;
+        escortData.Speed = 1.75f;
     }
-    private void StopMotion()
+    public void StopMotion()
     {
         Debug.Log("Escort quest: Stopping motion");
         AICommander.Command(escortTarget, AIData.Protocols.Lazy, waypoint, waypoint.transform.position);
