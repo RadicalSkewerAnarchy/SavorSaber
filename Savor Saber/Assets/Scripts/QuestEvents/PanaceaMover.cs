@@ -10,6 +10,10 @@ public class PanaceaMover : PoweredObject
     private Commander AICommander;
     [SerializeField]
     private GameObject escortTarget;
+    [SerializeField]
+    private GameObject escortBoundary;
+    [SerializeField]
+    private float boundaryRotationSpeed;
     private AIData escortData;
 
     public GameObject waypoint;
@@ -28,7 +32,8 @@ public class PanaceaMover : PoweredObject
     // Update is called once per frame
     void Update()
     {
-        
+        //if (active && playerNearby)
+            //escortBoundary.transform.RotateAround(Vector3.forward, boundaryRotationSpeed * Time.deltaTime);
     }
 
     public override void TurnOn()
