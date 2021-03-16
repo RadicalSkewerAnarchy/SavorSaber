@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PanaceaMover : PoweredObject
+public class AIMover : PoweredObject
 {
+    //public bool useTrueAI = false; //whether the AI being moved has an actual brain or needs to be "puppeted"
+    public float dumbAISpeed = 1; //how fast a "puppeted" AI should move
+    public Direction dumbAIDirection;
 
     private bool playerNearby = false;
     [SerializeField]
@@ -15,6 +18,8 @@ public class PanaceaMover : PoweredObject
     [SerializeField]
     private float boundaryRotationSpeed;
     private AIData escortData;
+    private Rigidbody2D escortBody;
+    private Animator escortAnimator;
 
     public GameObject waypoint;
 
@@ -27,44 +32,60 @@ public class PanaceaMover : PoweredObject
             AICommander = GameObject.Find("Gaia").GetComponent<Commander>();
 
         escortData = escortTarget.GetComponent<AIData>();
+        escortBody = escortTarget.GetComponent<Rigidbody2D>();
+        escortAnimator = escortTarget.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (active && playerNearby)
-            //escortBoundary.transform.RotateAround(Vector3.forward, boundaryRotationSpeed * Time.deltaTime);
+        if (active && playerNearby)
+        {
+            //Debug.Log("moving dumb ai");
+            escortBody.transform.position += ((Vector3)Vector2.right * dumbAISpeed * Time.deltaTime);
+            //Animate();
+        }
     }
 
     public override void TurnOn()
     {
         base.TurnOn();
         if (playerNearby)
-            StartMotion();
+            Animate(true); //if the player is nearby when the mover is turned on, remember to restart the animation!
     }
 
+    public override void ShutOff()
+    {
+        base.ShutOff();
+        Animate(false); //when shutting off, be sure to stop the target's animation, even if the player is nearby
+    }
 
+    //when the player enters, set the flag that they're nearby. As long as we're active, movement will occur, so play the animation.
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("AI Mover: Player nearby");
             playerNearby = true;
             if(active)
-                StartMotion();
+                Animate(true);
+
         }
 
     }
 
+    //When the player leaves, set the flag to false so movement stops. Animation will need to be stopped too.
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            Debug.Log("AI Mover: Player leaving");
             playerNearby = false;
-            if (active)
-                StopMotion();
+            Animate(false);
         }
     }
-
+    
+    /*
     public void StartMotion()
     {
         Debug.Log("Escort quest: Starting motion");
@@ -78,4 +99,19 @@ public class PanaceaMover : PoweredObject
         escortData.Speed = 0;
 
     }
+    */
+
+    private void ForceIdle()
+    {
+        escortAnimator.SetBool("Moving", false);
+       // escortAnimator.Play("Idle");
+
+    }
+
+    private void Animate(bool moving)
+    {
+        escortAnimator.SetBool("Moving", moving);
+        escortAnimator.SetFloat("Direction", (float)dumbAIDirection);
+    }
+
 }

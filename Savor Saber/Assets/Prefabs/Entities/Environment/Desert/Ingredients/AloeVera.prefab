@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8505475249310179909}
   - component: {fileID: 4018920241820251732}
   - component: {fileID: 3568208294772051319}
+  - component: {fileID: 6714985521167933385}
   m_Layer: 13
   m_Name: AloeVera
   m_TagString: ThrowThrough
@@ -121,20 +122,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae11695d2d75954d96805c620f25535, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowRegrow: 1
-  health: 1
-  dropChance: 33
+  maxHealth: 0
+  destroyed: 0
   dropOnDestroy: {fileID: 4084962922675323153, guid: cfdbb1c862c44544b9716d2d96391585,
     type: 3}
-  normalSprite: {fileID: 21300000, guid: 0c4541d52a80b6440a9cd26bc9ca809e, type: 3}
+  dropChance: 100
   destroyedSprite: {fileID: 21300000, guid: 15ec7502d321efa4fbc903e2d20c26e6, type: 3}
+  allowRegrow: 1
   respawnTime: 10
-  destroyed: 0
+  skewerable: 1
+  rooted: 1
+  staySolid: 0
   particles: {fileID: 15107256187553730}
   wiggleTime: 2
   wiggleSpeed: 0.2
   wiggleAmplitude: 0.05
-  skewerable: 0
 --- !u!82 &3568208294772051319
 AudioSource:
   m_ObjectHideFlags: 0
@@ -231,6 +233,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!50 &6714985521167933385
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760736430985461739}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1001 &908688031812200206
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 //[RequireComponent(typeof(MeleeAttack))]
 public class CharacterData : MonoBehaviour
@@ -50,6 +51,7 @@ public class CharacterData : MonoBehaviour
         public ParticleSystem eatingParticleBurst = null;
         public Slider healthBar;
         protected Coroutine barCr = null;
+        public UnityEvent deathEvent;
     #endregion
 
 
@@ -224,6 +226,7 @@ public class CharacterData : MonoBehaviour
         GetComponent<DropOnDeath>().Drop();
         //if (gameObject.name == "GhostReaper")
         //    FlagManager.SetFlag("reaperdead", "true");
+        deathEvent.Invoke();
         Destroy(gameObject);
     }
 

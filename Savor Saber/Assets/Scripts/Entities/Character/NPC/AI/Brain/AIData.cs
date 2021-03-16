@@ -36,6 +36,7 @@ public class AIData : CharacterData
                 Feed,
                 Console
             }
+    [Header("AI Fields")]
             public Behave currentBehavior = Behave.Idle;
             [HideInInspector]
             public Behave previousBehavior = Behave.Idle;
