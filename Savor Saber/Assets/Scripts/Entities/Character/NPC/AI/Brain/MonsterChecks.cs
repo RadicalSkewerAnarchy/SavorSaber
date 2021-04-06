@@ -657,7 +657,7 @@ public class MonsterChecks : MonoBehaviour
             var validNodes = new List<Collider2D>();
             foreach (var node in availableNodes)
             {
-                if (node.GetComponent<TileNode>() != null)
+                if (node.GetComponent<TileNode>() != null && node.GetComponent<TileNode>().valid == true)
                 {
                     validNodes.Add(node);
                 }

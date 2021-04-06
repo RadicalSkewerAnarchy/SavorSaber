@@ -63,6 +63,7 @@ public class TileNode : MonoBehaviour
                     }
                     //Destroy(this.gameObject);
                     valid = false;
+                    //GetComponent<SpriteRenderer>().color = Color.red;
                 }
             }
             return;

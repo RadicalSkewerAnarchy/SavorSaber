@@ -362,10 +362,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 1
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
@@ -376,6 +372,11 @@ MonoBehaviour:
   eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
     type: 3}
   healthBar: {fileID: 2370235303293770619}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -400,6 +401,7 @@ MonoBehaviour:
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
   path: []
+  flavor: 0
 --- !u!114 &6677514028057774228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +414,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &8639770712118812269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +471,9 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   meleeAttackDimensions: {x: 2, y: 2}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!114 &5006796550576820999
@@ -481,16 +488,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients: []
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
-  rewardItem: {fileID: 0}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
   damageFromBaseSkewer: 1
@@ -537,11 +544,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToDrop:
-  - {fileID: 7333149920346737114, guid: ba46848d5c790614d84960f76c26a945, type: 3}
-  - {fileID: 4084962922675323153, guid: d9af4e661addf4946a26c453351e799b, type: 3}
-  - {fileID: 4084962922675323153, guid: ab9ad4b5c72ec5646bee0dc936cb29d5, type: 3}
-  - {fileID: 4084962922675323153, guid: 0453cb4ea7a74734e94afeebebc490e0, type: 3}
-  - {fileID: 4084962922675323153, guid: 6cef2ae2bb67f944fa6c2995be9347b5, type: 3}
+  - {fileID: 8048196615877476968, guid: cf23e49b22b42554fbb5d65880ba6a65, type: 3}
+  - {fileID: 1176069091743031787, guid: 8f428d3bda3ee0c4283338a2659f1371, type: 3}
+  - {fileID: 7078625886373637647, guid: 171fb9d649aeda9419257459deb911e3, type: 3}
+  - {fileID: 1835202734110564369, guid: a98e5067890d13e419e1701295f8dcba, type: 3}
   randomSelection: 0
   randomItemCount: 2
 --- !u!61 &8055180839980965654
@@ -785,16 +791,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -806,6 +802,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

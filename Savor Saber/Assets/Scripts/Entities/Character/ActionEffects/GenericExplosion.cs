@@ -14,6 +14,7 @@ public class GenericExplosion : MonoBehaviour
     public float shakeIntensity = 0.1f;
     public bool invisible = false;
     public string tagToIgnore = "";
+    public RecipeData.Flavors flavor;
 
     void Awake()
     {
@@ -24,7 +25,16 @@ public class GenericExplosion : MonoBehaviour
             Animator explodeAnim = GetComponent<Animator>();
             CameraController.instance?.Shake(shakeTime, 0.1f, shakeIntensity);
             explodeAudio.Play();
-            explodeAnim.SetBool("Explode", true);
+            if(flavor == RecipeData.Flavors.Sour)
+                explodeAnim.SetBool("ExplodeSour", true);
+            else if(flavor == RecipeData.Flavors.Sweet)
+                explodeAnim.SetBool("ExplodeSweet", true);
+            else if (flavor == RecipeData.Flavors.Salty)
+                explodeAnim.SetBool("ExplodeSalty", true);
+            else if (flavor == RecipeData.Flavors.Spicy)
+                explodeAnim.SetBool("ExplodeSpicy", true);
+            else
+                explodeAnim.SetBool("Explode", true);
         }
 
     }
