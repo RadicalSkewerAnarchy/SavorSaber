@@ -31,6 +31,7 @@ public class EventGraph : MonoBehaviour
     public void Restart()
     {
         stopped = false;
+        Debug.Log("Restarting cutscene " + this.gameObject.name);
     }
 
     private void Awake()

@@ -148,6 +148,7 @@ public class ArrowKeyEvent : MonoBehaviour
 
     private void Finish()
     {
+        Debug.Log("Keypress event finished");
         onFinish.Invoke();
     }
 
