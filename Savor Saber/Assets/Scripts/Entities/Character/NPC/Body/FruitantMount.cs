@@ -33,6 +33,8 @@ public class FruitantMount : MonoBehaviour
     public Vector3 mountEnd;
     private float leapLerp = 0;
 
+    public float mountSpeed = 2;
+    private float originalSpeed;
 
 
     // Start is called before the first frame update
@@ -49,6 +51,8 @@ public class FruitantMount : MonoBehaviour
         dust = player.GetComponentInChildren<ParticleSystem>();
 
         audioSource = this.GetComponent<AudioSource>();
+
+        originalSpeed = fruitantData.Speed;
     }
 
     private void GetPlayerRefs()
@@ -148,6 +152,8 @@ public class FruitantMount : MonoBehaviour
 
         // dust
         dust.Play();
+
+        fruitantData.Speed = mountSpeed;
     }
 
     public void Demount()
@@ -173,6 +179,8 @@ public class FruitantMount : MonoBehaviour
         // mounted
         mounted = false;
         demounting = true;
+
+        fruitantData.Speed = originalSpeed;
     }
 
     void Update()

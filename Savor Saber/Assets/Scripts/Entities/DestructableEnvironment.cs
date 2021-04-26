@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // on interact with a sword
 [RequireComponent(typeof(Collider2D))]
@@ -63,7 +64,7 @@ public class DestructableEnvironment : MonoBehaviour
     private AudioSource sfx;
     private Animator anim;
     new private Collider2D collider;
-    
+    public UnityEvent deathEvent;
 
     private void Start()
     {
@@ -111,6 +112,7 @@ public class DestructableEnvironment : MonoBehaviour
         }
 
         collider.enabled = staySolid;
+        deathEvent.Invoke();
     }
 
     private IEnumerator Regrow(float time)

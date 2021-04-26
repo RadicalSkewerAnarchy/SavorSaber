@@ -336,6 +336,9 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.5
   meleeAttackDimensions: {x: 3, y: 3}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
 --- !u!114 &5927032140592398662
@@ -487,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 1
-  Speed: 2
+  Speed: 6
   Perception: 9
   MeleeAttackThreshold: 2
   RangeAttackThreshold: 10
@@ -509,6 +512,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 1114503538508181113}
   eatingParticleBurst: {fileID: 0}
   healthBar: {fileID: 4025794516613548346}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -741,16 +749,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -762,6 +760,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

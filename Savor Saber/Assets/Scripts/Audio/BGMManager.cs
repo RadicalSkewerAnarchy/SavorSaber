@@ -32,7 +32,8 @@ public class BGMManager : MonoBehaviour
         if (instance == null)
             instance = this;
         else
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            return;
     }
 
     private void Start()
@@ -43,8 +44,8 @@ public class BGMManager : MonoBehaviour
         AreaBgsNight = initialData.nightBgs;
         bgmSrc = bgmContainer.GetComponents<AudioSource>();
         bgsSrc = bgsContainer.GetComponents<AudioSource>();
-        DayNightController.instance.OnDay += GoToDayMusic;
-        DayNightController.instance.OnNight += GoToNightMusic;
+        DayNightController.instance.OnDay = GoToDayMusic;
+        DayNightController.instance.OnNight = GoToNightMusic;
     }
 
     public void GoToNightMusic()
@@ -75,6 +76,7 @@ public class BGMManager : MonoBehaviour
 
     public void FadeToAreaSounds(float fadeTime = 3)
     {
+        Debug.Log("Entering FadeToAreaSounds");
         if(DayNightController.instance.IsDayTime)
         {
             CrossFadeBgm(AreaBgmDay, fadeTime);

@@ -25,7 +25,7 @@ public class FlowerWeatherUpdate : WeatherUpdate
         }
         else
         {
-            if (plantManager.isOpen)
+            if (plantManager != null && plantManager.isOpen)
                 plantManager.ClosePlant();
         }
     }

@@ -250,7 +250,7 @@ public class FlavorInputManager : MonoBehaviour
     public virtual void CurryBalls (bool favorite)
     {
         // the amount of time that a fruitant is charmed
-        int shots = 5;
+        int shots = 2;
         int pellets = 5;
         dotTicLength = 0.5f;
         StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));

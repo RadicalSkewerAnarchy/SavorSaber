@@ -5,7 +5,7 @@ using UnityEngine;
 public class PoisonCloud : MonoBehaviour
 {
     PlayerData characterData;
-    public int dotTicLength;
+    public float dotTicLength = 1;
     bool playerInCloud;
     public int damagePerTic = 1;
 
@@ -57,7 +57,7 @@ public class PoisonCloud : MonoBehaviour
     {
         //things to happen before delay
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(dotTicLength);
 
         //things to happen after delay
         DamageOverTime();

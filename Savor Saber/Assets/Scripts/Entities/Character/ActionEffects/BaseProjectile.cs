@@ -253,8 +253,8 @@ public class BaseProjectile : MonoBehaviour
             if (envData != null)
             {
                 envData.Health -= (int)Mathf.Max(projectileDamage, 1);
-                if (!penetrateTargets)
-                    Destroy(this.gameObject);
+                //if (!penetrateTargets)
+                    //Destroy(this.gameObject);
             }
         }
         //if what you hit is terrain
