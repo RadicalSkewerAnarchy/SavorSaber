@@ -9,11 +9,18 @@ public class DroneTransmissionHelper : MonoBehaviour
     SpriteRenderer sr;
     bool alive = true;
     public GameObject parentDrone;
+    public GameObject extraDebrisToEnable;
+
     // Start is called before the first frame update
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
         sr.enabled = false;
+
+        if (extraDebrisToEnable != null)
+        {
+            extraDebrisToEnable.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -27,5 +34,9 @@ public class DroneTransmissionHelper : MonoBehaviour
     {
         alive = false;
         sr.enabled = true;
+        if(extraDebrisToEnable != null)
+        {
+            extraDebrisToEnable.SetActive(true);
+        }
     }
 }
