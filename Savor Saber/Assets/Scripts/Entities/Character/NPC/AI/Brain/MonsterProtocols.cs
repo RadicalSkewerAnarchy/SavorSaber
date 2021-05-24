@@ -652,7 +652,7 @@ public partial class MonsterProtocols : MonoBehaviour
         //set tile debug color
         if (AiData.path != null && showPathfindingColor)
         {
-            Debug.Log("setting color...");
+            //Debug.Log("setting color...");
             foreach (TileNode tile in AiData.path)
             {
                 tile.GetComponent<SpriteRenderer>().color = pathfinderColor;

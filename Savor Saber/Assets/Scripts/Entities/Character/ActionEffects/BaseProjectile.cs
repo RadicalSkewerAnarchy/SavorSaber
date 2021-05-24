@@ -15,8 +15,7 @@ public class BaseProjectile : MonoBehaviour
     /// <summary>
     /// Should this projectile hurt certain factions?
     /// </summary>
-    public bool hurtPlayer = true;
-    public bool hurtDrones = true;
+    public string[] tagsToIgnore;
 
     public bool overcharged = false;
     [HideInInspector]
@@ -210,10 +209,12 @@ public class BaseProjectile : MonoBehaviour
         if (go == attacker)
             return;
         //ignore specified target classes
-        if ((go.tag == "Player" || go.tag =="Prey") && !hurtPlayer)
-            return;
-        if (go.tag == "Predator" && !hurtDrones)
-            return;
+        foreach(string tag in tagsToIgnore)
+        {
+            if (go.tag == tag)
+                return;
+        }
+
         #endregion
 
         //if you have a drop item, drop it now

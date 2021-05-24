@@ -63,8 +63,8 @@ public class PlayerKnifeAttack : BaseMeleeAttack
             {
                 body.directionVector *= -1;
                 Physics2D.IgnoreCollision(body.GetComponent<Collider2D>(), body.attacker.GetComponent<Collider2D>(), false);
-                if(!body.hurtDrones)
-                    body.hurtDrones = true;
+                //if(!body.hurtDrones)
+                    //body.hurtDrones = true;
                 if (body.attacker != null)
                     body.attacker = this.gameObject;
 

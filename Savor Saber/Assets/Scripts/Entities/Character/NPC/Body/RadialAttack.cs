@@ -21,9 +21,24 @@ public class RadialAttack : MonoBehaviour
     private ParticleSystem shooter;
     private PlaySFX sfxPlayer;
     private bool active = false;
+
+    public Material redMaterial;
+    public Material blueMaterial;
+    public Material whiteMaterial;
+
+    public enum BulletColors
+    {
+        Red,
+        Blue,
+        White,
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        int RedLayer = LayerMask.GetMask("Red");
+        int BlueLayer = LayerMask.GetMask("Blue");
+
         Cooldown = new WaitForSeconds(cooldown);
         CastTic = new WaitForSeconds(0.25f);
         shooter = GetComponent<ParticleSystem>();
@@ -35,6 +50,7 @@ public class RadialAttack : MonoBehaviour
             active = true;
             StartCoroutine(FireLoop());
         }
+
     }
 
     // Update is called once per frame
@@ -43,6 +59,32 @@ public class RadialAttack : MonoBehaviour
         
     }
 
+    public void SetColor(BulletColors color)
+    {
+        var collision = shooter.collision;
+        LayerMask currentMask = collision.collidesWith;
+
+        switch (color)
+        {
+            case BulletColors.Red:
+                Debug.Log("SpreadShot: Setting attack color to red");
+                currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
+                currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Blue");
+                break;
+            case BulletColors.Blue:
+                Debug.Log("SpreadShot: Setting attack color to blue");
+                currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
+                currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Red");
+                break;
+            case BulletColors.White:
+                Debug.Log("SpreadShot: Setting attack color to white");
+                currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
+                currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
+                break;
+            default:
+                return;
+        }
+    }
     public void Activate()
     {
         if (!active)
@@ -60,7 +102,7 @@ public class RadialAttack : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("PARTICLE COLLISION");
+        //Debug.Log("PARTICLE COLLISION");
         if(other.tag == "Player" || other.tag == "Prey")
         {
             CharacterData data = other.GetComponent<CharacterData>();

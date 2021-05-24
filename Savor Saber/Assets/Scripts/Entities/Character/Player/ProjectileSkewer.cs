@@ -34,6 +34,14 @@ public class ProjectileSkewer : BaseProjectile
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
+        GameObject go = collision.gameObject;
+        //ignore specified target classes
+        foreach (string tag in tagsToIgnore)
+        {
+            if (go.tag == tag)
+                return;
+        }
+
         if (!fed)
         { 
             if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
