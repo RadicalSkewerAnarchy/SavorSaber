@@ -11,7 +11,6 @@ public class BonusPearManager : MonoBehaviour
     public GameObject vanillaPear;
     public String[] genericTexts;
     public Text splashText;
-    private bool isPrideMonth = false;
 
     // Start is called before the first frame update
     void Awake()

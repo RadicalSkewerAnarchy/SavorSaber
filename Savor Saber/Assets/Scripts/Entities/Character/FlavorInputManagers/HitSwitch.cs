@@ -7,14 +7,22 @@ using UnityEngine;
 public class HitSwitch : FlavorInputManager
 {
     public bool isToggle = true;
+    public int cooldownTime = 0; //if 0, effect is permanent
     public PoweredObject[] TargetObjects;
-    private bool active = false;
+    private bool targetsActive = false;
     private AudioSource burnSFXPlayer;
+
+
+    private WaitForSeconds CooldownTimer;
 
     // Start is called before the first frame update
     void Start()
     {
         burnSFXPlayer = GetComponent<AudioSource>();
+        CooldownTimer = new WaitForSeconds(cooldownTime);
+        if (cooldownTime > 0)
+            isToggle = true;
+
     }
 
     // Update is called once per frame
@@ -24,7 +32,7 @@ public class HitSwitch : FlavorInputManager
     }
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
-        if (active)
+        if (targetsActive)
         {
             foreach (PoweredObject target in TargetObjects)
             {
@@ -32,7 +40,10 @@ public class HitSwitch : FlavorInputManager
             }
 
             if(isToggle)
-                active = false;
+                targetsActive = false;
+
+            if (cooldownTime > 0)
+                StartCoroutine(StartCooldown());
         }
         else
         {
@@ -42,10 +53,45 @@ public class HitSwitch : FlavorInputManager
             }
 
             if(isToggle)
-                active = true;
+                targetsActive = true;
+
+            if (cooldownTime > 0)
+                StartCoroutine(StartCooldown());
 
             burnSFXPlayer.Play();
         }
     }
+
+    private IEnumerator StartCooldown()
+    {
+        yield return CooldownTimer;
+
+        if (targetsActive)
+        {
+            foreach (PoweredObject target in TargetObjects)
+            {
+                target.ShutOff();
+            }
+
+            if (isToggle)
+                targetsActive = false;
+        }
+        else
+        {
+            foreach (PoweredObject target in TargetObjects)
+            {
+                target.TurnOn();
+            }
+
+            if (isToggle)
+                targetsActive = true;
+
+            burnSFXPlayer.Play();
+        }
+
+        yield return null;
+    }
+
+    
 
 }
