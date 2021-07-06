@@ -168,7 +168,12 @@ public class RadialAttack : MonoBehaviour
 
     public void Deactivate()
     {
-        StopAllCoroutines();
+        if (active)
+        {
+            active = false;
+            StopAllCoroutines();
+        }
+
     }
 
     private void OnParticleCollision(GameObject other)

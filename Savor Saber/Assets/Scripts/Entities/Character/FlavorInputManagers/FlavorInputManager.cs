@@ -88,13 +88,7 @@ public class FlavorInputManager : MonoBehaviour
             {
                 rejected = true;
                 //spit out the rejected object
-                GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
-                SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
-                SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
-                rejectedSR.sprite = rejectedIngredient.image;
-                rejectedSO.data = rejectedIngredient;
-                sfxPlayer.clip = rejectSFX;
-                sfxPlayer.Play();
+                SpawnRejectedIngredient(ingredient);
             }
         }
         //if we didn't reject it, heal and check if we should morph
@@ -158,13 +152,13 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     rejected = true;
                     isReject = true;
-
+                    SpawnRejectedIngredient(rejectedIngredient);
                     //spit out the rejected object
-                    GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
-                    SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
-                    SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
-                    rejectedSR.sprite = rejectedIngredient.image;
-                    rejectedSO.data = rejectedIngredient;
+                    //GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+                    //SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+                    //SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+                    //rejectedSR.sprite = rejectedIngredient.image;
+                    //rejectedSO.data = rejectedIngredient;
                 }
             }
             //heal mildly if neither favorite nor reject
@@ -202,6 +196,17 @@ public class FlavorInputManager : MonoBehaviour
             }
             Debug.Log("wtf, why would you feed me this");
         }
+    }
+
+    protected void SpawnRejectedIngredient(IngredientData data)
+    {
+        GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
+        SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
+        SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
+        rejectedSR.sprite = data.image;
+        rejectedSO.data = data;
+        sfxPlayer.clip = rejectSFX;
+        sfxPlayer.Play();
     }
  
     #region SUGAR
