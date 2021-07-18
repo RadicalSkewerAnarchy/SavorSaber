@@ -180,7 +180,7 @@ public class DayNightController : MonoBehaviour, IPausable
             StartCoroutine(AdvanceTime(true));
         }
         else
-            StartCoroutine(transition(t, 0.15f));
+            StartCoroutine(transition(t, 0.075f));
     }
     public void SetTimeOfDayImmediate(TimeOfDay t)
     {
