@@ -5,6 +5,13 @@ using UnityEngine.UI;
 
 public class RadialAttack : MonoBehaviour
 {
+    public enum PolarityMode
+    {
+        Static,
+        Alternate,
+        Randomize
+    }
+
     public bool startActive = true;
     public int particleDamage = 2;
     public int cooldown = 10;
@@ -15,7 +22,6 @@ public class RadialAttack : MonoBehaviour
     public AudioClip criticalChargeSFX;
     public AudioClip shootSFX;
 
-
     private WaitForSeconds Cooldown;
     private WaitForSeconds CastTic;
     private ParticleSystem shooter;
@@ -23,8 +29,10 @@ public class RadialAttack : MonoBehaviour
     private PlaySFX sfxPlayer;
     private bool active = false;
     private int criticalThreshold;
+
     [Header("Polarity properties")]
     public bool swapPolarityOnShoot = false;
+    public PolarityMode polarityMode = PolarityMode.Static;
     public Material redMaterial;
     public Material blueMaterial;
     public Material whiteMaterial;
@@ -199,7 +207,7 @@ public class RadialAttack : MonoBehaviour
         //Debug.Log("Cooldown elapsed, beginning attack");
         castSlider.gameObject.SetActive(true);
         //preform late polarity swaps before the next shot, if necessary, but not on the first shot because that breaks things
-        if (swapPolarityOnShoot && !isFirstShot)
+        if (polarityMode == PolarityMode.Alternate && !isFirstShot)
         {
             if (currentColor == BulletColors.Red)
             {
@@ -234,7 +242,7 @@ public class RadialAttack : MonoBehaviour
             sfxPlayer.Play(shootSFX);
 
             //swap polarity after shooting
-            if (swapPolarityOnShoot)
+            if (polarityMode == PolarityMode.Alternate)
             {
                 if (currentColor == BulletColors.Red)
                 {
