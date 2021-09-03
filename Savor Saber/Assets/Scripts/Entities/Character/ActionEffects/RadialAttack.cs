@@ -52,6 +52,7 @@ public class RadialAttack : MonoBehaviour
     }
 
     public BulletColors currentColor = BulletColors.White;
+    private BulletColors randomizedColor;
 
     // Start is called before the first frame update
     void Start()
@@ -206,7 +207,7 @@ public class RadialAttack : MonoBehaviour
 
         //Debug.Log("Cooldown elapsed, beginning attack");
         castSlider.gameObject.SetActive(true);
-        //preform late polarity swaps before the next shot, if necessary, but not on the first shot because that breaks things
+        //preform late bullet polarity swaps before the next shot, if necessary, but not on the first shot because that breaks things
         if (polarityMode == PolarityMode.Alternate && !isFirstShot)
         {
             if (currentColor == BulletColors.Red)
@@ -217,6 +218,10 @@ public class RadialAttack : MonoBehaviour
             {
                 ChangePolarityBullet(BulletColors.Red);
             }
+        }
+        else if(polarityMode == PolarityMode.Randomize && !isFirstShot)
+        {
+            ChangePolarityBullet(randomizedColor);
         }
         if (isFirstShot)
             isFirstShot = false;
@@ -241,7 +246,7 @@ public class RadialAttack : MonoBehaviour
             shooter.Play();
             sfxPlayer.Play(shootSFX);
 
-            //swap polarity after shooting
+            //swap telegraph polarity after shooting
             if (polarityMode == PolarityMode.Alternate)
             {
                 if (currentColor == BulletColors.Red)
@@ -252,6 +257,22 @@ public class RadialAttack : MonoBehaviour
                 {
                     ChangePolarityTelegraph(BulletColors.Red);
                 }
+            }
+            else if(polarityMode == PolarityMode.Randomize)
+            {
+                float rng = Random.Range(0, 2);
+                if (rng > 1)
+                {
+                    ChangePolarityTelegraph(BulletColors.Red);
+                    randomizedColor = BulletColors.Red;
+                }
+                else
+                {
+                    ChangePolarityTelegraph(BulletColors.Blue);
+                    randomizedColor = BulletColors.Blue;
+                }
+                    
+
             }
             yield return FireLoop();
         }
