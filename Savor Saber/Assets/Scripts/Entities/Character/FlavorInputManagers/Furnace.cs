@@ -15,7 +15,7 @@ public class Furnace : FlavorInputManager
 
     public bool active = true;
     public RecipeData.Flavors favoriteFlavors;
-    private bool useFavoriteFlavors = true;
+    public bool useFavoriteFlavors = true;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +24,7 @@ public class Furnace : FlavorInputManager
         sfxPlayer = GetComponent<AudioSource>();
 
         //if "none" is marked as a favorite flavor, disregard the whole system and take anything.
-        if ((favoriteFlavors & RecipeData.Flavors.None) > 0)
+        if (favoriteFlavors == RecipeData.Flavors.None)
         {
             useFavoriteFlavors = false;
         }

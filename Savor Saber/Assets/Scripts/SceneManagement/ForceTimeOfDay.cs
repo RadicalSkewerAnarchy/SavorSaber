@@ -26,10 +26,11 @@ public class ForceTimeOfDay : MonoBehaviour
     public void ForceTime(TimeOfDay t)
     {
         instance.SetTimeOfDay(t);
+        instance.Paused = true;
     }
     public void ResetToPrevious()
     {
         instance.SetTimeOfDay(oldTime);
-        //instance.Paused = false;
+        instance.Paused = false;
     }
 }
