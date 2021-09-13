@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8918734202811279978
+--- !u!114 &-9083815337518263541
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -6754719626711365806}
+  body: {fileID: -2337988034416706258}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 8798206245208920611}
+  - {fileID: 3000651133951503534}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-8782638598009951109
+--- !u!114 &-9021668347127622614
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,20 +30,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
   m_EditorClassIdentifier: 
-  position: {x: -940, y: 140}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 4263347490322327055}
-  fromPreviousIN: {fileID: -3460472895606402264}
-  characterName: Character Name
-  text: You can feed it up close {control,skewer} or by throwing {control,throw} a
-    skewer towards it.
-  actor: Amrita
-  emotion: 0
---- !u!114 &-8755091019373406653
+  body: {fileID: 3487563510735893385}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -6648137840850870912}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-8855194428610522640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,29 +57,12 @@ MonoBehaviour:
   position: {x: -1150, y: -280}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 9015346704766236003}
-  fromPreviousIN: {fileID: -1286244937090982045}
+  toNextOUT: {fileID: 745534025042998376}
+  fromPreviousIN: {fileID: -7485994074541554119}
   disable: 1
   parent: Amrita
   childName: SpeechBubble
---- !u!114 &-8706878392974813187
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea491fe537c73eb408082e3db06ceb2a, type: 3}
-  m_Name: Dialog End
-  m_EditorClassIdentifier: 
-  position: {x: 1279.5, y: 552.1001}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  playCompletionEvents: 1
-  fromPreviousIN: {fileID: 8252652643392521310}
---- !u!114 &-8615192797830726350
+--- !u!114 &-8703248787419241297
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,16 +74,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 4849349609966307438}
+  body: {fileID: -172794571550552220}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -5744394511180324648}
+  - {fileID: 8523688527782192728}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-8366378480296491242
+--- !u!114 &-8500518723402093334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
+  m_Name: Dialog Start
+  m_EditorClassIdentifier: 
+  position: {x: -1430, y: -280}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -7243391425377855413}
+  dependencies:
+  - Campfire
+  - Waypoint1
+  - IslandPearWaypoint
+  - PlateCameraTarget
+  actors:
+  - Amrita
+  - IslandPear
+  - Narrator
+  unityEvents:
+  - PearMove
+--- !u!114 &-8277000188666520531
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 7699743327830300588}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 359719468763724137}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-7967267848581822706
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -113,502 +143,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 4849349609966307438}
+  body: {fileID: 1219164570172097023}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -1355342645469527715}
+  - {fileID: 9206259124182325817}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-8070418184362895884
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715e8871ff146974c8b08dedb1c8853a, type: 3}
-  m_Name: Enable Child Object
-  m_EditorClassIdentifier: 
-  position: {x: 1060.4, y: 547.6}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -307928021998599161}
-  fromPreviousIN: {fileID: 8798206245208920611}
-  disable: 0
-  parent: Amrita
-  childName: SpeechBubble
---- !u!114 &-7924967745008994358
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -3298310744636747821}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5423495198453980797}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-7886182723363911138
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -6821879232530290904}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -2791852544352609099}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-7649745387345898184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -6740671412212179419}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -7508654519954420902}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-7519447469857869954
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 3364040851929148801}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -5268000628693712805}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-7508654519954420902
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 1277451698911957713}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -7649745387345898184}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-6821879232530290904
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -130, y: 150}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -7886182723363911138}
-  fromPreviousIN: {fileID: 3400779778508089015}
-  characterName: Character Name
-  text: Just north of here is a pressure plate that operates a door.
-  actor: Amrita
-  emotion: 0
---- !u!114 &-6754719626711365806
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e8ef661a4f5eb545900d6a1ca0d692e, type: 3}
-  m_Name: Set Quest Text
-  m_EditorClassIdentifier: 
-  position: {x: 830, y: 550}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -8918734202811279978}
-  fromPreviousIN: {fileID: -5744394511180324648}
-  text: Hack terminal
---- !u!114 &-6740671412212179419
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -140, y: -280}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 1863278805968548698}
-  fromPreviousIN: {fileID: -7649745387345898184}
-  characterName: Character Name
-  text: 'A Paddle Posse, if you will. '
-  actor: Amrita
-  emotion: 20
---- !u!114 &-6694830455762566091
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c4994ad4009914dbdae2e088971763, type: 3}
-  m_Name: Move Character
-  m_EditorClassIdentifier: 
-  position: {x: -464.8, y: -436}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -6684761829809777797}
-  fromPreviousIN: {fileID: -413199030776163511}
-  waitUntilFinished: 1
-  character: Soma
-  destination: Waypoint1
-  xLeniency:
-    min: -0.1
-    max: 0.1
-  yLeniency:
-    min: -0.1
-    max: 0.1
-  speed: 2
-  endFacing: 0
---- !u!114 &-6684761829809777797
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -6694830455762566091}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 4731643399064148493}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5749390526378972257
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
-  m_Name: Pan Camera
-  m_EditorClassIdentifier: 
-  position: {x: -460, y: -560}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 5801824013556780368}
-  fromPreviousIN: {fileID: -2084859728392458904}
-  waitUntilFinished: 1
-  movementType: 0
-  target: Campfire
-  maxPullSpeed: 100
-  snapTime: 0.75
---- !u!114 &-5744394511180324648
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -6754719626711365806}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -8615192797830726350}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5631178814006778931
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -5162537185422240818}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3626403070917371058}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5568858493261486908
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -4586554101252074513}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -168429985575594157}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5268000628693712805
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -4491184976444911881}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -7519447469857869954}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-5233730290960053920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: OUT
-  m_EditorClassIdentifier: 
-  body: {fileID: 4224161886913713790}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -2084859728392458904}
-  side: 2
-  sidePosition: 100
-  sideOffset: 0
---- !u!114 &-5162537185422240818
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -480, y: 340}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -1092125536441991157}
-  fromPreviousIN: {fileID: -5631178814006778931}
-  characterName: Character Name
-  text: After that, hack the terminal on the other side to keep it open for good.
-  actor: Amrita
-  emotion: 0
---- !u!114 &-4821261950239013578
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -4009427028538475053}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3489778492041843864}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4716057489889762486
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -4491184976444911881}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -1092125536441991157}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4707207315565888303
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 3004146428673709277}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 1863278805968548698}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-4586554101252074513
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715e8871ff146974c8b08dedb1c8853a, type: 3}
-  m_Name: Enable Child Object
-  m_EditorClassIdentifier: 
-  position: {x: -1010, y: 370}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -5568858493261486908}
-  fromPreviousIN: {fileID: 6597822614459846469}
-  disable: 0
-  parent: Amrita
-  childName: SpeechBubble
---- !u!114 &-4491184976444911881
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -127, y: 334}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -5268000628693712805}
-  fromPreviousIN: {fileID: -4716057489889762486}
-  characterName: Character Name
-  text: Hack the terminal?
-  actor: Soma
-  emotion: 0
---- !u!114 &-4454330750422955936
+--- !u!114 &-7672266685492758552
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -624,8 +168,30 @@ MonoBehaviour:
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
   playCompletionEvents: 0
-  fromPreviousIN: {fileID: -168429985575594157}
---- !u!114 &-4416094889954921178
+  fromPreviousIN: {fileID: 6680268206321932414}
+--- !u!114 &-7509756584779636194
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 220, y: 340}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 6287124540709892474}
+  fromPreviousIN: {fileID: -3511085976315449096}
+  characterName: Character Name
+  text: Just interact {control,interact} with it, and your hacking software will take
+    care of the rest.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &-7485994074541554119
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -637,16 +203,79 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 7981099656231691184}
+  body: {fileID: -8855194428610522640}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 8062482696525083393}
+  - {fileID: -7243391425377855413}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-4244934686013690877
+--- !u!114 &-7243391425377855413
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -8500518723402093334}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -7485994074541554119}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6866386302907432288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -127, y: 334}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -40001274399689919}
+  fromPreviousIN: {fileID: -5667209899420753883}
+  characterName: Character Name
+  text: Hack the terminal?
+  actor: Soma
+  emotion: 0
+--- !u!114 &-6745859559785090477
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 2422833571569999553}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -681058817813488396}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6648137840850870912
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -658,16 +287,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -1265475111918741147}
+  body: {fileID: -2656293868453220136}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 7722217227607047104}
+  - {fileID: -9021668347127622614}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-4009427028538475053
+--- !u!114 &-6585873172214885541
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -2097552452718847204}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -1208739972630813445}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6543073449220014196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -6459037019646607453}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -638783899807689359}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6459037019646607453
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -679,17 +350,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
   m_Name: Pan Camera
   m_EditorClassIdentifier: 
-  position: {x: 212.8003, y: 150.60016}
+  position: {x: -460, y: -560}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -4821261950239013578}
-  fromPreviousIN: {fileID: -2791852544352609099}
+  toNextOUT: {fileID: -1187870789920060661}
+  fromPreviousIN: {fileID: -6543073449220014196}
   waitUntilFinished: 1
   movementType: 0
-  target: PlateCameraTarget
+  target: Campfire
   maxPullSpeed: 100
   snapTime: 0.75
---- !u!114 &-3938351148155551406
+--- !u!114 &-5667209899420753883
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -6866386302907432288}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1306399981325520596}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-5584021707733987389
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -2337988034416706258}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -4321861587517311880}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-5124604868329132012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -3675750482610680582}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 924264278433870575}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-4419333739173922026
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 9020381105988083172}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 3636179534929911355}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-4321861587517311880
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 5093242506794895286}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -5584021707733987389}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-3990976476938147321
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 1547967838043698018}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -895809578003637702}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-3675750482610680582
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -704,13 +501,13 @@ MonoBehaviour:
   position: {x: -130, y: 550}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -1355342645469527715}
-  fromPreviousIN: {fileID: 2514249926235423097}
+  toNextOUT: {fileID: -5124604868329132012}
+  fromPreviousIN: {fileID: 8523688527782192728}
   characterName: Character Name
   text: Fruitants can't use computers, so we give them a hand on that front.
   actor: Amrita
   emotion: 0
---- !u!114 &-3681245646232971237
+--- !u!114 &-3633961512298103138
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -722,16 +519,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 3364040851929148801}
+  body: {fileID: -1324827686586910122}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -3141993020832646286}
+  - {fileID: 1186895084571982559}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3626403070917371058
+--- !u!114 &-3569835468845169542
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 715e8871ff146974c8b08dedb1c8853a, type: 3}
+  m_Name: Enable Child Object
+  m_EditorClassIdentifier: 
+  position: {x: -1010, y: 370}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -197544128502751792}
+  fromPreviousIN: {fileID: 6350450776656031498}
+  disable: 0
+  parent: Amrita
+  childName: SpeechBubble
+--- !u!114 &-3519884519861215544
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -743,16 +560,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -1265475111918741147}
+  body: {fileID: 9020381105988083172}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -5631178814006778931}
+  - {fileID: 3265287995335649201}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3489778492041843864
+--- !u!114 &-3511085976315449096
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -764,16 +581,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 591207701513553493}
+  body: {fileID: -7509756584779636194}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -4821261950239013578}
+  - {fileID: -40001274399689919}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3460472895606402264
+--- !u!114 &-3365328920556194991
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 644202061881127271}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -2690231297208926864}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-2690231297208926864
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -785,16 +623,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -8782638598009951109}
+  body: {fileID: 8414315477539003300}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 7424074797446742289}
+  - {fileID: -3365328920556194991}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3298310744636747821
+--- !u!114 &-2656293868453220136
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -806,16 +644,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: -470, y: -280}
+  position: {x: 223, y: -264}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -7924967745008994358}
-  fromPreviousIN: {fileID: 4731643399064148493}
+  toNextOUT: {fileID: 2915147905212811646}
+  fromPreviousIN: {fileID: -6648137840850870912}
   characterName: Character Name
-  text: To survive in this world, you and your new friend will need to work as a team.
+  text: "As robots, one of our specialties is real-time logistics. \r"
   actor: Amrita
-  emotion: 20
---- !u!114 &-3218282420836346490
+  emotion: 0
+--- !u!114 &-2337988034416706258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bab16cf61b90f4ab537fe713c7b2d1, type: 3}
+  m_Name: Play Unity Event
+  m_EditorClassIdentifier: 
+  position: {x: -126.89981, y: -410.39978}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -9083815337518263541}
+  fromPreviousIN: {fileID: -5584021707733987389}
+  waitUntilFinished: 1
+  eventName: PearMove
+--- !u!114 &-2272004252316960467
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -827,16 +684,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 1997102686631445070}
+  body: {fileID: 1219164570172097023}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 2514249926235423097}
+  - {fileID: -474072703147406036}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3141993020832646286
+--- !u!114 &-2097552452718847204
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -845,82 +702,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  body: {fileID: 1997102686631445070}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3681245646232971237}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2791852544352609099
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -4009427028538475053}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -7886182723363911138}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2497823213841311415
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 5496642560156828718}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 3400779778508089015}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2175905491963013062
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 8876631499710831268}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5185461800718794869}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2166782757959142294
+  position: {x: 220.4, y: -46.4}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 3636179534929911355}
+  fromPreviousIN: {fileID: -6585873172214885541}
+  characterName: Character Name
+  text: Other things?
+  actor: Soma
+  emotion: 0
+--- !u!114 &-1947838444149049497
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -932,38 +726,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf88e5a0aaca874a8ba01804c11a952, type: 3}
   m_Name: Fixed Dialog
   m_EditorClassIdentifier: 
-  position: {x: 880, y: -40}
+  position: {x: 1220, y: -40}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 8062482696525083393}
-  fromPreviousIN: {fileID: 4626886308294429636}
+  toNextOUT: {fileID: -1800877506924475627}
+  fromPreviousIN: {fileID: -474072703147406036}
   characterName: Character Name
-  text: '{c,narrator,Press 1/2/3/4 to issue orders. Active and available orders will
-    be visible on the HUD.}'
+  text: '{c,narrator,move or attack orders can also be issued by clicking your companion
+    and then clicking its destination.}'
   actor: Narrator
   emotion: 0
---- !u!114 &-2084859728392458904
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -5749390526378972257}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -5233730290960053920}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1960743933951797291
+--- !u!114 &-1800877506924475627
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -975,166 +748,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 3004146428673709277}
+  body: {fileID: -1947838444149049497}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 671250730027661815}
+  - {fileID: 7478885054273787162}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-1822075485471288682
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 4224161886913713790}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 9015346704766236003}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1513142294616342445
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
-  m_Name: MainEditorState
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  parentEditor: {fileID: 0}
-  selectedNode: {fileID: -6740671412212179419}
-  panOffset: {x: -275.6001, y: -60.60011}
-  zoom: 1.2
---- !u!114 &-1476427367510656736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -940, y: -60}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7424074797446742289}
-  fromPreviousIN: {fileID: 5688791352165505386}
-  characterName: Character Name
-  text: Pick up acorns with your skewer and feed them to the {c,sweet,Paddle Pear}
-    .
-  actor: Amrita
-  emotion: 0
---- !u!114 &-1355342645469527715
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -3938351148155551406}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -8366378480296491242}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1312317275975750889
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 7478425394511640865}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 419740673990493348}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1286244937090982045
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8755091019373406653}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 6439285179558870695}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1276472983236195308
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
-  m_Name: Dialog Start
-  m_EditorClassIdentifier: 
-  position: {x: -1430, y: -280}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 6439285179558870695}
-  dependencies:
-  - Campfire
-  - Waypoint1
-  - IslandPearWaypoint
-  - PlateCameraTarget
-  actors:
-  - Amrita
-  - IslandPear
-  - Narrator
-  unityEvents:
-  - PearMove
---- !u!114 &-1265475111918741147
+--- !u!114 &-1324827686586910122
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1146,17 +769,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
   m_Name: Pan Camera
   m_EditorClassIdentifier: 
-  position: {x: 1218.4, y: 144}
+  position: {x: 212.8003, y: 150.60016}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3626403070917371058}
-  fromPreviousIN: {fileID: -4244934686013690877}
+  toNextOUT: {fileID: -3633961512298103138}
+  fromPreviousIN: {fileID: 3956603104219569364}
   waitUntilFinished: 1
   movementType: 0
-  target: Campfire
+  target: PlateCameraTarget
   maxPullSpeed: 100
   snapTime: 0.75
---- !u!114 &-1092125536441991157
+--- !u!114 &-1231733672975347952
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1168,37 +791,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -5162537185422240818}
+  body: {fileID: 8414315477539003300}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -4716057489889762486}
+  - {fileID: 6350450776656031498}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-413199030776163511
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -6694830455762566091}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5801824013556780368}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-307928021998599161
+--- !u!114 &-1208739972630813445
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1210,16 +812,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -8070418184362895884}
+  body: {fileID: 5299445766760359563}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 8252652643392521310}
+  - {fileID: -6585873172214885541}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-168429985575594157
+--- !u!114 &-1187870789920060661
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -6459037019646607453}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 6499676138703849802}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-1089943477068397381
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1231,13 +854,223 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -4454330750422955936}
+  body: {fileID: 7699743327830300588}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -5568858493261486908}
+  - {fileID: 7971774537395582928}
   side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-970114686909745946
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -470, y: -50}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 4481032486487874574}
+  fromPreviousIN: {fileID: 6653096387031202869}
+  characterName: Character Name
+  text: "As such, the Fruitants will defer to your expertise when it comes to strategy.\r\n"
+  actor: Amrita
+  emotion: 0
+--- !u!114 &-895809578003637702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 4550246496356168528}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -3990976476938147321}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-699615842524148351
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 644202061881127271}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1613134007483564338}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-681058817813488396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 6325426365081243115}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -6745859559785090477}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-638783899807689359
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: OUT
+  m_EditorClassIdentifier: 
+  body: {fileID: 3937069178545022987}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -6543073449220014196}
+  side: 2
+  sidePosition: 99
+  sideOffset: 0
+--- !u!114 &-474072703147406036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -1947838444149049497}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -2272004252316960467}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-197544128502751792
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -3569835468845169542}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 6680268206321932414}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-172794571550552220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -470, y: 550}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -8703248787419241297}
+  fromPreviousIN: {fileID: 8571738663955668251}
+  characterName: Character Name
+  text: That's our other purpose, by the way.
+  actor: Amrita
+  emotion: 18
+--- !u!114 &-40001274399689919
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: -6866386302907432288}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -3511085976315449096}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-36160431534474790
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 6325426365081243115}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 7390291823717641054}
+  side: 2
   sidePosition: 30
   sideOffset: 0
 --- !u!114 &11400000
@@ -1253,88 +1086,46 @@ MonoBehaviour:
   m_Name: Amrita3 (Hack)
   m_EditorClassIdentifier: 
   editorStates:
-  - {fileID: -1513142294616342445}
+  - {fileID: 5422440006134152613}
   saveName: Assets\ScriptableObjects\DialogScenes\Tutorial\Amrita3 (Hack)
   savePath: Assets\ScriptableObjects\DialogScenes\Tutorial\Amrita3 (Hack).asset
   livesInScene: 0
   nodes:
-  - {fileID: -8755091019373406653}
-  - {fileID: -4454330750422955936}
-  - {fileID: -4586554101252074513}
-  - {fileID: -6821879232530290904}
-  - {fileID: -3938351148155551406}
-  - {fileID: 5496642560156828718}
-  - {fileID: 4224161886913713790}
-  - {fileID: -6694830455762566091}
-  - {fileID: -8070418184362895884}
-  - {fileID: -8706878392974813187}
-  - {fileID: -4009427028538475053}
-  - {fileID: -4491184976444911881}
-  - {fileID: 1997102686631445070}
-  - {fileID: 8876631499710831268}
-  - {fileID: -6754719626711365806}
-  - {fileID: -1265475111918741147}
-  - {fileID: 4849349609966307438}
-  - {fileID: -1276472983236195308}
-  - {fileID: 3364040851929148801}
-  - {fileID: -8782638598009951109}
-  - {fileID: -3298310744636747821}
-  - {fileID: 8033666741077041669}
-  - {fileID: 1277451698911957713}
-  - {fileID: 3004146428673709277}
-  - {fileID: 591207701513553493}
-  - {fileID: -5162537185422240818}
-  - {fileID: -5749390526378972257}
-  - {fileID: 6114215348148224801}
-  - {fileID: -2166782757959142294}
-  - {fileID: 7478425394511640865}
-  - {fileID: 7981099656231691184}
-  - {fileID: -1476427367510656736}
-  - {fileID: -6740671412212179419}
+  - {fileID: -8855194428610522640}
+  - {fileID: -7672266685492758552}
+  - {fileID: -3569835468845169542}
+  - {fileID: 2178350256763202885}
+  - {fileID: -3675750482610680582}
+  - {fileID: 9020381105988083172}
+  - {fileID: 3937069178545022987}
+  - {fileID: 6180431370899493347}
+  - {fileID: 4197447127186503590}
+  - {fileID: 7836986358965332662}
+  - {fileID: -1324827686586910122}
+  - {fileID: -6866386302907432288}
+  - {fileID: -172794571550552220}
+  - {fileID: -2097552452718847204}
+  - {fileID: 6325426365081243115}
+  - {fileID: 4550246496356168528}
+  - {fileID: 2422833571569999553}
+  - {fileID: -8500518723402093334}
+  - {fileID: -7509756584779636194}
+  - {fileID: 7699743327830300588}
+  - {fileID: 5093242506794895286}
+  - {fileID: -2337988034416706258}
+  - {fileID: -2656293868453220136}
+  - {fileID: 7116754692469618468}
+  - {fileID: 1547967838043698018}
+  - {fileID: -6459037019646607453}
+  - {fileID: -970114686909745946}
+  - {fileID: 5299445766760359563}
+  - {fileID: 644202061881127271}
+  - {fileID: 3487563510735893385}
+  - {fileID: 8414315477539003300}
+  - {fileID: 1219164570172097023}
+  - {fileID: -1947838444149049497}
   groups: []
---- !u!114 &419740673990493348
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 6114215348148224801}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -1312317275975750889}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &591207701513553493
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 552.4, y: 57.799988}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 1595547121936379058}
-  fromPreviousIN: {fileID: -3489778492041843864}
-  characterName: Character Name
-  text: Get your companion to stand on that plate so you can get past it.
-  actor: Amrita
-  emotion: 0
---- !u!114 &671250730027661815
+--- !u!114 &359719468763724137
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1346,119 +1137,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 6114215348148224801}
+  body: {fileID: 5093242506794895286}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -1960743933951797291}
+  - {fileID: -8277000188666520531}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &1277451698911957713
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15bab16cf61b90f4ab537fe713c7b2d1, type: 3}
-  m_Name: Play Unity Event
-  m_EditorClassIdentifier: 
-  position: {x: -126.89981, y: -410.39978}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -7508654519954420902}
-  fromPreviousIN: {fileID: 5893518476094783564}
-  waitUntilFinished: 1
-  eventName: PearMove
---- !u!114 &1595547121936379058
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 591207701513553493}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 4626886308294429636}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &1863278805968548698
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -6740671412212179419}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -4707207315565888303}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &1997102686631445070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -470, y: 550}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3218282420836346490}
-  fromPreviousIN: {fileID: -3141993020832646286}
-  characterName: Character Name
-  text: That's our other purpose, by the way.
-  actor: Amrita
-  emotion: 18
---- !u!114 &2514249926235423097
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -3938351148155551406}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3218282420836346490}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &3004146428673709277
+--- !u!114 &644202061881127271
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1470,125 +1158,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: 223, y: -264}
+  position: {x: -940, y: -60}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -1960743933951797291}
-  fromPreviousIN: {fileID: -4707207315565888303}
+  toNextOUT: {fileID: -3365328920556194991}
+  fromPreviousIN: {fileID: -699615842524148351}
   characterName: Character Name
-  text: "As robots, one of our specialties is real-time logistics. \r"
+  text: Pick up acorns with your skewer and feed them to the {c,sweet,Paddle Pear}
+    .
   actor: Amrita
   emotion: 0
---- !u!114 &3364040851929148801
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 220, y: 340}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3681245646232971237}
-  fromPreviousIN: {fileID: -7519447469857869954}
-  characterName: Character Name
-  text: Just interact {control,interact} with it, and your hacking software will take
-    care of the rest.
-  actor: Amrita
-  emotion: 0
---- !u!114 &3400779778508089015
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -6821879232530290904}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -2497823213841311415}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &3568542271248962636
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Default Branch
-  m_EditorClassIdentifier: 
-  body: {fileID: 4224161886913713790}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5688791352165505386}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &4035676564451897726
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 8876631499710831268}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 4854751251283811820}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &4224161886913713790
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d272a38b9015334288766e9538f3b4d, type: 3}
-  m_Name: Gameflow Branch
-  m_EditorClassIdentifier: 
-  position: {x: -969.6, y: -278.6}
-  dynamicConnectionPorts:
-  - {fileID: -5233730290960053920}
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  fromPreviousIN: {fileID: -1822075485471288682}
-  toDefaultBranch: {fileID: 3568542271248962636}
-  cases:
-  - connection: {fileID: -5233730290960053920}
-    pattern: true
-    type: 0
-  exprType: 0
-  variableName: PearCheck
---- !u!114 &4263347490322327055
+--- !u!114 &745534025042998376
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1600,16 +1180,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -8782638598009951109}
+  body: {fileID: -8855194428610522640}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 6597822614459846469}
+  - {fileID: 3287085566759474573}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4626886308294429636
+--- !u!114 &924264278433870575
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1621,16 +1201,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -2166782757959142294}
+  body: {fileID: 2422833571569999553}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 1595547121936379058}
+  - {fileID: -5124604868329132012}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4731643399064148493
+--- !u!114 &1186895084571982559
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1642,16 +1222,143 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -3298310744636747821}
+  body: {fileID: 7116754692469618468}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -6684761829809777797}
+  - {fileID: -3633961512298103138}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4849349609966307438
+--- !u!114 &1219164570172097023
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf88e5a0aaca874a8ba01804c11a952, type: 3}
+  m_Name: Fixed Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 880, y: -40}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -2272004252316960467}
+  fromPreviousIN: {fileID: -7967267848581822706}
+  characterName: Character Name
+  text: '{c,narrator,Press 1/2/3/4 to issue orders. Available orders will be listed
+    on the HUD.}'
+  actor: Narrator
+  emotion: 0
+--- !u!114 &1300972566079092794
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 5299445766760359563}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 4481032486487874574}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &1306399981325520596
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 1547967838043698018}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -5667209899420753883}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &1547967838043698018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -480, y: 340}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 1306399981325520596}
+  fromPreviousIN: {fileID: -3990976476938147321}
+  characterName: Character Name
+  text: After that, hack the terminal on the other side to keep it open for good.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &1613134007483564338
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Default Branch
+  m_EditorClassIdentifier: 
+  body: {fileID: 3937069178545022987}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -699615842524148351}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &2178350256763202885
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -130, y: 150}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 7806063701085243847}
+  fromPreviousIN: {fileID: 3265287995335649201}
+  characterName: Character Name
+  text: Just north of here is a pressure plate that operates a door.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &2422833571569999553
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1666,13 +1373,34 @@ MonoBehaviour:
   position: {x: 200, y: 550}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -8615192797830726350}
-  fromPreviousIN: {fileID: -8366378480296491242}
+  toNextOUT: {fileID: -6745859559785090477}
+  fromPreviousIN: {fileID: 924264278433870575}
   characterName: Character Name
   text: Once you've hacked the terminal, come back and talk to me.
   actor: Amrita
   emotion: 0
---- !u!114 &4854751251283811820
+--- !u!114 &2539415260031315630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 7836986358965332662}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 4084134359414768207}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &2915147905212811646
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1684,16 +1412,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 7478425394511640865}
+  body: {fileID: -2656293868453220136}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 4035676564451897726}
+  - {fileID: 6653096387031202869}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5185461800718794869
+--- !u!114 &3000651133951503534
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1705,16 +1433,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 5496642560156828718}
+  body: {fileID: 3487563510735893385}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -2175905491963013062}
+  - {fileID: -9083815337518263541}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5423495198453980797
+--- !u!114 &3265287995335649201
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1726,37 +1454,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 8033666741077041669}
+  body: {fileID: 2178350256763202885}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -7924967745008994358}
+  - {fileID: -3519884519861215544}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5496642560156828718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: -480, y: 150}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -2497823213841311415}
-  fromPreviousIN: {fileID: 5185461800718794869}
-  characterName: Character Name
-  text: "You'll see soon enough. \r\n"
-  actor: Amrita
-  emotion: 0
---- !u!114 &5688791352165505386
+--- !u!114 &3287085566759474573
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1768,58 +1475,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -1476427367510656736}
+  body: {fileID: 3937069178545022987}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 3568542271248962636}
+  - {fileID: 745534025042998376}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &5801824013556780368
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -5749390526378972257}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -413199030776163511}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &5893518476094783564
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: 1277451698911957713}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 7528342970247854630}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &6114215348148224801
+--- !u!114 &3487563510735893385
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1831,16 +1496,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: -470, y: -50}
+  position: {x: -140, y: -280}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 419740673990493348}
-  fromPreviousIN: {fileID: 671250730027661815}
+  toNextOUT: {fileID: -9021668347127622614}
+  fromPreviousIN: {fileID: 3000651133951503534}
   characterName: Character Name
-  text: "As such, the Fruitants will defer to your expertise when it comes to strategy.\r\n"
+  text: 'A Paddle Posse, if you will. '
   actor: Amrita
-  emotion: 0
---- !u!114 &6439285179558870695
+  emotion: 20
+--- !u!114 &3636179534929911355
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1852,16 +1517,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -1276472983236195308}
+  body: {fileID: -2097552452718847204}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -1286244937090982045}
+  - {fileID: -4419333739173922026}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &6597822614459846469
+--- !u!114 &3937069178545022987
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d272a38b9015334288766e9538f3b4d, type: 3}
+  m_Name: Gameflow Branch
+  m_EditorClassIdentifier: 
+  position: {x: -969.6, y: -278.6}
+  dynamicConnectionPorts:
+  - {fileID: -638783899807689359}
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  fromPreviousIN: {fileID: 3287085566759474573}
+  toDefaultBranch: {fileID: 1613134007483564338}
+  cases:
+  - connection: {fileID: -638783899807689359}
+    pattern: true
+    type: 0
+  exprType: 0
+  variableName: PearCheck
+--- !u!114 &3956603104219569364
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1873,16 +1562,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -4586554101252074513}
+  body: {fileID: -1324827686586910122}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 4263347490322327055}
+  - {fileID: 7806063701085243847}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &7424074797446742289
+--- !u!114 &4084134359414768207
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1894,16 +1583,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -1476427367510656736}
+  body: {fileID: 4197447127186503590}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -3460472895606402264}
+  - {fileID: 2539415260031315630}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &7478425394511640865
+--- !u!114 &4197447127186503590
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1912,20 +1601,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: VN Dialog
+  m_Script: {fileID: 11500000, guid: 715e8871ff146974c8b08dedb1c8853a, type: 3}
+  m_Name: Enable Child Object
   m_EditorClassIdentifier: 
-  position: {x: -130, y: -50}
+  position: {x: 1060.4, y: 547.6}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 4854751251283811820}
-  fromPreviousIN: {fileID: -1312317275975750889}
-  characterName: Character Name
-  text: That's one reason their leaders...recruited us in the first place. Among other
-    things.
-  actor: Amrita
-  emotion: 18
---- !u!114 &7528342970247854630
+  toNextOUT: {fileID: 4084134359414768207}
+  fromPreviousIN: {fileID: 7390291823717641054}
+  disable: 0
+  parent: Amrita
+  childName: SpeechBubble
+--- !u!114 &4481032486487874574
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1937,16 +1624,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 8033666741077041669}
+  body: {fileID: -970114686909745946}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 5893518476094783564}
+  - {fileID: 1300972566079092794}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &7722217227607047104
+--- !u!114 &4550246496356168528
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1955,41 +1642,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
+  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
+  m_Name: Pan Camera
   m_EditorClassIdentifier: 
-  body: {fileID: 7981099656231691184}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -4244934686013690877}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &7981099656231691184
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cf88e5a0aaca874a8ba01804c11a952, type: 3}
-  m_Name: Fixed Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 1220, y: -40}
+  position: {x: 1218.4, y: 144}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7722217227607047104}
-  fromPreviousIN: {fileID: -4416094889954921178}
-  characterName: Character Name
-  text: '{c,narrator,Individual move orders can be issued by clicking a fruitant and
-    then clicking its destination.}'
-  actor: Narrator
-  emotion: 0
---- !u!114 &8033666741077041669
+  toNextOUT: {fileID: -895809578003637702}
+  fromPreviousIN: {fileID: 7478885054273787162}
+  waitUntilFinished: 1
+  movementType: 0
+  target: Campfire
+  maxPullSpeed: 100
+  snapTime: 0.75
+--- !u!114 &5093242506794895286
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2004,8 +1670,8 @@ MonoBehaviour:
   position: {x: -130, y: -564}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7528342970247854630}
-  fromPreviousIN: {fileID: 5423495198453980797}
+  toNextOUT: {fileID: -4321861587517311880}
+  fromPreviousIN: {fileID: 359719468763724137}
   waitUntilFinished: 0
   character: IslandPear
   destination: IslandPearWaypoint
@@ -2017,70 +1683,7 @@ MonoBehaviour:
     max: 0.1
   speed: 3
   endFacing: 4
---- !u!114 &8062482696525083393
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -2166782757959142294}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -4416094889954921178}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8252652643392521310
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8706878392974813187}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -307928021998599161}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8798206245208920611
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8070418184362895884}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -8918734202811279978}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8876631499710831268
+--- !u!114 &5299445766760359563
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2092,16 +1695,62 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
   m_Name: VN Dialog
   m_EditorClassIdentifier: 
-  position: {x: 220.4, y: -46.4}
+  position: {x: -130, y: -50}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -2175905491963013062}
-  fromPreviousIN: {fileID: 4035676564451897726}
+  toNextOUT: {fileID: -1208739972630813445}
+  fromPreviousIN: {fileID: 1300972566079092794}
   characterName: Character Name
-  text: Other things?
-  actor: Soma
-  emotion: 0
---- !u!114 &9015346704766236003
+  text: That's one reason their leaders...recruited us in the first place. Among other
+    things.
+  actor: Amrita
+  emotion: 18
+--- !u!114 &5422440006134152613
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
+  m_Name: MainEditorState
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  parentEditor: {fileID: 0}
+  selectedNode: {fileID: -1947838444149049497}
+  panOffset: {x: -940.6001, y: -236.80013}
+  zoom: 1.4
+--- !u!114 &6180431370899493347
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c4994ad4009914dbdae2e088971763, type: 3}
+  m_Name: Move Character
+  m_EditorClassIdentifier: 
+  position: {x: -464.8, y: -436}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 7971774537395582928}
+  fromPreviousIN: {fileID: 6499676138703849802}
+  waitUntilFinished: 1
+  character: Soma
+  destination: Waypoint1
+  xLeniency:
+    min: -0.1
+    max: 0.1
+  yLeniency:
+    min: -0.1
+    max: 0.1
+  speed: 2
+  endFacing: 0
+--- !u!114 &6287124540709892474
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2113,12 +1762,363 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -8755091019373406653}
+  body: {fileID: -7509756584779636194}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -1822075485471288682}
+  - {fileID: 8571738663955668251}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6325426365081243115
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e8ef661a4f5eb545900d6a1ca0d692e, type: 3}
+  m_Name: Set Quest Text
+  m_EditorClassIdentifier: 
+  position: {x: 830, y: 550}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -36160431534474790}
+  fromPreviousIN: {fileID: -681058817813488396}
+  text: Hack terminal
+--- !u!114 &6350450776656031498
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -3569835468845169542}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -1231733672975347952}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6499676138703849802
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 6180431370899493347}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -1187870789920060661}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6653096387031202869
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -970114686909745946}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 2915147905212811646}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &6680268206321932414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -7672266685492758552}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -197544128502751792}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &7116754692469618468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 552.4, y: 57.799988}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 9206259124182325817}
+  fromPreviousIN: {fileID: 1186895084571982559}
+  characterName: Character Name
+  text: Get your companion to stand on that plate so you can get past it.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &7390291823717641054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 4197447127186503590}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -36160431534474790}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &7478885054273787162
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 4550246496356168528}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -1800877506924475627}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &7699743327830300588
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -470, y: -280}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -8277000188666520531}
+  fromPreviousIN: {fileID: -1089943477068397381}
+  characterName: Character Name
+  text: To survive in this world, you and your new friend will need to work as a team.
+  actor: Amrita
+  emotion: 20
+--- !u!114 &7806063701085243847
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 2178350256763202885}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: 3956603104219569364}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &7836986358965332662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea491fe537c73eb408082e3db06ceb2a, type: 3}
+  m_Name: Dialog End
+  m_EditorClassIdentifier: 
+  position: {x: 1279.5, y: 552.1001}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  playCompletionEvents: 1
+  fromPreviousIN: {fileID: 2539415260031315630}
+--- !u!114 &7971774537395582928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 6180431370899493347}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -1089943477068397381}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &8414315477539003300
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: VN Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -940, y: 140}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -1231733672975347952}
+  fromPreviousIN: {fileID: -2690231297208926864}
+  characterName: Character Name
+  text: You can feed it up close {control,interact} or by throwing {control,throw}
+    a skewer towards it.
+  actor: Amrita
+  emotion: 0
+--- !u!114 &8523688527782192728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -3675750482610680582}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -8703248787419241297}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &8571738663955668251
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -172794571550552220}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 6287124540709892474}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &9020381105988083172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: -480, y: 150}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -3519884519861215544}
+  fromPreviousIN: {fileID: -4419333739173922026}
+  characterName: Character Name
+  text: "You'll see soon enough. \r\n"
+  actor: Amrita
+  emotion: 0
+--- !u!114 &9206259124182325817
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 7116754692469618468}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -7967267848581822706}
   side: 2
   sidePosition: 30
   sideOffset: 0
