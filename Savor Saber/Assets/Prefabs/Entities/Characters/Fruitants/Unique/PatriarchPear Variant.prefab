@@ -1528,6 +1528,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 1
     mode: 1
     timeMode: 0
@@ -1645,7 +1646,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 21300006, guid: 52a71006db9511a40afcd583319178e2, type: 3}
     flipU: 0
@@ -2456,8 +2457,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -6358,6 +6412,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
   UVModule:
+    serializedVersion: 2
     enabled: 1
     mode: 1
     timeMode: 0
@@ -6475,7 +6530,7 @@ ParticleSystem:
     rowIndex: 0
     cycles: 1
     uvChannelMask: -1
-    randomRow: 1
+    rowMode: 1
     sprites:
     - sprite: {fileID: 21300002, guid: 52a71006db9511a40afcd583319178e2, type: 3}
     flipU: 0
@@ -7286,8 +7341,61 @@ ParticleSystem:
     inWorldSpace: 0
     randomizePerFrame: 0
   ExternalForcesModule:
+    serializedVersion: 2
     enabled: 0
-    multiplier: 1
+    multiplierCurve:
+      serializedVersion: 2
+      minMaxState: 0
+      scalar: 1
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
     influenceFilter: 0
     influenceMask:
       serializedVersion: 2
@@ -9758,17 +9866,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 0
   m_TargetGraphic: {fileID: 5540807276223641543}
@@ -9809,7 +9920,7 @@ GameObject:
   - component: {fileID: 5769253157361949790}
   - component: {fileID: 6924852079544484228}
   m_Layer: 0
-  m_Name: PatriarchPear
+  m_Name: PatriarchPear Variant
   m_TagString: Prey
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9827,7 +9938,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7021008132481391968}
-  - {fileID: 2632894650512189725}
   - {fileID: 2370229066658730217}
   - {fileID: 9099003479226698578}
   - {fileID: 4117567662681488890}
@@ -10169,6 +10279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  armored: 0
   Speed: 1
   Perception: 10
   MeleeAttackThreshold: 1
@@ -10176,15 +10287,12 @@ MonoBehaviour:
   EngageHostileThreshold: 2
   maxHealth: 100
   health: 100
+  overchargeHealth: 0
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 0
-  initialFriendliness: 1
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
   healSFX: {fileID: 8300000, guid: d920bcd5c6699884596bbfdbbaeed284, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
@@ -10194,23 +10302,36 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 130415743257929013}
   eatingParticleBurst: {fileID: 4280357332354198762}
   healthBar: {fileID: 2310627888853755749}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
-  path: []
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
   DecisionTimer: 0
   DecisionTimerReset: 1
   DecisionTimerVariance: 0.5
   Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
   Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
   Awareness: {fileID: 0}
-  Friends: []
-  Enemies: []
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
+  path: []
+  flavor: 0
 --- !u!114 &8475188656050417345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10223,6 +10344,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &4863738386113620898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10244,6 +10367,7 @@ MonoBehaviour:
   AllCreatures: []
   AllPlants: []
   AllDrops: []
+  closestFriend: {fileID: 0}
   closestEnemy: {fileID: 0}
   specialTarget: {fileID: 0}
   specialLeader: {fileID: 0}
@@ -10273,9 +10397,13 @@ MonoBehaviour:
   projectile: {fileID: 5137971854693691506, guid: 4233a3545297b204a94ce80ba9cc4276,
     type: 3}
   attackDuration: 1
+  attackCooldown: 0.5
   meleeAttackDuration: 4
   meleeAttackDelay: 0
   meleeAttackDimensions: {x: 4, y: 3}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 8300000, guid: 23300f9df72ccce409c2d456f30034a1, type: 3}
 --- !u!70 &6611929061611348362
@@ -10320,22 +10448,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da37b81d0f2c45842b47651c8c1468b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 1
+  isCompanion: 0
   favoriteIngredients:
-  - Acorn
-  favoriteFlavors: 1
-  charmThreshhold: 1
-  rewardItem: {fileID: 4084962922675323153, guid: 0f3340712367e104887ce1128e461a64,
-    type: 3}
-  amountRewardItem: 3
+  - {fileID: 0}
+  rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
-  charmTime: 0
-  shieldSize: 2
+  rejectSFX: {fileID: 0}
   dotTicLength: 0.3
-  electricFieldTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
-    type: 3}
-  saltShieldTemplate: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
-    type: 3}
-  electricSFX: {fileID: 8300000, guid: 83b3893919c3014489438f576d27d083, type: 3}
+  rejectedObjectTemplate: {fileID: 0}
+  spawnParticles: {fileID: 0}
+  sugarCount: 0
+  rushed: 0
 --- !u!114 &6924852079544484228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10351,77 +10475,6 @@ MonoBehaviour:
   allNodes: {fileID: 0}
   possibleGraphs: []
   bornOnto: 0
---- !u!1 &7283688460601463347
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2632894650512189725}
-  - component: {fileID: 627599221675796688}
-  - component: {fileID: 7241792646970491147}
-  m_Layer: 2
-  m_Name: PearSpawning
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2632894650512189725
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7283688460601463347}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.63, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 9183176342616779035}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &627599221675796688
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7283688460601463347}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &7241792646970491147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7283688460601463347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52e05735ce0222340bbbfcadf539a90c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  group: {fileID: 0}
-  loop: 1
-  spawnOnStart: 1
-  loopTime: 1
-  spawnObjects:
-  - {fileID: 4084962922675323153, guid: 0f3340712367e104887ce1128e461a64, type: 3}
-  spawnSignals: []
-  trackedObjects: []
-  maxSpawnedEntites: 1
-  maxTries: 100
-  spawnAttatched: 1
 --- !u!1 &7300592670295209974
 GameObject:
   m_ObjectHideFlags: 0
@@ -10665,7 +10718,7 @@ Transform:
   - {fileID: 8941395268154762765}
   - {fileID: 6803642436581354396}
   m_Father: {fileID: 9183176342616779035}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &133452475766508413
 PrefabInstance:
@@ -10897,7 +10950,7 @@ PrefabInstance:
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4889259209370829396, guid: c114ed1ceb1fd6647bbe5d2dd2541c45,
         type: 3}
@@ -10977,7 +11030,7 @@ PrefabInstance:
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5847080097991971285, guid: 609cf543f670ded479a520ca2f15dcbe,
         type: 3}
