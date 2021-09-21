@@ -6,6 +6,7 @@ public class DroneTurretParticle : MonoBehaviour
 {
 
     public GameObject explosionTemplate;
+    public int particleDamage = 1;
 
     public List<ParticleCollisionEvent> collisionEvents;
 
@@ -23,6 +24,11 @@ public class DroneTurretParticle : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        
+        //Debug.Log("PARTICLE COLLISION");
+        if (other.tag == "Player" || other.tag == "Prey")
+        {
+            CharacterData data = other.GetComponent<CharacterData>();
+            data.DoDamage(particleDamage);
+        }
     }
 }

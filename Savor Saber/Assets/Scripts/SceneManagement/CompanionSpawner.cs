@@ -23,7 +23,7 @@ public class CompanionSpawner : MonoBehaviour
         {
             Debug.Log("CompanionSpawner: Flag check passed or not required");
             //move morphed companion to player
-            companion.transform.position = player.transform.position + new Vector3(-1.5f, 0, 0);
+            companion.transform.position = player.transform.position + new Vector3(-1.25f, 0, 0);
             Debug.Log("Moving companion to " + companion.transform.position);
 
             //feed the companion template the ingredientdata that player currently has
