@@ -21,10 +21,12 @@ public class SkewerBonusEffect : MonoBehaviour
         
     }
 
-    public void SetTarget(GameObject obj, int mag)
+    public virtual void SetTarget(GameObject obj, int mag)
     {
+        Debug.Log("Skewer bonus effect - Setting target: " + obj);
         target = obj;
         targetData = obj.GetComponent<CharacterData>();
         magnitude = mag;
+
     }
 }

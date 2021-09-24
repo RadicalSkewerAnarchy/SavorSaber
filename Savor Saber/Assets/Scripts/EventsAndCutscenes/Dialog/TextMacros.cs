@@ -28,6 +28,7 @@ public class TextMacros : MonoBehaviour
         {"mana", "#DB5A78" },
         {"amrita", "#FEF4D1" },
         {"nec", "#D0FF78" },
+        {"panacea", "#d98ddd"}
     };
 
     private void Awake()
@@ -64,6 +65,7 @@ public class TextMacros : MonoBehaviour
             {"amrita", (args) => ColorMacro("color","amrita", "Amrita") },
             {"nec", (args) => ColorMacro("color","nec", "Nec") },
             {"nectar", (args) => ColorMacro("color","nec", "Nectar") },
+            {"panacea", (args) => ColorMacro("color","panacea", "Panacea") },
             #endregion
             #region Flavor Name Shortcuts
             {"spicy",  (args) => ColorMacro("color","spicy", "Spicy") + " " + ImgMacro("img","IconSpicy") },

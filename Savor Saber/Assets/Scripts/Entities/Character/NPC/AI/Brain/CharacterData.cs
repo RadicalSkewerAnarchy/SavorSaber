@@ -14,8 +14,18 @@ public class CharacterData : MonoBehaviour
             return transform.position;
         }
     }
+
     public bool armored = false;
+
     #region Main Variables
+
+    #region DoT fields
+    [HideInInspector]
+    public bool affectedByDot = false;
+    [HideInInspector]
+    public GameObject currentDot;
+    #endregion
+
     #region Values for Behaviors
     public float Speed;
         public float Perception;

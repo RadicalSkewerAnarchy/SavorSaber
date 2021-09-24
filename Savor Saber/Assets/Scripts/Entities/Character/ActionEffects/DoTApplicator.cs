@@ -18,14 +18,26 @@ public class DoTApplicator : SkewerBonusEffect
     // Update is called once per frame
     void Update()
     {
-        
+        if(targetData != null)
+            transform.position = targetData.gameObject.transform.position;
+    }
+    public override void SetTarget(GameObject obj, int mag)
+    {
+        base.SetTarget(obj, mag);
+
+        //overwrite any existing DoTs
+        if (targetData.currentDot != null)
+            Destroy(targetData.currentDot);
+
+        targetData.currentDot = this.gameObject;
+
     }
 
     private void DamageOverTime()
     {
         bool killingBlow = false;
         if (targetData == null)
-            StartCoroutine(ExecuteAfterSeconds());
+            Destroy(this.gameObject);
 
         //test to see if this tic will inflict a killing blow
         killingBlow = targetData.DoDamage(magnitude, true);
