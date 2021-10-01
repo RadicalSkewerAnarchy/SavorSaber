@@ -26,7 +26,7 @@ public class PartyUIManager : MonoBehaviour
 
     public void ChangeCompanion(GameObject companion)
     {
-        Debug.Log("UI: changing companion to " + companion);
+        //Debug.Log("UI: changing companion to " + companion);
         currentCompanion = companion;
         companionData = companion.GetComponent<AIData>();
         companionImage.sprite = companion.GetComponent<SpriteRenderer>().sprite;

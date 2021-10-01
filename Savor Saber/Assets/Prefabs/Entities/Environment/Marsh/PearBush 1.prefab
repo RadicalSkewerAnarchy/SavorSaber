@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 390226487203878472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0.327, z: -1}
+  m_LocalPosition: {x: 0.857, y: -0.338, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5490907156333433923}
@@ -47,7 +47,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: -0.45, y: 0.28}
   serializedVersion: 2
-  m_Radius: 0.64
+  m_Radius: 0.2
 --- !u!114 &8961964915190018777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 1933345956843133363, guid: 1a1b28e55cb925d4ab9f590d77083399, type: 3}
   spawnSignals: []
   trackedObjects: []
-  maxSpawnedEntites: 2
+  maxSpawnedEntites: 1
   maxTries: 5
   spawnAttatched: 1
   spawnOnStart: 0
@@ -101,6 +101,7 @@ Transform:
   m_Children:
   - {fileID: 3903165654677226159}
   - {fileID: 7991076535474075375}
+  - {fileID: 5179548655066283002}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -178,6 +179,76 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.21821642, y: 0.17598751}
   m_EdgeRadius: 0
+--- !u!1 &7213117297780226018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5179548655066283002}
+  - component: {fileID: 550393345496891813}
+  - component: {fileID: 2997585376076919526}
+  m_Layer: 2
+  m_Name: Spawn1 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5179548655066283002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213117297780226018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.051, y: -0.387, z: -1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5490907156333433923}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &550393345496891813
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213117297780226018}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.45, y: 0.28}
+  serializedVersion: 2
+  m_Radius: 0.2
+--- !u!114 &2997585376076919526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7213117297780226018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71089cc879fd3c4187f368982c5267d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnObjects:
+  - {fileID: 1933345956843133363, guid: 1a1b28e55cb925d4ab9f590d77083399, type: 3}
+  spawnSignals: []
+  trackedObjects: []
+  maxSpawnedEntites: 1
+  maxTries: 5
+  spawnAttatched: 1
+  spawnOnStart: 0
+  loop: 1
+  loopTime: 10
 --- !u!1001 &4594517812427712314
 PrefabInstance:
   m_ObjectHideFlags: 0

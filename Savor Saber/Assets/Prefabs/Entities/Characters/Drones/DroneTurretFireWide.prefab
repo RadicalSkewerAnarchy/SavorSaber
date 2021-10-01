@@ -100,10 +100,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7455878743343096759}
   - component: {fileID: 5976959624942313550}
-  - component: {fileID: 8143953902923398184}
   - component: {fileID: 4174058849830384825}
   - component: {fileID: 9222660553390726595}
   - component: {fileID: 577292859637373833}
+  - component: {fileID: 3321938255079911955}
   m_Layer: 0
   m_Name: DroneTurretFireWide
   m_TagString: Untagged
@@ -142,12 +142,15 @@ MonoBehaviour:
   particleDamage: 2
   cooldown: 10
   castTime: 15
+  criticalThreshold: 3
   castSlider: {fileID: 6760869790785867129, guid: ed339ed7f73124e4e876df2332fa55b2,
     type: 3}
   beginChargeSFX: {fileID: 8300000, guid: 5aee52c94138e1c46a64f95bc31da189, type: 3}
   criticalChargeSFX: {fileID: 8300000, guid: a6d96ef3b004f9842922aa7881293695, type: 3}
   shootSFX: {fileID: 8300000, guid: 0d56de37cf1a7344f9b11d65ec1ec0cd, type: 3}
+  secondaryShooters: []
   swapPolarityOnShoot: 0
+  polarityMode: 0
   redMaterial: {fileID: 2100000, guid: 86a7a062642b8a946b209b6ca615b57e, type: 2}
   blueMaterial: {fileID: 2100000, guid: 7f1fb16c985d3f146a3c4fb21fd6624c, type: 2}
   whiteMaterial: {fileID: 2100000, guid: be8f3e2d180e6384b82e9e50400c9ab1, type: 2}
@@ -158,19 +161,6 @@ MonoBehaviour:
   castBarFillColor: {fileID: 8943066025573762949, guid: ed339ed7f73124e4e876df2332fa55b2,
     type: 3}
   currentColor: 0
---- !u!114 &8143953902923398184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461021526299441660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f08d4fcfe6efa7d4ba19dedceb12e24f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  explosionTemplate: {fileID: 0}
 --- !u!198 &4174058849830384825
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -3933,7 +3923,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4997,6 +4987,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3321938255079911955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461021526299441660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f909b47d8022784885a34d16203219e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfx: {fileID: 0}
+  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
 --- !u!1 &2837866628391965532
 GameObject:
   m_ObjectHideFlags: 0

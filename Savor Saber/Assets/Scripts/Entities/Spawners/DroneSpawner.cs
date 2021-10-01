@@ -27,6 +27,7 @@ public class DroneSpawner : PoweredObject
     ParticleSystem teleportRings;
 
     private bool blocked = false;
+    private bool guardingBossDead = false; 
     private Collider2D[] overlappingObject = null;
     private bool overlapped = false;
 
@@ -140,6 +141,9 @@ public class DroneSpawner : PoweredObject
     private bool CheckValidCollisions()
     {
         overlappingObject = Physics2D.OverlapBoxAll(transform.position - new Vector3(0, 0.35f), new Vector2(1.5f, 0.75f), 0f);
+
+        if (!active)
+            return true;
 
         if (overlappingObject.Length == 0)
             return false;

@@ -13,7 +13,7 @@ public class PointOfInterest : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Capturing camera");
+            //Debug.Log("Capturing camera");
             var cam = collision.gameObject.GetComponent<CameraController>();
             cam.SetTarget(gameObject.gameObject, maxPullDistance, maxPullSpeed, snapTime);
         }
@@ -22,7 +22,7 @@ public class PointOfInterest : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Releasing Camera");
+            //Debug.Log("Releasing Camera");
             collision.gameObject.GetComponent<CameraController>().ReleaseTarget();
         }
     }

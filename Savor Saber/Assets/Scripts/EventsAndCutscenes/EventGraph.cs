@@ -21,6 +21,11 @@ public class EventGraph : MonoBehaviour
     private BaseNode currNode = null;
     private BaseNode lastNode = null;
     private bool stopped = false;
+
+    private void Update()
+    {
+
+    }
     /// <summary> Initialized the root node (for if next dialogue is called in DialogManager's awake function </summary>
     public void ResetScene()
     {

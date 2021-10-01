@@ -386,7 +386,7 @@ public class Inventory : MonoBehaviour {
             sfxPlayer.Play(swapSFX);
             UpdateUI();
             //DisplayInventory.instance?.SwapHandles(true);
-            Debug.Log("Swapping skewer to " + activeSkewer);
+            //Debug.Log("Swapping skewer to " + activeSkewer);
         }
         else if (InputManager.GetButtonDown(Control.SwapSkewerRight))
         {
@@ -397,7 +397,7 @@ public class Inventory : MonoBehaviour {
             sfxPlayer.Play(swapSFX);
             UpdateUI();
             //DisplayInventory.instance?.SwapHandles(false);
-            Debug.Log("Swapping skewer to " + activeSkewer);
+            //Debug.Log("Swapping skewer to " + activeSkewer);
         }
     }
 

@@ -57,6 +57,7 @@ public class DevFlavorInputManager : FlavorInputManager
             }
             if (!sceneTriggered && optionalScene != null && sceneReady)
             {
+                Debug.Log("Starting devourer scene...");
                 optionalScene.Trigger();
                 sceneTriggered = true;
             }

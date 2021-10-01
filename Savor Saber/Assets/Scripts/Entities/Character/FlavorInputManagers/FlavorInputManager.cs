@@ -79,7 +79,7 @@ public class FlavorInputManager : MonoBehaviour
 
     public virtual void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
     {
-        Debug.Log(this.gameObject.name + " is eating " + ingredient.displayName);
+        //Debug.Log(this.gameObject.name + " is eating " + ingredient.displayName);
         bool rejected = false;
         //check to see if we should reject this
         foreach (IngredientData rejectedIngredient in rejectedIngredients)

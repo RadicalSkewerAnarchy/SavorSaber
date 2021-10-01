@@ -17,10 +17,13 @@ public class RadialAttack : MonoBehaviour
     public int cooldown = 10;
     //number of quarter-second intervals it takes to cast
     public int castTime = 40;
+    public int criticalThreshold = 3;
     public Slider castSlider;
     public AudioClip beginChargeSFX;
     public AudioClip criticalChargeSFX;
     public AudioClip shootSFX;
+
+    public ParticleSystem[] secondaryShooters;
 
     private WaitForSeconds Cooldown;
     private WaitForSeconds CastTic;
@@ -28,7 +31,7 @@ public class RadialAttack : MonoBehaviour
     private ParticleSystemRenderer shooterRenderer;
     private PlaySFX sfxPlayer;
     private bool active = false;
-    private int criticalThreshold;
+
 
     [Header("Polarity properties")]
     public bool swapPolarityOnShoot = false;
@@ -65,9 +68,10 @@ public class RadialAttack : MonoBehaviour
         shooter = GetComponent<ParticleSystem>();
         shooterRenderer = GetComponent <ParticleSystemRenderer>();
         sfxPlayer = GetComponent<PlaySFX>();
-        castTime = castTime * 4; //get it into quarter seconds
-        criticalThreshold = (castTime > 16) ? (int)castTime / 4 : 4;
-
+        castTime *= 4; //get it into quarter seconds
+        criticalThreshold *= 4;
+        //criticalThreshold = (castTime > 12) ? 12 : (castTime / 12);
+        Debug.Log("Critical threshold: " + criticalThreshold);
         if (startActive)
         {
             active = true;
@@ -93,37 +97,22 @@ public class RadialAttack : MonoBehaviour
         switch (color)
         {
             case BulletColors.Red:
-                Debug.Log("SpreadShot: Setting telegraph color to red");
-                //currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
-                //currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Blue");
                     //change telegraph color
                 foreach(SpriteRenderer sr in spritesToSwap)
                     sr.sprite = redSprite;
                 castBarFillColor.color = Color.red;
-                //currentColor = BulletColors.Red;
-                //shooterRenderer.material = redMaterial;
                 break;
             case BulletColors.Blue:
-                Debug.Log("SpreadShot: Setting telegraph color to blue");
-                //currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
-                //currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Red");
                     //change telegraph color
                 foreach (SpriteRenderer sr in spritesToSwap)
                     sr.sprite = blueSprite;
                 castBarFillColor.color = new Color(0,0.94f,1);
-                //currentColor = BulletColors.Blue;
-                //shooterRenderer.material = blueMaterial;
                 break;
             case BulletColors.White:
-                Debug.Log("SpreadShot: Setting telegraph color to white");
-                //currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
-                //currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
                     //change telegraph color
                 foreach (SpriteRenderer sr in spritesToSwap)
                     sr.sprite = whiteSprite;
                 castBarFillColor.color = Color.white;
-                //currentColor = BulletColors.White;
-                //shooterRenderer.material = whiteMaterial;
                 break;
             default:
                 return;
@@ -187,9 +176,10 @@ public class RadialAttack : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        //Debug.Log("PARTICLE COLLISION");
+        Debug.Log(gameObject.name + ": PARTICLE COLLISION WITH " + other);
         if(other.tag == "Player" || other.tag == "Prey")
         {
+            Debug.Log("Player hit by particle from " + gameObject.name + ", applying damage");
             CharacterData data = other.GetComponent<CharacterData>();
             data.DoDamage(particleDamage); 
         }
@@ -203,7 +193,8 @@ public class RadialAttack : MonoBehaviour
         //Wait for the cooldown timer before starting to charge again
         yield return Cooldown;
 
-        sfxPlayer.Play(beginChargeSFX);
+        if(beginChargeSFX != null)
+            sfxPlayer.Play(beginChargeSFX);
 
         //Debug.Log("Cooldown elapsed, beginning attack");
         castSlider.gameObject.SetActive(true);
@@ -235,7 +226,7 @@ public class RadialAttack : MonoBehaviour
 
         if(numTics > 0)
         {
-            if (numTics == criticalThreshold)
+            if (numTics == criticalThreshold && criticalChargeSFX != null)
                 sfxPlayer.Play(criticalChargeSFX);
             yield return CastTic;
             yield return Cast(numTics - 1);
@@ -260,16 +251,19 @@ public class RadialAttack : MonoBehaviour
             }
             else if(polarityMode == PolarityMode.Randomize)
             {
-                float rng = Random.Range(0, 2);
-                if (rng > 1)
+                int rng = Random.Range(0, 2);
+                Debug.Log("Particle attack: Randomize = " + rng);
+                if (rng == 0)
                 {
                     ChangePolarityTelegraph(BulletColors.Red);
                     randomizedColor = BulletColors.Red;
+                    Debug.Log("Setting particle attack " + this.gameObject.name + "to Red");
                 }
                 else
                 {
                     ChangePolarityTelegraph(BulletColors.Blue);
                     randomizedColor = BulletColors.Blue;
+                    Debug.Log("Setting particle attack " + this.gameObject.name + "to Red");
                 }
                     
 

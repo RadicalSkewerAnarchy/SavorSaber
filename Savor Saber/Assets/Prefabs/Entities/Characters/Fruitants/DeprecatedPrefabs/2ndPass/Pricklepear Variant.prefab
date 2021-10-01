@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 3
   Perception: 8
   MeleeAttackThreshold: 1
@@ -35,6 +37,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 8598478036791432432}
   eatingParticleBurst: {fileID: 8598478035881563988}
   healthBar: {fileID: 8598478037478601225}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -128,35 +135,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
-        type: 3}
-      propertyPath: rejectedIngredients.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
-        type: 3}
-      propertyPath: favoriteIngredients.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: ae5403765e06d194c935880a6d5447fe,
-        type: 2}
-    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
-        type: 3}
-      propertyPath: rewardItem
-      value: 
-      objectReference: {fileID: 4084962922675323153, guid: 46abdc5ee22aa424bb0b8d905dbe352b,
-        type: 3}
-    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
-        type: 3}
-      propertyPath: rejectedIngredients.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: a8b2291a8b981a748b4dd4d072026b40,
-        type: 2}
-    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
-        type: 3}
-      propertyPath: rejectedObjectTemplate
-      value: 
-      objectReference: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
-        type: 3}
     - target: {fileID: 8438048843460588668, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
       propertyPath: m_Mass
@@ -210,6 +188,35 @@ PrefabInstance:
       propertyPath: displayName
       value: PricklePear
       objectReference: {fileID: 0}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rejectedIngredients.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: favoriteIngredients.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ae5403765e06d194c935880a6d5447fe,
+        type: 2}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rewardItem
+      value: 
+      objectReference: {fileID: 4084962922675323153, guid: 46abdc5ee22aa424bb0b8d905dbe352b,
+        type: 3}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rejectedIngredients.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: a8b2291a8b981a748b4dd4d072026b40,
+        type: 2}
+    - target: {fileID: 8438048843460588612, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: rejectedObjectTemplate
+      value: 
+      objectReference: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
+        type: 3}
     - target: {fileID: 8438048843460588608, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
       propertyPath: meleeSFX
@@ -254,6 +261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225190455268470958, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8438048843460588610, guid: 0fe4e845d1e71bf4ea875f52f9f18181,
         type: 3}
@@ -311,6 +323,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TeslaRingFruitant
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4998334802170643234, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
         type: 3}

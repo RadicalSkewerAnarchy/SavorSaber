@@ -8,8 +8,12 @@ public class HideSpriteRenderer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
-        GetComponent<TilemapRenderer>().enabled = false;
+        var sr = GetComponent<SpriteRenderer>();
+        var tr = GetComponent<TilemapRenderer>();
+        if(sr != null)
+            sr.enabled = false;
+        if(tr != null)
+            tr.enabled = false;
     }
 
     // Update is called once per frame
