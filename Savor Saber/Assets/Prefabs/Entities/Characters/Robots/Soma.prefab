@@ -5094,6 +5094,7 @@ GameObject:
   - component: {fileID: 1026942968}
   - component: {fileID: 5591276385788421115}
   - component: {fileID: 7453417409486403263}
+  - component: {fileID: 7768406717483243010}
   m_Layer: 8
   m_Name: Soma
   m_TagString: Player
@@ -5361,6 +5362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 0
   Perception: 0
   MeleeAttackThreshold: 0
@@ -5383,6 +5386,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 0}
   eatingParticleBurst: {fileID: 0}
   healthBar: {fileID: 0}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   lowHealthSFX: {fileID: 8300000, guid: 784df687af9a6b640a64e90df347f033, type: 3}
   party: []
   lowHealthThreshhold: 2
@@ -5548,6 +5556,8 @@ MonoBehaviour:
   control: 7
   axis: 5
   extraDamage: 0
+  spicyTemplate: {fileID: 0}
+  sourTemplate: {fileID: 0}
   chargeLevels: 3
   chargeTime: 0.75
   chargeSounds:
@@ -5617,6 +5627,18 @@ MonoBehaviour:
     type: 3}
   teslaTemplate: {fileID: 4998334802170643246, guid: fea442ebfc5a12f4db05d6ea6ef407a0,
     type: 3}
+--- !u!114 &7768406717483243010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055231404074166004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30fb9750dc379e947997dce4e7a148ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7059255978142214458
 GameObject:
   m_ObjectHideFlags: 0
@@ -5803,11 +5825,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PartyTeleportBeacon
       objectReference: {fileID: 0}
-    - target: {fileID: 8475941208052389328, guid: 809144c2098961b43bf14e54e1bf3c96,
-        type: 3}
-      propertyPath: radar
-      value: 
-      objectReference: {fileID: 4708779065190903909}
     - target: {fileID: 8031853950543585063, guid: 809144c2098961b43bf14e54e1bf3c96,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5863,6 +5880,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8475941208052389328, guid: 809144c2098961b43bf14e54e1bf3c96,
+        type: 3}
+      propertyPath: radar
+      value: 
+      objectReference: {fileID: 4708779065190903909}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 809144c2098961b43bf14e54e1bf3c96, type: 3}
 --- !u!4 &7660045081796999883 stripped
@@ -6069,21 +6091,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TargetCursor
       objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2717294953454589810, guid: add9efeacc855164f9d24551c04a4781,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6144,6 +6151,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 988854165538208353, guid: add9efeacc855164f9d24551c04a4781,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: add9efeacc855164f9d24551c04a4781, type: 3}
 --- !u!114 &8158704198816880316 stripped
@@ -6175,17 +6197,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Feeder
-      objectReference: {fileID: 0}
-    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
-        type: 3}
-      propertyPath: recruitWindowTemplate
-      value: 
-      objectReference: {fileID: 7552703712896063681, guid: 9d1714e33d58cbd448bc7ffd2d5749c2,
-        type: 3}
-    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
-        type: 3}
-      propertyPath: feedingRecruits
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
@@ -6240,6 +6251,17 @@ PrefabInstance:
     - target: {fileID: 239724237029591144, guid: 40a901469dca8e648b1593c8e3e264ba,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
+        type: 3}
+      propertyPath: recruitWindowTemplate
+      value: 
+      objectReference: {fileID: 7552703712896063681, guid: 9d1714e33d58cbd448bc7ffd2d5749c2,
+        type: 3}
+    - target: {fileID: 786438621044024911, guid: 40a901469dca8e648b1593c8e3e264ba,
+        type: 3}
+      propertyPath: feedingRecruits
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

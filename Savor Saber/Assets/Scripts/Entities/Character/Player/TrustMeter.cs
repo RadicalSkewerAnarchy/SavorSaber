@@ -31,6 +31,7 @@ public class TrustMeter : MonoBehaviour
     public GameObject shieldTemplate;
     public GameObject teslaTemplate;
     private GameObject currentObject;
+    private bool currentObjectFollowsPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,12 @@ public class TrustMeter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             ChangeTrust(10);
+        }
+
+        //If the trust effect should follow the player, do it now
+        if (currentObjectFollowsPlayer)
+        {
+            currentObject.transform.position = transform.position;
         }
     }
 
@@ -109,6 +116,7 @@ public class TrustMeter : MonoBehaviour
             //sweet companions buff health and speed
             case RecipeData.Flavors.Sweet:
                 //Debug.Log("Setting trust effect for sweet");
+                currentObjectFollowsPlayer = false;
                 somaController.dashRechargeMultiplier = (int)stage + 1;
                 somaController.maxDashes = 3 + (int)stage;
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " dash");
@@ -116,19 +124,22 @@ public class TrustMeter : MonoBehaviour
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
                 //Debug.Log("Setting trust effect for spicy");
+                currentObjectFollowsPlayer = false;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Spicy, (int)stage);
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " DoT");
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
                 //Debug.Log("Setting trust effect for salty");
-                currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity, transform);
+                currentObjectFollowsPlayer = true;
+                currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
                 trustText.UpdateDisplayText("Trust effect: Shield");
                 break;
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
                 //Debug.Log("Setting trust effect for sour");
+                currentObjectFollowsPlayer = false;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Sour, (int)stage);
                 trustText.UpdateDisplayText("Trust effect: Tesla Skewers");
                 break;
