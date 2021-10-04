@@ -154,37 +154,6 @@ public class RadialAttack : MonoBehaviour
         }
     }
 
-    public void Activate()
-    {
-        if (!active)
-        {
-            active = true;
-            StartCoroutine(FireLoop());
-        }
-        
-    }
-
-    public void Deactivate()
-    {
-        if (active)
-        {
-            active = false;
-            StopAllCoroutines();
-        }
-
-    }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        Debug.Log(gameObject.name + ": PARTICLE COLLISION WITH " + other);
-        if(other.tag == "Player" || other.tag == "Prey")
-        {
-            Debug.Log("Player hit by particle from " + gameObject.name + ", applying damage");
-            CharacterData data = other.GetComponent<CharacterData>();
-            data.DoDamage(particleDamage); 
-        }
-    }
-
     private IEnumerator FireLoop()
     {
         
@@ -271,6 +240,37 @@ public class RadialAttack : MonoBehaviour
             yield return FireLoop();
         }
         yield return null;
+    }
+
+    public void Activate()
+    {
+        if (!active)
+        {
+            active = true;
+            StartCoroutine(FireLoop());
+        }
+
+    }
+
+    public void Deactivate()
+    {
+        if (active)
+        {
+            active = false;
+            StopAllCoroutines();
+        }
+
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log(gameObject.name + ": PARTICLE COLLISION WITH " + other);
+        if (other.tag == "Player" || other.tag == "Prey")
+        {
+            Debug.Log("Player hit by particle from " + gameObject.name + ", applying damage");
+            CharacterData data = other.GetComponent<CharacterData>();
+            data.DoDamage(particleDamage);
+        }
     }
 
 }
