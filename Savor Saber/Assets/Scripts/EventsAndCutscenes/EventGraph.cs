@@ -128,6 +128,7 @@ public class EventGraph : MonoBehaviour
             }
             else if (currNode is CutsceneEventNode)
             {
+                Debug.Log("Found Cutscene Event Node");
                 Coroutine routine = null;
                 if (currNode is WaitNode)
                     routine = StartCoroutine(CutsceneNodeEvents.Wait(currNode as WaitNode));

@@ -46,7 +46,7 @@ public class ProjectileSkewer : BaseProjectile
         { 
             if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
                 return;
-            Debug.Log("Skewer collided with " + collision.gameObject);
+            //Debug.Log("Skewer collided with " + collision.gameObject);
 
             if (ingredientArray != null)
             {
@@ -54,7 +54,7 @@ public class ProjectileSkewer : BaseProjectile
                 FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
                 if (flavorInput != null)
                 {
-                    Debug.Log("Flavor input of " + collision.gameObject + " not null");
+                    //Debug.Log("Flavor input of " + collision.gameObject + " not null");
                     flavorInput.Feed(ingredientArray[0], true, myCharData);
                     fed = true;
 

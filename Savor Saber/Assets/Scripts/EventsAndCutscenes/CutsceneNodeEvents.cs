@@ -8,9 +8,11 @@ public static class CutsceneNodeEvents
 {
     public static IEnumerator PanCamera(PanCameraNode node, GameObject player, EventGraph.ActorDict actors, GameObjectDict dependencies)
     {
+        
         var pNode = node as PanCameraNode;
         var target = actors.ContainsKey(pNode.target) ? actors[pNode.target].gameObject : dependencies[pNode.target];
         var cam = player.GetComponent<CameraController>();
+        Debug.Log("Panning Camera to " + target);
         switch (pNode.movementType)
         {
             case PanCameraNode.MoveType.Smoothed:

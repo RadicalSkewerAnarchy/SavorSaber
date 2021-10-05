@@ -43,7 +43,7 @@ public class PoweredShield : PoweredObject
 
     public override void TurnOn()
     {
-        Debug.Log("Turning on Powered Shield");
+        //Debug.Log("Turning on Powered Shield");
         base.TurnOn();
         shield.SetActive(true);
         if (allowSound)
@@ -56,7 +56,7 @@ public class PoweredShield : PoweredObject
 
     public override void ShutOff()
     {
-        Debug.Log("Turning off Powered Shield");
+        //Debug.Log("Turning off Powered Shield");
         base.ShutOff();
         shield.SetActive(false);
         if (allowSound)

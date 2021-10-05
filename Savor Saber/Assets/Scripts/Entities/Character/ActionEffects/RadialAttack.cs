@@ -264,10 +264,10 @@ public class RadialAttack : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log(gameObject.name + ": PARTICLE COLLISION WITH " + other);
+        //Debug.Log(gameObject.name + ": PARTICLE COLLISION WITH " + other);
         if (other.tag == "Player" || other.tag == "Prey")
         {
-            Debug.Log("Player hit by particle from " + gameObject.name + ", applying damage");
+            //Debug.Log("Player hit by particle from " + gameObject.name + ", applying damage");
             CharacterData data = other.GetComponent<CharacterData>();
             data.DoDamage(particleDamage);
         }
