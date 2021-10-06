@@ -119,6 +119,7 @@ public class TrustMeter : MonoBehaviour
                 currentObjectFollowsPlayer = false;
                 somaController.dashRechargeMultiplier = (int)stage + 1;
                 somaController.maxDashes = 3 + (int)stage;
+                somaSkewer.SetFlavor(RecipeData.Flavors.Sweet, (int)stage);
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " dash");
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
@@ -134,6 +135,7 @@ public class TrustMeter : MonoBehaviour
                 currentObjectFollowsPlayer = true;
                 currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
+                somaSkewer.SetFlavor(RecipeData.Flavors.Salty, (int)stage);
                 trustText.UpdateDisplayText("Trust effect: Shield");
                 break;
             //sour companions generate a tesla field

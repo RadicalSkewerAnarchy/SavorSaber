@@ -224,7 +224,7 @@ public class AttackRanged : AttackBase
             projectileData.SetBonusEffect(spicyTemplate, flavorMagnitude);
         else if (flavor == RecipeData.Flavors.Sour && sourTemplate != null)
             projectileData.SetBonusEffect(sourTemplate, flavorMagnitude);
-        else
+        else if(flavor == RecipeData.Flavors.Sweet || flavor == RecipeData.Flavors.Salty)
             projectileData.SetBonusEffect(null, flavorMagnitude);
 
         //set ingredient data if applicable
