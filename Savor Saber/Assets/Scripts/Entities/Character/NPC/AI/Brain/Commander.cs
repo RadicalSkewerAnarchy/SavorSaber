@@ -63,6 +63,9 @@ public class Commander : MonoBehaviour
         Cursor = cross.gameObject;
         if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
 
+        PartyTeleportBeacon teleporter = player.GetComponentInChildren<PartyTeleportBeacon>();
+        teleporter.partyCommander = this;
+
         Debug.Log($"Commander {this.name} has been awoken");
         
     }

@@ -102,11 +102,12 @@ public class PartyTeleportBeacon : MonoBehaviour
                 }
                 positionIndex++;
             }
-
-            //Verb = AIData.Protocols.Chase;
-            //ObjectCriteria = Commander.Criteria.None;
-            //Object = GameObject.FindGameObjectWithTag("Player");
-            //partyCommander.GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+            
+            Verb = AIData.Protocols.Chase;
+            ObjectCriteria = Commander.Criteria.None;
+            Object = GameObject.FindGameObjectWithTag("Player");
+            partyCommander.GroupCommand(player.GetComponent<PlayerData>().party, Verb, ObjectCriteria, Object, Location);
+            
         }
         teleporting = false;
     }

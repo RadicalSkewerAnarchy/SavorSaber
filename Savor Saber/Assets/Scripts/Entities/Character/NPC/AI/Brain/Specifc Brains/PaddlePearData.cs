@@ -7,13 +7,15 @@ public class PaddlePearData : AIData
     public override Protocols DecideProtocol()
     {
         Protocols p = currentProtocol;
-       
+        
         if(Checks.NumberOfEnemies() > 0)
         {
-            p = Protocols.Runaway;
+            p = Protocols.Attack;
+            Debug.Log("Paddle Pear found enemies, attack");
         }
         else
         {
+            Debug.Log("Paddle pear checking number of friends since there are no enemies nearby");
             int friends = Checks.NumberOfFriends();
             if (friends >= 0 && friends < 9)
                 p = Protocols.Wander;
@@ -21,8 +23,9 @@ public class PaddlePearData : AIData
                 p = Protocols.Party;
             else
                 p = Protocols.Runaway;
+           
         }
-
+        
         return p;
     }
 
