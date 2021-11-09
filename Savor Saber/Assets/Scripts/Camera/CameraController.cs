@@ -111,18 +111,18 @@ public class CameraController : MonoBehaviour
     }
     public IEnumerator MoveToPointSmoothCr(Vector2 point, float maxSpeed, float snapTime)
     {
-        Debug.Log("Entering MoveToPointSmoothCR");
+        //Debug.Log("Entering MoveToPointSmoothCR");
         Vector2 currVelocity = Vector2.zero;
         while (Vector2.Distance(camera.position, point) > 0.02f)
         {       
             yield return new WaitForFixedUpdate();
             var newPos = Vector2.SmoothDamp(camera.position, point, ref currVelocity, snapTime, maxSpeed, Time.fixedDeltaTime);
-            Debug.Log("NewPos calculated: " + newPos);
+            //Debug.Log("NewPos calculated: " + newPos);
             camera.position = new Vector3(newPos.x, newPos.y, camera.position.z);
-            Debug.Log("Camera moved. Remaining distance: " + Vector2.Distance(camera.position, point));
+            //Debug.Log("Camera moved. Remaining distance: " + Vector2.Distance(camera.position, point));
         }
         camera.position = new Vector3(point.x, point.y, camera.position.z);
-        Debug.Log("ending MoveToPointSmoothCR");
+        //Debug.Log("ending MoveToPointSmoothCR");
     }
 
     // FixedUpdate removes jitter to Rigidbody movement

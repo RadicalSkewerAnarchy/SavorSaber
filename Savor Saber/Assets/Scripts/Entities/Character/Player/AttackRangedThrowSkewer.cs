@@ -68,6 +68,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         //animation cancel
         if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
         {
+            Debug.Log("Animation cancel");
             StopAllCoroutines();
             r.color = Color.white;
             currLevel = 0;
@@ -81,10 +82,12 @@ public class AttackRangedThrowSkewer : AttackRanged
         //conditions to throw: Must have ingredients
         if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()))
         {
+            StopAllCoroutines();
             chargedAttack = true;
             center = r.bounds.center;
 
             AttackBase activeAttack = GetActiveAttack();
+            
             if (activeAttack == null)
                 StartCoroutine(Charge());            
             else if (activeAttack.CanBeCanceled)
@@ -92,19 +95,32 @@ public class AttackRangedThrowSkewer : AttackRanged
                 activeAttack.Cancel();
                 StartCoroutine(Charge());
             }
+            return;
+
         }
-        if (InputManager.GetButtonUp(control, axis) && Attacking)
+        if (InputManager.GetButtonUp(control, axis))
         {
+            if (!Attacking)
+            {
+                Debug.Log("Got throw button up, but attacking bool is false");
+                return;
+            }
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
             flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
-            ingredientArray = inv.GetActiveSkewer().ToArray();
+            //find the top ingredient
+            //ingredientArray = inv.GetActiveSkewer().ToArray();
+            ingredientArray = new IngredientData[1];
+            ingredientArray[0] = inv.RemoveFromSkewer();
+
+
+
 
             r.color = Color.white;
             currLevel = 0;
             Attack(crosshair.GetTarget());
             inv.ClearActiveRecipe();
-            inv.ClearActiveSkewer();
+            //inv.ClearActiveSkewer();
             inv.CanSwap = true;
             Attacking = false;
             chargedAttack = false;
@@ -121,7 +137,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         inv.CanSwap = false;
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
-            //Debug.Log("Charge Level Equals: " + currLevel);
+            Debug.Log("Charge Level Equals: " + currLevel);
             animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
             sfxPlayer.Play(chargeSounds[currLevel]);
             float time = 0;

@@ -11,11 +11,11 @@ public class PaddlePearData : AIData
         if(Checks.NumberOfEnemies() > 0)
         {
             p = Protocols.Attack;
-            Debug.Log("Paddle Pear found enemies, attack");
+            //Debug.Log("Paddle Pear found enemies, attack");
         }
         else
         {
-            Debug.Log("Paddle pear checking number of friends since there are no enemies nearby");
+            //Debug.Log("Paddle pear checking number of friends since there are no enemies nearby");
             int friends = Checks.NumberOfFriends();
             if (friends >= 0 && friends < 9)
                 p = Protocols.Wander;
@@ -57,5 +57,10 @@ public class PaddlePearData : AIData
             default:
                 break;
         }
+    }
+
+    public void SetSpeed(float s)
+    {
+        Speed = s;
     }
 }

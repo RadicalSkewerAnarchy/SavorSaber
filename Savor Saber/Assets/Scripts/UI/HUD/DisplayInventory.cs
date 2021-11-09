@@ -160,6 +160,20 @@ public class DisplayInventory : MonoBehaviour
         UpdateFlavorIcons(skewerIngredientsRight, flavorIconsSub2);
     }
 
+    public void UpdateSkewerUI(int slot, IngredientData data)
+    {
+        skewerSpritesActive[slot].gameObject.GetComponent<Animator>().SetTrigger("AddItem");
+        skewerSpritesActive[slot].sprite = data.image;
+
+        IngredientData[] skewerIngredientsActive = skewerInventory.GetActiveSkewer().Reverse().ToArray();
+        IngredientData[] skewerIngredientsLeft = skewerInventory.GetLeftSkewer().Reverse().ToArray();
+        IngredientData[] skewerIngredientsRight = skewerInventory.GetRightSkewer().Reverse().ToArray();
+
+        UpdateFlavorIcons(skewerIngredientsActive, flavorIconsActive);
+        UpdateFlavorIcons(skewerIngredientsLeft, flavorIconsSub1);
+        UpdateFlavorIcons(skewerIngredientsRight, flavorIconsSub2);
+    }
+
     public void SwapHandles(bool up)
     {
         if(up)

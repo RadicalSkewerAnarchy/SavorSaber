@@ -154,7 +154,8 @@ public class Inventory : MonoBehaviour {
         {
             quiver[activeSkewer].PushIngredient(ingredient);
             //UpdateSkewerVisual();
-            UpdateUI();
+            //UpdateUI();
+            UpdateUI(quiver[activeSkewer].GetCount() - 1, ingredient);
         }
         else if (ActiveSkewerFull())
         {
@@ -424,6 +425,16 @@ public class Inventory : MonoBehaviour {
     public void UpdateUI()
     {
         DisplayInventory.instance?.UpdateSkewerUI();
+    }
+
+    public void UpdateUI(int slot, IngredientData data)
+    {
+        if (slot < 0)
+        {
+            Debug.LogError("Inventory Error: Attempting to update UI of slot < 0");
+            return;
+        }
+        DisplayInventory.instance?.UpdateSkewerUI(slot, data);
     }
 
     #endregion
