@@ -62,7 +62,7 @@ public class Respawner : MonoBehaviour
         //Debug.Log("Triggering Event: " + name);
         if(collision.tag == "Respawn")
         {
-            Debug.Log("Setting Spawn Point to: " + collision.name);
+            //Debug.Log("Setting Spawn Point to: " + collision.name);
             currSpawn = collision.GetComponent<SpawnPoint>();
 
             //only heal if it's needed

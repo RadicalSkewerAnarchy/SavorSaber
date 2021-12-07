@@ -9,7 +9,7 @@ public class EventOnDeath : MonoBehaviour
 
     private bool active = false;
 
-    private List<GameObject> targetList;
+    public List<GameObject> targetList;
     public UnityEvent deathEvent;
 
     void Start()

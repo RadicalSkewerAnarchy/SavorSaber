@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 2696718372663051624}
   - component: {fileID: 2039627871308581389}
   - component: {fileID: -1132314315162024829}
+  - component: {fileID: 116315128114590724}
   m_Layer: 0
   m_Name: DroneScout
   m_TagString: Predator
@@ -277,6 +278,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &6905162006665372143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +335,9 @@ MonoBehaviour:
   meleeAttackDuration: 2
   meleeAttackDelay: 2
   meleeAttackDimensions: {x: 2, y: 2}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!58 &1933951996701256598
@@ -362,16 +368,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients: []
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
-  rewardItem: {fileID: 0}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
   damageFromBaseSkewer: 1
@@ -418,6 +424,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 2
   Perception: 10
   MeleeAttackThreshold: 1
@@ -431,10 +439,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 1
-  initialHostility: 1
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
@@ -444,6 +448,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 3494661672731493306}
   eatingParticleBurst: {fileID: 0}
   healthBar: {fileID: 636825719347881209}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -468,6 +477,7 @@ MonoBehaviour:
   meleeHunter: 0
   rideVector: {x: 0, y: 0, z: 0}
   path: []
+  flavor: 0
 --- !u!114 &-1132314315162024829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,6 +497,24 @@ MonoBehaviour:
   vertRange: 0
   vertSpeed: 1
   vertBase: 0
+--- !u!114 &116315128114590724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874833132442233986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f0513f71a3cea45b9cd169b968a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayName: Drone
+  textBlipSound: {fileID: 0}
+  portraitDictionary:
+    _keys: 00000000
+    _values:
+    - {fileID: 21300000, guid: df2ca7011ed634e4ca9ad6de1b644890, type: 3}
 --- !u!1001 &931576373806108353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -604,16 +632,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5721304028588265373, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_IsActive
@@ -630,6 +648,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
