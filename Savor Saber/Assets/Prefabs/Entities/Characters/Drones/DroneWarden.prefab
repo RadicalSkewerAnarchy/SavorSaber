@@ -348,6 +348,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &1988266223871799956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,6 +405,9 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   meleeAttackDimensions: {x: 2, y: 2}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!58 &6815470992871143661
@@ -433,16 +438,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients: []
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
-  rewardItem: {fileID: 0}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
   damageFromBaseSkewer: 1
@@ -508,6 +513,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 2
   Perception: 7
   MeleeAttackThreshold: 1
@@ -521,10 +528,6 @@ MonoBehaviour:
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 1
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 0}
   deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
@@ -534,6 +537,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 8375610762140078273}
   eatingParticleBurst: {fileID: 0}
   healthBar: {fileID: 5518554705024333698}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -558,6 +566,7 @@ MonoBehaviour:
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
   path: []
+  flavor: 0
 --- !u!1001 &525366843112158219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -756,16 +765,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -777,6 +776,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594102629844728936, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -812,6 +821,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TeslaRing
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998334802170643246, guid: 30605d015852ce3419fa21e6ce3826b7,
+        type: 3}
+      propertyPath: m_TagString
+      value: ThrowThrough
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998334802170643246, guid: 30605d015852ce3419fa21e6ce3826b7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4998334802170643234, guid: 30605d015852ce3419fa21e6ce3826b7,
         type: 3}
@@ -867,6 +886,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4998334802170643233, guid: 30605d015852ce3419fa21e6ce3826b7,
+        type: 3}
+      propertyPath: damageRate
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30605d015852ce3419fa21e6ce3826b7, type: 3}

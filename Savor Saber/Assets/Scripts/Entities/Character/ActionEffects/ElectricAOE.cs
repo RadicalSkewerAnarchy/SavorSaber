@@ -7,7 +7,7 @@ public class ElectricAOE : SkewerBonusEffect
 
     //private CharacterData characterData;
     private List<CharacterData> characterList;
-    private bool inAOE = false;
+    private bool enemiesInAOE = false;
     private bool active = true;
     private SpriteRenderer sr;
     private Light teslaLight;
@@ -42,6 +42,11 @@ public class ElectricAOE : SkewerBonusEffect
         teslaAnimator = GetComponent<Animator>();
         teslaLight = GetComponentInChildren<Light>();
         shockSFXPlayer = GetComponent<PlaySFX>();
+
+        if (active)
+        {
+            DamageOverTime();
+        }
     }
 
     // Update is called once per frame
@@ -75,22 +80,31 @@ public class ElectricAOE : SkewerBonusEffect
             //Debug.Log("Damaging player-friendly target with electric field");
             //characterData = collision.gameObject.GetComponent<CharacterData>();
             characterList.Add(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = true;
-            StopCoroutine(ExecuteAfterSeconds());
-            DamageOverTime();
             Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
             shockSFXPlayer.Play(shockSFX);
+            if (!enemiesInAOE)
+            {
+                enemiesInAOE = true;
+                StopAllCoroutines();
+                DamageOverTime();
+
+            }
+        
         }
         else if(active && hurtDrones && collision.gameObject.tag == "Predator")
         {
             //Debug.Log("Damaging valid target with electric field");
             //characterData = collision.gameObject.GetComponent<CharacterData>();
             characterList.Add(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = true;
-            StopCoroutine(ExecuteAfterSeconds());
-            DamageOverTime();
             Instantiate(sparkTemplate, collision.gameObject.transform.position, Quaternion.identity);
             shockSFXPlayer.Play(shockSFX);
+            if (!enemiesInAOE)
+            {
+                enemiesInAOE = true;
+                StopAllCoroutines();
+                DamageOverTime();
+
+            }
         }
     }
 
@@ -100,18 +114,23 @@ public class ElectricAOE : SkewerBonusEffect
         {
             StopCoroutine(ExecuteAfterSeconds());
             characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = false;
         }
         else if(collision.gameObject.tag == "Predator")
         {
             StopCoroutine(ExecuteAfterSeconds());
             characterList.Remove(collision.gameObject.GetComponent<CharacterData>());
-            inAOE = false;
+        }
+
+        if(characterList.Count == 0)
+        {
+            enemiesInAOE = false;
+            StopAllCoroutines();
         }
     }
 
     public void DamageOverTime()
     {
+        Debug.Log("Entering DoT tic");
         bool killingBlow = false;
         foreach(CharacterData characterData in characterList)
         {
@@ -127,11 +146,11 @@ public class ElectricAOE : SkewerBonusEffect
             //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
 
             if (killingBlow)
-                return;
+                continue;
 
-            StartCoroutine(ExecuteAfterSeconds());
+
         }
-
+        StartCoroutine(ExecuteAfterSeconds());
     }
 
     protected IEnumerator ExecuteAfterSeconds()
