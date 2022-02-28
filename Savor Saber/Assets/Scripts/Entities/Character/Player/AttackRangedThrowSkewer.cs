@@ -68,7 +68,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         //animation cancel
         if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
         {
-            Debug.Log("Animation cancel");
+            //Debug.Log("Animation cancel");
             StopAllCoroutines();
             r.color = Color.white;
             currLevel = 0;
@@ -102,7 +102,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         {
             if (!Attacking)
             {
-                Debug.Log("Got throw button up, but attacking bool is false");
+                //Debug.Log("Got throw button up, but attacking bool is false");
                 return;
             }
             StopAllCoroutines();
@@ -137,7 +137,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         inv.CanSwap = false;
         for (currLevel = 0; currLevel < chargeLevels - 1; ++currLevel)
         {
-            Debug.Log("Charge Level Equals: " + currLevel);
+           //Debug.Log("Charge Level Equals: " + currLevel);
             animator.Play(attackName + "Charge", 0, normalInterval * (currLevel + 1));
             sfxPlayer.Play(chargeSounds[currLevel]);
             float time = 0;

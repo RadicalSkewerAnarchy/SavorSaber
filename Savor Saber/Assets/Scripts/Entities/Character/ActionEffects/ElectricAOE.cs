@@ -130,7 +130,7 @@ public class ElectricAOE : SkewerBonusEffect
 
     public void DamageOverTime()
     {
-        Debug.Log("Entering DoT tic");
+        //Debug.Log("Entering DoT tic");
         bool killingBlow = false;
         foreach(CharacterData characterData in characterList)
         {

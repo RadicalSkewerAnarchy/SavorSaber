@@ -34,7 +34,7 @@ public class LogicMulti : MonoBehaviour
     {
         inputs[input] = value;
 
-        Debug.Log("Logic AND: Input " + input + " set to " + value);
+        Debug.Log(this.gameObject.name + ": Input " + input + " set to " + value);
         //Logic AND
         if(type == LogicType.AND)
         {
@@ -42,6 +42,7 @@ public class LogicMulti : MonoBehaviour
             {
                 foreach (PoweredObject target in targetObjects)
                 {
+                    Debug.Log("AND achieved, turning on");
                     target.TurnOn();
                 }
             }
@@ -59,6 +60,7 @@ public class LogicMulti : MonoBehaviour
             {
                 foreach (PoweredObject target in targetObjects)
                 {
+                    Debug.Log("OR achieved, turning on");
                     target.TurnOn();
                 }
             }
@@ -76,6 +78,7 @@ public class LogicMulti : MonoBehaviour
             {
                 foreach (PoweredObject target in targetObjects)
                 {
+                    Debug.Log("XOR achieved, turning on");
                     target.TurnOn();
                 }
             }

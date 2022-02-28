@@ -56,9 +56,10 @@ public class PlayerSkewerAttack : BaseMeleeAttack
         }
 
         //do knockback effects
-        if (collision.gameObject.tag == "Predator" || collision.gameObject.tag == "Prey")
+        if (collision.gameObject.tag == "Predator")
         {
             DoKnockBack(collision.gameObject.GetComponent<Rigidbody2D>(), bunceForce);
+            collision.gameObject.GetComponent<CharacterData>().DoDamage((int)meleeDamage);
         }
     }
 

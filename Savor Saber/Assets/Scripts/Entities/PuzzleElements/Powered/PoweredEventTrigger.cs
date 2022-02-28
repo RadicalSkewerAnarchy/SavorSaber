@@ -21,6 +21,7 @@ public class PoweredEventTrigger : PoweredObject
 
     public override void TurnOn()
     {
+        Debug.Log("PoweredEventTrigger turning on.");
         base.TurnOn();
         eventToCall.Invoke();
     }
