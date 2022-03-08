@@ -63,10 +63,16 @@ public class Commander : MonoBehaviour
         Cursor = cross.gameObject;
         if (Cursor==null)Debug.Log(this.name + " NEEDS A REFERENCE TO THE PLAYER'S CURSOR! in the inspector");
 
-        PartyTeleportBeacon teleporter = player.GetComponentInChildren<PartyTeleportBeacon>();
-        teleporter.partyCommander = this;
 
-        Debug.Log($"Commander {this.name} has been awoken");
+        //Assign references to self in player components
+        PartyTeleportBeacon teleporter = player.GetComponentInChildren<PartyTeleportBeacon>();
+        teleporter.AssignCommander(this);
+        PlayerCompanionSummon summoner = player.GetComponentInChildren<PlayerCompanionSummon>();
+        summoner.AssignCommander(this);
+
+
+
+        //Debug.Log($"Commander {this.name} has been awoken");
         
     }
 
@@ -485,6 +491,9 @@ public class Commander : MonoBehaviour
                 else
                     this.Location = Vector2.zero;
                 // set inside brain
+                Debug.Log("Commander: Targeting object " + this.Object + "with subject " + sub);
+                if (Brain.Checks == null) Debug.Log("Error: Brain checks null");
+                else Debug.Log("Brain checks not null");
                 Brain.Checks.specialTarget = this.Object;
                 Brain.Checks.specialPosition = this.Location;
                 // reset pathfinder

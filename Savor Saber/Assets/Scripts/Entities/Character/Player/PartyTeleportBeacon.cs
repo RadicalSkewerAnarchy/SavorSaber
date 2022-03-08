@@ -7,7 +7,7 @@ public class PartyTeleportBeacon : MonoBehaviour
     public GameObject teleportEffectPrefab;
     public GameObject radar;
     public AudioSource failedAudioPlayer;
-    public Commander partyCommander;
+    private Commander partyCommander; // each scene's party commander will find Soma and assign itself to this field via AssignCommander();
 
     private PlayerData somaData;
     private AudioSource teleSFX;
@@ -66,6 +66,11 @@ public class PartyTeleportBeacon : MonoBehaviour
     {
         if (collision.gameObject.tag != "Prey" && collision.gameObject.tag != "ThrowThrough")
             numHits++;
+    }
+
+    public void AssignCommander(Commander c)
+    {
+        partyCommander = c;
     }
 
     private void Teleport()

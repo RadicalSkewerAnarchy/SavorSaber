@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 4
   Perception: 8
   MeleeAttackThreshold: 1
@@ -35,6 +37,11 @@ MonoBehaviour:
   damageParticleBurst: {fileID: 7140082185146095837}
   eatingParticleBurst: {fileID: 7140082184981961593}
   healthBar: {fileID: 7140082184456584740}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -48,10 +55,10 @@ MonoBehaviour:
   DecisionTimer: 0
   DecisionTimerReset: 1
   DecisionTimerVariance: 0.2
-  Behavior: {fileID: 0}
-  Protocol: {fileID: 0}
-  Checks: {fileID: 0}
-  sRenderer: {fileID: 0}
+  Behavior: {fileID: 7140082185345536149}
+  Protocol: {fileID: 7140082185345536150}
+  Checks: {fileID: 7140082185345536155}
+  sRenderer: {fileID: 7140082185345536175}
   Awareness: {fileID: 0}
   FoodPreference: 
   updateAI: 0
@@ -111,87 +118,6 @@ PrefabInstance:
         type: 3}
       propertyPath: attackCooldown
       value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: Speed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: Perception
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: RangeAttackThreshold
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: EngageHostileThreshold
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: maxHealth
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: health
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: initialFear
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: initialHunger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: initialHostility
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: healSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: deathSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: eatingParticleBurst
-      value: 
-      objectReference: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
-        type: 3}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: DecisionTimerReset
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: DecisionTimerVariance
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: meleeHunter
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: overchargeHealth
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089618, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -355,6 +281,117 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: Speed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: Perception
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: RangeAttackThreshold
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: EngageHostileThreshold
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: maxHealth
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: health
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: initialFear
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: initialHunger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: initialHostility
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: healSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: deathSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: eatingParticleBurst
+      value: 
+      objectReference: {fileID: 2813036203250177130, guid: 4b76023d501bc4a4e87ede5649192021,
+        type: 3}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: DecisionTimerReset
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: DecisionTimerVariance
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: meleeHunter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: overchargeHealth
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.173
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.46413165
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.68833077
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.68833077
+      objectReference: {fileID: 0}
+    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.68833077
+      objectReference: {fileID: 0}
     - target: {fileID: 6405371342921917297, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -390,35 +427,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    - target: {fileID: 8906389738186870776, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.173
-      objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.46413165
-      objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.68833077
-      objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.68833077
-      objectReference: {fileID: 0}
-    - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.68833077
+      value: -0.258
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089623, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -655,11 +667,6 @@ PrefabInstance:
       propertyPath: aiStates._values.Array.data[2]._values.Array.data[0].m_RotationOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 8906389738186870776, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.258
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6405371343124089620, guid: 0f44ac84a8c8fa143bc0f795dc0c688b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 0f44ac84a8c8fa143bc0f795dc0c688b, type: 3}
@@ -669,6 +676,48 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4319754301166410627}
   m_PrefabAsset: {fileID: 0}
+--- !u!212 &7140082185345536175 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4319754301166410627}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7140082185345536150 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6405371343124089621, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4319754301166410627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140082185345536154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7140082185345536149 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4319754301166410627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140082185345536154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ffe954047d6023438dedbd542443ec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7140082185345536155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6405371343124089624, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4319754301166410627}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140082185345536154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855506bed9018d046a30cc6d87bf0b60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &7140082185146095837 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6405371343323726686, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,

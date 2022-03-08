@@ -34,7 +34,7 @@ public class PaddlePearData : AIData
         switch(s)
         {
             case LifeState.overcharged:
-                this.GetComponent<SpriteRenderer>().color = Color.magenta;
+                //this.GetComponent<SpriteRenderer>().color = Color.magenta;
                 FlavorInputManager fim = GetComponent<FlavorInputManager>();
                 fim.SugarStack(Mathf.Max(this.health - this.maxHealth, 0));
                 break;

@@ -110,13 +110,13 @@ public class AIData : CharacterData
         #endregion
 
         #region Components
-        [HideInInspector]
+        //[HideInInspector]
         public MonsterBehavior Behavior;
-        [HideInInspector]
+        //[HideInInspector]
         public MonsterProtocols Protocol;
-        [HideInInspector]
+        //[HideInInspector]
         public MonsterChecks Checks;
-        [HideInInspector]
+        //[HideInInspector]
         public SpriteRenderer sRenderer;
 
         #endregion
