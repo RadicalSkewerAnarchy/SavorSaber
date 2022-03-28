@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCompanionSummon : MonoBehaviour
 {
@@ -8,14 +9,24 @@ public class PlayerCompanionSummon : MonoBehaviour
     //references to other relevant gameobjects
     private GameObject player;
     private PlayerData somaData;
+
+    private GameObject companion;
+    private Slider companionTimerSlider;
+    public Slider companionCooldownSlider;
+    public Text companionCooldownText;
+
+    private Commander partyCommander; // each scene's party commander will find Soma and assign itself to this field via AssignCommander();
     public GameObject menuCanvas;
     private readonly string menuOpenFlag = "CompanionMenuOpen";
-    private Commander partyCommander; // each scene's party commander will find Soma and assign itself to this field via AssignCommander();
+
     public IngredientData overchargeIngredient;
 
     //cooldown fields
+    private float ticLength = 0.25f;
     public float cooldownTime = 30; //time until the player can summon the fruitant again
-    private WaitForSeconds CooldownTimer;
+    public float maxActiveTime = 15; //how long the fruitant will remain active
+    private WaitForSeconds activeTimerTic; //in quarter seconds
+    private WaitForSeconds cooldownTimerTic; //in quarter seconds
     private bool isOnCooldown = false;
 
     //Fields for keeping track of which fruitants the player can or has summoned
@@ -43,7 +54,8 @@ public class PlayerCompanionSummon : MonoBehaviour
     {
         player = transform.parent.gameObject;
         somaData = player.GetComponent<PlayerData>();
-        CooldownTimer = new WaitForSeconds(cooldownTime);
+        cooldownTimerTic = new WaitForSeconds(ticLength);
+        activeTimerTic = new WaitForSeconds(ticLength);
         baseFixedTimeScale = Time.fixedDeltaTime;
     }
 
@@ -52,7 +64,7 @@ public class PlayerCompanionSummon : MonoBehaviour
     {
         ToggleUI();
     }
-
+    #region Core Functionality
     public void AssignCommander(Commander c)
     {
         partyCommander = c;
@@ -75,19 +87,24 @@ public class PlayerCompanionSummon : MonoBehaviour
             CloseUI();
             return;
         }
-        Debug.Log("Attempting to summon fruitant: " + fruitantName);
-        GameObject companion = Instantiate(unlockedFruitants[fruitantName].monster);
+
+        //Debug.Log("Attempting to summon fruitant: " + fruitantName);
+        companion = Instantiate(unlockedFruitants[fruitantName].monster);
         companion.transform.position = player.transform.position + new Vector3(-1.25f, 0, 0);
+        companionTimerSlider = companion.GetComponent<CompanionTimerSlider>().slider;
+        companionTimerSlider.gameObject.SetActive(true);
+        isOnCooldown = true;
+        companionCooldownText.text = "Please wait...";
 
-        StopAllCoroutines();
-        StartCoroutine(Cooldown());
+        StartCoroutine(Cooldown(0));
         StartCoroutine(DelayedAI(companion));
-        //todo: add spawned companion to party
-
+        StartCoroutine(ActiveTimer(0));
 
         CloseUI();
     }
+    #endregion
 
+    #region User Interface
     public void ToggleUI()
     {
         //toggle the menu
@@ -116,6 +133,9 @@ public class PlayerCompanionSummon : MonoBehaviour
         FlagManager.SetFlag(menuOpenFlag, "True");
     }
 
+    #endregion
+
+    #region timers
     private IEnumerator DelayedAI(GameObject companion)
     {
         yield return new WaitForSeconds(0.1f);
@@ -135,13 +155,39 @@ public class PlayerCompanionSummon : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator Cooldown()
+    private IEnumerator Cooldown(float timeActive)
     {
-        Debug.Log("Companion summon on cooldown");
-        isOnCooldown = true;
-        yield return CooldownTimer;
-        isOnCooldown = false;
-        Debug.Log("Companion summon off cooldown");
+        Debug.Log(timeActive);
+        companionCooldownSlider.value = (float)(timeActive / cooldownTime);
+        if (timeActive >= cooldownTime)
+        {
+            isOnCooldown = false;
+            //Debug.Log("Cooldown elapsed, can now summon again");
+            companionCooldownText.text = "Ready to help!";
+            yield return null;
+        }
+        else
+        {
+           //Debug.Log("cooldown not elapsed, resuming loop");
+            yield return cooldownTimerTic;
+            yield return Cooldown(timeActive + ticLength);
+        }
     }
 
+    private IEnumerator ActiveTimer(float timeActive)
+    {
+        companionTimerSlider.value = (float)(1f - (timeActive / maxActiveTime));
+        if(timeActive >= maxActiveTime)
+        {
+            //Debug.Log("Timer elapsed, companion retreating");
+            Destroy(companion);
+            yield return null;
+        }
+        else
+        {
+            yield return activeTimerTic;
+            yield return ActiveTimer(timeActive + ticLength);
+        }
+    }
+    #endregion
 }
