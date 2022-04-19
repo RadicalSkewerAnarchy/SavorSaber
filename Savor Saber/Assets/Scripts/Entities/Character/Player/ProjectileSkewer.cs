@@ -74,6 +74,15 @@ public class ProjectileSkewer : BaseProjectile
                 else if (!dropping && !penetrateTargets)
                 {
                     SpawnDropsOnMiss();
+                    if (spawnBonusEffectOnMiss && bonusEffectTemplate != null)
+                    {
+                        GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);
+                        SkewerBonusEffect effect = bonus.GetComponent<SkewerBonusEffect>();
+                        if (effect != null)
+                            effect.SetTarget(collision.gameObject, bonusEffectMagnitude);
+                        dropping = true;
+                    }
+
                     Destroy(this.gameObject);
                 }
             }

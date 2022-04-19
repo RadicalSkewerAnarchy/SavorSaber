@@ -110,6 +110,7 @@ public class BaseProjectile : MonoBehaviour
     protected GameObject bonusEffectTemplate = null; //for any additional effects to be spawned, e.g. from Trust Buffs
     protected int bonusEffectMagnitude = 1;
     protected bool dropping = false; //prevents duplicate drops
+    public bool spawnBonusEffectOnMiss;
     #endregion
 
     // Start is called before the first frame update

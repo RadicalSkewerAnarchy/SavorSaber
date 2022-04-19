@@ -11,6 +11,7 @@ public class FlavorInputManager : MonoBehaviour
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
     public IngredientData[] favoriteIngredients;
+    public RecipeData.Flavors favoriteFlavor;
     public IngredientData[] rejectedIngredients;
 
     protected bool fedFavoriteIngredient = false;
@@ -94,7 +95,21 @@ public class FlavorInputManager : MonoBehaviour
         //if we didn't reject it, heal and check if we should morph
         if (!rejected)
         {
-            characterData.DoHeal(99);
+            bool healed = false;
+            foreach (IngredientData favoriteIngredient in favoriteIngredients)
+            {
+                if (ingredient == favoriteIngredient)
+                {
+                    characterData.DoHeal(6);
+                    healed = true;
+                }
+                else if ((ingredient.flavors & favoriteIngredient.flavors) > 0)
+                {
+                    characterData.DoHeal(4);
+                    healed = true;
+                }
+            }
+            if (!healed) characterData.DoHeal(2);
 
             if (canTransformWhenFed && ingredient.monster != null)
             {

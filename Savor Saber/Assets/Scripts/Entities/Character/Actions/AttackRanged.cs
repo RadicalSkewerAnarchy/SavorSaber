@@ -75,6 +75,7 @@ public class AttackRanged : AttackBase
     public GameObject sourTemplate;
     protected RecipeData.Flavors flavor = RecipeData.Flavors.None;
     protected int flavorMagnitude = 1;
+    public bool spawnEffectOnMiss = false;
     #endregion
 
     // Start is called before the first frame update
@@ -224,8 +225,10 @@ public class AttackRanged : AttackBase
             projectileData.SetBonusEffect(spicyTemplate, flavorMagnitude);
         else if (flavor == RecipeData.Flavors.Sour && sourTemplate != null)
             projectileData.SetBonusEffect(sourTemplate, flavorMagnitude);
-        else if(flavor == RecipeData.Flavors.Sweet || flavor == RecipeData.Flavors.Salty)
+        else if(flavor == RecipeData.Flavors.Sweet || flavor == RecipeData.Flavors.Salty || flavor == RecipeData.Flavors.None)
             projectileData.SetBonusEffect(null, flavorMagnitude);
+
+        projectileData.spawnBonusEffectOnMiss = spawnEffectOnMiss;
 
         //set ingredient data if applicable
         if (ingredientArray != null)

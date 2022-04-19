@@ -149,9 +149,9 @@ public class PlayerData : CharacterData
                 Brain.CommandCompleted = false;
                 Brain.path = null;
 
-                partyUI.ChangeCompanion(member);
+                //partyUI.ChangeCompanion(member);
                 
-                trust.SetTrustEffect(Brain.flavor);
+                //trust.SetTrustEffect(Brain.flavor);
             }
             else Debug.Log(member.name + " : has no brain! cannot add to party");
         }

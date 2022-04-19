@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TutorialPearFeedManager : MonoBehaviour
 {
+    public bool fruitantJoinsParty = false;
     private int food;
     [SerializeField]
     private int maxFood = 2;
@@ -46,7 +47,8 @@ public class TutorialPearFeedManager : MonoBehaviour
 
             if(bridge != null)
                 bridge.TurnOn();
-            
+            if (!fruitantJoinsParty) return;
+
             foreach(GameObject fruitant in fruitantsToAdd)
             {
                 PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
@@ -61,6 +63,7 @@ public class TutorialPearFeedManager : MonoBehaviour
 
     public void SetFollow()
     {
+        if (!fruitantJoinsParty) return;
         Verb = AIData.Protocols.Chase;
         ObjectCriteria = Commander.Criteria.None;
         Object = GameObject.FindGameObjectWithTag("Player");       

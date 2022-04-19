@@ -65,12 +65,27 @@ public class TutorialFlavorInput : FlavorInputManager
         //if we didn't reject it, heal and check if we should morph
         if (!rejected)
         {
-            characterData.DoHeal(99);
-            //FOR TUTORIAL: count how much this feeding adds to the total
-            if (countingActive && (amountFed < limitPerFruitant))
+            bool healed = false;
+            foreach(IngredientData favoriteIngredient in favoriteIngredients)
             {
-                feedManager.Feed(1);
-                amountFed++;
+                if (ingredient == favoriteIngredient)
+                {
+                    characterData.DoHeal(6);
+                    healed = true;
+                }
+                else if ((ingredient.flavors & favoriteIngredient.flavors) > 0)
+                {
+                    characterData.DoHeal(4);
+                    healed = true;
+                }
+            }
+            if (!healed) characterData.DoHeal(2);
+
+            //FOR TUTORIAL: count how much this feeding adds to the total
+            if (countingActive && characterData.health >= characterData.maxHealth)
+            {
+                feedManager.Feed(99);
+                //amountFed++;
             }
 
             //FOR TUTORIAL ONLY: Only allow morphing once the tutorial reaches that step

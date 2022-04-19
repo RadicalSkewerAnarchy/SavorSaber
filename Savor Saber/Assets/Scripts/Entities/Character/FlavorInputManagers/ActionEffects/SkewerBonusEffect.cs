@@ -8,7 +8,6 @@ public class SkewerBonusEffect : MonoBehaviour
     protected GameObject target;
     protected CharacterData targetData;
     public int magnitude = 1;
-
     // Start is called before the first frame update
     void Start()
     {

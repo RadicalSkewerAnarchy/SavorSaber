@@ -28,8 +28,9 @@ public class TrustMeter : MonoBehaviour
     private float baseSpeed;
     private int baseMaxHealth;
 
-    public GameObject shieldTemplate;
-    public GameObject teslaTemplate;
+    public GameObject saltyTemplate;
+    public GameObject sourTemplate;
+    public GameObject spicyTemplate;
     private GameObject currentObject;
     private bool currentObjectFollowsPlayer = false;
 
@@ -127,13 +128,14 @@ public class TrustMeter : MonoBehaviour
                 //Debug.Log("Setting trust effect for spicy");
                 currentObjectFollowsPlayer = false;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Spicy, (int)stage);
+                somaSkewer.spicyTemplate = spicyTemplate;
                 trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " DoT");
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
                 //Debug.Log("Setting trust effect for salty");
                 currentObjectFollowsPlayer = true;
-                currentObject = Instantiate(shieldTemplate, transform.position, Quaternion.identity);
+                currentObject = Instantiate(saltyTemplate, transform.position, Quaternion.identity);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
                 somaSkewer.SetFlavor(RecipeData.Flavors.Salty, (int)stage);
                 trustText.UpdateDisplayText("Trust effect: Shield");
@@ -143,7 +145,15 @@ public class TrustMeter : MonoBehaviour
                 //Debug.Log("Setting trust effect for sour");
                 currentObjectFollowsPlayer = false;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Sour, (int)stage);
+                somaSkewer.sourTemplate = sourTemplate;
+                somaSkewer.spawnEffectOnMiss = true;
                 trustText.UpdateDisplayText("Trust effect: Tesla Skewers");
+                break;
+
+            case RecipeData.Flavors.None:
+                Debug.Log("Setting trust effect for None");
+                somaSkewer.SetFlavor(RecipeData.Flavors.None, 1);
+                ResetPlayerParameters();
                 break;
         }
     }
