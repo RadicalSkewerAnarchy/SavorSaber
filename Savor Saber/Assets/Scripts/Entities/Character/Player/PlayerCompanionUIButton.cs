@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerCompanionUIButton : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerCompanionUIButton : MonoBehaviour
     /// </summary>
     public IngredientData fruitantData;
     public PlayerCompanionSummon summoner;
+
+    public Image silhouette;
     // Start is called before the first frame update
     void Start()
     {

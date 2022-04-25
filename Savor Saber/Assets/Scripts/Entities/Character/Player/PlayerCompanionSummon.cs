@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SerializableCollections;
 
 public class PlayerCompanionSummon : MonoBehaviour
 {
+
+    public static PlayerCompanionSummon instance;
 
     //references to other relevant gameobjects
     private GameObject player;
@@ -59,6 +62,16 @@ public class PlayerCompanionSummon : MonoBehaviour
         baseFixedTimeScale = Time.fixedDeltaTime;
     }
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+            Destroy(gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -77,6 +90,19 @@ public class PlayerCompanionSummon : MonoBehaviour
         if (data.displayName == null) Debug.LogError("PlayerCompanionSummon Error: IngredientData display name is null");
         Debug.Log("Unlocking fruitant: " + data.displayName);
         unlockedFruitants.Add(data.displayName, data);
+
+        //turn on button
+        PlayerCompanionUIButton[] buttonArray = GetComponentsInChildren<PlayerCompanionUIButton>(true);
+        foreach(PlayerCompanionUIButton button in buttonArray)
+        {
+            if(button.fruitantData.displayName == data.displayName)
+            {
+                Debug.Log("Found button matching unlocked fruitant");
+                GameObject buttonObj = button.gameObject;
+                buttonObj.GetComponent<Button>().interactable = true;
+                button.silhouette.color = Color.white;
+            }
+        }
     }
 
     public void SummonCompanion(string fruitantName)
@@ -157,7 +183,7 @@ public class PlayerCompanionSummon : MonoBehaviour
 
     private IEnumerator Cooldown(float timeActive)
     {
-        Debug.Log(timeActive);
+        //Debug.Log(timeActive);
         companionCooldownSlider.value = (float)(timeActive / cooldownTime);
         if (timeActive >= cooldownTime)
         {
