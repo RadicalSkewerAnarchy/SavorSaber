@@ -28,7 +28,7 @@ public class ShadowTint : MonoBehaviour
             ShadowTint shadow = collision.gameObject.GetComponentInChildren<ShadowTint>();
             if(shadow != null)
             {
-                Debug.Log("Detecing shadow on enter");
+                //Debug.Log("Detecing shadow on enter");
                 SpriteRenderer shadowSR = shadow.gameObject.GetComponent<SpriteRenderer>();
                 shadowSR.enabled = false;
             }

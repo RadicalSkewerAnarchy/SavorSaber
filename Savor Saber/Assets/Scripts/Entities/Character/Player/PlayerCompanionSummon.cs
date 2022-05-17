@@ -12,6 +12,7 @@ public class PlayerCompanionSummon : MonoBehaviour
     //references to other relevant gameobjects
     private GameObject player;
     private PlayerData somaData;
+    private AudioSource sfx;
 
     private GameObject companion;
     private Slider companionTimerSlider;
@@ -51,11 +52,13 @@ public class PlayerCompanionSummon : MonoBehaviour
 
     //time scale fields
     private float baseFixedTimeScale;
+    public float timeDilation = 0.1f;
 
     // Start is called before the first frame update
     void Start()
     {
         player = transform.parent.gameObject;
+        sfx = GetComponent<AudioSource>();
         somaData = player.GetComponent<PlayerData>();
         cooldownTimerTic = new WaitForSeconds(ticLength);
         activeTimerTic = new WaitForSeconds(ticLength);
@@ -97,7 +100,7 @@ public class PlayerCompanionSummon : MonoBehaviour
         {
             if(button.fruitantData.displayName == data.displayName)
             {
-                Debug.Log("Found button matching unlocked fruitant");
+                //Debug.Log("Found button matching unlocked fruitant");
                 GameObject buttonObj = button.gameObject;
                 buttonObj.GetComponent<Button>().interactable = true;
                 button.silhouette.color = Color.white;
@@ -148,15 +151,17 @@ public class PlayerCompanionSummon : MonoBehaviour
         menuCanvas.SetActive(false);
         MenuOpen = false;
         FlagManager.SetFlag(menuOpenFlag, "False");
+        sfx.Play();
     }
 
     public void OpenUI()
     {
-        Time.timeScale = 0.1f;
+        Time.timeScale = timeDilation;
         Time.fixedDeltaTime = Time.timeScale * 0.02f;
         menuCanvas.SetActive(true);
         MenuOpen = true;
         FlagManager.SetFlag(menuOpenFlag, "True");
+        sfx.Play();
     }
 
     #endregion
@@ -189,7 +194,7 @@ public class PlayerCompanionSummon : MonoBehaviour
         {
             isOnCooldown = false;
             //Debug.Log("Cooldown elapsed, can now summon again");
-            companionCooldownText.text = "Ready to help!";
+            companionCooldownText.text = "Ready to Go!";
             yield return null;
         }
         else
