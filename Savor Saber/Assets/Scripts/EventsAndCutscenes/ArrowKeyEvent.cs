@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class ArrowKeyEvent : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class ArrowKeyEvent : MonoBehaviour
     private ControlProfile currKeyControls = null;
     private bool controllerMode = false;
     public UnityEvent onFinish;
+    public Slider BootUpSlider;
 
     private void Start()
     {
@@ -58,6 +60,7 @@ public class ArrowKeyEvent : MonoBehaviour
                 {                    
                     joyStick.transform.position = joyTr;
                     joyCr.cr = StartCoroutine(Shake(joyCr, joyStick.gameObject, 0.2f, 0.2f, 0.05f));
+                    BootUpSlider.value = count / pressGoal;
                 }
             }
         }
@@ -82,6 +85,7 @@ public class ArrowKeyEvent : MonoBehaviour
                         StopCoroutine(upCr.cr);
                     up.transform.position = upTr;
                     upCr.cr = StartCoroutine(Shake(upCr, up.gameObject, 0.2f, 0.2f, 0.05f));
+                    BootUpSlider.value = count / pressGoal;
                 }
 
             }
@@ -95,6 +99,8 @@ public class ArrowKeyEvent : MonoBehaviour
                         StopCoroutine(downCr.cr);
                     down.transform.position = downTr;
                     downCr.cr = StartCoroutine(Shake(downCr, down.gameObject, 0.2f, 0.2f, 0.05f));
+                    BootUpSlider.value = count / pressGoal;
+
                 }
 
             }
@@ -108,6 +114,7 @@ public class ArrowKeyEvent : MonoBehaviour
                         StopCoroutine(leftCr.cr);
                     left.transform.position = leftTr;
                     leftCr.cr = StartCoroutine(Shake(leftCr, left.gameObject, 0.2f, 0.2f, 0.05f));
+                    BootUpSlider.value = count / pressGoal;
                 }
 
             }
@@ -121,6 +128,7 @@ public class ArrowKeyEvent : MonoBehaviour
                         StopCoroutine(rightCr.cr);
                     right.transform.position = rightTr;
                     rightCr.cr = StartCoroutine(Shake(rightCr, right.gameObject, 0.2f, 0.2f, 0.05f));
+                    BootUpSlider.value = count / pressGoal;
                 }
 
             }

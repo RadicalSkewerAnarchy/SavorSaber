@@ -9,6 +9,7 @@ public class CompanionSpawner : MonoBehaviour
     public string valueToCheck;
     private GameObject player;
     private GameObject companion;
+    public GameObject MountTemplate;
 
     private void Awake()
     {
@@ -19,7 +20,31 @@ public class CompanionSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if((requireFlag && FlagManager.GetFlag(flagToCheck) == valueToCheck) || !requireFlag)
+        //SpawnCompanion();
+        SpawnMount();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
+    private void SpawnMount()
+    {
+        PlayerController somaController = player.GetComponent<PlayerController>();
+        if (somaController.riding || somaController.loadRiding)
+        {
+            Debug.Log("Soma entered zone while riding");
+            GameObject mount = Instantiate(MountTemplate, player.transform.position, Quaternion.identity);
+            mount.GetComponentInChildren<FruitantMount>().MountOnLoad();
+            somaController.despawnOnDismount = true;
+        }
+    }
+
+    private void SpawnCompanion()
+    {
+        if ((requireFlag && FlagManager.GetFlag(flagToCheck) == valueToCheck) || !requireFlag)
         {
             Debug.Log("CompanionSpawner: Flag check passed or not required");
             //move morphed companion to player
@@ -50,11 +75,5 @@ public class CompanionSpawner : MonoBehaviour
         {
             companion.SetActive(false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

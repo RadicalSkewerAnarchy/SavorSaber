@@ -13,7 +13,9 @@ public class PlayerCompanionSummon : MonoBehaviour
     private GameObject player;
     private PlayerData somaData;
     private AudioSource sfx;
+    public PlayerController somaController;
 
+    public PlayerCompanionUIButton[] buttons;
     private GameObject companion;
     private Slider companionTimerSlider;
     public Slider companionCooldownSlider;
@@ -53,6 +55,11 @@ public class PlayerCompanionSummon : MonoBehaviour
     //time scale fields
     private float baseFixedTimeScale;
     public float timeDilation = 0.1f;
+
+    //sfx
+    public AudioClip notReadyAudio;
+    public AudioClip readyAudio;
+    public AudioSource statusAudioPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -113,6 +120,8 @@ public class PlayerCompanionSummon : MonoBehaviour
         if (isOnCooldown)
         {
             Debug.Log("Cannot summon companion while on cooldown");
+            statusAudioPlayer.clip = notReadyAudio;
+            statusAudioPlayer.Play();
             CloseUI();
             return;
         }
@@ -123,7 +132,7 @@ public class PlayerCompanionSummon : MonoBehaviour
         companionTimerSlider = companion.GetComponent<CompanionTimerSlider>().slider;
         companionTimerSlider.gameObject.SetActive(true);
         isOnCooldown = true;
-        companionCooldownText.text = "Please wait...";
+        companionCooldownText.text = "Please wait";
 
         StartCoroutine(Cooldown(0));
         StartCoroutine(DelayedAI(companion));
@@ -137,7 +146,7 @@ public class PlayerCompanionSummon : MonoBehaviour
     public void ToggleUI()
     {
         //toggle the menu
-        if (InputManager.GetButtonDown(control, axis))
+        if (InputManager.GetButtonDown(control, axis) && FlagManager.GetFlag("CanSummonCompanion") == "True")
         {
             if (MenuOpen) CloseUI();
             else OpenUI();
@@ -146,12 +155,17 @@ public class PlayerCompanionSummon : MonoBehaviour
 
     public void CloseUI()
     {
+        sfx.Play();
+        foreach (PlayerCompanionUIButton button in buttons)
+        {
+            button.ShrinkButton();
+        }
         Time.timeScale = 1;
         Time.fixedDeltaTime = baseFixedTimeScale;
         menuCanvas.SetActive(false);
         MenuOpen = false;
         FlagManager.SetFlag(menuOpenFlag, "False");
-        sfx.Play();
+        
     }
 
     public void OpenUI()
@@ -195,6 +209,8 @@ public class PlayerCompanionSummon : MonoBehaviour
             isOnCooldown = false;
             //Debug.Log("Cooldown elapsed, can now summon again");
             companionCooldownText.text = "Ready to Go!";
+            statusAudioPlayer.clip = readyAudio;
+            statusAudioPlayer.Play();
             yield return null;
         }
         else
@@ -211,8 +227,17 @@ public class PlayerCompanionSummon : MonoBehaviour
         if(timeActive >= maxActiveTime)
         {
             //Debug.Log("Timer elapsed, companion retreating");
-            Destroy(companion);
-            yield return null;
+            if (somaController.riding)
+            {
+                Debug.Log("Soma is riding, do not despawn");
+                somaController.despawnOnDismount = true;
+                yield return null;
+            }
+            else
+            {
+                Destroy(companion);
+                yield return null;
+            }
         }
         else
         {

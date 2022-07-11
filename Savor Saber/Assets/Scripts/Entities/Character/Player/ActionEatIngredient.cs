@@ -13,6 +13,7 @@ public class ActionEatIngredient : MonoBehaviour
 
     private Inventory inv;
     private TrustMeter trust; //used because the code to apply flavor effects to the player already exists here
+    private PlayerData PData;
 
     private WaitForSeconds IngredientEffectTimer;
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class ActionEatIngredient : MonoBehaviour
         inv = GetComponent<Inventory>();
         trust = GetComponent<TrustMeter>();
         IngredientEffectTimer = new WaitForSeconds(IngredientEffectCooldown);
+        PData = GetComponent<PlayerData>();
     }
 
     // Update is called once per frame
@@ -34,6 +36,7 @@ public class ActionEatIngredient : MonoBehaviour
 
     private void EatIngredient()
     {
+        PData.DoHeal(1);
         IngredientData ingredient = inv.RemoveFromSkewer();
         RecipeData.Flavors flavor = ingredient.flavors;
         trust.SetTrustEffect(flavor);

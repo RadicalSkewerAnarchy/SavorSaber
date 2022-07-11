@@ -149,11 +149,13 @@ public class FruitantMount : MonoBehaviour
         // mounted
         mounted = true;
         demounting = false;
+        controller.currentSaddle = this.gameObject;
 
         // dust
         dust.Play();
 
         fruitantData.Speed = mountSpeed;
+        FlagManager.SetFlag("CanSummonCompanion", "False");
     }
 
     public void Demount()
@@ -179,8 +181,16 @@ public class FruitantMount : MonoBehaviour
         // mounted
         mounted = false;
         demounting = true;
+        controller.currentSaddle = null;
 
         fruitantData.Speed = originalSpeed;
+
+        FlagManager.SetFlag("CanSummonCompanion", "True");
+        if (controller.despawnOnDismount)
+        {
+            controller.despawnOnDismount = false;
+            Destroy(transform.parent.gameObject);
+        }
     }
 
     void Update()

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -143,14 +143,17 @@ public class TextMacros : MonoBehaviour
         {KeyCode.A, "KeyA" },
         {KeyCode.S, "KeyS" },
         {KeyCode.D, "KeyD" },
+        {KeyCode.F, "KeyF" },
         {KeyCode.Z, "KeyZ" },
         {KeyCode.X, "KeyX" },
+        {KeyCode.R, "KeyR" },
         {KeyCode.C, "KeyC" },
         {KeyCode.UpArrow, "KeyUp" },
         {KeyCode.DownArrow, "KeyDown" },
         {KeyCode.LeftArrow, "KeyLeft" },
         {KeyCode.RightArrow, "KeyRight" },
         {KeyCode.Space, "KeySpace" },
+        {KeyCode.LeftShift, "KeyShift" },
         {KeyCode.Joystick1Button0, "JoyA" },
         {KeyCode.Joystick1Button1, "JoyB" },
         {KeyCode.Joystick1Button2, "JoyX" },
@@ -186,6 +189,12 @@ public class TextMacros : MonoBehaviour
                 break;
             case "interact":
                 imgKey = controlMap[keyBinds[Control.Interact]];
+                break;
+            case "eat":
+                imgKey = controlMap[keyBinds[Control.Cancel]];
+                break;
+            case "dash":
+                imgKey = controlMap[keyBinds[Control.Dash]];
                 break;
         }
         return ImgMacro("img", imgKey);

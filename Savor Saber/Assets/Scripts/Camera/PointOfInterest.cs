@@ -8,10 +8,11 @@ public class PointOfInterest : MonoBehaviour
     public float maxPullDistance = 5;
     public float maxPullSpeed = 100;
     public float snapTime = 0.75f;
+    public bool enableCameraPull = true;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && enableCameraPull)
         {
             //Debug.Log("Capturing camera");
             var cam = collision.gameObject.GetComponent<CameraController>();
@@ -20,7 +21,7 @@ public class PointOfInterest : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && enableCameraPull)
         {
             //Debug.Log("Releasing Camera");
             collision.gameObject.GetComponent<CameraController>().ReleaseTarget();

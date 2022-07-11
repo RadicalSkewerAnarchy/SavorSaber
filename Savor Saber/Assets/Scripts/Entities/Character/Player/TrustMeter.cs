@@ -121,7 +121,7 @@ public class TrustMeter : MonoBehaviour
                 somaController.dashRechargeMultiplier = (int)stage + 1;
                 somaController.maxDashes = 3 + (int)stage;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Sweet, (int)stage);
-                trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " dash");
+                trustText.UpdateDisplayText("Ing. Bonus: +" + (int)stage + " dash");
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
@@ -129,7 +129,7 @@ public class TrustMeter : MonoBehaviour
                 currentObjectFollowsPlayer = false;
                 somaSkewer.SetFlavor(RecipeData.Flavors.Spicy, (int)stage);
                 somaSkewer.spicyTemplate = spicyTemplate;
-                trustText.UpdateDisplayText("Trust effect: +" + (int)stage + " DoT");
+                trustText.UpdateDisplayText("Ing. Bonus: +" + (int)stage + " DoT");
                 break;
             //salty companions generate a shield
             case RecipeData.Flavors.Salty:
@@ -138,7 +138,7 @@ public class TrustMeter : MonoBehaviour
                 currentObject = Instantiate(saltyTemplate, transform.position, Quaternion.identity);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
                 somaSkewer.SetFlavor(RecipeData.Flavors.Salty, (int)stage);
-                trustText.UpdateDisplayText("Trust effect: Shield");
+                trustText.UpdateDisplayText("Ing. Bonus: Shield");
                 break;
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
@@ -147,7 +147,7 @@ public class TrustMeter : MonoBehaviour
                 somaSkewer.SetFlavor(RecipeData.Flavors.Sour, (int)stage);
                 somaSkewer.sourTemplate = sourTemplate;
                 somaSkewer.spawnEffectOnMiss = true;
-                trustText.UpdateDisplayText("Trust effect: Tesla Skewers");
+                trustText.UpdateDisplayText("Ing. Bonus: Tesla Skewers");
                 break;
 
             case RecipeData.Flavors.None:

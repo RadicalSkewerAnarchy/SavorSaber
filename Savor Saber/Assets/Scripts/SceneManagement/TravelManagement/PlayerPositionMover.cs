@@ -21,6 +21,8 @@ public class PlayerPositionMover : MonoBehaviour
     public SceneReference[] alternateScenes;
     public string flag;
     public string value;
+
+    public bool emergencyDismountFlag = false; //temporary measure to avoid horseradishes breaking the game
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +40,16 @@ public class PlayerPositionMover : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D other)
     {
+
+
         if (other.gameObject.tag == "Player")
         {
             playerObject = other;
             player = other.gameObject;
+            if (emergencyDismountFlag)
+            {
+                player.GetComponent<PlayerController>().currentSaddle.GetComponent<FruitantMount>().Demount();
+            }
             m_onStart = MoveToNewPosition;
             if(hasAlternateScenes && FlagManager.GetFlag(flag) == value)
                 sceneLoader.LoadScenes(alternateScenes, MoveToNewPosition, null);

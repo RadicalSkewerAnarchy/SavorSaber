@@ -55,6 +55,8 @@ public class PlayerController : EntityController
     public float CurrDashes { get; private set; }
     private bool dashing = false;
     public bool riding = false;
+    public GameObject currentSaddle;
+    public bool despawnOnDismount = false;
     public bool loadRiding = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
