@@ -132,6 +132,7 @@ public class RadialAttack : MonoBehaviour
                 Debug.Log("SpreadShot: Setting attack color to red");
                 currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
                 currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Blue");
+                currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("White");
                 shooterRenderer.material = redMaterial;
                 currentColor = BulletColors.Red;
                 break;
@@ -139,6 +140,7 @@ public class RadialAttack : MonoBehaviour
                 Debug.Log("SpreadShot: Setting attack color to blue");
                 currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
                 currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("Red");
+                currentMask = collision.collidesWith = currentMask ^ LayerMask.GetMask("White");
                 shooterRenderer.material = blueMaterial;
                 currentColor = BulletColors.Blue;
                 break;
@@ -146,6 +148,7 @@ public class RadialAttack : MonoBehaviour
                 Debug.Log("SpreadShot: Setting attack color to white");
                 currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Red");
                 currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("Blue");
+                currentMask = collision.collidesWith = currentMask | LayerMask.GetMask("White");
                 shooterRenderer.material = whiteMaterial;
                 currentColor = BulletColors.White;
                 break;

@@ -72,4 +72,10 @@ public class PoweredGenerator : PoweredObject
 
 
     }
+    public void Break(bool affectTargets = false)
+    {
+        if(affectTargets)
+            ShutOff();
+        animator.Play("Dead");
+    }
 }
