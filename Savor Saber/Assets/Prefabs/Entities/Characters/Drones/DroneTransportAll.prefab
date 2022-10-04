@@ -349,23 +349,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
   Speed: 2
   Perception: 10
   MeleeAttackThreshold: 1
   RangeAttackThreshold: 5
   EngageHostileThreshold: 0
-  maxHealth: 2
-  health: 2
+  maxHealth: 1
+  health: 1
   overchargeHealth: 0
   PartySize: 3
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
   damageDealt: 0
   entitiesKilled: 0
-  initialFear: 0
-  initialHunger: 0
-  initialHostility: 1
-  initialFriendliness: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
@@ -376,6 +374,11 @@ MonoBehaviour:
   eatingParticleBurst: {fileID: 7230085629594245623, guid: 59600f8f9bc35c94e9a4464cfc67caf7,
     type: 3}
   healthBar: {fileID: 1508445450}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -400,6 +403,7 @@ MonoBehaviour:
   meleeHunter: 1
   rideVector: {x: 0, y: 0, z: 0}
   path: []
+  flavor: 0
 --- !u!114 &117430866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -412,6 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb03b6bfcd7e80f44959db2cca4760d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pathfinderColor: {r: 0, g: 0, b: 0, a: 0}
+  showPathfindingColor: 0
 --- !u!114 &117430865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +473,9 @@ MonoBehaviour:
   meleeAttackDuration: 0.5
   meleeAttackDelay: 0.25
   meleeAttackDimensions: {x: 2, y: 2}
+  explodeEffects: 0
+  explodeTemplate: {fileID: 0}
+  explodePosition: {fileID: 0}
   isAttacking: 0
   meleeSFX: {fileID: 0}
 --- !u!114 &117430863
@@ -481,16 +490,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTransformWhenFed: 0
+  isCompanion: 0
   favoriteIngredients: []
+  favoriteFlavor: 0
   rejectedIngredients: []
   rewardSFX: {fileID: 8300000, guid: e8088f941d78a8747ac0eed3b4902cdb, type: 3}
   rejectSFX: {fileID: 0}
-  charmTime: 0
-  shieldSize: 1
   dotTicLength: 1
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
-  rewardItem: {fileID: 0}
+  spawnParticles: {fileID: 0}
   sugarCount: 0
   rushed: 0
   damageFromBaseSkewer: 1

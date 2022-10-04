@@ -16,6 +16,7 @@ public class Furnace : FlavorInputManager
     public bool active = true;
     public RecipeData.Flavors favoriteFlavors;
     public bool useFavoriteFlavors = true;
+    private bool useFavoriteIngredient = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,8 @@ public class Furnace : FlavorInputManager
         {
             useFavoriteFlavors = false;
         }
+        if (favoriteIngredients.Length == 0) useFavoriteIngredient = true;
+        else useFavoriteIngredient = false;
 
         //set animation according to favorite flavor
         Animator animator = GetComponent<Animator>();
@@ -58,6 +61,15 @@ public class Furnace : FlavorInputManager
                 return;
             }
                 
+        }
+        if (useFavoriteIngredient)
+        {
+            bool isFavorite = false;
+            foreach(IngredientData favorite in favoriteIngredients)
+            {
+                if (ingredient == favorite) isFavorite = true;
+            }
+            if (!isFavorite) return;
         }
         if (targetsActive)
         {
