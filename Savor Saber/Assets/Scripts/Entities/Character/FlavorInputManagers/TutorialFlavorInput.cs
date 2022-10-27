@@ -16,6 +16,7 @@ public class TutorialFlavorInput : FlavorInputManager
     private bool countingActive = false;
     private bool morphingActive = false;
     public string flagToSetOnMorph;
+    public bool tutorialComplete = false;
 
     private void Start()
     {

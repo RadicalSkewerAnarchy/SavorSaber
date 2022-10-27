@@ -23,6 +23,9 @@ public class TutorialPearFeedManager : MonoBehaviour
     private AIData.Protocols Verb;
     private Vector2 Location = Vector2.zero;
     private Rigidbody2D fruitantRB;
+
+    private bool active = true; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,9 +38,21 @@ public class TutorialPearFeedManager : MonoBehaviour
     {
         
     }
+    
+    public void Activate()
+    {
+        active = true;
+    }
+
+    public void Deactivate()
+    {
+        active = false;
+    }
 
     public void Feed(int numFood)
     {
+        if (!active) return;
+
         food += numFood;
         if(food >= maxFood)
         {

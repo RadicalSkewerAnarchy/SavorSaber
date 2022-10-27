@@ -63,7 +63,7 @@ public class DialogPlayer : MonoBehaviour
     {
         if (state == State.Inactive)
             return;
-        if (InputManager.GetButtonDown(Control.Confirm))
+        if (InputManager.GetButtonDown(Control.Confirm) || InputManager.GetButtonDown(Control.Skewer))
             state = state.Next();
     }
 

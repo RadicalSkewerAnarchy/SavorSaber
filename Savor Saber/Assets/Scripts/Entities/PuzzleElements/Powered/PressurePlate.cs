@@ -13,6 +13,7 @@ public class PressurePlate : PoweredObject
 
     public Sprite onSprite;
     public Sprite offSprite;
+    public Sprite disabledSprite;
 
     private bool lastOn = false;
     private bool hasChangedStates = false;
@@ -122,6 +123,12 @@ public class PressurePlate : PoweredObject
             }
             return false;
         }
+    }
+
+    public override void ShutOff()
+    {
+        base.ShutOff();
+        sr.sprite = disabledSprite;
     }
 
 }
