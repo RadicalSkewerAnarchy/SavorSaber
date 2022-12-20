@@ -151,6 +151,10 @@ public class PlayerCompanionSummon : MonoBehaviour
             if (MenuOpen) CloseUI();
             else OpenUI();
         }
+        else if(InputManager.GetButtonDown(Control.Cancel) && MenuOpen)
+        {
+            CloseUI();
+        }
     }
 
     public void CloseUI()

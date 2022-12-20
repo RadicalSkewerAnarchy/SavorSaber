@@ -32,6 +32,7 @@ public class DialogPlayer : MonoBehaviour
     protected RectTransform dialogRectTransform;
 
     protected TextMeshProUGUI dialogText;
+    protected Text dialogNameTag;
     protected Image dialogImage;
     private AudioSource audioPlayer;
     #endregion
@@ -46,6 +47,9 @@ public class DialogPlayer : MonoBehaviour
             dialogRectTransform = dialogBox.GetComponent<RectTransform>();
             dialogBox.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             dialogText = dialogBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();//dialogBox.transform.GetChild(2).GetComponent<Text>();
+
+            GameObject nameTagObject = dialogBox.transform.GetComponentInChildren<DialogNameTag>().gameObject;
+            dialogNameTag = nameTagObject.GetComponent<Text>();
             audioPlayer = dialogBox.GetComponent<AudioSource>();
             //set dialog box portrait
             Transform portrait = dialogBox.transform.GetChild(1);
@@ -78,6 +82,7 @@ public class DialogPlayer : MonoBehaviour
             StopAllCoroutines();
         var dialogData = actor.GetComponent<DialogData>();
         dialogImage.sprite = dialogData.portraitDictionary[item.emotion];
+        dialogNameTag.text = dialogData.displayName;
         if (dialogData.textBlipSound != null)
             audioPlayer.clip = dialogData.textBlipSound;
         Visible = true;

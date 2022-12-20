@@ -66,4 +66,13 @@ public class FlagManager : MonoBehaviour
 
         return instance.flags;
     }
+    
+    public void SaveFlags()
+    {
+        for(int i = 0; i < flags.Count; i++)
+        {
+            
+        }
+        
+    }
 }
