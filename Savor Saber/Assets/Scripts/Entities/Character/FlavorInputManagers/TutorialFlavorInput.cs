@@ -20,7 +20,6 @@ public class TutorialFlavorInput : FlavorInputManager
 
     private void Start()
     {
-        InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
 

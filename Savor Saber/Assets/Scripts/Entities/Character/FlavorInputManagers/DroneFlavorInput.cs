@@ -19,7 +19,6 @@ public class DroneFlavorInput : FlavorInputManager
     // Start is called before the first frame update
     void Start()
     {
-        InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         characterData = GetComponent<AIData>();
 
