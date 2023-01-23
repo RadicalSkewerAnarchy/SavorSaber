@@ -57,6 +57,7 @@ public class ActionLimitBreak : PoweredObject
             target.ShutOff();
         foreach (GameObject targetObject in objectsToEnable)
             targetObject.SetActive(false);
+        vfx.Stop();
     }
 
     protected IEnumerator StartActiveTimer()

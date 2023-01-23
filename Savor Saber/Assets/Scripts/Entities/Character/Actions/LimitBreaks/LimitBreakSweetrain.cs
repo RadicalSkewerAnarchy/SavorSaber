@@ -18,7 +18,13 @@ public class LimitBreakSweetrain : PoweredObject
         
     }
 
-    private void GetTargets()
+    public override void TurnOn()
+    {
+        base.TurnOn();
+        HealTargets();
+    }
+
+    private void HealTargets()
     {
         CharacterData data;
         healTargets = GameObject.FindGameObjectsWithTag("Prey");

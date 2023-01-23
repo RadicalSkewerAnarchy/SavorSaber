@@ -38,7 +38,6 @@ public class FlavorInputManager : MonoBehaviour
 
     private void Start()
     {
-        InitializeDictionary();
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
         // differentiate between ai and char data
@@ -54,30 +53,6 @@ public class FlavorInputManager : MonoBehaviour
         }
     }
 
-    public void InitializeDictionary()
-    {
-        flavorCountDictionary.Add(RecipeData.Flavors.Sweet, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Sour, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Spicy, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Salty, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Umami, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Bitter, 0);
-        flavorCountDictionary.Add(RecipeData.Flavors.Acquired, 0);
-    }
-
-    public void ResetDictionary()
-    {
-        flavorCountDictionary[RecipeData.Flavors.Sweet] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Sour] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Spicy] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Salty] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Umami] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Bitter] = 0;
-        flavorCountDictionary[RecipeData.Flavors.Acquired] = 0;
-
-        ingredientCountDictionary.Clear();
-    }
-
     public virtual void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
     {
         //Debug.Log(this.gameObject.name + " is eating " + ingredient.displayName);
@@ -90,6 +65,11 @@ public class FlavorInputManager : MonoBehaviour
                 rejected = true;
                 //spit out the rejected object
                 SpawnRejectedIngredient(ingredient);
+                if (sfxPlayer != null)
+                {
+                    sfxPlayer.clip = rejectSFX;
+                    sfxPlayer.Play();
+                }
             }
         }
         //if we didn't reject it, heal and check if we should morph
@@ -144,72 +124,10 @@ public class FlavorInputManager : MonoBehaviour
     //OLD FEEDING CODE - OUTDATED, KEPT FOR LEGACY PURPOSES
     public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
     {
-
-        bool healed = false;
-        bool rejected = false;
-        foreach(IngredientData data in ingredientArray)
+       foreach (IngredientData ing in ingredientArray)
         {
-            bool isFavorite = false;
-            bool isReject = false;
-            foreach(IngredientData favoriteIngredient in favoriteIngredients)
-            {
-                if(data == favoriteIngredient)
-                {
-                    //healing with a favorite ingredient is very effective
-                    characterData.DoHeal(99);
-                    healed = true;
-                    isFavorite = true;
-                }
-            }
-            foreach (IngredientData rejectedIngredient in rejectedIngredients)
-            {
-                if (data == rejectedIngredient)
-                {
-                    rejected = true;
-                    isReject = true;
-                    SpawnRejectedIngredient(rejectedIngredient);
-                    //spit out the rejected object
-                    //GameObject rejectedObject = Instantiate(rejectedObjectTemplate, transform.position, Quaternion.identity);
-                    //SpriteRenderer rejectedSR = rejectedObject.GetComponent<SpriteRenderer>();
-                    //SkewerableObject rejectedSO = rejectedObject.GetComponent<SkewerableObject>();
-                    //rejectedSR.sprite = rejectedIngredient.image;
-                    //rejectedSO.data = rejectedIngredient;
-                }
-            }
-            //heal mildly if neither favorite nor reject
-            if(!isFavorite && !isReject)
-            {
-                characterData.DoHeal(3);
-                healed = true;
-            }
-        }
-
-        //play audio based on what happened during this feeding
-        if (healed && !rejected)
-        {
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rewardSFX;
-                sfxPlayer.Play();
-            }
-        }
-        else if (rejected && !healed)
-        {
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rejectSFX;
-                sfxPlayer.Play();
-            }
-            Debug.Log("wtf, why would you feed me this");
-        }
-        else if(rejected && healed)
-        {
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rewardSFX;
-                sfxPlayer.Play();
-            }
-            Debug.Log("wtf, why would you feed me this");
+            PlayerData data = null;
+            Feed(ing, fedByPlayer, data);
         }
     }
 
