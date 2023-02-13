@@ -31,7 +31,7 @@ public class LycheeData : AIData
         {
             case LifeState.overcharged:
                 this.GetComponent<SpriteRenderer>().color = Color.magenta;
-                FlavorInputManager fim = GetComponent<FlavorInputManager>();
+                OverchargeSugarRush fim = GetComponent<OverchargeSugarRush>();
                 fim.SugarStack(Mathf.Max(this.health - this.maxHealth, 0));
                 break;
             default:

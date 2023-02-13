@@ -112,23 +112,12 @@ public class FlavorInputManager : MonoBehaviour
         }
     }
 
-
     public virtual void PlaySpawnParticles()
     {
         if (spawnParticles != null)
             spawnParticles.Play();
         else
             Debug.Log("FlavorInputManager Error: No particle system");
-    }
-
-    //OLD FEEDING CODE - OUTDATED, KEPT FOR LEGACY PURPOSES
-    public virtual void Feed(IngredientData[] ingredientArray, bool fedByPlayer)
-    {
-       foreach (IngredientData ing in ingredientArray)
-        {
-            PlayerData data = null;
-            Feed(ing, fedByPlayer, data);
-        }
     }
 
     protected void SpawnRejectedIngredient(IngredientData data)
@@ -141,7 +130,7 @@ public class FlavorInputManager : MonoBehaviour
         sfxPlayer.clip = rejectSFX;
         sfxPlayer.Play();
     }
- 
+ /*
     #region SUGAR
     [HideInInspector]
     public int sugarCount = 0;
@@ -242,4 +231,5 @@ public class FlavorInputManager : MonoBehaviour
     }
 
     #endregion
+*/
 }

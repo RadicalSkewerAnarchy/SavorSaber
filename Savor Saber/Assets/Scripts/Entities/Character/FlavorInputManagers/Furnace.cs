@@ -29,8 +29,8 @@ public class Furnace : FlavorInputManager
         {
             useFavoriteFlavors = false;
         }
-        if (favoriteIngredients.Length == 0) useFavoriteIngredient = true;
-        else useFavoriteIngredient = false;
+        if (favoriteIngredients.Length == 0) useFavoriteIngredient = false;
+        else useFavoriteIngredient = true;
 
         //set animation according to favorite flavor
         Animator animator = GetComponent<Animator>();
@@ -50,6 +50,7 @@ public class Furnace : FlavorInputManager
 
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
+        Debug.Log("entering Furnace Feed");
         if (!active)
             return;
 

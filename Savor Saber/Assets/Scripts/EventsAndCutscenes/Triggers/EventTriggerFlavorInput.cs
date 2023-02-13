@@ -9,20 +9,6 @@ using System.Linq;
 public class EventTriggerFlavorInput : FlavorInputManager
 {
     public EventTrigger scene;
-    public override void Feed(IngredientData[] ingredientArray, bool fedbyPlayer)
-    {
-        if (ingredientArray.Length >= 0 && !scene.IsActive)
-        {
-            foreach(var ing in ingredientArray)
-            {
-                if(favoriteIngredients.Any((i) => i == ing))
-                {
-                    scene.Trigger();
-                    return;
-                }
-            }
-        }        
-    }
 
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
     {

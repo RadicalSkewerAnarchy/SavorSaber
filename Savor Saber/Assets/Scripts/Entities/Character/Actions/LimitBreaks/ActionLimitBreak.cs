@@ -37,8 +37,8 @@ public class ActionLimitBreak : PoweredObject
     public override void TurnOn()
     {
         base.TurnOn();
-        animator.SetTrigger("LimitBreak");
-        vfx.Play();
+        if(animator != null) animator.SetTrigger("LimitBreak");
+        if (vfx != null)  vfx.Play();
 
         foreach(PoweredObject target in effects)
             target.TurnOn();
@@ -57,7 +57,7 @@ public class ActionLimitBreak : PoweredObject
             target.ShutOff();
         foreach (GameObject targetObject in objectsToEnable)
             targetObject.SetActive(false);
-        vfx.Stop();
+        if (vfx != null) vfx.Stop();
     }
 
     protected IEnumerator StartActiveTimer()

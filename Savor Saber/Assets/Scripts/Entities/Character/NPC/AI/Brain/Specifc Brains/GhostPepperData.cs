@@ -6,7 +6,7 @@ public class GhostPepperData : AIData
 {
     public GameObject normalProjectile;
     public GameObject overchargedProjectile;
-    private FlavorInputManager fim;
+    private OverchargeCurryBalls fim;
 
     /// <summary>
     /// if enemies around
@@ -77,7 +77,7 @@ public class GhostPepperData : AIData
             case LifeState.overcharged:
                 this.Behavior.projectile = overchargedProjectile;
                 if (fim == null)
-                    fim = GetComponent<FlavorInputManager>();
+                    fim = GetComponent<OverchargeCurryBalls>();
                 fim.CurryBalls(true);
                 this.RangeAttackThreshold = 1;
                 break;

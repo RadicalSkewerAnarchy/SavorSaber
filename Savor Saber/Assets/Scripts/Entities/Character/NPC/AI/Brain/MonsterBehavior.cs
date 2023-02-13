@@ -209,7 +209,8 @@ public class MonsterBehavior : MonoBehaviour
             ingredientArray[0] = ingredient;
 
             // activate flavor input manager
-            flavor.Feed(ingredientArray, fedByPlayer);
+            PlayerData pdata = null;
+            flavor.Feed(ingredient, fedByPlayer, pdata);
 
             // deactivate drop
             drop.SetActive(false);
