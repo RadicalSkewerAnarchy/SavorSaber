@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class LycheeData : AIData
 {
+    private WaitForSeconds secondTic;
+    public int maxTics = 3;
+    private int numTics;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        secondTic = new WaitForSeconds(1);
+    }
+
     public override Protocols DecideProtocol()
     {
         Protocols p = currentProtocol;
@@ -31,11 +41,47 @@ public class LycheeData : AIData
         {
             case LifeState.overcharged:
                 this.GetComponent<SpriteRenderer>().color = Color.magenta;
-                OverchargeSugarRush fim = GetComponent<OverchargeSugarRush>();
-                fim.SugarStack(Mathf.Max(this.health - this.maxHealth, 0));
+                StopAllCoroutines();
+                StartCoroutine(StartHealTics());
                 break;
             default:
                 break;
         }
+    }
+
+    public override void OnStateExit(LifeState s)
+    {
+        base.OnStateExit(s);
+
+        switch (s)
+        {
+            case LifeState.overcharged:
+                this.GetComponent<SpriteRenderer>().color = Color.white;
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    private IEnumerator StartHealTics()
+    {
+        if (numTics <= maxTics)
+        {
+            yield return secondTic;
+            HealTargets();
+        }
+        yield return null;
+    }
+
+    private void HealTargets()
+    {
+        PlayerData pd = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
+        if (pd.health < pd.maxHealth)
+        {
+            pd.DoHeal(1);
+        }
+        StartCoroutine(StartHealTics());
+        numTics++;
     }
 }
