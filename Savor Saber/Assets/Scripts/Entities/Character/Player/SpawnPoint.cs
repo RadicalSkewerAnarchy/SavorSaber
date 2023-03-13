@@ -22,7 +22,7 @@ public class SpawnPoint : MonoBehaviour
     public SceneReference[] alternateScenes;
     private void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
         if (sceneLoader == null)
         {
             sceneLoader = FindObjectOfType<SceneLoadingManager>();

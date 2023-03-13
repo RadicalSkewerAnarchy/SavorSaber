@@ -51,6 +51,7 @@ public class SaltamanderData : AIData
         switch (s)
         {
             case LifeState.overcharged:
+                Debug.Log("Saltamander no longer overcharged");
                 shieldToEnable.SetActive(false);
                 break;
             default:

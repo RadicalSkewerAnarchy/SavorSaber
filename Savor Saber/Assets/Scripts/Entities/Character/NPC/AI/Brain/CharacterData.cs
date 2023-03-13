@@ -62,6 +62,7 @@ public class CharacterData : MonoBehaviour
         public Slider healthBar;
         protected Coroutine barCr = null;
         public UnityEvent deathEvent;
+        public int overchargeTime = 6;
     #endregion
 
 
@@ -178,6 +179,7 @@ public class CharacterData : MonoBehaviour
                 {
                     if (overcharged)
                     {
+                        Debug.Log("Overcharging");
                         if (this.tag == "Prey")
                         {
                             if (ai.currentLifeState == AIData.LifeState.overcharged)
@@ -185,14 +187,14 @@ public class CharacterData : MonoBehaviour
                                 // first stop
                                 StopCoroutine(ai.OverchargeTimer(0));
                                 // then start timer
-                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                                StartCoroutine(ai.OverchargeTimer(overchargeTime));
                             }
                             else
                             {
                                 // set state
                                 ai.currentLifeState = AIData.LifeState.overcharged;
                                 // then start timer
-                                StartCoroutine(ai.OverchargeTimer(ai.overchargeHealth));
+                                StartCoroutine(ai.OverchargeTimer(overchargeTime));
                             }
                         }
                     }

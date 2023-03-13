@@ -7,6 +7,7 @@ public class LycheeData : AIData
     private WaitForSeconds secondTic;
     public int maxTics = 3;
     private int numTics;
+    private bool stopHealing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +41,9 @@ public class LycheeData : AIData
         switch(s)
         {
             case LifeState.overcharged:
+                stopHealing = false;
                 this.GetComponent<SpriteRenderer>().color = Color.magenta;
-                StopAllCoroutines();
+                StopCoroutine(StartHealTics());
                 StartCoroutine(StartHealTics());
                 break;
             default:
@@ -56,8 +58,11 @@ public class LycheeData : AIData
         switch (s)
         {
             case LifeState.overcharged:
+                Debug.Log("Lychee no longer overcharged");
+                stopHealing = true;
                 this.GetComponent<SpriteRenderer>().color = Color.white;
-
+                StopAllCoroutines();
+                
                 break;
             default:
                 break;
@@ -66,6 +71,7 @@ public class LycheeData : AIData
 
     private IEnumerator StartHealTics()
     {
+        if (stopHealing) yield return null;
         if (numTics <= maxTics)
         {
             yield return secondTic;
@@ -76,6 +82,7 @@ public class LycheeData : AIData
 
     private void HealTargets()
     {
+        if (stopHealing) return;
         PlayerData pd = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerData>();
         if (pd.health < pd.maxHealth)
         {

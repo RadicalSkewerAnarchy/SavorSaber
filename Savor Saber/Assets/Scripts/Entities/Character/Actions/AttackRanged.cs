@@ -245,8 +245,10 @@ public class AttackRanged : AttackBase
 
         //play animations
         //OverrideDirection(projectileRotation);
-        controller.Direction = direction;
-        animator.Play(attackName);
+        if(controller != null)
+            controller.Direction = direction;
+        if(animator != null)
+            animator.Play(attackName);
 
         Attacking = true;
         StartCoroutine(EndAttackAfterSeconds(attackDuration));
