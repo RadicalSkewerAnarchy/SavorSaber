@@ -135,8 +135,8 @@ public class AttackRanged : AttackBase
             audioSource.clip = defaultAttackSound;
             audioSource.Play();
         }
-        animator.Play(attackName,0,0);
-
+        if(animator != null)
+            animator.Play(attackName,0,0);
         Direction direction = controller.Direction;
         if (controller is PlayerController)
             if ((controller as PlayerController).riding)

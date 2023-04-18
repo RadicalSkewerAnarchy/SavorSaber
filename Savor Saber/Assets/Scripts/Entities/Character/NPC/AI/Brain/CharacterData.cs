@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 
 //[RequireComponent(typeof(MeleeAttack))]
+
 public class CharacterData : MonoBehaviour
 {
     public Vector2 Position
@@ -18,6 +19,8 @@ public class CharacterData : MonoBehaviour
     public bool armored = false;
 
     #region Main Variables
+
+    protected HealthGatedEvent events;
 
     #region DoT fields
     [HideInInspector]
@@ -71,6 +74,7 @@ public class CharacterData : MonoBehaviour
     void Start()
     {
         InitializeCharacterData();
+        events = GetComponent<HealthGatedEvent>();
     }
 
     protected void InitializeCharacterData()
@@ -92,6 +96,13 @@ public class CharacterData : MonoBehaviour
         if (damage > 0)
         {
             health -= damage;
+
+            //check for health-gated events
+            if(events != null)
+            {
+                events.CheckGateProgress(health);
+            }
+
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {

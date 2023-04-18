@@ -158,6 +158,7 @@ public class AIData : CharacterData
         Protocol = GetComponent<MonsterProtocols>();
         Checks = GetComponent<MonsterChecks>();
         sRenderer = GetComponent<SpriteRenderer>();
+        events = GetComponent<HealthGatedEvent>();
         #endregion
         #region Initialize Data
         InitializeCharacterData();

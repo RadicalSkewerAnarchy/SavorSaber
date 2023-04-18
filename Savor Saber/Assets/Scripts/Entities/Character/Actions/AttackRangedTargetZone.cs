@@ -10,6 +10,9 @@ public class AttackRangedTargetZone : MonoBehaviour
     private string[] tagsToTarget;
     private GameObject currentTarget;
     private AttackRanged shooter;
+    public GameObject explosionTemplate;
+    [SerializeField]
+    private GameObject explosionSpawnPoint;
     public float shotCooldown = 5;
     public bool active = true;
     private WaitForSeconds cooldownTimer;
@@ -34,12 +37,12 @@ public class AttackRangedTargetZone : MonoBehaviour
 
     private void Shoot()
     {
-        Debug.Log("Entering Shoot() loop of static turret");
-        Debug.Log("Turret target is " + currentTarget);
+        //Debug.Log("Entering Shoot() loop of static turret");
+        //Debug.Log("Turret target is " + currentTarget);
         if (currentTarget != null)
         {
             shooter.Attack(currentTarget.transform.position);
-            
+            Instantiate(explosionTemplate, explosionSpawnPoint.transform.position, Quaternion.identity, this.gameObject.transform);
         }
         StartCoroutine(ExecuteAfterSeconds());
     }
