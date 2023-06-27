@@ -6,6 +6,7 @@ public class Noclip : MonoBehaviour
 {
     private Collider2D collision;
     private bool noclip = false;
+    public DayNightController timeController;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,11 @@ public class Noclip : MonoBehaviour
                 collision.enabled = false;
                 noclip = true;
             }
+        }
+
+        if (Input.GetButtonDown("TimeOfDay"))
+        {
+            Debug.Log(timeController.CurrTimeOfDay);
         }
     }
 

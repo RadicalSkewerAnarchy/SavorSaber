@@ -11,22 +11,25 @@ public class PlayerPositionMover : MonoBehaviour
     private SceneLoadingManager sceneLoader;
     private Collider2D playerObject;
     private GameObject player;
+    private EventTrigger transitionScene;
 
     public delegate void EventDelegate();
     public EventDelegate m_onStart;
     public EventDelegate m_onEnd;
+    [HideInInspector]
+    public bool emergencyDismountFlag = false; //temporary measure to avoid horseradishes breaking the game
 
-    [Header("Alternate Scene conditions")]
+    public UnityEvent eventOnContact;[Header("Alternate Scene conditions")]
+
     public bool hasAlternateScenes = false;
     public SceneReference[] alternateScenes;
     public string flag;
     public string value;
 
-    public bool emergencyDismountFlag = false; //temporary measure to avoid horseradishes breaking the game
     // Start is called before the first frame update
     void Start()
     {
-
+        transitionScene = GetComponentInChildren<EventTrigger>();
     }
 
     // Update is called once per frame
@@ -44,19 +47,29 @@ public class PlayerPositionMover : MonoBehaviour
 
         if (other.gameObject.tag == "Player")
         {
+            eventOnContact.Invoke();
+
             playerObject = other;
             player = other.gameObject;
             if (emergencyDismountFlag)
             {
                 player.GetComponent<PlayerController>().currentSaddle.GetComponent<FruitantMount>().Demount();
             }
-            m_onStart = MoveToNewPosition;
-            if(hasAlternateScenes && FlagManager.GetFlag(flag) == value)
-                sceneLoader.LoadScenes(alternateScenes, MoveToNewPosition, null);
-            else
-                sceneLoader.LoadScenes(scenesToLoad, MoveToNewPosition, null);
 
+            //find DayNightController to save time of day
+            DayNightController dnc = FindObjectOfType<DayNightController>();
+            dnc.timeOfDayTransitionHolder = dnc.CurrTimeOfDay;
+            m_onStart = MoveToNewPosition;
+            transitionScene.Trigger();
         }
+    }
+
+    public void LoadScene()
+    {
+        if (hasAlternateScenes && FlagManager.GetFlag(flag) == value)
+            sceneLoader.LoadScenes(alternateScenes, MoveToNewPosition, null);
+        else
+            sceneLoader.LoadScenes(scenesToLoad, MoveToNewPosition, null);
     }
 
     void MoveToNewPosition()

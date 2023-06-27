@@ -74,6 +74,7 @@ public class DayNightController : MonoBehaviour, IPausable
     public float transitionTime = 1;
     [SerializeField] private TimeOfDay currTimeOfDay = TimeOfDay.Day;
     public TimeOfDay CurrTimeOfDay { get => currTimeOfDay; private set => currTimeOfDay = value; }
+    public TimeOfDay timeOfDayTransitionHolder;
 
     // Weather and Season dat
 

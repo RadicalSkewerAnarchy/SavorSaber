@@ -27,6 +27,8 @@ public class BGMManager : MonoBehaviour
     private AudioSource FadeBgsSource { get => firstSelectedBgs ? bgsSrc[1] : bgsSrc[0]; }
     private AudioClip bgsBuffer;
 
+    private BGMTimeOfDayParser todParser;
+
     private void Awake()
     {
         if (instance == null)
@@ -46,6 +48,9 @@ public class BGMManager : MonoBehaviour
         bgsSrc = bgsContainer.GetComponents<AudioSource>();
         DayNightController.instance.OnDay = GoToDayMusic;
         DayNightController.instance.OnNight = GoToNightMusic;
+
+        todParser = GetComponentInChildren<BGMTimeOfDayParser>();
+        todParser.Parse();
     }
 
     public void GoToNightMusic()
@@ -55,10 +60,28 @@ public class BGMManager : MonoBehaviour
             FadeToAreaSounds();
         }
     }
+    /// <summary>
+    /// used for initializing scenes during nighttime
+    /// </summary>
+    public void GoToNightMusic(bool ignoreCurrBGM)
+    {
+        if (ignoreCurrBGM || (CurrBgmSource!= null && CurrBgmSource.clip == AreaBgmDay))
+        {
+            FadeToAreaSounds();
+        }
+    }
 
     public void GoToDayMusic()
     {
         if (CurrBgmSource.clip == AreaBgmNight)
+        {
+            FadeToAreaSounds();
+        }
+    }
+
+    public void GoToDayMusic(bool ignoreCurrBGM)
+    {
+        if (ignoreCurrBGM || (CurrBgmSource != null && CurrBgmSource.clip == AreaBgmNight))
         {
             FadeToAreaSounds();
         }

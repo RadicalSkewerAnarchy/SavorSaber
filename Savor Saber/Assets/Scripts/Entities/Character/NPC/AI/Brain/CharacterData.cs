@@ -253,6 +253,20 @@ public class CharacterData : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public virtual void SetHealth(int newHP)
+    {
+        health = newHP;
+        if (healthBar != null)
+        {
+            healthBar.gameObject.SetActive(true);
+            //Debug.Log("Update health bar");
+            healthBar.value = (float)health / maxHealth;
+            if (barCr != null)
+                StopCoroutine(barCr);
+            barCr = StartCoroutine(ShowHealthBar());
+        }
+    }
+
     #endregion
 
     #region Signalling

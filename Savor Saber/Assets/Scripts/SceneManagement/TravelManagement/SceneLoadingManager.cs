@@ -72,7 +72,14 @@ public class SceneLoadingManager : MonoBehaviour
 
         if (OnEnd != null) OnEnd();
 
-        LoadingScreenCanvas.SetActive(false);
+        StartCoroutine(LoadingScreenFadeDelay());
         Time.timeScale = 1.0f;
+    }
+
+    private IEnumerator LoadingScreenFadeDelay()
+    {
+        yield return new WaitForSeconds(0.75f);
+        LoadingScreenCanvas.SetActive(false);
+        yield return null;
     }
 }

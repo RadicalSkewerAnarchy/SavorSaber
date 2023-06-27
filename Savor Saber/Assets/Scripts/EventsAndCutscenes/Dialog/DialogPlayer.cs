@@ -37,6 +37,13 @@ public class DialogPlayer : MonoBehaviour
     private AudioSource audioPlayer;
     #endregion
 
+    private void Awake()
+    {
+        if(UICanvas == null)
+        {
+            UICanvas = GameObject.Find("DialogCanvas").GetComponent<Canvas>();
+        }
+    }
     public void Initialize()
     {
         if (dialogBoxPrefab != null)

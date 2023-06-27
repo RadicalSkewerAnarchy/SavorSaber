@@ -9,10 +9,13 @@ public class LimitBreakSweetrain : PoweredObject
     private WaitForSeconds secondTic;
     public int maxTics = 10;
     private int numTics = 0;
+    private GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
         secondTic = new WaitForSeconds(1);
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     // Update is called once per frame
@@ -50,8 +53,7 @@ public class LimitBreakSweetrain : PoweredObject
                 data.DoHeal(1);
             }
         }
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        
         PlayerData pd = player.GetComponent<PlayerData>();
         if (pd.health < pd.maxHealth)
         {

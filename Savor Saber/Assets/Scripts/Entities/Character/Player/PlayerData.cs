@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer), typeof(Respawner))]
-public class PlayerData : CharacterData
+public class PlayerData : CharacterData, IDataPersistence
 {
     [Header("Player-specific fields")]
     public AudioClip lowHealthSFX;
@@ -26,6 +26,15 @@ public class PlayerData : CharacterData
         res = GetComponent<Respawner>();
         altSFXPlayer = GetComponent<PlaySFX>();
         trust = GetComponent<TrustMeter>();
+    }
+
+    public void LoadData(GameData data)
+    {
+        SetHealth(data.health);
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.health = this.health;
     }
 
     public override bool DoDamage(int damage, bool overcharged = false)
@@ -101,6 +110,11 @@ public class PlayerData : CharacterData
         } 
         sp.color = new Color(sp.color.r, sp.color.g, sp.color.b, 1);
         Invincible = false;
+    }
+
+    public override void SetHealth(int newHP)
+    {
+        base.SetHealth(newHP);
     }
 
 
