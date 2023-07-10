@@ -8,7 +8,7 @@ using System;
 /// Controller for functions related to managing and displaying inventory
 /// </summary>
 ///
-public class Inventory : MonoBehaviour {
+public class Inventory : MonoBehaviour, IDataPersistence {
 
     #region fields
 
@@ -60,6 +60,37 @@ public class Inventory : MonoBehaviour {
     {
         //Detect swapping input
         GetSkewerSwapInput();
+    }
+
+    public void LoadData(GameData data)
+    {
+        activeSkewer = data.activeSkewerIndex;
+        foreach(IngredientData ingDat in data.activeSkewerIngredients)
+        {   
+            if(ingDat != null)
+                AddToSkewer(ingDat);
+        }
+        foreach (IngredientData ingDat in data.leftSkewerIngredients)
+        {
+            if (ingDat != null)
+                AddToSkewerLeft(ingDat);
+        }
+        foreach (IngredientData ingDat in data.rightSkewerIngredients)
+        {
+            if (ingDat != null)
+                AddToSkewerRight(ingDat);
+        }
+        //UpdateUI();
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.activeSkewerIndex = activeSkewer;
+        IngredientData[] ingArray = GetActiveSkewer().ToArray();
+        IngredientData[] leftArray = GetLeftSkewer().ToArray();
+        IngredientData[] rightArray = GetRightSkewer().ToArray();
+        Array.Copy(ingArray, data.activeSkewerIngredients, ingArray.Length);
+        Array.Copy(leftArray, data.leftSkewerIngredients, leftArray.Length);
+        Array.Copy(rightArray, data.rightSkewerIngredients, rightArray.Length);
     }
 
     #region utility functions
@@ -163,6 +194,22 @@ public class Inventory : MonoBehaviour {
         }
     }
 
+    public void AddToSkewerRight(IngredientData ingredient)
+    {
+        if(!(GetRightSkewer().GetCount() == maxItemsPerSkewer))
+        {
+            GetRightSkewer().PushIngredient(ingredient);
+            UpdateUI();
+        }
+    }
+    public void AddToSkewerLeft(IngredientData ingredient)
+    {
+        if (!(GetLeftSkewer().GetCount() == maxItemsPerSkewer))
+        {
+            GetLeftSkewer().PushIngredient(ingredient);
+            UpdateUI();
+        }
+    }
     /// <summary>
     /// Remove an ingredient from the active skewer
     /// </summary>

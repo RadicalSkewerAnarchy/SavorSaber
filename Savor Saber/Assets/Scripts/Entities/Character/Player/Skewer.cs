@@ -114,6 +114,26 @@ public class Skewer : IEnumerable<IngredientData>
         finishedRecipe = null;
     }
 
+    public void CopySkewerTo(ref Skewer targetSkewer)
+    {
+        IngredientData[] array = this.ToArray();
+        foreach(IngredientData data in array)
+        {
+            targetSkewer.PushIngredient(data);
+        }
+    }
+
+    public Skewer CopySkewer()
+    {
+        IngredientData[] array = this.ToArray();
+        Skewer newSkewer = new Skewer();
+        foreach (IngredientData data in array)
+        {
+            newSkewer.PushIngredient(data);
+        }
+        return newSkewer;
+    }
+
     public IEnumerator<IngredientData> GetEnumerator()
     {
         return ingredientStack.GetEnumerator();

@@ -31,10 +31,12 @@ public class PlayerData : CharacterData, IDataPersistence
     public void LoadData(GameData data)
     {
         SetHealth(data.health);
+        transform.position = data.playerPosition;
     }
     public void SaveData(ref GameData data)
     {
         data.health = this.health;
+        data.playerPosition = transform.position;
     }
 
     public override bool DoDamage(int damage, bool overcharged = false)
