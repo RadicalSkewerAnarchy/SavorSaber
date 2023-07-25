@@ -33,7 +33,7 @@ public class PoweredObject : MonoBehaviour
     {
         //if it has not yet been set to true or false (i.e. player has not interacted with this object yet), set it to "Null" so the
         //object knows to default to inspector settings
-        if(FlagManager.GetFlag(activeStateFlag) != "True" && FlagManager.GetFlag(activeStateFlag) != "True")
+        if(FlagManager.GetFlag(activeStateFlag) != "True" && FlagManager.GetFlag(activeStateFlag) != "False")
         {
             FlagManager.SetFlag(activeStateFlag, "Null");
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using SerializableCollections;
 [System.Serializable]
 public class GameData
 {
@@ -12,6 +12,9 @@ public class GameData
     public IngredientData[] activeSkewerIngredients;
     public IngredientData[] leftSkewerIngredients;
     public IngredientData[] rightSkewerIngredients;
+    public string[] flagKeys;
+    public string[] flagValues;
+    public SceneReference currentScene;
     public GameData()
     {
         this.health = 5;
@@ -21,5 +24,9 @@ public class GameData
         activeSkewerIngredients = new IngredientData[3];
         leftSkewerIngredients = new IngredientData[3];
         rightSkewerIngredients = new IngredientData[3];
+        // I'M SORRY FOR THIS
+        // REPLACE THIS ASAP ONCE DICTIONARY SERIALIZATION IS DEALT WITH
+        flagKeys = new string[512];
+        flagValues = new string[512];
     }
 }

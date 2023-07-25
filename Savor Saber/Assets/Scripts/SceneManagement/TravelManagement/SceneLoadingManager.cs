@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneLoadingManager : MonoBehaviour
+public class SceneLoadingManager : MonoBehaviour, IDataPersistence
 {
 
     public SceneReference[] ScenesToLoad;
@@ -17,6 +17,21 @@ public class SceneLoadingManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(LoadAllAsyncScene(ScenesToLoad, null, null));
+    }
+
+    public void LoadData(GameData data)
+    {
+       if(data.currentScene != null)
+        {
+            ScenesToLoad[0] = data.currentScene;
+        }
+
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+        data.currentScene = ScenesToLoad[0];
     }
 
 
