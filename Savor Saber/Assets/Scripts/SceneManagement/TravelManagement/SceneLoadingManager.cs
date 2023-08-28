@@ -8,6 +8,7 @@ public class SceneLoadingManager : MonoBehaviour, IDataPersistence
 
     public SceneReference[] ScenesToLoad;
     public GameObject LoadingScreenCanvas;
+    public bool newGame = true;
 
     private List<SceneReference> CurrentlyLoadedScenes = new List<SceneReference>();
 
@@ -16,12 +17,13 @@ public class SceneLoadingManager : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
+        newGame = FindObjectOfType<GameDataManager>().isNewGame;
         StartCoroutine(LoadAllAsyncScene(ScenesToLoad, null, null));
     }
 
     public void LoadData(GameData data)
     {
-       if(data.currentScene != null)
+       if(data.currentScene != null && !newGame)
         {
             ScenesToLoad[0] = data.currentScene;
         }

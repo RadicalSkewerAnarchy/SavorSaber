@@ -12,9 +12,11 @@ public class GameData
     public IngredientData[] activeSkewerIngredients;
     public IngredientData[] leftSkewerIngredients;
     public IngredientData[] rightSkewerIngredients;
+    public IngredientData[] unlockedFruitants;
     public string[] flagKeys;
     public string[] flagValues;
     public SceneReference currentScene;
+    public string questText;
     public GameData()
     {
         this.health = 5;
@@ -24,6 +26,8 @@ public class GameData
         activeSkewerIngredients = new IngredientData[3];
         leftSkewerIngredients = new IngredientData[3];
         rightSkewerIngredients = new IngredientData[3];
+        unlockedFruitants = new IngredientData[16];
+
         // I'M SORRY FOR THIS
         // REPLACE THIS ASAP ONCE DICTIONARY SERIALIZATION IS DEALT WITH
         flagKeys = new string[512];

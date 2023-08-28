@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using SerializableCollections;
 
-public class PlayerCompanionSummon : MonoBehaviour
+public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
 {
 
     public static PlayerCompanionSummon instance;
@@ -80,6 +80,32 @@ public class PlayerCompanionSummon : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
+
+    public void LoadData(GameData data)
+    {
+
+        foreach(IngredientData fruitantData in data.unlockedFruitants)
+        {
+            UnlockFruitant(fruitantData);
+        }
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+        
+        for(int i = 0; i < data.unlockedFruitants.Length; i++)
+        {
+            data.unlockedFruitants[i] = null;
+        }
+        int j = 0; 
+        foreach(var kvp in unlockedFruitants)
+        {
+            data.unlockedFruitants[j] = kvp.Value;
+            j++;
+        }
+        
     }
 
     // Update is called once per frame

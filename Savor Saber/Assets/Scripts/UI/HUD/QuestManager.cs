@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : MonoBehaviour, IDataPersistence
 {
     public static QuestManager instance;
     [SerializeField] private TextMeshProUGUI text;
@@ -21,6 +21,17 @@ public class QuestManager : MonoBehaviour
         }
 
 
+    }
+
+    public void LoadData(GameData data)
+    {
+        SetText(data.questText);
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+        data.questText = text.text;
     }
 
     public void SetText(string text)

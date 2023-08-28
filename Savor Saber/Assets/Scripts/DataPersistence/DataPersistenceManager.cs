@@ -10,9 +10,11 @@ public class DataPersistenceManager : MonoBehaviour
     private GameData gameData;
     private List<IDataPersistence> dataPersistenceObjects;
     private FileDataHandler dataHandler;
+    private bool newGame;
 
     private void Awake()
     {
+        newGame = FindObjectOfType<GameDataManager>().isNewGame;
         if (instance != null)
         {
             Debug.LogError("Error: Found more than one DataPersistenceManager in the scene");
@@ -37,10 +39,12 @@ public class DataPersistenceManager : MonoBehaviour
         //TODO: Load any saved data from a file using the data handler.
         this.gameData = dataHandler.Load();
         //If no data can be found, initialize to a new game.
-        if(this.gameData == null)
+        if(this.gameData == null || newGame)
         {
+            if (newGame) Debug.Log("New game starting...");
             Debug.Log("No data was found. Initializing data to defaults.");
             NewGame();
+            return;
         }
         // TODO: Push the loaded data to all other scripts that need it.'
         foreach(IDataPersistence dataPersistenceObj in dataPersistenceObjects)

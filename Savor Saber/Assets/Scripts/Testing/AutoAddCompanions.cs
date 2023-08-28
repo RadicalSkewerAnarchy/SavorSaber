@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoAddCompanions : MonoBehaviour
+public class AutoAddCompanions : MonoBehaviour, IDataPersistence
 {
     public PlayerCompanionSummon summoner;
 
@@ -19,6 +19,18 @@ public class AutoAddCompanions : MonoBehaviour
         {
             FlagManager.SetFlag("CanSummonCompanion", "True");
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+
+
+    }
+
+
+    public void SaveData(ref GameData data)
+    {
+
     }
 
     // Update is called once per frame
