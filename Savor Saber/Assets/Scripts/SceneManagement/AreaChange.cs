@@ -9,8 +9,6 @@ public enum Area
     Desert
 }
 
-
-[RequireComponent(typeof(Collider2D))]
 public class AreaChange : MonoBehaviour
 {
     public static Area CurrArea = Area.Plains;
@@ -22,22 +20,22 @@ public class AreaChange : MonoBehaviour
     public AudioClip nightBgs;
     public AudioClip dayBgs;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Temp: disable area change during party
-        if (CurrArea == area)
-            return;
-        BGMManager.instance.AreaBgmDay = dayMusic;
-        BGMManager.instance.AreaBgmNight = nightMusic;
-        BGMManager.instance.AreaBgsDay = dayBgs;
-        BGMManager.instance.AreaBgsNight = nightBgs;
-        WeatherController.instance.Weather = weather;
-        if (FlagManager.GetFlag("party") != "true")
-        {
-            BGMManager.instance.FadeToAreaSounds();
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    // Temp: disable area change during party
+    //    if (CurrArea == area)
+    //        return;
+    //    BGMManager.instance.AreaBgmDay = dayMusic;
+    //    BGMManager.instance.AreaBgmNight = nightMusic;
+    //    BGMManager.instance.AreaBgsDay = dayBgs;
+    //    BGMManager.instance.AreaBgsNight = nightBgs;
+    //    WeatherController.instance.Weather = weather;
+    //    if (FlagManager.GetFlag("party") != "true")
+    //    {
+    //        BGMManager.instance.FadeToAreaSounds();
             
-        }
-        DayNightController.instance.currWeather = lightProfile;
-        CurrArea = area;
-    }
+    //    }
+    //    DayNightController.instance.currWeather = lightProfile;
+    //    CurrArea = area;
+    //}
 }

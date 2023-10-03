@@ -6,16 +6,12 @@ public class ForceTimeOfDay : MonoBehaviour
 {
     public TimeOfDay time;
     private TimeOfDay oldTime;
-    [SerializeField]
-    private DayNightController instance;
-    private bool timeSet = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        instance = DayNightController.instance;
-        oldTime = instance.CurrTimeOfDay;
+        oldTime = DayNightController.instance.CurrTimeOfDay;
 
-        ForceTime(time);
+        ForceTime(time, true);
     }
 
     // Update is called once per frame
@@ -23,20 +19,20 @@ public class ForceTimeOfDay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            ForceTime(time);
+            ForceTime(time, false);
         }
     }
 
 
-    public void ForceTime(TimeOfDay t)
+    public void ForceTime(TimeOfDay t, bool skipCallbacks)
     {
-        Debug.Log("Forcing time of day: " + t); 
-        instance.Paused = true;
-        instance.SetTimeOfDayImmediate(t);   
+        Debug.Log("Forcing time of day: " + t);
+        DayNightController.instance.Paused = true;
+        DayNightController.instance.SetTimeOfDayImmediate(t, skipCallbacks);   
     }
     public void ResetToPrevious()
     {
-        instance.SetTimeOfDay(oldTime);
-        instance.Paused = false;
+        DayNightController.instance.SetTimeOfDay(oldTime);
+        DayNightController.instance.Paused = false;
     }
 }

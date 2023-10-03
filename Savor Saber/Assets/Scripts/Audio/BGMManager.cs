@@ -26,8 +26,7 @@ public class BGMManager : MonoBehaviour
     public AudioSource CurrBgsSource { get => firstSelectedBgs ? bgsSrc[0] : bgsSrc[1]; }
     private AudioSource FadeBgsSource { get => firstSelectedBgs ? bgsSrc[1] : bgsSrc[0]; }
     private AudioClip bgsBuffer;
-
-    private BGMTimeOfDayParser todParser;
+    [SerializeField] private bool startOnStart = true;
 
     private void Awake()
     {
@@ -48,9 +47,10 @@ public class BGMManager : MonoBehaviour
         bgsSrc = bgsContainer.GetComponents<AudioSource>();
         DayNightController.instance.OnDay = GoToDayMusic;
         DayNightController.instance.OnNight = GoToNightMusic;
-
-        todParser = GetComponentInChildren<BGMTimeOfDayParser>();
-        todParser.Parse();
+        if (startOnStart)
+        {
+            FadeToAreaSounds();
+        }
     }
 
     public void GoToNightMusic()
@@ -114,7 +114,7 @@ public class BGMManager : MonoBehaviour
 
     public void CrossFadeBgm(AudioClip song, float fadeTime = 3)
     {
-        if (CurrBgmSource.volume < 1)
+        if (CurrBgmSource.volume < 1 && CurrBgmSource.volume > 0)
         {
             bgmBuffer = song;
             return;
@@ -128,7 +128,7 @@ public class BGMManager : MonoBehaviour
 
     public void CrossFadeBgs(AudioClip song, float fadeTime = 3)
     {
-        if (CurrBgsSource.volume < 1)
+        if (CurrBgsSource.volume < 1 && CurrBgsSource.volume > 0)
         {
             bgmBuffer = song;
             return;

@@ -183,16 +183,19 @@ public class DayNightController : MonoBehaviour, IPausable
         else
             StartCoroutine(transition(t, 0.075f));
     }
-    public void SetTimeOfDayImmediate(TimeOfDay t)
+    public void SetTimeOfDayImmediate(TimeOfDay t, bool skipCallbacks = false)
     {
         StopAllCoroutines();
         CurrTimeOfDay = t;
         RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
             currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
-        if (IsNightTime)
-            OnNight?.Invoke();
-        else
-            OnDay?.Invoke();
+        if (!skipCallbacks)
+        {
+            if (IsNightTime)
+                OnNight?.Invoke();
+            else
+                OnDay?.Invoke();
+        }
         StartCoroutine(AdvanceTime(true));
     }
 
