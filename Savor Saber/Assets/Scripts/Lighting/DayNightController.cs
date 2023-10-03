@@ -73,7 +73,7 @@ public class DayNightController : MonoBehaviour, IPausable
     /// <summary> The time in Game Hours it takes to transition for one TimeOfDay to the next</summary>
     public float transitionTime = 1;
     [SerializeField] private TimeOfDay currTimeOfDay = TimeOfDay.Day;
-    public TimeOfDay CurrTimeOfDay { get => currTimeOfDay; private set => currTimeOfDay = value; }
+    public TimeOfDay CurrTimeOfDay { get => currTimeOfDay; set => currTimeOfDay = value; }
     public TimeOfDay timeOfDayTransitionHolder;
 
     // Weather and Season dat
