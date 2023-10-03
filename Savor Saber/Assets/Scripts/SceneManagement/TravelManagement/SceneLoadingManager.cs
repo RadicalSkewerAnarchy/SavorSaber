@@ -84,7 +84,10 @@ public class SceneLoadingManager : MonoBehaviour, IDataPersistence
         CurrentlyLoadedScenes = NewScenes;
 
         SceneManager.SetActiveScene(SceneManager.GetSceneByPath(NewScenes[0]));
-
+        if(DayNightController.instance != null)
+        {
+            DayNightController.instance.UpdateCurrentLighting();
+        }
         yield return new WaitForSecondsRealtime(0.25f);
 
         if (OnEnd != null) OnEnd();

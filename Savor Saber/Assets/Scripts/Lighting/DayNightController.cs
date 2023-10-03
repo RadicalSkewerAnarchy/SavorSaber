@@ -171,9 +171,9 @@ public class DayNightController : MonoBehaviour, IPausable
         StopAllCoroutines();
         if (Paused)
         {
-            RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
-             currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
+
             CurrTimeOfDay = t;
+            UpdateCurrentLighting();
             if (IsNightTime)
                 OnNight?.Invoke();
             else
@@ -187,8 +187,7 @@ public class DayNightController : MonoBehaviour, IPausable
     {
         StopAllCoroutines();
         CurrTimeOfDay = t;
-        RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(t) ?
-            currWeather.lightingOverrides[t].lightColor : clearWeather.lightingOverrides[t].lightColor;
+        UpdateCurrentLighting();
         if (!skipCallbacks)
         {
             if (IsNightTime)
@@ -212,6 +211,12 @@ public class DayNightController : MonoBehaviour, IPausable
     {
         currWeather = data;
         GoToNight();
+    }
+
+    public void UpdateCurrentLighting()
+    {
+        RenderSettings.ambientLight = currWeather.lightingOverrides.ContainsKey(CurrTimeOfDay) ?
+            currWeather.lightingOverrides[CurrTimeOfDay].lightColor : clearWeather.lightingOverrides[CurrTimeOfDay].lightColor;
     }
 
     [System.Serializable] public class TimeTableDict : SDictionary<TimeOfDay, float>
