@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DevFlavorInputManager : FlavorInputManager
 {
@@ -22,6 +23,7 @@ public class DevFlavorInputManager : FlavorInputManager
     private bool sceneTriggered = false;
     //will the scene be triggered upon next feeding?
     public bool sceneReady = false;
+    public UnityEvent callOnFeed = new UnityEvent();
 
     private void Start()
     {
@@ -59,6 +61,10 @@ public class DevFlavorInputManager : FlavorInputManager
                 Debug.Log("Starting devourer scene...");
                 optionalScene.Trigger();
                 sceneTriggered = true;
+            }
+            if(callOnFeed != null)
+            {
+                callOnFeed.Invoke();
             }
         }
         else
