@@ -6,7 +6,6 @@ using MathUtils;
 public class FlavorInputManager : MonoBehaviour
 {
     #region Feeding
-    public bool canTransformWhenFed = false;
     public bool isCompanion = false;
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
@@ -90,25 +89,6 @@ public class FlavorInputManager : MonoBehaviour
                 }
             }
             if (!healed) characterData.DoHeal(2);
-
-            if (canTransformWhenFed && ingredient.monster != null)
-            {
-                GameObject newMorph = Instantiate(ingredient.monster, transform.position, Quaternion.identity);
-                //if this is the companion, keep it in the party
-                if (isCompanion)
-                {
-                    //Debug.Log("Entering 'is companion' field of Feed()");
-                    PlayerData somaData = (PlayerData)feederData;
-                    somaData.JoinTeam(newMorph, 1, true);
-                    somaData.SetCurrentFormIngreident(ingredient);
-                    FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
-                    newFIM.isCompanion = true;
-                    newFIM.PlaySpawnParticles();
-
-                    newMorph.transform.parent = transform.parent;
-                }
-                Destroy(this.gameObject);
-            }
         }
     }
 

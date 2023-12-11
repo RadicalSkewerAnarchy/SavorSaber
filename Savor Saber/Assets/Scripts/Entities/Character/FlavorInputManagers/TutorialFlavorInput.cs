@@ -14,8 +14,6 @@ public class TutorialFlavorInput : FlavorInputManager
     public int limitPerFruitant = 1;
     private int amountFed = 0;
     private bool countingActive = false;
-    private bool morphingActive = false;
-    public string flagToSetOnMorph;
     public bool tutorialComplete = false;
 
     private void Start()
@@ -87,35 +85,11 @@ public class TutorialFlavorInput : FlavorInputManager
                 feedManager.Feed(99);
                 //amountFed++;
             }
-
-            //FOR TUTORIAL ONLY: Only allow morphing once the tutorial reaches that step
-            if (canTransformWhenFed && ingredient.monster != null && morphingActive)
-            {
-                GameObject newMorph = Instantiate(ingredient.monster, transform.position, Quaternion.identity);
-                FlagManager.SetFlag(flagToSetOnMorph, "True");
-                //if this is the companion, keep it in the party
-                if (isCompanion)
-                {
-                    PlayerData somaData = (PlayerData)feederData;
-                    somaData.JoinTeam(newMorph, 1, true);
-                    somaData.SetCurrentFormIngreident(ingredient);
-                    FlavorInputManager newFIM = newMorph.GetComponent<FlavorInputManager>();
-                    newFIM.isCompanion = true;
-                    newFIM.PlaySpawnParticles();
-
-                }
-                Destroy(this.gameObject);
-            }
         }
     }
 
     public void EnableCounting()
     {
         countingActive = true;
-    }
-
-    public void EnableMorphing()
-    {
-        morphingActive = true;
     }
 }
