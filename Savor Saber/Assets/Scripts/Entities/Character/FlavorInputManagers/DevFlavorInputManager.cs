@@ -7,31 +7,33 @@ public class DevFlavorInputManager : FlavorInputManager
 {
     public GameObject rejectedItemTemplate;
     // the weather that needs to be turned on or off
-    public List<GameObject> weatherStates;
-    public int currentWeatherState = 0;
+    //public List<GameObject> weatherStates;
+    //public int currentWeatherState = 0;
 
     //reference to the speech bubble displaying requested food
     public FavoriteFoodBubble speechBubble;
 
     // the way to transition to the next weather
-    public List<IngredientData> requestStates;
-    public IngredientData currentRequestState;
+    //public List<IngredientData> requestStates;
+    //public IngredientData currentRequestState;
 
+    //events to be called when fed favorite ingredient
+    public UnityEvent callOnFeed = new UnityEvent();
     //cutscenes to trigger
     [Header("Cutscene fields")]
     public EventTrigger optionalScene;
     private bool sceneTriggered = false;
     //will the scene be triggered upon next feeding?
     public bool sceneReady = false;
-    public UnityEvent callOnFeed = new UnityEvent();
+
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
-        currentRequestState = requestStates[0];
+        //currentRequestState = requestStates[0];
 
-        StartWeather();
+        //StartWeather();
     }
 
     // when fed compare with desired request
@@ -43,36 +45,42 @@ public class DevFlavorInputManager : FlavorInputManager
     {
         Debug.Log("DEVOURER HAS BEEN FED. GOD HAVE MERCY ON OUR SOULS.");
         Debug.Log("Fed by player: " + fedByPlayer);
-        IngredientData check = requestStates[Mathf.Clamp(currentWeatherState, 0, requestStates.Count - 1)];
+        //IngredientData check = requestStates[Mathf.Clamp(currentWeatherState, 0, requestStates.Count - 1)];
 
-
-        if (ingredient == check)
+        foreach(IngredientData favorite in favoriteIngredients)
         {
-            Debug.Log("Detected correct ingredients for request state");
-            CycleWeather();
+            if(ingredient == favorite)
+            {
+                Debug.Log("Detected correct ingredients for request state");
+                //CycleWeather();
 
-            if (sfxPlayer != null)
-            {
-                sfxPlayer.clip = rewardSFX;
-                sfxPlayer.Play();
-            }
-            if (!sceneTriggered && optionalScene != null && sceneReady)
-            {
-                Debug.Log("Starting devourer scene...");
-                optionalScene.Trigger();
-                sceneTriggered = true;
-            }
-            if(callOnFeed != null)
-            {
-                callOnFeed.Invoke();
+                if (sfxPlayer != null)
+                {
+                    sfxPlayer.clip = rewardSFX;
+                    sfxPlayer.Play();
+                }
+                if (!sceneTriggered && optionalScene != null && sceneReady)
+                {
+                    Debug.Log("Starting devourer scene...");
+                    optionalScene.Trigger();
+                    sceneTriggered = true;
+                }
+                if (callOnFeed != null)
+                {
+                    callOnFeed.Invoke();
+                }
             }
         }
-        else
-        {
-            IngredientData[] ingredientArray = { ingredient };
-            SpawnReward(ingredientArray, fedByPlayer);
-        }
+
     }
+
+    public void SetSceneReady(bool isReady)
+    {
+        sceneReady = isReady;
+    }
+
+    //can delete everything below this line if it works okay
+    /*
 
     // "rewards" are spawned if the food is rejected!
     public void SpawnReward(IngredientData[] ingredientArray, bool fedByPlayer)
@@ -142,9 +150,6 @@ public class DevFlavorInputManager : FlavorInputManager
         speechBubble.favoriteFood3 = requestStates[state];
         speechBubble.reset = true;
     }
+    */
 
-    public void SetSceneReady(bool isReady)
-    {
-        sceneReady = isReady;
-    }
 }

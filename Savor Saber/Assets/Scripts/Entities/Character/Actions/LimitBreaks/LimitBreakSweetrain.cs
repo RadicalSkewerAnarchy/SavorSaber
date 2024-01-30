@@ -31,6 +31,12 @@ public class LimitBreakSweetrain : PoweredObject
         StartCoroutine(StartHealTics());
     }
 
+    public override void ShutOff()
+    {
+        base.ShutOff();
+        StopAllCoroutines();
+    }
+
     private IEnumerator StartHealTics()
     {
         if(numTics <= maxTics)
