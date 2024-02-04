@@ -17,7 +17,7 @@ public class PaddlePearData : AIData
         {
             //Debug.Log("Paddle pear checking number of friends since there are no enemies nearby");
             int friends = Checks.NumberOfFriends();
-            if (friends >= 0 && friends < 9)
+            if (friends >= 0 && friends < 2)
                 p = Protocols.Wander;
             else if (friends < 12)
                 p = Protocols.Party;

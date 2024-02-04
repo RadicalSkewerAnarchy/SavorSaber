@@ -352,50 +352,6 @@ public class MonsterBehavior : MonoBehaviour
             ActionTimer = 0;
             return false;
         }
-    } 
-    /// <summary>
-    /// Spawns one friend signal per action
-    /// </summary>
-    public bool Console()
-    {
-        if (ActionTimer < 0)
-        {
-            // create signal 
-            // change signal radius
-            // change signal values (--fear)
-            //Debug.Log("Instantiating Calming Signal");
-            TransitionBehavior(AIData.Behave.Socialize, "Socialize");
-            AiData.InstantiateSignal(2f, "Fear", -0.25f, true, true);
-            ResetActionTimer();
-            return true;
-        }
-        else
-        {
-            ActionTimer -= Time.deltaTime;
-            return false;
-        }
-    }
-    /// <summary>
-    /// Spawns one friend signal per action
-    /// </summary>
-    public bool Scare()
-    {
-        if (ActionTimer < 0)
-        {
-            // create signal 
-            // change signal radius
-            // change signal values (--fear)
-            //Debug.Log("Instantiating Calming Signal");
-            TransitionBehavior(AIData.Behave.Socialize, "Socialize");
-            AiData.InstantiateSignal(3f, "Fear", 0.25f, true, false);
-            ResetActionTimer();
-            return true;
-        }
-        else
-        {
-            ActionTimer -= Time.deltaTime;
-            return false;
-        }
     }
     #endregion
 

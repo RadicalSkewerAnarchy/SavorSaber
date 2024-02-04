@@ -214,12 +214,6 @@ public class AttackRanged : AttackBase
         projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
 
-        //give the spawned projectile its effect data, if applicable (DEPRECATED)
-        if (effectRecipeData != null)
-        {
-            projectileData.effectRecipeData = effectRecipeData;
-        }
-
         //set any bonus effects to be spawned
         if (flavor == RecipeData.Flavors.Spicy && spicyTemplate != null)
             projectileData.SetBonusEffect(spicyTemplate, flavorMagnitude);

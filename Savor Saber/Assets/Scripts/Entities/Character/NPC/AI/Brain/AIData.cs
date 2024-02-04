@@ -423,21 +423,9 @@ public class AIData : CharacterData
             case Protocols.Party:
                 Protocol.Party();
                 break;
-            // feast
-            case Protocols.Feast:
-                Protocol.Feast(meleeHunter);
-                break;
-            // console
-            case Protocols.Console:
-                Protocol.Console();
-                break;
             // Runaway
             case Protocols.Runaway:
                 Protocol.NavRunaway();
-                break;
-            // Conga
-            case Protocols.Conga:
-                Protocol.Conga();
                 break;
             // Chase
             case Protocols.Chase:

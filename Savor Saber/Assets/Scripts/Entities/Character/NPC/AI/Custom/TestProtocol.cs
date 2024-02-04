@@ -54,9 +54,6 @@ public class TestProtocol : CustomProtocol
             case Behavior.Ranged:
                 _behave.RangedAttack(targetPos, speed);
                 break;
-            case Behavior.Socialize:
-                _behave.Socialize();
-                break;
             case Behavior.Custom:
                 custom.InvokeBehavior();
                 break;
