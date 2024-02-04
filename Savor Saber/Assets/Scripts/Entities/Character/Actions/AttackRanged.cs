@@ -203,8 +203,8 @@ public class AttackRanged : AttackBase
         float projectileRotation = GetRotation(targetVector);
         Vector2 directionVector = GetTargetVector(targetVector);
         Direction direction = DirectionMethods.FromVec2(directionVector);
-
         Vector2 spawnPositionModifier = directionVector.normalized * 0.75f;
+
         //spawn the attack at the spawn point and give it its data
         GameObject newAttack = Instantiate(projectile, center + spawnPositionModifier, Quaternion.identity);
         BaseProjectile projectileData = newAttack.GetComponent<BaseProjectile>();

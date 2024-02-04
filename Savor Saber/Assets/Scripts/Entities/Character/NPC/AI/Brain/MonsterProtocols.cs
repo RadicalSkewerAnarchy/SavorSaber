@@ -34,8 +34,6 @@ public partial class MonsterProtocols : MonoBehaviour
     #region Aggro Protocols
     /// NEEDS A LOT OF POLISH
     // Melee()
-    // move to and make a melee attack on
-    // some creature or enemy or bush
     /// <summary>
     /// If the target is outside of our range, move to it and attack. Else, attack.
     /// </summary>
