@@ -129,21 +129,25 @@ public class AIData : CharacterData
         [HideInInspector]
         public Queue<IngredientData> Stomach = new Queue<IngredientData>();
         private Squeezer squeeze;
-        #endregion
+    #endregion
 
-        #region Misc Info
-        [HideInInspector]
-        public bool updateAI = false;
-        [HideInInspector]
-        public bool updateBehavior = true;
-        public bool meleeHunter = true;
-        [HideInInspector]
-        public Vector3 rideVector;
-        [HideInInspector]
-        public List<TileNode> path;
+    #region Misc Info
 
-        //what flavor an AI is changes the trust buff it grants as a party member (only useful for fruitants, Drones are None
-        public RecipeData.Flavors flavor;
+    [HideInInspector]
+    public bool updateAI = false;
+    [HideInInspector]
+    public bool updateBehavior = true;
+    public bool hasMeleeAttack = true;
+    public bool hasRangedAttack = false;
+    [HideInInspector]
+    public bool inMeleeRange = false;
+    [HideInInspector]
+    public Vector3 rideVector;
+    [HideInInspector]
+    public List<TileNode> path;
+    //what flavor an AI is changes the trust buff it grants as a party member (only useful for fruitants, Drones are None
+    //Deprecated. Delete?
+    public RecipeData.Flavors flavor;
     #endregion
 
     #endregion
@@ -231,8 +235,13 @@ public class AIData : CharacterData
     /// <returns>the new or old state based on surroundings and stats</returns>
     public virtual Protocols DecideProtocol()
     {
+        // Old version
+        /*
         Protocols myNewState = currentProtocol;
         return myNewState;
+        */
+
+        return Protocols.Attack;
     }
 
     /// <summary>
@@ -441,9 +450,9 @@ public class AIData : CharacterData
                 break;
             // attack
             case Protocols.Attack:
-                if (meleeHunter)
+                if (inMeleeRange)
                     Protocol.Melee(Checks.specialTarget);
-                else
+                else if (hasRangedAttack)
                     Protocol.Ranged(Checks.specialTarget);
                 break;
             default:

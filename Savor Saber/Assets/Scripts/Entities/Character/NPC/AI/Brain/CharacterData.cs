@@ -20,6 +20,7 @@ public class CharacterData : MonoBehaviour
 
     #region Main Variables
 
+    //a component that stores health threshholds at which to play unity events
     protected HealthGatedEvent events;
 
     #region DoT fields
@@ -30,42 +31,46 @@ public class CharacterData : MonoBehaviour
     #endregion
 
     #region Values for Behaviors
+
     public float Speed;
-        public float Perception;
-        public float MeleeAttackThreshold = 1f;
-        public float RangeAttackThreshold = 2f;
-        public float EngageHostileThreshold = 5f;
-        public int maxHealth = 10;
-        public int health = 10;
-        public int overchargeHealth = 0;
-        [HideInInspector]
-        public int PartySize = 3;
-        private Vector2 Spawn;
-        public GameObject signalPrefab;
-        [HideInInspector]
-        public float damageDealt = 0;
-        [HideInInspector]
-        public float entitiesKilled = 0;
-        #endregion
+    public float Perception;
+    public float MeleeAttackThreshold = 1f;
+    public float RangeAttackThreshold = 2f;
+    public float EngageHostileThreshold = 5f;
+    public int maxHealth = 10;
+    public int health = 10;
+    public int overchargeTime = 6;
+    private Vector2 Spawn;
+    public GameObject signalPrefab;
+    [HideInInspector]
+    public int PartySize = 3;
+    [HideInInspector]
+    public float damageDealt = 0;
+    [HideInInspector]
+    public float entitiesKilled = 0;
+    
+    #endregion
 
         #region Variance
         float VDown = 9 / 10;
         float VUp = 11 / 10;
-        #endregion
+    #endregion
 
 
-        #region Effects
-        public AudioClip damageSFX;
-        public AudioClip healSFX;
-        public AudioClip deathSFX;
-        public AudioClip eatSFX;
-        public GameObject sfxPlayer;
-        public ParticleSystem damageParticleBurst = null;
-        public ParticleSystem eatingParticleBurst = null;
-        public Slider healthBar;
-        protected Coroutine barCr = null;
-        public UnityEvent deathEvent;
-        public int overchargeTime = 6;
+    #region Effects
+
+    public AudioClip damageSFX;
+    public AudioClip healSFX;
+    public AudioClip deathSFX;
+    public AudioClip eatSFX;
+    public GameObject sfxPlayer;
+    public ParticleSystem damageParticleBurst = null;
+    public ParticleSystem eatingParticleBurst = null;
+    public Slider healthBar;
+    protected Coroutine barCr = null;
+    [Header("Event to play on death")]
+    public UnityEvent deathEvent;
+
     #endregion
 
 
@@ -164,7 +169,7 @@ public class CharacterData : MonoBehaviour
         {
             health += restore;
             overcharged = (health > maxHealth);
-            health = Mathf.Min(health, maxHealth + overchargeHealth);
+            health = Mathf.Min(health, maxHealth);
             //only play damage SFX if it was not a killing blow so sounds don't overlap
             if (health > 0)
             {

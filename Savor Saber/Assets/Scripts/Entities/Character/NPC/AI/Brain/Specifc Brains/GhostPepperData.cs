@@ -26,10 +26,7 @@ public class GhostPepperData : AIData
         {
             if (Checks.ClosestDrone() != null)
             {
-                if (health > (maxHealth / 4))
-                    proto = Protocols.Ranged;
-                else
-                    proto = Protocols.Runaway;
+                proto = Protocols.Attack;
             }
             else
                 proto = Protocols.Runaway;

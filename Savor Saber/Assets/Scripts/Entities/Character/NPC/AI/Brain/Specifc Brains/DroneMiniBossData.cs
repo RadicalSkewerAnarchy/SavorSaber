@@ -8,7 +8,7 @@ public class DroneMiniBossData : AIData
     {
         Protocols proto;
 
-        meleeHunter = true;
+        hasMeleeAttack = true;
         /*
         var weakling = Checks.WeakestCreature();
         var closest = Checks.ClosestCreature(new string[] { "Predator" });
