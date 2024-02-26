@@ -450,8 +450,22 @@ public class AIData : CharacterData
                 break;
             // attack
             case Protocols.Attack:
-                if (inMeleeRange)
-                    Protocol.Melee(Checks.specialTarget);
+
+                //if(Checks.closestEnemy != null)
+                //inMeleeRange = (Vector3.Distance(this.transform.position, Checks.closestEnemy.transform.position) <= MeleeAttackThreshold);
+                GameObject closest = Checks.ClosestCreature();
+                if(closest != null)
+                {
+                    Debug.Log(this.gameObject.name + " found closest creature");
+                    inMeleeRange = (Vector3.Distance(this.transform.position, closest.transform.position) <= MeleeChaseThreshold);
+                }
+                else
+                {
+                    Debug.Log(this.gameObject.name + "closest craeture is null");
+                }
+
+                if (inMeleeRange && hasMeleeAttack)
+                    Protocol.NavMelee(Checks.specialTarget);
                 else if (hasRangedAttack)
                     Protocol.Ranged(Checks.specialTarget);
                 break;

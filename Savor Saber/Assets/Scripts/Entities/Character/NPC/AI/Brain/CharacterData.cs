@@ -35,6 +35,7 @@ public class CharacterData : MonoBehaviour
     public float Speed;
     public float Perception;
     public float MeleeAttackThreshold = 1f;
+    public float MeleeChaseThreshold = 2f;
     public float RangeAttackThreshold = 2f;
     public float EngageHostileThreshold = 5f;
     public int maxHealth = 10;
