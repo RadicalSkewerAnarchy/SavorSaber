@@ -248,11 +248,13 @@ public class MonsterBehavior : MonoBehaviour
         {
             #region Attack
             TransitionBehavior(AIData.Behave.Attack, "Melee");
-            AnimatorBody.Play("Melee");
+            //AnimatorBody.Play("Melee Attack");
+            AnimatorBody.SetTrigger("Melee");
             isAttacking = true;
             if (meleeSFX != null)
                 Instantiate(AiData.sfxPlayer, transform.position, transform.rotation).GetComponent<PlayAndDestroy>().Play(meleeSFX);
             StartCoroutine(MeleeDelay(target));
+            AnimatorBody.SetTrigger("Idle");
             #endregion
             return true;
         }
@@ -443,7 +445,8 @@ public class MonsterBehavior : MonoBehaviour
     private void BehaviorIn(AIData.Behave behave, string anim)
     {
         AiData.previousBehavior = AiData.currentBehavior;
-        AnimatorBody.Play(anim);
+        //AnimatorBody.Play(anim);
+        AnimatorBody.SetTrigger(anim);
     }
 
     private void BehaviorOut(AIData.Behave behave, string anim)
@@ -453,13 +456,15 @@ public class MonsterBehavior : MonoBehaviour
             if (AnimatorBody.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1)
             {
                 AiData.currentBehavior = behave;
-                AnimatorBody.Play(anim);
+                //AnimatorBody.Play(anim);
+                AnimatorBody.SetTrigger(anim);
             }
         }
         else
         {
             AiData.currentBehavior = behave;
-            AnimatorBody.Play(anim);
+            //AnimatorBody.Play(anim);
+            AnimatorBody.SetTrigger(anim);
         }
     }
 
