@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using MathUtils;
-public class OverchargeCurryBalls : MonoBehaviour
+public class OverchargeCurryBalls : Overcharge
 {
     protected SpriteRenderer spriteRenderer;
     protected PointVector pv = new PointVector();
@@ -14,7 +14,7 @@ public class OverchargeCurryBalls : MonoBehaviour
     }
 
 
-    public virtual void CurryBalls(bool favorite)
+    public override void Activate()
     {
         // the amount of time that a fruitant is charmed
         int shots = 2;

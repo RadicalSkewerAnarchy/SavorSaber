@@ -15398,34 +15398,34 @@ MonoBehaviour:
   armored: 0
   affectedByDot: 0
   currentDot: {fileID: 0}
-  Speed: 1
-  Perception: 5
-  MeleeAttackThreshold: 1
-  RangeAttackThreshold: 1
+  Speed: 4
+  Perception: 8
+  MeleeAttackThreshold: 1.5
+  MeleeChaseThreshold: 5
+  RangeAttackThreshold: 2
   EngageHostileThreshold: 5
-  maxHealth: 10
-  health: 10
-  overchargeHealth: 0
-  PartySize: 3
+  maxHealth: 12
+  health: 12
+  overchargeTime: 6
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  PartySize: 3
   damageDealt: 0
   entitiesKilled: 0
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
   healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
   deathSFX: {fileID: 8300000, guid: 8ce9ef701a5973345997768074124cef, type: 3}
   eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+  sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
   damageParticleBurst: {fileID: 0}
   eatingParticleBurst: {fileID: 0}
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 6405371344080102823}
   deathEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  overchargeTime: 6
   currentBehavior: 0
   previousBehavior: 0
   currentProtocol: 2
@@ -15437,20 +15437,25 @@ MonoBehaviour:
   CommandCompleted: 1
   CommandInProgress: 0
   DecisionTimer: 0
-  DecisionTimerReset: 0.5
-  DecisionTimerVariance: 0.25
-  Behavior: {fileID: 6405371343124089622}
-  Protocol: {fileID: 6405371343124089621}
-  Checks: {fileID: 6405371343124089624}
-  sRenderer: {fileID: 6405371343124089644}
+  DecisionTimerReset: 1
+  DecisionTimerVariance: 0.2
+  Behavior: {fileID: 5116614928368540169, guid: 8c734374033eaa04fb452a75c540ebe1,
+    type: 3}
+  Protocol: {fileID: 5116614928368540170, guid: 8c734374033eaa04fb452a75c540ebe1,
+    type: 3}
+  Checks: {fileID: 5116614928368540167, guid: 8c734374033eaa04fb452a75c540ebe1, type: 3}
+  sRenderer: {fileID: 5116614928368540211, guid: 8c734374033eaa04fb452a75c540ebe1,
+    type: 3}
   Awareness: {fileID: 0}
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
-  meleeHunter: 0
+  hasMeleeAttack: 1
+  hasRangedAttack: 0
+  inMeleeRange: 0
   rideVector: {x: 0, y: 0, z: 0}
   path: []
-  flavor: 0
+  flavor: 1
 --- !u!114 &6405371343124089621
 MonoBehaviour:
   m_ObjectHideFlags: 0

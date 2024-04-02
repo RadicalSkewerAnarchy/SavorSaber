@@ -24,6 +24,7 @@ public class FlavorInputManager : MonoBehaviour
     protected AudioSource sfxPlayer;
     protected AIData characterData;
     protected SpriteRenderer spriteRenderer;
+    protected Overcharge overcharge;
     #endregion
 
     #region Other
@@ -39,6 +40,7 @@ public class FlavorInputManager : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
+        overcharge = GetComponent<Overcharge>();
         // differentiate between ai and char data
         characterData = GetComponent<AIData>();
         if (characterData == null)
@@ -86,6 +88,7 @@ public class FlavorInputManager : MonoBehaviour
                 {
                     characterData.DoHeal(4);
                     healed = true;
+                    overcharge.Activate();
                 }
             }
             if (!healed) characterData.DoHeal(2);

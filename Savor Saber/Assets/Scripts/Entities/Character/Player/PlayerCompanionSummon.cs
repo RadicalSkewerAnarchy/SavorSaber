@@ -163,6 +163,7 @@ public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
         StartCoroutine(Cooldown(0));
         StartCoroutine(DelayedAI(companion));
         StartCoroutine(ActiveTimer(0));
+        companion.GetComponent<Animator>().SetTrigger("Socialize");
 
         CloseUI();
     }

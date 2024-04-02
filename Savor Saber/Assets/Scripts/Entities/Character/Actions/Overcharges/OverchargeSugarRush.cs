@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AIData))]
-public class OverchargeSugarRush : MonoBehaviour
+public class OverchargeSugarRush : Overcharge
 {
 
     private AIData characterData;
@@ -19,7 +19,11 @@ public class OverchargeSugarRush : MonoBehaviour
         characterData = GetComponent<AIData>();
     }
 
-
+    public override void Activate()
+    {
+        base.Activate();
+        SugarStack(5);
+    }
     public void SugarStack(int amount)
     {
         if (rushed)

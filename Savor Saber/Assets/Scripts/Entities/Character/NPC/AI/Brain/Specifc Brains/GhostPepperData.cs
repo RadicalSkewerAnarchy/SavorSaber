@@ -75,7 +75,7 @@ public class GhostPepperData : AIData
                 this.Behavior.projectile = overchargedProjectile;
                 if (fim == null)
                     fim = GetComponent<OverchargeCurryBalls>();
-                fim.CurryBalls(true);
+                //fim.CurryBalls(true);
                 this.RangeAttackThreshold = 1;
                 break;
             default:
