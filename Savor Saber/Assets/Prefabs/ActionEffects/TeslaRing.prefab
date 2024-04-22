@@ -117,11 +117,11 @@ GameObject:
   - component: {fileID: 4998334802170643234}
   - component: {fileID: 4998334802170643235}
   - component: {fileID: 4998334802170643232}
-  - component: {fileID: 4998334802170643233}
   - component: {fileID: 6835986143875154485}
   - component: {fileID: 7037523349122621899}
   - component: {fileID: 7472499420747752940}
   - component: {fileID: 4367723076355936092}
+  - component: {fileID: 3844714795217569189}
   m_Layer: 12
   m_Name: TeslaRing
   m_TagString: Untagged
@@ -208,27 +208,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1.8, y: 2.47}
   m_Direction: 1
---- !u!114 &4998334802170643233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4998334802170643246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f229e813e1b0a4c8cb3b5fc6205d79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hurtPlayer: 1
-  hurtDrones: 0
-  damagePerTic: 1
-  damageRate: 0.25
-  shockSFX: {fileID: 8300000, guid: 85288a9423ec05b42a9a6ff635f9d162, type: 3}
-  disruptiontime: 5
-  sparkTemplate: {fileID: 4415573733315086686, guid: 63ddcb3db00acb54c85dbc3ae885ac0d,
-    type: 3}
-  overCharged: 0
 --- !u!114 &6835986143875154485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +230,7 @@ Animator:
   m_GameObject: {fileID: 4998334802170643246}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c69ca6e70dbfc574287060090d182bcb, type: 2}
+  m_Controller: {fileID: 22100000, guid: eb4092fd08f5298408d4baabc8c1295d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -372,3 +351,24 @@ MonoBehaviour:
   sfx: {fileID: 0}
   sfxPlayer: {fileID: 4539271411933894991, guid: f74fdefbddc61194a8449615a189da9e,
     type: 3}
+--- !u!114 &3844714795217569189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4998334802170643246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660ce8dc43e09db4faab3a786f320ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectPlayer: 1
+  affectDrones: 0
+  effectRate: 0.25
+  lifespan: -1
+  SFX: {fileID: 8300000, guid: 85288a9423ec05b42a9a6ff635f9d162, type: 3}
+  disruptionTime: 5
+  vfxTemplate: {fileID: 4415573733315086686, guid: 63ddcb3db00acb54c85dbc3ae885ac0d,
+    type: 3}
+  overCharged: 0

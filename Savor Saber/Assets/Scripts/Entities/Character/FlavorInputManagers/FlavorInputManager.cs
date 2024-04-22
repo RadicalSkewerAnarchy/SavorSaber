@@ -77,18 +77,20 @@ public class FlavorInputManager : MonoBehaviour
         if (!rejected)
         {
             bool healed = false;
+            bool overcharged = false;
             foreach (IngredientData favoriteIngredient in favoriteIngredients)
             {
                 if (ingredient == favoriteIngredient)
                 {
-                    characterData.DoHeal(6);
+                    overcharged = characterData.DoHeal(6);
                     healed = true;
+                    if(overcharged) overcharge.Activate();
                 }
                 else if ((ingredient.flavors & favoriteIngredient.flavors) > 0)
                 {
-                    characterData.DoHeal(4);
+                    overcharged = characterData.DoHeal(4);
                     healed = true;
-                    overcharge.Activate();
+                    if (overcharged) overcharge.Activate();
                 }
             }
             if (!healed) characterData.DoHeal(2);

@@ -6,7 +6,7 @@ public class OverchargeCurryBalls : Overcharge
 {
     protected SpriteRenderer spriteRenderer;
     protected PointVector pv = new PointVector();
-    public float dotTicLength = 1;
+    public float shotCooldown = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,11 +16,10 @@ public class OverchargeCurryBalls : Overcharge
 
     public override void Activate()
     {
-        // the amount of time that a fruitant is charmed
         int shots = 2;
         int pellets = 6;
-        dotTicLength = 0.5f;
-        StartCoroutine(ExecuteCurry(dotTicLength, shots, pellets));
+        shotCooldown = 0.5f;
+        StartCoroutine(ExecuteCurry(shotCooldown, shots, pellets));
     }
 
 

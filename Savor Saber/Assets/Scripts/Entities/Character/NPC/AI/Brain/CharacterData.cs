@@ -191,6 +191,8 @@ public class CharacterData : MonoBehaviour
 
                 // fruitant specific
                 // set alive or overcharged
+                // Deprecated since overcharged is no longer a life state
+                /*
                 var ai = this.GetComponent<AIData>();
                 if (ai != null)
                 {
@@ -221,6 +223,7 @@ public class CharacterData : MonoBehaviour
                         ai.currentLifeState = AIData.LifeState.alive;
                     }
                 }
+                */
             }
 
             // create a anti fear signal
