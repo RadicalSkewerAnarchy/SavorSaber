@@ -78,6 +78,7 @@ public class AreaEffectOverTime : MonoBehaviour
         if (active && affectPlayer && (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Prey"))
         {
             characterList.Add(collision.gameObject.GetComponent<CharacterData>());
+            EffectVFX(collision);
             if (!targetsInAOE)
             {
                 targetsInAOE = true;
@@ -135,7 +136,7 @@ public class AreaEffectOverTime : MonoBehaviour
         // do something to the targets
     }
 
-    //Classes that extend this template will put their effect vfx here
+    //Classes that extend this template will put their effect vfx and sfx here
     protected virtual void EffectVFX(Collider2D collision)
     {
         // play some fx

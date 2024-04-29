@@ -188,42 +188,7 @@ public class CharacterData : MonoBehaviour
                     var deathSoundObj = Instantiate(sfxPlayer, transform.position, transform.rotation);
                     deathSoundObj.GetComponent<PlayAndDestroy>().Play(healSFX);
                 }
-
-                // fruitant specific
-                // set alive or overcharged
-                // Deprecated since overcharged is no longer a life state
-                /*
-                var ai = this.GetComponent<AIData>();
-                if (ai != null)
-                {
-                    if (overcharged)
-                    {
-                        Debug.Log("Overcharging");
-                        if (this.tag == "Prey")
-                        {
-                            if (ai.currentLifeState == AIData.LifeState.overcharged)
-                            {
-                                // first stop
-                                StopCoroutine(ai.OverchargeTimer(0));
-                                // then start timer
-                                StartCoroutine(ai.OverchargeTimer(overchargeTime));
-                            }
-                            else
-                            {
-                                // set state
-                                ai.currentLifeState = AIData.LifeState.overcharged;
-                                // then start timer
-                                StartCoroutine(ai.OverchargeTimer(overchargeTime));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //revived or still alive
-                        ai.currentLifeState = AIData.LifeState.alive;
-                    }
-                }
-                */
+                
             }
 
             // create a anti fear signal
