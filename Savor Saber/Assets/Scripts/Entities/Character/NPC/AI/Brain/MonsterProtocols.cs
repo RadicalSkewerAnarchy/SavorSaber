@@ -336,6 +336,7 @@ public partial class MonsterProtocols : MonoBehaviour
     // used for ride protocol
     public void Ride(Vector3 go)
     {
+        Debug.Log(this.gameObject.name + "In protocol Ride");
         float chargeSpeed = 5;
         if (InputManager.GetButton(Control.Knife))
         {

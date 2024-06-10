@@ -125,13 +125,6 @@ public class CharacterData : MonoBehaviour
                 if (damageParticleBurst != null)
                     damageParticleBurst.Play();
                 StartCoroutine(DamageEffectCr());
-
-                /*var ai = this.GetComponent<AIData>();
-                if (ai != null)
-                {
-                    // squeeze!
-                    ai.Wiggle(damage);
-                }*/
             }
             else // Health <= 0
             {
