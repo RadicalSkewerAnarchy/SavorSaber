@@ -18,14 +18,15 @@ MonoBehaviour:
   Speed: 4
   Perception: 8
   MeleeAttackThreshold: 1
+  MeleeChaseThreshold: 2
   RangeAttackThreshold: 5
   EngageHostileThreshold: 4
   maxHealth: 20
   health: 20
-  overchargeHealth: 0
-  PartySize: 3
+  overchargeTime: 6
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  PartySize: 3
   damageDealt: 0
   entitiesKilled: 0
   damageSFX: {fileID: 8300000, guid: b8e248dbd4d5f2a48ba65c3755c67e1b, type: 3}
@@ -64,7 +65,9 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
-  meleeHunter: 1
+  hasMeleeAttack: 1
+  hasRangedAttack: 0
+  inMeleeRange: 0
   rideVector: {x: 0, y: 0, z: 0}
   path: []
   flavor: 16
@@ -76,11 +79,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6405371343124089625, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Name
-      value: Saltamander Variant
-      objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089622, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: ActionTimerReset
@@ -110,6 +108,37 @@ PrefabInstance:
         type: 3}
       propertyPath: attackCooldown
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_StitchLightmapSeams
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -106014166347916088, guid: cdadc62f0e895ce488dc61f0d51e1e1f,
+        type: 3}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6405371343124089625, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
+        type: 3}
+      propertyPath: m_Name
+      value: Saltamander Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089618, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -171,27 +200,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: ee66234ff0922254fa49ace0b6916b4e,
         type: 2}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_StitchLightmapSeams
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: cdadc62f0e895ce488dc61f0d51e1e1f,
-        type: 3}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6405371343124089644, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6405371343124089643, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: m_Offset.y
@@ -290,7 +298,7 @@ PrefabInstance:
     - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.219
+      value: 0.379
       objectReference: {fileID: 0}
     - target: {fileID: 702969539251955311, guid: 0f44ac84a8c8fa143bc0f795dc0c688b,
         type: 3}
@@ -707,16 +715,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5116614928368540214}
     m_Modifications:
-    - target: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
-        type: 3}
-      propertyPath: m_Name
-      value: SaltShield
-      objectReference: {fileID: 0}
-    - target: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6589464027418502387, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -770,6 +768,16 @@ PrefabInstance:
     - target: {fileID: 6589464027418502387, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
+        type: 3}
+      propertyPath: m_Name
+      value: SaltShield
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589464027418502391, guid: 9daa829184aa17d4e8aa63c70d94dd5a,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
