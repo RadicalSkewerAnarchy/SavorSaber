@@ -32,10 +32,6 @@ public class SpawnPoint : MonoBehaviour
     public void Respawn(GameObject player)
     {
         //respawn
-        if (emergencyDismountFlag)
-        {
-            player.GetComponent<PlayerController>().currentSaddle.GetComponent<FruitantMount>().Demount();
-        }
         var cData = player.GetComponent<CharacterData>();
         cData.health = cData.maxHealth;
         //Add more fancy death scene later
@@ -83,18 +79,5 @@ public class SpawnPoint : MonoBehaviour
         //temporarily dismount if riding a fruitant
         PlayerController somaController = player.GetComponent<PlayerController>();
         somaController.Stop();
-        if (somaController.riding)
-        {
-            PlayerData somaData = player.GetComponent<PlayerData>();
-            GameObject companion = somaData.party[0];
-            if (companion != null)
-            {
-                FruitantMount saddle = companion.GetComponentInChildren<FruitantMount>();
-                saddle.DemountOnLoad();
-            }
-
-            //preserve the fact that we *were* riding before the transition
-            somaController.loadRiding = true;
-        }
     }
 }

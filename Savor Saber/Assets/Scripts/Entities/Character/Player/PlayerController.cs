@@ -56,8 +56,6 @@ public class PlayerController : EntityController
     private bool dashing = false;
     public bool riding = false;
     public GameObject currentSaddle;
-    public bool despawnOnDismount = false;
-    public bool loadRiding = false;
     private float dashCurrTime = 0;
     private Vector2 dashVector;
     public float doubleTapTime;
@@ -343,17 +341,6 @@ public class PlayerController : EntityController
             animatorBody.SetBool("Moving", false);
             animatorBody.SetBool("Running", false);
             return;
-        }
-
-        if (riding)
-        {
-            animatorBody.SetBool("Riding", true);
-            animatorBody.Play("Riding");
-            return;
-        }
-        else
-        {
-            animatorBody.SetBool("Riding", false);
         }
 
         var movementVector = GetMovementVector();

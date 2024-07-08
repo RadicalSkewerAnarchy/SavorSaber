@@ -15,7 +15,6 @@ public class PlayerData : CharacterData, IDataPersistence
     private Respawner res;
     public List<GameObject> party = new List<GameObject>();
     public int lowHealthThreshhold = 2;
-    private TrustMeter trust;
     private IngredientData currentFormIngredient;
 
     public PartyUIManager partyUI;
@@ -25,7 +24,6 @@ public class PlayerData : CharacterData, IDataPersistence
         sp = GetComponent<SpriteRenderer>();
         res = GetComponent<Respawner>();
         altSFXPlayer = GetComponent<PlaySFX>();
-        trust = GetComponent<TrustMeter>();
     }
 
     public void LoadData(GameData data)

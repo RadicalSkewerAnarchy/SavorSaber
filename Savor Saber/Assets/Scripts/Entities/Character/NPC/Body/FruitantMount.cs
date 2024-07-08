@@ -4,287 +4,55 @@ using UnityEngine;
 
 public class FruitantMount : MonoBehaviour
 {
-    // the fruitant being mounted
-    public GameObject thisFruitant;
-    private AIData fruitantData;
-
-    // sounds
-    public AudioClip mountSound;
-    public AudioClip demountSound;
-
-    public AudioSource audioSource;
-
-    // player refs
-    public GameObject player;
-    public PlayerController controller;
-    public SpriteRenderer fruitantRenderer;
-    public MonsterController fruitantController;
-    public SpriteRenderer playerRenderer;
-    public PlayerData playerData;
-    public ParticleSystem dust;
-    public bool mounted = false;
-    public bool demounting = false;
-    [SerializeField]
-    private bool mountable = false;
-    private bool fruitantEnabled = false;
-
-    // lerping
-    public Vector3 mountStart;
-    public Vector3 mountEnd;
-    private float leapLerp = 0;
-
-    public float mountSpeed = 2;
-    private float originalSpeed;
-
+    private Animator playerAnimator;
+    private PlayerData playerData;
+    private PlayerController controller;
+    private RuntimeAnimatorController mountedAnimationController;
+    private RuntimeAnimatorController baseAnimationController;
+    private bool canMount = false;
+    private FruitantMountData mountData;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        controller = player.GetComponent<PlayerController>();
-        playerRenderer = player.GetComponent<SpriteRenderer>();
-        playerData = player.GetComponent<PlayerData>();
-        fruitantData = thisFruitant.GetComponent<AIData>();
-        fruitantController = thisFruitant.GetComponent<MonsterController>();
-        fruitantRenderer = thisFruitant.GetComponent<SpriteRenderer>();
-
-        dust = player.GetComponentInChildren<ParticleSystem>();
-
-        audioSource = this.GetComponent<AudioSource>();
-
-        originalSpeed = fruitantData.Speed;
+        playerAnimator = GetComponentInParent<Animator>();
+        baseAnimationController = playerAnimator.runtimeAnimatorController;
+        controller = GetComponentInParent<PlayerController>();
     }
 
-    private void GetPlayerRefs()
+    // Update is called once per frame
+    void Update()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
-        controller = player.GetComponent<PlayerController>();
-        playerRenderer = player.GetComponent<SpriteRenderer>();
-        playerData = player.GetComponent<PlayerData>();
-    }
-
-    public void MountOnLoad()
-    {
-        Debug.Log("Entering MountOnLoad");
-
-        // set fruitant data
-        if(fruitantData == null)
+        if(canMount && !EventTrigger.InCutscene && playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
         {
-            fruitantData = GetComponentInParent<AIData>();
+            Mount();
         }
-        fruitantData.rideVector = new Vector2(0, 0);
-        fruitantData.currentProtocol = AIData.Protocols.Ride;
-
-        // enable riding
-        GetPlayerRefs();
-        if (player != null)
-            controller = player.GetComponent<PlayerController>();
-        controller.riding = true;
-        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
-
-        // change player layering
-        playerRenderer.sortingLayerName = "AboveObjects";
-
-        // set lerps
-        leapLerp = 0;
-        mountStart = player.transform.position;
-        mountEnd = this.transform.position;
-
-        // mounted
-        mountable = true;
-        mounted = true;
-        demounting = false;
-
-        // dust
-        dust.Play();
-    }
-
-    public void DemountOnLoad()
-    {
-        Debug.Log("Demounting");
-
-        // set fruitant data
-        fruitantData.currentProtocol = AIData.Protocols.Lazy;
-
-        // change player layering
-        playerRenderer.flipX = false;
-        if (controller != null)
-            controller = player.GetComponent<PlayerController>();
-        controller.riding = false;
-
-        // set lerps
-        leapLerp = 0;
-        mountEnd = this.transform.position - new Vector3(0, 1.25f);
-        mountStart = player.transform.position;
-
-        // mounted
-        mounted = false;
-        demounting = true;
+        
     }
 
     void Mount()
     {
-        Debug.Log("Mounting");
-        audioSource.clip = mountSound;
-        audioSource.Play();
-
-        // set fruitant data
-        fruitantData.rideVector = new Vector2(0, 0);
-        fruitantData.currentProtocol = AIData.Protocols.Ride;
-
-        // enable riding
-        if (controller != null)
-            controller = player.GetComponent<PlayerController>();
+        playerAnimator.runtimeAnimatorController = mountedAnimationController;
         controller.riding = true;
-        Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), true);
-
-        // change player layering
-        playerRenderer.sortingLayerName = "AboveObjects";
-
-        // set lerps
-        leapLerp = 0;
-        mountStart = player.transform.position;
-        mountEnd = this.transform.position;
-
-        // mounted
-        mounted = true;
-        demounting = false;
-        controller.currentSaddle = this.gameObject;
-
-        // dust
-        dust.Play();
-
-        fruitantData.Speed = mountSpeed;
-        FlagManager.SetFlag("CanSummonCompanion", "False");
+        canMount = false;
     }
 
-    public void Demount()
+    void Dismount()
     {
-        Debug.Log("Demounting");
-        audioSource.clip = demountSound;
-        audioSource.Play();
-
-        // set fruitant data
-        fruitantData.currentProtocol = AIData.Protocols.Lazy;
-        
-        // change player layering
-        playerRenderer.flipX = false;
-        if (controller != null)
-            controller = player.GetComponent<PlayerController>();
+        playerAnimator.runtimeAnimatorController = baseAnimationController;
         controller.riding = false;
-
-        // set lerps
-        leapLerp = 0;
-        mountEnd = this.transform.position - new Vector3(0, 1.25f);
-        mountStart = player.transform.position;
-
-        // mounted
-        mounted = false;
-        demounting = true;
-        controller.currentSaddle = null;
-
-        fruitantData.Speed = originalSpeed;
-
-        FlagManager.SetFlag("CanSummonCompanion", "True");
-        if (controller.despawnOnDismount)
-        {
-            controller.despawnOnDismount = false;
-            Destroy(transform.parent.gameObject);
-        }
-    }
-
-    void Update()
-    {
-        //Debug.Log("Mounted: " + mounted);
-        //Debug.Log("Mountable: " + mountable);
-        if (mounted)
-        {
-            // if player dies, demount
-            if (playerData.health <= 0)
-            {
-                Demount();
-                return;
-            }
-
-            // if in cutscene, dmeount
-            if (EventTrigger.InCutscene)
-            {
-                Demount();
-                demounting = false;
-                playerRenderer.sortingLayerName = "Objects";
-                Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
-                return;
-            }
-
-            // demount
-            if (InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
-            {
-                Demount();
-                return;
-            }
-
-            // move the fruitant
-            fruitantData.rideVector = controller.GetMovementVector();
-            //Debug.Log("Mount rideVector: " + controller.GetMovementVector());
-            //Debug.Log("Mount proxy controller currently Null? " + (controller == null));
-
-            // move player to here
-            mountEnd = this.transform.position;
-            if (leapLerp >= 1.0)
-            {
-                player.transform.position = mountEnd;
-            }
-            else
-            {
-                leapLerp += Time.deltaTime * 4;
-                player.transform.position = Vector3.Lerp(mountStart, mountEnd, leapLerp);
-            }
-
-            // flip player
-            playerRenderer.flipX = (fruitantController.invert ? fruitantRenderer.flipX : !fruitantRenderer.flipX);
-
-        }
-        else
-        {
-            if (mountable && !EventTrigger.InCutscene && playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash)) //InputManager.GetAxis(InputAxis.Dash) > 0.9)
-            {
-                Mount();
-                return;
-            }
-        }
-
-        // when the player hops off
-        if (demounting && leapLerp < 2f)
-        {
-            leapLerp += Time.deltaTime * 4;
-            player.transform.position = Vector3.Lerp(mountStart, mountEnd, leapLerp);
-            if (leapLerp >= 1)
-            {
-                demounting = false;
-                playerRenderer.sortingLayerName = "Objects";
-                Physics2D.IgnoreCollision(player.GetComponent<Collider2D>(), thisFruitant.GetComponent<Collider2D>(), false);
-
-                // dust
-                dust.Play();
-            }
-        }
+        canMount = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
-        {
-            mountable = true;
-        }
+        if (collision.gameObject.tag == "Prey:") Debug.Log("Fruitant mount detected fruitant in zone");
+        mountData = collision.gameObject.GetComponent<FruitantMountData>();
+        if (mountData != null) canMount = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Player")
-        {
-            mountable = false;
-            //if (mounted)
-                //Demount();
-        }
+
     }
 }

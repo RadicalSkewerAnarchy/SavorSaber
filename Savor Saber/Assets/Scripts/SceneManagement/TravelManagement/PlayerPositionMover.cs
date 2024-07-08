@@ -51,10 +51,6 @@ public class PlayerPositionMover : MonoBehaviour
 
             playerObject = other;
             player = other.gameObject;
-            if (emergencyDismountFlag)
-            {
-                player.GetComponent<PlayerController>().currentSaddle.GetComponent<FruitantMount>().Demount();
-            }
 
             //find DayNightController to save time of day
             DayNightController dnc = FindObjectOfType<DayNightController>();
@@ -80,18 +76,5 @@ public class PlayerPositionMover : MonoBehaviour
         //temporarily dismount if riding a fruitant
         PlayerController somaController = player.GetComponent<PlayerController>();
         somaController.Stop();
-        if (somaController.riding)
-        {
-            PlayerData somaData = player.GetComponent<PlayerData>();
-            GameObject companion = somaData.party[0];
-            if(companion != null)
-            {
-                FruitantMount saddle = companion.GetComponentInChildren<FruitantMount>();
-                saddle.DemountOnLoad();
-            }
-
-            //preserve the fact that we *were* riding before the transition
-            somaController.loadRiding = true;
-        }
     }
 }

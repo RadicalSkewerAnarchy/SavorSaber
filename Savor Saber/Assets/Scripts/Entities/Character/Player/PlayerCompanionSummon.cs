@@ -261,7 +261,6 @@ public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
             if (somaController.riding)
             {
                 Debug.Log("Soma is riding, do not despawn");
-                somaController.despawnOnDismount = true;
                 yield return null;
             }
             else
