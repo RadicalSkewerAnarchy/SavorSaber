@@ -173,7 +173,7 @@ public class AttackMelee : AttackBase
 
     public override void Attack()
     {
-        if (controller.riding)
+        if (controller.mounted)
             return;
 
         CanBeCanceled = true;

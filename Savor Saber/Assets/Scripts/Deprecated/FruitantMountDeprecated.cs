@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FruitantMountDeprecated : MonoBehaviour
 {
+    /*
     // the fruitant being mounted
     public GameObject thisFruitant;
     private AIData fruitantData;
@@ -282,4 +283,5 @@ public class FruitantMountDeprecated : MonoBehaviour
                 //Demount();
         }
     }
+    */
 }

@@ -258,7 +258,7 @@ public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
         if(timeActive >= maxActiveTime)
         {
             //Debug.Log("Timer elapsed, companion retreating");
-            if (somaController.riding)
+            if (somaController.mounted)
             {
                 Debug.Log("Soma is riding, do not despawn");
                 yield return null;

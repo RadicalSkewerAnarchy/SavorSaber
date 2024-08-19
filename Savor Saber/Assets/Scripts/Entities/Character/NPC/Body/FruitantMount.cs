@@ -13,6 +13,8 @@ public class FruitantMount : MonoBehaviour
     private bool canMount = false;
     private bool isMounted = false;
     private FruitantMountData mountData;
+    [SerializeField]
+    private GameObject specialTerrainCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +29,7 @@ public class FruitantMount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(canMount && !isMounted && !EventTrigger.InCutscene && playerData.health > 0 && !controller.riding && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
+        if(canMount && !isMounted && !EventTrigger.InCutscene && playerData.health > 0 && !controller.mounted && InputManager.GetButtonDown(Control.Dash, InputAxis.Dash))
         {
             Mount();
         }
@@ -41,8 +43,13 @@ public class FruitantMount : MonoBehaviour
     void Mount()
     {
         playerAnimator.runtimeAnimatorController = mountedAnimationController;
-        //controller.SetSpeed(mountData.speed);
+        //controller.SetSpeed(baseSpeed * mountData.speedMultiplier);
+        controller.mounted = true;
         isMounted = true;
+        if(mountData != null && mountData.crossSpecialTerrain)
+        {
+            specialTerrainCollider.SetActive(true);
+        }
         Destroy(mountData.gameObject);
     }
 
@@ -50,21 +57,28 @@ public class FruitantMount : MonoBehaviour
     {
         playerAnimator.runtimeAnimatorController = baseAnimationController;
         //controller.SetSpeed(baseSpeed);
+        controller.mounted = false;
         isMounted = false;
+        specialTerrainCollider.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Prey") Debug.Log("Fruitant mount detected fruitant in zone");
         mountData = collision.gameObject.GetComponent<FruitantMountData>();
-        mountedAnimationController = mountData.animatorController;
+        if(mountData != null)
+            mountedAnimationController = mountData.animatorController;
         if (mountData != null) canMount = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Prey") Debug.Log("Fruitant exiting mount zone");
-        mountData = collision.gameObject.GetComponent<FruitantMountData>();
-        if (mountData != null) canMount = false;
+        if (mountData != null)
+        {
+            mountData = collision.gameObject.GetComponent<FruitantMountData>();
+            canMount = false;
+        }
+
     }
 }

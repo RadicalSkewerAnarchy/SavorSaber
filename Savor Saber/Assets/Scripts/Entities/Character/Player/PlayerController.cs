@@ -55,6 +55,7 @@ public class PlayerController : EntityController
     public float CurrDashes { get; private set; }
     private bool dashing = false;
     public bool riding = false;
+    public bool mounted = false; //duplicated because for some reason isRiding prevents movement when set to true
     public GameObject currentSaddle;
     private float dashCurrTime = 0;
     private Vector2 dashVector;

@@ -6,7 +6,8 @@ public class FruitantMountData : MonoBehaviour
 {
 
     public RuntimeAnimatorController animatorController;
-    public float speed;
+    public float speedMultiplier = 1;
+    public bool crossSpecialTerrain = true;
     // Start is called before the first frame update
     void Start()
     {

@@ -68,7 +68,7 @@ public class AttackMeleeSkewer : AttackMelee
 
     public override void Attack()
     {
-        if (controller.riding)
+        if (controller.mounted)
             return;
 
         //animation and sound stuff
