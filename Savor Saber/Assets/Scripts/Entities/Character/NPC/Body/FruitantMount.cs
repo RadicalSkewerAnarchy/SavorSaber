@@ -12,6 +12,7 @@ public class FruitantMount : MonoBehaviour
     private float baseSpeed;
     private bool canMount = false;
     private bool isMounted = false;
+    private bool specialTerrainMount = false;
     private FruitantMountData mountData;
     [SerializeField]
     private GameObject specialTerrainCollider;
@@ -23,7 +24,7 @@ public class FruitantMount : MonoBehaviour
         baseAnimationController = playerAnimator.runtimeAnimatorController;
         controller = GetComponentInParent<PlayerController>();
         playerData = GetComponentInParent<PlayerData>();
-        baseSpeed = playerData.Speed;
+        baseSpeed = playerData.Speed;   
     }
 
     // Update is called once per frame
@@ -48,7 +49,7 @@ public class FruitantMount : MonoBehaviour
         isMounted = true;
         if(mountData != null && mountData.crossSpecialTerrain)
         {
-            specialTerrainCollider.SetActive(true);
+            specialTerrainCollider.SetActive(false);
         }
         Destroy(mountData.gameObject);
     }
@@ -59,7 +60,7 @@ public class FruitantMount : MonoBehaviour
         //controller.SetSpeed(baseSpeed);
         controller.mounted = false;
         isMounted = false;
-        specialTerrainCollider.SetActive(false);
+        specialTerrainCollider.SetActive(true);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -67,8 +68,10 @@ public class FruitantMount : MonoBehaviour
         if (collision.gameObject.tag == "Prey") Debug.Log("Fruitant mount detected fruitant in zone");
         mountData = collision.gameObject.GetComponent<FruitantMountData>();
         if(mountData != null)
+        {
             mountedAnimationController = mountData.animatorController;
-        if (mountData != null) canMount = true;
+            canMount = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
