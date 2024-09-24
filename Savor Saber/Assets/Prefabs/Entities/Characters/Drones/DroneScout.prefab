@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 7874833132442233989}
   - component: {fileID: 7867367932957486398}
   - component: {fileID: 2696718372663051624}
-  - component: {fileID: 2039627871308581389}
   - component: {fileID: -1132314315162024829}
   - component: {fileID: 116315128114590724}
+  - component: {fileID: -8495676503736083278}
   m_Layer: 0
   m_Name: DroneScout
   m_TagString: Predator
@@ -368,7 +368,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canTransformWhenFed: 0
   isCompanion: 0
   favoriteIngredients: []
   favoriteFlavor: 0
@@ -410,74 +409,6 @@ MonoBehaviour:
   allNodes: {fileID: 0}
   possibleGraphs: []
   bornOnto: 0
---- !u!114 &2039627871308581389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7874833132442233986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a81051f8d2f55a46af621fe644198de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armored: 0
-  affectedByDot: 0
-  currentDot: {fileID: 0}
-  Speed: 2
-  Perception: 10
-  MeleeAttackThreshold: 1
-  RangeAttackThreshold: 5
-  EngageHostileThreshold: 2
-  maxHealth: 6
-  health: 6
-  overchargeHealth: 0
-  PartySize: 3
-  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
-    type: 3}
-  damageDealt: 0
-  entitiesKilled: 0
-  damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
-  healSFX: {fileID: 0}
-  deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
-  eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
-  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
-    type: 3}
-  damageParticleBurst: {fileID: 3494661672731493306}
-  eatingParticleBurst: {fileID: 0}
-  healthBar: {fileID: 636825719347881209}
-  deathEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  overchargeTime: 6
-  currentBehavior: 0
-  previousBehavior: 0
-  currentProtocol: 2
-  previousProtocol: 2
-  currentLifeState: 0
-  previousLifeState: 0
-  currentMoveState: 0
-  previousMoveState: 0
-  CommandCompleted: 1
-  CommandInProgress: 0
-  DecisionTimer: 0
-  DecisionTimerReset: 1
-  DecisionTimerVariance: 0.2
-  Behavior: {fileID: 0}
-  Protocol: {fileID: 0}
-  Checks: {fileID: 0}
-  sRenderer: {fileID: 0}
-  Awareness: {fileID: 0}
-  FoodPreference: 
-  updateAI: 0
-  updateBehavior: 1
-  meleeHunter: 0
-  rideVector: {x: 0, y: 0, z: 0}
-  path: []
-  flavor: 0
 --- !u!114 &-1132314315162024829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +446,78 @@ MonoBehaviour:
     _keys: 00000000
     _values:
     - {fileID: 21300000, guid: df2ca7011ed634e4ca9ad6de1b644890, type: 3}
+--- !u!114 &-8495676503736083278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874833132442233986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a953ba0b1a0ec4d88b99de85caa04f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armored: 0
+  affectedByDot: 0
+  currentDot: {fileID: 0}
+  Speed: 2
+  Perception: 10
+  MeleeAttackThreshold: 1
+  MeleeChaseThreshold: 2
+  RangeAttackThreshold: 5
+  EngageHostileThreshold: 3
+  maxHealth: 6
+  health: 6
+  overchargeTime: 6
+  signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
+    type: 3}
+  PartySize: 3
+  damageDealt: 0
+  entitiesKilled: 0
+  damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
+  healSFX: {fileID: 8300000, guid: 571774a0f30c07540a24a1c5bca6dd68, type: 3}
+  deathSFX: {fileID: 8300000, guid: b3f3c4cace0cc1b45bc02e7fb254f16d, type: 3}
+  eatSFX: {fileID: 8300000, guid: e4fbb2e04c2603c419e2652bf540917d, type: 3}
+  sfxPlayer: {fileID: 4539271411933894991, guid: e28cd274dff01eb4fbe6a5d2969cbcab,
+    type: 3}
+  damageParticleBurst: {fileID: 3494661672731493306, guid: 1de2665084fcb7246b2f44eafb974a61,
+    type: 3}
+  eatingParticleBurst: {fileID: 0}
+  healthBar: {fileID: 636825719347881209, guid: 1de2665084fcb7246b2f44eafb974a61,
+    type: 3}
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  currentBehavior: 0
+  previousBehavior: 0
+  currentProtocol: 2
+  previousProtocol: 2
+  currentLifeState: 0
+  previousLifeState: 0
+  currentMoveState: 0
+  previousMoveState: 0
+  CommandCompleted: 1
+  CommandInProgress: 0
+  DecisionTimer: 0
+  DecisionTimerReset: 1
+  DecisionTimerVariance: 0.2
+  Behavior: {fileID: 0}
+  Protocol: {fileID: 0}
+  Checks: {fileID: 0}
+  sRenderer: {fileID: 0}
+  Awareness: {fileID: 0}
+  FoodPreference: 
+  updateAI: 0
+  updateBehavior: 1
+  hasMeleeAttack: 0
+  hasRangedAttack: 1
+  inMeleeRange: 0
+  rideVector: {x: 0, y: 0, z: 0}
+  path: []
+  flavor: 0
 --- !u!1001 &931576373806108353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,18 +673,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 931576373806108353}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &636825719347881209 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 305095066010790456, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
-    type: 3}
-  m_PrefabInstance: {fileID: 931576373806108353}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -113659843, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1739389212481942988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -829,12 +820,6 @@ PrefabInstance:
 --- !u!4 &989798793147667777 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5671632012465910321, guid: 8810df0ddde908745878a508b9576c92,
-    type: 3}
-  m_PrefabInstance: {fileID: 4830629046384519024}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3494661672731493306 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 8319942642036876490, guid: 8810df0ddde908745878a508b9576c92,
     type: 3}
   m_PrefabInstance: {fileID: 4830629046384519024}
   m_PrefabAsset: {fileID: 0}
