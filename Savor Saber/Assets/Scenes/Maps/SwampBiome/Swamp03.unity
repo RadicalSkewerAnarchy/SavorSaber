@@ -4200,6 +4200,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfef6272df4769047a30b54a42d9de47, type: 3}
+--- !u!1 &258843453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 258843454}
+  m_Layer: 9
+  m_Name: SomaWaypoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &258843454
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258843453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -81.26, y: 29.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6521766236296241820}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &265444301
 GameObject:
   m_ObjectHideFlags: 0
@@ -35456,6 +35486,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 486751010}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &486751012 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6793001521634354830, guid: 84728f80f0c2ab54fb2be481ff701afc,
+    type: 3}
+  m_PrefabInstance: {fileID: 486751010}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f0513f71a3cea45b9cd169b968a59d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &507505232
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -114883,9 +114925,9 @@ Transform:
   m_LocalPosition: {x: -104.03566, y: 18.196949, z: -554.98566}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1304906034}
   - {fileID: 1384130262}
   - {fileID: 1270934994}
-  - {fileID: 1304906034}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -114999,7 +115041,7 @@ Transform:
   - {fileID: 62060057}
   - {fileID: 83665809}
   m_Father: {fileID: 1281655177}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1304906035
 MonoBehaviour:
@@ -115686,16 +115728,16 @@ PrefabInstance:
       propertyPath: callOnActivation.m_PersistentCalls.m_Calls.Array.data[4].m_Arguments.m_StringArgument
       value: Bring {color,sweet,G. Pear} to {mana}
       objectReference: {fileID: 0}
-    - target: {fileID: 453848839064285805, guid: 66ff4dc170cfdfa4fa0e52abdaf2c146,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
     - target: {fileID: 329292246017357252, guid: 66ff4dc170cfdfa4fa0e52abdaf2c146,
         type: 3}
       propertyPath: fruitant
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 453848839064285805, guid: 66ff4dc170cfdfa4fa0e52abdaf2c146,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 065e62636d375c7499c43357a8399dce, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66ff4dc170cfdfa4fa0e52abdaf2c146, type: 3}
 --- !u!4 &1376189383 stripped
@@ -187339,6 +187381,7 @@ Transform:
   m_LocalScale: {x: 0.67479, y: 0.67479, z: 0.67479}
   m_Children:
   - {fileID: 6521766236988857592}
+  - {fileID: 258843454}
   m_Father: {fileID: 712179261}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -187377,18 +187420,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _actors:
     _keys:
-    - Amrita
-    - Soma
+    - Avocatoad
     _values:
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 486751012}
   _dependencies:
     _keys:
-    - Campfire
-    - Waypoint1
+    - SomaWaypoint
     _values:
-    - {fileID: 0}
-    - {fileID: 6521766236988857593}
+    - {fileID: 258843453}
   specialEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -187397,7 +187436,7 @@ MonoBehaviour:
   _events:
     _keys: []
     _values: []
-  Graph: {fileID: 0}
+  Graph: {fileID: 11400000, guid: 8c61e378df99b05468cb98b6e0369698, type: 2}
 --- !u!114 &6521766236296241823
 MonoBehaviour:
   m_ObjectHideFlags: 0

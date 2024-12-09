@@ -12,7 +12,7 @@ public class DoTApplicator : SkewerBonusEffect
     void Start()
     {
         Tic = new WaitForSeconds(1);
-        DamageOverTime();
+        Cooldown();
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class DoTApplicator : SkewerBonusEffect
 
     }
 
-    private void DamageOverTime()
+    private void Cooldown()
     {
         bool killingBlow = false;
         if (targetData == null)
@@ -54,13 +54,12 @@ public class DoTApplicator : SkewerBonusEffect
         }
         StartCoroutine(ExecuteAfterSeconds());
 
-
     }
 
     private IEnumerator ExecuteAfterSeconds()
     {
         yield return Tic;
-        DamageOverTime();
+        Cooldown();
     }
 
 
