@@ -16,6 +16,7 @@ public class PaddlePearData : AIData
         else
         {
             //Debug.Log("Paddle pear checking number of friends since there are no enemies nearby");
+            /*
             int friends = Checks.NumberOfFriends();
             if (friends >= 0 && friends < 2)
                 p = Protocols.Wander;
@@ -23,7 +24,7 @@ public class PaddlePearData : AIData
                 p = Protocols.Party;
             else
                 p = Protocols.Runaway;
-           
+           */
         }
         
         return p;
