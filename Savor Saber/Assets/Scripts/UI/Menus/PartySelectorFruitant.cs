@@ -28,8 +28,8 @@ public class PartySelectorFruitant : MonoBehaviour
     public void DismissFruitant()
     {
         PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
-        if (targetFruitant != null && partyCommander != null)
-            pd.LeaveTeam(targetFruitant);
+        //if (targetFruitant != null && partyCommander != null)
+            //pd.LeaveTeam(targetFruitant);
 
         closeSound.Play(closeSound.sfx);
     }

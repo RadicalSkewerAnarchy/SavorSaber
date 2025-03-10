@@ -15,9 +15,7 @@ public class PlayerData : CharacterData, IDataPersistence
     private Respawner res;
     public List<GameObject> party = new List<GameObject>();
     public int lowHealthThreshhold = 2;
-    private IngredientData currentFormIngredient;
 
-    public PartyUIManager partyUI;
     private void Awake()
     {
         InitializeCharacterData();
@@ -116,124 +114,5 @@ public class PlayerData : CharacterData, IDataPersistence
     {
         base.SetHealth(newHP);
     }
-
-
-    #region Party Manipulation
-    /// <summary>
-    /// Add any fruitant to the player's party.
-    /// </summary>
-    /// <param name="member">the fruitant</param>
-    /// <param name="partysize">size to fit to</param>
-    /// <param name="partyoverride">remove fruitants in order to fit</param>
-    public void JoinTeam(GameObject member, int partysize = 3, bool partyoverride = false)
-    {
-        AIData Brain;
-        // if subject still exists
-        if (member != null)
-        {
-            // get brain
-            Brain = member.GetComponent<AIData>();
-            if (Brain != null)
-            {
-                //if (pd == null) Debug.Log("Player Data is null!!!!");
-                if (party.Contains(member))
-                {
-                    // do nothing
-                    return;
-                }
-                else if (partyoverride)
-                {
-                    AddMember(member, Brain);
-                }
-                else if (party.Count >= partysize)
-                {
-                    // remove if over size
-                    AddMember(member, Brain);
-                    while (party.Count > partysize)
-                    {
-                        LeaveTeam(party[0]);
-                    }
-                }
-                else if (party.Count < partysize)
-                {
-                    AddMember(member, Brain);
-                }
-
-                // set mind set
-                Brain.CommandCompleted = false;
-                Brain.path = null;
-
-                //partyUI.ChangeCompanion(member);
-                
-                //trust.SetTrustEffect(Brain.flavor);
-            }
-            else Debug.Log(member.name + " : has no brain! cannot add to party");
-        }
-        else Debug.Log(this.name + " : is trying to add a null member to the party");
-    }
-
-    private void AddMember(GameObject member, AIData brain)
-    {
-        //Right now it clears the party before adding a new member
-        //this is okay because no new party members will be added under the curent design
-        //only times they're "added" is when they get replaced as part of a morph or scene load
-        //this ensures that the companion is always accessible at party[0] index
-        party.Clear();
-        party.Add(member);
-        brain.CommandCompleted = false;
-        brain.path = null;
-        Debug.Log(member.name + " : has joined the party");
-    }
-
-    public void LeaveTeam(GameObject member)
-    {
-        // if subject still exists
-        if (member != null)
-        {
-            AIData Brain = member.GetComponent<AIData>();
-            if (Brain != null)
-            {
-                // set player party
-                party.Remove(member);
-                Debug.Log(member.name + " : has left the party");
-                // set mind set
-                Brain.CommandCompleted = true;
-                Brain.path = null;
-            }
-        }
-    }
-
-    public void ClearParty()
-    {
-        foreach (GameObject member in party)
-        {
-            AIData Brain = member.GetComponent<AIData>();
-            if (Brain != null)
-            {
-                // set mind set
-                Brain.CommandCompleted = true;
-                Brain.path = null;
-            }
-        }
-
-        party.Clear();
-
-        Debug.Log("Party has been cleared!");
-    }
-    /// <summary>
-    /// Used to keep track of what form the companion is currently in.
-    /// Called by FlavorInputManagers when feeding.
-    /// </summary>
-    public void SetCurrentFormIngreident(IngredientData ingredient)
-    {
-        currentFormIngredient = ingredient;
-    }
-
-    public IngredientData GetCurrentFormIngredient()
-    {
-        return currentFormIngredient;
-    }
-
-    #endregion
 
 }

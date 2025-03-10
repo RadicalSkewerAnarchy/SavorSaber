@@ -27,6 +27,8 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     /// Fields related to cooking
     /// </summary>
     public bool nearCampfire = false;
+    private List<IngredientData> unlockedIngredients;
+    private Dictionary<RecipeData.Flavors, int> flavorStrength;
 
     /// <summary>
     /// Fields related to audio
@@ -192,6 +194,11 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         {
             sfxPlayer.Play(fullSFX);
         }
+    }
+
+    public void AddToSkewer(IngredientData ingredient, int index, int skewer)
+    {
+        //quiver[skewer].
     }
 
     public void AddToSkewerRight(IngredientData ingredient)
@@ -386,39 +393,6 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     }
 
     /// <summary>
-    /// Update the visuals to display the current inventory state
-    /// </summary>
-    /// 
-    /*
-    private void UpdateSkewerVisual()
-    {
-        //convert the active skewer stack to an array and reverse it
-        IngredientData[] dropArray = quiver[activeSkewer].ToArray();
-        IngredientData[] reverseDropArray = new IngredientData[dropArray.Length];
-        for(int a = 0; a < dropArray.Length; a++)
-        {
-            reverseDropArray[a] = dropArray[dropArray.Length - (a + 1)];
-        }
-        dropArray = reverseDropArray;
-
-        //display the sprite associated with each IngredientData in the resulting array
-        for (int i = 0; i < maxItemsPerSkewer; i++)
-        {
-            if(i < dropArray.Length)
-            {
-                if (skewerSprites[i] != null)
-                    skewerSprites[i].sprite = dropArray[i].image;
-            }
-            else
-            {
-                if(skewerSprites[i] != null)
-                    skewerSprites[i].sprite = emptySprite;
-            }
-        }
-    }
-    */
-
-    /// <summary>
     /// Handle input for buttons to swap skewers
     /// </summary>
     private void GetSkewerSwapInput()
@@ -447,6 +421,11 @@ public class Inventory : MonoBehaviour, IDataPersistence {
             //DisplayInventory.instance?.SwapHandles(false);
             //Debug.Log("Swapping skewer to " + activeSkewer);
         }
+    }
+
+    public int GetFlavorStrength(RecipeData.Flavors flavor)
+    {
+        return flavorStrength[flavor];
     }
 
     /// <summary>

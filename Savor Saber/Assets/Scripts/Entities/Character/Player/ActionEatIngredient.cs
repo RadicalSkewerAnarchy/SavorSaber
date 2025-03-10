@@ -12,7 +12,7 @@ public class ActionEatIngredient : MonoBehaviour
     public float IngredientEffectCooldown = 16;
 
     private Inventory inv;
-    private TrustMeter trust; //used because the code to apply flavor effects to the player already exists here
+    private SelfIngredientEffect selfEffect; //used because the code to apply flavor effects to the player already exists here
     private PlayerData PData;
 
     private WaitForSeconds IngredientEffectTimer;
@@ -20,7 +20,7 @@ public class ActionEatIngredient : MonoBehaviour
     void Start()
     {
         inv = GetComponent<Inventory>();
-        trust = GetComponent<TrustMeter>();
+        selfEffect = GetComponent<SelfIngredientEffect>();
         IngredientEffectTimer = new WaitForSeconds(IngredientEffectCooldown);
         PData = GetComponent<PlayerData>();
     }
@@ -36,10 +36,9 @@ public class ActionEatIngredient : MonoBehaviour
 
     private void EatIngredient()
     {
-        PData.DoHeal(1);
+        
         IngredientData ingredient = inv.RemoveFromSkewer();
-        RecipeData.Flavors flavor = ingredient.flavors;
-        trust.SetTrustEffect(flavor);
+        selfEffect.SetPassiveEffect(ingredient.flavors);
         StopAllCoroutines();
         StartCoroutine(Cooldown());
     }
@@ -47,7 +46,7 @@ public class ActionEatIngredient : MonoBehaviour
     private IEnumerator Cooldown()
     {
         yield return IngredientEffectTimer;
-        trust.SetTrustEffect(RecipeData.Flavors.None);
+        selfEffect.SetPassiveEffect(RecipeData.Flavors.None);
         Debug.Log("Bonus effect should have returned to normal by now...");
         yield return null;
     }

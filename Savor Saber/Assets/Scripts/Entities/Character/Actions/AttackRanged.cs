@@ -70,7 +70,7 @@ public class AttackRanged : AttackBase
 
     #region Bonus effect fields
     //Trust bonus effects
-    [Header("Trust bonus effects")]
+    [Header("Bonus effects")]
     public GameObject spicyTemplate;
     public GameObject sourTemplate;
     protected RecipeData.Flavors flavor = RecipeData.Flavors.None;

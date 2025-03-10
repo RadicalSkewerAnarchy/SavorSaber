@@ -8,6 +8,8 @@ public class AttackRangedThrowSkewer : AttackRanged
 {
     public int chargeLevels = 3;
     public float chargeTime = 1;
+    public int cooldown = 2;
+    private bool ready = true;
     public AudioClip[] chargeSounds = new AudioClip[3];
     [HideInInspector]
     public int currLevel = 0;
@@ -15,11 +17,13 @@ public class AttackRangedThrowSkewer : AttackRanged
     private Inventory inv;
     private PlaySFX sfxPlayer;
     public CrosshairController crosshair;
+    private WaitForSeconds tic;
 
     // Start is called before the first frame update
     void Start()
     {
         Initialize();
+        tic = new WaitForSeconds(1);
         animator = GetComponent<Animator>();       
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
@@ -57,7 +61,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         }
         
         //conditions to throw: Must have ingredients
-        if (!Attacking && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()))
+        if (!Attacking && ready && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()))
         {
             StopAllCoroutines();
             chargedAttack = true;
@@ -75,7 +79,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             return;
 
         }
-        if (InputManager.GetButtonUp(control, axis))
+        if (InputManager.GetButtonUp(control, axis) && ready)
         {
             if (!Attacking)
             {
@@ -86,9 +90,9 @@ public class AttackRangedThrowSkewer : AttackRanged
             effectRecipeData = inv.GetActiveEffect();
             flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
             //find the top ingredient
-            //ingredientArray = inv.GetActiveSkewer().ToArray();
-            ingredientArray = new IngredientData[1];
-            ingredientArray[0] = inv.RemoveFromSkewer();
+            ingredientArray = inv.GetActiveSkewer().ToArray();
+            //ingredientArray = new IngredientData[1];
+            //ingredientArray[0] = inv.RemoveFromSkewer();
 
 
 
@@ -101,9 +105,32 @@ public class AttackRangedThrowSkewer : AttackRanged
             inv.CanSwap = true;
             Attacking = false;
             chargedAttack = false;
+
+            ready = false;
+            StartCooldown(cooldown);
         }
     }
 
+    private void StartCooldown(int cd)
+    {
+        if(cd == 0)
+        {
+            ready = true;
+            return;
+        }
+        else
+        {
+            int nextCD = cd - 1;
+            StartCoroutine(CooldownTimer(nextCD));
+        }
+    }
+
+    private IEnumerator CooldownTimer(int cd)
+    {
+        yield return tic;
+        StartCooldown(cd);
+        yield return null;
+    }
 
     private IEnumerator Charge()
     {

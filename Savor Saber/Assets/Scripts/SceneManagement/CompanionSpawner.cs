@@ -42,7 +42,7 @@ public class CompanionSpawner : MonoBehaviour
             //feed the companion template the ingredientdata that player currently has
             PlayerData somaData = player.GetComponent<PlayerData>();
             FlavorInputManager companionFIM = companion.GetComponent<FlavorInputManager>();
-            companionFIM.Feed(somaData.GetCurrentFormIngredient(), true, somaData);
+            //companionFIM.Feed(somaData.GetCurrentFormIngredient(), true, somaData);
 
         }
         else

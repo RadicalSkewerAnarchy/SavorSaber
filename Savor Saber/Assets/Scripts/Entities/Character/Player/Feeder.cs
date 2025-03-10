@@ -92,28 +92,7 @@ public class Feeder : MonoBehaviour
             }
             ingredientArray = null;
         }
-
-        if (feedingRecruits && collision.gameObject.tag == "Prey" && !somaData.party.Contains(collision.gameObject))
-        {
-            //If we're at max size, spawn the recruitment window
-            if(somaData.party.Count >= maxPartySize)
-            {
-                GameObject partySelectObject = Instantiate(partySelectTemplate, Vector3.zero, Quaternion.identity,partySelectCanvas.transform);
-                PartySelector partySelector = partySelectObject.GetComponent<PartySelector>();
-                partySelectObject.transform.localPosition = Vector3.zero;
-
-                //give the recruitment window its data
-                partySelector.SetParty(somaData.party, partyCommander);
-                partySelector.newFruitant = collision.gameObject;
-                
-            }
-            else
-            {
-                PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
-                pd.JoinTeam(collision.gameObject, maxPartySize, true);
-            }
-            
-        }
+        
     }
 
     private IEnumerator Feed()

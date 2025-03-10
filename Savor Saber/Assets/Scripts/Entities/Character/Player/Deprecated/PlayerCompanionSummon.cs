@@ -216,7 +216,7 @@ public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
     {
         yield return new WaitForSeconds(0.1f);
 
-        somaData.JoinTeam(companion, 1, true);
+        //somaData.JoinTeam(companion, 1, true);
         FlavorInputManager newFIM = companion.GetComponent<FlavorInputManager>();
         newFIM.isCompanion = true;
         newFIM.PlaySpawnParticles();

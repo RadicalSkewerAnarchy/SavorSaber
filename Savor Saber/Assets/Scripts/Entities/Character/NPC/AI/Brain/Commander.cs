@@ -262,25 +262,6 @@ public class Commander : MonoBehaviour
 
         Debug.Log("Current Family = " + FamilyChoice + " => Soma's Party");
 
-        // JOIN THE PARTY, BROS
-        FamilyReunion();
-    }
-
-    /// <summary>
-    /// Make the current family Soma's party
-    /// </summary>
-    public void FamilyReunion()
-    {
-        // clear the party
-        PlayerData pd = player.GetComponent<PlayerData>();
-        pd.ClearParty();
-
-        // add the family to the party
-        foreach (Transform t in Families[FamilyChoice].transform)
-        {
-            GameObject member = t.gameObject;
-            pd.JoinTeam(member);
-        }
     }
 
     #endregion

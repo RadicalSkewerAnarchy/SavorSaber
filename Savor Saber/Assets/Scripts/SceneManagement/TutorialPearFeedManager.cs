@@ -67,7 +67,7 @@ public class TutorialPearFeedManager : MonoBehaviour
             foreach(GameObject fruitant in fruitantsToAdd)
             {
                 PlayerData pd = GameObject.FindObjectOfType<PlayerData>();
-                pd.JoinTeam(fruitant);
+                //pd.JoinTeam(fruitant);
                 fruitantRB = fruitant.GetComponent<Rigidbody2D>();
                 fruitantRB.constraints = RigidbodyConstraints2D.None;
                 fruitantRB.constraints = RigidbodyConstraints2D.FreezeRotation;
