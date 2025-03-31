@@ -13,7 +13,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     #region fields
 
     public bool CanSwap { get; set; }
-
+    public static Inventory instance;
     public int maxItemsPerSkewer = 3;
 
     /// <summary>
@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     /// Fields related to cooking
     /// </summary>
     public bool nearCampfire = false;
-    private List<IngredientData> unlockedIngredients;
+    private RecipeData.Flavors unlockedFlavors;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
 
     /// <summary>
@@ -56,6 +56,16 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         {
             quiver[i].InitializeDictionary();
         }
+    }
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+            Destroy(gameObject);
     }
 
     private void Update()
@@ -426,6 +436,19 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     public int GetFlavorStrength(RecipeData.Flavors flavor)
     {
         return flavorStrength[flavor];
+    }
+
+    public void UnlockIngredient(IngredientData ingredient)
+    {
+        if ((unlockedFlavors & ingredient.flavors) == 0)
+        {
+            unlockedFlavors = unlockedFlavors | ingredient.flavors;
+            flavorStrength[ingredient.flavors] = 1; //this might not work if there are multiple flavors in the ingredient
+        }
+        else
+        {
+            flavorStrength[ingredient.flavors]++;
+        }
     }
 
     /// <summary>

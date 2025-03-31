@@ -21,6 +21,6 @@ public class NexusUnlockFruitant : MonoBehaviour
     public void UnlockFruitant()
     {
         if (fruitant == null) return;
-        PlayerCompanionSummon.instance.UnlockFruitant(fruitant);
+        Inventory.instance.UnlockIngredient(fruitant);
     }
 }
