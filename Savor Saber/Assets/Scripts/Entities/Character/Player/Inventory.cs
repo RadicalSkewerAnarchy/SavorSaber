@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     /// </summary>
     public bool nearCampfire = false;
     private RecipeData.Flavors unlockedFlavors;
+    private List<IngredientData> unlockedIngredients;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
 
     /// <summary>
@@ -440,6 +441,10 @@ public class Inventory : MonoBehaviour, IDataPersistence {
 
     public void UnlockIngredient(IngredientData ingredient)
     {
+        if (!unlockedIngredients.Contains(ingredient))
+        {
+            unlockedIngredients.Add(ingredient);
+        }
         if ((unlockedFlavors & ingredient.flavors) == 0)
         {
             unlockedFlavors = unlockedFlavors | ingredient.flavors;
