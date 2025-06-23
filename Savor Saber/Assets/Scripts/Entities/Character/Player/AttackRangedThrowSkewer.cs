@@ -18,6 +18,8 @@ public class AttackRangedThrowSkewer : AttackRanged
     private PlaySFX sfxPlayer;
     public CrosshairController crosshair;
     private WaitForSeconds tic;
+    private PlayerController playerController; //this is insconsistent with the player's melee attacks but it has to be, because controller is already an EntityController
+    //and I don't want to fuck it up by changing it to a playercontroller
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         animator = GetComponent<Animator>();       
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
+        playerController = GetComponent<PlayerController>();
         normalInterval = (1 / (float)chargeLevels) - 0.001f;
         inv = GetComponent<Inventory>();
         r = GetComponent<SpriteRenderer>();
@@ -47,7 +50,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     {
 
         //animation cancel
-        if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)))
+        if (Attacking && (InputManager.GetButtonDown(Control.Knife, InputAxis.Slash) || InputManager.GetButtonDown(Control.Skewer, InputAxis.Skewer)) && !playerController.uiOpen)
         {
             //Debug.Log("Animation cancel");
             StopAllCoroutines();
@@ -61,7 +64,7 @@ public class AttackRangedThrowSkewer : AttackRanged
         }
         
         //conditions to throw: Must have ingredients
-        if (!Attacking && ready && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()))
+        if (!Attacking && ready && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()) && !playerController.uiOpen)
         {
             StopAllCoroutines();
             chargedAttack = true;
@@ -79,7 +82,7 @@ public class AttackRangedThrowSkewer : AttackRanged
             return;
 
         }
-        if (InputManager.GetButtonUp(control, axis) && ready)
+        if (InputManager.GetButtonUp(control, axis) && ready && !playerController.uiOpen)
         {
             if (!Attacking)
             {

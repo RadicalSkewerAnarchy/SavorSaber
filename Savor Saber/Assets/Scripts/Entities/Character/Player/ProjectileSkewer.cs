@@ -44,12 +44,26 @@ public class ProjectileSkewer : BaseProjectile
 
         if (!fed)
         { 
-            if (collision.tag == "ThrowThrough" || collision.tag == "SkewerableObject")
+            if (collision.tag == "SkewerableObject")
                 return;
             //Debug.Log("Skewer collided with " + collision.gameObject);
 
             if (ingredientArray != null)
             {
+                //if what you hit is destructible environment
+                if (go.tag == "ThrowThrough")
+                {
+                    DestructableEnvironment envData = go.GetComponent<DestructableEnvironment>();
+                    //myCharData.damageDealt += (int)projectileDamage;
+                    Debug.Log("Dealing DMG to destructible environment");
+                    if (envData != null && flavorCountDictionary[RecipeData.Flavors.Spicy] > 0)
+                    {
+                        envData.Health -= (int)Mathf.Max(projectileDamage, 1);
+                        //if (!penetrateTargets)
+                        //Destroy(this.gameObject);
+                        return;
+                    }
+                }
                 //check to see if the thing we hit has a FlavorInputManager
                 FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
                 if (flavorInput != null)
@@ -73,7 +87,7 @@ public class ProjectileSkewer : BaseProjectile
                 //if you hit something (and aren't penetrating) but can't feed it
                 else if (!dropping && !penetrateTargets)
                 {
-                    SpawnDropsOnMiss();
+                    //SpawnDropsOnMiss();
                     if (spawnBonusEffectOnMiss && bonusEffectTemplate != null)
                     {
                         GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);

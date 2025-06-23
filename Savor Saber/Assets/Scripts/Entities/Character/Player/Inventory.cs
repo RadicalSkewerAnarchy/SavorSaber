@@ -22,14 +22,23 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     public int activeSkewer = 0;
     private int numberOfSkewers = 3;
     private Skewer[] quiver;
+    [SerializeField]
+    private Image[] CookingPanelIngredientSprites;
+    [SerializeField]
+    private Image[] CookingPanelFlavorPowerSprites;
 
     /// <summary>
     /// Fields related to cooking
     /// </summary>
     public bool nearCampfire = false;
+    private int cookingSkewer = 0;
     private RecipeData.Flavors unlockedFlavors;
     private List<IngredientData> unlockedIngredients;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
+    [SerializeField]
+    private GameObject cookingUI;
+    private bool cooking = false;
+    private PlayerController playerController;
 
     /// <summary>
     /// Fields related to audio
@@ -57,6 +66,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         {
             quiver[i].InitializeDictionary();
         }
+        playerController = GetComponent<PlayerController>();
     }
 
     void Awake()
@@ -73,6 +83,24 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     {
         //Detect swapping input
         GetSkewerSwapInput();
+
+        if(cooking && InputManager.GetButtonDown(Control.Interact))
+        {
+            cooking = false;
+            cookingUI.SetActive(false);
+            playerController.uiOpen = false;
+        }
+        //if near a campfire, interact opens the cooking menu
+        else if(nearCampfire && InputManager.GetButtonDown(Control.Interact))
+        {
+            if (!cooking)
+            {
+                cooking = true;
+                cookingUI.SetActive(true);
+                playerController.uiOpen = true;
+            }
+
+        }
     }
 
     public void LoadData(GameData data)
@@ -207,11 +235,6 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         }
     }
 
-    public void AddToSkewer(IngredientData ingredient, int index, int skewer)
-    {
-        //quiver[skewer].
-    }
-
     public void AddToSkewerRight(IngredientData ingredient)
     {
         if(!(GetRightSkewer().GetCount() == maxItemsPerSkewer))
@@ -247,6 +270,13 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         quiver[activeSkewer].ResetDictionary();
         UpdateUI();
         //UpdateSkewerVisual();
+    }
+
+    public void ClearSkewerAtIndex(int index)
+    {
+        quiver[index].ClearItems();
+        quiver[index].ResetDictionary();
+        UpdateUI();
     }
 
     /// <summary>
@@ -439,39 +469,78 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         return flavorStrength[flavor];
     }
 
+    #region Cooking Nonsense
+
     public void UnlockIngredient(IngredientData ingredient)
     {
-        if (!unlockedIngredients.Contains(ingredient))
+        if (!unlockedIngredients.Contains(ingredient)) //if we don't have the ingredient already, add it
         {
             unlockedIngredients.Add(ingredient);
+            foreach(Image img in CookingPanelIngredientSprites)
+            {
+                if (img.gameObject.name.Equals(ingredient.displayName))
+                {
+                    img.color = Color.white;
+                }
+            }
         }
-        if ((unlockedFlavors & ingredient.flavors) == 0)
+        if ((unlockedFlavors & ingredient.flavors) == 0) //if we don't have the flavor already, add it and set the strength to 1
         {
             unlockedFlavors = unlockedFlavors | ingredient.flavors;
             flavorStrength[ingredient.flavors] = 1; //this might not work if there are multiple flavors in the ingredient
         }
-        else
+        else //if we had the flavor already, add 1 to its strength
         {
             flavorStrength[ingredient.flavors]++;
         }
+        UpdateUI();
     }
+
+    #endregion
+    /// <summary>
+    /// sets which skewer is being cooked on
+    /// </summary>
+    /// <param name="input"></param>
+    public void SetCookingSkewer(int input)
+    {
+        cookingSkewer = input;
+    }
+
+    /// <summary>
+    /// add an ingredient to the currently designated Cooking Skewer via cooking UI
+    /// </summary>
+    /// <param name="ingredient"></param>
+    public void AddToCookingSkewer(IngredientData ingredient)
+    {
+        if(quiver[cookingSkewer].GetCount() >= maxItemsPerSkewer)
+        {
+            Debug.Log("Skewer " + cookingSkewer + " is full.");
+            sfxPlayer.Play(fullSFX);
+            return;
+        }
+
+        quiver[cookingSkewer].PushIngredient(ingredient);
+        UpdateUI(quiver[activeSkewer].GetCount() - 1, ingredient);
+    }
+
+
 
     /// <summary>
     /// Triggers to check if the player is near a campfire
     /// </summary>
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Campfire")
+        if (collision.gameObject.tag == "Respawn")
         {
-            //Debug.Log("Player near campfire");
+            Debug.Log("Player near campfire");
             nearCampfire = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Campfire")
+        if (collision.gameObject.tag == "Respawn")
         {
-            //Debug.Log("Player left campfire");
+            Debug.Log("Player left campfire");
             nearCampfire = false;
         }
     }
@@ -479,6 +548,26 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     public void UpdateUI()
     {
         DisplayInventory.instance?.UpdateSkewerUI();
+
+        //update flavor power UI
+        foreach(Image flavor in CookingPanelFlavorPowerSprites)
+        {
+            switch (flavor.name)
+            {
+                case "Sweet":
+                    flavor.fillAmount = (float)GetFlavorStrength(RecipeData.Flavors.Sweet) / 3f;
+                    break;
+                case "Spicy":
+                    flavor.fillAmount = (float)GetFlavorStrength(RecipeData.Flavors.Spicy) / 3f;
+                    break;
+                case "Sour":
+                    flavor.fillAmount = (float)GetFlavorStrength(RecipeData.Flavors.Sour) / 3f;
+                    break;
+                case "Salty":
+                    flavor.fillAmount = (float)GetFlavorStrength(RecipeData.Flavors.Salty) / 3f;
+                    break;
+            }
+        }
     }
 
     public void UpdateUI(int slot, IngredientData data)

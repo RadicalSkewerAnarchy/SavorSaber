@@ -41,7 +41,7 @@ public class AttackMeleeSkewer : AttackMelee
 
     void LateUpdate()
     {
-        if (InputManager.GetButtonDown(control, axis))
+        if (InputManager.GetButtonDown(control, axis) && !controller.uiOpen)
         {
             //Get the first attack from dependecies that is attacking, else null
             AttackBase activeAttack = GetActiveAttack();

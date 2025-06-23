@@ -41,6 +41,8 @@ public class PlayerController : EntityController
     Animator animatorBody;
     DialogData dialogData;
     private PlayerData playerData;
+    [System.NonSerialized]
+    public bool uiOpen = false;
     /// <summary> The Squared magnitude of the movement vector from last frame
     /// Used to determine if soma is slowing down </summary>
     private float lastSqrMagnitude = 0;
