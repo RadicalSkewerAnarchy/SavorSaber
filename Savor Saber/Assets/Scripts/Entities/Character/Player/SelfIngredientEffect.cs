@@ -8,14 +8,9 @@ public class SelfIngredientEffect : MonoBehaviour
     [Range(0,100)]
     [SerializeField]
     private int trust = 0;
-    [SerializeField]
-    private Slider meterSlider;
-    private Image meterFill;
     private TrustEffectDisplay trustText;
-
     private int maxTrust = 100;
-    private int minTrust = 0;
-    
+    private int minTrust = 0;   
     public enum UpgradeTier {Neutral = 1, Warm, Allied, Honored}
     private UpgradeTier stage;
 
@@ -26,7 +21,6 @@ public class SelfIngredientEffect : MonoBehaviour
     private float baseSpeed;
     private int baseMaxHealth;
     private Inventory playerInventory;
-
     public GameObject saltyTemplate;
     public GameObject sourTemplate;
     public GameObject spicyTemplate;
@@ -41,10 +35,6 @@ public class SelfIngredientEffect : MonoBehaviour
         somaSkewer = GetComponent<AttackRangedThrowSkewer>();
         baseSpeed = somaController.GetSpeed();
         baseMaxHealth = somaData.maxHealth;
-
-
-        meterFill = meterSlider.fillRect.gameObject.GetComponent<Image>();
-        trustText = meterSlider.gameObject.GetComponent<TrustEffectDisplay>();
         stage = UpgradeTier.Neutral;
     }
 

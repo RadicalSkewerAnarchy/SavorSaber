@@ -26,6 +26,8 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     private Image[] CookingPanelIngredientSprites;
     [SerializeField]
     private Image[] CookingPanelFlavorPowerSprites;
+    [SerializeField]
+    private Slider energySlider;
 
     /// <summary>
     /// Fields related to cooking
@@ -35,6 +37,9 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     private RecipeData.Flavors unlockedFlavors;
     private List<IngredientData> unlockedIngredients;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
+
+    private int energy;
+    public int maxEnergy = 10;
     [SerializeField]
     private GameObject cookingUI;
     private bool cooking = false;
@@ -53,7 +58,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
 
     void Start ()
     {
-
+        energySlider.maxValue = maxEnergy;
         quiver = new Skewer[numberOfSkewers];
         quiver[0] = new Skewer();
         quiver[1] = new Skewer();
@@ -135,7 +140,34 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     }
 
     #region utility functions
-
+    
+    public int GetEnergy()
+    {
+        return energy;
+    }
+    public void AddEnergy(int e)
+    {
+        energy += e;
+        if (energy > maxEnergy) energy = maxEnergy;
+        UpdateEnergySlider();
+    }
+    public void SubtractEnergy(int e)
+    {
+        energy -= e;
+        if (energy < 0) energy = 0;
+        UpdateEnergySlider();
+    }
+    public void SetEnergy(int e)
+    {
+        energy = e;
+        if (energy > maxEnergy) energy = maxEnergy;
+        UpdateEnergySlider();
+    }
+    private void UpdateEnergySlider()
+    {
+        Debug.Log("Energy at " + energy);
+        energySlider.value = energy;
+    }
     /// <summary>
     /// returns the currently active skewer
     /// </summary>
@@ -496,7 +528,6 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         UpdateUI();
     }
 
-    #endregion
     /// <summary>
     /// sets which skewer is being cooked on
     /// </summary>
@@ -524,6 +555,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     }
 
 
+    #endregion
 
     /// <summary>
     /// Triggers to check if the player is near a campfire

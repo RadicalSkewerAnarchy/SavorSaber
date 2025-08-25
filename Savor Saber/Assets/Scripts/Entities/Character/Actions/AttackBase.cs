@@ -6,6 +6,7 @@ using System.Linq;
 public abstract class AttackBase : MonoBehaviour
 {
     public AudioClip attackSound;
+    public AudioClip failSound;
     protected AudioClip defaultAttackSound;
     protected AssetBundle sfx_bundle;
     protected AudioSource audioSource;

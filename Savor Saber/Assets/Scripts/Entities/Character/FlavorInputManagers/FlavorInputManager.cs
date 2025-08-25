@@ -6,7 +6,7 @@ using MathUtils;
 public class FlavorInputManager : MonoBehaviour
 {
     #region Feeding
-    public bool isCompanion = false;
+
     protected Dictionary<RecipeData.Flavors, int> flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>();
     protected Dictionary<IngredientData, int> ingredientCountDictionary = new Dictionary<IngredientData, int>();
     public IngredientData[] favoriteIngredients;

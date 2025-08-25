@@ -456,12 +456,12 @@ public class AIData : CharacterData
                 GameObject closest = Checks.ClosestCreature();
                 if(closest != null)
                 {
-                    Debug.Log(this.gameObject.name + " found closest creature");
+                    //Debug.Log(this.gameObject.name + " found closest creature");
                     inMeleeRange = (Vector3.Distance(this.transform.position, closest.transform.position) <= MeleeChaseThreshold);
                 }
                 else
                 {
-                    Debug.Log(this.gameObject.name + "closest craeture is null");
+                    //Debug.Log(this.gameObject.name + "closest craeture is null");
                 }
 
                 if (inMeleeRange && hasMeleeAttack)

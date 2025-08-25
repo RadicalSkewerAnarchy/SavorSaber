@@ -1,14 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
 
 [RequireComponent(typeof(Inventory))]
 public class AttackRangedThrowSkewer : AttackRanged
 {
     public int chargeLevels = 3;
+    public int energyCostToThrow = 1;
     public float chargeTime = 1;
-    public int cooldown = 2;
+    public float cooldown = 2;
+    private float cooldownTicLength = 0.05f;
+    [SerializeField]
+    private Slider cooldownSlider;
     private bool ready = true;
     public AudioClip[] chargeSounds = new AudioClip[3];
     [HideInInspector]
@@ -18,6 +23,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     private PlaySFX sfxPlayer;
     public CrosshairController crosshair;
     private WaitForSeconds tic;
+
     private PlayerController playerController; //this is insconsistent with the player's melee attacks but it has to be, because controller is already an EntityController
     //and I don't want to fuck it up by changing it to a playercontroller
 
@@ -25,7 +31,7 @@ public class AttackRangedThrowSkewer : AttackRanged
     void Start()
     {
         Initialize();
-        tic = new WaitForSeconds(1);
+        tic = new WaitForSeconds(cooldownTicLength);
         animator = GetComponent<Animator>();       
         audioSource = GetComponent<AudioSource>();
         controller = GetComponent<EntityController>();
@@ -63,9 +69,14 @@ public class AttackRangedThrowSkewer : AttackRanged
             return;
         }
         
-        //conditions to throw: Must have ingredients
+        //conditions to throw: Must have ingredients and energy, Skewer has contents, not in UI
         if (!Attacking && ready && InputManager.GetButtonDown(control, axis) && (!inv.ActiveSkewerEmpty()) && !playerController.uiOpen)
         {
+            if (inv.GetEnergy() < energyCostToThrow)
+            {
+                sfxPlayer.Play(failSound);
+                return;
+            }
             StopAllCoroutines();
             chargedAttack = true;
             center = r.bounds.center;
@@ -89,6 +100,7 @@ public class AttackRangedThrowSkewer : AttackRanged
                 //Debug.Log("Got throw button up, but attacking bool is false");
                 return;
             }
+            inv.SubtractEnergy(energyCostToThrow);
             StopAllCoroutines();
             effectRecipeData = inv.GetActiveEffect();
             flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
@@ -110,27 +122,31 @@ public class AttackRangedThrowSkewer : AttackRanged
             chargedAttack = false;
 
             ready = false;
+            cooldownSlider.gameObject.SetActive(true);
             StartCooldown(cooldown);
         }
     }
 
-    private void StartCooldown(int cd)
+    private void StartCooldown(float cd)
     {
-        if(cd == 0)
+        Debug.Log(cd);
+        if(cd <= 0)
         {
             ready = true;
+            cooldownSlider.gameObject.SetActive(false);
             return;
         }
         else
         {
-            int nextCD = cd - 1;
+            float nextCD = cd - cooldownTicLength;
             StartCoroutine(CooldownTimer(nextCD));
         }
     }
 
-    private IEnumerator CooldownTimer(int cd)
+    private IEnumerator CooldownTimer(float cd)
     {
         yield return tic;
+        cooldownSlider.value = cd / cooldown;
         StartCooldown(cd);
         yield return null;
     }

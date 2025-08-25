@@ -36,6 +36,21 @@ public class PlayerSkewerAttack : BaseMeleeAttack
         // pickup  drops
         if (collision.gameObject.tag == "SkewerableObject" || collision.gameObject.tag == "Reflectable")
         {
+            Debug.Log("Skewer hit skewerable object");
+            if(inventory.GetEnergy() < inventory.maxEnergy)
+            {
+                sfxPlayer.Play(pickUpSFX);
+                inventory.AddEnergy(1);
+                SkewerableObject targetObject = collision.gameObject.GetComponent<SkewerableObject>();
+                MGSTextSpawner.instance?.SpawnText(targetObject.data, transform.position);
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                sfxPlayer.Play(cantPickUpSFX);
+            }
+            //old code for adding objects to skewer
+            /* 
             if (!inventory.ActiveSkewerFull() && !inventory.ActiveSkewerCooked())
             {
                 //Debug.Log("Hit skewerable object");
@@ -53,6 +68,7 @@ public class PlayerSkewerAttack : BaseMeleeAttack
             {
                 sfxPlayer.Play(cantPickUpSFX);
             }
+            */
         }
 
         //do knockback effects

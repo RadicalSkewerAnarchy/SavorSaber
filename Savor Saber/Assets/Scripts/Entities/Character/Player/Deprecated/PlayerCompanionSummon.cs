@@ -218,7 +218,6 @@ public class PlayerCompanionSummon : MonoBehaviour, IDataPersistence
 
         //somaData.JoinTeam(companion, 1, true);
         FlavorInputManager newFIM = companion.GetComponent<FlavorInputManager>();
-        newFIM.isCompanion = true;
         newFIM.PlaySpawnParticles();
         //newFIM.Feed(overchargeIngredient, true, somaData);
         companionSummoned = true;

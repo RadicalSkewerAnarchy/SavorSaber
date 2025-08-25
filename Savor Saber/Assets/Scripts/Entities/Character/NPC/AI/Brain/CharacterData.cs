@@ -143,6 +143,7 @@ public class CharacterData : MonoBehaviour
             {
                 healthBar.gameObject.SetActive(true);
                 //Debug.Log("Update health bar");
+                Debug.Log(gameObject.name + " taking damage, health " + ((float)health / maxHealth));
                 healthBar.value = (float)health / maxHealth;
                 if (barCr != null)
                     StopCoroutine(barCr);
@@ -169,12 +170,21 @@ public class CharacterData : MonoBehaviour
             {
                 if (healthBar != null)
                 {
-                    healthBar.gameObject.SetActive(true);
-                    //Debug.Log("Update health bar");
-                    healthBar.value = (float)health / maxHealth;
-                    if (barCr != null)
-                        StopCoroutine(barCr);
-                    barCr = StartCoroutine(ShowHealthBar());
+                    if(health == maxHealth)
+                    {
+                        healthBar.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        healthBar.gameObject.SetActive(true);
+                        //Debug.Log("Update health bar");
+                        healthBar.value = (float)health / maxHealth;
+                        if (barCr != null)
+                            StopCoroutine(barCr);
+                        barCr = StartCoroutine(ShowHealthBar());
+                       
+                    }
+
                 }
                 if (healSFX != null)
                 {
