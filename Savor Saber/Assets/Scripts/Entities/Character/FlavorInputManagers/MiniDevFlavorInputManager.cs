@@ -37,7 +37,9 @@ public class MiniDevFlavorInputManager : FlavorInputManager
     //      spawn the same items back
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
+        Debug.Log("Mini Devourer fed");
         currentFood++;
+        Debug.Log("Current food: " + currentFood + "/" + maxFood);
         if (sfxPlayer != null)
         {
             sfxPlayer.clip = rewardSFX;
@@ -79,7 +81,7 @@ public class MiniDevFlavorInputManager : FlavorInputManager
     {
         if(energySlider != null)
         {
-            energySlider.value = (currentFood / maxFood);
+            energySlider.value = ((float)currentFood / (float)maxFood);
         }
     }
 }

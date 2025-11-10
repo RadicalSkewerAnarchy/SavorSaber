@@ -353,8 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2891d1dc40dc0146b762ba8fc5c0a78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canTransformWhenFed: 0
-  isCompanion: 0
   favoriteIngredients: []
   favoriteFlavor: 0
   rejectedIngredients: []
@@ -364,8 +362,6 @@ MonoBehaviour:
   rejectedObjectTemplate: {fileID: 4084962922675323153, guid: ccc54972069e2bc4d9009aa834a8f000,
     type: 3}
   spawnParticles: {fileID: 0}
-  sugarCount: 0
-  rushed: 0
   damageFromBaseSkewer: 1
   damageFromBulletSkewer: 3
 --- !u!114 &5919570652110356733
@@ -477,14 +473,15 @@ MonoBehaviour:
   Speed: 2
   Perception: 12
   MeleeAttackThreshold: 2
+  MeleeChaseThreshold: 2
   RangeAttackThreshold: 5
   EngageHostileThreshold: 2
   maxHealth: 40
   health: 40
-  overchargeHealth: 0
-  PartySize: 3
+  overchargeTime: 6
   signalPrefab: {fileID: 7933496512764857606, guid: d3086824726aa4c4989c5977a804f781,
     type: 3}
+  PartySize: 3
   damageDealt: 0
   entitiesKilled: 0
   damageSFX: {fileID: 8300000, guid: b17469613fc30da4a9ce7ef9fc0417c3, type: 3}
@@ -522,7 +519,9 @@ MonoBehaviour:
   FoodPreference: 
   updateAI: 0
   updateBehavior: 1
-  meleeHunter: 1
+  hasMeleeAttack: 1
+  hasRangedAttack: 0
+  inMeleeRange: 0
   rideVector: {x: 0, y: 0, z: 0}
   path: []
   flavor: 0
@@ -710,7 +709,7 @@ PrefabInstance:
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.438
+      value: 2.42
       objectReference: {fileID: 0}
     - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
@@ -751,6 +750,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.023857813
+      objectReference: {fileID: 0}
+    - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.023857813
+      objectReference: {fileID: 0}
+    - target: {fileID: 140051567460597314, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5269
       objectReference: {fileID: 0}
     - target: {fileID: 5989902848479348387, guid: 02960aaddb3d56c4a8cfba7bca8052d0,
         type: 3}
