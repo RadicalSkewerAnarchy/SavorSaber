@@ -17,6 +17,7 @@ public class SceneLoadingManager : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
+
         newGame = FindObjectOfType<GameDataManager>().isNewGame;
         StartCoroutine(LoadAllAsyncScene(ScenesToLoad, null, null));
     }

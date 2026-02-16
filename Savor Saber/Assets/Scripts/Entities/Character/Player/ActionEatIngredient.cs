@@ -16,6 +16,13 @@ public class ActionEatIngredient : MonoBehaviour
     private PlayerData PData;
 
     private WaitForSeconds IngredientEffectTimer;
+    public GameObject SaltyEffectTemplate;
+    public GameObject SourEffectTemplate;
+
+    private WaitForSeconds effectTimer;
+    private GameObject instantiatedEffect;
+    private int potency;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,11 +43,42 @@ public class ActionEatIngredient : MonoBehaviour
 
     private void EatIngredient()
     {
-        
-        IngredientData ingredient = inv.RemoveFromSkewer();
-        selfEffect.SetPassiveEffect(ingredient.flavors);
-        StopAllCoroutines();
-        StartCoroutine(Cooldown());
+        potency = inv.GetEnergy();
+        inv.SetEnergy(0);
+        if (potency == 0) return;
+
+
+        IngredientData[] ingredientArray = inv.GetActiveSkewer().ToArray();
+        foreach (IngredientData ingredient in ingredientArray)
+        {
+            if ((ingredient.flavors & RecipeData.Flavors.Sweet) > 0)
+            {
+                //heal
+                PData.DoHeal(potency);
+                Debug.Log("Eating with sweet flavor");
+                StartCoroutine(durationTimer());
+            }
+            if ((ingredient.flavors & RecipeData.Flavors.Spicy) > 0)
+            {
+                //instantiate DoT applicator
+                Debug.Log("Eating with spicy flavor");
+                StartCoroutine(durationTimer());
+            }
+            if ((ingredient.flavors & RecipeData.Flavors.Sour) > 0)
+            {
+                instantiatedEffect = Instantiate(SourEffectTemplate, transform.position, Quaternion.identity, this.gameObject.transform);
+                Debug.Log("Eating with sour flavor");
+                StartCoroutine(durationTimer());
+            }
+            if ((ingredient.flavors & RecipeData.Flavors.Salty) > 0)
+            {
+                //shield
+                instantiatedEffect = Instantiate(SaltyEffectTemplate, transform.position, Quaternion.identity, this.gameObject.transform);
+                Debug.Log("Eating with salty flavor");
+                StartCoroutine(durationTimer());
+            }
+        }
+
     }
 
     private IEnumerator Cooldown()
@@ -49,5 +87,11 @@ public class ActionEatIngredient : MonoBehaviour
         selfEffect.SetPassiveEffect(RecipeData.Flavors.None);
         Debug.Log("Bonus effect should have returned to normal by now...");
         yield return null;
+    }
+
+    private IEnumerator durationTimer()
+    {
+        yield return new WaitForSeconds(potency);
+        Destroy(instantiatedEffect);
     }
 }

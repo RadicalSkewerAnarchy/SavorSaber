@@ -1,94 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8841292671835764070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4c4994ad4009914dbdae2e088971763, type: 3}
-  m_Name: Move Character
-  m_EditorClassIdentifier: 
-  position: {x: -572.50006, y: -128.2}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 8648323736625577283}
-  fromPreviousIN: {fileID: -1406979491751335353}
-  waitUntilFinished: 1
-  character: Soma
-  destination: SomaWaypoint
-  xLeniency:
-    min: -0.1
-    max: 0.1
-  yLeniency:
-    min: -0.1
-    max: 0.1
-  speed: 2
-  endFacing: 2
---- !u!114 &-8649263558715612694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
-  m_Name: MainEditorState
-  m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  parentEditor: {fileID: 0}
-  selectedNode: {fileID: -7411132347195541038}
-  panOffset: {x: 133.2001, y: 188.40002}
-  zoom: 1
---- !u!114 &-7902579219397628147
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: 1362126992333945231}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: 8214363130666619119}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-7411132347195541038
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
-  m_Name: Pan Camera
-  m_EditorClassIdentifier: 
-  position: {x: -570, y: -310}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -3581412577375319082}
-  fromPreviousIN: {fileID: 8214363130666619119}
-  waitUntilFinished: 1
-  movementType: 0
-  target: LycheeBoi
-  maxPullSpeed: 100
-  snapTime: 0.75
---- !u!114 &-6457775708492044195
+--- !u!114 &-8390956222092253041
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: 4731852171428806616}
+  body: {fileID: -6342131033468895711}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: 9010097530830607581}
+  - {fileID: -7796336342320479077}
   side: 4
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-5949057627217106528
+--- !u!114 &-7796336342320479077
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,122 +33,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -2875795101613538392}
+  body: {fileID: -2701030108570357642}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -496338640859000487}
+  - {fileID: -8390956222092253041}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &-3581412577375319082
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: To Next
-  m_EditorClassIdentifier: 
-  body: {fileID: -7411132347195541038}
-  direction: 2
-  maxConnectionCount: 0
-  styleID: Gameflow
-  _connections:
-  - {fileID: -1406979491751335353}
-  side: 2
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-3245017296003618967
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -988776696185848045}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 7116635178404430415}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-2875795101613538392
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 350, y: -280}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -5949057627217106528}
-  fromPreviousIN: {fileID: 8450110985850990016}
-  characterName: Character Name
-  text: Hmph. Humans and their weird obsession with security.
-  actor: LycheeBoi
-  emotion: 1
---- !u!114 &-1406979491751335353
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -8841292671835764070}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -3581412577375319082}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &-1265444083346761572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
-  m_Name: Speech Bubble Dialog
-  m_EditorClassIdentifier: 
-  position: {x: 640, y: -280}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 9010097530830607581}
-  fromPreviousIN: {fileID: -496338640859000487}
-  characterName: Character Name
-  text: Maybe you can help? Find a way to weigh down the plates, then throw something
-    into the furnace.
-  actor: LycheeBoi
-  emotion: 0
---- !u!114 &-988776696185848045
+--- !u!114 &-7736875464677821679
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -251,13 +57,13 @@ MonoBehaviour:
   position: {x: 60, y: -280}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 5193234522422551189}
-  fromPreviousIN: {fileID: -3245017296003618967}
+  toNextOUT: {fileID: 5590877595923407503}
+  fromPreviousIN: {fileID: -7087911398322326769}
   characterName: Character Name
   text: We lychees are too small to weight down the pressure plates.
   actor: LycheeBoi
   emotion: 0
---- !u!114 &-496338640859000487
+--- !u!114 &-7168590207596299517
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,12 +75,236 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: From Previous
   m_EditorClassIdentifier: 
-  body: {fileID: -1265444083346761572}
+  body: {fileID: -2701030108570357642}
   direction: 1
   maxConnectionCount: 1
   styleID: Gameflow
   _connections:
-  - {fileID: -5949057627217106528}
+  - {fileID: 459903544479640429}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-7087911398322326769
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -7736875464677821679}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 5086552176815147783}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-6944796783996444798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
+  m_Name: Dialog Start
+  m_EditorClassIdentifier: 
+  position: {x: -930, y: -340}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 1899061275635960043}
+  dependencies:
+  - SomaWaypoint
+  actors:
+  - LycheeBoi
+  unityEvents: []
+--- !u!114 &-6490778041226725307
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 350, y: -280}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 459903544479640429}
+  fromPreviousIN: {fileID: -871764615686488584}
+  characterName: Character Name
+  text: Hmph. Humans and their weird obsession with security.
+  actor: LycheeBoi
+  emotion: 1
+--- !u!114 &-6342131033468895711
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea491fe537c73eb408082e3db06ceb2a, type: 3}
+  m_Name: Dialog End
+  m_EditorClassIdentifier: 
+  position: {x: 947.3, y: -259.80002}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  playCompletionEvents: 1
+  fromPreviousIN: {fileID: -8390956222092253041}
+--- !u!114 &-4953727718372466727
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 1297516077737877551}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: -3809259441096625172}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-4917436812036192264
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ab6487237ff124ea4c2aa5de9ce3fb, type: 3}
+  m_Name: MainEditorState
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  parentEditor: {fileID: 0}
+  selectedNode: {fileID: 4371140997753034235}
+  panOffset: {x: -152.3999, y: 164.40002}
+  zoom: 1.2
+--- !u!114 &-3809259441096625172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: To Next
+  m_EditorClassIdentifier: 
+  body: {fileID: 6917423805138374594}
+  direction: 2
+  maxConnectionCount: 0
+  styleID: Gameflow
+  _connections:
+  - {fileID: -4953727718372466727}
+  side: 2
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-2999103833443472641
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 4371140997753034235}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1899061275635960043}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-2701030108570357642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce9a1dcb07d1c7147b7c40571ecbf2bc, type: 3}
+  m_Name: Speech Bubble Dialog
+  m_EditorClassIdentifier: 
+  position: {x: 640, y: -280}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -7796336342320479077}
+  fromPreviousIN: {fileID: -7168590207596299517}
+  characterName: Character Name
+  text: Maybe you can help? Find a way to weigh down the plates, then throw something
+    into the furnace.
+  actor: LycheeBoi
+  emotion: 0
+--- !u!114 &-2303396329204489101
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: 6917423805138374594}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 1384415060679701805}
+  side: 4
+  sidePosition: 30
+  sideOffset: 0
+--- !u!114 &-871764615686488584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
+  m_Name: From Previous
+  m_EditorClassIdentifier: 
+  body: {fileID: -6490778041226725307}
+  direction: 1
+  maxConnectionCount: 1
+  styleID: Gameflow
+  _connections:
+  - {fileID: 5590877595923407503}
   side: 4
   sidePosition: 30
   sideOffset: 0
@@ -291,42 +321,21 @@ MonoBehaviour:
   m_Name: LycheeBossTutorial
   m_EditorClassIdentifier: 
   editorStates:
-  - {fileID: -8649263558715612694}
+  - {fileID: -4917436812036192264}
   saveName: Assets\ScriptableObjects\DialogScenes\Marsh\LycheeBossTutorial
   savePath: Assets\ScriptableObjects\DialogScenes\Marsh\LycheeBossTutorial.asset
   livesInScene: 0
   nodes:
-  - {fileID: 4731852171428806616}
-  - {fileID: -8841292671835764070}
-  - {fileID: 4849318272377095608}
-  - {fileID: -988776696185848045}
-  - {fileID: -2875795101613538392}
-  - {fileID: -1265444083346761572}
-  - {fileID: 1362126992333945231}
-  - {fileID: -7411132347195541038}
+  - {fileID: -6342131033468895711}
+  - {fileID: 6917423805138374594}
+  - {fileID: 1297516077737877551}
+  - {fileID: -7736875464677821679}
+  - {fileID: -6490778041226725307}
+  - {fileID: -2701030108570357642}
+  - {fileID: -6944796783996444798}
+  - {fileID: 4371140997753034235}
   groups: []
---- !u!114 &1362126992333945231
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 158717af878438146a2a215452594487, type: 3}
-  m_Name: Dialog Start
-  m_EditorClassIdentifier: 
-  position: {x: -930, y: -340}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: -7902579219397628147}
-  dependencies:
-  - SomaWaypoint
-  actors:
-  - LycheeBoi
-  unityEvents: []
---- !u!114 &3243656034395671425
+--- !u!114 &459903544479640429
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -336,35 +345,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
+  m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 4849318272377095608}
-  direction: 1
-  maxConnectionCount: 1
+  body: {fileID: -6490778041226725307}
+  direction: 2
+  maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 8648323736625577283}
-  side: 4
+  - {fileID: -7168590207596299517}
+  side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &4731852171428806616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea491fe537c73eb408082e3db06ceb2a, type: 3}
-  m_Name: Dialog End
-  m_EditorClassIdentifier: 
-  position: {x: 947.3, y: -259.80002}
-  dynamicConnectionPorts: []
-  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  playCompletionEvents: 1
-  fromPreviousIN: {fileID: -6457775708492044195}
---- !u!114 &4849318272377095608
+--- !u!114 &1297516077737877551
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -379,14 +371,14 @@ MonoBehaviour:
   position: {x: -250, y: -280}
   dynamicConnectionPorts: []
   backgroundColor: {r: 1, g: 1, b: 1, a: 1}
-  toNextOUT: {fileID: 7116635178404430415}
-  fromPreviousIN: {fileID: 3243656034395671425}
+  toNextOUT: {fileID: 5086552176815147783}
+  fromPreviousIN: {fileID: -4953727718372466727}
   characterName: Character Name
   text: The drawbridge here is powered by a nearby furnace, but I can't open the gate
     to reach it.
   actor: LycheeBoi
   emotion: 0
---- !u!114 &5193234522422551189
+--- !u!114 &1384415060679701805
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -398,16 +390,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -988776696185848045}
+  body: {fileID: 4371140997753034235}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 8450110985850990016}
+  - {fileID: -2303396329204489101}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &7116635178404430415
+--- !u!114 &1899061275635960043
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,16 +411,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: 4849318272377095608}
+  body: {fileID: -6944796783996444798}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -3245017296003618967}
+  - {fileID: -2999103833443472641}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &8214363130666619119
+--- !u!114 &4371140997753034235
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -437,40 +429,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
+  m_Script: {fileID: 11500000, guid: 3d40d909fc42e844ebd46856e887de11, type: 3}
+  m_Name: Pan Camera
   m_EditorClassIdentifier: 
-  body: {fileID: -7411132347195541038}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: -7902579219397628147}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8450110985850990016
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
-  m_Name: From Previous
-  m_EditorClassIdentifier: 
-  body: {fileID: -2875795101613538392}
-  direction: 1
-  maxConnectionCount: 1
-  styleID: Gameflow
-  _connections:
-  - {fileID: 5193234522422551189}
-  side: 4
-  sidePosition: 30
-  sideOffset: 0
---- !u!114 &8648323736625577283
+  position: {x: -570, y: -310}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: 1384415060679701805}
+  fromPreviousIN: {fileID: -2999103833443472641}
+  waitUntilFinished: 1
+  movementType: 0
+  target: LycheeBoi
+  maxPullSpeed: 100
+  snapTime: 0.75
+--- !u!114 &5086552176815147783
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -482,16 +454,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -8841292671835764070}
+  body: {fileID: 1297516077737877551}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: 3243656034395671425}
+  - {fileID: -7087911398322326769}
   side: 2
   sidePosition: 30
   sideOffset: 0
---- !u!114 &9010097530830607581
+--- !u!114 &5590877595923407503
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -503,12 +475,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3d338988a4691f43b8c0764bd85cf70, type: 3}
   m_Name: To Next
   m_EditorClassIdentifier: 
-  body: {fileID: -1265444083346761572}
+  body: {fileID: -7736875464677821679}
   direction: 2
   maxConnectionCount: 0
   styleID: Gameflow
   _connections:
-  - {fileID: -6457775708492044195}
+  - {fileID: -871764615686488584}
   side: 2
   sidePosition: 30
   sideOffset: 0
+--- !u!114 &6917423805138374594
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4c4994ad4009914dbdae2e088971763, type: 3}
+  m_Name: Move Character
+  m_EditorClassIdentifier: 
+  position: {x: -572.50006, y: -128.2}
+  dynamicConnectionPorts: []
+  backgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  toNextOUT: {fileID: -3809259441096625172}
+  fromPreviousIN: {fileID: -2303396329204489101}
+  waitUntilFinished: 1
+  character: Soma
+  destination: SomaWaypoint
+  xLeniency:
+    min: -0.1
+    max: 0.1
+  yLeniency:
+    min: -0.1
+    max: 0.1
+  speed: 2
+  endFacing: 2

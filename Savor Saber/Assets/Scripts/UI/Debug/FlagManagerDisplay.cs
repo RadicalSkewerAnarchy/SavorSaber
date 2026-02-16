@@ -18,7 +18,11 @@ public class FlagManagerDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Dictionary<string, string> dict = flagMan.GetInstanceFlagDictionary();
-        debugText.text = string.Join("\n", dict.Select(x => x.Key + " = " + x.Value).ToArray());
+        if(flagMan != null)
+        {
+            Dictionary<string, string> dict = flagMan.GetInstanceFlagDictionary();
+            debugText.text = string.Join("\n", dict.Select(x => x.Key + " = " + x.Value).ToArray());
+        }
+
     }
 }

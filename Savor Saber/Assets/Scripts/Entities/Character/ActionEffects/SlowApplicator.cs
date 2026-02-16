@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoTApplicator : SkewerBonusEffect
+public class SlowApplicator : SkewerBonusEffect
 {
 
     private WaitForSeconds Tic;
     private int numTics = 1;
-
+    private float originalSpeed = 1;
     // Start is called before the first frame update
     void Start()
     {
         Tic = new WaitForSeconds(1);
+
+        if (targetData != null)
+        {
+            originalSpeed = targetData.Speed;
+            targetData.Speed = 0;
+        }
         Cooldown();
     }
 
@@ -23,12 +29,10 @@ public class DoTApplicator : SkewerBonusEffect
     }
     public override void SetTarget(GameObject obj, int mag)
     {
-        if (targetData == null) return;
-
         base.SetTarget(obj, mag);
 
         //overwrite any existing DoTs
-        if (targetData != null && targetData.currentDot != null)
+        if (targetData.currentDot != null)
             Destroy(targetData.currentDot);
 
         targetData.currentDot = this.gameObject;
@@ -37,26 +41,17 @@ public class DoTApplicator : SkewerBonusEffect
 
     private void Cooldown()
     {
-        bool killingBlow = false;
         if (targetData == null)
         {
             Debug.Log("Applicator targetData found to be null, terminating");
             Destroy(this.gameObject);
-            return;
         }
 
-        //test to see if this tic will inflict a killing blow
-        if(targetData != null)
-            killingBlow = targetData.DoDamage(magnitude, true);
-        //Debug.Log("Health reduced to " + characterData.health + " by DoT effect");
-
-        //termination conditions
-        if (killingBlow)
-            Destroy(this.gameObject);
         numTics++;
         if (numTics > (magnitude * 5))
         {
             StopAllCoroutines();
+            targetData.Speed = originalSpeed;
             Destroy(this.gameObject);
         }
         StartCoroutine(ExecuteAfterSeconds());

@@ -32,17 +32,6 @@ public class AttackRanged : AttackBase
     /// </summary>
     public GameObject projectile;
 
-    /// <summary>
-    /// The data for what effects this attack should have, if any.
-    /// </summary>
-    [HideInInspector]
-    public RecipeData effectRecipeData = null;
-
-    /// <summary>
-    /// how much of each flavor is present on the skewer
-    /// </summary>
-    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
-    public IngredientData[] ingredientArray;
 
     /// <summary>
     /// The name of the attack, used to determine animation states
@@ -66,16 +55,12 @@ public class AttackRanged : AttackBase
     [HideInInspector]
     public int extraDamage = 0;
 
-    #endregion
+    /// <summary>
+    /// reference to the spawned projectile's data component
+    /// </summary>
+    [HideInInspector]
+    public BaseProjectile projectileData;
 
-    #region Bonus effect fields
-    //Trust bonus effects
-    [Header("Bonus effects")]
-    public GameObject spicyTemplate;
-    public GameObject sourTemplate;
-    protected RecipeData.Flavors flavor = RecipeData.Flavors.None;
-    protected int flavorMagnitude = 1;
-    public bool spawnEffectOnMiss = false;
     #endregion
 
     // Start is called before the first frame update
@@ -153,24 +138,6 @@ public class AttackRanged : AttackBase
         projectileData.directionVector = directionVector;
         projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
-
-        //give the spawned projectile its effect data, if applicable
-        if (effectRecipeData != null)
-        {
-            projectileData.effectRecipeData = effectRecipeData;
-        }
-        if(ingredientArray != null)
-        {
-            projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
-            Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
-        }
-        if (flavorCountDictionary != null)
-        {
-            projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
-        }
-
-        Attacking = true;
-        StartCoroutine(EndAttackAfterSeconds(attackDuration));
     }
 
     /// <summary>
@@ -213,28 +180,6 @@ public class AttackRanged : AttackBase
         projectileData.directionVector = directionVector;
         projectileData.projectileDamage += extraDamage;
         newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
-
-        //set any bonus effects to be spawned
-        if (flavor == RecipeData.Flavors.Spicy && spicyTemplate != null)
-            projectileData.SetBonusEffect(spicyTemplate, flavorMagnitude);
-        else if (flavor == RecipeData.Flavors.Sour && sourTemplate != null)
-            projectileData.SetBonusEffect(sourTemplate, flavorMagnitude);
-        else if(flavor == RecipeData.Flavors.Sweet || flavor == RecipeData.Flavors.Salty || flavor == RecipeData.Flavors.None)
-            projectileData.SetBonusEffect(null, flavorMagnitude);
-
-        projectileData.spawnBonusEffectOnMiss = spawnEffectOnMiss;
-
-        //set ingredient data if applicable
-        if (ingredientArray != null)
-        {
-            projectileData.ingredientArray = new IngredientData[ingredientArray.Length];
-            Array.Copy(ingredientArray, projectileData.ingredientArray, ingredientArray.Length);
-        }
-        //DEPRECATED
-        if(flavorCountDictionary != null)
-        {
-            projectileData.flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(flavorCountDictionary);
-        }
 
 
         //play animations
@@ -282,12 +227,5 @@ public class AttackRanged : AttackBase
     protected Vector2 GetTargetVector(Vector2 targetVector)
     {
         return new Vector2(targetVector.x - transform.position.x, targetVector.y - transform.position.y).normalized;
-    }
-
-    //function for the Trust Meter to assign the correct
-    public void SetFlavor(RecipeData.Flavors flav, int mag = 1)
-    {
-        flavor = flav;
-        flavorMagnitude = mag;
     }
 }

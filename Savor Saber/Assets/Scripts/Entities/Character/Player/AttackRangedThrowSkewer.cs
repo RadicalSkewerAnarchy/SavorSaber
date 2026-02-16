@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System;
 
 [RequireComponent(typeof(Inventory))]
 public class AttackRangedThrowSkewer : AttackRanged
@@ -23,6 +24,13 @@ public class AttackRangedThrowSkewer : AttackRanged
     private PlaySFX sfxPlayer;
     public CrosshairController crosshair;
     private WaitForSeconds tic;
+    private ProjectileSkewer skewerProjectileData;
+
+    /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+    public IngredientData[] ingredientArray;
 
     private PlayerController playerController; //this is insconsistent with the player's melee attacks but it has to be, because controller is already an EntityController
     //and I don't want to fuck it up by changing it to a playercontroller
@@ -102,21 +110,21 @@ public class AttackRangedThrowSkewer : AttackRanged
             }
             inv.SubtractEnergy(energyCostToThrow);
             StopAllCoroutines();
-            effectRecipeData = inv.GetActiveEffect();
             flavorCountDictionary = new Dictionary<RecipeData.Flavors, int>(inv.GetActiveFlavorDictionary());
             //find the top ingredient
             ingredientArray = inv.GetActiveSkewer().ToArray();
-            //ingredientArray = new IngredientData[1];
-            //ingredientArray[0] = inv.RemoveFromSkewer();
-
-
-
 
             r.color = Color.white;
             currLevel = 0;
             Attack(crosshair.GetTarget());
-            inv.ClearActiveRecipe();
-            //inv.ClearActiveSkewer();
+
+            //set ingredient data if applicable
+            if (ingredientArray != null)
+            {
+                skewerProjectileData.ingredientArray = new IngredientData[ingredientArray.Length];
+                Array.Copy(ingredientArray, skewerProjectileData.ingredientArray, ingredientArray.Length);
+            }
+
             inv.CanSwap = true;
             Attacking = false;
             chargedAttack = false;
@@ -127,9 +135,63 @@ public class AttackRangedThrowSkewer : AttackRanged
         }
     }
 
+    /// <summary>
+    /// Overloaded version of Attack() that takes in a target vector and uses that to get its rotation.
+    /// </summary>
+    public override void Attack(Vector2 targetVector)
+    {
+        if (!chargedAttack)
+        {
+            //true center of sprite
+            center = r.bounds.center;
+        }
+
+        //sound stuff
+        if (attackSound != null && audioSource != null)
+        {
+            audioSource.clip = attackSound;
+            audioSource.Play();
+
+        }
+        else if (attackSound == null && audioSource != null)
+        {
+            audioSource.clip = defaultAttackSound;
+            audioSource.Play();
+        }
+
+
+        //get directional/rotational information
+        //float projectileRotation = GetRotation(direction);
+        float projectileRotation = GetRotation(targetVector);
+        Vector2 directionVector = GetTargetVector(targetVector);
+        Direction direction = DirectionMethods.FromVec2(directionVector);
+        Vector2 spawnPositionModifier = directionVector.normalized * 0.75f;
+
+        //spawn the attack at the spawn point and give it its data
+        GameObject newAttack = Instantiate(projectile, center + spawnPositionModifier, Quaternion.identity);
+        skewerProjectileData = newAttack.GetComponent<ProjectileSkewer>();
+        skewerProjectileData.attacker = this.gameObject;
+        skewerProjectileData.myCharData = GetComponent<CharacterData>();
+        skewerProjectileData.direction = direction;
+        skewerProjectileData.directionVector = directionVector;
+        skewerProjectileData.projectileDamage += extraDamage;
+        newAttack.transform.Rotate(new Vector3(0, 0, projectileRotation));
+
+
+        //play animations
+        //OverrideDirection(projectileRotation);
+        if (controller != null)
+            controller.Direction = direction;
+        if (animator != null)
+            animator.Play(attackName);
+
+        Attacking = true;
+        StartCoroutine(EndAttackAfterSeconds(attackDuration));
+    }
+
     private void StartCooldown(float cd)
     {
-        Debug.Log(cd);
+        //Debug.Log(cd);
         if(cd <= 0)
         {
             ready = true;

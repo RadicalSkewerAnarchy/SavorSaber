@@ -13,7 +13,20 @@ public class ProjectileSkewer : BaseProjectile
     public GameObject audioPlayer;
     [HideInInspector]
     public bool fed = false;
+    private bool hitEnemy = false;
 
+    /// <summary>
+    /// how much of each flavor is present on the skewer
+    /// </summary>
+    public Dictionary<RecipeData.Flavors, int> flavorCountDictionary;
+    public Dictionary<string, int> ingredientCountDictionary;
+    [HideInInspector]
+    public IngredientData[] ingredientArray;
+
+    public GameObject templateBonusSweet;
+    public GameObject templateBonusSpicy;
+    public GameObject templateBonusSour;
+    public GameObject templateBonusSalty;
 
     // Start is called before the first frame update
     void Start()
@@ -36,6 +49,7 @@ public class ProjectileSkewer : BaseProjectile
     {
         GameObject go = collision.gameObject;
         //ignore specified target classes
+        Debug.Log("Skewer collided with " + go);
         foreach (string tag in tagsToIgnore)
         {
             if (go.tag == tag)
@@ -68,62 +82,57 @@ public class ProjectileSkewer : BaseProjectile
                 FlavorInputManager flavorInput = collision.gameObject.GetComponent<FlavorInputManager>();
                 if (flavorInput != null)
                 {
+                    Debug.Log("Found FlavorInputManager");
                     //Debug.Log("Flavor input of " + collision.gameObject + " not null");
                     flavorInput.Feed(ingredientArray[0], true, myCharData);
                     fed = true;
-
-                    //if this is an enemy, check if we should be spawning a bonus effect
-                    if(collision.gameObject.tag == "Predator" && !dropping && bonusEffectTemplate != null)
-                    {
-                        GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);
-                        SkewerBonusEffect effect = bonus.GetComponent<SkewerBonusEffect>();
-                        if (effect != null)
-                            effect.SetTarget(collision.gameObject, bonusEffectMagnitude);
-                        dropping = true;
-                    }
-
-                    Destroy(this.gameObject);
+                    if (go.tag == "Predator") hitEnemy = true;
                 }
-                //if you hit something (and aren't penetrating) but can't feed it
-                else if (!dropping && !penetrateTargets)
-                {
-                    //SpawnDropsOnMiss();
-                    if (spawnBonusEffectOnMiss && bonusEffectTemplate != null)
-                    {
-                        GameObject bonus = Instantiate(bonusEffectTemplate, transform.position, Quaternion.identity);
-                        SkewerBonusEffect effect = bonus.GetComponent<SkewerBonusEffect>();
-                        if (effect != null)
-                            effect.SetTarget(collision.gameObject, bonusEffectMagnitude);
-                        dropping = true;
-                    }
-
-                    Destroy(this.gameObject);
-                }
+                ApplyBonusEffects(go);
+                Destroy(this.gameObject);
             }
             else if (!penetrateTargets)
                 Destroy(this.gameObject);
         }
     }
 
-    private void SpawnDropsOnMiss()
+    private void ApplyBonusEffects(GameObject target)
     {
-        SkewerableObject ingredient;
-        GameObject drop;
-        SpriteRenderer sr;
-        for (int i = 0; i < ingredientArray.Length; i++)
+        foreach(IngredientData ingredient in ingredientArray)
         {
-            if (ingredientArray[i] != null && dropTemplate != null)
+            if((ingredient.flavors & RecipeData.Flavors.Sweet) > 0)
             {
-                drop = Instantiate(dropTemplate, transform.position, Quaternion.identity);
-                ingredient = drop.GetComponent<SkewerableObject>();
-                sr = drop.GetComponent<SpriteRenderer>();
-
-                ingredient.data = ingredientArray[i];
-                sr.sprite = ingredientArray[i].image;
+                //lifesteal
+                Debug.Log("Impact with sweet flavor");
+                CharacterData attackerData = attacker.GetComponent<CharacterData>();
+                if(attackerData != null)
+                {
+                    attackerData.DoHeal(1);
+                }
             }
-
+            if ((ingredient.flavors & RecipeData.Flavors.Spicy) > 0)
+            {
+                //instantiate DoT applicator
+                GameObject bonus = Instantiate(templateBonusSpicy, transform.position, Quaternion.identity);
+                SkewerBonusEffect dot = bonus.GetComponent<SkewerBonusEffect>();
+                dot.SetTarget(target, 5);
+                Debug.Log("Impact with spicy flavor");
+            }
+            if ((ingredient.flavors & RecipeData.Flavors.Sour) > 0)
+            {
+                //instantiate Tesla Field
+                GameObject bonus = Instantiate(templateBonusSour, transform.position, Quaternion.identity);
+                Debug.Log("Impact with sour flavor");
+            }
+            if ((ingredient.flavors & RecipeData.Flavors.Salty) > 0)
+            {
+                //immobilize target
+                GameObject bonus = Instantiate(templateBonusSalty, transform.position, Quaternion.identity);
+                Debug.Log("Impact with salty flavor");
+                SkewerBonusEffect slow = bonus.GetComponent<SkewerBonusEffect>();
+                slow.SetTarget(target, 5);
+            }
         }
-        dropping = true;
     }
 
 }

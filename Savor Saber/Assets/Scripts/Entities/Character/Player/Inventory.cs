@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     private RecipeData.Flavors unlockedFlavors;
     private List<IngredientData> unlockedIngredients;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
+    public IngredientData[] startingIngredients;
 
     private int energy;
     public int maxEnergy = 10;
@@ -72,6 +73,11 @@ public class Inventory : MonoBehaviour, IDataPersistence {
             quiver[i].InitializeDictionary();
         }
         playerController = GetComponent<PlayerController>();
+
+        foreach(IngredientData ingredient in startingIngredients)
+        {
+            UnlockIngredient(ingredient);
+        }
     }
 
     void Awake()
@@ -543,6 +549,23 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     /// <param name="ingredient"></param>
     public void AddToCookingSkewer(IngredientData ingredient)
     {
+        bool ingredientUnlocked = false;
+        foreach(IngredientData ingredientCheck in unlockedIngredients)
+        {
+            if(ingredientCheck == ingredient)
+            {
+                Debug.Log("We can cook with this ingredient!");
+                ingredientUnlocked = true;
+                break;
+            }
+        }
+        //if we didn't find the ingredient in the list, terminate
+        if (!ingredientUnlocked)
+        {
+            Debug.Log("Didn't find this ingredient in the unlock list... :(");
+            sfxPlayer.Play(fullSFX);
+            return;
+        }
         if(quiver[cookingSkewer].GetCount() >= maxItemsPerSkewer)
         {
             Debug.Log("Skewer " + cookingSkewer + " is full.");

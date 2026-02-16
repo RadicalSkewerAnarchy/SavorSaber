@@ -61,15 +61,12 @@ public class SelfIngredientEffect : MonoBehaviour
                 currentObjectFollowsPlayer = false;
                 somaController.dashRechargeMultiplier = flavorStrength + 1;
                 somaController.maxDashes = 3 + flavorStrength;
-                somaSkewer.SetFlavor(RecipeData.Flavors.Sweet, flavorStrength);
                 trustText.UpdateDisplayText("Ing. Bonus: +" + flavorStrength + " dash");
                 break;
             //spicy companions add DoT effects to skewer throws vs. enemies
             case RecipeData.Flavors.Spicy:
                 //Debug.Log("Setting trust effect for spicy");
                 currentObjectFollowsPlayer = false;
-                somaSkewer.SetFlavor(RecipeData.Flavors.Spicy, flavorStrength);
-                somaSkewer.spicyTemplate = spicyTemplate;
                 trustText.UpdateDisplayText("Ing. Bonus: +" + flavorStrength + " DoT");
                 break;
             //salty companions generate a shield
@@ -78,22 +75,17 @@ public class SelfIngredientEffect : MonoBehaviour
                 currentObjectFollowsPlayer = true;
                 currentObject = Instantiate(saltyTemplate, transform.position, Quaternion.identity);
                 currentObject.GetComponent<SaltShield>().SetOwner(this.gameObject);
-                somaSkewer.SetFlavor(RecipeData.Flavors.Salty, flavorStrength);
                 trustText.UpdateDisplayText("Ing. Bonus: Shield");
                 break;
             //sour companions generate a tesla field
             case RecipeData.Flavors.Sour:
                 //Debug.Log("Setting trust effect for sour");
                 currentObjectFollowsPlayer = false;
-                somaSkewer.SetFlavor(RecipeData.Flavors.Sour, flavorStrength);
-                somaSkewer.sourTemplate = sourTemplate;
-                somaSkewer.spawnEffectOnMiss = true;
                 trustText.UpdateDisplayText("Ing. Bonus: Tesla Skewers");
                 break;
 
             case RecipeData.Flavors.None:
                 Debug.Log("Setting trust effect for None");
-                somaSkewer.SetFlavor(RecipeData.Flavors.None, 1);
                 ResetPlayerParameters();
                 break;
         }

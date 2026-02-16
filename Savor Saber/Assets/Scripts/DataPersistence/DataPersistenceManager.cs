@@ -14,6 +14,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Awake()
     {
+
         newGame = FindObjectOfType<GameDataManager>().isNewGame;
         if (instance != null)
         {

@@ -65,11 +65,12 @@ public class Commander : MonoBehaviour
 
 
         //Assign references to self in player components
+        /*
         PartyTeleportBeacon teleporter = player.GetComponentInChildren<PartyTeleportBeacon>();
         teleporter.AssignCommander(this);
         PlayerCompanionSummon summoner = player.GetComponentInChildren<PlayerCompanionSummon>();
         summoner.AssignCommander(this);
-
+        */
 
 
         //Debug.Log($"Commander {this.name} has been awoken");

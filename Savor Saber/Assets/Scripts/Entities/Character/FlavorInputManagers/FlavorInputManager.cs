@@ -45,13 +45,6 @@ public class FlavorInputManager : MonoBehaviour
         characterData = GetComponent<AIData>();
         if (characterData == null)
             characterData = (AIData)GetComponent<CharacterData>();
-
-        if (this.tag == "Prey")
-        {
-            FavoriteFoodBubble ffb = GetComponentInChildren<FavoriteFoodBubble>();
-            ffb.fruitant = this.gameObject;
-            ffb.favoriteFood1 = favoriteIngredients[0];
-        }
     }
 
     public virtual void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feederData)
