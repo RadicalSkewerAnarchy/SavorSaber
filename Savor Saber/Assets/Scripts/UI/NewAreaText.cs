@@ -37,30 +37,35 @@ public class NewAreaText : MonoBehaviour
     {
         if(active && !textPlaying && collision.gameObject.tag == "Player")
         {
-            if (animated)
-            {
-                text = Instantiate(animTextTemplate, targetCanvas.transform);
-                NewAreaTextAnimShutoff shutoff = text.GetComponentInChildren<NewAreaTextAnimShutoff>();
-                shutoff.textTrigger = this;
-
-                //assign proper text and color
-                Text textTop = text.transform.GetChild(0).gameObject.GetComponent<Text>();
-                Text textBottom = text.transform.GetChild(1).gameObject.GetComponent<Text>();
-                textTop.text = animatedTextTop;
-                textBottom.text = animatedTextBottom;
-                textTop.color = new Color(color.x, color.y, color.z);
-                textBottom.color = new Color(color.x, color.y, color.z);
-                //play audio as well? 
-            }
-            else
-            {
-                //Instantiate the typing variant once that exists
-            }
-
-            textPlaying = true;
-            if (!repeatable)
-                active = false;
-
+            DisplayText();
         }
+    }
+
+    public void DisplayText()
+    {
+        if (animated)
+        {
+            text = Instantiate(animTextTemplate, targetCanvas.transform);
+            NewAreaTextAnimShutoff shutoff = text.GetComponentInChildren<NewAreaTextAnimShutoff>();
+            shutoff.textTrigger = this;
+
+            //assign proper text and color
+            Text textTop = text.transform.GetChild(0).gameObject.GetComponent<Text>();
+            Text textBottom = text.transform.GetChild(1).gameObject.GetComponent<Text>();
+            textTop.text = animatedTextTop;
+            textBottom.text = animatedTextBottom;
+            textTop.color = new Color(color.x, color.y, color.z);
+            textBottom.color = new Color(color.x, color.y, color.z);
+            //play audio as well? 
+        }
+        else
+        {
+            //Instantiate the typing variant once that exists
+        }
+
+        textPlaying = true;
+        if (!repeatable)
+            active = false;
+
     }
 }

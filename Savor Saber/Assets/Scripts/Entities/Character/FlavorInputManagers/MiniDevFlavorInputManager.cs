@@ -20,13 +20,14 @@ public class MiniDevFlavorInputManager : FlavorInputManager
     private int maxFood = 25;
     private int currentFood = 0;
     public Slider energySlider;
+    
 
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         sfxPlayer = GetComponent<AudioSource>();
         //currentRequestState = requestStates[0];
-
+        
         //StartWeather();
     }
 
@@ -37,6 +38,12 @@ public class MiniDevFlavorInputManager : FlavorInputManager
     //      spawn the same items back
     public override void Feed(IngredientData ingredient, bool fedByPlayer, CharacterData feeder)
     {
+        if (!active)
+        {
+            Debug.Log("FiM not active, returning...");
+            return;
+        }
+
         Debug.Log("Mini Devourer fed");
         currentFood++;
         Debug.Log("Current food: " + currentFood + "/" + maxFood);
@@ -83,5 +90,10 @@ public class MiniDevFlavorInputManager : FlavorInputManager
         {
             energySlider.value = ((float)currentFood / (float)maxFood);
         }
+    }
+
+    public void SetActive(bool state)
+    {
+        active = state;
     }
 }

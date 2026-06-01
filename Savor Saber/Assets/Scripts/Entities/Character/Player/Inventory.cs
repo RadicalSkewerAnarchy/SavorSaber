@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     private RecipeData.Flavors unlockedFlavors;
     private List<IngredientData> unlockedIngredients;
     private Dictionary<RecipeData.Flavors, int> flavorStrength;
-    public IngredientData[] startingIngredients;
+
 
     private int energy;
     public int maxEnergy = 10;
@@ -55,6 +55,10 @@ public class Inventory : MonoBehaviour, IDataPersistence {
     public AudioClip fullSFX;
     private PlaySFX sfxPlayer;
 
+    [Header("Testing Fields")]
+    //ingredients to start unlocked
+    public IngredientData[] startingIngredients;
+
     #endregion
 
     void Start ()
@@ -66,6 +70,8 @@ public class Inventory : MonoBehaviour, IDataPersistence {
         quiver[2] = new Skewer();
         CanSwap = true;
         sfxPlayer = GetComponent<PlaySFX>();
+        unlockedIngredients = new List<IngredientData>();
+        flavorStrength = new Dictionary<RecipeData.Flavors, int>();
 
         //initialize dictionaries 
         for(int i = 0; i < quiver.Length; i++)

@@ -35,6 +35,8 @@ public class FlavorInputManager : MonoBehaviour
     [SerializeField]
     protected ParticleSystem spawnParticles;
     #endregion
+    [SerializeField]
+    protected bool active = true;
 
     private void Start()
     {
